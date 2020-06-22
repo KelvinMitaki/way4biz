@@ -10,8 +10,8 @@ import CaroDisplay from "./CaroDisplay";
 class Hero extends React.Component {
     render(){
         return (
-            <div id="hero" className="container-fluid">
-                <div className="row no-gutters">
+            <div className="container-fluid">
+                <div className="row" id="hero">
                     <SideBar/>
                     <CaroDisplay/>
                 </div>

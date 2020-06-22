@@ -1,0 +1,8 @@
+.hero-carousel,.slider{
+    height:calc(80vh - 20px);
+}
+
+.slider img{
+    height:100%;
+    width:100%;
+}
