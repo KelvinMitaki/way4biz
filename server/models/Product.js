@@ -20,6 +20,11 @@ const ProductSchema = new mongoose.Schema({
   subcategory: {
     type: String,
     required: true
+  },
+  seller: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true
   }
 });
 const Product = mongoose.model("Product", ProductSchema);
