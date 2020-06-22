@@ -8,7 +8,7 @@ class Market extends React.Component {
     render(){
         return (
             <div className="container-fluid market">
-                  <div className="col">
+                  <div className="col market-head">
                       <h1>Selling</h1>
                   </div>
                   <div className="row products">

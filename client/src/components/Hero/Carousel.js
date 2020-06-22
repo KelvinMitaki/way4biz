@@ -11,7 +11,7 @@ class HeroCarousel extends React.Component {
                 <Carousel.Item className="slider">
                     <img
                     className="img-fluid slider"
-                    src="p.jpg"
+                    src="j.jpeg"
                     alt="First slide"
                     />
                 </Carousel.Item>
@@ -22,13 +22,13 @@ class HeroCarousel extends React.Component {
                     alt="Third slide"
                     />
                 </Carousel.Item>
-                <Carousel.Item className="slider">
+                {/* <Carousel.Item className="slider">
                     <img
                     className="img-fluid"
                     src="p.jpg"
                     alt="Third slide"
                     />
-                </Carousel.Item>
+                </Carousel.Item> */}
             </Carousel>
 
         )

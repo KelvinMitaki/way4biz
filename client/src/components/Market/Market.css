@@ -8,6 +8,10 @@
     background-color: #f8f9f9;
 }
 
+.market-head h1{
+    margin-bottom: 20px;
+}
+
 .products{
     background-color: #fff;
 }
@@ -22,7 +26,7 @@
 }
 
 .product:hover{
-    box-shadow: 0 0 10px #eee;
+    box-shadow: 0 0 10px #d4d4d4;
 }
 
 .product img{
@@ -57,7 +61,7 @@
     }
 
     .product{
-        box-shadow: 0 0 10px #eee;
+        box-shadow: 0 0 10px #eeeeee;
     }
     
     .product div{
