@@ -13,7 +13,7 @@
 }
 
 .product{
-    height:350px;
+    height:340px;
     margin-bottom:10px;
 }
 
@@ -44,4 +44,27 @@
 .price-before{
     text-decoration: line-through;
     color:#5D6D7E;
+}
+
+
+@media screen and (max-width:960px){
+    .market{
+        padding:30px 0px;
+    }
+
+    .product div{
+        padding-left:10px;
+    }
+
+    .product{
+        box-shadow: 0 0 10px #eee;
+    }
+    
+    .product div{
+        margin-top:20px;
+    }
+    
+    .product:hover{
+        box-shadow: none;
+    }
 }
