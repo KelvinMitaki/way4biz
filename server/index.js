@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongodb-session")(session);
 const bodyParser = require("body-parser");
 
 const adminRoutes = require("./controllers/admin");
@@ -11,14 +11,11 @@ const shopRoutes = require("./controllers/shop");
 const app = express();
 
 const sessionStore = new MongoStore({
-  mongooseConnection: mongoose.createConnection(process.env.MONGO_URI, {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  }),
+  uri: process.env.MONGO_URI,
   collection: "sessions"
 });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
@@ -34,8 +31,6 @@ app.use(
     }
   })
 );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(authRoutes);
 app.use(shopRoutes);
 app.use(adminRoutes);
