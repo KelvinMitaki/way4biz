@@ -1,0 +1,22 @@
+.footer{
+    background-color: #17202A;
+    padding:30px 0px;
+    color:#fff;
+}
+
+hr{
+    background-color:#2C3E50 ;
+}
+
+.site-footer-info{
+    margin-top:20px;
+}
+
+.site-footer-info p{
+    margin:10px;
+}
+
+
+.copyright{
+    text-align: center;
+}
