@@ -12,10 +12,17 @@ route.get("/api/products/:sellerId", auth, async (req, res) => {
   }
 });
 
-route.post("/api/product", auth, async (req, res) => {
+route.post("/api/product/:sellerId", auth, async (req, res) => {
   try {
-    const { name, price, quantity, subcategory } = req.body;
-    const product = new Product({ name, price, quantity, subcategory });
+    const { sellerId } = req.params;
+    const { name, price, stockQuantity, subcategory } = req.body;
+    const product = new Product({
+      name,
+      price,
+      stockQuantity,
+      subcategory,
+      seller: sellerId
+    });
     await product.save();
     res.status(201).send(product);
   } catch (error) {
@@ -26,16 +33,22 @@ route.post("/api/product", auth, async (req, res) => {
 route.patch("/api/product/:sellerId/:productId", auth, async (req, res) => {
   try {
     const { productId, sellerId } = req.params;
-    const { name, price, quantity } = req.body;
-    const updatedProduct = await Product.findOneAndUpdate(
-      { _id: productId, seller: sellerId },
-      {
-        name,
-        price,
-        quantity
-      }
-    );
-    res.send(updatedProduct);
+    const { name, price, stockQuantity } = req.body;
+    const product = await Product.findOne({
+      _id: productId,
+      seller: sellerId
+    });
+    if (name) {
+      product.name = name;
+    }
+    if (price) {
+      product.price = price;
+    }
+    if (stockQuantity) {
+      product.stockQuantity = stockQuantity;
+    }
+    await product.save();
+    res.send(product);
   } catch (error) {
     res.status(500).send(error);
   }
