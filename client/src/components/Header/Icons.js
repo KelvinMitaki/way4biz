@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Icons";
+import "./Icons.css";
 
 class Icons extends React.Component{
     render(){
