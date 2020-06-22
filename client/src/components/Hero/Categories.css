@@ -19,20 +19,27 @@
 
 
 .category{
-    padding:20px;
+    padding:20px 0px 20px 0px;
     background-color: #fff;
-    height:calc(100vh - 50px);
+    height:calc(80vh - 50px);
     list-style: none;
-    position: relative;
-    bottom:0px;
-    overflow-y: clip;
+    /* overflow-y: clip; */
+    display: flex;
+    flex-direction: column;
 }
 
 
 .category li {
     height:50px;
+    display: flex;
+    width:100%;
+    align-items: center;
+    padding-left:20px;
 }
 
 .category li:hover{
     color:#f76b1a;
+    border-top:1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
 }

@@ -1,0 +1,47 @@
+.market{
+    margin-top: 50px;
+    background-color: #f8f9f9;
+    padding:30px 50px;
+}
+
+.market .col{
+    background-color: #f8f9f9;
+}
+
+.products{
+    background-color: #fff;
+}
+
+.product{
+    height:350px;
+    margin-bottom:10px;
+}
+
+.product div{
+    margin-top:20px;
+}
+
+.product:hover{
+    box-shadow: 0 0 10px #eee;
+}
+
+.product img{
+    width:100%;
+}
+
+.product-name{
+    width:100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.price{
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+.price-before{
+    text-decoration: line-through;
+    color:#5D6D7E;
+}
