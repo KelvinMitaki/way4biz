@@ -6,3 +6,12 @@
     height:100%;
     width:100%;
 }
+
+@media screen and (max-width:960px){
+    .hero-carousel,.slider{
+        width: 100vw !important;
+        height:40vh;
+        position: relative;
+        left: 0px;
+    }
+}

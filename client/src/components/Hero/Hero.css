@@ -4,3 +4,11 @@
     height:80vh;
     background-color: #f8f9f9;
 }
+
+@media screen and (max-width:960px){
+    #hero{
+        border: none;
+        padding:0px;
+        height:auto;
+    }
+}

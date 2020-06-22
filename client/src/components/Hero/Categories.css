@@ -43,3 +43,10 @@
     border-bottom: 1px solid #eee;
     border-left: 1px solid #eee;
 }
+
+
+@media screen and (max-width:960px){
+    #categories{
+        display: none;
+    }
+}

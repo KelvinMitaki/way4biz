@@ -2,3 +2,10 @@
     height:100%;
     padding:0px;
 }
+
+@media screen and (max-width:960px){
+    #sidebar{
+        display: none;
+    }
+}
+

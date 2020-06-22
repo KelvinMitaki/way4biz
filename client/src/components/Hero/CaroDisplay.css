@@ -2,3 +2,11 @@
     margin:10px 0px;
     height:100%;
 }
+
+
+@media screen and (max-width:960px){
+    #caro-display{
+        margin: 0px;
+        padding:0px;
+    }
+}
