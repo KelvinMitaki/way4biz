@@ -1,7 +1,8 @@
 const Product = require("../models/Product");
+const auth = require("../middlewares/is-auth");
 
 const route = require("express").Router();
-route.get("/api/products/:sellerId", async (req, res) => {
+route.get("/api/products/:sellerId", auth, async (req, res) => {
   try {
     const { sellerId } = req.params;
     const products = await Product.find({ seller: sellerId });
@@ -11,7 +12,7 @@ route.get("/api/products/:sellerId", async (req, res) => {
   }
 });
 
-route.post("/api/product", async (req, res) => {
+route.post("/api/product", auth, async (req, res) => {
   try {
     const { name, price, quantity, subcategory } = req.body;
     const product = new Product({ name, price, quantity, subcategory });
@@ -22,7 +23,7 @@ route.post("/api/product", async (req, res) => {
   }
 });
 
-route.patch("/api/product/:sellerId/:productId", async (req, res) => {
+route.patch("/api/product/:sellerId/:productId", auth, async (req, res) => {
   try {
     const { productId, sellerId } = req.params;
     const { name, price, quantity } = req.body;
@@ -39,7 +40,7 @@ route.patch("/api/product/:sellerId/:productId", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.delete("/api/product/:sellerId/:productId", async (req, res) => {
+route.delete("/api/product/:sellerId/:productId", auth, async (req, res) => {
   try {
     const { productId, sellerId } = req.params;
     await Product.findOneAndDelete({ _id: productId, seller: sellerId });
