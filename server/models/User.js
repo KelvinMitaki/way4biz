@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
   isSeller: {
     type: Boolean,
     default: false
+  },
+  cart: {
+    type: mongoose.Types.ObjectId,
+    ref: "Cart"
   }
 });
 const User = mongoose.model("User", UserSchema);
