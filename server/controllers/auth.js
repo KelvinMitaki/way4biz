@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
+const auth = require("../middlewares/is-auth");
 
 route.post(
   "/api/login",
@@ -91,7 +92,7 @@ route.post(
   }
 );
 
-route.post("/api/logout", (req, res) => {
+route.post("/api/logout", auth, (req, res) => {
   try {
     req.session.destroy(err => {
       if (err) {

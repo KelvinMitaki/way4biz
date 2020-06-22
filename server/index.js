@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const bodyParser = require("body-parser");
 
 const adminRoutes = require("./controllers/admin");
 const authRoutes = require("./controllers/auth");
@@ -33,7 +34,8 @@ app.use(
     }
   })
 );
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(authRoutes);
 app.use(shopRoutes);
 app.use(adminRoutes);
