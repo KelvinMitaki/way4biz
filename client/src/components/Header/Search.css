@@ -1,5 +1,40 @@
 #header-search{
     height:100%;
-    flex:3;
+    flex:4;
+    display: flex;
+    align-items: center;
     
+}
+
+
+.header-input-search{
+    height:50px;
+    border-radius: 10px;
+    border:1px solid #f76b1a !important;
+}
+
+.header-input-search:focus{
+    box-shadow: none;
+    outline: none;
+}
+
+#header-search-btn{
+    width:150px;
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #f76b1a;
+    color:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#header-search-btn span{
+    font-size: 20px;
+}
+
+
+.header-search-category{
+    width:180px;
 }

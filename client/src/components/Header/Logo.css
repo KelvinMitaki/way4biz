@@ -1,4 +1,12 @@
 #logo{
     height:100%;
     flex:1;
+    display: flex;
+    justify-content: center;
+}
+
+#logo h1{
+    color:#f76b1a;
+    align-self: center;
+
 }
