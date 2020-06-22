@@ -23,3 +23,9 @@
 .icon:hover{
     color:#f76b1a;
 }
+
+@media screen and (max-width:960px){
+    #header-icons{
+        display: none;
+    }
+}
