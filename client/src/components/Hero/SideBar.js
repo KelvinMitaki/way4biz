@@ -8,7 +8,6 @@ class SideBar extends React.Component {
     render(){
         return (
             <div id="sidebar" className="col-md-3">
-
             </div>
         )
     }
