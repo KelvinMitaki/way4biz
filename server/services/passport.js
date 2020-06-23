@@ -24,8 +24,9 @@ passport.use(
       try {
         const { id, name, emails, photos } = profile;
         const existingUser = await User.findOne({ googleId: id });
+
         if (existingUser) {
-          done(null, existingUser);
+          return done(null, existingUser);
         }
         const user = new User({
           googleId: id,

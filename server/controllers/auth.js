@@ -22,7 +22,19 @@ route.get(
     scope: ["profile", "email"]
   })
 );
-route.get("/auth/google/callback", passport.authenticate("google"));
+route.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    try {
+      req.session.isLoggedIn = true;
+      req.session.user = req.user;
+      res.send(req.user);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.post(
   "/api/login",
   check("email").trim().isEmail().withMessage("Please enter a valid email"),
