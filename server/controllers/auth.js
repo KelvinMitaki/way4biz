@@ -97,13 +97,61 @@ route.post(
         lastName,
         number
       });
+      const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
+        expiresIn: "1 hour"
+      });
+      // **TODO** FROM EMAIL TO BE CHANGED
+      transporter.sendMail(
+        {
+          to: email,
+          from: "kevinkhalifa911@gmail.com",
+          subject: "Email Confirmation",
+          html: `<html lang="en">
+        <body>
+            <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}>here</a> to confirm your email
+            </p>
+        </body>
+        </html>`
+        },
+        (error, info) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).send(error);
+          }
+          console.log(info);
+        }
+      );
       await user.save();
-      res.status(201).send(user);
+      res.status(201).send({
+        message:
+          "An email has been sent to your email address, please check it to confirm your email"
+      });
     } catch (error) {
       res.status(500).send(error);
     }
   }
 );
+
+route.get("/api/confirm/email/:emailToken", async (req, res) => {
+  try {
+    const { emailToken } = req.params;
+    const decoded = jwt.verify(emailToken, process.env.CONFIRM_EMAIL_JWT);
+    if (!decoded._id) {
+      return res.status(401).send({ message: "Invalid token" });
+    }
+    const user = await User.findById(decoded._id);
+    if (!user) {
+      return res.status(401).send({ message: "No user with that email" });
+    }
+    user.verified = true;
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 route.post("/api/logout", auth, (req, res) => {
   try {

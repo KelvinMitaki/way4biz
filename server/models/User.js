@@ -19,10 +19,13 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   number: {
-    type: Number,
-    unique: true
+    type: Number
   },
   isSeller: {
+    type: Boolean,
+    default: false
+  },
+  verified: {
     type: Boolean,
     default: false
   },
