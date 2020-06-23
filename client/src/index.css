@@ -4,14 +4,14 @@
     box-sizing: border-box;
   }
   
-  html,body{
-    overflow-x: hidden;
-  }
+html,body,#root{
+  overflow-x: hidden;
+  height:auto;
+}
 
-  /* html,body{
-    height: 10000px;
-  } */
 
-  h1,h2,h3,h4,h5,h6,p{
-    margin:0px;
-  }
+
+
+h1,h2,h3,h4,h5,h6,p{
+  margin:0px;
+}
