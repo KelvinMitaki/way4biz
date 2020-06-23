@@ -134,6 +134,48 @@ route.post(
   }
 );
 
+route.post(
+  "/api/change/password",
+  auth,
+  check("currentPassword")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Please enter your current password"),
+  check("newPassword")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Your new password must be atleast six characters"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { currentPassword, newPassword, confirmNewPassword } = req.body;
+      const isMatch = await bcrypt.compare(
+        currentPassword,
+        req.session.user.password
+      );
+      if (!isMatch) {
+        return res.status(401).send({
+          message: "Your current password does not match with the provided one"
+        });
+      }
+      if (newPassword !== confirmNewPassword) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
+      const updatedUser = await User.findByIdAndUpdate(req.session.user._id, {
+        password: hashedPassword
+      });
+
+      res.send(updatedUser);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 route.get("/api/confirm/email/:emailToken", async (req, res) => {
   try {
     const { emailToken } = req.params;

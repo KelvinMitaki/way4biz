@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  address: {
+    type: String
+  },
   cart: {
     type: mongoose.Types.ObjectId,
     ref: "Cart"
