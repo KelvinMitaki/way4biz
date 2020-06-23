@@ -1,0 +1,20 @@
+#mini-menu{
+    height:90px;
+    position:fixed;
+    bottom: 0px;
+    background-color: #fff;
+    width:100vw;
+    margin: 0px;
+}
+
+.mini-menu-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.mini-menu-icon::before{
+    margin: 0px !important;
+}
