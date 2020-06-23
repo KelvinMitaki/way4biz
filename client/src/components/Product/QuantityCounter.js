@@ -44,10 +44,15 @@ class QuantityCounter extends React.Component {
 
     render(){
         return (
-            <div>
-                <button onClick={this.handleDecrement} id="decrement">-</button>
+            <div id="quantity-counter">
+                <p>Quantity</p>
+                <div>
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </div>
                 <p id="quantity">{this.state.quantity}</p>
-                <button onClick={this.handleIncrement} id="increment">+</button>
+                <div>
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
             </div>
         )
     }

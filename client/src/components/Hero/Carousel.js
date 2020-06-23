@@ -22,13 +22,13 @@ class HeroCarousel extends React.Component {
                     alt="Third slide"
                     />
                 </Carousel.Item>
-                {/* <Carousel.Item className="slider">
+                <Carousel.Item className="slider">
                     <img
                     className="img-fluid"
-                    src="p.jpg"
+                    src="k.png"
                     alt="Third slide"
                     />
-                </Carousel.Item> */}
+                </Carousel.Item>
             </Carousel>
 
         )

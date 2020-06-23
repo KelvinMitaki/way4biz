@@ -1,47 +1,81 @@
 import React from "react";
-
+import ReactImageMagnify from 'react-image-magnify';
 
 import "./Product.css";
 
 
-import QuantityCounter from "./QuantityCounter";
-
-
 class Product extends React.Component {
+    getImageProps(){
+        return (
+            {
+                smallImage: {
+                  alt: 'Phasellus laoreet',
+                  isFluidWidth: true,
+                  src: "product-imgs/1.jpg"
+                },
+                largeImage: {
+                  src: "product-imgs/1.jpg",
+                  width: 1200,
+                  height: 1800
+                },
+                enlargedImageContainerStyle: { background: '#fff', zIndex: 9 }
+              }
+        )
+    }
+
+
     render(){
         return (
             <div id="container-fluid">
-                <div className="row">
-                    <div className="col-md-6 product-imgs">
-                        <img src="product-imgs/1.jpg" alt="product-image"/>
+                <div className="row" id="product">
+                    <div className="col-lg-6 product-imgs">
+                        <ReactImageMagnify {...this.getImageProps()} />
                         <div className="feature-imgs d-flex">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
+                            <div>
+                                <img src="product-imgs/1.jpg" alt="product-image"/>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-md-6 product-info">
+                    <div className="col-lg-6 product-info">
                         <h3 id="prod-name">Dell XPS laptop "15</h3>
                         <div className="price-rating d-flex">
-                            <h3>Ksh.140,000</h3>
-                            <ul className="rating">
-                                <li><i className="fas fa-star"></i></li>
-                                <li><i className="fas fa-star"></i></li>
-                                <li><i className="fas fa-star"></i></li>
-                                <li><i className="fas fa-star"></i></li>
-                                <li><i className="far fa-star"></i></li>
-                            </ul>
+                            <h4>Ksh.140,000</h4>
                         </div>
+                        <div id="prod-description">
+                            <h3>Product Details</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Why do we use it?
+                            It is a long established fact that a reader will be distracted by the 
+                            readable content of a page when looking at its layout. The point of using Lorem 
+                            Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 
+                            'Content here, content here', making it look like readable English. Many desktop publishing 
+                            packages and web page editors now use Lorem Ipsum as their default model text, and a search for 
+                            'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved 
+                            over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                            </p>
+                        </div>
+                        <hr/>
                         <div id="cart-quantity">
-                            <div>
-                                <QuantityCounter/>
-                            </div>
-                            <button className="btn btn-md">Add to Cart</button>
+                            <button className="btn btn-md add-to-cart ml-5 btn-block">Add to Cart</button>
                         </div>
+                        <hr/>
                         <div id="features">
+                            <h4>Features and Specifications</h4>
                             <ul>
                                 <li>Backlit keyboard</li>
                                 <li>11 hours Battery life</li>

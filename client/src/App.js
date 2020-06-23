@@ -4,8 +4,6 @@ import './App.css';
 import {Route,Switch} from "react-router-dom";
 
 import Header from "./components/Header/Header";
-import Hero from "./components/Hero/Hero";
-import Market from "./components/Market/Market";
 import Footer from "./components/Footer/Footer";
 import MiniMenuWrapper from "./components/MiniMenuWrapper/MiniMenuWrapper";
 import Product from "./components/Product/Product"
