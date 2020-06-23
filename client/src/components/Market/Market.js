@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 import "./Market.css";
 
@@ -12,14 +13,17 @@ class Market extends React.Component {
                       <h1>Selling</h1>
                   </div>
                   <div className="row products">
-                      <div className="col-6 col-md-4 col-lg-2 product">
-                        <img src="product-imgs/1.jpg" />
-                        <div>
-                            <h3 className="product-name">Samsung LG "24</h3>
-                            <p className="price">Ksh.80,000</p>
-                            <p className="price-before">Ksh.90,000</p>
-                        </div>
-                      </div>
+                      <Link to="/product" className="col-6 col-md-4 col-lg-2 product">
+                        {/* <div className="col-6 col-md-4 col-lg-2 product"> */}
+                          <img src="product-imgs/1.jpg" />
+                          <div>
+                              <h3 className="product-name">Samsung LG "24</h3>
+                              <p className="price">Ksh.80,000</p>
+                              <p className="price-before">Ksh.90,000</p>
+                          </div>
+                        {/* </div> */}
+                      </Link>
+                      
                       <div className="col-6 col-md-4 col-lg-2 product">
                         <img src="product-imgs/2.jpg" />
                         <div>

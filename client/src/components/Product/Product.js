@@ -27,19 +27,19 @@ class Product extends React.Component {
                         <h3 id="prod-name">Dell XPS laptop "15</h3>
                         <div className="price-rating d-flex">
                             <h3>Ksh.140,000</h3>
-                            <ul class="rating">
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="far fa-star"></i></li>
+                            <ul className="rating">
+                                <li><i className="fas fa-star"></i></li>
+                                <li><i className="fas fa-star"></i></li>
+                                <li><i className="fas fa-star"></i></li>
+                                <li><i className="fas fa-star"></i></li>
+                                <li><i className="far fa-star"></i></li>
                             </ul>
                         </div>
                         <div id="cart-quantity">
                             <div>
                                 <QuantityCounter/>
                             </div>
-                            <button class="btn btn-md">Add to Cart</button>
+                            <button className="btn btn-md">Add to Cart</button>
                         </div>
                         <div id="features">
                             <ul>
