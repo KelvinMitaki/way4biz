@@ -1,0 +1,55 @@
+#user-auth{
+    position: relative;
+}
+
+.user-icon{
+    width:100%;
+}
+
+#auth-info{
+    width:250px;
+    min-height:400px;
+    background-color: #fff;
+    position: absolute;
+    top:60px;
+    z-index: 10000;
+    margin-left: -80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding:40px 10px 20px 10px;
+}
+
+.login{
+    border: none;
+    background-color: #f76b1a;
+    color: #fff;
+}
+
+/* .auth-btns{
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+
+.google{
+    background-color: #4285F4;
+    color:#fff;
+    border: none;
+    width: 100%;
+}
+
+.facebook{
+    background-color: #3b5998;
+    color:#fff;
+}
+
+#register-link{
+    color:#f76b1a;
+    font-weight: bold;
+}
+
+#register-link:hover{
+    color:#f76b1a;
+    text-decoration: none;
+}
