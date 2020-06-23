@@ -15,10 +15,12 @@ if (cluster.isMaster) {
   const session = require("express-session");
   const MongoStore = require("connect-mongodb-session")(session);
   const bodyParser = require("body-parser");
+  const passport = require("passport");
 
   const adminRoutes = require("./controllers/admin");
   const authRoutes = require("./controllers/auth");
   const shopRoutes = require("./controllers/shop");
+  require("./services/passport");
 
   const app = express();
 
@@ -26,6 +28,8 @@ if (cluster.isMaster) {
     uri: process.env.MONGO_URI,
     collection: "sessions"
   });
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 

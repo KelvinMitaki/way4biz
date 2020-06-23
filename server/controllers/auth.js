@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const { check, validationResult } = require("express-validator");
+const passport = require("passport");
 
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
@@ -15,7 +16,13 @@ const transporter = nodeMailer.createTransport(
     }
   })
 );
-
+route.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  })
+);
+route.get("/auth/google/callback", passport.authenticate("google"));
 route.post(
   "/api/login",
   check("email").trim().isEmail().withMessage("Please enter a valid email"),
@@ -277,4 +284,5 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 module.exports = route;

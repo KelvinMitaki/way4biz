@@ -15,8 +15,7 @@ const UserSchema = new mongoose.Schema({
     unique: true
   },
   password: {
-    type: String,
-    required: true
+    type: String
   },
   number: {
     type: Number
@@ -28,6 +27,9 @@ const UserSchema = new mongoose.Schema({
   verified: {
     type: Boolean,
     default: false
+  },
+  googleId: {
+    type: String
   },
   address: {
     type: String
