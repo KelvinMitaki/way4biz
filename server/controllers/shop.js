@@ -9,6 +9,15 @@ route.get("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/product/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findById(productId);
+    res.send(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.post("/api/products/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
@@ -20,4 +29,5 @@ route.post("/api/products/search", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 module.exports = route;
