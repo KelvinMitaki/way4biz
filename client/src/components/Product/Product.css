@@ -1,0 +1,12 @@
+.product-imgs img{
+    width:100%;
+}
+
+.feature-imgs{
+    justify-content: space-evenly;
+}
+
+
+.price-rating{
+    justify-content: space-between;
+}

@@ -38,7 +38,7 @@ class Market extends React.Component {
                       <div className="col-6 col-md-4 col-lg-2 product">
                         <img src="product-imgs/4.jpg" />
                         <div>
-                            <h3 className="product-name">Minut Maid 500ml</h3>
+                            <h3 className="product-name">Minute Maid 500ml</h3>
                             <p className="price">Ksh.200</p>
                             <p className="price-before">Ksh.300</p>
                         </div>
