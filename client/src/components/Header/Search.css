@@ -58,6 +58,12 @@
     }
 }
 
+@media screen and (min-width:720px){
+    #header-search{
+        flex:4 !important;
+    }
+}
+
 @media screen and (max-width:540px){
     #header-search-btn{
         width:80px;

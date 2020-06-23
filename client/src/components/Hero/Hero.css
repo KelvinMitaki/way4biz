@@ -5,6 +5,12 @@
     background-color: #f8f9f9;
 }
 
+@media screen and (min-height:950px){
+    #hero{
+        height:50vh;
+    }
+}
+
 @media screen and (max-width:960px){
     #hero{
         border: none;

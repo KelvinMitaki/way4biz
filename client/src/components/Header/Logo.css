@@ -3,6 +3,7 @@
     flex:1;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #logo h1{
@@ -11,8 +12,16 @@
 
 }
 
+
 @media screen and (max-width:960px){
     #logo{
         display: none;
     }
 }
+
+
+@media screen and (min-width:720px){
+    #logo{
+        display: flex;
+    }
+} 

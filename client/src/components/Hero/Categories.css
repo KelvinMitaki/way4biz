@@ -44,6 +44,12 @@
     border-left: 1px solid #eee;
 }
 
+@media screen and (min-height:950px){
+    .category{
+        height:calc(50vh - 20px);
+    }
+}
+
 
 @media screen and (max-width:960px){
     #categories{
