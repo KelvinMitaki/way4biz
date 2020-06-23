@@ -1,11 +1,20 @@
 const route = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const sgMail = require("@sendgrid/mail");
+const nodeMailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
+
+const transporter = nodeMailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY
+    }
+  })
+);
 
 route.post(
   "/api/login",
@@ -67,7 +76,8 @@ route.post(
         password,
         confirmPassword,
         firstName,
-        lastName
+        lastName,
+        number
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -84,7 +94,8 @@ route.post(
         email,
         password: hashedPassword,
         firstName,
-        lastName
+        lastName,
+        number
       });
       await user.save();
       res.status(201).send(user);
@@ -117,15 +128,13 @@ route.post("/api/reset", async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "30 minutes"
     });
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY)(
-      // **TODO** from email address to be fixed
-      async () => {
-        try {
-          await sgMail.send({
-            to: email,
-            from: "kevinkhalifa911@gmail.com",
-            subject: "Password Resetting",
-            html: `<html lang="en">
+    // **TODO** from email address to be fixed
+    transporter.sendMail(
+      {
+        to: email,
+        from: "kevinkhalifa911@gmail.com",
+        subject: "Password Resetting",
+        html: `<html lang="en">
           <body>
               <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
               <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
@@ -133,16 +142,13 @@ route.post("/api/reset", async (req, res) => {
               </p>
           </body>
           </html>`
-          });
-        } catch (error) {
-          console.log(error);
-          if (error.response) {
-            console.log(error.response.body);
-          }
-        }
+      },
+      (error, info) => {
+        if (error) console.log(error);
+        console.log("Sending message info: ", info);
       }
-    )();
-    res.send(data);
+    );
+    res.send({ token });
   } catch (error) {
     res.status(500).send(error);
   }
