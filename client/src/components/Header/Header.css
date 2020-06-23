@@ -1,0 +1,14 @@
+.header{
+    height:80px;
+    background-color: #fff;
+    border-bottom: 1px solid #eeeeee;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width:960px){
+    .header{
+        margin-bottom: 20px;
+    }
+}

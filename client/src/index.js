@@ -4,10 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import {Route,Switch, BrowserRouter} from "react-router-dom";
+
+import Product from "./components/Product/Product";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+  <App/>
+  </BrowserRouter>
+    ,
   document.getElementById('root')
 );
 
