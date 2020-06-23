@@ -9,19 +9,19 @@ import Market from "./components/Market/Market";
 import Footer from "./components/Footer/Footer";
 import MiniMenuWrapper from "./components/MiniMenuWrapper/MiniMenuWrapper";
 import Product from "./components/Product/Product"
+import Home from './components/Pages/Home';
 
 class App extends React.Component{
   render(){
     return (
       <div>
         <Header/>
-        <Hero/>
-        <Market/>
-        <Footer/>
-        <MiniMenuWrapper/>
         <Switch>
+          <Route path="/" exact component={Home}/>
           <Route path="/product" exact component={Product} />
         </Switch>
+        <Footer/>
+        <MiniMenuWrapper/>
       </div>
     );
   }
