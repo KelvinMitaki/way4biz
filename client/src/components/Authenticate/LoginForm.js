@@ -3,6 +3,8 @@ import "./LoginForm.css";
 import { reduxForm, Field } from "redux-form";
 import FormField from "./Field";
 import validator from "validator";
+import { connect } from "react-redux";
+import { logIn } from "../../redux/actions";
 
 class LoginForm extends React.Component {
   render() {
@@ -11,7 +13,7 @@ class LoginForm extends React.Component {
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit(formValues =>
-            console.log(formValues)
+            this.props.logIn(formValues)
           )}
         >
           <Field type="text" name="email" label="Email" component={FormField} />
@@ -48,4 +50,6 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({ validate, form: "LoginForm" })(LoginForm);
+export default connect(null, { logIn })(
+  reduxForm({ validate, form: "LoginForm" })(LoginForm)
+);

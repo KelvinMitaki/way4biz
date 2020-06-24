@@ -11,15 +11,13 @@ import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
 import AddressForm from "./components/Checkout/AddressForm";
+import { connect } from "react-redux";
 
 class App extends React.Component {
-  state = {
-    isSignedIn: true
-  };
   render() {
     return (
       <div id="main">
-        {!this.state.isSignedIn ? (
+        {!this.props.isSignedIn ? (
           <Route path="/sign-in" exact component={Authenticate} />
         ) : (
           <Route
@@ -28,7 +26,12 @@ class App extends React.Component {
                 <div className="content">
                   <Header />
                   <Switch>
-                    <Route path="/" exact component={Home} />
+                    <Route
+                      path="/"
+                      exact
+                      component={Home}
+                      isSignedIn={this.props.isSignedIn}
+                    />
                     <Route path="/product" exact component={Product} />
                     <Route path="/cart" exact component={Cart} />
                     <Route path="/address" exact component={AddressForm} />
@@ -44,5 +47,10 @@ class App extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  };
+};
 
-export default App;
+export default connect(mapStateToProps)(App);
