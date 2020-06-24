@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import MiniMenuWrapper from "./components/MiniMenuWrapper/MiniMenuWrapper";
 import Product from "./components/Product/Product"
 import Home from './components/Pages/Home';
+import Cart from './components/Pages/Cart';
 
 class App extends React.Component{
   render(){
@@ -17,6 +18,7 @@ class App extends React.Component{
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/product" exact component={Product} />
+          <Route path="/cart" exact component={Cart}/>
         </Switch>
         <Footer/>
         <MiniMenuWrapper/>

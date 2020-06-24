@@ -20,7 +20,7 @@ class MiniMenu extends React.Component {
                         
                         <Link to="/" className="link col-3">
                             <div className="mini-menu-item">
-                                <div className="flaticon-list mini-menu-icon"></div>
+                                <div className="flaticon-category mini-menu-icon"></div>
                                 <h6>Category</h6>
                             </div>
                         </Link>

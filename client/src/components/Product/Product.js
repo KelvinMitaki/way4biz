@@ -9,7 +9,7 @@ class Product extends React.Component {
         return (
             {
                 smallImage: {
-                  alt: 'Phasellus laoreet',
+                  alt: 'Helloooo',
                   isFluidWidth: true,
                   src: "product-imgs/1.jpg"
                 },
