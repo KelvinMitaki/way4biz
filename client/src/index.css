@@ -1,17 +1,24 @@
-*{
-    margin:0px;
-    padding: 0px;
-    box-sizing: border-box;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 960px) {
+  html,
+  body,
+  #root {
+    overflow-x: hidden;
+    height: auto;
   }
-  
-/* html,body,#root{ */
-  /* overflow-x: hidden; */
-  /* height:auto; */
-/* } */
+}
 
-
-
-
-h1,h2,h3,h4,h5,h6,p{
-  margin:0px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
 }
