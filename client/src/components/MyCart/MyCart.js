@@ -22,7 +22,7 @@ class MyCart extends React.Component {
                                     <h3>Cart(2)</h3>
                                 </div>
                             </div>
-                            <div className="row wrapper">
+                            <div className="row wrapper mb-5">
                                 <div className="col-12">
                                     <div className="container">
                                         <div className="row cart-product-details">
@@ -51,7 +51,7 @@ class MyCart extends React.Component {
 
 
 
-                            <div className="row">
+                            <div className="row wrapper mb-5">
                                 <div className="col-12">
                                     <div className="container">
                                         <div className="row cart-product-details">
