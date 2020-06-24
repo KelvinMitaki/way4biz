@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginForm.css";
 import { reduxForm, Field } from "redux-form";
-import LoginField from "./LoginField";
+import LoginField from "./Field";
 
 class LoginForm extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class LoginForm extends React.Component {
       <div>
         <form className="login-form">
           <Field
-            type="text"
+            type="email"
             name="email"
             label="Email"
             component={LoginField}
