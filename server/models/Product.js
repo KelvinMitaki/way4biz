@@ -21,6 +21,10 @@ const ProductSchema = new mongoose.Schema({
   rating: {
     type: Number
   },
+  category: {
+    type: String,
+    required: true
+  },
   subcategory: {
     type: String,
     required: true

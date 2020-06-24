@@ -14,11 +14,11 @@ route.get("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/product/:productId", async (req, res) => {
+route.get("/api/products/:category", async (req, res) => {
   try {
-    const { productId } = req.params;
-    const product = await Product.findById(productId);
-    res.send(product);
+    const { category } = req.params;
+    const products = await Product.find({ category });
+    res.send(products);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -29,6 +29,15 @@ route.post("/api/products/search", async (req, res) => {
     const product = await Product.find({
       name: { $regex: searchTerm, $options: "i" }
     });
+    res.send(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/product/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findById(productId);
     res.send(product);
   } catch (error) {
     res.status(500).send(error);
@@ -99,6 +108,7 @@ route.post(
         region,
         city
       };
+      res.send({ price: 50000 });
     } catch (error) {
       res.status(500).send(error);
     }
