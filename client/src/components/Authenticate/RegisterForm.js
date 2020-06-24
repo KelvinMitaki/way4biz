@@ -2,7 +2,7 @@ import React from "react";
 
 import "./RegisterForm.css";
 import { reduxForm, Field } from "redux-form";
-import LoginField from "./Field";
+import FormField from "./Field";
 import validator from "validator";
 
 class RegisterForm extends React.Component {
@@ -18,33 +18,30 @@ class RegisterForm extends React.Component {
             type="text"
             name="firstName"
             label="First Name"
-            component={LoginField}
+            component={FormField}
           />
           <Field
             type="text"
             name="lastName"
             label="Last Name"
-            component={LoginField}
+            component={FormField}
           />
-          <Field
-            type="text"
-            name="email"
-            label="Email"
-            component={LoginField}
-          />
+          <Field type="text" name="email" label="Email" component={FormField} />
           <Field
             type="password"
             name="password"
             label="Password"
-            component={LoginField}
+            component={FormField}
           />
           <Field
             type="password"
             name="confirmPassword"
             label="Confirm Password"
-            component={LoginField}
+            component={FormField}
           />
-          <button type="submit">Register</button>
+          <button disabled={!this.props.valid} type="submit">
+            Register
+          </button>
         </form>
       </div>
     );

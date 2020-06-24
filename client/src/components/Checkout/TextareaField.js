@@ -1,16 +1,15 @@
 import React from "react";
 
-const FormField = props => {
+const TextareaForm = props => {
   return (
     <div>
       <strong>{props.label}</strong>
       <br />
-      <input type={props.type} {...props.input} />
+      <textarea {...props.input}></textarea>
       <br />
       {props.meta.touched && props.meta.error}
-      <hr />
     </div>
   );
 };
 
-export default FormField;
+export default TextareaForm;

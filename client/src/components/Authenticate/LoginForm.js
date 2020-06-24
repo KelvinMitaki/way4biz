@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginForm.css";
 import { reduxForm, Field } from "redux-form";
-import LoginField from "./Field";
+import FormField from "./Field";
 import validator from "validator";
 
 class LoginForm extends React.Component {
@@ -14,19 +14,16 @@ class LoginForm extends React.Component {
             console.log(formValues)
           )}
         >
-          <Field
-            type="text"
-            name="email"
-            label="Email"
-            component={LoginField}
-          />
+          <Field type="text" name="email" label="Email" component={FormField} />
           <Field
             type="password"
             name="password"
             label="Password"
-            component={LoginField}
+            component={FormField}
           />
-          <button type="submit">Login</button>
+          <button disabled={!this.props.valid} type="submit">
+            Login
+          </button>
         </form>
       </div>
     );
