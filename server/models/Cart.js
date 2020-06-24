@@ -13,6 +13,10 @@ const CartSchema = new mongoose.Schema({
       }
     }
   ],
+  totalPrice: {
+    type: Number,
+    required: true
+  },
   buyer: {
     type: mongoose.Types.ObjectId,
     ref: "User"

@@ -5,6 +5,7 @@ const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
+const Cart = require("../models/Cart");
 
 route.get("/api/products", async (req, res) => {
   try {
@@ -237,5 +238,24 @@ route.post(
     }
   }
 );
+
+route.post("/api/cart", auth, check(""), async (req, res) => {
+  try {
+    const { cartItems } = req.body;
+    // CART SHOULD BE AN ARRAY WITH THE PRODUCT  AND QUANTITY
+    const itemPriceArr = cartItems.map(item => {
+      return item.product.price * item.quantity;
+    });
+    const totalPrice = itemPriceArr.reduce((acc, curr) => acc + curr, 0);
+    const cart = new Cart({
+      items: cartItems,
+      totalPrice
+    });
+    await cart.save();
+    res.send({ cart });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 module.exports = route;
