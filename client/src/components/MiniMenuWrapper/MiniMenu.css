@@ -22,12 +22,17 @@
 
 .mini-cart span{
     display: inline;
+    padding:0px;
 }
 
 
 .mini-menu-icon::before{
     margin: 0px !important;
 }
+
+/* .mini-menu-icon::before{
+    
+} */
 
 
 @media screen and (max-width:380px){
