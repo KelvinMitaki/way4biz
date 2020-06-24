@@ -20,7 +20,12 @@ const ProductSchema = new mongoose.Schema(
       required: true
     },
     rating: {
-      type: Number
+      type: Number,
+      default: 0
+    },
+    freeShipping: {
+      type: Boolean,
+      default: false
     },
     category: {
       type: String,
