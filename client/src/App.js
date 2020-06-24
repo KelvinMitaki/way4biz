@@ -10,27 +10,30 @@ import Product from "./components/Product/Product";
 import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
+import AddressForm from "./components/Checkout/AddressForm";
 
 class App extends React.Component {
   state = {
-    isSignedIn: false
+    isSignedIn: true
   };
   render() {
     return (
-      <div>
+      <div id="main">
         {!this.state.isSignedIn ? (
           <Route path="/sign-in" exact component={Authenticate} />
         ) : (
           <Route
-            path="/(.+)"
             render={() => (
               <React.Fragment>
-                <Header />
-                <Switch>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/product" exact component={Product} />
-                  <Route path="/cart" exact component={Cart} />
-                </Switch>
+                <div className="content">
+                  <Header />
+                  <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/product" exact component={Product} />
+                    <Route path="/cart" exact component={Cart} />
+                    <Route path="/address" exact component={AddressForm} />
+                  </Switch>
+                </div>
                 <Footer />
                 <MiniMenuWrapper />
               </React.Fragment>

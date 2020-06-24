@@ -11,6 +11,7 @@ class Authenticate extends React.Component {
     this.state = {
       signInOpen: true
     };
+
     this.handleSignInClick = this.handleSignInClick.bind(this);
     this.handleRegisterClick = this.handleRegisterClick.bind(this);
   }

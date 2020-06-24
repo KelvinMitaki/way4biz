@@ -9,13 +9,12 @@
   body,
   #root {
     overflow-x: hidden;
-    height: auto;
+    height: 100%;
   }
 }
 
-
-body{
-  background-color:#F8F9F9;
+body {
+  background-color: #f8f9f9;
 }
 
 h1,
