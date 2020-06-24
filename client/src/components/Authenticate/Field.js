@@ -5,6 +5,7 @@ const LoginField = props => {
     <div>
       <strong>{props.label}</strong>
       <input type={props.type} {...props.input} />
+      {props.meta.touched && props.meta.error}
     </div>
   );
 };

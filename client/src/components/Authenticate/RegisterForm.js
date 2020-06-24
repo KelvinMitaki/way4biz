@@ -26,7 +26,7 @@ class RegisterForm extends React.Component {
             component={LoginField}
           />
           <Field
-            type="email"
+            type="text"
             name="email"
             label="Email"
             component={LoginField}
@@ -43,6 +43,7 @@ class RegisterForm extends React.Component {
             label="Confirm Password"
             component={LoginField}
           />
+          <button type="submit">Register</button>
         </form>
       </div>
     );
