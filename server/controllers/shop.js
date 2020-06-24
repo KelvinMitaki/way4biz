@@ -32,11 +32,11 @@ route.post("/api/products/:category", async (req, res) => {
     const { category } = req.params;
     const { min, max } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
-    if (min) {
+    if (min && !max) {
       const products = await Product.find({ category, price: { $gte: min } });
       return res.send(products);
     }
-    if (max) {
+    if (max && !min) {
       const products = await Product.find({ category, price: { $lte: max } });
       return res.send(products);
     }
@@ -65,28 +65,24 @@ route.get("/api/products/:subcategory", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.post("/api/products/search", async (req, res) => {
-  try {
-    const { searchTerm } = req.body;
-    const product = await Product.find({
-      name: { $regex: searchTerm, $options: "i" }
-    });
-    res.send(product);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+
 route.post("/api/products/:subcategory", async (req, res) => {
   try {
     const { subcategory } = req.params;
     const { min, max } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
     if (min) {
-      const products = await Product.find({ subcategory, price: min });
+      const products = await Product.find({
+        subcategory,
+        price: { $gte: min }
+      });
       return res.send(products);
     }
     if (max) {
-      const products = await Product.find({ subcategory, price: max });
+      const products = await Product.find({
+        subcategory,
+        price: { $lte: max }
+      });
       return res.send(products);
     }
     if (min && max) {
@@ -96,6 +92,17 @@ route.post("/api/products/:subcategory", async (req, res) => {
       });
       return res.send(products);
     }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post("/api/products/search", async (req, res) => {
+  try {
+    const { searchTerm } = req.body;
+    const product = await Product.find({
+      name: { $regex: searchTerm, $options: "i" }
+    });
+    res.send(product);
   } catch (error) {
     res.status(500).send(error);
   }
