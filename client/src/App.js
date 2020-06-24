@@ -11,6 +11,7 @@ import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
 import AddressForm from "./components/Checkout/AddressForm";
+import CheckOut from "./components/Checkout/Checkout";
 
 class App extends React.Component {
   state = {
@@ -32,6 +33,7 @@ class App extends React.Component {
                     <Route path="/product" exact component={Product} />
                     <Route path="/cart" exact component={Cart} />
                     <Route path="/address" exact component={AddressForm} />
+                    <Route path="/checkout" exact component={CheckOut} />
                   </Switch>
                 </div>
                 <Footer />
