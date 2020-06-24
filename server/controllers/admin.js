@@ -15,11 +15,19 @@ route.get("/api/products/:sellerId", auth, async (req, res) => {
 route.post("/api/product/:sellerId", auth, async (req, res) => {
   try {
     const { sellerId } = req.params;
-    const { name, price, stockQuantity, subcategory, description } = req.body;
+    const {
+      name,
+      price,
+      stockQuantity,
+      subcategory,
+      description,
+      category
+    } = req.body;
     const product = new Product({
       name,
       price,
       stockQuantity,
+      category,
       subcategory,
       seller: sellerId,
       description
