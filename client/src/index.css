@@ -4,10 +4,10 @@
     box-sizing: border-box;
   }
   
-html,body,#root{
-  overflow-x: hidden;
-  height:auto;
-}
+/* html,body,#root{ */
+  /* overflow-x: hidden; */
+  /* height:auto; */
+/* } */
 
 
 
