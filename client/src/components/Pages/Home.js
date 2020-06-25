@@ -6,8 +6,6 @@ import { Redirect } from "react-router-dom";
 
 class Home extends React.Component {
   render() {
-    console.log("checking");
-    console.log(this.props.isSignedIn);
     if (!this.props.isSignedIn) return <Redirect to="/sign-in" />;
     return (
       <div>

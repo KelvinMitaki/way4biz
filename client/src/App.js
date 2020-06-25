@@ -20,6 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="main">
+        <Route path="/sign-in" exact component={Authenticate} />
         {this.props.isSignedIn ? (
           <Route
             render={() => (
@@ -48,7 +49,7 @@ class App extends React.Component {
             )}
           />
         ) : (
-          <Route path="/sign-in" exact component={Authenticate} />
+          <Authenticate />
         )}
       </div>
     );
