@@ -10,7 +10,7 @@ class CheckOut extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-md-8 mx-auto">
-            <div id="address-details" className="mb-3">
+            <div id="address-details" className="mb-3 box-container">
               <h3>Address Details</h3>
               <hr />
               <div id="current-address">
@@ -20,7 +20,7 @@ class CheckOut extends React.Component {
               </div>
               <EditAddressSection />
             </div>
-            <div id="payment-methods">
+            <div id="payment-methods" className="box-container">
               <h3>Payment Methods</h3>
               <hr />
               <p className="ml-3">How do you want to pay for your order?</p>

@@ -13,7 +13,7 @@ class LoginForm extends React.Component {
       <div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             this.props.history.push("/");
             return this.props.logIn(formValues);
           })}
@@ -25,7 +25,11 @@ class LoginForm extends React.Component {
             label="Password"
             component={FormField}
           />
-          <button disabled={!this.props.valid} type="submit">
+          <button
+            disabled={!this.props.valid}
+            className="btn btn-md btn-block auth-btn"
+            type="submit"
+          >
             Login
           </button>
         </form>
@@ -34,7 +38,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||

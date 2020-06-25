@@ -1,7 +1,7 @@
-#address-details {
+/* #address-details {
   background-color: #fff;
   border: 1px solid #eee;
-}
+} */
 
 hr {
   margin: 0px;
@@ -17,10 +17,8 @@ hr {
 }
 
 #payment-methods {
-  background-color: #fff;
-  border: 1px solid #eee;
   padding-bottom: 20px;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .checkout-sub-total {

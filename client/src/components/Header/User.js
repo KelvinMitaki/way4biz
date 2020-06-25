@@ -7,7 +7,7 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
@@ -39,10 +39,9 @@ class User extends React.Component {
               <Link to="/" className="btn btn-md google">
                 Google
               </Link>
-              {/* <button className="btn btn-md facebook">Facebook</button> */}
             </div>
 
-            <hr />
+            {/* <hr /> */}
           </div>
         ) : null}
       </div>

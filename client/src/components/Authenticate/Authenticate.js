@@ -51,12 +51,20 @@ class Authenticate extends React.Component {
             <div className="col" id="auth-navigator">
               <div>
                 <p onClick={this.handleSignInClick} className="mr-4">
-                  Sign in
+                  {this.state.signInOpen ? (
+                    <span style={{ color: "#f76b1a" }}> Sign in</span>
+                  ) : (
+                    <span> Sign in</span>
+                  )}
                 </p>
               </div>
               <div>
                 <p onClick={this.handleRegisterClick} className="ml-4">
-                  Register
+                  {!this.state.signInOpen ? (
+                    <span style={{ color: "#f76b1a" }}> Register</span>
+                  ) : (
+                    <span> Register</span>
+                  )}
                 </p>
               </div>
             </div>

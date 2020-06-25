@@ -1,13 +1,13 @@
 import React from "react";
 
-const SelectField = props => {
+const SelectField = (props) => {
   return (
-    <div>
+    <div className="form-group">
       <strong>{props.label}</strong>
       <br />
-      <select {...props.input}>
+      <select {...props.input} className="form-control">
         <option value="choose">------Please Choose An Option------</option>
-        {props.options.map(option => (
+        {props.options.map((option) => (
           <option key={option.key} value={option.key}>
             {option.text}
           </option>

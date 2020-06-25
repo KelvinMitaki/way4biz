@@ -11,11 +11,11 @@ class MyCart extends React.Component {
         <div className="col7">
           <div className="container  cart-product">
             <div className="row">
-              <div className="cart-header col-12">
+              <div className="cart-header box-container col-12">
                 <h3>Cart(2)</h3>
               </div>
             </div>
-            <div className="row wrapper mb-5">
+            <div className="row box-container mb-5">
               <div className="col-12">
                 <div className="container">
                   <div className="row cart-product-details">
@@ -42,7 +42,7 @@ class MyCart extends React.Component {
               </div>
             </div>
 
-            <div className="row wrapper mb-5">
+            <div className="row box-container mb-5">
               <div className="col-12">
                 <div className="container">
                   <div className="row cart-product-details">
@@ -71,7 +71,7 @@ class MyCart extends React.Component {
           </div>
         </div>
         <div className="col5">
-          <div id="cart-total-checkout">
+          <div id="cart-total-checkout" className="box-container">
             <h3>Order Summary</h3>
 
             <div className="my-5">

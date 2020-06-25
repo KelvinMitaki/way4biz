@@ -1,4 +1,20 @@
 #address-form {
-  background-color: #fff;
-  margin-bottom: 100px;
+  margin-bottom: 100px !important;
+  padding: 15px 10px;
+}
+
+#address-form h3 {
+  margin: 20px 10px;
+}
+
+.address-btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.address-btn {
+  width: 300px;
+  background-color: #f76b1a;
+  color: #fff;
 }

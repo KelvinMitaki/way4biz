@@ -1,5 +1,5 @@
 import React from "react";
-import FormField from "../Authenticate/Field";
+import FormField from "./FormField";
 import "./AddressForm.css";
 import { reduxForm, Field } from "redux-form";
 import validator from "validator";
@@ -11,18 +11,22 @@ const category = [
   { key: "film", text: "Film", value: "film" },
   { key: "food", text: "Food", value: "food" },
   { key: "music", text: "Music", value: "music" },
-  { key: "travel", text: "Travel", value: "travel" }
+  { key: "travel", text: "Travel", value: "travel" },
 ];
+
 class AddressForm extends React.Component {
   render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-9 my-5 mx-auto" id="address-form">
+          <div
+            className="col-md-9 my-5 mx-auto box-container"
+            id="address-form"
+          >
             <h3 className="legend">Address</h3>
             <hr />
             <form
-              onSubmit={this.props.handleSubmit(formValues =>
+              onSubmit={this.props.handleSubmit((formValues) =>
                 console.log(formValues)
               )}
             >
@@ -61,9 +65,15 @@ class AddressForm extends React.Component {
                 options={category}
                 component={SelectField}
               />
-              <button disabled={!this.props.valid} type="submit">
-                Save Details
-              </button>
+              <div className="address-btn-wrapper">
+                <button
+                  disabled={!this.props.valid}
+                  type="submit"
+                  className="btn btn-md address-btn"
+                >
+                  Save Details
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -71,7 +81,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||

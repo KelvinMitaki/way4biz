@@ -1,5 +1,10 @@
 /* .login-form{ */
-    /* height:200px; */
-    /* width:500px;
+/* height:200px; */
+/* width:500px;
     background-color: aqua; */
 /* } */
+
+.auth-btn {
+  background-color: #f76b1a;
+  color: #fff;
+}
