@@ -33,7 +33,7 @@ class MiniMenu extends React.Component {
             </Link>
 
             {/* use state to change the directing of this link */}
-            <Link to="/" className="link col-3">
+            <Link to="/account" className="link col-3">
               <div className="mini-menu-item">
                 <div className="flaticon-user mini-menu-icon"></div>
                 <h6>Account</h6>

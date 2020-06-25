@@ -1,0 +1,13 @@
+.order-item {
+  display: flex;
+  align-items: center;
+  padding: 30px 10px;
+}
+
+.order-id {
+  font-weight: bold;
+}
+
+.order-details-link .link {
+  color: #f76b1a !important;
+}

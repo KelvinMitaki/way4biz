@@ -25,8 +25,8 @@ class MyCart extends React.Component {
                     />
                     <div className="price-title my-auto col col-md-6">
                       <p>Seller:LG</p>
-                      <h3>Product Name</h3>
-                      <h6>Unit Price: ksh.30,000</h6>
+                      <h3>Product Name </h3>
+                      <h6>Price: ksh.30,000</h6>
                     </div>
                   </div>
                 </div>
@@ -53,7 +53,7 @@ class MyCart extends React.Component {
                     <div className="price-title my-auto col col-md-6">
                       <p>Seller:LG</p>
                       <h3>Product Name</h3>
-                      <h6>Unit Price: ksh.30,000</h6>
+                      <h6>Price: ksh.30,000</h6>
                     </div>
                   </div>
                 </div>
@@ -73,6 +73,7 @@ class MyCart extends React.Component {
             </div>
           </div>
         </div>
+        <h1 style={{ width: "10px" }}></h1>
         <div className="col5">
           <div id="cart-total-checkout" className="box-container">
             <h3>Order Summary</h3>

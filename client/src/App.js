@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import "./App.css";
 import Account from "./components/Account/Account";
 import changePassword from "./components/Account/changePassword";
+import Orders from "./components/Account/Orders";
+import Wishlist from "./components/Account/Wishlist";
 
 class App extends React.Component {
   render() {
@@ -31,6 +33,8 @@ class App extends React.Component {
                     <Route path="/address" exact component={AddressForm} />
                     <Route path="/checkout" exact component={CheckOut} />
                     <Route path="/account" exact component={Account} />
+                    <Route path="/orders" exact component={Orders} />
+                    <Route path="/wishlist" exact component={Wishlist} />
                     <Route
                       path="/change-password"
                       exact
@@ -50,9 +54,9 @@ class App extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 
