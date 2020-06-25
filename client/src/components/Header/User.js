@@ -25,7 +25,10 @@ class User extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseEnter}
       >
-        <div className="icon user-icon flaticon-user">
+        <div
+          style={{ cursor: "pointer" }}
+          className="icon user-icon flaticon-user"
+        >
           <span>Sign In | Join</span>
         </div>
         {this.state.open ? (
@@ -34,6 +37,7 @@ class User extends React.Component {
             <Link to="/sign-in" className="btn btn-md login">
               Sign In
             </Link>
+            <hr />
             <p>Sign in with:</p>
             <div className="auth-btns">
               <Link to="/" className="btn btn-md google">

@@ -19,6 +19,7 @@
 .product {
   margin-bottom: 10px;
   color: #000 !important;
+  box-shadow: 0 0 10px #dfdfdf;
 }
 
 .product div {
@@ -57,10 +58,6 @@
 
   .product div {
     padding-left: 10px;
-  }
-
-  .product {
-    box-shadow: 0 0 10px #eeeeee;
   }
 
   .product div {

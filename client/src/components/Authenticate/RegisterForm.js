@@ -40,13 +40,18 @@ class RegisterForm extends React.Component {
             component={FormField}
           />
           <button
+            style={{ cursor: "pointer" }}
             disabled={!this.props.valid}
-            className="btn btn-md btn-block auth-btn"
+            className="btn btn-md btn-block auth-btn mt-3"
             type="submit"
           >
             Register
           </button>
         </form>
+        <br />
+        <button className="btn btn-md btn-block mt-3 google" type="submit">
+          Sign In With Google
+        </button>
       </div>
     );
   }

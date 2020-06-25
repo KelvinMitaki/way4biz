@@ -5,6 +5,7 @@ import { reduxForm, Field } from "redux-form";
 import validator from "validator";
 import SelectField from "./SelectField";
 import TextareaForm from "./TextareaField";
+import { withRouter } from "react-router-dom";
 const category = [
   { key: "drinks", text: "Drinks", value: "drinks" },
   { key: "culture", text: "Culture", value: "culture" },
@@ -65,15 +66,15 @@ class AddressForm extends React.Component {
                 options={category}
                 component={SelectField}
               />
-              <div className="address-btn-wrapper">
-                <button
-                  disabled={!this.props.valid}
-                  type="submit"
-                  className="btn btn-md address-btn"
-                >
-                  Save Details
-                </button>
-              </div>
+
+              <button
+                disabled={!this.props.valid}
+                type="submit"
+                className="btn btn-md address-btn btn-block"
+                onClick={() => this.props.history.push("/checkout")}
+              >
+                Proceed To Checkout
+              </button>
             </form>
           </div>
         </div>
@@ -122,4 +123,6 @@ const validate = (formValues) => {
   return errors;
 };
 
-export default reduxForm({ validate, form: "AddressForm" })(AddressForm);
+export default withRouter(
+  reduxForm({ validate, form: "AddressForm" })(AddressForm)
+);

@@ -5,7 +5,7 @@ import FormField from "./Field";
 import validator from "validator";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
   render() {
@@ -26,13 +26,23 @@ class LoginForm extends React.Component {
             component={FormField}
           />
           <button
+            style={{ cursor: "pointer" }}
             disabled={!this.props.valid}
-            className="btn btn-md btn-block auth-btn"
+            className="btn btn-md btn-block auth-btn mt-3"
             type="submit"
           >
             Login
           </button>
         </form>
+        <br />
+        <p>
+          <Link style={{ color: "#f76b1a" }} to="/">
+            Forgot password?
+          </Link>
+        </p>
+        <button className="btn btn-md btn-block mt-3 google" type="submit">
+          Sign In With Google
+        </button>
       </div>
     );
   }

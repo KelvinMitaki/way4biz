@@ -19,6 +19,7 @@ class CheckOut extends React.Component {
                 <p> +254712345678</p>
               </div>
               <EditAddressSection />
+              <br />
             </div>
             <div id="payment-methods" className="box-container">
               <h3>Payment Methods</h3>

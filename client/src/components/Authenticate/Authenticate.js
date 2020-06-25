@@ -58,6 +58,7 @@ class Authenticate extends React.Component {
                   )}
                 </p>
               </div>
+              |
               <div>
                 <p onClick={this.handleRegisterClick} className="ml-4">
                   {!this.state.signInOpen ? (

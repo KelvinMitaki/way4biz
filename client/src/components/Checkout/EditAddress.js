@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Card, Accordion } from "react-bootstrap";
 
 import "./EditAddress.css";
+import { Link } from "react-router-dom";
 
 class EditAddressSection extends Component {
   constructor(props) {
@@ -11,22 +12,16 @@ class EditAddressSection extends Component {
   render() {
     return (
       <div>
-        <Accordion>
-          <Card id="address-accordion">
-            <Card.Header className="address-change-header">
-              <Accordion.Toggle
-                className="change-address-link"
-                variant="link"
-                eventKey="0"
-              >
-                Change Address
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>Hello! I'm the body</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+        <Link
+          to="/address"
+          style={{
+            color: "#f76b1a",
+            textDecoration: "none",
+            marginLeft: "20px",
+          }}
+        >
+          Change Address
+        </Link>
       </div>
     );
   }
