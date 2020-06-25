@@ -9,7 +9,7 @@ class Authenticate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signInOpen: true
+      signInOpen: true,
     };
 
     this.handleSignInClick = this.handleSignInClick.bind(this);
@@ -17,27 +17,27 @@ class Authenticate extends React.Component {
   }
 
   handleSignInClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       if (!prevState.signInOpen) {
         return {
-          signInOpen: true
+          signInOpen: true,
         };
       }
       return {
-        signInOpen: prevState.signInOpen
+        signInOpen: prevState.signInOpen,
       };
     });
   }
 
   handleRegisterClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       if (prevState.signInOpen) {
         return {
-          signInOpen: false
+          signInOpen: false,
         };
       }
       return {
-        signInOpen: prevState.signInOpen
+        signInOpen: prevState.signInOpen,
       };
     });
   }
@@ -46,7 +46,7 @@ class Authenticate extends React.Component {
     return (
       <div id="auth-section">
         <AuthHeader />
-        <div className="container my-5 mx-auto auth-forms">
+        <div className="container-fluid my-5 auth-forms">
           <div className="row">
             <div className="col" id="auth-navigator">
               <div>
@@ -62,7 +62,7 @@ class Authenticate extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col">
               {this.state.signInOpen ? <LoginForm /> : <RegisterForm />}
             </div>
           </div>

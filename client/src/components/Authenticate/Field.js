@@ -1,11 +1,11 @@
 import React from "react";
 
-const FormField = props => {
+const FormField = (props) => {
   return (
-    <div>
+    <div className="form-group">
       <strong>{props.label}</strong>
       <br />
-      <input type={props.type} {...props.input} />
+      <input className="form-control" type={props.type} {...props.input} />
       <br />
       {props.meta.touched && props.meta.error}
       <hr />
