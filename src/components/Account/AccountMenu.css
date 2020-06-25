@@ -1,0 +1,31 @@
+.account-menu-container {
+  padding: 20px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-menu-wrapper {
+  height: 40px;
+  width: 100%;
+}
+
+.navlink,
+.navlink:hover {
+  text-decoration: none !important;
+  color: #000;
+  display: block;
+  width: 100% !important;
+  padding: 20px;
+}
+.navlink:hover {
+  font-weight: 500;
+  background-color: #f8f9f9;
+  color: #f76b1a !important;
+}
+.active,
+.active:hover {
+  color: #f76b1a !important;
+  font-weight: 600;
+  width: 100% !important;
+  background-color: #ededed;
+}

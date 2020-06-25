@@ -1,0 +1,72 @@
+#user-auth {
+  position: relative;
+}
+
+.user-icon {
+  width: 100%;
+}
+
+#auth-info {
+  width: 250px;
+  min-height: 250px;
+  background-color: #fff;
+  position: absolute;
+  top: 60px;
+  z-index: 10000;
+  margin-left: -80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 30px 10px 20px 10px;
+  box-shadow: 0px 0px 10px 2px grey;
+}
+
+.login {
+  border: none;
+  background-color: #f76b1a;
+  color: #fff;
+}
+
+/* .auth-btns{
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+.google {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  width: 100%;
+}
+
+.facebook {
+  background-color: #3b5998;
+  color: #fff;
+}
+
+#register-link {
+  color: #f76b1a;
+  font-weight: bold;
+}
+
+#register-link:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
+.my-account {
+  display: flex;
+  flex-direction: column;
+  margin: auto -10px -20px -10px;
+  background-color: #f8f9f9;
+}
+
+.my-account-link {
+  padding: 10px;
+}
+.my-account-link:hover {
+  padding: 10px;
+  font-weight: bold;
+  color: #f76b1a !important;
+  background-color: #eee;
+}

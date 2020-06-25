@@ -1,0 +1,9 @@
+.form-input {
+  width: 400px;
+}
+
+@media screen and (max-width: 920px) {
+  .form-input {
+    width: 90vw !important;
+  }
+}

@@ -1,0 +1,27 @@
+#logo{
+    height:100%;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo h1{
+    color:#f76b1a;
+    align-self: center;
+
+}
+
+
+@media screen and (max-width:960px){
+    #logo{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width:720px){
+    #logo{
+        display: flex;
+    }
+} 
