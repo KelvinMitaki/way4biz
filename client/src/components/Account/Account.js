@@ -7,6 +7,7 @@ import TextareaForm from "../Checkout/TextareaField";
 import SelectField from "../Checkout/SelectField";
 import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
+import AccountMenu from "./AccountMenu";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -21,10 +22,10 @@ class Account extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div
-            className="col-md-9 my-5 mx-auto box-container"
-            id="address-form"
-          >
+          <div className="col-lg-4">
+            <AccountMenu />
+          </div>
+          <div className="col-lg-8 my-5  box-container" id="address-form">
             <h3 className="legend">My Account</h3>
             <hr />
             <form

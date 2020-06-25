@@ -8,8 +8,8 @@ const PhoneNumber = props => {
       <strong>{props.label}</strong>
       <div className="input-group">
         <br />
-        <div class="input-group-prepend">
-          <span class="input-group-text">+254</span>
+        <div className="input-group-prepend">
+          <span className="input-group-text">+254</span>
         </div>
         <input
           placeholder="712345678"
