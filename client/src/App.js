@@ -1,8 +1,5 @@
 import React from "react";
-import "./App.css";
-
-import { Route, Switch, Redirect } from "react-router-dom";
-
+import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MiniMenuWrapper from "./components/MiniMenuWrapper/MiniMenuWrapper";
@@ -13,6 +10,9 @@ import Authenticate from "./components/Authenticate/Authenticate";
 import AddressForm from "./components/Checkout/AddressForm";
 import CheckOut from "./components/Checkout/Checkout";
 import { connect } from "react-redux";
+import "./App.css";
+import Account from "./components/Account/Account";
+import changePassword from "./components/Account/changePassword";
 
 class App extends React.Component {
   render() {
@@ -30,6 +30,12 @@ class App extends React.Component {
                     <Route path="/cart" exact component={Cart} />
                     <Route path="/address" exact component={AddressForm} />
                     <Route path="/checkout" exact component={CheckOut} />
+                    <Route path="/account" exact component={Account} />
+                    <Route
+                      path="/change-password"
+                      exact
+                      component={changePassword}
+                    />
                   </Switch>
                 </div>
                 <Footer />

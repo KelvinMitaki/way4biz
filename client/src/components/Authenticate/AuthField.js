@@ -2,9 +2,9 @@ import React from "react";
 
 import "./Field.css";
 
-const FormField = (props) => {
+const AuthField = props => {
   return (
-    <div className="form-group" className="form-input">
+    <div className="form-group">
       <strong>{props.label}</strong>
       <br />
       <input className="form-control" type={props.type} {...props.input} />
@@ -16,4 +16,4 @@ const FormField = (props) => {
   );
 };
 
-export default FormField;
+export default AuthField;

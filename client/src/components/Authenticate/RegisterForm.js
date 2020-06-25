@@ -2,7 +2,7 @@ import React from "react";
 
 import "./RegisterForm.css";
 import { reduxForm, Field } from "redux-form";
-import FormField from "./Field";
+import AuthField from "./AuthField";
 import validator from "validator";
 
 class RegisterForm extends React.Component {
@@ -10,7 +10,7 @@ class RegisterForm extends React.Component {
     return (
       <div>
         <form
-          onSubmit={this.props.handleSubmit((formValues) =>
+          onSubmit={this.props.handleSubmit(formValues =>
             console.log(formValues)
           )}
         >
@@ -18,26 +18,26 @@ class RegisterForm extends React.Component {
             type="text"
             name="firstName"
             label="First Name"
-            component={FormField}
+            component={AuthField}
           />
           <Field
             type="text"
             name="lastName"
             label="Last Name"
-            component={FormField}
+            component={AuthField}
           />
-          <Field type="text" name="email" label="Email" component={FormField} />
+          <Field type="text" name="email" label="Email" component={AuthField} />
           <Field
             type="password"
             name="password"
             label="Password"
-            component={FormField}
+            component={AuthField}
           />
           <Field
             type="password"
             name="confirmPassword"
             label="Confirm Password"
-            component={FormField}
+            component={AuthField}
           />
           <button
             style={{ cursor: "pointer" }}
@@ -56,7 +56,7 @@ class RegisterForm extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||

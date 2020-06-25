@@ -7,12 +7,12 @@ import SelectField from "./SelectField";
 import TextareaForm from "./TextareaField";
 import { withRouter } from "react-router-dom";
 const category = [
-  { key: "drinks", text: "Drinks", value: "drinks" },
-  { key: "culture", text: "Culture", value: "culture" },
-  { key: "film", text: "Film", value: "film" },
-  { key: "food", text: "Food", value: "food" },
-  { key: "music", text: "Music", value: "music" },
-  { key: "travel", text: "Travel", value: "travel" },
+  { key: "nairobi", text: "Nairobi", value: "nairobi" },
+  { key: "kajiado", text: "Kajiado", value: "kajiado" },
+  { key: "kisumu", text: "Kisumu", value: "kisumu" },
+  { key: "mombasa", text: "Mombasa", value: "mombasa" },
+  { key: "embu", text: "Embu", value: "embu" },
+  { key: "meru", text: "Meru", value: "meru" }
 ];
 
 class AddressForm extends React.Component {
@@ -27,7 +27,7 @@ class AddressForm extends React.Component {
             <h3 className="legend">Address</h3>
             <hr />
             <form
-              onSubmit={this.props.handleSubmit((formValues) =>
+              onSubmit={this.props.handleSubmit(formValues =>
                 console.log(formValues)
               )}
             >
@@ -82,7 +82,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||

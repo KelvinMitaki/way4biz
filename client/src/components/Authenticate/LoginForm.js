@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginForm.css";
 import { reduxForm, Field } from "redux-form";
-import FormField from "./Field";
+import AuthField from "./AuthField";
 import validator from "validator";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions";
@@ -13,22 +13,22 @@ class LoginForm extends React.Component {
       <div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit((formValues) => {
+          onSubmit={this.props.handleSubmit(formValues => {
             this.props.history.push("/");
             return this.props.logIn(formValues);
           })}
         >
-          <Field type="text" name="email" label="Email" component={FormField} />
+          <Field type="text" name="email" label="Email" component={AuthField} />
           <Field
             type="password"
             name="password"
             label="Password"
-            component={FormField}
+            component={AuthField}
           />
           <button
             style={{ cursor: "pointer" }}
-            disabled={!this.props.valid}
             className="btn btn-md btn-block auth-btn mt-3"
+            disabled={!this.props.valid}
             type="submit"
           >
             Login
@@ -48,7 +48,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
