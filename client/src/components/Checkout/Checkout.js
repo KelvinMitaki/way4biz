@@ -35,10 +35,17 @@ class CheckOut extends React.Component {
                   <p>300</p>
                 </div>
                 <div>
-                  <p>Sipping</p>
+                  <p>Shipping</p>
                   <p>1,500</p>
                 </div>
                 <hr />
+                <div>
+                  <p>Total</p>
+                  <p>31,800</p>
+                </div>
+                <button className="btn btn-md btn-block order-btn">
+                  Order Now
+                </button>
               </div>
             </div>
           </div>

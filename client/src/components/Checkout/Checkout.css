@@ -19,9 +19,18 @@ hr {
 #payment-methods {
   background-color: #fff;
   border: 1px solid #eee;
-  /* margin-bottom: 100px; */
 }
 
 .checkout-sub-total {
   background-color: #fff;
+}
+
+.checkout-sub-total div {
+  margin: 10px 40px;
+}
+
+.order-btn {
+  background-color: #f76b1a;
+  border: none;
+  height: 40px;
 }
