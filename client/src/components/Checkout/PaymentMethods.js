@@ -15,7 +15,7 @@ class PaymentMethods extends React.Component {
         <div className="payment" id="paypal">
           <div className="payment-title-button">
             <input type="radio" value="paypal" name="payment-method" />
-            <p className="ml-2">Paypal</p>
+            <p className="ml-2">Stripe</p>
           </div>
         </div>
       </div>
