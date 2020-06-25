@@ -1,0 +1,9 @@
+.payment {
+  height: 400px;
+}
+
+.payment-title-button {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}

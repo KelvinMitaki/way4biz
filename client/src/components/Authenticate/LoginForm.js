@@ -5,6 +5,7 @@ import FormField from "./Field";
 import validator from "validator";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 class LoginForm extends React.Component {
   render() {
@@ -12,9 +13,10 @@ class LoginForm extends React.Component {
       <div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit(formValues =>
-            this.props.logIn(formValues)
-          )}
+          onSubmit={this.props.handleSubmit(formValues => {
+            this.props.history.push("/");
+            return this.props.logIn(formValues);
+          })}
         >
           <Field type="text" name="email" label="Email" component={FormField} />
           <Field
@@ -50,6 +52,8 @@ const validate = formValues => {
   return errors;
 };
 
-export default connect(null, { logIn })(
-  reduxForm({ validate, form: "LoginForm" })(LoginForm)
+export default withRouter(
+  connect(null, { logIn })(
+    reduxForm({ validate, form: "LoginForm" })(LoginForm)
+  )
 );

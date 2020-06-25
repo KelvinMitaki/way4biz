@@ -15,7 +15,6 @@ const category = [
 ];
 class AddressForm extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="container">
         <div className="row">

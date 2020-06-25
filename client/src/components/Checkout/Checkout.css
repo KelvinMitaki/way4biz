@@ -1,0 +1,27 @@
+#address-details {
+  background-color: #fff;
+  border: 1px solid #eee;
+}
+
+hr {
+  margin: 0px;
+}
+
+#address-details h3,
+#payment-methods h3 {
+  margin: 10px 20px;
+}
+
+#current-address {
+  padding: 10px 20px;
+}
+
+#payment-methods {
+  background-color: #fff;
+  border: 1px solid #eee;
+  /* margin-bottom: 100px; */
+}
+
+.checkout-sub-total {
+  background-color: #fff;
+}
