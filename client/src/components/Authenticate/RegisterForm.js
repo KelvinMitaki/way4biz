@@ -63,7 +63,7 @@ const validate = formValues => {
   }
   if (
     !formValues.email ||
-    (formValues.email && validator.isEmail(formValues.email.trim()))
+    (formValues.email && !validator.isEmail(formValues.email.trim()))
   ) {
     errors.email = "Please enter a valid email";
   }

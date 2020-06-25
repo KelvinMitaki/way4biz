@@ -19,7 +19,7 @@ class App extends React.Component {
     return (
       <div id="main">
         <Route path="/sign-in" exact component={Authenticate} />
-        {!this.props.isSignedIn && <Redirect to="/sign-in" />};
+        {!this.props.isSignedIn && <Redirect to="/sign-in" />}
         {this.props.isSignedIn && (
           <Route
             render={() => (
