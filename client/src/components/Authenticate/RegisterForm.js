@@ -10,9 +10,10 @@ class RegisterForm extends React.Component {
     return (
       <div>
         <form
-          onSubmit={this.props.handleSubmit(formValues =>
-            console.log(formValues)
-          )}
+          onSubmit={this.props.handleSubmit(formValues => {
+            console.log(formValues);
+            this.props.handleSignInClick();
+          })}
         >
           <Field
             type="text"

@@ -9,7 +9,7 @@ class Authenticate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signInOpen: true,
+      signInOpen: true
     };
 
     this.handleSignInClick = this.handleSignInClick.bind(this);
@@ -17,27 +17,27 @@ class Authenticate extends React.Component {
   }
 
   handleSignInClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       if (!prevState.signInOpen) {
         return {
-          signInOpen: true,
+          signInOpen: true
         };
       }
       return {
-        signInOpen: prevState.signInOpen,
+        signInOpen: prevState.signInOpen
       };
     });
   }
 
   handleRegisterClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       if (prevState.signInOpen) {
         return {
-          signInOpen: false,
+          signInOpen: false
         };
       }
       return {
-        signInOpen: prevState.signInOpen,
+        signInOpen: prevState.signInOpen
       };
     });
   }
@@ -72,7 +72,11 @@ class Authenticate extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              {this.state.signInOpen ? <LoginForm /> : <RegisterForm />}
+              {this.state.signInOpen ? (
+                <LoginForm />
+              ) : (
+                <RegisterForm handleSignInClick={this.handleSignInClick} />
+              )}
             </div>
           </div>
         </div>
