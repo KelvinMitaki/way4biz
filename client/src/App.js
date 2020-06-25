@@ -13,7 +13,6 @@ import Authenticate from "./components/Authenticate/Authenticate";
 import AddressForm from "./components/Checkout/AddressForm";
 import CheckOut from "./components/Checkout/Checkout";
 import { connect } from "react-redux";
-import CheckOut from "./components/Checkout/Checkout";
 
 class App extends React.Component {
   render() {
@@ -45,9 +44,9 @@ class App extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    isSignedIn: state.auth.isSignedIn,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 
