@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./User.css";
 
@@ -45,7 +45,17 @@ class User extends React.Component {
               </Link>
             </div>
 
-            {/* <hr /> */}
+            <div className="my-account mt-4">
+              <NavLink to="/account" className="link my-account-link">
+                My Account
+              </NavLink>
+              <NavLink to="/orders" className="link my-account-link">
+                Orders
+              </NavLink>
+              <NavLink to="/wishlist" className="link my-account-link">
+                WishList
+              </NavLink>
+            </div>
           </div>
         ) : null}
       </div>

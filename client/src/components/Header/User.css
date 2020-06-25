@@ -53,3 +53,20 @@
   color: #f76b1a;
   text-decoration: none;
 }
+
+.my-account {
+  display: flex;
+  flex-direction: column;
+  margin: auto -10px -20px -10px;
+  background-color: #f8f9f9;
+}
+
+.my-account-link {
+  padding: 10px;
+}
+.my-account-link:hover {
+  padding: 10px;
+  font-weight: bold;
+  color: #f76b1a !important;
+  background-color: #eee;
+}
