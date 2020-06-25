@@ -18,9 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="main">
-        <Route path="/sign-in" exact component={Authenticate} />
-        {!this.props.isSignedIn && <Redirect to="/sign-in" />}
-        {this.props.isSignedIn && (
+        {this.props.isSignedIn ? (
           <Route
             render={() => (
               <React.Fragment>
@@ -39,6 +37,8 @@ class App extends React.Component {
               </React.Fragment>
             )}
           />
+        ) : (
+          <Route path="/sign-in" exact component={Authenticate} />
         )}
       </div>
     );
