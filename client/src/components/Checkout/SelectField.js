@@ -13,8 +13,10 @@ const SelectField = (props) => {
           </option>
         ))}
       </select>
-      <br />
-      {props.meta.touched && props.meta.error}
+
+      <div style={{ color: "red" }}>
+        {props.meta.touched && props.meta.error}
+      </div>
     </div>
   );
 };

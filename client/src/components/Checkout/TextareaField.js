@@ -5,9 +5,11 @@ const TextareaForm = (props) => {
     <div className="form-group">
       <strong>{props.label}</strong>
       <br />
-      <textarea {...props.input} className="form-control"></textarea>
-      <br />
-      {props.meta.touched && props.meta.error}
+      <textarea {...props.input} className="form-control" rows="5"></textarea>
+
+      <div style={{ color: "red" }}>
+        {props.meta.touched && props.meta.error}
+      </div>
     </div>
   );
 };
