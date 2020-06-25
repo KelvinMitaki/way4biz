@@ -11,11 +11,7 @@ import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
 import AddressForm from "./components/Checkout/AddressForm";
-<<<<<<< HEAD
 import { connect } from "react-redux";
-=======
-import CheckOut from "./components/Checkout/Checkout";
->>>>>>> 194649d1c11464225b21092b6d9a9bfb7256b021
 
 class App extends React.Component {
   render() {
