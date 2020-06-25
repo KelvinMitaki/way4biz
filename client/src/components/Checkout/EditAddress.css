@@ -4,5 +4,15 @@
 
 .address-change-header {
   background-color: #fff;
-  border: none;
+  border: none !important;
+}
+
+.change-address-link {
+  /* border: 1px solid #fff !important; */
+  color: #f76b1a;
+  background-color: #fff;
+}
+
+.change-address-link {
+  border: 1px solid #fff !important;
 }

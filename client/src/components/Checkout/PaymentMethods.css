@@ -1,9 +1,18 @@
 .payment {
-  height: 400px;
+  margin-bottom: 40px;
 }
 
 .payment-title-button {
   display: flex;
   height: 40px;
   align-items: center;
+}
+
+.payment-method-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-method-info img {
+  height: 60px;
 }

@@ -4,13 +4,21 @@ import { Button, Card, Accordion } from "react-bootstrap";
 import "./EditAddress.css";
 
 class EditAddressSection extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
         <Accordion>
           <Card id="address-accordion">
             <Card.Header className="address-change-header">
-              <Accordion.Toggle variant="link" eventKey="0">
+              <Accordion.Toggle
+                className="change-address-link"
+                variant="link"
+                eventKey="0"
+              >
                 Change Address
               </Accordion.Toggle>
             </Card.Header>

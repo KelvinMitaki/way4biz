@@ -14,9 +14,9 @@ class CheckOut extends React.Component {
               <h3>Address Details</h3>
               <hr />
               <div id="current-address">
-                <p>Helloo</p>
-                <p>Helloo</p>
-                <p>Helloo</p>
+                <h6>John Doe</h6>
+                <p>00100, Kahawa West / Roysambu / Zimmerman,Nairobi</p>
+                <p> +254712345678</p>
               </div>
               <EditAddressSection />
             </div>

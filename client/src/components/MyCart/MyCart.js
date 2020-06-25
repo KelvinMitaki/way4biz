@@ -11,7 +11,7 @@ class MyCart extends React.Component {
         <div className="col7">
           <div className="container  cart-product">
             <div className="row">
-              <div className="cart-header box-container col-12">
+              <div className="cart-header box-container col-12 ">
                 <h3>Cart(2)</h3>
               </div>
             </div>
@@ -19,7 +19,10 @@ class MyCart extends React.Component {
               <div className="col-12">
                 <div className="container">
                   <div className="row cart-product-details">
-                    <img src="product-imgs/1.jpg" className="col col-md-6" />
+                    <img
+                      src="product-imgs/1.jpg"
+                      className="col col-md-6 mr -md-4"
+                    />
                     <div className="price-title my-auto col col-md-6">
                       <p>Seller:LG</p>
                       <h3>Product Name</h3>

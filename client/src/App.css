@@ -13,3 +13,8 @@
   border: 1px solid #eee;
   margin-bottom: 10px;
 }
+
+.link,
+.link:hover {
+  text-decoration: none;
+}
