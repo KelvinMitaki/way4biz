@@ -6,6 +6,7 @@ import { withRouter, Link } from "react-router-dom";
 import TextareaForm from "../Checkout/TextareaField";
 import SelectField from "../Checkout/SelectField";
 import AuthField from "../Authenticate/AuthField";
+import PhoneNumber from "./PhoneNumber";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -47,7 +48,7 @@ class Account extends React.Component {
                 type="text"
                 name="phoneNumber"
                 label="Phone Number"
-                component={AuthField}
+                component={PhoneNumber}
               />
               <Field
                 name="address"
@@ -76,6 +77,7 @@ class Account extends React.Component {
                 Save And Continue
               </button>
             </form>
+            <br />
             <p>
               <Link style={{ color: "#f76b1a" }} to="/change-password">
                 Change password

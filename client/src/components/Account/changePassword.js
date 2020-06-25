@@ -14,9 +14,10 @@ export class changePassword extends Component {
             <h3 className="legend">Change Password</h3>
             <hr />
             <form
-              onSubmit={this.props.handleSubmit(formValues =>
-                console.log(formValues)
-              )}
+              onSubmit={this.props.handleSubmit(formValues => {
+                console.log(formValues);
+                return this.props.history.push("/");
+              })}
             >
               <Field
                 type="password"

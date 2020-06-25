@@ -6,6 +6,7 @@ import validator from "validator";
 import SelectField from "./SelectField";
 import TextareaForm from "./TextareaField";
 import { withRouter } from "react-router-dom";
+import PhoneNumber from "../Account/PhoneNumber";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -47,7 +48,7 @@ class AddressForm extends React.Component {
                 type="text"
                 name="phoneNumber"
                 label="Phone Number"
-                component={FormField}
+                component={PhoneNumber}
               />
               <Field
                 name="address"

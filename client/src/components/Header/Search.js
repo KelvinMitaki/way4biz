@@ -32,7 +32,7 @@ class Search extends React.Component {
           />
           <div className="input-group-append">
             <button id="header-search-btn">
-              <i className="fa fa-search fa-2x"></i>
+              <i className="fa fa-search " style={{ fontSize: "25px" }}></i>
               <span>Search</span>
             </button>
           </div>
