@@ -19,6 +19,8 @@ hr {
 #payment-methods {
   background-color: #fff;
   border: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .checkout-sub-total {
@@ -27,10 +29,15 @@ hr {
 
 .checkout-sub-total div {
   margin: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
 }
 
 .order-btn {
   background-color: #f76b1a;
   border: none;
   height: 40px;
+  width: 100%;
+  color: #fff;
 }

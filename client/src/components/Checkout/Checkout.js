@@ -43,9 +43,9 @@ class CheckOut extends React.Component {
                   <p>Total</p>
                   <p>31,800</p>
                 </div>
-                <button className="btn btn-md btn-block order-btn">
-                  Order Now
-                </button>
+                <div>
+                  <button className="btn btn-md order-btn">Order Now</button>
+                </div>
               </div>
             </div>
           </div>
