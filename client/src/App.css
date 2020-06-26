@@ -6,6 +6,7 @@
 
 .content {
   flex: 1 0 auto;
+  margin-bottom: 60px;
 }
 
 .box-container {
@@ -17,4 +18,53 @@
 .link,
 .link:hover {
   text-decoration: none;
+}
+
+.primary-text {
+  color: black;
+}
+
+.primary-background {
+  background-color: #00001e;
+}
+
+.primary-button {
+  color: #fff;
+  background-color: #00001e;
+  border: none;
+}
+
+.primary-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.primary-button:hover {
+  color: #fff;
+}
+
+.primary-link {
+  color: #000;
+}
+
+.primary-link:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.secondary-text {
+  color: #f76b1a;
+}
+
+.secondary-link {
+  color: #f76b1a;
+}
+
+.secondary-link:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
+.tertiary-background {
+  background-color: #f8f9f9;
 }

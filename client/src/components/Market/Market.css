@@ -1,7 +1,7 @@
 .market {
-  margin: 50px 0px 60px 0px;
+  margin: 50px 0px 0px 0px;
   background-color: #f8f9f9;
-  padding: 30px 15px;
+  padding: 30px 15px 0px 15px;
 }
 
 .market .col {
@@ -53,7 +53,7 @@
 
 @media screen and (max-width: 960px) {
   .market {
-    padding: 30px 0px;
+    padding: 30px 0px 10px 0px;
   }
 
   .product div {

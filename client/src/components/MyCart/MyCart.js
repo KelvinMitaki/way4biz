@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 
 class MyCart extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="cart-wrapper">
         <div className="col7">
@@ -24,13 +23,16 @@ class MyCart extends React.Component {
                       className="col col-md-6 mr -md-4"
                     />
                     <div className="price-title my-auto col col-md-6">
-                      <p>Seller:LG</p>
-                      <h3>Product Name </h3>
-                      <h6>Price: ksh.30,000</h6>
+                      <h6>Seller:LG</h6>
+                      <h5 className="product-name">
+                        Product Name Product Name
+                      </h5>
+                      <p>Price: ksh.30,000</p>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="col-12 d-flex secondary-details">
                 <div>
                   <QuantityCounter />
@@ -49,15 +51,54 @@ class MyCart extends React.Component {
               <div className="col-12">
                 <div className="container">
                   <div className="row cart-product-details">
-                    <img src="product-imgs/1.jpg" className="col col-md-6" />
+                    <img
+                      src="product-imgs/1.jpg"
+                      className="col col-md-6 mr -md-4"
+                    />
                     <div className="price-title my-auto col col-md-6">
-                      <p>Seller:LG</p>
-                      <h3>Product Name</h3>
-                      <h6>Price: ksh.30,000</h6>
+                      <h6>Seller:LG</h6>
+                      <h5 className="product-name">
+                        Product Name Product Name
+                      </h5>
+                      <p>Price: ksh.30,000</p>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="col-12 d-flex secondary-details">
+                <div>
+                  <QuantityCounter />
+                </div>
+                <div>
+                  <p>Ksh.30,000</p>
+                </div>
+                <div id="remove-cart">
+                  <i className="fa fa-trash mr-1"></i>
+                  <span className="remove-text">Remove</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="row box-container mb-5">
+              <div className="col-12">
+                <div className="container">
+                  <div className="row cart-product-details">
+                    <img
+                      src="product-imgs/1.jpg"
+                      className="col col-md-6 mr -md-4"
+                    />
+                    <div className="price-title my-auto col col-md-6">
+                      <h6>Seller:LG</h6>
+                      <h5 className="product-name">
+                        Product Name Product Name
+                      </h5>
+                      <p>Price: ksh.30,000</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="col-12 d-flex secondary-details">
                 <div>
                   <QuantityCounter />

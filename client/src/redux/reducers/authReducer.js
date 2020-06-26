@@ -1,8 +1,8 @@
 import { LOG_IN } from "../actions/types";
 
 const INITIAL_STATE = {
-  isSignedIn: false,
-  user: null
+  isSignedIn: true,
+  user: null,
 };
 
 export default (state = INITIAL_STATE, action) => {

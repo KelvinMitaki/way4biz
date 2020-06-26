@@ -4,8 +4,8 @@ import "./AuthHeader.css";
 class AuthHeader extends React.Component {
   render() {
     return (
-      <div id="auth-header">
-        <h1>Logo</h1>
+      <div id="auth-header" className="primary-background">
+        <h1 className="secondary-text">Logo</h1>
       </div>
     );
   }

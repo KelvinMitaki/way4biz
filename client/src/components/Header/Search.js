@@ -6,23 +6,23 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      typing: ""
+      typing: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
   async handleChange(e) {
     this.setState({
-      typing: e.target.value
+      typing: e.target.value,
     });
 
     const res = await axios.post("/api/products/search", {
-      searchTerm: e.target.value
+      searchTerm: e.target.value,
     });
     console.log(res.data);
   }
   render() {
     return (
-      <div id="header-search">
+      <div id="header-search" className="col">
         <div className="input-group">
           <input
             type="text"
@@ -31,14 +31,14 @@ class Search extends React.Component {
             placeholder="bata shoes"
           />
           <div className="input-group-append">
-            <button id="header-search-btn">
+            <button id="header-search-btn" className="primary-button">
               <i className="fa fa-search " style={{ fontSize: "25px" }}></i>
               <span>Search</span>
             </button>
           </div>
         </div>
         {this.state.typing !== "" ? (
-          <div className="search-output"></div>
+          <div className="search-output tertiary-background"></div>
         ) : null}
       </div>
     );

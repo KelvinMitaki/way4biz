@@ -8,7 +8,7 @@
 
 .header-input-search {
   height: 50px;
-  border-radius: 10px;
+  border-radius: 30px;
   border: 1px solid #f76b1a !important;
   /* align-self: center !important; */
 }
@@ -21,8 +21,8 @@
 #header-search-btn {
   width: 120px;
   border: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
   background-color: #f76b1a;
   color: #fff;
   display: flex;
@@ -36,7 +36,6 @@
 
 .search-output {
   height: 350px;
-  background-color: #fff;
   width: 100%;
   position: absolute;
   top: 65px;

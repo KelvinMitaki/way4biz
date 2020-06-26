@@ -2,6 +2,12 @@
   width: 400px;
 }
 
+.authenticate-field {
+  border: 1px solid #eee;
+  border-radius: 40px;
+  height: 50px;
+}
+
 @media screen and (max-width: 920px) {
   .form-input {
     width: 90vw !important;

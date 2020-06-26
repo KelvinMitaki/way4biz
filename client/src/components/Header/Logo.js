@@ -6,7 +6,7 @@ class Logo extends React.Component {
   render() {
     return (
       <div id="logo">
-        <Link to="/" className="link">
+        <Link to="/" className="link secondary-link">
           <h1>LOGO</h1>
         </Link>
       </div>

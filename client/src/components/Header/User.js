@@ -27,7 +27,7 @@ class User extends React.Component {
       >
         <div
           style={{ cursor: "pointer" }}
-          className="icon user-icon flaticon-user"
+          className="icon user-icon flaticon-user secondary-link"
         >
           <span>Sign In | Join</span>
         </div>
@@ -46,13 +46,13 @@ class User extends React.Component {
             </div>
 
             <div className="my-account mt-4">
-              <NavLink to="/account" className="link my-account-link">
+              <NavLink to="/account" className="primary-link my-account-link">
                 My Account
               </NavLink>
-              <NavLink to="/orders" className="link my-account-link">
+              <NavLink to="/orders" className="primary-link my-account-link">
                 Orders
               </NavLink>
-              <NavLink to="/wishlist" className="link my-account-link">
+              <NavLink to="/wishlist" className="primary-link my-account-link">
                 WishList
               </NavLink>
             </div>

@@ -15,17 +15,21 @@ import Account from "./components/Account/Account";
 import changePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
+import ForgotPassword from "./components/Account/ForgotPassword";
+import MobileLogo from "./components/Header/MobileLogo";
+// import EmailSent from "./components/Authenticate/EmailSent";
 
 class App extends React.Component {
   render() {
     return (
       <div id="main">
-        <Route path="/sign-in" exact component={Authenticate} />
+        {/* <Route path="/sign-in" exact component={Authenticate} /> */}
         {this.props.isSignedIn ? (
           <Route
             render={() => (
               <React.Fragment>
                 <div className="content">
+                  <MobileLogo />
                   <Header />
                   <Switch>
                     <Route path="/" exact component={Home} />
@@ -49,15 +53,27 @@ class App extends React.Component {
             )}
           />
         ) : (
-          <Authenticate />
+          <Route
+            render={() => (
+              <React.Fragment>
+                <div>
+                  <Switch>
+                    <Route path="/forgot-password" component={ForgotPassword} />
+                    <Route path="/sign-in" component={Authenticate} />
+                    {/* <Route path="/confirm-email" component={EmailSent} /> */}
+                  </Switch>
+                </div>
+              </React.Fragment>
+            )}
+          />
         )}
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 

@@ -7,7 +7,7 @@ import Icons from "./Icons";
 class Header extends React.Component {
   render() {
     return (
-      <div className="header d-flex">
+      <div className="header d-flex primary-background">
         <Logo />
         <Search />
         <Icons />
