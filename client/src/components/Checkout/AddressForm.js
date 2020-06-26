@@ -7,6 +7,9 @@ import SelectField from "./SelectField";
 import TextareaForm from "./TextareaField";
 import { withRouter } from "react-router-dom";
 import PhoneNumber from "../Account/PhoneNumber";
+import Footer from "../Footer/Footer";
+import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import Header from "../Header/Header";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -19,67 +22,72 @@ const category = [
 class AddressForm extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div
-            className="col-md-9 my-5 mx-auto box-container"
-            id="address-form"
-          >
-            <h3 className="legend">Address</h3>
-            <hr />
-            <form
-              onSubmit={this.props.handleSubmit(formValues =>
-                console.log(formValues)
-              )}
+      <React.Fragment>
+        <Header />
+        <div className="container">
+          <div className="row">
+            <div
+              className="col-md-9 my-5 mx-auto box-container"
+              id="address-form"
             >
-              <Field
-                type="text"
-                name="firstName"
-                label="First Name"
-                component={FormField}
-              />
-              <Field
-                type="text"
-                name="lastName"
-                label="Last Name"
-                component={FormField}
-              />
-              <Field
-                type="text"
-                name="phoneNumber"
-                label="Phone Number"
-                component={PhoneNumber}
-              />
-              <Field
-                name="address"
-                label="Delivery Address"
-                component={TextareaForm}
-              />
-              <Field
-                name="city"
-                label="City"
-                options={category}
-                component={SelectField}
-              />
-              <Field
-                name="town"
-                label="Town"
-                options={category}
-                component={SelectField}
-              />
-
-              <button
-                disabled={!this.props.valid}
-                type="submit"
-                className="btn btn-md address-btn btn-block"
-                onClick={() => this.props.history.push("/checkout")}
+              <h3 className="legend">Address</h3>
+              <hr />
+              <form
+                onSubmit={this.props.handleSubmit(formValues =>
+                  console.log(formValues)
+                )}
               >
-                Proceed To Checkout
-              </button>
-            </form>
+                <Field
+                  type="text"
+                  name="firstName"
+                  label="First Name"
+                  component={FormField}
+                />
+                <Field
+                  type="text"
+                  name="lastName"
+                  label="Last Name"
+                  component={FormField}
+                />
+                <Field
+                  type="text"
+                  name="phoneNumber"
+                  label="Phone Number"
+                  component={PhoneNumber}
+                />
+                <Field
+                  name="address"
+                  label="Delivery Address"
+                  component={TextareaForm}
+                />
+                <Field
+                  name="city"
+                  label="City"
+                  options={category}
+                  component={SelectField}
+                />
+                <Field
+                  name="town"
+                  label="Town"
+                  options={category}
+                  component={SelectField}
+                />
+
+                <button
+                  disabled={!this.props.valid}
+                  type="submit"
+                  className="btn btn-md address-btn btn-block"
+                  onClick={() => this.props.history.push("/checkout")}
+                >
+                  Proceed To Checkout
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+        <Footer />
+        <MiniMenuWrapper />
+      </React.Fragment>
     );
   }
 }

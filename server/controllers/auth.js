@@ -29,12 +29,22 @@ route.get(
     try {
       req.session.isLoggedIn = true;
       req.session.user = req.user;
-      res.send(req.user);
+      res.redirect("/");
     } catch (error) {
       res.status(500).send(error);
     }
   }
 );
+
+route.get("/api/current_user", async (req, res) => {
+  try {
+    const user = req.session.user;
+    const isLoggedIn = req.session.isLoggedIn;
+    res.send({ user, isLoggedIn });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.post(
   "/api/login",
   check("email").trim().isEmail().withMessage("Please enter a valid email"),
@@ -51,7 +61,7 @@ route.post(
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).send({ message: "No user with that email" });
+        return res.status(404).send({ message: "No user with that email" });
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
@@ -137,7 +147,6 @@ route.post(
         (error, info) => {
           if (error) {
             console.log(error);
-            return res.status(500).send(error);
           }
           console.log(info);
         }
@@ -145,7 +154,7 @@ route.post(
       await user.save();
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your email"
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       res.status(500).send(error);
@@ -208,20 +217,20 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
     }
     user.verified = true;
     await user.save();
-    res.send(user);
+    res.redirect("/");
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-route.post("/api/logout", auth, (req, res) => {
+route.get("/api/logout", auth, (req, res) => {
   try {
     req.session.destroy(err => {
       if (err) {
         return res.redirect("/");
       }
     });
-    res.send({ message: "Successfully logged out" });
+    res.redirect("/sign-in");
   } catch (error) {
     res.status(500).send(error);
   }
@@ -257,7 +266,10 @@ route.post("/api/reset", async (req, res) => {
         console.log("Sending message info: ", info);
       }
     );
-    res.send({ token });
+    res.send({
+      message:
+        "Check your email inbox for instructions from us on how to reset your password."
+    });
   } catch (error) {
     res.status(500).send(error);
   }
