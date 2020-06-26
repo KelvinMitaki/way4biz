@@ -5,7 +5,8 @@ import {
   LOG_IN_FAILED,
   FETCH_USER,
   LOADING_START,
-  LOADING_STOP
+  LOADING_STOP,
+  REGISTER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -22,6 +23,20 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
     getState().form.LoginForm.values.password = "";
     dispatch({ type: LOADING_STOP });
     dispatch({ type: LOG_IN_FAILED });
+  }
+};
+export const register = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post("/api/register", credentials);
+    dispatch({ type: REGISTER });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: LOADING_STOP });
   }
 };
 

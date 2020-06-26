@@ -3,14 +3,16 @@ import {
   LOG_IN_FAILED,
   FETCH_USER,
   LOADING_START,
-  LOADING_STOP
+  LOADING_STOP,
+  REGISTER
 } from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: false,
   user: null,
   error: null,
-  loading: false
+  loading: false,
+  showEmailConfirm: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -31,6 +33,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     case LOADING_STOP:
       return { ...state, loading: false };
+    case REGISTER:
+      return { ...state, showEmailConfirm: true };
     default:
       return state;
   }

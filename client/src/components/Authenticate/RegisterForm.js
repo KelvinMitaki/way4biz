@@ -4,55 +4,92 @@ import "./RegisterForm.css";
 import { reduxForm, Field } from "redux-form";
 import AuthField from "./AuthField";
 import validator from "validator";
+import { register } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PhoneNumber from "../Account/PhoneNumber";
+import EmailConfirm from "./EmailConfirm";
 
 class RegisterForm extends React.Component {
   render() {
+    if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
         <form
           onSubmit={this.props.handleSubmit(formValues => {
-            console.log(formValues);
-            this.props.handleSignInClick();
+            this.props.register(formValues);
           })}
         >
           <Field
+            required="*"
             type="text"
             name="firstName"
             label="First Name"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="lastName"
             label="Last Name"
             component={AuthField}
           />
-          <Field type="text" name="email" label="Email" component={AuthField} />
           <Field
+            required="*"
+            type="text"
+            name="email"
+            label="Email"
+            component={AuthField}
+          />
+          <Field
+            type="text"
+            name="phoneNumber"
+            label="Phone Number"
+            component={PhoneNumber}
+          />
+          <Field
+            required="*"
             type="password"
             name="password"
             label="Password"
             component={AuthField}
           />
           <Field
+            required="*"
             type="password"
             name="confirmPassword"
             label="Confirm Password"
             component={AuthField}
           />
+          <strong>* is required</strong>
           <button
             style={{ cursor: "pointer" }}
-            disabled={!this.props.valid}
             className="btn btn-md btn-block auth-btn mt-3"
+            disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
-            Register
+            {this.props.loading && (
+              <span
+                className="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            )}
+            {this.props.loading ? (
+              <span> {"  "}Loading...</span>
+            ) : (
+              <span>Register</span>
+            )}
           </button>
         </form>
         <br />
-        <button className="btn btn-md btn-block mt-3 google" type="submit">
+        <a
+          href="/auth/google"
+          className="btn btn-md btn-block mt-3 google"
+          type="submit"
+        >
           Sign In With Google
-        </button>
+        </a>
       </div>
     );
   }
@@ -78,6 +115,12 @@ const validate = formValues => {
     errors.email = "Please enter a valid email";
   }
   if (
+    (formValues.phoneNumber && !validator.isNumeric(formValues.phoneNumber)) ||
+    (formValues.phoneNumber && formValues.phoneNumber.length !== 9)
+  ) {
+    errors.phoneNumber = "Please enter a valid phone number";
+  }
+  if (
     !formValues.password ||
     (formValues.password && formValues.password.trim().length < 6)
   ) {
@@ -88,5 +131,14 @@ const validate = formValues => {
   }
   return errors;
 };
-
-export default reduxForm({ validate, form: "RegisterForm" })(RegisterForm);
+const mapStateToProps = state => {
+  return {
+    showEmailConfirm: state.auth.showEmailConfirm,
+    loading: state.auth.loading
+  };
+};
+export default withRouter(
+  reduxForm({ validate, form: "RegisterForm" })(
+    connect(mapStateToProps, { register })(RegisterForm)
+  )
+);

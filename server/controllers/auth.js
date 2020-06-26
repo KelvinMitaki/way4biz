@@ -147,7 +147,6 @@ route.post(
         (error, info) => {
           if (error) {
             console.log(error);
-            return res.status(500).send(error);
           }
           console.log(info);
         }
@@ -155,7 +154,7 @@ route.post(
       await user.save();
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your email"
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       res.status(500).send(error);
@@ -218,7 +217,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
     }
     user.verified = true;
     await user.save();
-    res.send(user);
+    res.redirect("/");
   } catch (error) {
     res.status(500).send(error);
   }
