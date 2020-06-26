@@ -5,7 +5,6 @@ import validator from "validator";
 import { withRouter, Link } from "react-router-dom";
 import TextareaForm from "../Checkout/TextareaField";
 import SelectField from "../Checkout/SelectField";
-import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
 import AccountMenu from "./AccountMenu";
 import Footer from "../Footer/Footer";

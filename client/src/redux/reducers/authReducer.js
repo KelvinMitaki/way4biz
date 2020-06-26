@@ -33,7 +33,11 @@ export default (state = INITIAL_STATE, action) => {
       };
     case FETCH_USER:
       if (action.payload.isLoggedIn) {
-        return { ...state, isSignedIn: action.payload.isLoggedIn };
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
       }
       return { ...state, isSignedIn: false };
     case LOADING_START:

@@ -223,14 +223,14 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
   }
 });
 
-route.post("/api/logout", auth, (req, res) => {
+route.get("/api/logout", auth, (req, res) => {
   try {
     req.session.destroy(err => {
       if (err) {
         return res.redirect("/");
       }
     });
-    res.send({ message: "Successfully logged out" });
+    res.redirect("/sign-in");
   } catch (error) {
     res.status(500).send(error);
   }
