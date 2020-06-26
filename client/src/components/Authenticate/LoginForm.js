@@ -53,9 +53,13 @@ class LoginForm extends React.Component {
             Forgot password?
           </Link>
         </p>
-        <button className="btn btn-md btn-block mt-3 google" type="submit">
+        <a
+          href="/auth/google"
+          className="btn btn-md btn-block mt-3 google"
+          type="submit"
+        >
           Sign In With Google
-        </button>
+        </a>
       </div>
     );
   }

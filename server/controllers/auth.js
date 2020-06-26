@@ -29,7 +29,7 @@ route.get(
     try {
       req.session.isLoggedIn = true;
       req.session.user = req.user;
-      res.send(req.user);
+      res.redirect("/");
     } catch (error) {
       res.status(500).send(error);
     }
