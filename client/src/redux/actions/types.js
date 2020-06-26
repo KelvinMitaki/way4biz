@@ -1,1 +1,9 @@
 export const LOG_IN = "LOG_IN";
+export const LOG_IN_FAILED = "LOG_IN_FAILED";
+export const FETCH_USER = "FETCH_USER";
+export const LOADING_START = "LOADING_START";
+export const LOADING_STOP = "LOADING_STOP";
+export const REGISTER = "REGISTER";
+export const REGISTER_FAILED = "REGISTER_FAILED";
+export const RESET_PASSWORD = "RESET_PASSWORD";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";

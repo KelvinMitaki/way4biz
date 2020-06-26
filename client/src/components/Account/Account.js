@@ -5,92 +5,100 @@ import validator from "validator";
 import { withRouter, Link } from "react-router-dom";
 import TextareaForm from "../Checkout/TextareaField";
 import SelectField from "../Checkout/SelectField";
-import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
 import AccountMenu from "./AccountMenu";
+import Footer from "../Footer/Footer";
+import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import Header from "../Header/Header";
+import FormField from "../Checkout/FormField";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" },
+  { key: "meru", text: "Meru", value: "meru" }
 ];
 
 class Account extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-4">
-            <AccountMenu />
-          </div>
-          <div className="col-lg-8  box-container" id="address-form">
-            <h3 className="legend">My Account</h3>
-            <hr />
-            <form
-              onSubmit={this.props.handleSubmit((formValues) =>
-                console.log(formValues)
-              )}
-            >
-              <Field
-                type="text"
-                name="firstName"
-                label="First Name"
-                component={AuthField}
-              />
-              <Field
-                type="text"
-                name="lastName"
-                label="Last Name"
-                component={AuthField}
-              />
-              <Field
-                type="text"
-                name="phoneNumber"
-                label="Phone Number"
-                component={PhoneNumber}
-              />
-              <Field
-                name="address"
-                label="Delivery Address"
-                component={TextareaForm}
-              />
-              <Field
-                name="city"
-                label="City"
-                options={category}
-                component={SelectField}
-              />
-              <Field
-                name="town"
-                label="Town"
-                options={category}
-                component={SelectField}
-              />
-
-              <button
-                disabled={!this.props.valid}
-                type="submit"
-                className="btn btn-md address-btn btn-block"
-                onClick={() => this.props.history.push("/")}
+      <React.Fragment>
+        <Header />
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4">
+              <AccountMenu />
+            </div>
+            <div className="col-lg-8  box-container" id="address-form">
+              <h3 className="legend">My Account</h3>
+              <hr />
+              <form
+                onSubmit={this.props.handleSubmit(formValues =>
+                  console.log(formValues)
+                )}
               >
-                Save And Continue
-              </button>
-            </form>
-            <br />
-            <p>
-              <Link style={{ color: "#f76b1a" }} to="/change-password">
-                Change password
-              </Link>
-            </p>
+                <Field
+                  type="text"
+                  name="firstName"
+                  label="First Name"
+                  component={FormField}
+                />
+                <Field
+                  type="text"
+                  name="lastName"
+                  label="Last Name"
+                  component={FormField}
+                />
+                <Field
+                  type="text"
+                  name="phoneNumber"
+                  label="Phone Number"
+                  component={PhoneNumber}
+                />
+                <Field
+                  name="address"
+                  label="Delivery Address"
+                  component={TextareaForm}
+                />
+                <Field
+                  name="city"
+                  label="City"
+                  options={category}
+                  component={SelectField}
+                />
+                <Field
+                  name="town"
+                  label="Town"
+                  options={category}
+                  component={SelectField}
+                />
+
+                <button
+                  disabled={!this.props.valid}
+                  type="submit"
+                  className="btn btn-md address-btn btn-block"
+                  onClick={() => this.props.history.push("/")}
+                >
+                  Save And Continue
+                </button>
+              </form>
+              <br />
+              <p>
+                <Link style={{ color: "#f76b1a" }} to="/change-password">
+                  Change password
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+        <Footer />
+        <MiniMenuWrapper />
+      </React.Fragment>
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||

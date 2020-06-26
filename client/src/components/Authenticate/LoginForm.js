@@ -11,11 +11,13 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
+        <div style={{ color: "red", width: "400px" }}>
+          {this.props.error && this.props.error}
+        </div>
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit((formValues) => {
-            this.props.history.push("/");
-            return this.props.logIn(formValues);
+            return this.props.logIn(formValues, this.props.history);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -27,22 +29,37 @@ class LoginForm extends React.Component {
           />
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block primary-button mt-3"
-            disabled={!this.props.valid}
+            className="btn btn-md btn-block auth-btn mt-3"
+            disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
-            Login
+            {this.props.loading && (
+              <span
+                className="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            )}
+            {this.props.loading ? (
+              <span> {"  "}Loading...</span>
+            ) : (
+              <span>Login</span>
+            )}
           </button>
         </form>
         <br />
         <p>
-          <Link style={{ color: "#f76b1a" }} to="/">
+          <Link style={{ color: "#f76b1a" }} to="/password/reset">
             Forgot password?
           </Link>
         </p>
-        <button className="btn btn-md btn-block mt-3 google" type="submit">
+        <a
+          href="/auth/google"
+          className="btn btn-md btn-block mt-3 google"
+          type="submit"
+        >
           Sign In With Google
-        </button>
+        </a>
       </div>
     );
   }
@@ -65,9 +82,14 @@ const validate = (formValues) => {
   }
   return errors;
 };
-
+const mapStateToProps = (state) => {
+  return {
+    error: state.auth.error,
+    loading: state.auth.loading,
+  };
+};
 export default withRouter(
-  connect(null, { logIn })(
-    reduxForm({ validate, form: "LoginForm" })(LoginForm)
+  reduxForm({ validate, form: "LoginForm" })(
+    connect(mapStateToProps, { logIn })(LoginForm)
   )
 );
