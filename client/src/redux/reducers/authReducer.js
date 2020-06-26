@@ -1,9 +1,16 @@
-import { LOG_IN, LOG_IN_FAILED, FETCH_USER } from "../actions/types";
+import {
+  LOG_IN,
+  LOG_IN_FAILED,
+  FETCH_USER,
+  LOADING_START,
+  LOADING_STOP
+} from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: false,
   user: null,
-  error: null
+  error: null,
+  loading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,6 +27,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     case FETCH_USER:
       return { ...state, isSignedIn: action.payload.isLoggedIn };
+    case LOADING_START:
+      return { ...state, loading: true };
+    case LOADING_STOP:
+      return { ...state, loading: false };
     default:
       return state;
   }

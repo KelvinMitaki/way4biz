@@ -30,10 +30,21 @@ class LoginForm extends React.Component {
           <button
             style={{ cursor: "pointer" }}
             className="btn btn-md btn-block auth-btn mt-3"
-            disabled={!this.props.valid}
+            disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
-            Login
+            {this.props.loading && (
+              <span
+                className="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            )}
+            {this.props.loading ? (
+              <span> {"  "}Loading...</span>
+            ) : (
+              <span>Login</span>
+            )}
           </button>
         </form>
         <br />
@@ -69,7 +80,8 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    error: state.auth.error
+    error: state.auth.error,
+    loading: state.auth.loading
   };
 };
 export default withRouter(
