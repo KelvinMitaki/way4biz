@@ -17,6 +17,7 @@ import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
 import { fetchUser } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
+import NotFound from "./components/Pages/NotFound";
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,96 +27,92 @@ class App extends React.Component {
   render() {
     return (
       <div id="main">
-        <React.Fragment>
-          <div className="content">
-            {this.props.isSignedIn && <Header />}
-            <Route path="/" exact component={Home} />
-            <Switch>
-              <Route
-                path="/sign-in"
-                exact
-                render={() =>
-                  this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
-                }
-              />
-              <Route
-                path="/reset"
-                exact
-                render={() =>
-                  this.props.isSignedIn ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <ForgotPassword />
-                  )
-                }
-              />
-              <Route path="/product" exact component={Product} />
-              <Route path="/cart" exact component={Cart} />
-              <Route
-                path="/address"
-                exact
-                render={() =>
-                  !this.props.isSignedIn ? (
-                    <Redirect to="/sign-in" />
-                  ) : (
-                    <AddressForm />
-                  )
-                }
-              />
-              <Route
-                path="/checkout"
-                exact
-                render={() =>
-                  !this.props.isSignedIn ? (
-                    <Redirect to="/sign-in" />
-                  ) : (
-                    <CheckOut />
-                  )
-                }
-              />
-              <Route
-                path="/account"
-                exact
-                render={() =>
-                  !this.props.isSignedIn ? (
-                    <Redirect to="/sign-in" />
-                  ) : (
-                    <Account />
-                  )
-                }
-              />
-              <Route
-                path="/orders"
-                exact
-                render={() =>
-                  !this.props.isSignedIn ? (
-                    <Redirect to="/sign-in" />
-                  ) : (
-                    <Orders />
-                  )
-                }
-              />
-              <Route path="/wishlist" exact component={Wishlist} />
-              <Route
-                path="/change-password"
-                exact
-                render={() =>
-                  !this.props.isSignedIn ? (
-                    <Redirect to="/sign-in" />
-                  ) : (
-                    <ChangePassword />
-                  )
-                }
-              />
-            </Switch>
-          </div>
-          {this.props.isSignedIn && (
-            <React.Fragment>
-              <Footer />
-              <MiniMenuWrapper />
-            </React.Fragment>
-          )}
-        </React.Fragment>
+        <div className="content">
+          <Route path="/" exact component={Home} />
+          <Route
+            render={() => (
+              <Switch>
+                <Route
+                  path="/password/reset"
+                  exact
+                  render={() =>
+                    this.props.isSignedIn ? (
+                      <Redirect to="/" />
+                    ) : (
+                      <ForgotPassword />
+                    )
+                  }
+                />
+                <Route path="/product" exact component={Product} />
+                <Route path="/cart" exact component={Cart} />
+                <Route
+                  path="/address"
+                  exact
+                  render={() =>
+                    !this.props.isSignedIn ? (
+                      <Redirect to="/sign-in" />
+                    ) : (
+                      <AddressForm />
+                    )
+                  }
+                />
+                <Route
+                  path="/checkout"
+                  exact
+                  render={() =>
+                    !this.props.isSignedIn ? (
+                      <Redirect to="/sign-in" />
+                    ) : (
+                      <CheckOut />
+                    )
+                  }
+                />
+                <Route
+                  path="/account"
+                  exact
+                  render={() =>
+                    !this.props.isSignedIn ? (
+                      <Redirect to="/sign-in" />
+                    ) : (
+                      <Account />
+                    )
+                  }
+                />
+                <Route
+                  path="/orders"
+                  exact
+                  render={() =>
+                    !this.props.isSignedIn ? (
+                      <Redirect to="/sign-in" />
+                    ) : (
+                      <Orders />
+                    )
+                  }
+                />
+                <Route path="/wishlist" exact component={Wishlist} />
+                <Route
+                  path="/change-password"
+                  exact
+                  render={() =>
+                    !this.props.isSignedIn ? (
+                      <Redirect to="/sign-in" />
+                    ) : (
+                      <ChangePassword />
+                    )
+                  }
+                />
+                {/* <Route component={NotFound} /> */}
+              </Switch>
+            )}
+          />
+        </div>
+        <Route
+          path="/sign-in"
+          exact
+          render={() =>
+            this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
+          }
+        />
       </div>
     );
   }
