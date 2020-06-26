@@ -1,0 +1,40 @@
+#mini-menu {
+  /* height:90px; */
+  position: fixed;
+  bottom: 0px;
+  background-color: #fff;
+  width: 100vw;
+  margin: 0px;
+}
+
+.mini-menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+}
+
+.link {
+  color: #000 !important;
+  text-decoration: none;
+}
+
+.mini-cart span {
+  display: inline;
+  padding: 0px;
+}
+
+.mini-menu-icon::before {
+  margin: 0px !important;
+}
+
+/* .mini-menu-icon::before{
+    
+} */
+
+@media screen and (max-width: 380px) {
+  .mini-menu-icon {
+    font-size: 25px !important;
+  }
+}

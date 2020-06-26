@@ -1,0 +1,70 @@
+.market {
+  margin: 50px 0px 60px 0px;
+  background-color: #f8f9f9;
+  padding: 30px 15px;
+}
+
+.market .col {
+  background-color: #f8f9f9;
+}
+
+.market-head h1 {
+  margin-bottom: 20px;
+}
+
+.products {
+  background-color: #fff;
+}
+
+.product {
+  margin-bottom: 10px;
+  color: #000 !important;
+  box-shadow: 0 0 10px #dfdfdf;
+}
+
+.product div {
+  margin-top: 20px;
+}
+
+.product:hover {
+  box-shadow: 0 0 10px #d4d4d4;
+}
+
+.product img {
+  width: 100%;
+}
+
+.product-name {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.price {
+  margin: 10px 0px;
+  font-weight: bold;
+}
+
+.price-before {
+  text-decoration: line-through;
+  color: #5d6d7e;
+}
+
+@media screen and (max-width: 960px) {
+  .market {
+    padding: 30px 0px;
+  }
+
+  .product div {
+    padding-left: 10px;
+  }
+
+  .product div {
+    margin-top: 20px;
+  }
+
+  .product:hover {
+    box-shadow: none;
+  }
+}
