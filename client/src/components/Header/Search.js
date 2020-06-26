@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "./Search.css";
 
 class Search extends React.Component {
@@ -14,11 +13,6 @@ class Search extends React.Component {
     this.setState({
       typing: e.target.value
     });
-
-    const res = await axios.post("/api/products/search", {
-      searchTerm: e.target.value
-    });
-    console.log(res.data);
   }
   render() {
     return (

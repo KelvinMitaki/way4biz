@@ -51,7 +51,7 @@ route.post(
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).send({ message: "No user with that email" });
+        return res.status(404).send({ message: "No user with that email" });
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
