@@ -15,8 +15,13 @@ import Account from "./components/Account/Account";
 import changePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
+import { fetchUser } from "./redux/actions";
 
 class App extends React.Component {
+  componentDidMount() {
+    const { fetchUser } = this.props;
+    fetchUser();
+  }
   render() {
     return (
       <div id="main">
@@ -61,4 +66,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { fetchUser })(App);

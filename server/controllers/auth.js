@@ -35,6 +35,16 @@ route.get(
     }
   }
 );
+
+route.get("/api/current_user", async (req, res) => {
+  try {
+    const user = req.session.user;
+    const isLoggedIn = req.session.isLoggedIn;
+    res.send({ user, isLoggedIn });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.post(
   "/api/login",
   check("email").trim().isEmail().withMessage("Please enter a valid email"),

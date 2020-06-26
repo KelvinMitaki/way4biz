@@ -11,11 +11,13 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
+        <div style={{ color: "red", width: "400px" }}>
+          {this.props.error && this.props.error}
+        </div>
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit(formValues => {
-            this.props.history.push("/");
-            return this.props.logIn(formValues);
+            return this.props.logIn(formValues, this.props.history);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -65,9 +67,13 @@ const validate = formValues => {
   }
   return errors;
 };
-
+const mapStateToProps = state => {
+  return {
+    error: state.auth.error
+  };
+};
 export default withRouter(
-  connect(null, { logIn })(
-    reduxForm({ validate, form: "LoginForm" })(LoginForm)
+  reduxForm({ validate, form: "LoginForm" })(
+    connect(mapStateToProps, { logIn })(LoginForm)
   )
 );
