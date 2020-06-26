@@ -25,101 +25,105 @@ class App extends React.Component {
     fetchUser();
   }
   render() {
-    return (
-      <div id="main">
-        <div className="content">
-          <Route path="/" exact component={Home} />
+    if (this.props.isSignedIn !== null) {
+      return (
+        <div id="main">
+          <div className="content">
+            <Route path="/" exact component={Home} />
+            <Route
+              render={() => (
+                <Switch>
+                  <Route
+                    path="/password/reset"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <ForgotPassword />
+                      )
+                    }
+                  />
+                  <Route path="/product" exact component={Product} />
+                  <Route path="/cart" exact component={Cart} />
+                  <Route
+                    path="/address"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <AddressForm />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/checkout"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <CheckOut />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/account"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <Account />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/orders"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <Orders />
+                      )
+                    }
+                  />
+                  <Route path="/wishlist" exact component={Wishlist} />
+                  <Route
+                    path="/change-password"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <ChangePassword />
+                      )
+                    }
+                  />
+                  {/* <Route component={NotFound} /> */}
+                </Switch>
+              )}
+            />
+          </div>
           <Route
-            render={() => (
-              <Switch>
-                <Route
-                  path="/password/reset"
-                  exact
-                  render={() =>
-                    this.props.isSignedIn ? (
-                      <Redirect to="/" />
-                    ) : (
-                      <ForgotPassword />
-                    )
-                  }
-                />
-                <Route path="/product" exact component={Product} />
-                <Route path="/cart" exact component={Cart} />
-                <Route
-                  path="/address"
-                  exact
-                  render={() =>
-                    !this.props.isSignedIn ? (
-                      <Redirect to="/sign-in" />
-                    ) : (
-                      <AddressForm />
-                    )
-                  }
-                />
-                <Route
-                  path="/checkout"
-                  exact
-                  render={() =>
-                    !this.props.isSignedIn ? (
-                      <Redirect to="/sign-in" />
-                    ) : (
-                      <CheckOut />
-                    )
-                  }
-                />
-                <Route
-                  path="/account"
-                  exact
-                  render={() =>
-                    !this.props.isSignedIn ? (
-                      <Redirect to="/sign-in" />
-                    ) : (
-                      <Account />
-                    )
-                  }
-                />
-                <Route
-                  path="/orders"
-                  exact
-                  render={() =>
-                    !this.props.isSignedIn ? (
-                      <Redirect to="/sign-in" />
-                    ) : (
-                      <Orders />
-                    )
-                  }
-                />
-                <Route path="/wishlist" exact component={Wishlist} />
-                <Route
-                  path="/change-password"
-                  exact
-                  render={() =>
-                    !this.props.isSignedIn ? (
-                      <Redirect to="/sign-in" />
-                    ) : (
-                      <ChangePassword />
-                    )
-                  }
-                />
-                {/* <Route component={NotFound} /> */}
-              </Switch>
-            )}
+            path="/sign-in"
+            exact
+            render={() =>
+              this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
+            }
           />
         </div>
-        <Route
-          path="/sign-in"
-          exact
-          render={() =>
-            this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
-          }
-        />
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
 const mapStateToProps = state => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
+    loading: state.auth.loading
   };
 };
 

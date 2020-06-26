@@ -11,7 +11,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  isSignedIn: false,
+  isSignedIn: null,
   user: null,
   error: null,
   loading: false,
@@ -32,7 +32,10 @@ export default (state = INITIAL_STATE, action) => {
           "The email and password you entered did not match our records. Please double-check and try again."
       };
     case FETCH_USER:
-      return { ...state, isSignedIn: action.payload.isLoggedIn };
+      if (action.payload.isLoggedIn) {
+        return { ...state, isSignedIn: action.payload.isLoggedIn };
+      }
+      return { ...state, isSignedIn: false };
     case LOADING_START:
       return { ...state, loading: true };
     case LOADING_STOP:
