@@ -49,7 +49,7 @@ class LoginForm extends React.Component {
         </form>
         <br />
         <p>
-          <Link style={{ color: "#f76b1a" }} to="/">
+          <Link style={{ color: "#f76b1a" }} to="/reset">
             Forgot password?
           </Link>
         </p>

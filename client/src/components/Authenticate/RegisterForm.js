@@ -34,6 +34,7 @@ class RegisterForm extends React.Component {
             label="Last Name"
             component={AuthField}
           />
+
           <Field
             required="*"
             type="text"
@@ -41,6 +42,9 @@ class RegisterForm extends React.Component {
             label="Email"
             component={AuthField}
           />
+          <div style={{ color: "red", width: "400px" }}>
+            {this.props.error && this.props.error}
+          </div>
           <Field
             type="text"
             name="phoneNumber"
@@ -134,7 +138,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    error: state.auth.error
   };
 };
 export default withRouter(

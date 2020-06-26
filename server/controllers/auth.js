@@ -266,7 +266,10 @@ route.post("/api/reset", async (req, res) => {
         console.log("Sending message info: ", info);
       }
     );
-    res.send({ token });
+    res.send({
+      message:
+        "Check your email inbox for instructions from us on how to reset your password."
+    });
   } catch (error) {
     res.status(500).send(error);
   }

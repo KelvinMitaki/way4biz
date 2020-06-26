@@ -4,7 +4,10 @@ import {
   FETCH_USER,
   LOADING_START,
   LOADING_STOP,
-  REGISTER
+  REGISTER,
+  REGISTER_FAILED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -12,7 +15,8 @@ const INITIAL_STATE = {
   user: null,
   error: null,
   loading: false,
-  showEmailConfirm: false
+  showEmailConfirm: false,
+  success: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +39,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false };
     case REGISTER:
       return { ...state, showEmailConfirm: true };
+    case REGISTER_FAILED:
+      return { ...state, error: "That email address is already in use" };
+    case RESET_PASSWORD:
+      return { ...state, success: action.payload.message };
+    case RESET_PASSWORD_FAILED:
+      return { ...state, error: "No user with that email found" };
     default:
       return state;
   }

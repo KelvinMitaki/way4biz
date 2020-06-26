@@ -12,10 +12,11 @@ import CheckOut from "./components/Checkout/Checkout";
 import { connect } from "react-redux";
 import "./App.css";
 import Account from "./components/Account/Account";
-import changePassword from "./components/Account/changePassword";
+import ChangePassword from "./components/Account/ChangePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
 import { fetchUser } from "./redux/actions";
+import ForgotPassword from "./components/Authenticate/ForgotPassword";
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,37 +26,96 @@ class App extends React.Component {
   render() {
     return (
       <div id="main">
-        <Route path="/sign-in" exact component={Authenticate} />
-        {this.props.isSignedIn ? (
-          <Route
-            render={() => (
-              <React.Fragment>
-                <div className="content">
-                  <Header />
-                  <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/product" exact component={Product} />
-                    <Route path="/cart" exact component={Cart} />
-                    <Route path="/address" exact component={AddressForm} />
-                    <Route path="/checkout" exact component={CheckOut} />
-                    <Route path="/account" exact component={Account} />
-                    <Route path="/orders" exact component={Orders} />
-                    <Route path="/wishlist" exact component={Wishlist} />
-                    <Route
-                      path="/change-password"
-                      exact
-                      component={changePassword}
-                    />
-                  </Switch>
-                </div>
-                <Footer />
-                <MiniMenuWrapper />
-              </React.Fragment>
-            )}
-          />
-        ) : (
-          <Authenticate />
-        )}
+        <React.Fragment>
+          <div className="content">
+            {this.props.isSignedIn && <Header />}
+            <Route path="/" exact component={Home} />
+            <Switch>
+              <Route
+                path="/sign-in"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
+                }
+              />
+              <Route
+                path="/reset"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <ForgotPassword />
+                  )
+                }
+              />
+              <Route path="/product" exact component={Product} />
+              <Route path="/cart" exact component={Cart} />
+              <Route
+                path="/address"
+                exact
+                render={() =>
+                  !this.props.isSignedIn ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AddressForm />
+                  )
+                }
+              />
+              <Route
+                path="/checkout"
+                exact
+                render={() =>
+                  !this.props.isSignedIn ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <CheckOut />
+                  )
+                }
+              />
+              <Route
+                path="/account"
+                exact
+                render={() =>
+                  !this.props.isSignedIn ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <Account />
+                  )
+                }
+              />
+              <Route
+                path="/orders"
+                exact
+                render={() =>
+                  !this.props.isSignedIn ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <Orders />
+                  )
+                }
+              />
+              <Route path="/wishlist" exact component={Wishlist} />
+              <Route
+                path="/change-password"
+                exact
+                render={() =>
+                  !this.props.isSignedIn ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <ChangePassword />
+                  )
+                }
+              />
+            </Switch>
+          </div>
+          {this.props.isSignedIn && (
+            <React.Fragment>
+              <Footer />
+              <MiniMenuWrapper />
+            </React.Fragment>
+          )}
+        </React.Fragment>
       </div>
     );
   }

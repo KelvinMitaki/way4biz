@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 
-export class changePassword extends Component {
+export class ChangePassword extends Component {
   render() {
     return (
       <div className="container">
@@ -74,4 +74,4 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({ validate, form: "changePassword" })(changePassword);
+export default reduxForm({ validate, form: "ChangePassword" })(ChangePassword);
