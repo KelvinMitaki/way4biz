@@ -7,16 +7,17 @@ import {
   REGISTER,
   REGISTER_FAILED,
   RESET_PASSWORD_FAILED,
-  RESET_PASSWORD,
+  RESET_PASSWORD
 } from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: null,
   user: null,
   error: null,
+  registerError: null,
   loading: false,
   showEmailConfirm: false,
-  success: null,
+  success: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,14 +30,14 @@ export default (state = INITIAL_STATE, action) => {
         isSignedIn: false,
         user: null,
         error:
-          "The email and password you entered did not match our records. Please double-check and try again.",
+          "The email and password you entered did not match our records. Please double-check and try again."
       };
     case FETCH_USER:
       if (action.payload.isLoggedIn) {
         return {
           ...state,
           isSignedIn: action.payload.isLoggedIn,
-          user: action.payload.user,
+          user: action.payload.user
         };
       }
       return { ...state, isSignedIn: false };
@@ -47,7 +48,10 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER:
       return { ...state, showEmailConfirm: true };
     case REGISTER_FAILED:
-      return { ...state, error: "That email address is already in use" };
+      return {
+        ...state,
+        registerError: "That email address is already in use"
+      };
     case RESET_PASSWORD:
       return { ...state, success: action.payload.message };
     case RESET_PASSWORD_FAILED:
