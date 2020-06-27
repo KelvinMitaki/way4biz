@@ -1,6 +1,6 @@
 const cluster = require("cluster");
 const os = require("os");
-
+const path = require("path");
 if (cluster.isMaster) {
   // MASTER PROCESS
   const n_cpus = os.cpus().length;
@@ -61,6 +61,15 @@ if (cluster.isMaster) {
     console.log("connected to the database");
   };
   mongooseConnect();
+
+  if (process.env.NODE_ENV === "production") {
+    // SERVING STATIC FILES
+    app.use(express.static("client/build"));
+    // SERVE UP INDEX.HTML IF IT DOESNOT RECORGANISE THE ROUTE
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+  }
   app.listen(process.env.PORT, () =>
     console.log(`server started on port ${process.env.PORT}`)
   );
