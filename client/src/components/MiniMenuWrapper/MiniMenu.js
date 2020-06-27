@@ -2,6 +2,8 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Tooltip from "react-png-tooltip";
 
+import { connect } from "react-redux";
+
 import "./MiniMenu.css";
 
 class MiniMenu extends React.Component {
@@ -33,42 +35,46 @@ class MiniMenu extends React.Component {
               </div>
             </NavLink>
 
-            {/* use state to change the directing of this link */}
-            {/* <NavLink to="/account" className="primary-link col-3">
-              <div className="mini-menu-item">
-                <div className="flaticon-user mini-menu-icon"></div>
-                <p>Account</p>
-              </div>
-            </NavLink> */}
-
-            <div className="col-3" id="account-mini-link-wrapper">
-              <Tooltip
-                className="primary-link tool-tip"
-                tooltip={
-                  <div className="mini-menu-item">
-                    <div className="flaticon-user mini-menu-icon"></div>
-                    <p>Account</p>
+            {this.props.user ? (
+              <div className="col-3" id="account-mini-link-wrapper">
+                <Tooltip
+                  className="primary-link tool-tip"
+                  tooltip={
+                    <div className="mini-menu-item">
+                      <div className="flaticon-user mini-menu-icon"></div>
+                      <p>Account</p>
+                    </div>
+                  }
+                >
+                  <div className="account-mini-links">
+                    <NavLink
+                      className="primary-link"
+                      to="/account"
+                      activeClassName="active"
+                      exact
+                    >
+                      My Account
+                    </NavLink>
+                    <NavLink className="primary-link" to="/orders">
+                      Orders
+                    </NavLink>
+                    <NavLink className="primary-link" to="/wishlist">
+                      WishList
+                    </NavLink>
+                    <a className="mini-logout-link" href="/api/logout">
+                      Logout
+                    </a>
                   </div>
-                }
-              >
-                <div className="account-mini-links">
-                  <NavLink
-                    className="primary-link"
-                    to="/account"
-                    activeClassName="active"
-                    exact
-                  >
-                    My Account
-                  </NavLink>
-                  <NavLink className="primary-link" to="/orders">
-                    Orders
-                  </NavLink>
-                  <NavLink className="primary-link" to="/wishlist">
-                    WishList
-                  </NavLink>
+                </Tooltip>
+              </div>
+            ) : (
+              <NavLink to="/sign-in" className="primary-link col-3">
+                <div className="mini-menu-item">
+                  <div className="flaticon-user mini-menu-icon"></div>
+                  <p>Account</p>
                 </div>
-              </Tooltip>
-            </div>
+              </NavLink>
+            )}
           </div>
         </div>
       </div>
@@ -76,4 +82,10 @@ class MiniMenu extends React.Component {
   }
 }
 
-export default MiniMenu;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(MiniMenu);

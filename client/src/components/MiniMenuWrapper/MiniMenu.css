@@ -17,34 +17,33 @@
 .tool-tip {
   display: flex;
   align-items: center;
-  /* width: 100%; */
   background-color: transparent;
   width: 100px !important;
   margin-right: -200px;
   box-shadow: none !important;
   padding: 0px !important;
+  position: relative;
+  z-index: 100000;
 }
-
-/* .Content-Container--xhjD8 {
-  padding: 0px !important;
-} */
 
 #account-mini-link-wrapper {
   display: flex;
   width: 100px;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .account-mini-links {
-  height: 100px;
+  height: 150px;
   background-color: #fff;
   flex-direction: column;
   z-index: 20000;
   display: flex;
   width: 100%;
-  /* align-items: center; */
   justify-content: center;
+  /* position: absolute;
+  z-index: 50000000; */
 }
 
 .account-mini-links .primary-link {
@@ -70,6 +69,12 @@
 
 .mini-menu-icon::before {
   margin: 0px !important;
+}
+
+.mini-logout-link {
+  color: black;
+  font-weight: 500;
+  padding: 10px;
 }
 
 @media screen and (max-width: 380px) {
