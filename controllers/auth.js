@@ -223,7 +223,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
     }
     user.verified = true;
     await user.save();
-    res.redirect("/");
+    res.redirect("/sign-in");
   } catch (error) {
     res.status(500).send(error);
   }
