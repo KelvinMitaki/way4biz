@@ -70,6 +70,9 @@ route.post(
       if (!isMatch) {
         return res.status(401).send({ message: "Passwords do not match" });
       }
+      if (!user.verified) {
+        return res.status(401).send({ message: "Email not verified" });
+      }
       req.session.user = user;
       req.session.isLoggedIn = true;
       res.send(user);
