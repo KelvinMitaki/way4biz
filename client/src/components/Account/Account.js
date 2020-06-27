@@ -5,7 +5,7 @@ import validator from "validator";
 import { withRouter, Link } from "react-router-dom";
 import TextareaForm from "../Checkout/TextareaField";
 import SelectField from "../Checkout/SelectField";
-import PhoneNumber from "./PhoneNumber";
+import AddressPhoneNumber from "./AddressPhoneNumber";
 import AccountMenu from "./AccountMenu";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -17,7 +17,7 @@ const category = [
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
+  { key: "meru", text: "Meru", value: "meru" },
 ];
 
 class Account extends React.Component {
@@ -34,7 +34,7 @@ class Account extends React.Component {
               <h3 className="legend">My Account</h3>
               <hr />
               <form
-                onSubmit={this.props.handleSubmit(formValues =>
+                onSubmit={this.props.handleSubmit((formValues) =>
                   console.log(formValues)
                 )}
               >
@@ -54,7 +54,7 @@ class Account extends React.Component {
                   type="text"
                   name="phoneNumber"
                   label="Phone Number"
-                  component={PhoneNumber}
+                  component={AddressPhoneNumber}
                 />
                 <Field
                   name="address"
@@ -98,7 +98,7 @@ class Account extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||

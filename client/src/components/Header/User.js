@@ -40,17 +40,26 @@ class User extends React.Component {
           <div id="auth-info">
             {this.props.user ? (
               <div className="my-account mt-4">
-                <NavLink to="/account" className="link my-account-link">
+                <NavLink
+                  activeClassName="active"
+                  to="/account"
+                  className="primary-link my-account-link"
+                >
                   My Account
                 </NavLink>
-                <NavLink to="/orders" className="link my-account-link">
+                <NavLink to="/orders" className="primary-link my-account-link">
                   Orders
                 </NavLink>
-                <NavLink to="/wishlist" className="link my-account-link">
+                <NavLink
+                  to="/wishlist"
+                  className="primary-link my-account-link"
+                >
                   WishList
                 </NavLink>
 
-                <a href="/api/logout">Logout</a>
+                <a className="logout-link" href="/api/logout">
+                  Logout
+                </a>
               </div>
             ) : (
               <React.Fragment>
