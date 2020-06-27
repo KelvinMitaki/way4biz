@@ -1,5 +1,10 @@
-#auth-header{
-    border-bottom:1px solid #eee;
-    height:80px;
-    padding:10px 40px;
+#auth-header {
+  border-bottom: 1px solid #eee;
+  height: 80px;
+  padding: 10px 40px;
+}
+@media screen and (max-width: 719px) {
+  #auth-header {
+    display: none;
+  }
 }
