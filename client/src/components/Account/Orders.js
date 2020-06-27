@@ -17,9 +17,9 @@ export class Orders extends Component {
             <div className="col-lg-4">
               <AccountMenu />
             </div>
-            <div className="col-lg-8 box-container">
+            <div className="col-lg-8 box-container  orders-wrapper">
               <h3 className="mb-4">Orders(1)</h3>
-              <div className="container orders-wrapper">
+              <div className="container">
                 <div className="row order-item box-container">
                   <div className="col-md-4 order-id">
                     <p>Order id: 0795%3436gfo</p>

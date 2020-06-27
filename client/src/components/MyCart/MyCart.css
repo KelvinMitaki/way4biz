@@ -1,7 +1,7 @@
 .cart-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 20px 100px;
   margin-bottom: 70px;
 }
 
@@ -113,8 +113,4 @@
   .col7 {
     flex-basis: 100%;
   }
-
-  /* .shopping-btn {
-    margin: auto;
-  } */
 }

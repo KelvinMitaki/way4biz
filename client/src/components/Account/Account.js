@@ -11,6 +11,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import FormField from "../Checkout/FormField";
+import "./Account.css";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -25,7 +26,7 @@ class Account extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div className="container">
+        <div className="container account-wrapper">
           <div className="row">
             <div className="col-lg-4">
               <AccountMenu />
