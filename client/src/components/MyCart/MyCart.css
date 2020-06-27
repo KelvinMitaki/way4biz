@@ -113,4 +113,14 @@
   .col7 {
     flex-basis: 100%;
   }
+
+  .col5 {
+    flex-basis: 100%;
+  }
+
+  #cart-total-checkout {
+    padding: 20px;
+    width: 90% !important;
+    margin: auto;
+  }
 }
