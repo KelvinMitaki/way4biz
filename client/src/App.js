@@ -101,7 +101,7 @@ class App extends React.Component {
                       )
                     }
                   />
-                  {/* <Route component={NotFound} /> */}
+                  <Route component={NotFound} />
                 </Switch>
               )}
             />
