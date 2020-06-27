@@ -27,23 +27,6 @@
   color: #fff;
 }
 
-/* .auth-btns{
-    display: flex;
-    justify-content: space-evenly;
-} */
-
-.google {
-  background-color: #4285f4;
-  color: #fff;
-  border: none;
-  width: 100%;
-}
-
-.facebook {
-  background-color: #3b5998;
-  color: #fff;
-}
-
 #register-link {
   color: #f76b1a;
   font-weight: bold;

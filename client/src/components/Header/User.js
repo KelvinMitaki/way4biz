@@ -8,7 +8,7 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
@@ -28,7 +28,7 @@ class User extends React.Component {
       >
         <div
           style={{ cursor: "pointer" }}
-          className="icon user-icon flaticon-user"
+          className="icon user-icon flaticon-user secondary-link"
         >
           {this.props.user ? (
             <span>Hello, {this.props.user.firstName} </span>
@@ -73,9 +73,9 @@ class User extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(User);

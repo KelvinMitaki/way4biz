@@ -18,3 +18,112 @@
 .link:hover {
   text-decoration: none;
 }
+
+.primary-text {
+  color: black;
+}
+
+.primary-background {
+  background-color: #00001e;
+}
+
+.primary-button {
+  color: #fff;
+  background-color: #00001e;
+  border: none;
+}
+
+.primary-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.primary-button:hover {
+  color: #fff;
+}
+
+.primary-link {
+  color: #000;
+}
+
+.primary-link:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.secondary-text {
+  color: #f76b1a;
+}
+
+.secondary-link {
+  color: #f76b1a;
+}
+
+.secondary-link:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
+.secondary-button,
+.secondary-button:hover {
+  background-color: #00001e;
+  border: 1px solid #00001e;
+  height: 50px;
+  border-radius: 40px;
+  cursor: pointer;
+  color: #f76b1a;
+  width: 400px;
+  margin: auto;
+}
+
+.secondary-button:focus,
+.secondary-google:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.tertiary-background {
+  background-color: #f8f9f9;
+}
+
+.google {
+  background-color: #4885ed;
+  color: #fff;
+  border: none;
+  width: 100%;
+}
+
+.secondary-google {
+  background-color: #4885ed;
+  border: 1px solid #4885ed;
+  height: 50px;
+  border-radius: 40px;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  margin: auto;
+}
+
+.secondary-google:hover {
+  color: #fff;
+}
+
+.form-primary-error {
+  color: red;
+  margin: 10px 0px;
+  width: 400px;
+  margin: auto;
+}
+
+@media screen and (max-width: 920px) {
+  .secondary-button,
+  .secondary-google,
+  .forgot-password-link-wrapper,
+  .form-primary-error {
+    width: 90vw !important;
+    margin: auto;
+  }
+}

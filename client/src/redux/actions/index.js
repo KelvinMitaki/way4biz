@@ -46,6 +46,7 @@ export const fetchUser = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/current_user");
+    console.log("Cpus: ", res.data.Cpus);
     dispatch({ type: FETCH_USER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Tooltip from "react-png-tooltip";
 
 import "./MiniMenu.css";
 
@@ -9,36 +10,65 @@ class MiniMenu extends React.Component {
       <div id="mini-menu">
         <div className="container-fluid">
           <div className="row flex-wrap">
-            <Link to="/" className="link col-3">
+            <NavLink to="/" exact className="primary-link col-3">
               <div className="mini-menu-item">
                 <div className="flaticon-home mini-menu-icon"></div>
-                <h6>Home</h6>
+                <p>Home</p>
               </div>
-            </Link>
+            </NavLink>
 
-            <Link to="/categories" className="link col-3">
+            <NavLink to="/categories" className="primary-link col-3">
               <div className="mini-menu-item">
                 <div className="flaticon-category mini-menu-icon"></div>
-                <h6>Category</h6>
+                <p>Category</p>
               </div>
-            </Link>
+            </NavLink>
 
-            <Link to="/cart" className="link col-3">
+            <NavLink to="/cart" className="primary-link col-3">
               <div className="mini-menu-item mini-cart">
                 <div className="flaticon-shopping-cart mini-menu-icon">
                   <span className="badge">0</span>
                 </div>
-                <h6>Cart</h6>
+                <p>Cart</p>
               </div>
-            </Link>
+            </NavLink>
 
             {/* use state to change the directing of this link */}
-            <Link to="/account" className="link col-3">
+            {/* <NavLink to="/account" className="primary-link col-3">
               <div className="mini-menu-item">
                 <div className="flaticon-user mini-menu-icon"></div>
-                <h6>Account</h6>
+                <p>Account</p>
               </div>
-            </Link>
+            </NavLink> */}
+
+            <div className="col-3" id="account-mini-link-wrapper">
+              <Tooltip
+                className="primary-link tool-tip"
+                tooltip={
+                  <div className="mini-menu-item">
+                    <div className="flaticon-user mini-menu-icon"></div>
+                    <p>Account</p>
+                  </div>
+                }
+              >
+                <div className="account-mini-links">
+                  <NavLink
+                    className="primary-link"
+                    to="/account"
+                    activeClassName="active"
+                    exact
+                  >
+                    My Account
+                  </NavLink>
+                  <NavLink className="primary-link" to="/orders">
+                    Orders
+                  </NavLink>
+                  <NavLink className="primary-link" to="/wishlist">
+                    WishList
+                  </NavLink>
+                </div>
+              </Tooltip>
+            </div>
           </div>
         </div>
       </div>

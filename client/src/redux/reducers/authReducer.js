@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   isSignedIn: null,
   user: null,
   error: null,
+  registerError: null,
   loading: false,
   showEmailConfirm: false,
   success: null
@@ -47,7 +48,10 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER:
       return { ...state, showEmailConfirm: true };
     case REGISTER_FAILED:
-      return { ...state, error: "That email address is already in use" };
+      return {
+        ...state,
+        registerError: "That email address is already in use"
+      };
     case RESET_PASSWORD:
       return { ...state, success: action.payload.message };
     case RESET_PASSWORD_FAILED:

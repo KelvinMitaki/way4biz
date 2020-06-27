@@ -42,8 +42,8 @@ class RegisterForm extends React.Component {
             label="Email"
             component={AuthField}
           />
-          <div style={{ color: "red", width: "400px" }}>
-            {this.props.error && this.props.error}
+          <div className="form-primary-error">
+            {this.props.registerError && this.props.registerError}
           </div>
           <Field
             type="text"
@@ -68,7 +68,7 @@ class RegisterForm extends React.Component {
           <strong>* is required</strong>
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block auth-btn mt-3"
+            className="btn btn-md btn-block secondary-button mt-3"
             disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
@@ -89,7 +89,7 @@ class RegisterForm extends React.Component {
         <br />
         <a
           href="/auth/google"
-          className="btn btn-md btn-block mt-3 google"
+          className="btn btn-md btn-block mt-3 secondary-google"
           type="submit"
         >
           Sign In With Google
@@ -139,7 +139,7 @@ const mapStateToProps = state => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
     loading: state.auth.loading,
-    error: state.auth.error
+    registerError: state.auth.registerError
   };
 };
 export default withRouter(

@@ -1,3 +1,5 @@
+const os = require("os");
+
 const route = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -40,7 +42,8 @@ route.get("/api/current_user", async (req, res) => {
   try {
     const user = req.session.user;
     const isLoggedIn = req.session.isLoggedIn;
-    res.send({ user, isLoggedIn });
+    const Cpus = os.cpus().length;
+    res.send({ user, isLoggedIn, Cpus });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -66,6 +69,9 @@ route.post(
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(401).send({ message: "Passwords do not match" });
+      }
+      if (!user.verified) {
+        return res.status(401).send({ message: "Email not verified" });
       }
       req.session.user = user;
       req.session.isLoggedIn = true;
