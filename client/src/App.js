@@ -9,7 +9,7 @@ import CheckOut from "./components/Checkout/Checkout";
 import { connect } from "react-redux";
 import "./App.css";
 import Account from "./components/Account/Account";
-import ChangePassword from "./components/Account/ChangePassword";
+import ChangePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
 import { fetchUser } from "./redux/actions";
@@ -119,10 +119,10 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
