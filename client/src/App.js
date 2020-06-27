@@ -14,6 +14,7 @@ import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
 import { fetchUser } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
+import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
 
 class App extends React.Component {
@@ -25,6 +26,7 @@ class App extends React.Component {
     if (this.props.isSignedIn !== null) {
       return (
         <div id="main">
+          <MobileLogo />
           <div className="content">
             <Route path="/" exact component={Home} />
             <Route

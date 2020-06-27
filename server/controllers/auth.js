@@ -12,14 +12,14 @@ const auth = require("../middlewares/is-auth");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY
-    }
+      api_key: process.env.SENDGRID_API_KEY,
+    },
   })
 );
 route.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
   })
 );
 route.get(
@@ -106,7 +106,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        number
+        number,
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -124,10 +124,10 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        number
+        number,
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
-        expiresIn: "1 hour"
+        expiresIn: "1 hour",
       });
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
@@ -142,7 +142,7 @@ route.post(
                 <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}>here</a> to confirm your email
             </p>
         </body>
-        </html>`
+        </html>`,
         },
         (error, info) => {
           if (error) {
@@ -154,7 +154,7 @@ route.post(
       await user.save();
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account"
+          "An email has been sent to your email address, please check it to confirm your account",
       });
     } catch (error) {
       res.status(500).send(error);
@@ -186,7 +186,7 @@ route.post(
       );
       if (!isMatch) {
         return res.status(401).send({
-          message: "Your current password does not match with the provided one"
+          message: "Your current password does not match with the provided one",
         });
       }
       if (newPassword !== confirmNewPassword) {
@@ -194,7 +194,7 @@ route.post(
       }
       const hashedPassword = await bcrypt.hash(newPassword, 12);
       const updatedUser = await User.findByIdAndUpdate(req.session.user._id, {
-        password: hashedPassword
+        password: hashedPassword,
       });
 
       res.send(updatedUser);
@@ -225,7 +225,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
 
 route.get("/api/logout", auth, (req, res) => {
   try {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         return res.redirect("/");
       }
@@ -244,7 +244,7 @@ route.post("/api/reset", async (req, res) => {
       return res.status(401).send({ message: "No user with that email found" });
     }
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "30 minutes"
+      expiresIn: "30 minutes",
     });
     // **TODO** from email address to be fixed
     transporter.sendMail(
@@ -259,7 +259,7 @@ route.post("/api/reset", async (req, res) => {
                   <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
               </p>
           </body>
-          </html>`
+          </html>`,
       },
       (error, info) => {
         if (error) console.log(error);
@@ -268,7 +268,7 @@ route.post("/api/reset", async (req, res) => {
     );
     res.send({
       message:
-        "Check your email inbox for instructions from us on how to reset your password."
+        "Check your email inbox for instructions from us on how to reset your password.",
     });
   } catch (error) {
     res.status(500).send(error);
@@ -301,7 +301,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     const { password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await User.findByIdAndUpdate(decoded._id, {
-      password: hashedPassword
+      password: hashedPassword,
     });
     res.send({ user, message: "Password updated successfully" });
   } catch (error) {

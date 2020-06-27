@@ -29,3 +29,9 @@
   width: 100% !important;
   background-color: #ededed;
 }
+
+@media screen and (max-width: 960px) {
+  .account-menu-container {
+    display: none;
+  }
+}

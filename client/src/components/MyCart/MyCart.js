@@ -131,7 +131,7 @@ class MyCart extends React.Component {
             </div>
             <button
               onClick={() => this.props.history.push("/address")}
-              className="btn checkout-btn mb-3 btn-md btn-block"
+              className="btn checkout-button mb-3 btn-md btn-block"
             >
               Proceed To Checkout
             </button>

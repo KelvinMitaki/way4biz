@@ -11,7 +11,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ color: "red", width: "400px" }}>
+        <div className="form-primary-error">
           {this.props.error && this.props.error}
         </div>
         <form
@@ -28,8 +28,7 @@ class LoginForm extends React.Component {
             component={AuthField}
           />
           <button
-            style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block auth-btn mt-3"
+            className="btn btn-md btn-block auth-btn mt-3 secondary-button"
             disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
@@ -48,14 +47,14 @@ class LoginForm extends React.Component {
           </button>
         </form>
         <br />
-        <p>
+        <p className="forgot-password-link-wrapper">
           <Link style={{ color: "#f76b1a" }} to="/password/reset">
             Forgot password?
           </Link>
         </p>
         <a
           href="/auth/google"
-          className="btn btn-md btn-block mt-3 google"
+          className="btn btn-md btn-block mt-3 secondary-google"
           type="submit"
         >
           Sign In With Google

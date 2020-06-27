@@ -1,5 +1,6 @@
 .form-input {
   width: 400px;
+  margin: auto;
 }
 
 .authenticate-field {
@@ -8,8 +9,25 @@
   height: 50px;
 }
 
+.phone {
+  height: 50px;
+  border: 1px solid #eee;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  /* border-radius: 40px; */
+}
+
+.phone-prepend span {
+  height: 50px;
+  border: 1px solid #eee;
+  border-top-left-radius: 40px !important;
+  border-bottom-left-radius: 40px !important;
+  border-radius: 40px;
+}
+
 @media screen and (max-width: 920px) {
   .form-input {
     width: 90vw !important;
+    margin: auto;
   }
 }
