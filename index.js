@@ -64,12 +64,10 @@ if (cluster.isMaster) {
 
   if (process.env.NODE_ENV === "production") {
     // SERVING STATIC FILES
-    app.use(express.static(path.resolve(__dirname, "..", "client", "build")));
+    app.use(express.static("client/build"));
     // SERVE UP INDEX.HTML IF IT DOESNOT RECORGANISE THE ROUTE
     app.get("*", (req, res) => {
-      res.sendFile(
-        path.resolve(__dirname, "..", "client", "build", "index.html")
-      );
+      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     });
   }
   app.listen(process.env.PORT, () =>
