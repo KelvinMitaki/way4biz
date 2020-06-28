@@ -60,7 +60,14 @@ export default (state = INITIAL_STATE, action) => {
     case RESET_PASSWORD_FAILED:
       return { ...state, error: "No user with that email found" };
     case EDIT_USER:
-      return { ...state, user: action.payload.user };
+      if (action.payload.isLoggedIn) {
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
+      }
+      return { ...state, isSignedIn: false };
     case EDIT_USER_FAILED:
       return { ...state, editUserError: "Saving changes failed" };
     default:

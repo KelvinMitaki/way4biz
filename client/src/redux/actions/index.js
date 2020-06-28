@@ -49,6 +49,9 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/current_user");
     console.log("Cpus: ", res.data.Cpus);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
     dispatch({ type: FETCH_USER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
@@ -70,12 +73,19 @@ export const passwordReset = email => async dispatch => {
   }
 };
 
-export const editUser = credentials => async (dispatch, getState) => {
+export const editUser = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
-    const res = await axios.post(`/api/user/edit/${userId}`, credentials);
+    const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
     dispatch({ type: EDIT_USER, payload: res.data });
+    history.push("/");
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     console.log(error);

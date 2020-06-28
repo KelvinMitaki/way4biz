@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   town: {
     type: String
   },
-  deliveryAddress: {
+  address: {
     type: String
   },
   isSeller: {

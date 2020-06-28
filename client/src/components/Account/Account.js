@@ -13,6 +13,7 @@ import Header from "../Header/Header";
 import FormField from "../Checkout/FormField";
 import "./Account.css";
 import { connect } from "react-redux";
+import { editUser } from "../../redux/actions";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -37,7 +38,7 @@ class Account extends React.Component {
               <hr />
               <form
                 onSubmit={this.props.handleSubmit(formValues =>
-                  console.log(formValues)
+                  this.props.editUser(formValues, this.props.history)
                 )}
               >
                 <Field
@@ -77,14 +78,31 @@ class Account extends React.Component {
                 />
 
                 <button
-                  disabled={!this.props.valid}
+                  className="btn btn-md btn-block address-btn mt-3 "
+                  disabled={
+                    !this.props.valid ||
+                    this.props.loading ||
+                    this.props.pristine
+                  }
                   type="submit"
-                  className="btn btn-md address-btn btn-block"
-                  onClick={() => this.props.history.push("/")}
                 >
-                  Save And Continue
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Save And Continue</span>
+                  )}
                 </button>
               </form>
+              <div className="form-primary-error">
+                {this.props.editUserError && this.props.editUserError}
+              </div>
               <br />
               <p>
                 <Link style={{ color: "#f76b1a" }} to="/change-password">
@@ -142,10 +160,14 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
+    editUserError: state.auth.editUserError,
+    loading: state.auth.loading
   };
 };
 
 export default withRouter(
-  connect(mapStateToProps)(reduxForm({ validate, form: "Account" })(Account))
+  connect(mapStateToProps, { editUser })(
+    reduxForm({ validate, form: "Account" })(Account)
+  )
 );
