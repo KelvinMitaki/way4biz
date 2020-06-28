@@ -104,7 +104,7 @@ class Product extends React.Component {
                 </button>
               </div>
               <div id="features">
-                <h4>Features and Specifications</h4>
+                <h5>Features and Specifications</h5>
                 <ul>
                   <li>32 inches</li>
                   <li>IPS Technology</li>

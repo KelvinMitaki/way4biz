@@ -17,9 +17,9 @@ export class ChangePassword extends Component {
               id="address-form"
             >
               <h3 className="legend">Change Password</h3>
-              <hr />
+              {/* <hr /> */}
               <form
-                onSubmit={this.props.handleSubmit(formValues => {
+                onSubmit={this.props.handleSubmit((formValues) => {
                   console.log(formValues);
                   return this.props.history.push("/");
                 })}
@@ -61,7 +61,7 @@ export class ChangePassword extends Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
 
   if (
