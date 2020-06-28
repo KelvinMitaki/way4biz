@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class Logo extends React.Component {
   render() {
     return (
-      <div id="logo">
+      <div id={this.props.id}>
         <Link to="/" className="link secondary-link">
           <h1>LOGO</h1>
         </Link>

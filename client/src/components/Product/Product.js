@@ -12,14 +12,14 @@ class Product extends React.Component {
       smallImage: {
         alt: "Helloooo",
         isFluidWidth: true,
-        src: "product-imgs/1.jpg"
+        src: "product-imgs/1.jpg",
       },
       largeImage: {
         src: "product-imgs/1.jpg",
         width: 1200,
-        height: 1800
+        height: 1800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -53,9 +53,13 @@ class Product extends React.Component {
               </div>
             </div>
             <div className="col-lg-6 product-info">
-              <h3 id="prod-name">Dell XPS laptop "15</h3>
+              <div className="product-name-wishlist">
+                <h3 id="prod-name">Dell Monitor "32</h3>
+                <p className="flaticon-heart secondary-text"></p>
+              </div>
               <div className="price-rating d-flex">
                 <h4>Ksh.140,000</h4>
+                <p>Stars</p>
               </div>
               <div id="prod-description">
                 <h3>Product Details</h3>
@@ -75,19 +79,19 @@ class Product extends React.Component {
                   and the like).
                 </p>
               </div>
-              <hr />
+              {/* <hr /> */}
               <div id="cart-quantity">
                 <button className="btn btn-md add-to-cart ml-5 btn-block">
                   Add to Cart
                 </button>
               </div>
-              <hr />
+              {/* <hr /> */}
               <div id="features">
                 <h4>Features and Specifications</h4>
                 <ul>
-                  <li>Backlit keyboard</li>
-                  <li>11 hours Battery life</li>
-                  <li>16gb ram DDR4</li>
+                  <li>32 inches</li>
+                  <li>IPS Technology</li>
+                  <li>Touch Screen</li>
                 </ul>
               </div>
             </div>

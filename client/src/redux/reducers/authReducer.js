@@ -7,7 +7,12 @@ import {
   REGISTER,
   REGISTER_FAILED,
   RESET_PASSWORD_FAILED,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  EDIT_USER,
+  EDIT_USER_FAILED,
+  FETCH_USER_FAILED,
+  CHECKOUT_USER,
+  CHECKOUT_USER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -17,7 +22,9 @@ const INITIAL_STATE = {
   registerError: null,
   loading: false,
   showEmailConfirm: false,
-  success: null
+  success: null,
+  editUserError: null,
+  checkoutUserError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         error:
           "The email and password you entered did not match our records. Please double-check and try again."
       };
+    case FETCH_USER_FAILED:
+      return { ...state, isSignedIn: false, user: null };
     case FETCH_USER:
       if (action.payload.isLoggedIn) {
         return {
@@ -56,6 +65,28 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, success: action.payload.message };
     case RESET_PASSWORD_FAILED:
       return { ...state, error: "No user with that email found" };
+    case EDIT_USER:
+      if (action.payload.isLoggedIn) {
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
+      }
+      return { ...state, isSignedIn: false };
+    case CHECKOUT_USER:
+      if (action.payload.isLoggedIn) {
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
+      }
+      return { ...state, isSignedIn: false };
+    case CHECKOUT_USER_FAILED:
+      return { ...state, checkoutUserError: "Saving changes failed" };
+    case EDIT_USER_FAILED:
+      return { ...state, editUserError: "Saving changes failed" };
     default:
       return state;
   }
