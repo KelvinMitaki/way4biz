@@ -16,7 +16,9 @@ import {
   CHECKOUT_USER,
   CHECKOUT_USER_FAILED,
   FETCH_PRODUCTS,
-  FETCH_PRODUCTS_FAILED
+  FETCH_PRODUCTS_FAILED,
+  UPDATE_PASSWORD_LOGGED_IN,
+  UPDATE_PASSWORD_LOGGED_IN_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -131,14 +133,23 @@ export const fetchProducts = searchTerm => async dispatch => {
   }
 };
 
-export const updatePasswordLoggedIn = (password, history) => async dispatch => {
+export const updatePasswordLoggedIn = (
+  formValues,
+  history
+) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.patch("/api/loggedIn/reset/password", { password });
+    const { currentPassword, newPassword } = formValues;
+    const res = await axios.patch("/api/loggedIn/reset/password", {
+      currentPassword,
+      newPassword
+    });
+    dispatch({ type: UPDATE_PASSWORD_LOGGED_IN, payload: res.data });
     dispatch({ type: LOADING_STOP });
     history.push("/");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
+    dispatch({ type: UPDATE_PASSWORD_LOGGED_IN_FAILED });
     console.log(error);
   }
 };

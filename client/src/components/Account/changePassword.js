@@ -22,8 +22,10 @@ export class ChangePassword extends Component {
               <hr />
               <form
                 onSubmit={this.props.handleSubmit(formValues => {
-                  console.log(formValues);
-                  //  updatePasswordLoggedIn()
+                  this.props.updatePasswordLoggedIn(
+                    formValues,
+                    this.props.history
+                  );
                 })}
               >
                 <Field
@@ -62,6 +64,10 @@ export class ChangePassword extends Component {
                     <span>Save And Continue</span>
                   )}
                 </button>
+                <div style={{ color: "red" }}>
+                  {this.props.updatePasswordError &&
+                    this.props.updatePasswordError}
+                </div>
               </form>
             </div>
           </div>
@@ -95,9 +101,10 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    updatePasswordError: state.auth.updatePasswordError
   };
 };
 export default reduxForm({ validate, form: "ChangePassword" })(
-  connect(mapStateToProps)(ChangePassword)
+  connect(mapStateToProps, { updatePasswordLoggedIn })(ChangePassword)
 );
