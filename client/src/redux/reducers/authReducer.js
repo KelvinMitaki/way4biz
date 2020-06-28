@@ -7,7 +7,9 @@ import {
   REGISTER,
   REGISTER_FAILED,
   RESET_PASSWORD_FAILED,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  EDIT_USER,
+  EDIT_USER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -17,7 +19,8 @@ const INITIAL_STATE = {
   registerError: null,
   loading: false,
   showEmailConfirm: false,
-  success: null
+  success: null,
+  editUserError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -56,6 +59,17 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, success: action.payload.message };
     case RESET_PASSWORD_FAILED:
       return { ...state, error: "No user with that email found" };
+    case EDIT_USER:
+      if (action.payload.isLoggedIn) {
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
+      }
+      return { ...state, isSignedIn: false };
+    case EDIT_USER_FAILED:
+      return { ...state, editUserError: "Saving changes failed" };
     default:
       return state;
   }

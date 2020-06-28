@@ -18,7 +18,7 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
-      proxy: true,
+      proxy: true
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -33,7 +33,7 @@ passport.use(
           firstName: name.givenName,
           lastName: name.familyName,
           email: emails[0].value,
-          verified: emails[0].verified,
+          verified: emails[0].verified
         });
         await user.save();
         done(null, user);

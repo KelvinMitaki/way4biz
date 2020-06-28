@@ -12,13 +12,15 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import FormField from "../Checkout/FormField";
 import "./Account.css";
+import { connect } from "react-redux";
+import { editUser } from "../../redux/actions";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" },
+  { key: "meru", text: "Meru", value: "meru" }
 ];
 
 class Account extends React.Component {
@@ -35,8 +37,8 @@ class Account extends React.Component {
               <h3 className="legend">My Account</h3>
               <hr />
               <form
-                onSubmit={this.props.handleSubmit((formValues) =>
-                  console.log(formValues)
+                onSubmit={this.props.handleSubmit(formValues =>
+                  this.props.editUser(formValues, this.props.history)
                 )}
               >
                 <Field
@@ -76,14 +78,31 @@ class Account extends React.Component {
                 />
 
                 <button
-                  disabled={!this.props.valid}
+                  className="btn btn-md btn-block address-btn mt-3 "
+                  disabled={
+                    !this.props.valid ||
+                    this.props.loading ||
+                    this.props.pristine
+                  }
                   type="submit"
-                  className="btn btn-md address-btn btn-block"
-                  onClick={() => this.props.history.push("/")}
                 >
-                  Save And Continue
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Save And Continue</span>
+                  )}
                 </button>
               </form>
+              <div className="form-primary-error">
+                {this.props.editUserError && this.props.editUserError}
+              </div>
               <br />
               <p>
                 <Link style={{ color: "#f76b1a" }} to="/change-password">
@@ -99,7 +118,7 @@ class Account extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -139,5 +158,16 @@ const validate = (formValues) => {
   }
   return errors;
 };
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user,
+    editUserError: state.auth.editUserError,
+    loading: state.auth.loading
+  };
+};
 
-export default withRouter(reduxForm({ validate, form: "Account" })(Account));
+export default withRouter(
+  connect(mapStateToProps, { editUser })(
+    reduxForm({ validate, form: "Account" })(Account)
+  )
+);

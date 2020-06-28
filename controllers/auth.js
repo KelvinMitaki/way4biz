@@ -40,6 +40,10 @@ route.get(
 
 route.get("/api/current_user", async (req, res) => {
   try {
+    if (!req.session.user) {
+      return res.status(404).send({});
+    }
+    req.session.user = await User.findById(req.session.user._id);
     const user = req.session.user;
     const isLoggedIn = req.session.isLoggedIn;
     const Cpus = os.cpus().length;
@@ -112,7 +116,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        number
+        phoneNumber
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -130,7 +134,7 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        number
+        phoneNumber
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
         expiresIn: "1 hour"
@@ -223,7 +227,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
     }
     user.verified = true;
     await user.save();
-    res.redirect("/");
+    res.redirect("/sign-in");
   } catch (error) {
     res.status(500).send(error);
   }
@@ -310,6 +314,27 @@ route.post("/api/reset/:resetToken", async (req, res) => {
       password: hashedPassword
     });
     res.send({ user, message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.patch("/api/user/edit/:userId", auth, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { firstName, lastName, address, city, town, phoneNumber } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(401).send({ message: "User not found" });
+    }
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.address = address;
+    user.city = city;
+    user.town = town;
+    user.phoneNumber = phoneNumber;
+    await user.save();
+    const isLoggedIn = req.session.isLoggedIn;
+    res.send({ user, isLoggedIn });
   } catch (error) {
     res.status(500).send(error);
   }

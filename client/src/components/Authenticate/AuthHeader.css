@@ -3,7 +3,6 @@
   height: 80px;
   padding: 10px 40px;
 }
-
 @media screen and (max-width: 719px) {
   #auth-header {
     display: none;

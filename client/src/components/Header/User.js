@@ -8,7 +8,7 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
@@ -70,9 +70,9 @@ class User extends React.Component {
                 <hr />
                 <p>Sign in with:</p>
                 <div className="auth-btns">
-                  <Link to="/" className="btn btn-md google">
+                  <a href="/auth/google" className="btn btn-md google">
                     Google
-                  </Link>
+                  </a>
                 </div>
               </React.Fragment>
             )}
@@ -82,9 +82,9 @@ class User extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps)(User);

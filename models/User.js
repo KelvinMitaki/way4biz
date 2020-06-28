@@ -17,8 +17,17 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  number: {
+  phoneNumber: {
     type: Number
+  },
+  city: {
+    type: String
+  },
+  town: {
+    type: String
+  },
+  address: {
+    type: String
   },
   isSeller: {
     type: Boolean,
