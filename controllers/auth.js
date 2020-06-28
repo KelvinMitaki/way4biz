@@ -340,4 +340,24 @@ route.patch("/api/user/edit/:userId", auth, async (req, res) => {
   }
 });
 
+route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.session.user._id);
+    if (!user) {
+      return res.status(404).send({ message: "No user with that ID found" });
+    }
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).send({ message: "Passwords do not match" });
+    }
+    const hashedPassowrd = await bcrypt.hash(newPassword, 12);
+    user.password = hashedPassowrd;
+    await user.save();
+    res.send({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = route;

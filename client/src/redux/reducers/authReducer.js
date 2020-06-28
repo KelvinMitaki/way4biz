@@ -12,7 +12,9 @@ import {
   EDIT_USER_FAILED,
   FETCH_USER_FAILED,
   CHECKOUT_USER,
-  CHECKOUT_USER_FAILED
+  CHECKOUT_USER_FAILED,
+  UPDATE_PASSWORD_LOGGED_IN,
+  UPDATE_PASSWORD_LOGGED_IN_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -24,7 +26,9 @@ const INITIAL_STATE = {
   showEmailConfirm: false,
   success: null,
   editUserError: null,
-  checkoutUserError: null
+  checkoutUserError: null,
+  updatePasswordMessage: null,
+  updatePasswordError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -87,6 +91,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, checkoutUserError: "Saving changes failed" };
     case EDIT_USER_FAILED:
       return { ...state, editUserError: "Saving changes failed" };
+    case UPDATE_PASSWORD_LOGGED_IN:
+      return { ...state, updatePasswordMessage: action.payload.message };
+    case UPDATE_PASSWORD_LOGGED_IN_FAILED:
+      return {
+        ...state,
+        updatePasswordError:
+          "Update Password failed, Please double-check your current password and try again"
+      };
     default:
       return state;
   }
