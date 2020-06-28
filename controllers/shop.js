@@ -107,7 +107,7 @@ route.post("/api/products/:subcategory", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.post("/api/products/search", async (req, res) => {
+route.post("/api/product/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
     const product = await Product.find({
