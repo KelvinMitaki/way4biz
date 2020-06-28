@@ -130,3 +130,15 @@ export const fetchProducts = searchTerm => async dispatch => {
     console.log(error);
   }
 };
+
+export const updatePasswordLoggedIn = (password, history) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.patch("/api/loggedIn/reset/password", { password });
+    dispatch({ type: LOADING_STOP });
+    history.push("/");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};

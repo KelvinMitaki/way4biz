@@ -4,6 +4,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import FormField from "../Checkout/FormField";
+import { connect } from "react-redux";
+import { updatePasswordLoggedIn } from "../../redux/actions";
 
 export class ChangePassword extends Component {
   render() {
@@ -21,7 +23,7 @@ export class ChangePassword extends Component {
               <form
                 onSubmit={this.props.handleSubmit(formValues => {
                   console.log(formValues);
-                  return this.props.history.push("/");
+                  //  updatePasswordLoggedIn()
                 })}
               >
                 <Field
@@ -43,12 +45,22 @@ export class ChangePassword extends Component {
                   component={FormField}
                 />
                 <button
-                  style={{ cursor: "pointer" }}
-                  className="btn btn-md  auth-btn btn-block mt-3"
-                  disabled={this.props.invalid}
+                  className="btn btn-md btn-block address-btn mt-3 "
+                  disabled={!this.props.valid || this.props.loading}
                   type="submit"
                 >
-                  Change Password
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Save And Continue</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -81,5 +93,11 @@ const validate = formValues => {
   }
   return errors;
 };
-
-export default reduxForm({ validate, form: "ChangePassword" })(ChangePassword);
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading
+  };
+};
+export default reduxForm({ validate, form: "ChangePassword" })(
+  connect(mapStateToProps)(ChangePassword)
+);
