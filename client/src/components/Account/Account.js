@@ -12,6 +12,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import FormField from "../Checkout/FormField";
 import "./Account.css";
+import { connect } from "react-redux";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
@@ -139,5 +140,12 @@ const validate = formValues => {
   }
   return errors;
 };
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user
+  };
+};
 
-export default withRouter(reduxForm({ validate, form: "Account" })(Account));
+export default withRouter(
+  connect(mapStateToProps)(reduxForm({ validate, form: "Account" })(Account))
+);
