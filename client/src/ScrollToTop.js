@@ -8,7 +8,7 @@ export class ScrollToTop extends Component {
     }
   }
   render() {
-    return <div></div>;
+    return this.props.children;
   }
 }
 
