@@ -1,16 +1,21 @@
 import React from "react";
 
 import "./PaymentMethods.css";
+import { Field } from "redux-form";
+import RadioField from "./RadioField";
 
 class PaymentMethods extends React.Component {
   render() {
     return (
       <div className="ml-3 mt-3">
         <div className="payment" id="mpesa">
-          <div className="payment-title-button">
-            <input type="radio" value="mpesa" name="payment-method" />
-            <h5 className="ml-2">Mpesa</h5>
-          </div>
+          <Field
+            type="radio"
+            label="Mpesa"
+            name="payment"
+            value="mpesa"
+            component={RadioField}
+          />
 
           <div className="payment-method-info">
             <div>
@@ -26,10 +31,14 @@ class PaymentMethods extends React.Component {
           </div>
         </div>
         <div className="payment" id="debit">
-          <div className="payment-title-button">
-            <input type="radio" value="card" name="payment-method" />
-            <h5 className="ml-2">Debit Card/Credit Card</h5>
-          </div>
+          <Field
+            type="radio"
+            label="Debit Card/Credit Card"
+            name="payment"
+            value="debit/credit"
+            component={RadioField}
+          />
+
           <div className="payment-method-info">
             <div>
               <img src="debit.png" />
