@@ -5,8 +5,8 @@ import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
-import Popup from "reactjs-popup";
-import { Link } from "react-router-dom";
+// import Popup from "reactjs-popup";
+// import { Link } from "react-router-dom";
 class Product extends React.Component {
   constructor(props) {
     super(props);
