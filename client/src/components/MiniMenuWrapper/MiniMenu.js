@@ -22,7 +22,7 @@ class MiniMenu extends React.Component {
             <NavLink to="/categories" className="primary-link col-3">
               <div className="mini-menu-item">
                 <div className="flaticon-category mini-menu-icon"></div>
-                <p>Category</p>
+                <p>Categories</p>
               </div>
             </NavLink>
 
