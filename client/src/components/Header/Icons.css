@@ -1,4 +1,5 @@
-#header-icons {
+#header-icons,
+#account-header-icons {
   flex: 2;
   height: 100%;
   display: flex;
@@ -33,6 +34,10 @@
 
 @media screen and (max-width: 960px) {
   #header-icons {
+    display: none;
+  }
+
+  #account-header-icons {
     display: none;
   }
 }

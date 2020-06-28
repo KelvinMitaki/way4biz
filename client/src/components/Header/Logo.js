@@ -3,9 +3,12 @@ import "./Logo.css";
 import { Link } from "react-router-dom";
 
 class Logo extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
-      <div id="logo">
+      <div id={this.props.id}>
         <Link to="/" className="link secondary-link">
           <h1>LOGO</h1>
         </Link>
