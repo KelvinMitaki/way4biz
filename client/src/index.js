@@ -9,7 +9,8 @@ import { Provider } from "react-redux";
 import { createStore, compose, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
 import thunk from "redux-thunk";
-import ScrollToTop from "./ScrollToTop";
+// import ScrollToTop from "./ScrollToTop";
+import ScrollToTop from "react-router-scroll-top";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
