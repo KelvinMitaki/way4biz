@@ -12,7 +12,9 @@ import {
   RESET_PASSWORD,
   EDIT_USER,
   EDIT_USER_FAILED,
-  FETCH_USER_FAILED
+  FETCH_USER_FAILED,
+  CHECKOUT_USER,
+  CHECKOUT_USER_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -45,7 +47,7 @@ export const register = credentials => async (dispatch, getState) => {
   }
 };
 
-export const fetchUser = history => async dispatch => {
+export const fetchUser = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/current_user");
@@ -86,11 +88,31 @@ export const editUser = (credentials, history) => async (
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: EDIT_USER, payload: res.data });
-    history.push("/");
     dispatch({ type: LOADING_STOP });
+    history.push("/");
   } catch (error) {
     console.log(error);
     dispatch({ type: EDIT_USER_FAILED });
+    dispatch({ type: LOADING_STOP });
+  }
+};
+export const checkoutUser = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const userId = getState().auth.user._id;
+    const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
+    dispatch({ type: CHECKOUT_USER, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+    history.push("/checkout");
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: CHECKOUT_USER_FAILED });
     dispatch({ type: LOADING_STOP });
   }
 };

@@ -10,13 +10,15 @@ import AddressPhoneNumber from "../Account/AddressPhoneNumber";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
+import { connect } from "react-redux";
+import { checkoutUser } from "../../redux/actions";
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
   { key: "kajiado", text: "Kajiado", value: "kajiado" },
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" },
+  { key: "meru", text: "Meru", value: "meru" }
 ];
 
 class AddressForm extends React.Component {
@@ -33,8 +35,8 @@ class AddressForm extends React.Component {
               <h3 className="legend">Address</h3>
               <hr />
               <form
-                onSubmit={this.props.handleSubmit((formValues) =>
-                  console.log(formValues)
+                onSubmit={this.props.handleSubmit(formValues =>
+                  this.props.checkoutUser(formValues, this.props.history)
                 )}
               >
                 <Field
@@ -74,13 +76,26 @@ class AddressForm extends React.Component {
                 />
 
                 <button
-                  disabled={!this.props.valid}
+                  className="btn btn-md btn-block address-btn mt-3 "
+                  disabled={!this.props.valid || this.props.loading}
                   type="submit"
-                  className="btn btn-md address-btn btn-block"
-                  onClick={() => this.props.history.push("/checkout")}
                 >
-                  Proceed To Checkout
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Proceed To Checkout</span>
+                  )}
                 </button>
+                <div className="form-primary-error">
+                  {this.props.checkoutUserError && this.props.checkoutUserError}
+                </div>
               </form>
             </div>
           </div>
@@ -91,7 +106,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -131,7 +146,15 @@ const validate = (formValues) => {
   }
   return errors;
 };
-
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user,
+    loading: state.auth.loading,
+    checkoutUserError: state.auth.checkoutUserError
+  };
+};
 export default withRouter(
-  reduxForm({ validate, form: "AddressForm" })(AddressForm)
+  connect(mapStateToProps, { checkoutUser })(
+    reduxForm({ validate, form: "AddressForm" })(AddressForm)
+  )
 );

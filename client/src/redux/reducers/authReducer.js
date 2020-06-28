@@ -10,7 +10,9 @@ import {
   RESET_PASSWORD,
   EDIT_USER,
   EDIT_USER_FAILED,
-  FETCH_USER_FAILED
+  FETCH_USER_FAILED,
+  CHECKOUT_USER,
+  CHECKOUT_USER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -21,7 +23,8 @@ const INITIAL_STATE = {
   loading: false,
   showEmailConfirm: false,
   success: null,
-  editUserError: null
+  editUserError: null,
+  checkoutUserError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -71,6 +74,17 @@ export default (state = INITIAL_STATE, action) => {
         };
       }
       return { ...state, isSignedIn: false };
+    case CHECKOUT_USER:
+      if (action.payload.isLoggedIn) {
+        return {
+          ...state,
+          isSignedIn: action.payload.isLoggedIn,
+          user: action.payload.user
+        };
+      }
+      return { ...state, isSignedIn: false };
+    case CHECKOUT_USER_FAILED:
+      return { ...state, checkoutUserError: "Saving changes failed" };
     case EDIT_USER_FAILED:
       return { ...state, editUserError: "Saving changes failed" };
     default:
