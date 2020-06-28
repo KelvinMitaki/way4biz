@@ -314,5 +314,17 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post("/api/user/edit/:userId", auth, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findByIdAndUpdate(userId, req.body);
+    if (!user) {
+      return res.status(401).send({ message: "User not found" });
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 module.exports = route;

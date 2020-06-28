@@ -9,7 +9,9 @@ import {
   REGISTER,
   REGISTER_FAILED,
   RESET_PASSWORD_FAILED,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  EDIT_USER,
+  EDIT_USER_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -64,6 +66,19 @@ export const passwordReset = email => async dispatch => {
   } catch (error) {
     console.log(error);
     dispatch({ type: RESET_PASSWORD_FAILED });
+    dispatch({ type: LOADING_STOP });
+  }
+};
+
+export const editUser = credentials => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const userId = getState().auth.user._id;
+    const res = await axios.post(`/api/user/edit/${userId}`, credentials);
+    dispatch({ type: EDIT_USER, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: EDIT_USER_FAILED });
     dispatch({ type: LOADING_STOP });
   }
 };
