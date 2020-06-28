@@ -14,7 +14,9 @@ import {
   EDIT_USER_FAILED,
   FETCH_USER_FAILED,
   CHECKOUT_USER,
-  CHECKOUT_USER_FAILED
+  CHECKOUT_USER_FAILED,
+  FETCH_PRODUCTS,
+  FETCH_PRODUCTS_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -114,5 +116,17 @@ export const checkoutUser = (credentials, history) => async (
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
     dispatch({ type: LOADING_STOP });
+  }
+};
+
+export const fetchProducts = searchTerm => async dispatch => {
+  try {
+    const res = await axios.post("/api/product/search", {
+      searchTerm
+    });
+    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
+  } catch (error) {
+    dispatch({ type: FETCH_PRODUCTS_FAILED });
+    console.log(error);
   }
 };
