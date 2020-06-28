@@ -8,15 +8,17 @@ class UserName extends React.Component {
   render() {
     return (
       <div id="header-username">
-        <h3 className="secondary-text">Hi,{this.props.user.firstName}</h3>
+        <h3 className="secondary-text">
+          Hi,{this.props.user ? this.props.user.firstName : null}
+        </h3>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 
