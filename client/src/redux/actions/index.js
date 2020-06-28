@@ -78,6 +78,7 @@ export const editUser = credentials => async (dispatch, getState) => {
     dispatch({ type: EDIT_USER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
+    console.log(error);
     dispatch({ type: EDIT_USER_FAILED });
     dispatch({ type: LOADING_STOP });
   }
