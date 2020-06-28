@@ -11,7 +11,8 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD,
   EDIT_USER,
-  EDIT_USER_FAILED
+  EDIT_USER_FAILED,
+  FETCH_USER_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -44,7 +45,7 @@ export const register = credentials => async (dispatch, getState) => {
   }
 };
 
-export const fetchUser = () => async dispatch => {
+export const fetchUser = history => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/current_user");
@@ -55,7 +56,7 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOG_IN_FAILED });
+    dispatch({ type: FETCH_USER_FAILED });
     dispatch({ type: LOADING_STOP });
   }
 };

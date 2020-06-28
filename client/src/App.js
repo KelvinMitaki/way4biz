@@ -91,7 +91,17 @@ class App extends React.Component {
                       )
                     }
                   />
-                  <Route path="/wishlist" exact component={Wishlist} />
+                  <Route
+                    path="/wishlist"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <Wishlist />
+                      )
+                    }
+                  />
                   <Route
                     path="/change-password"
                     exact
@@ -121,10 +131,10 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 

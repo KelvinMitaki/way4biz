@@ -3,9 +3,6 @@ import "./Logo.css";
 import { Link } from "react-router-dom";
 
 class Logo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div id={this.props.id}>

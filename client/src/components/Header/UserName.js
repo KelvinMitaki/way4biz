@@ -5,9 +5,6 @@ import "./UserName.css";
 // import User from "./User";
 
 class UserName extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div id="header-username">
@@ -17,9 +14,9 @@ class UserName extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 

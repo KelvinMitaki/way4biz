@@ -9,7 +9,8 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD,
   EDIT_USER,
-  EDIT_USER_FAILED
+  EDIT_USER_FAILED,
+  FETCH_USER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -35,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
         error:
           "The email and password you entered did not match our records. Please double-check and try again."
       };
+    case FETCH_USER_FAILED:
+      return { ...state, isSignedIn: false, user: null };
     case FETCH_USER:
       if (action.payload.isLoggedIn) {
         return {
