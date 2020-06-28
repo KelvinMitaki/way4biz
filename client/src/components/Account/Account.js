@@ -104,11 +104,13 @@ class Account extends React.Component {
                 {this.props.editUserError && this.props.editUserError}
               </div>
               <br />
-              <p>
-                <Link style={{ color: "#f76b1a" }} to="/change-password">
-                  Change password
-                </Link>
-              </p>
+              {!this.props.googleId && (
+                <p>
+                  <Link style={{ color: "#f76b1a" }} to="/change-password">
+                    Change password
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -161,6 +163,7 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
+    googleId: state.auth.user.googleId,
     editUserError: state.auth.editUserError,
     loading: state.auth.loading
   };
