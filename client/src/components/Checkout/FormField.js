@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormField = (props) => {
+const FormField = props => {
   return (
     <div className="form-group">
       <strong>{props.label}</strong>
