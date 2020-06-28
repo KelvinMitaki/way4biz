@@ -12,7 +12,7 @@ class CheckOut extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div className="container">
+        <div className="container main-checkout-wrapper">
           <div className="row">
             <div className="col-md-8 mx-auto">
               <div id="address-details" className="mb-3 box-container">

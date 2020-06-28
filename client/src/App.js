@@ -16,6 +16,7 @@ import { fetchUser } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
+import MainCategories from "./components/MainCategories/MainCategories";
 
 class App extends React.Component {
   componentDidMount() {
@@ -44,6 +45,7 @@ class App extends React.Component {
                     }
                   />
                   <Route path="/product" exact component={Product} />
+                  <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
                   <Route
                     path="/address"
@@ -119,10 +121,10 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
