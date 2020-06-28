@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
 
 import "./WishList.css";
-import Header from "../Header/Header";
+import AccountHeader from "../Header/AccountHeader";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 
@@ -10,7 +10,7 @@ export class Wishlist extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        <AccountHeader />
         <div className="container">
           <div className="row">
             <div className="col-lg-4">

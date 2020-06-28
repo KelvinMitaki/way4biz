@@ -16,7 +16,7 @@ class Search extends React.Component {
   }
   render() {
     return (
-      <div id="header-search" className="col">
+      <div id={this.props.id} className="col">
         <div className="input-group">
           <input
             type="text"

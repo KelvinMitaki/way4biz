@@ -9,7 +9,7 @@ import AddressPhoneNumber from "./AddressPhoneNumber";
 import AccountMenu from "./AccountMenu";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import Header from "../Header/Header";
+import AccountHeader from "../Header/AccountHeader";
 import FormField from "../Checkout/FormField";
 import "./Account.css";
 import { connect } from "react-redux";
@@ -27,7 +27,7 @@ class Account extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        <AccountHeader />
         <div className="container account-wrapper">
           <div className="row">
             <div className="col-lg-4">

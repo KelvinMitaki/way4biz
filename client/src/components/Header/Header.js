@@ -8,9 +8,9 @@ class Header extends React.Component {
   render() {
     return (
       <div className="header d-flex primary-background">
-        <Logo />
-        <Search />
-        <Icons />
+        <Logo id="logo" />
+        <Search id="header-search" />
+        <Icons id="header-icons" />
       </div>
     );
   }

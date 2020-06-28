@@ -1,7 +1,7 @@
 #product {
   background-color: #f8f9f9;
   padding: 50px 100px;
-  margin-bottom: 100px;
+  margin-bottom: 70px;
 }
 
 hr {
@@ -20,8 +20,25 @@ hr {
   background-color: #f8f9f9;
 }
 
+.product-name-wishlist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
 #prod-name {
-  margin: 20px 0px;
+  max-width: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* background-color: #f76b1a; */
+}
+
+.product-name-wishlist .flaticon-heart {
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 #prod-description {
@@ -41,7 +58,11 @@ hr {
 
 .price-rating {
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 20px 20px;
+}
+
+.price-rating h4 {
+  font-size: large;
 }
 
 #features {
