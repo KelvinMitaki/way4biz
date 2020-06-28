@@ -28,8 +28,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -42,8 +42,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -55,8 +55,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -68,8 +68,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -81,8 +81,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -94,8 +94,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
@@ -107,8 +107,8 @@ export class Orders extends Component {
                     <p>1/1/2000</p>
                   </div>
                   <div className="col-md-4 order-details-link">
-                    <Link to="/" className="link">
-                      Detail
+                    <Link to="/" className="secondary-link link">
+                      Details
                     </Link>
                   </div>
                 </div>
