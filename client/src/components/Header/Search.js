@@ -1,18 +1,22 @@
 import React from "react";
 import "./Search.css";
+import { fetchProducts } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      typing: "",
+      typing: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
   async handleChange(e) {
     this.setState({
-      typing: e.target.value,
+      typing: e.target.value
     });
+
+    this.props.fetchProducts(e.target.value);
   }
   render() {
     return (
@@ -32,11 +36,23 @@ class Search extends React.Component {
           </div>
         </div>
         {this.state.typing !== "" ? (
-          <div className="search-output tertiary-background"></div>
+          <div className="search-output tertiary-background">
+            {this.props.products.length > 0 &&
+              this.props.products.map(product => (
+                <div key={product._id}>
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                </div>
+              ))}
+          </div>
         ) : null}
       </div>
     );
   }
 }
-
-export default Search;
+const mapStateToProps = state => {
+  return {
+    products: state.product.products
+  };
+};
+export default connect(mapStateToProps, { fetchProducts })(Search);
