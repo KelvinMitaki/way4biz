@@ -20,7 +20,7 @@ const category = [
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
+  { key: "meru", text: "Meru", value: "meru" },
 ];
 
 class Account extends React.Component {
@@ -35,9 +35,9 @@ class Account extends React.Component {
             </div>
             <div className="col-lg-8  box-container" id="address-form">
               <h3 className="legend">My Account</h3>
-              <hr />
+              {/* <hr /> */}
               <form
-                onSubmit={this.props.handleSubmit(formValues =>
+                onSubmit={this.props.handleSubmit((formValues) =>
                   this.props.editUser(formValues, this.props.history)
                 )}
               >
@@ -104,11 +104,13 @@ class Account extends React.Component {
                 {this.props.editUserError && this.props.editUserError}
               </div>
               <br />
-              <p>
-                <Link style={{ color: "#f76b1a" }} to="/change-password">
-                  Change password
-                </Link>
-              </p>
+              {!this.props.googleId && (
+                <p>
+                  <Link style={{ color: "#f76b1a" }} to="/change-password">
+                    Change password
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -118,7 +120,7 @@ class Account extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -158,11 +160,12 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
+    googleId: state.auth.user.googleId,
     editUserError: state.auth.editUserError,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 

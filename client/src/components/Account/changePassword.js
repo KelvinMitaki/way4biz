@@ -6,6 +6,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import FormField from "../Checkout/FormField";
 import { connect } from "react-redux";
 import { updatePasswordLoggedIn } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 export class ChangePassword extends Component {
   render() {
@@ -19,7 +20,7 @@ export class ChangePassword extends Component {
               id="address-form"
             >
               <h3 className="legend">Change Password</h3>
-              <hr />
+              {/* <hr /> */}
               <form
                 onSubmit={this.props.handleSubmit(formValues => {
                   this.props.updatePasswordLoggedIn(
@@ -105,6 +106,8 @@ const mapStateToProps = state => {
     updatePasswordError: state.auth.updatePasswordError
   };
 };
-export default reduxForm({ validate, form: "ChangePassword" })(
-  connect(mapStateToProps, { updatePasswordLoggedIn })(ChangePassword)
+export default withRouter(
+  reduxForm({ validate, form: "ChangePassword" })(
+    connect(mapStateToProps, { updatePasswordLoggedIn })(ChangePassword)
+  )
 );

@@ -39,11 +39,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: large;
 }
 
 .price {
   margin: 10px 0px;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .price-before {
@@ -66,5 +67,13 @@
 
   .product:hover {
     box-shadow: none;
+  }
+
+  .product-name {
+    font-size: large;
+  }
+
+  .price {
+    font-weight: normal;
   }
 }
