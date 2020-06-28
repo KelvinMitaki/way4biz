@@ -37,12 +37,22 @@ class Search extends React.Component {
         </div>
         {this.state.typing !== "" ? (
           <div className="search-output tertiary-background">
-            <h2>checking</h2>
+            {this.props.products.length > 0 &&
+              this.props.products.map(product => (
+                <div key={product._id}>
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                </div>
+              ))}
           </div>
         ) : null}
       </div>
     );
   }
 }
-
-export default connect(null, { fetchProducts })(Search);
+const mapStateToProps = state => {
+  return {
+    products: state.product.products
+  };
+};
+export default connect(mapStateToProps, { fetchProducts })(Search);
