@@ -1,7 +1,7 @@
 .cart-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 20px 100px;
   margin-bottom: 70px;
 }
 
@@ -114,7 +114,13 @@
     flex-basis: 100%;
   }
 
-  /* .shopping-btn {
+  .col5 {
+    flex-basis: 100%;
+  }
+
+  #cart-total-checkout {
+    padding: 20px;
+    width: 90% !important;
     margin: auto;
-  } */
+  }
 }
