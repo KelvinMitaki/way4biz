@@ -18,7 +18,7 @@ const category = [
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
+  { key: "meru", text: "Meru", value: "meru" },
 ];
 
 class AddressForm extends React.Component {
@@ -33,9 +33,9 @@ class AddressForm extends React.Component {
               id="address-form"
             >
               <h3 className="legend">Address</h3>
-              <hr />
+              {/* <hr /> */}
               <form
-                onSubmit={this.props.handleSubmit(formValues =>
+                onSubmit={this.props.handleSubmit((formValues) =>
                   this.props.checkoutUser(formValues, this.props.history)
                 )}
               >
@@ -106,7 +106,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -146,11 +146,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
     loading: state.auth.loading,
-    checkoutUserError: state.auth.checkoutUserError
+    checkoutUserError: state.auth.checkoutUserError,
   };
 };
 export default withRouter(

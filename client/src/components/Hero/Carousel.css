@@ -1,23 +1,26 @@
-.hero-carousel,.slider{
-    height:calc(80vh - 20px);
+.hero-carousel,
+.slider {
+  height: calc(80vh - 20px);
 }
 
-.slider img{
-    height:100%;
-    width:100%;
+.slider img {
+  height: 100%;
+  width: 100%;
 }
 
-@media screen and (min-height:950px){
-    .hero-carousel,.slider{
-        height:calc(50vh - 20px);
-    }
+@media screen and (min-height: 950px) {
+  .hero-carousel,
+  .slider {
+    height: calc(50vh - 20px);
+  }
 }
 
-@media screen and (max-width:960px){
-    .hero-carousel,.slider{
-        width: 100vw;
-        height:40vh;
-        position: relative;
-        left: 0px;
-    }
+@media screen and (max-width: 960px) {
+  .hero-carousel,
+  .slider {
+    width: 100vw;
+    height: 40vh;
+    position: relative;
+    left: 0px;
+  }
 }

@@ -5,8 +5,27 @@ import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
-
+// import Popup from "reactjs-popup";
+// import { Link } from "react-router-dom";
 class Product extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShow: false,
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.setState((prevState) => {
+      return {
+        modalShow: !prevState.modalShow,
+      };
+    });
+  }
+
+  // handleModalClose
   getImageProps() {
     return {
       smallImage: {
@@ -79,15 +98,13 @@ class Product extends React.Component {
                   and the like).
                 </p>
               </div>
-              {/* <hr /> */}
-              <div id="cart-quantity">
-                <button className="btn btn-md add-to-cart ml-5 btn-block">
+              <div>
+                <button className="btn btn-md my-2 add-to-cart btn-block">
                   Add to Cart
                 </button>
               </div>
-              {/* <hr /> */}
               <div id="features">
-                <h4>Features and Specifications</h4>
+                <h5>Features and Specifications</h5>
                 <ul>
                   <li>32 inches</li>
                   <li>IPS Technology</li>

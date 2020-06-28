@@ -20,7 +20,7 @@ export class ChangePassword extends Component {
               id="address-form"
             >
               <h3 className="legend">Change Password</h3>
-              <hr />
+              {/* <hr /> */}
               <form
                 onSubmit={this.props.handleSubmit(formValues => {
                   this.props.updatePasswordLoggedIn(

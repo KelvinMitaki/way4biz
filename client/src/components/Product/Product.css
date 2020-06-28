@@ -84,7 +84,12 @@ hr {
   background-color: #f76b1a;
   color: #fff;
   height: 40px;
-  margin: 0px !important;
+  /* margin: 0px !imp; */
+}
+
+.add-to-cart:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 @media screen and (max-width: 960px) {
