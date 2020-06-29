@@ -37,7 +37,7 @@ class App extends React.Component {
                     path="/password/reset"
                     exact
                     render={() =>
-                      this.props.isSignedIn === false ? (
+                      this.props.isSignedIn === true ? (
                         <Redirect to="/" />
                       ) : (
                         <ForgotPassword />
@@ -121,10 +121,10 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 

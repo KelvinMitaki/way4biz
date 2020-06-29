@@ -4,6 +4,9 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import FormField from "../Checkout/FormField";
+import { connect } from "react-redux";
+import { updatePasswordLoggedIn } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 export class ChangePassword extends Component {
   render() {
@@ -19,9 +22,11 @@ export class ChangePassword extends Component {
               <h3 className="legend">Change Password</h3>
               {/* <hr /> */}
               <form
-                onSubmit={this.props.handleSubmit((formValues) => {
-                  console.log(formValues);
-                  return this.props.history.push("/");
+                onSubmit={this.props.handleSubmit(formValues => {
+                  this.props.updatePasswordLoggedIn(
+                    formValues,
+                    this.props.history
+                  );
                 })}
               >
                 <Field
@@ -43,13 +48,27 @@ export class ChangePassword extends Component {
                   component={FormField}
                 />
                 <button
-                  style={{ cursor: "pointer" }}
-                  className="btn btn-md  auth-btn btn-block mt-3"
-                  disabled={this.props.invalid}
+                  className="btn btn-md btn-block address-btn mt-3 "
+                  disabled={!this.props.valid || this.props.loading}
                   type="submit"
                 >
-                  Change Password
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Save And Continue</span>
+                  )}
                 </button>
+                <div style={{ color: "red" }}>
+                  {this.props.updatePasswordError &&
+                    this.props.updatePasswordError}
+                </div>
               </form>
             </div>
           </div>
@@ -61,7 +80,7 @@ export class ChangePassword extends Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
 
   if (
@@ -81,5 +100,14 @@ const validate = (formValues) => {
   }
   return errors;
 };
-
-export default reduxForm({ validate, form: "ChangePassword" })(ChangePassword);
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    updatePasswordError: state.auth.updatePasswordError
+  };
+};
+export default withRouter(
+  reduxForm({ validate, form: "ChangePassword" })(
+    connect(mapStateToProps, { updatePasswordLoggedIn })(ChangePassword)
+  )
+);

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import AuthField from "./AuthField";
 import { connect } from "react-redux";
 import { passwordReset } from "../../redux/actions";
 import validator from "validator";
+import FormField from "../Checkout/FormField";
+import "../Account/Account.css";
 
 export class ForgotPassword extends Component {
   render() {
@@ -11,6 +12,7 @@ export class ForgotPassword extends Component {
     return (
       <div>
         <h3>Reset your password</h3>
+
         <form
           onSubmit={this.props.handleSubmit(formValues =>
             this.props.passwordReset(formValues)
@@ -19,13 +21,13 @@ export class ForgotPassword extends Component {
           <p>
             To reset your password, enter the email address you use to sign in.
           </p>
-          <Field type="text" name="email" label="Email" component={AuthField} />
+          <Field type="text" name="email" label="Email" component={FormField} />
           <div style={{ color: "red", width: "400px" }}>
             {this.props.error && this.props.error}
           </div>
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md  auth-btn mt-3"
+            className="btn btn-md btn-block address-btn mt-3"
             disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
