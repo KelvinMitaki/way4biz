@@ -27,10 +27,16 @@
   background-color: #00001e;
 }
 
-.primary-button {
-  color: #fff;
+.primary-button,
+.primary-button:hover {
   background-color: #00001e;
-  border: none;
+  border: 1px solid #00001e;
+  height: 50px;
+  border-radius: 40px;
+  cursor: pointer;
+  color: #f76b1a;
+  width: 400px;
+  margin: auto;
 }
 
 .primary-button:focus {
@@ -38,9 +44,9 @@
   outline: none;
 }
 
-.primary-button:hover {
+/* .primary-button:hover {
   color: #fff;
-}
+} */
 
 .primary-link {
   color: #000;
@@ -66,12 +72,12 @@
 
 .secondary-button,
 .secondary-button:hover {
-  background-color: #00001e;
-  border: 1px solid #00001e;
+  color: #fff;
+  background-color: #f76b1a;
   height: 50px;
   border-radius: 40px;
   cursor: pointer;
-  color: #f76b1a;
+  color: #fff;
   width: 400px;
   margin: auto;
 }
@@ -121,6 +127,7 @@
 @media screen and (max-width: 920px) {
   .secondary-button,
   .secondary-google,
+  .primary-button,
   .forgot-password-link-wrapper,
   .form-primary-error {
     width: 90vw !important;

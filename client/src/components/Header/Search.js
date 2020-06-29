@@ -29,7 +29,7 @@ class Search extends React.Component {
             placeholder="bata shoes"
           />
           <div className="input-group-append">
-            <button id="header-search-btn" className="primary-button">
+            <button id="header-search-btn">
               <i className="fa fa-search " style={{ fontSize: "25px" }}></i>
               <span>Search</span>
             </button>

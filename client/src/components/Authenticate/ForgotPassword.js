@@ -3,53 +3,73 @@ import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { passwordReset } from "../../redux/actions";
 import validator from "validator";
-import FormField from "../Checkout/FormField";
+import AuthField from "./AuthField";
 import "../Account/Account.css";
+
+import AuthHeader from "./AuthHeader";
 
 export class ForgotPassword extends Component {
   render() {
-    if (this.props.success) return <h3>{this.props.success}</h3>;
     return (
       <div>
-        <h3>Reset your password</h3>
+        <AuthHeader />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 my-5 mx-auto">
+              {this.props.success ? (
+                <h3>{this.props.success}</h3>
+              ) : (
+                <React.Fragment>
+                  <h3 className="mb-3">Reset your password</h3>
 
-        <form
-          onSubmit={this.props.handleSubmit(formValues =>
-            this.props.passwordReset(formValues)
-          )}
-        >
-          <p>
-            To reset your password, enter the email address you use to sign in.
-          </p>
-          <Field type="text" name="email" label="Email" component={FormField} />
-          <div style={{ color: "red", width: "400px" }}>
-            {this.props.error && this.props.error}
+                  <form
+                    onSubmit={this.props.handleSubmit((formValues) =>
+                      this.props.passwordReset(formValues)
+                    )}
+                  >
+                    <p className="mb-3">
+                      To reset your password, enter the email address you use to
+                      sign in.
+                    </p>
+                    <Field
+                      type="text"
+                      name="email"
+                      label="Email"
+                      component={AuthField}
+                    />
+                    <div style={{ color: "red", width: "400px" }}>
+                      {this.props.error && this.props.error}
+                    </div>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      className="btn btn-md btn-block secondary-button mt-3"
+                      disabled={!this.props.valid || this.props.loading}
+                      type="submit"
+                    >
+                      {this.props.loading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
+                      {this.props.loading ? (
+                        <span> {"  "}Loading...</span>
+                      ) : (
+                        <span>Reset</span>
+                      )}
+                    </button>
+                  </form>
+                </React.Fragment>
+              )}
+            </div>
           </div>
-          <button
-            style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block address-btn mt-3"
-            disabled={!this.props.valid || this.props.loading}
-            type="submit"
-          >
-            {this.props.loading && (
-              <span
-                className="spinner-grow spinner-grow-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            )}
-            {this.props.loading ? (
-              <span> {"  "}Loading...</span>
-            ) : (
-              <span>Reset</span>
-            )}
-          </button>
-        </form>
+        </div>
       </div>
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||
@@ -59,11 +79,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    success: state.auth.success
+    success: state.auth.success,
   };
 };
 export default reduxForm({ validate, form: "ForgotPassword" })(

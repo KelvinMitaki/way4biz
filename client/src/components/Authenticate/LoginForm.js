@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
             component={AuthField}
           />
           <button
-            className="btn btn-md btn-block auth-btn mt-3 secondary-button"
+            className="btn btn-md btn-block auth-btn mt-3 primary-button"
             disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
