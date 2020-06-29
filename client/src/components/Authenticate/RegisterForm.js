@@ -16,7 +16,7 @@ class RegisterForm extends React.Component {
     return (
       <div>
         <form
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             this.props.register(formValues);
           })}
         >
@@ -68,7 +68,7 @@ class RegisterForm extends React.Component {
           <strong>* is required</strong>
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block secondary-button mt-3"
+            className="btn btn-md btn-block primary-button mt-3"
             disabled={!this.props.valid || this.props.loading}
             type="submit"
           >
@@ -98,7 +98,7 @@ class RegisterForm extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -135,11 +135,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
     loading: state.auth.loading,
-    registerError: state.auth.registerError
+    registerError: state.auth.registerError,
   };
 };
 export default withRouter(
