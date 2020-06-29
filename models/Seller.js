@@ -32,6 +32,10 @@ const SellerSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  city: {
+    type: String,
+    required: true
+  },
   streetAddress: {
     type: String,
     required: true

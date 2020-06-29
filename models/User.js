@@ -40,9 +40,6 @@ const UserSchema = new mongoose.Schema({
   googleId: {
     type: String
   },
-  address: {
-    type: String
-  },
   cart: {
     type: mongoose.Types.ObjectId,
     ref: "Cart"
