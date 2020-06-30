@@ -18,7 +18,9 @@
   #seller-dashboard-header {
     height: 80px;
   }
+}
 
+@media screen and (max-width: 540px) {
   #seller-logo {
     display: none;
   }

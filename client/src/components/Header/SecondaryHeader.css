@@ -81,7 +81,7 @@
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 540px) {
   .owl-item {
     font-size: medium !important;
     /* min-width: 80px; */

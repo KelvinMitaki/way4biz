@@ -32,13 +32,19 @@
   margin-left: 20px;
 }
 
+@media screen and (min-width: 961px) {
+  #hamburger-menu-wrapper {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .seller-menu-section-wrapper {
     top: 0px;
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 540px) {
   .seller-menu-section-wrapper {
     top: -80px;
   }
