@@ -44,10 +44,6 @@
   outline: none;
 }
 
-/* .primary-button:hover {
-  color: #fff;
-} */
-
 .primary-link {
   color: #000;
 }
@@ -122,6 +118,10 @@
   margin: 10px 0px;
   width: 400px;
   margin: auto;
+}
+
+.dashboard-wrapper {
+  padding: 0px;
 }
 
 @media screen and (max-width: 920px) {

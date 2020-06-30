@@ -1,0 +1,10 @@
+#seller-dashboard-menu {
+  height: calc(100vh - 90px);
+  width: 100%;
+}
+
+@media screen and (max-width: 960px) {
+  #seller-dashboard-menu {
+    display: none;
+  }
+}
