@@ -5,6 +5,8 @@ import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
+import TextareaForm from "../Checkout/TextareaField";
+import SellerTextArea from "./SellerTextArea";
 
 export class SellerRegister extends Component {
   render() {
@@ -53,25 +55,25 @@ export class SellerRegister extends Component {
           <Field
             type="password"
             name="storeName"
-            label="Confirm Password"
+            label="Store Name"
             component={AuthField}
           />
           <Field
             type="password"
             name="description"
-            label="Confirm Password"
-            component={AuthField}
+            label="Description"
+            component={SellerTextArea}
           />
           <Field
             type="password"
             name="city"
-            label="Confirm Password"
+            label="City"
             component={AuthField}
           />
           <Field
             type="password"
             name="address"
-            label="Confirm Password"
+            label="Street Address"
             component={AuthField}
           />
           <button
@@ -93,6 +95,8 @@ export class SellerRegister extends Component {
               <span>Register</span>
             )}
           </button>
+          <br />
+          <br />
         </form>
       </div>
     );
