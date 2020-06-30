@@ -4,19 +4,22 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "./SecondaryHeader.css";
+import { connect } from "react-redux";
 
 class SecondaryHeader extends React.Component {
   render() {
     return (
       <div className="secondary-header d-flex primary-background">
         <div id="large-screen-secondary-header" className="d-flex">
-          <Link
-            // activeClassName="secondary-header-active"
-            className="mx-4 secondary-header-link"
-            to="/sell"
-          >
-            Sell with us
-          </Link>
+          {!this.props.isSignedIn && (
+            <Link
+              // activeClassName="secondary-header-active"
+              className="mx-4 secondary-header-link"
+              to="/seller/register"
+            >
+              Sell with us
+            </Link>
+          )}
           <Link className="mx-4 secondary-header-link" to="/customer-service">
             Customer Service
           </Link>
@@ -35,9 +38,11 @@ class SecondaryHeader extends React.Component {
             autoplay={true}
             autoplayTimeout={3000}
           >
-            <Link className="carousel-link" to="/sell">
-              Sell with us
-            </Link>
+            {!this.props.isSignedIn && (
+              <Link className="carousel-link" to="/seller/register">
+                Sell with us
+              </Link>
+            )}
 
             <Link className="carousel-link" to="/customer-service">
               Customer Service
@@ -54,5 +59,10 @@ class SecondaryHeader extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  };
+};
 
-export default SecondaryHeader;
+export default connect(mapStateToProps)(SecondaryHeader);

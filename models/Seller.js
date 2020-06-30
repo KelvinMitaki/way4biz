@@ -47,6 +47,10 @@ const SellerSchema = new mongoose.Schema({
     type: String,
     default: false
   },
+  verifiedPhoneNumber: {
+    type: Boolean,
+    default: false
+  },
   verified: {
     type: Boolean,
     default: false

@@ -18,7 +18,9 @@ import {
   FETCH_PRODUCTS,
   FETCH_PRODUCTS_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
-  UPDATE_PASSWORD_LOGGED_IN_FAILED
+  UPDATE_PASSWORD_LOGGED_IN_FAILED,
+  REGISTER_SELLER,
+  REGISTER_SELLER_FAILED
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -154,5 +156,20 @@ export const updatePasswordLoggedIn = (
     dispatch({ type: LOADING_STOP });
     dispatch({ type: UPDATE_PASSWORD_LOGGED_IN_FAILED });
     console.log(error);
+  }
+};
+
+export const registerSeller = credentials => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+
+    const res = await axios.post("/api/seller/register", credentials);
+    console.log(res.data);
+    dispatch({ type: REGISTER_SELLER, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: REGISTER_SELLER_FAILED });
+    dispatch({ type: LOADING_STOP });
   }
 };
