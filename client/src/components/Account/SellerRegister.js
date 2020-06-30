@@ -8,12 +8,23 @@ import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
 import { registerSeller } from "../../redux/actions";
+import AuthHeader from "../Authenticate/AuthHeader";
 
 export class SellerRegister extends Component {
   render() {
-    if (this.props.showEmailConfirm) return <EmailConfirm />;
+    if (this.props.showEmailConfirm) {
+      return (
+        <React.Fragment>
+          <AuthHeader />
+          <EmailConfirm />
+        </React.Fragment>
+      );
+    }
     return (
       <div>
+        <AuthHeader />
+        <br />
+        <br />
         <form
           onSubmit={this.props.handleSubmit(formValues => {
             const { registerSeller } = this.props;

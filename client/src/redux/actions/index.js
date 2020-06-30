@@ -164,7 +164,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
     dispatch({ type: LOADING_START });
 
     const res = await axios.post("/api/seller/register", credentials);
-    console.log(res.data.message);
+
     dispatch({ type: REGISTER_SELLER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
