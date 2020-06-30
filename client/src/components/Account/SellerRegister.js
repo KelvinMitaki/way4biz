@@ -8,12 +8,23 @@ import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
 import { registerSeller } from "../../redux/actions";
+import AuthHeader from "../Authenticate/AuthHeader";
 
 export class SellerRegister extends Component {
   render() {
-    if (this.props.showEmailConfirm) return <EmailConfirm />;
+    if (this.props.showEmailConfirm) {
+      return (
+        <React.Fragment>
+          <AuthHeader />
+          <EmailConfirm />
+        </React.Fragment>
+      );
+    }
     return (
       <div>
+        <AuthHeader />
+        <br />
+        <br />
         <form
           onSubmit={this.props.handleSubmit(formValues => {
             const { registerSeller } = this.props;
@@ -56,25 +67,20 @@ export class SellerRegister extends Component {
             component={AuthField}
           />
           <Field
-            type="password"
+            type="text"
             name="storeName"
             label="Store Name"
             component={AuthField}
           />
           <Field
-            type="password"
+            type="text"
             name="description"
             label="Description"
             component={SellerTextArea}
           />
+          <Field type="text" name="city" label="City" component={AuthField} />
           <Field
-            type="password"
-            name="city"
-            label="City"
-            component={AuthField}
-          />
-          <Field
-            type="password"
+            type="text"
             name="address"
             label="Street Address"
             component={AuthField}
@@ -98,6 +104,9 @@ export class SellerRegister extends Component {
               <span>Register</span>
             )}
           </button>
+          <div className="form-primary-error">
+            {this.props.sellerRegisterError && this.props.sellerRegisterError}
+          </div>
           <br />
           <br />
         </form>
@@ -174,7 +183,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    showEmailConfirm: state.auth.showEmailConfirm
+    showEmailConfirm: state.auth.showEmailConfirm,
+    sellerRegisterError: state.auth.sellerRegisterError
   };
 };
 export default withRouter(

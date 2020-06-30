@@ -159,17 +159,39 @@ export const updatePasswordLoggedIn = (
   }
 };
 
-export const registerSeller = credentials => async dispatch => {
+export const registerSeller = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
 
     const res = await axios.post("/api/seller/register", credentials);
-    console.log(res.data);
+
     dispatch({ type: REGISTER_SELLER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
-    console.log(error);
-    dispatch({ type: REGISTER_SELLER_FAILED });
+    if (error.response.data.email) {
+      getState().form.SellerRegister.values.email = "";
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: error.response.data.email
+      });
+      dispatch({ type: LOADING_STOP });
+      return;
+    }
+    if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: "That phone number already exists"
+      });
+      dispatch({ type: LOADING_STOP });
+      return;
+    }
+    getState().form.SellerRegister.values[
+      Object.keys(error.response.data.keyPattern)[0]
+    ] = "";
+    dispatch({
+      type: REGISTER_SELLER_FAILED,
+      payload: "That store name already exists"
+    });
     dispatch({ type: LOADING_STOP });
   }
 };

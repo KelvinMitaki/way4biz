@@ -77,13 +77,15 @@ route.post(
       }
       const userExists = await User.findOne({ email });
       if (userExists) {
-        return res.status(401).send("A user with that email already exists");
+        return res
+          .status(401)
+          .send({ email: "A user with that email already exists" });
       }
       const sellerExists = await Seller.findOne({ email });
       if (sellerExists) {
         return res
           .status(401)
-          .send({ message: "A seller with that email already exists" });
+          .send({ email: "A seller with that email already exists" });
       }
       // **TODO**  CHECK IF EMAIL IS VALID VIA SENDGRID
       const hashedPassword = await bcrypt.hash(password, 12);
@@ -105,6 +107,7 @@ route.post(
           expiresIn: "1 hour"
         }
       );
+      await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -127,7 +130,6 @@ route.post(
           console.log(info);
         }
       );
-      await seller.save();
       res.status(201).send({
         message:
           "An email has been sent to your email address, please check it to confirm your account"
