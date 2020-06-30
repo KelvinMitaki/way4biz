@@ -36,7 +36,10 @@ const SellerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  streetAddress: {
+  town: {
+    type: String
+  },
+  address: {
     type: String,
     required: true
   },

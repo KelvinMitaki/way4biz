@@ -49,7 +49,7 @@ route.post(
     .isNumeric()
     .withMessage("Please enter a valid phone number"),
   check("city").trim().not().isEmpty().withMessage("Please enter a valid city"),
-  check("streetAddress")
+  check("address")
     .trim()
     .not()
     .isEmpty()
@@ -70,7 +70,7 @@ route.post(
         description,
         storeName,
         city,
-        streetAddress
+        address
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -96,7 +96,7 @@ route.post(
         description,
         storeName,
         city,
-        streetAddress
+        address
       });
       const token = jwt.sign(
         { _id: seller._id },
