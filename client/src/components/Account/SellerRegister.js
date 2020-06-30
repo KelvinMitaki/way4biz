@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
+import { registerSeller } from "../../redux/actions";
 
 export class SellerRegister extends Component {
   render() {
@@ -15,7 +16,8 @@ export class SellerRegister extends Component {
       <div>
         <form
           onSubmit={this.props.handleSubmit(formValues => {
-            console.log(formValues);
+            const { registerSeller } = this.props;
+            registerSeller(formValues);
           })}
         >
           <Field
@@ -178,7 +180,6 @@ const mapStateToProps = state => {
 export default withRouter(
   reduxForm({
     validate,
-    form: "SellerRegister",
-    destroyOnUnmount: false
-  })(connect(mapStateToProps)(SellerRegister))
+    form: "SellerRegister"
+  })(connect(mapStateToProps, { registerSeller })(SellerRegister))
 );

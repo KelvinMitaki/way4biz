@@ -162,6 +162,7 @@ export const updatePasswordLoggedIn = (
 export const registerSeller = credentials => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
+
     const res = await axios.post("/api/seller/register", credentials);
     console.log(res.data);
     dispatch({ type: REGISTER_SELLER, payload: res.data });
