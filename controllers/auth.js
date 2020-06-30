@@ -7,6 +7,10 @@ const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const { check, validationResult } = require("express-validator");
 const passport = require("passport");
+const client = require("twilio")(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
@@ -355,6 +359,36 @@ route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
     user.password = hashedPassowrd;
     await user.save();
     res.send({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post("/twilio", async (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    const data = await client.verify
+      .services(process.env.TWILIO_SID)
+      .verifications.create({
+        to: `+254${phoneNumber}`,
+        channel: "sms"
+      });
+    res.send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post("/twilio/verify", async (req, res) => {
+  try {
+    const { phoneNumber, code } = req.body;
+    const data = await client.verify
+      .services(process.env.TWILIO_SID)
+      .verificationChecks.create({
+        to: `+254${phoneNumber}`,
+        code
+      });
+    res.send(data);
   } catch (error) {
     res.status(500).send(error);
   }
