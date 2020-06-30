@@ -107,7 +107,7 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_SELLER_FAILED:
       return {
         ...state,
-        sellerRegisterError: "That email address is already in use"
+        sellerRegisterError: action.payload
       };
     default:
       return state;
