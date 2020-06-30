@@ -98,6 +98,9 @@ export class SellerRegister extends Component {
               <span>Register</span>
             )}
           </button>
+          <div className="form-primary-error">
+            {this.props.sellerRegisterError && this.props.sellerRegisterError}
+          </div>
           <br />
           <br />
         </form>
@@ -174,7 +177,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    showEmailConfirm: state.auth.showEmailConfirm
+    showEmailConfirm: state.auth.showEmailConfirm,
+    sellerRegisterError: state.auth.sellerRegisterError
   };
 };
 export default withRouter(

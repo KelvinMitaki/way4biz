@@ -15,7 +15,8 @@ import {
   CHECKOUT_USER_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
-  REGISTER_SELLER
+  REGISTER_SELLER,
+  REGISTER_SELLER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -29,7 +30,8 @@ const INITIAL_STATE = {
   editUserError: null,
   checkoutUserError: null,
   updatePasswordMessage: null,
-  updatePasswordError: null
+  updatePasswordError: null,
+  sellerRegisterError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -102,6 +104,11 @@ export default (state = INITIAL_STATE, action) => {
       };
     case REGISTER_SELLER:
       return { ...state, showEmailConfirm: true };
+    case REGISTER_SELLER_FAILED:
+      return {
+        ...state,
+        sellerRegisterError: "That email address is already in use"
+      };
     default:
       return state;
   }

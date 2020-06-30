@@ -11,8 +11,8 @@ const SellerSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -28,7 +28,7 @@ const SellerSchema = new mongoose.Schema({
     unique: true
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     required: true,
     unique: true
   },

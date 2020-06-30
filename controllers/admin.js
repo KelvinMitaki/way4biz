@@ -105,6 +105,7 @@ route.post(
           expiresIn: "1 hour"
         }
       );
+      await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -127,7 +128,6 @@ route.post(
           console.log(info);
         }
       );
-      await seller.save();
       res.status(201).send({
         message:
           "An email has been sent to your email address, please check it to confirm your account"

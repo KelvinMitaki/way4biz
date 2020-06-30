@@ -159,7 +159,7 @@ export const updatePasswordLoggedIn = (
   }
 };
 
-export const registerSeller = credentials => async dispatch => {
+export const registerSeller = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
 
@@ -169,6 +169,7 @@ export const registerSeller = credentials => async dispatch => {
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     console.log(error);
+    getState().form.SellerRegister.values.email = "";
     dispatch({ type: REGISTER_SELLER_FAILED });
     dispatch({ type: LOADING_STOP });
   }

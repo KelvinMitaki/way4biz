@@ -139,6 +139,7 @@ route.post(
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
         expiresIn: "1 hour"
       });
+      await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -161,7 +162,6 @@ route.post(
           console.log(info);
         }
       );
-      await user.save();
       res.status(201).send({
         message:
           "An email has been sent to your email address, please check it to confirm your account"
