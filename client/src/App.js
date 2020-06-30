@@ -18,6 +18,7 @@ import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
+import SellerRegister from "./components/Account/SellerRegister";
 
 class App extends React.Component {
   componentDidMount() {
