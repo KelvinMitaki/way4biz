@@ -115,7 +115,7 @@ route.post(
       <body>
           <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
           <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
-              <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}>here</a> to confirm your email
+              <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller>here</a> to confirm your email
           </p>
       </body>
       </html>`
@@ -139,6 +139,12 @@ route.post(
 );
 
 // CONFIRM PHONE NUMBER
+route.get(`/api/confirm/email/:emailToken/seller`, async (req, res) => {
+  try {
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {
