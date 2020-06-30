@@ -39,6 +39,14 @@ const SellerSchema = new mongoose.Schema({
   streetAddress: {
     type: String,
     required: true
+  },
+  isSeller: {
+    type: String,
+    default: false
+  },
+  verified: {
+    type: Boolean,
+    default: false
   }
 });
 
