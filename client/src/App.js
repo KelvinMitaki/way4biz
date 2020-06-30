@@ -17,7 +17,7 @@ import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
-import SellerRegister from "./components/Account/SellerRegister";
+import SellerDashBoard from "./components/Seller/SellerDashBoard";
 
 class App extends React.Component {
   componentDidMount() {
@@ -31,6 +31,7 @@ class App extends React.Component {
           <MobileLogo />
           <div className="content">
             <Route path="/" exact component={Home} />
+            <Route path="/seller-dashboard" exact component={SellerDashBoard} />
             <Route
               render={() => (
                 <Switch>
