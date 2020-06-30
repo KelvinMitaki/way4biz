@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { reduxForm } from "redux-form";
+import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
