@@ -5,11 +5,12 @@ import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import TextareaForm from "../Checkout/TextareaField";
 import SellerTextArea from "./SellerTextArea";
+import EmailConfirm from "../Authenticate/EmailConfirm";
 
 export class SellerRegister extends Component {
   render() {
+    if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
         <form
@@ -170,7 +171,8 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    showEmailConfirm: state.auth.showEmailConfirm
   };
 };
 export default withRouter(
