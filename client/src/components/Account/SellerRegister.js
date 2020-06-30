@@ -56,25 +56,20 @@ export class SellerRegister extends Component {
             component={AuthField}
           />
           <Field
-            type="password"
+            type="text"
             name="storeName"
             label="Store Name"
             component={AuthField}
           />
           <Field
-            type="password"
+            type="text"
             name="description"
             label="Description"
             component={SellerTextArea}
           />
+          <Field type="text" name="city" label="City" component={AuthField} />
           <Field
-            type="password"
-            name="city"
-            label="City"
-            component={AuthField}
-          />
-          <Field
-            type="password"
+            type="text"
             name="address"
             label="Street Address"
             component={AuthField}
