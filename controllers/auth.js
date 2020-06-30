@@ -63,7 +63,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { email, password } = req.body;
       const user = await User.findOne({ email });
@@ -108,7 +108,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const {
         email,
@@ -187,7 +187,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { currentPassword, newPassword, confirmNewPassword } = req.body;
       const isMatch = await bcrypt.compare(

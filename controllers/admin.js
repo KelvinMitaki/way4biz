@@ -58,7 +58,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const {
         email,
@@ -137,6 +137,9 @@ route.post(
     }
   }
 );
+
+// CONFIRM PHONE NUMBER
+
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {
     const { sellerId } = req.params;
@@ -147,32 +150,61 @@ route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   }
 });
 
-route.post("/api/product/:sellerId", isSeller, async (req, res) => {
-  try {
-    const { sellerId } = req.params;
-    const {
-      name,
-      price,
-      stockQuantity,
-      subcategory,
-      description,
-      category
-    } = req.body;
-    const product = new Product({
-      name,
-      price,
-      stockQuantity,
-      category,
-      subcategory,
-      seller: sellerId,
-      description
-    });
-    await product.save();
-    res.status(201).send(product);
-  } catch (error) {
-    res.status(500).send(error);
+route.post(
+  "/api/product/:sellerId",
+  check("name").trim().not().isEmpty().withMessage("Please enter a valid name"),
+  check("price").isFloat().withMessage("please enter a valid price"),
+  check("stockQuantity")
+    .isNumeric()
+    .withMessage("please enter a valid stock quantity"),
+  check("subcategory")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("please enter a valid sub category"),
+  check("description")
+    .trim()
+    .isLength({ min: 20 })
+    .withMessage(
+      "Please enter a valid description with a minimum of 20 characters"
+    ),
+  check("category")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid category"),
+  isSeller,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(401).send({ message: errors.array()[0].msg });
+    }
+    try {
+      const { sellerId } = req.params;
+      const {
+        name,
+        price,
+        stockQuantity,
+        subcategory,
+        description,
+        category
+      } = req.body;
+      const product = new Product({
+        name,
+        price,
+        stockQuantity,
+        category,
+        subcategory,
+        seller: sellerId,
+        description
+      });
+      await product.save();
+      res.status(201).send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
-});
+);
 
 route.patch("/api/product/:sellerId/:productId", isSeller, async (req, res) => {
   try {
