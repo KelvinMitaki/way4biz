@@ -387,18 +387,31 @@ route.patch("/api/user/edit/:userId", auth, async (req, res) => {
     const { userId } = req.params;
     const { firstName, lastName, address, city, town, phoneNumber } = req.body;
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(401).send({ message: "User not found" });
+    const seller = await Seller.findById(userId);
+    if (user) {
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.address = address;
+      user.city = city;
+      user.town = town;
+      user.phoneNumber = phoneNumber;
+      await user.save();
+      const isLoggedIn = req.session.isLoggedIn;
+      return res.send({ user, isLoggedIn });
     }
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.address = address;
-    user.city = city;
-    user.town = town;
-    user.phoneNumber = phoneNumber;
-    await user.save();
-    const isLoggedIn = req.session.isLoggedIn;
-    res.send({ user, isLoggedIn });
+    if (seller) {
+      seller.firstName = firstName;
+      seller.lastName = lastName;
+      seller.address = address;
+      seller.city = city;
+      seller.town = town;
+      seller.phoneNumber = phoneNumber;
+      await seller.save();
+      const isLoggedIn = req.session.isLoggedIn;
+      return res.send({ seller, isLoggedIn });
+    }
+
+    res.status(401).send({ message: "User not found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -408,17 +421,28 @@ route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.session.user._id);
-    if (!user) {
-      return res.status(404).send({ message: "No user with that ID found" });
+    const seller = await Seller.findById(req.session.user._id);
+    if (user) {
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      const hashedPassowrd = await bcrypt.hash(newPassword, 12);
+      user.password = hashedPassowrd;
+      await user.save();
+      return res.send({ message: "Password updated successfully" });
     }
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) {
-      return res.status(401).send({ message: "Passwords do not match" });
+    if (seller) {
+      const isMatch = await bcrypt.compare(currentPassword, seller.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      const hashedPassowrd = await bcrypt.hash(newPassword, 12);
+      seller.password = hashedPassowrd;
+      await seller.save();
+      return res.send({ message: "Password updated successfully" });
     }
-    const hashedPassowrd = await bcrypt.hash(newPassword, 12);
-    user.password = hashedPassowrd;
-    await user.save();
-    res.send({ message: "Password updated successfully" });
+    res.status(404).send({ message: "No user with that ID found" });
   } catch (error) {
     res.status(500).send(error);
   }
