@@ -30,8 +30,7 @@ const INITIAL_STATE = {
   editUserError: null,
   checkoutUserError: null,
   updatePasswordMessage: null,
-  updatePasswordError: null,
-  sellerRegisterError: null
+  updatePasswordError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -104,11 +103,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case REGISTER_SELLER:
       return { ...state, showEmailConfirm: true };
-    case REGISTER_SELLER_FAILED:
-      return {
-        ...state,
-        sellerRegisterError: action.payload
-      };
+
     default:
       return state;
   }

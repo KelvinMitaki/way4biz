@@ -4,6 +4,10 @@ const route = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
+const client = require("twilio")(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
@@ -140,13 +144,117 @@ route.post(
   }
 );
 
-// CONFIRM PHONE NUMBER
-route.get(`/api/confirm/email/:emailToken/seller`, async (req, res) => {
+route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   try {
+    const { emailToken } = req.params;
+    const decoded = jwt.verify(emailToken, process.env.CONFIRM_EMAIL_JWT);
+    if (!decoded._id) {
+      return res.status(401).send({ message: "Invalid token" });
+    }
+    const seller = await Seller.findById(decoded._id);
+    if (!seller) {
+      return res.status(401).send({ message: "No seller with that email" });
+    }
+    seller.verified = true;
+    await seller.save();
+    req.session.seller = seller;
+    res.redirect("/confirm/phoneNumber");
   } catch (error) {
     res.status(500).send(error);
   }
 });
+// CONFIRM PHONE NUMBER
+route.post("/api/twilio", async (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    await client.verify.services(process.env.TWILIO_SID).verifications.create({
+      to: `+254${phoneNumber}`,
+      channel: "sms"
+    });
+    req.session.phoneNumber = phoneNumber;
+    res.redirect("/api/number/verify");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/number/verify", (req, res) => {
+  try {
+    if (req.session.phoneNumber) {
+      return res.send(req.session.phoneNumber);
+    }
+    res.send({});
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post("/api/twilio/verify", async (req, res) => {
+  try {
+    const { phoneNumber, code } = req.body;
+    if (!req.session.seller) {
+      return res.redirect("/seller/register");
+    }
+    const data = await client.verify
+      .services(process.env.TWILIO_SID)
+      .verificationChecks.create({
+        to: `+254${phoneNumber}`,
+        code
+      });
+    const seller = await Seller.findById(req.session.seller._id);
+    if (!seller) {
+      return res.redirect("/seller/redirect");
+    }
+    seller.verifiedPhoneNumber = true;
+    await seller.save();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/current_seller", (req, res) => {
+  try {
+    if (req.session.seller) {
+      return res.send(req.session.seller);
+    }
+    res.send({});
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post(
+  "/api/seller/login",
+  check("email").trim().isEmail().withMessage("Please enter a valid email"),
+  check("password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Your password must be a minimun of six characters"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { email, password } = req.body;
+      const seller = await Seller.findOne({ email });
+      if (!seller) {
+        return res.status(404).send({ message: "No seller with that email" });
+      }
+      const isMatch = await bcrypt.compare(password, seller.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      if (!seller.verified) {
+        return res.status(401).send({ message: "Email not verified" });
+      }
+      req.session.user = seller;
+      req.session.isLoggedIn = true;
+      res.send(seller);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {

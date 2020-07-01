@@ -19,6 +19,10 @@ import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
 import SellerRegister from "./components/Account/SellerRegister";
+import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
+import VerifySellerNumber from "./components/Account/VerifySellerNumber";
+import SellerLogin from "./components/Account/SellerLogin";
+import ResetPassword from "./components/Authenticate/ResetPassword";
 
 class App extends React.Component {
   componentDidMount() {
@@ -51,6 +55,28 @@ class App extends React.Component {
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
                   <Route
+                    path="/confirm/phoneNumber"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerPhoneNumber />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/number/verify"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <VerifySellerNumber />
+                      )
+                    }
+                  />
+                  <Route
                     path="/seller/register"
                     exact
                     render={() =>
@@ -58,6 +84,28 @@ class App extends React.Component {
                         <Redirect to="/" />
                       ) : (
                         <SellerRegister />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/seller/sign-in"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerLogin />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/password/reset/callback"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <ResetPassword />
                       )
                     }
                   />

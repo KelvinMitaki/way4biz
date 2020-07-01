@@ -184,7 +184,7 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.auth.sellerRegisterError
+    sellerRegisterError: state.seller.sellerRegisterError
   };
 };
 export default withRouter(

@@ -1,23 +1,26 @@
-import React from "react";
-import "./LoginForm.css";
-import { reduxForm, Field } from "redux-form";
-import AuthField from "./AuthField";
-import validator from "validator";
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+import AuthField from "../Authenticate/AuthField";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logIn } from "../../redux/actions";
-import { withRouter, Link } from "react-router-dom";
+import { sellerLogIn } from "../../redux/actions";
+import validator from "validator";
+import AuthHeader from "../Authenticate/AuthHeader";
 
-class LoginForm extends React.Component {
+export class SellerLogin extends Component {
   render() {
     return (
       <div>
+        <AuthHeader />
+        <br />
+        <br />
         <div className="form-primary-error">
           {this.props.error && this.props.error}
         </div>
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit(formValues => {
-            return this.props.logIn(formValues, this.props.history);
+            return this.props.sellerLogIn(formValues, this.props.history);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -47,36 +50,18 @@ class LoginForm extends React.Component {
           </button>
         </form>
         <br />
-        <div
-          style={{
-            display: "flex",
-            fontSize: "10px",
-            justifyContent: "space-between"
-          }}
+        <p
+          style={{ textAlign: "center" }}
+          className="forgot-password-link-wrapper"
         >
-          <p className="forgot-password-link-wrapper">
-            <Link style={{ color: "#f76b1a" }} to="/password/reset">
-              Forgot password?
-            </Link>
-          </p>
-          <p className="forgot-password-link-wrapper">
-            <Link style={{ color: "#f76b1a" }} to="/seller/sign-in">
-              Sign In As A Seller
-            </Link>
-          </p>
-        </div>
-        <a
-          href="/auth/google"
-          className="btn btn-md btn-block mt-3 secondary-google"
-          type="submit"
-        >
-          Sign In With Google
-        </a>
+          <Link style={{ color: "#f76b1a" }} to="/password/reset">
+            Forgot password?
+          </Link>
+        </p>
       </div>
     );
   }
 }
-
 const validate = formValues => {
   const errors = {};
   if (
@@ -101,7 +86,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  reduxForm({ validate, destroyOnUnmount: false, form: "LoginForm" })(
-    connect(mapStateToProps, { logIn })(LoginForm)
+  reduxForm({ validate, form: "SellerLogin" })(
+    connect(mapStateToProps, { sellerLogIn })(SellerLogin)
   )
 );

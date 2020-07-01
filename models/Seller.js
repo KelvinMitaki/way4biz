@@ -28,7 +28,7 @@ const SellerSchema = new mongoose.Schema({
     unique: true
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     required: true,
     unique: true
   },
@@ -44,7 +44,7 @@ const SellerSchema = new mongoose.Schema({
     required: true
   },
   isSeller: {
-    type: String,
+    type: Boolean,
     default: false
   },
   verifiedPhoneNumber: {

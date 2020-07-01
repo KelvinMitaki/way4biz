@@ -20,7 +20,13 @@ import {
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
-  REGISTER_SELLER_FAILED
+  REGISTER_SELLER_FAILED,
+  FETCH_SELLER,
+  FETCH_SELLER_NUMBER,
+  INVALID_VERIFICATION_CODE,
+  SELLER_LOG_IN,
+  SELLER_LOG_IN_FAILED,
+  RESET_TOKEN_CHECK
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -38,6 +44,28 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
     history.push("/");
   } catch (error) {
     getState().form.LoginForm.values.password = "";
+    dispatch({ type: LOADING_STOP });
+    dispatch({ type: LOG_IN_FAILED });
+  }
+};
+export const sellerLogIn = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post("/api/seller/login", credentials);
+    if (res.data.user && res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
+    dispatch({
+      type: LOG_IN,
+      payload: res.data
+    });
+    dispatch({ type: LOADING_STOP });
+    history.push("/");
+  } catch (error) {
+    getState().form.SellerLogin.values.password = "";
     dispatch({ type: LOADING_STOP });
     dispatch({ type: LOG_IN_FAILED });
   }
@@ -193,5 +221,84 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       payload: "That store name already exists"
     });
     dispatch({ type: LOADING_STOP });
+  }
+};
+
+export const fetchSeller = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/current_seller");
+    dispatch({ type: FETCH_SELLER, payload: res.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendMessage = (formvalues, history) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post("/api/twilio", formvalues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/number/verify");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchSellerNumber = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/number/verify");
+    console.log(res.data);
+    dispatch({ type: FETCH_SELLER_NUMBER, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};
+export const verifyCode = (formValues, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    formValues.phoneNumber = getState().seller.sellerNumber.number;
+    dispatch({ type: LOADING_START });
+    await axios.post("/api/twilio/verify", formValues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/sign-in");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    getState().form.VerifySellerNumber.values.code = "";
+    dispatch({
+      type: INVALID_VERIFICATION_CODE,
+      payload: "The Verification code you entered is invalid. Please try again"
+    });
+  }
+};
+
+export const resetTokenCheck = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/password/reset/callback");
+    dispatch({ type: RESET_TOKEN_CHECK, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const forgotPassword = (formvalues, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/sign-in");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
   }
 };
