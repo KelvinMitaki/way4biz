@@ -15,6 +15,7 @@
     "react-image-magnify": "^2.7.4",
     "react-owl-carousel": "^2.3.1",
     "react-png-tooltip": "^1.2.0",
+    "react-rating-stars-component": "^1.1.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-router-scroll-top": "^0.2.1",

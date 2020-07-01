@@ -1,13 +1,13 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
-// import "react-customizable-modal/style.css";
-// import Modal from "react-customizable-modal";
+import OwlCarousel from "react-owl-carousel";
 
 import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
+import Rating from "./Rating";
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +26,6 @@ class Product extends React.Component {
     });
   }
 
-  // handleModalClose
   getImageProps() {
     return {
       smallImage: {
@@ -54,25 +53,33 @@ class Product extends React.Component {
           <div className="row" id="product">
             <div className="col-lg-6 product-imgs">
               <ReactImageMagnify {...this.getImageProps()} />
-              <div className="feature-imgs d-flex">
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
-                <div>
-                  <img src="product-imgs/1.jpg" alt="product-image" />
-                </div>
+              <div className="feature-imgs d-flex mb-4">
+                <OwlCarousel
+                  items={5}
+                  loop={true}
+                  autoplay={true}
+                  autoplayTimeout={4000}
+                  dots={true}
+                >
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                  <div>
+                    <img src="product-imgs/1.jpg" alt="product-image" />
+                  </div>
+                </OwlCarousel>
               </div>
             </div>
             <div className="col-lg-6 product-info">
@@ -82,7 +89,7 @@ class Product extends React.Component {
               </div>
               <div className="price-rating d-flex">
                 <h4>Ksh.140,000</h4>
-                <p>Stars</p>
+                <Rating />
               </div>
               <div id="prod-description">
                 <h3>Product Details</h3>

@@ -59,6 +59,8 @@ hr {
 .price-rating {
   justify-content: space-between;
   padding: 20px 10px;
+  display: flex;
+  align-items: center;
 }
 
 .price-rating h4 {

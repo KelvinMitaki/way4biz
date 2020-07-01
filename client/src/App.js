@@ -19,6 +19,8 @@ import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 class App extends React.Component {
   componentDidMount() {
