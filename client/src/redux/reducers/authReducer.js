@@ -16,8 +16,7 @@ import {
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
-  REGISTER_SELLER_FAILED,
-  FETCH_SELLER
+  REGISTER_SELLER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -31,9 +30,7 @@ const INITIAL_STATE = {
   editUserError: null,
   checkoutUserError: null,
   updatePasswordMessage: null,
-  updatePasswordError: null,
-  sellerRegisterError: null,
-  seller: null
+  updatePasswordError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -106,14 +103,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case REGISTER_SELLER:
       return { ...state, showEmailConfirm: true };
-    case REGISTER_SELLER_FAILED:
-      return {
-        ...state,
-        sellerRegisterError: action.payload
-      };
-    case FETCH_SELLER:
-      console.log(action.payload);
-      return { ...state, seller: { seller: action.payload } };
+
     default:
       return state;
   }
