@@ -17,6 +17,7 @@
 .link,
 .link:hover {
   text-decoration: none;
+  color: #fff;
 }
 
 .primary-text {

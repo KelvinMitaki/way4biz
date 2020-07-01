@@ -23,6 +23,7 @@ import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
 import VerifySellerNumber from "./components/Account/VerifySellerNumber";
 import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
+import AdminDashBoard from "./components/Admin/AdminDashBoard";
 
 class App extends React.Component {
   componentDidMount() {
@@ -36,7 +37,18 @@ class App extends React.Component {
           <MobileLogo />
           <div className="content">
             <Route path="/" exact component={Home} />
-            <Route path="/seller-dashboard" exact component={SellerDashBoard} />
+            <Route
+              path="/seller-dashboard"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerDashBoard />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route path="/admin-dashboard" exact component={AdminDashBoard} />
             <Route
               render={() => (
                 <Switch>
@@ -186,6 +198,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
+    user: state.auth.user,
     loading: state.auth.loading
   };
 };

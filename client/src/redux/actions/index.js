@@ -63,7 +63,7 @@ export const sellerLogIn = (credentials, history) => async (
       payload: res.data
     });
     dispatch({ type: LOADING_STOP });
-    history.push("/");
+    history.push("/seller-dashboard");
   } catch (error) {
     getState().form.SellerLogin.values.password = "";
     dispatch({ type: LOADING_STOP });

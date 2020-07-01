@@ -1,10 +1,13 @@
-/* .login-form{ */
-/* height:200px; */
-/* width:500px;
-    background-color: aqua; */
-/* } */
+#login-auth-links-wrapper {
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-between;
+}
 
-/* .auth-btn {
-  background-color: #f76b1a;
-  color: #fff;
-} */
+@media screen and (max-width: 960px) {
+  #login-auth-links-wrapper {
+    width: 90vw;
+    font-size: 15px;
+  }
+}

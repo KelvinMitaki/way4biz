@@ -22,8 +22,8 @@
   background-color: #f8f9f9;
   color: #f76b1a !important;
 }
-.active,
-.active:hover {
+.account-active,
+.account-active:hover {
   color: #f76b1a !important;
   font-weight: 600;
   width: 100% !important;

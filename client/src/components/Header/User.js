@@ -7,77 +7,59 @@ import { connect } from "react-redux";
 class User extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    };
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-  }
-
-  handleMouseEnter(e) {
-    this.setState((prevState, props) => {
-      return { open: !prevState.open };
-    });
   }
 
   render() {
     return (
-      <div
-        id="user-auth"
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseEnter}
-      >
-        <div
-          style={{ cursor: "pointer" }}
-          className="icon user-icon flaticon-user secondary-link"
-        >
+      <div id="user-auth" style={{ cursor: "pointer" }}>
+        <div className="icon user-icon flaticon-user secondary-link">
           {this.props.user ? (
             <span>Hello, {this.props.user.firstName} </span>
           ) : (
-            <span>Sign In | Join</span>
+            <span
+              style={{ height: "100%", display: "flex", alignItems: "center" }}
+            >
+              Sign In | Join
+            </span>
           )}
         </div>
-        {this.state.open ? (
-          <div id="auth-info">
-            {this.props.user ? (
-              <div className="my-account mt-4">
-                <NavLink
-                  activeClassName="active"
-                  to="/account"
-                  className="primary-link my-account-link"
-                >
-                  My Account
-                </NavLink>
-                <NavLink to="/orders" className="primary-link my-account-link">
-                  Orders
-                </NavLink>
-                <NavLink
-                  to="/wishlist"
-                  className="primary-link my-account-link"
-                >
-                  WishList
-                </NavLink>
+        <div id="auth-info">
+          {this.props.user ? (
+            <div className="my-account mt-4">
+              <NavLink
+                activeClassName="active"
+                to="/account"
+                className="primary-link my-account-link"
+              >
+                My Account
+              </NavLink>
+              <NavLink to="/orders" className="primary-link my-account-link">
+                Orders
+              </NavLink>
+              <NavLink to="/wishlist" className="primary-link my-account-link">
+                WishList
+              </NavLink>
 
-                <a className="logout-link" href="/api/logout">
-                  Logout
+              <a className="logout-link" href="/api/logout">
+                Logout
+              </a>
+            </div>
+          ) : (
+            <React.Fragment>
+              <p>Welcome</p>
+              <Link to="/sign-in" className="btn btn-md login">
+                Sign In
+              </Link>
+              <hr style={{ backgroundColor: "#eee" }} />
+              <p>Sign in with:</p>
+              <div className="auth-btns">
+                <a href="/auth/google" className="btn btn-md google">
+                  Google
                 </a>
               </div>
-            ) : (
-              <React.Fragment>
-                <p>Welcome</p>
-                <Link to="/sign-in" className="btn btn-md login">
-                  Sign In
-                </Link>
-                <hr style={{ backgroundColor: "#eee" }} />
-                <p>Sign in with:</p>
-                <div className="auth-btns">
-                  <a href="/auth/google" className="btn btn-md google">
-                    Google
-                  </a>
-                </div>
-              </React.Fragment>
-            )}
-          </div>
-        ) : null}
+            </React.Fragment>
+          )}
+        </div>
       </div>
     );
   }

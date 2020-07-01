@@ -5,16 +5,17 @@
   justify-self: start;
 }
 
-.seller-menu-section-wrapper {
+.admin-menu-section-wrapper {
   width: 100vw;
   height: 100vh;
   position: absolute;
+  top: -80px;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.seller-menu-slide-in {
-  animation: slide-in 0.5s forwards;
+.admin-menu-slide-in {
+  animation: slide-in 1s forwards;
 }
 
 @keyframes slide-in {
@@ -26,8 +27,8 @@
   }
 }
 
-.seller-menu-slide-out {
-  animation: slide-out 0.5s forwards;
+.admin-menu-slide-out {
+  animation: slide-out 1s forwards;
 }
 
 @keyframes slide-out {
@@ -39,48 +40,19 @@
   }
 }
 
-.seller-menu-section {
+.admin-menu-section {
   height: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  overflow-y: scroll;
   background-color: #00001e;
   width: 50%;
-  padding: 0px 20px;
 }
 
-.seller-menu-section h6 {
-  color: #f76b1a;
-}
-
-.seller-menu-section hr {
-  color: #fff;
-}
-
-.seller-hamburger {
+.admin-hamburger {
   margin-left: 20px;
 }
-
-.blank-menu-area {
-  width: 50%;
-}
-
-.hamburg {
-  height: 10%;
-}
-
-#seller-account-links,
-#seller-others-links {
-  width: 100%;
-  list-style: none;
-  max-height: 45%;
-  overflow-y: auto;
-  padding-left: 10px;
-}
-
-/* #seller-menu-slider-profile {
-  height: 15%;
-} */
 
 @media screen and (min-width: 961px) {
   #hamburger-menu-wrapper {
@@ -89,13 +61,13 @@
 }
 
 @media screen and (max-width: 960px) {
-  .seller-menu-section-wrapper {
+  .admin-menu-section-wrapper {
     top: 0px;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .seller-menu-section-wrapper {
-    top: 0px;
+  .admin-menu-section-wrapper {
+    top: -80px;
   }
 }

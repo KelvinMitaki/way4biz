@@ -18,6 +18,10 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  font-family: "Montserrat" sans-serif !important;
+}
+
 h1,
 h2,
 h3,

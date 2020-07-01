@@ -1,0 +1,23 @@
+#admin-dashboard-header {
+  height: 90px;
+}
+
+#admin-logo {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 960px) {
+  #admin-dashboard-header {
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #admin-logo {
+    display: none;
+  }
+}

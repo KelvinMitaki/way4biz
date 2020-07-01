@@ -10,7 +10,7 @@ import SecondaryHeader from "./SecondaryHeader";
 class AccountHeader extends React.Component {
   render() {
     return (
-      <div className="header-wrapper">
+      <div id="header-wrapper">
         <div className="d-flex primary-background account-header">
           <Logo id="account-header-logo" />
           <UserName />
