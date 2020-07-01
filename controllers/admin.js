@@ -4,6 +4,10 @@ const route = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
+const client = require("twilio")(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
@@ -160,7 +164,33 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   }
 });
 // CONFIRM PHONE NUMBER
+route.post("/twilio", async (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    await client.verify.services(process.env.TWILIO_SID).verifications.create({
+      to: `+254${phoneNumber}`,
+      channel: "sms"
+    });
+    res.redirect("/number/verify");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
+route.post("/twilio/verify", async (req, res) => {
+  try {
+    const { phoneNumber, code } = req.body;
+    const data = await client.verify
+      .services(process.env.TWILIO_SID)
+      .verificationChecks.create({
+        to: `+254${phoneNumber}`,
+        code
+      });
+    res.send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get("/api/current_seller", (req, res) => {
   try {
     if (req.session.seller) {

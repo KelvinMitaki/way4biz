@@ -20,6 +20,7 @@ import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
 import SellerRegister from "./components/Account/SellerRegister";
 import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
+import VerifySellerNumber from "./components/Account/VerifySellerNumber";
 
 class App extends React.Component {
   componentDidMount() {
@@ -59,6 +60,17 @@ class App extends React.Component {
                         <Redirect to="/" />
                       ) : (
                         <SellerPhoneNumber />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/number/verify"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <VerifySellerNumber />
                       )
                     }
                   />

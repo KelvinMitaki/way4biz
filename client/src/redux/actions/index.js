@@ -205,3 +205,14 @@ export const fetchSeller = () => async dispatch => {
     console.log(error);
   }
 };
+
+export const sendMessage = formvalues => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    console.log(formvalues);
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};
