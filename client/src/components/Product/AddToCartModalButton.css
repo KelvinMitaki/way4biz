@@ -1,0 +1,73 @@
+.modal-wrapper {
+  background: white;
+  border: 1px solid #d0cccc;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  transition: all 0.5s;
+  width: 90%;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 3000000000;
+}
+
+.modal-header {
+  background: #fff;
+  height: 40px;
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.modal-body {
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.close-modal-btn {
+  color: #f76b1a;
+  cursor: pointer;
+  float: right;
+  font-size: 30px;
+  margin: 0;
+}
+
+.close-modal-btn:hover {
+  color: #f76b1a;
+}
+
+.back-shed {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  transition: all 1.3s;
+  width: 100vw;
+  z-index: 10000000;
+}
+
+.continue-btn,
+.shopping-btn-modal,
+.continue-btn:hover,
+.shopping-btn-modal:hover {
+  padding: 10px 15px;
+  color: #fff;
+  width: 200px !important;
+}
+
+.continue-btn:focus,
+.shopping-btn-modal:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.continue-btn {
+  border: 1px solid #00001e;
+  border-radius: 10px;
+  background-color: #00001e;
+}
+
+.shopping-btn-modal {
+  border: 1px solid #f76b1a;
+  border-radius: 10px;
+  background-color: #f76b1a;
+}

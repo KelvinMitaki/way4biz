@@ -1,12 +1,13 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
+// import "react-customizable-modal/style.css";
+// import Modal from "react-customizable-modal";
 
 import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
-// import Popup from "reactjs-popup";
-// import { Link } from "react-router-dom";
+import AddToCartModalButton from "./AddToCartModalButton";
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -47,6 +48,9 @@ class Product extends React.Component {
       <React.Fragment>
         <Header />
         <div id="container-fluid">
+          {this.state.modalShow ? (
+            <div onClick={this.handleClick} className="back-shed"></div>
+          ) : null}
           <div className="row" id="product">
             <div className="col-lg-6 product-imgs">
               <ReactImageMagnify {...this.getImageProps()} />
@@ -99,9 +103,17 @@ class Product extends React.Component {
                 </p>
               </div>
               <div>
-                <button className="btn btn-md my-2 add-to-cart btn-block">
+                <button
+                  className="btn btn-md my-3 add-to-cart btn-block"
+                  onClick={this.handleClick}
+                >
                   Add to Cart
                 </button>
+                <AddToCartModalButton
+                  className="modal"
+                  show={this.state.modalShow}
+                  close={this.handleClick}
+                ></AddToCartModalButton>
               </div>
               <div id="features">
                 <h5>Features and Specifications</h5>

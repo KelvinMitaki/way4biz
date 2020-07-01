@@ -65,7 +65,7 @@ class RegisterForm extends React.Component {
             label="Confirm Password"
             component={AuthField}
           />
-          <strong>* is required</strong>
+          {/* <strong>* is required</strong> */}
           <button
             style={{ cursor: "pointer" }}
             className="btn btn-md btn-block primary-button mt-3"

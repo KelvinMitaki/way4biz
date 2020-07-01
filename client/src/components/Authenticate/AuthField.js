@@ -4,9 +4,9 @@ import "./Field.css";
 
 const AuthField = (props) => {
   return (
-    <div className="form-group form-input">
+    <div className="form-group form-input mt-3">
       <strong>
-        {props.label} {props.required}
+        {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
       </strong>
       <br />
       <input
