@@ -63,7 +63,7 @@ export const sellerLogIn = (credentials, history) => async (
       payload: res.data
     });
     dispatch({ type: LOADING_STOP });
-    history.push("/");
+    history.push("/seller-dashboard");
   } catch (error) {
     getState().form.SellerLogin.values.password = "";
     dispatch({ type: LOADING_STOP });
@@ -227,6 +227,9 @@ export const registerSeller = credentials => async (dispatch, getState) => {
 export const fetchSeller = () => async dispatch => {
   try {
     const res = await axios.get("/api/current_seller");
+    if (res.data.phoneNumber) {
+      res.data.phoneNumber = res.data.phoneNumber.toString();
+    }
     dispatch({ type: FETCH_SELLER, payload: res.data });
   } catch (error) {
     console.log(error);

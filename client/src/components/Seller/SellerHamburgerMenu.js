@@ -101,7 +101,7 @@ class SellerHamburgerMenu extends React.Component {
                     activeClassName="seller-menu-acive"
                     to="/seller-products"
                   >
-                    Say
+                    Sell
                   </NavLink>
                 </li>
                 <li className="my-4">
