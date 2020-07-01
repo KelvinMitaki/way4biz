@@ -23,6 +23,7 @@ import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
 import VerifySellerNumber from "./components/Account/VerifySellerNumber";
 import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
+import AdminDashBoard from "./components/Admin/AdminDashBoard";
 
 class App extends React.Component {
   componentDidMount() {
