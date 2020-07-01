@@ -16,7 +16,7 @@ class LoginForm extends React.Component {
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             return this.props.logIn(formValues, this.props.history);
           })}
         >
@@ -47,20 +47,18 @@ class LoginForm extends React.Component {
           </button>
         </form>
         <br />
-        <div
-          style={{
-            display: "flex",
-            fontSize: "10px",
-            justifyContent: "space-between"
-          }}
-        >
+        <div id="login-auth-links-wrapper">
           <p className="forgot-password-link-wrapper">
             <Link style={{ color: "#f76b1a" }} to="/password/reset">
               Forgot password?
             </Link>
           </p>
           <p className="forgot-password-link-wrapper">
-            <Link style={{ color: "#f76b1a" }} to="/seller/sign-in">
+            <Link
+              style={{ color: "#f76b1a" }}
+              className="float-right"
+              to="/seller/sign-in"
+            >
               Sign In As A Seller
             </Link>
           </p>
@@ -77,7 +75,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||
@@ -94,10 +92,10 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     error: state.auth.error,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 export default withRouter(
