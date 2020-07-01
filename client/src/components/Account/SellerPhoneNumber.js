@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import validator from "validator";
 import AuthHeader from "../Authenticate/AuthHeader";
 import { fetchSeller, sendMessage } from "../../redux/actions";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
 export class SellerPhoneNumber extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ export class SellerPhoneNumber extends Component {
             <br />
             <form
               onSubmit={this.props.handleSubmit(formValues =>
-                this.props.sendMessage(formValues)
+                this.props.sendMessage(formValues, this.props.history)
               )}
             >
               <Field
@@ -84,6 +84,8 @@ const mapStateToProps = state => {
     initialValues
   };
 };
-export default connect(mapStateToProps, { fetchSeller, sendMessage })(
-  reduxForm({ validate, form: " SellerPhoneNumber" })(SellerPhoneNumber)
+export default withRouter(
+  connect(mapStateToProps, { fetchSeller, sendMessage })(
+    reduxForm({ validate, form: " SellerPhoneNumber" })(SellerPhoneNumber)
+  )
 );

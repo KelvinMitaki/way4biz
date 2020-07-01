@@ -21,7 +21,8 @@ import {
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
   REGISTER_SELLER_FAILED,
-  FETCH_SELLER
+  FETCH_SELLER,
+  FETCH_SELLER_NUMBER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -206,10 +207,23 @@ export const fetchSeller = () => async dispatch => {
   }
 };
 
-export const sendMessage = formvalues => async dispatch => {
+export const sendMessage = (formvalues, history) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
-    console.log(formvalues);
+    await axios.post("/twilio", formvalues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/number/verify");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};
+export const fetchSellerNumber = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/number/verify");
+    console.log(res.data);
+    dispatch({ type: FETCH_SELLER_NUMBER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });

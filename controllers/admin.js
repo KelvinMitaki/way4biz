@@ -171,7 +171,19 @@ route.post("/twilio", async (req, res) => {
       to: `+254${phoneNumber}`,
       channel: "sms"
     });
-    res.redirect("/number/verify");
+    req.session.phoneNumber = phoneNumber;
+    res.redirect("/api/number/verify");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/number/verify", (req, res) => {
+  try {
+    if (req.session.phoneNumber) {
+      return res.send(req.session.phoneNumber);
+    }
+    res.send({});
   } catch (error) {
     res.status(500).send(error);
   }
