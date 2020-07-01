@@ -50,18 +50,18 @@ class SecondaryHeader extends React.Component {
             <Link className="carousel-link" to="/support-center">
               Support Center
             </Link>
-            <Link className="carousel-link" to="terms-conditions">
+            {/* <Link className="carousel-link" to="terms-conditions">
               Terms and Conditions
-            </Link>
+            </Link> */}
           </OwlCarousel>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 
