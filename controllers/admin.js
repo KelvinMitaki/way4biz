@@ -153,12 +153,24 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
     }
     seller.verified = true;
     await seller.save();
+    req.session.seller = seller;
     res.redirect("/confirm/phoneNumber");
   } catch (error) {
     res.status(500).send(error);
   }
 });
 // CONFIRM PHONE NUMBER
+
+route.get("/api/current_seller", (req, res) => {
+  try {
+    if (req.session.seller) {
+      return res.send(req.session.seller);
+    }
+    res.send({});
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {

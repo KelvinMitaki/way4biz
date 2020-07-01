@@ -19,6 +19,7 @@ import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
 import SellerRegister from "./components/Account/SellerRegister";
+import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
 
 class App extends React.Component {
   componentDidMount() {
@@ -50,6 +51,17 @@ class App extends React.Component {
                   <Route path="/product" exact component={Product} />
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
+                  <Route
+                    path="/confirm/phoneNumber"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerPhoneNumber />
+                      )
+                    }
+                  />
                   <Route
                     path="/seller/register"
                     exact

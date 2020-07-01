@@ -20,7 +20,8 @@ import {
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
-  REGISTER_SELLER_FAILED
+  REGISTER_SELLER_FAILED,
+  FETCH_SELLER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -193,5 +194,15 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       payload: "That store name already exists"
     });
     dispatch({ type: LOADING_STOP });
+  }
+};
+
+export const fetchSeller = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/current_seller");
+    console.log(res.data);
+    dispatch({ type: FETCH_SELLER, payload: res.data });
+  } catch (error) {
+    console.log(error);
   }
 };

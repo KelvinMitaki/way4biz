@@ -3,11 +3,21 @@ import { reduxForm, Field } from "redux-form";
 import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
 import validator from "validator";
+import AuthHeader from "../Authenticate/AuthHeader";
+import { fetchSeller } from "../../redux/actions";
 
 export class SellerPhoneNumber extends Component {
+  componentDidMount() {
+    this.props.fetchSeller();
+  }
   render() {
     return (
       <div>
+        <AuthHeader />
+        <br />
+        <br />
+        <br />
+        <br />
         <form
           onSubmit={this.props.handleSubmit(formValues =>
             console.log(formValues)
@@ -62,5 +72,5 @@ const mapStateToProps = state => {
   };
 };
 export default reduxForm({ validate, form: " SellerPhoneNumber" })(
-  connect(mapStateToProps)(SellerPhoneNumber)
+  connect(mapStateToProps, { fetchSeller })(SellerPhoneNumber)
 );
