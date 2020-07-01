@@ -25,7 +25,8 @@ import {
   FETCH_SELLER_NUMBER,
   INVALID_VERIFICATION_CODE,
   SELLER_LOG_IN,
-  SELLER_LOG_IN_FAILED
+  SELLER_LOG_IN_FAILED,
+  RESET_TOKEN_CHECK
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -272,5 +273,32 @@ export const verifyCode = (formValues, history) => async (
       type: INVALID_VERIFICATION_CODE,
       payload: "The Verification code you entered is invalid. Please try again"
     });
+  }
+};
+
+export const resetTokenCheck = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/password/reset/callback");
+    dispatch({ type: RESET_TOKEN_CHECK, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const forgotPassword = (formvalues, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/sign-in");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
   }
 };

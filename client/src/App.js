@@ -22,6 +22,7 @@ import SellerRegister from "./components/Account/SellerRegister";
 import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
 import VerifySellerNumber from "./components/Account/VerifySellerNumber";
 import SellerLogin from "./components/Account/SellerLogin";
+import ResetPassword from "./components/Authenticate/ResetPassword";
 
 class App extends React.Component {
   componentDidMount() {
@@ -94,6 +95,17 @@ class App extends React.Component {
                         <Redirect to="/" />
                       ) : (
                         <SellerLogin />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/password/reset/callback"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <ResetPassword />
                       )
                     }
                   />

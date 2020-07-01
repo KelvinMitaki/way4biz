@@ -333,12 +333,24 @@ route.get("/api/reset/:resetToken", async (req, res) => {
     const user = await User.findById(decoded._id);
     const seller = await Seller.findById(decoded._id);
     if (user) {
-      return res.send(user);
+      req.session.resetToken = resetToken;
+      return res.redirect("/password/reset/callback");
     }
     if (seller) {
-      return res.send(seller);
+      req.session.resetToken = resetToken;
+      return res.redirect("/password/reset/callback");
     }
     return res.status(401).send({ message: "No user found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/password/reset/callback", (req, res) => {
+  try {
+    if (req.session.resetToken) {
+      return res.send(req.session.resetToken);
+    }
+    res.send({});
   } catch (error) {
     res.status(500).send(error);
   }

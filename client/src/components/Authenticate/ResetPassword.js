@@ -1,15 +1,31 @@
 import React, { Component } from "react";
-import { reduxForm } from "redux-form";
+import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import AuthField from "./AuthField";
+import AuthHeader from "./AuthHeader";
+import { resetTokenCheck, forgotPassword } from "../../redux/actions";
+import { Redirect, withRouter } from "react-router-dom";
 
 export class ResetPassword extends Component {
+  componentDidMount() {
+    // CHECK FOR RESET TOKEN
+    this.props.resetTokenCheck();
+  }
   render() {
+    if (
+      this.props.resetToken &&
+      Object.keys(this.props.resetToken).length === 0
+    ) {
+      return <Redirect to="/password/reset" />;
+    }
     return (
       <div>
+        <AuthHeader />
+        <br />
+        <br />
         <form
           onSubmit={this.props.handleSubmit(formValues =>
-            console.log(formValues)
+            this.props.forgotPassword(formValues, this.props.history)
           )}
         >
           <Field
@@ -30,7 +46,9 @@ export class ResetPassword extends Component {
           <button
             style={{ cursor: "pointer" }}
             className="btn btn-md btn-block primary-button mt-3"
-            disabled={!this.props.valid || this.props.loading}
+            disabled={
+              !this.props.valid || this.props.loading || this.props.pristine
+            }
             type="submit"
           >
             {this.props.loading && (
@@ -67,10 +85,13 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    resetToken: state.seller.resetToken
   };
 };
 
-export default reduxForm({ validate, form: "ResetPassword" })(
-  connect(mapStateToProps)(ResetPassword)
+export default withRouter(
+  reduxForm({ validate, form: "ResetPassword" })(
+    connect(mapStateToProps, { resetTokenCheck, forgotPassword })(ResetPassword)
+  )
 );

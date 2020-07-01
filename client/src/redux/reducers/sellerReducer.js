@@ -2,14 +2,16 @@ import {
   FETCH_SELLER,
   REGISTER_SELLER_FAILED,
   FETCH_SELLER_NUMBER,
-  INVALID_VERIFICATION_CODE
+  INVALID_VERIFICATION_CODE,
+  RESET_TOKEN_CHECK
 } from "../actions/types";
 
 const INITIAL_STATE = {
   seller: null,
   sellerNumber: null,
   sellerRegisterError: null,
-  errorVerifying: null
+  errorVerifying: null,
+  resetToken: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -25,6 +27,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerNumber: { number: action.payload } };
     case INVALID_VERIFICATION_CODE:
       return { ...state, errorVerifying: action.payload };
+    case RESET_TOKEN_CHECK:
+      return { ...state, resetToken: action.payload };
     default:
       return state;
   }
