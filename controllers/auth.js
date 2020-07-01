@@ -375,7 +375,10 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     if (seller) {
       seller.password = hashedPassword;
       await seller.save();
-      return res.send({ seller, message: "Password updated successfully" });
+      return res.send({
+        user: seller,
+        message: "Password updated successfully"
+      });
     }
     return res.status(404).send({ message: "No user found" });
   } catch (error) {
@@ -408,7 +411,7 @@ route.patch("/api/user/edit/:userId", auth, async (req, res) => {
       seller.phoneNumber = phoneNumber;
       await seller.save();
       const isLoggedIn = req.session.isLoggedIn;
-      return res.send({ seller, isLoggedIn });
+      return res.send({ user: seller, isLoggedIn });
     }
 
     res.status(401).send({ message: "User not found" });
