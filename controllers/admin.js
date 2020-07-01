@@ -79,13 +79,13 @@ route.post(
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
       }
-      const userExists = await User.findOne({ email });
+      const userExists = await User.findOne({ email: email.toLowerCase() });
       if (userExists) {
         return res
           .status(401)
           .send({ email: "A user with that email already exists" });
       }
-      const sellerExists = await Seller.findOne({ email });
+      const sellerExists = await Seller.findOne({ email: email.toLowerCase() });
       if (sellerExists) {
         return res
           .status(401)
@@ -94,13 +94,13 @@ route.post(
       // **TODO**  CHECK IF EMAIL IS VALID VIA SENDGRID
       const hashedPassword = await bcrypt.hash(password, 12);
       const seller = new Seller({
-        email,
+        email: email.toLowerCase(),
         password: hashedPassword,
         firstName,
         lastName,
         phoneNumber,
         description,
-        storeName,
+        storeName: storeName.toLowerCase(),
         city,
         address
       });
