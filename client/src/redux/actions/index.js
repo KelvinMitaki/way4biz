@@ -22,7 +22,8 @@ import {
   REGISTER_SELLER,
   REGISTER_SELLER_FAILED,
   FETCH_SELLER,
-  FETCH_SELLER_NUMBER
+  FETCH_SELLER_NUMBER,
+  INVALID_VERIFICATION_CODE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -210,12 +211,12 @@ export const fetchSeller = () => async dispatch => {
 export const sendMessage = (formvalues, history) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.post("/twilio", formvalues);
+    await axios.post("/api/twilio", formvalues);
     dispatch({ type: LOADING_STOP });
     history.push("/number/verify");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
-    console.log(error);
+    console.log(error.response);
   }
 };
 export const fetchSellerNumber = () => async dispatch => {
@@ -230,13 +231,22 @@ export const fetchSellerNumber = () => async dispatch => {
     console.log(error);
   }
 };
-export const verifyCode = (formValues, history) => async dispatch => {
+export const verifyCode = (formValues, history) => async (
+  dispatch,
+  getState
+) => {
   try {
+    formValues.phoneNumber = getState().seller.sellerNumber.number;
     dispatch({ type: LOADING_START });
-    await axios.post("/twilio/verify", formValues);
+    await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
     history.push("/sign-in");
   } catch (error) {
-    console.log(error.response);
+    dispatch({ type: LOADING_STOP });
+    getState().form.VerifySellerNumber.values.code = "";
+    dispatch({
+      type: INVALID_VERIFICATION_CODE,
+      payload: "The Verification code you entered is invalid. Please try again"
+    });
   }
 };

@@ -25,7 +25,8 @@ export class VerifySellerNumber extends Component {
           <h2>VERIFY YOUR PHONE NUMBER</h2>
           <br />
           <p>
-            Please enter the code that was sent to {this.props.sellerNumber}
+            Please enter the code that was sent to +254
+            {this.props.sellerNumber.number}
           </p>
           <br />
           <form
@@ -58,6 +59,9 @@ export class VerifySellerNumber extends Component {
                 <span>Verify And Continue</span>
               )}
             </button>
+            <div className="form-primary-error">
+              {this.props.errorVerifying && this.props.errorVerifying}
+            </div>
             <br />
             <p
               style={{ textAlign: "center" }}
@@ -90,11 +94,12 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    sellerNumber: state.seller.sellerNumber
+    sellerNumber: state.seller.sellerNumber,
+    errorVerifying: state.seller.errorVerifying
   };
 };
 export default withRouter(
   connect(mapStateToProps, { fetchSellerNumber, verifyCode })(
-    reduxForm({ validate, form: " VerifySellerNumber" })(VerifySellerNumber)
+    reduxForm({ validate, form: "VerifySellerNumber" })(VerifySellerNumber)
   )
 );

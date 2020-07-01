@@ -1,13 +1,15 @@
 import {
   FETCH_SELLER,
   REGISTER_SELLER_FAILED,
-  FETCH_SELLER_NUMBER
+  FETCH_SELLER_NUMBER,
+  INVALID_VERIFICATION_CODE
 } from "../actions/types";
 
 const INITIAL_STATE = {
   seller: null,
   sellerNumber: null,
-  sellerRegisterError: null
+  sellerRegisterError: null,
+  errorVerifying: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,7 +22,9 @@ export default (state = INITIAL_STATE, action) => {
         sellerRegisterError: action.payload
       };
     case FETCH_SELLER_NUMBER:
-      return { ...state, sellerNumber: action.payload };
+      return { ...state, sellerNumber: { number: action.payload } };
+    case INVALID_VERIFICATION_CODE:
+      return { ...state, errorVerifying: action.payload };
     default:
       return state;
   }

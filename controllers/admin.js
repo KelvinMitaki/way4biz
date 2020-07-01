@@ -164,7 +164,7 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   }
 });
 // CONFIRM PHONE NUMBER
-route.post("/twilio", async (req, res) => {
+route.post("/api/twilio", async (req, res) => {
   try {
     const { phoneNumber } = req.body;
     await client.verify.services(process.env.TWILIO_SID).verifications.create({
@@ -189,15 +189,24 @@ route.get("/api/number/verify", (req, res) => {
   }
 });
 
-route.post("/twilio/verify", async (req, res) => {
+route.post("/api/twilio/verify", async (req, res) => {
   try {
     const { phoneNumber, code } = req.body;
+    if (!req.session.seller) {
+      return res.redirect("/seller/register");
+    }
     const data = await client.verify
       .services(process.env.TWILIO_SID)
       .verificationChecks.create({
         to: `+254${phoneNumber}`,
         code
       });
+    const seller = await Seller.findById(req.session.seller._id);
+    if (!seller) {
+      return res.redirect("/seller/redirect");
+    }
+    seller.verifiedPhoneNumber = true;
+    await seller.save();
     res.send(data);
   } catch (error) {
     res.status(500).send(error);
