@@ -11,46 +11,50 @@ export class SellerPhoneNumber extends Component {
     this.props.fetchSeller();
   }
   render() {
-    return (
-      <div>
-        <AuthHeader />
-        <br />
-        <br />
-        <br />
-        <br />
-        <form
-          onSubmit={this.props.handleSubmit(formValues =>
-            console.log(formValues)
-          )}
-        >
-          <Field
-            type="text"
-            name="phoneNumber"
-            label="Phone Number"
-            component={PhoneNumber}
-          />
-          <button
-            style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block primary-button mt-3"
-            disabled={!this.props.valid || this.props.loading}
-            type="submit"
+    if (this.props.initialValues) {
+      return (
+        <div>
+          <AuthHeader />
+          <br />
+          <br />
+          <br />
+          <br />
+          <form
+            onSubmit={this.props.handleSubmit(formValues =>
+              console.log(formValues)
+            )}
           >
-            {this.props.loading && (
-              <span
-                className="spinner-grow spinner-grow-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            )}
-            {this.props.loading ? (
-              <span> {"  "}Loading...</span>
-            ) : (
-              <span>Send SMS</span>
-            )}
-          </button>
-        </form>
-      </div>
-    );
+            <Field
+              type="text"
+              name="phoneNumber"
+              label="Phone Number"
+              component={PhoneNumber}
+            />
+            <button
+              style={{ cursor: "pointer" }}
+              className="btn btn-md btn-block primary-button mt-3"
+              disabled={!this.props.valid || this.props.loading}
+              type="submit"
+            >
+              {this.props.loading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.loading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>Send SMS</span>
+              )}
+            </button>
+          </form>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 const validate = formValues => {
@@ -67,10 +71,15 @@ const validate = formValues => {
   return errors;
 };
 const mapStateToProps = state => {
+  let initialValues;
+  if (state.seller.seller && Object.keys(state.seller.seller)) {
+    initialValues = state.seller.seller;
+  }
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    initialValues
   };
 };
-export default reduxForm({ validate, form: " SellerPhoneNumber" })(
-  connect(mapStateToProps, { fetchSeller })(SellerPhoneNumber)
+export default connect(mapStateToProps, { fetchSeller })(
+  reduxForm({ validate, form: " SellerPhoneNumber" })(SellerPhoneNumber)
 );

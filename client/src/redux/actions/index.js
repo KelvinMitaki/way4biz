@@ -200,7 +200,6 @@ export const registerSeller = credentials => async (dispatch, getState) => {
 export const fetchSeller = () => async dispatch => {
   try {
     const res = await axios.get("/api/current_seller");
-    console.log(res.data);
     dispatch({ type: FETCH_SELLER, payload: res.data });
   } catch (error) {
     console.log(error);
