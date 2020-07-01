@@ -258,36 +258,66 @@ route.post("/api/reset", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).send({ message: "No user with that email found" });
+    const seller = await Seller.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "30 minutes"
+      });
+      // **TODO** from email address to be fixed
+      transporter.sendMail(
+        {
+          to: email,
+          from: "kevinkhalifa911@gmail.com",
+          subject: "Password Resetting",
+          html: `<html lang="en">
+            <body>
+                <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                    <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
+                </p>
+            </body>
+            </html>`
+        },
+        (error, info) => {
+          if (error) console.log(error);
+          console.log("Sending message info: ", info);
+        }
+      );
+      return res.send({
+        message:
+          "Check your email inbox for instructions from us on how to reset your password."
+      });
     }
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "30 minutes"
-    });
-    // **TODO** from email address to be fixed
-    transporter.sendMail(
-      {
-        to: email,
-        from: "kevinkhalifa911@gmail.com",
-        subject: "Password Resetting",
-        html: `<html lang="en">
-          <body>
-              <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
-              <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
-                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
-              </p>
-          </body>
-          </html>`
-      },
-      (error, info) => {
-        if (error) console.log(error);
-        console.log("Sending message info: ", info);
-      }
-    );
-    res.send({
-      message:
-        "Check your email inbox for instructions from us on how to reset your password."
-    });
+    if (seller) {
+      const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
+        expiresIn: "30 minutes"
+      });
+      // **TODO** from email address to be fixed
+      transporter.sendMail(
+        {
+          to: email,
+          from: "kevinkhalifa911@gmail.com",
+          subject: "Password Resetting",
+          html: `<html lang="en">
+            <body>
+                <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                    <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
+                </p>
+            </body>
+            </html>`
+        },
+        (error, info) => {
+          if (error) console.log(error);
+          console.log("Sending message info: ", info);
+        }
+      );
+      return res.send({
+        message:
+          "Check your email inbox for instructions from us on how to reset your password."
+      });
+    }
+    return res.status(401).send({ message: "No user with that email found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -301,10 +331,14 @@ route.get("/api/reset/:resetToken", async (req, res) => {
       return res.status(401).send({ message: "Invalid Token" });
     }
     const user = await User.findById(decoded._id);
-    if (!user) {
-      return res.status(401).send({ message: "No user found" });
+    const seller = await Seller.findById(decoded._id);
+    if (user) {
+      return res.send(user);
     }
-    res.send(user);
+    if (seller) {
+      return res.send(seller);
+    }
+    return res.status(401).send({ message: "No user found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -318,10 +352,20 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     }
     const { password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await User.findByIdAndUpdate(decoded._id, {
-      password: hashedPassword
-    });
-    res.send({ user, message: "Password updated successfully" });
+
+    const user = await User.findById(decoded._id);
+    const seller = await Seller.findById(decoded._id);
+    if (user) {
+      user.password = hashedPassword;
+      await user.save();
+      return res.send({ user, message: "Password updated successfully" });
+    }
+    if (seller) {
+      seller.password = hashedPassword;
+      await seller.save();
+      return res.send({ seller, message: "Password updated successfully" });
+    }
+    return res.status(404).send({ message: "No user found" });
   } catch (error) {
     res.status(500).send(error);
   }

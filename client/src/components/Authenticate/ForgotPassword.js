@@ -23,7 +23,7 @@ export class ForgotPassword extends Component {
                   <h3 className="mb-3">Reset your password</h3>
 
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
+                    onSubmit={this.props.handleSubmit(formValues =>
                       this.props.passwordReset(formValues)
                     )}
                   >
@@ -42,7 +42,7 @@ export class ForgotPassword extends Component {
                     </div>
                     <button
                       style={{ cursor: "pointer" }}
-                      className="btn btn-md btn-block secondary-button mt-3"
+                      className="btn btn-md btn-block primary-button mt-3"
                       disabled={!this.props.valid || this.props.loading}
                       type="submit"
                     >
@@ -56,7 +56,7 @@ export class ForgotPassword extends Component {
                       {this.props.loading ? (
                         <span> {"  "}Loading...</span>
                       ) : (
-                        <span>Reset</span>
+                        <span>Get Reset Link</span>
                       )}
                     </button>
                   </form>
@@ -69,7 +69,7 @@ export class ForgotPassword extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
@@ -79,11 +79,11 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    success: state.auth.success,
+    success: state.auth.success
   };
 };
 export default reduxForm({ validate, form: "ForgotPassword" })(
