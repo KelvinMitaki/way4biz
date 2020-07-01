@@ -8,11 +8,7 @@ import SellerHamburger from "./SellerHamburgerMenu";
 class SellerDashBoardHeader extends React.Component {
   render() {
     return (
-      <div
-        className="primary-background d-flex"
-        id="seller-dashboard-header"
-        ref={this.containerRef}
-      >
+      <div className="primary-background d-flex" id="seller-dashboard-header">
         <SellerHamburger />
         <Logo id="seller-logo" />
         <ProfileImage />

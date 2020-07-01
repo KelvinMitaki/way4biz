@@ -18,6 +18,7 @@ import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
+import AdminDashBoard from "./components/Admin/AdminDashBoard";
 
 class App extends React.Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class App extends React.Component {
           <div className="content">
             <Route path="/" exact component={Home} />
             <Route path="/seller-dashboard" exact component={SellerDashBoard} />
+            <Route path="/admin-dashboard" exact component={AdminDashBoard} />
             <Route
               render={() => (
                 <Switch>
