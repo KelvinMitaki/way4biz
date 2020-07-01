@@ -222,6 +222,39 @@ route.get("/api/current_seller", (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/login/seller",
+  check("email").trim().isEmail().withMessage("Please enter a valid email"),
+  check("password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Your password must be a minimun of six characters"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { email, password } = req.body;
+      const seller = await Seller.findOne({ email });
+      if (!seller) {
+        return res.status(404).send({ message: "No seller with that email" });
+      }
+      const isMatch = await bcrypt.compare(password, seller.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      if (!seller.verified) {
+        return res.status(401).send({ message: "Email not verified" });
+      }
+      req.session.user = seller;
+      req.session.isLoggedIn = true;
+      res.send(seller);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {
