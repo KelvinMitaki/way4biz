@@ -3,9 +3,9 @@ import AuthHeader from "../Authenticate/AuthHeader";
 import { reduxForm, Field } from "redux-form";
 import validator from "validator";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import VerificationField from "./VerificationField";
-import { fetchSellerNumber } from "../../redux/actions";
+import { fetchSellerNumber, verifyCode } from "../../redux/actions";
 
 export class VerifySellerNumber extends Component {
   componentDidMount() {
@@ -24,9 +24,15 @@ export class VerifySellerNumber extends Component {
           <br />
           <h2>VERIFY YOUR PHONE NUMBER</h2>
           <br />
-          <p>Please enter the code that was sent to</p>
+          <p>
+            Please enter the code that was sent to {this.props.sellerNumber}
+          </p>
           <br />
-          <form>
+          <form
+            onSubmit={this.props.handleSubmit(formValues =>
+              this.props.verifyCode(formValues, this.props.history)
+            )}
+          >
             <Field
               type="text"
               name="code"
@@ -87,6 +93,8 @@ const mapStateToProps = state => {
     sellerNumber: state.seller.sellerNumber
   };
 };
-export default connect(mapStateToProps, { fetchSellerNumber })(
-  reduxForm({ validate, form: " VerifySellerNumber" })(VerifySellerNumber)
+export default withRouter(
+  connect(mapStateToProps, { fetchSellerNumber, verifyCode })(
+    reduxForm({ validate, form: " VerifySellerNumber" })(VerifySellerNumber)
+  )
 );

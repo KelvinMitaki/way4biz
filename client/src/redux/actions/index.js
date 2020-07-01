@@ -230,3 +230,13 @@ export const fetchSellerNumber = () => async dispatch => {
     console.log(error);
   }
 };
+export const verifyCode = (formValues, history) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post("/twilio/verify", formValues);
+    dispatch({ type: LOADING_STOP });
+    history.push("/sign-in");
+  } catch (error) {
+    console.log(error.response);
+  }
+};
