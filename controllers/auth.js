@@ -10,6 +10,7 @@ const passport = require("passport");
 
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
+const Seller = require("../models/Seller");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -43,11 +44,18 @@ route.get("/api/current_user", async (req, res) => {
     if (!req.session.user) {
       return res.status(404).send({});
     }
-    req.session.user = await User.findById(req.session.user._id);
-    const user = req.session.user;
+    const user = await User.findById(req.session.user._id);
+    if (user) {
+      req.session.user = user;
+      const isLoggedIn = req.session.isLoggedIn;
+      const Cpus = os.cpus().length;
+      return res.send({ user, isLoggedIn, Cpus });
+    }
+    const seller = await Seller.findById(req.session.user._id);
+    req.session.user = seller;
     const isLoggedIn = req.session.isLoggedIn;
     const Cpus = os.cpus().length;
-    res.send({ user, isLoggedIn, Cpus });
+    return res.send({ user: seller, isLoggedIn, Cpus });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -63,10 +71,10 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { email, password } = req.body;
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: email.toLowerCase() });
       if (!user) {
         return res.status(404).send({ message: "No user with that email" });
       }
@@ -108,7 +116,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const {
         email,
@@ -121,7 +129,7 @@ route.post(
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
       }
-      const userExists = await User.findOne({ email });
+      const userExists = await User.findOne({ email: email.toLowerCase() });
       if (userExists) {
         return res
           .status(401)
@@ -130,7 +138,7 @@ route.post(
       // **TODO**  CHECK IF EMAIL IS VALID VIA SENDGRID
       const hashedPassword = await bcrypt.hash(password, 12);
       const user = new User({
-        email,
+        email: email.toLowerCase(),
         password: hashedPassword,
         firstName,
         lastName,
@@ -139,6 +147,7 @@ route.post(
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
         expiresIn: "1 hour"
       });
+      await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -161,7 +170,6 @@ route.post(
           console.log(info);
         }
       );
-      await user.save();
       res.status(201).send({
         message:
           "An email has been sent to your email address, please check it to confirm your account"
@@ -187,7 +195,7 @@ route.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).send(errors.array()[0].msg);
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { currentPassword, newPassword, confirmNewPassword } = req.body;
       const isMatch = await bcrypt.compare(
@@ -250,36 +258,66 @@ route.post("/api/reset", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).send({ message: "No user with that email found" });
+    const seller = await Seller.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "30 minutes"
+      });
+      // **TODO** from email address to be fixed
+      transporter.sendMail(
+        {
+          to: email,
+          from: "kevinkhalifa911@gmail.com",
+          subject: "Password Resetting",
+          html: `<html lang="en">
+            <body>
+                <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                    <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
+                </p>
+            </body>
+            </html>`
+        },
+        (error, info) => {
+          if (error) console.log(error);
+          console.log("Sending message info: ", info);
+        }
+      );
+      return res.send({
+        message:
+          "Check your email inbox for instructions from us on how to reset your password."
+      });
     }
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "30 minutes"
-    });
-    // **TODO** from email address to be fixed
-    transporter.sendMail(
-      {
-        to: email,
-        from: "kevinkhalifa911@gmail.com",
-        subject: "Password Resetting",
-        html: `<html lang="en">
-          <body>
-              <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
-              <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
-                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
-              </p>
-          </body>
-          </html>`
-      },
-      (error, info) => {
-        if (error) console.log(error);
-        console.log("Sending message info: ", info);
-      }
-    );
-    res.send({
-      message:
-        "Check your email inbox for instructions from us on how to reset your password."
-    });
+    if (seller) {
+      const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
+        expiresIn: "30 minutes"
+      });
+      // **TODO** from email address to be fixed
+      transporter.sendMail(
+        {
+          to: email,
+          from: "kevinkhalifa911@gmail.com",
+          subject: "Password Resetting",
+          html: `<html lang="en">
+            <body>
+                <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                    <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
+                </p>
+            </body>
+            </html>`
+        },
+        (error, info) => {
+          if (error) console.log(error);
+          console.log("Sending message info: ", info);
+        }
+      );
+      return res.send({
+        message:
+          "Check your email inbox for instructions from us on how to reset your password."
+      });
+    }
+    return res.status(401).send({ message: "No user with that email found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -293,10 +331,26 @@ route.get("/api/reset/:resetToken", async (req, res) => {
       return res.status(401).send({ message: "Invalid Token" });
     }
     const user = await User.findById(decoded._id);
-    if (!user) {
-      return res.status(401).send({ message: "No user found" });
+    const seller = await Seller.findById(decoded._id);
+    if (user) {
+      req.session.resetToken = resetToken;
+      return res.redirect("/password/reset/callback");
     }
-    res.send(user);
+    if (seller) {
+      req.session.resetToken = resetToken;
+      return res.redirect("/password/reset/callback");
+    }
+    return res.status(401).send({ message: "No user found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/password/reset/callback", (req, res) => {
+  try {
+    if (req.session.resetToken) {
+      return res.send(req.session.resetToken);
+    }
+    res.send({});
   } catch (error) {
     res.status(500).send(error);
   }
@@ -310,10 +364,23 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     }
     const { password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await User.findByIdAndUpdate(decoded._id, {
-      password: hashedPassword
-    });
-    res.send({ user, message: "Password updated successfully" });
+
+    const user = await User.findById(decoded._id);
+    const seller = await Seller.findById(decoded._id);
+    if (user) {
+      user.password = hashedPassword;
+      await user.save();
+      return res.send({ user, message: "Password updated successfully" });
+    }
+    if (seller) {
+      seller.password = hashedPassword;
+      await seller.save();
+      return res.send({
+        user: seller,
+        message: "Password updated successfully"
+      });
+    }
+    return res.status(404).send({ message: "No user found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -323,18 +390,31 @@ route.patch("/api/user/edit/:userId", auth, async (req, res) => {
     const { userId } = req.params;
     const { firstName, lastName, address, city, town, phoneNumber } = req.body;
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(401).send({ message: "User not found" });
+    const seller = await Seller.findById(userId);
+    if (user) {
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.address = address;
+      user.city = city;
+      user.town = town;
+      user.phoneNumber = phoneNumber;
+      await user.save();
+      const isLoggedIn = req.session.isLoggedIn;
+      return res.send({ user, isLoggedIn });
     }
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.address = address;
-    user.city = city;
-    user.town = town;
-    user.phoneNumber = phoneNumber;
-    await user.save();
-    const isLoggedIn = req.session.isLoggedIn;
-    res.send({ user, isLoggedIn });
+    if (seller) {
+      seller.firstName = firstName;
+      seller.lastName = lastName;
+      seller.address = address;
+      seller.city = city;
+      seller.town = town;
+      seller.phoneNumber = phoneNumber;
+      await seller.save();
+      const isLoggedIn = req.session.isLoggedIn;
+      return res.send({ user: seller, isLoggedIn });
+    }
+
+    res.status(401).send({ message: "User not found" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -344,17 +424,28 @@ route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.session.user._id);
-    if (!user) {
-      return res.status(404).send({ message: "No user with that ID found" });
+    const seller = await Seller.findById(req.session.user._id);
+    if (user) {
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      const hashedPassowrd = await bcrypt.hash(newPassword, 12);
+      user.password = hashedPassowrd;
+      await user.save();
+      return res.send({ message: "Password updated successfully" });
     }
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) {
-      return res.status(401).send({ message: "Passwords do not match" });
+    if (seller) {
+      const isMatch = await bcrypt.compare(currentPassword, seller.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+      const hashedPassowrd = await bcrypt.hash(newPassword, 12);
+      seller.password = hashedPassowrd;
+      await seller.save();
+      return res.send({ message: "Password updated successfully" });
     }
-    const hashedPassowrd = await bcrypt.hash(newPassword, 12);
-    user.password = hashedPassowrd;
-    await user.save();
-    res.send({ message: "Password updated successfully" });
+    res.status(404).send({ message: "No user with that ID found" });
   } catch (error) {
     res.status(500).send(error);
   }

@@ -18,9 +18,11 @@ import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
 import MainCategories from "./components/MainCategories/MainCategories";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
-import AdminDashBoard from "./components/Admin/AdminDashBoard";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+import SellerRegister from "./components/Account/SellerRegister";
+import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
+import VerifySellerNumber from "./components/Account/VerifySellerNumber";
+import SellerLogin from "./components/Account/SellerLogin";
+import ResetPassword from "./components/Authenticate/ResetPassword";
 
 class App extends React.Component {
   componentDidMount() {
@@ -53,6 +55,61 @@ class App extends React.Component {
                   <Route path="/product" exact component={Product} />
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
+                  <Route
+                    path="/confirm/phoneNumber"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerPhoneNumber />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/number/verify"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <VerifySellerNumber />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/seller/register"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerRegister />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/seller/sign-in"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerLogin />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/password/reset/callback"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <ResetPassword />
+                      )
+                    }
+                  />
                   <Route
                     path="/address"
                     exact

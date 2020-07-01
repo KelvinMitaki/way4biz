@@ -14,7 +14,9 @@ import {
   CHECKOUT_USER,
   CHECKOUT_USER_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
-  UPDATE_PASSWORD_LOGGED_IN_FAILED
+  UPDATE_PASSWORD_LOGGED_IN_FAILED,
+  REGISTER_SELLER,
+  REGISTER_SELLER_FAILED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -99,6 +101,9 @@ export default (state = INITIAL_STATE, action) => {
         updatePasswordError:
           "Update Password failed, Please double-check your current password and try again"
       };
+    case REGISTER_SELLER:
+      return { ...state, showEmailConfirm: true };
+
     default:
       return state;
   }
