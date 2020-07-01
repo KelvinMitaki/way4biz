@@ -1,5 +1,6 @@
 import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
+import { NavLink } from "react-router-dom";
 
 import "./SellerHamburgerMenu.css";
 
@@ -39,7 +40,7 @@ class SellerHamburgerMenu extends React.Component {
             }`}
           >
             <div className="seller-menu-section">
-              <div className="my-4 mx-3">
+              <div className="my-4 mx-3 hamburg">
                 <HamburgerMenu
                   width={20}
                   height={15}
@@ -49,10 +50,75 @@ class SellerHamburgerMenu extends React.Component {
                   className="float-right"
                 />
               </div>
-              <p style={{ color: "#fff" }}> Hey</p>
-              <p style={{ color: "#fff" }}> Hey</p>
-              <p style={{ color: "#fff" }}> Hey</p>
-              <p style={{ color: "#fff" }}> Hey</p>
+              <h6>MY ACCOUNT</h6>
+              <hr />
+              <ul id="seller-account-links">
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    exact
+                    to="/seller-dashboard"
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller-products"
+                  >
+                    Products
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller-orders"
+                  >
+                    Orders
+                  </NavLink>
+                </li>
+              </ul>
+              <h6>OTHERS</h6>
+              <hr />
+              <ul id="seller-others-links">
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    exact
+                    to="/"
+                  >
+                    Buy
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller-products"
+                  >
+                    Say
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller-orders"
+                  >
+                    Do Something
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <a className="link" href="/api/logout">
+                    Logout
+                  </a>
+                </li>
+              </ul>
             </div>
             <div className="blank-menu-area" onClick={this.handleClick}></div>
           </div>

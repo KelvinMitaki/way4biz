@@ -3,6 +3,16 @@
   margin: auto;
 }
 
+.form-input input {
+  border: none;
+}
+
+.form-input input:focus {
+  box-shadow: none;
+  outline: none;
+  border: none !important;
+}
+
 .authenticate-field {
   border: 1px solid #eee;
   border-radius: 40px;

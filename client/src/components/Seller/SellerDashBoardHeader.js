@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import "./SellerDashBoardHeader.css";
 import Logo from "../Header/Logo";
@@ -11,6 +12,35 @@ class SellerDashBoardHeader extends React.Component {
       <div className="primary-background d-flex" id="seller-dashboard-header">
         <SellerHamburger />
         <Logo id="seller-logo" />
+        <ul id="seller-header-menu-items">
+          <li className="my-4">
+            <NavLink
+              className="link"
+              activeClassName="seller-menu-acive"
+              to="/buy"
+            >
+              Buy
+            </NavLink>
+          </li>
+          <li className="my-4">
+            <NavLink
+              className="link"
+              activeClassName="seller-menu-acive"
+              to="/seller-products"
+            >
+              Sell
+            </NavLink>
+          </li>
+          <li className="my-4">
+            <NavLink
+              className="link"
+              activeClassName="seller-menu-acive"
+              to="/seller-orders"
+            >
+              Do Something
+            </NavLink>
+          </li>
+        </ul>
         <ProfileImage />
       </div>
     );
