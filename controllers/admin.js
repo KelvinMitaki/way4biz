@@ -223,7 +223,7 @@ route.get("/api/current_seller", (req, res) => {
   }
 });
 route.post(
-  "/api/login/seller",
+  "/api/seller/login",
   check("email").trim().isEmail().withMessage("Please enter a valid email"),
   check("password")
     .trim()

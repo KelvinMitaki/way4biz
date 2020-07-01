@@ -21,6 +21,7 @@ import SellerDashBoard from "./components/Seller/SellerDashBoard";
 import SellerRegister from "./components/Account/SellerRegister";
 import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
 import VerifySellerNumber from "./components/Account/VerifySellerNumber";
+import SellerLogin from "./components/Account/SellerLogin";
 
 class App extends React.Component {
   componentDidMount() {
@@ -82,6 +83,17 @@ class App extends React.Component {
                         <Redirect to="/" />
                       ) : (
                         <SellerRegister />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/seller/login"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <SellerLogin />
                       )
                     }
                   />
