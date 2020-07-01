@@ -268,7 +268,7 @@ export const verifyCode = (formValues, history) => async (
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
-    history.push("/sign-in");
+    history.push("/seller/sign-in");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     getState().form.VerifySellerNumber.values.code = "";

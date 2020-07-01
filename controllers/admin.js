@@ -201,6 +201,12 @@ route.post("/api/twilio/verify", async (req, res) => {
         to: `+254${phoneNumber}`,
         code
       });
+    if (!data.valid) {
+      return res.status(401).send({
+        message:
+          "The Verification code you entered is invalid. Please try again"
+      });
+    }
     const seller = await Seller.findById(req.session.seller._id);
     if (!seller) {
       return res.redirect("/seller/redirect");
@@ -244,9 +250,10 @@ route.post(
       if (!isMatch) {
         return res.status(401).send({ message: "Passwords do not match" });
       }
-      if (!seller.verified) {
-        return res.status(401).send({ message: "Email not verified" });
+      if (!seller.verifiedPhoneNumber) {
+        return res.status(401).send({ message: "Phone number not verified" });
       }
+
       req.session.user = seller;
       req.session.isLoggedIn = true;
       res.send(seller);
