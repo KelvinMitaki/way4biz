@@ -3,11 +3,17 @@
   margin: auto;
 }
 
-.form-input input {
+.form-input input,
+.form-input textarea {
   border: none;
 }
 
-.form-input input:focus {
+/* .form-input textarea {
+  border-radius: 40px;
+} */
+
+.form-input input:focus,
+.form-input textarea:focus {
   box-shadow: none;
   outline: none;
   border: none !important;
