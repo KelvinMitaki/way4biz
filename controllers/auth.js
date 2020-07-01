@@ -10,6 +10,7 @@ const passport = require("passport");
 
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
+const Seller = require("../models/Seller");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -43,11 +44,18 @@ route.get("/api/current_user", async (req, res) => {
     if (!req.session.user) {
       return res.status(404).send({});
     }
-    req.session.user = await User.findById(req.session.user._id);
-    const user = req.session.user;
+    const user = await User.findById(req.session.user._id);
+    if (user) {
+      req.session.user = user;
+      const isLoggedIn = req.session.isLoggedIn;
+      const Cpus = os.cpus().length;
+      return res.send({ user, isLoggedIn, Cpus });
+    }
+    const seller = await Seller.findById(req.session.user._id);
+    req.session.user = seller;
     const isLoggedIn = req.session.isLoggedIn;
     const Cpus = os.cpus().length;
-    res.send({ user, isLoggedIn, Cpus });
+    return res.send({ user: seller, isLoggedIn, Cpus });
   } catch (error) {
     res.status(500).send(error);
   }

@@ -86,7 +86,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { sellerLogIn })(
-    reduxForm({ validate, form: "SellerLogin" })(SellerLogin)
+  reduxForm({ validate, form: "SellerLogin" })(
+    connect(mapStateToProps, { sellerLogIn })(SellerLogin)
   )
 );
