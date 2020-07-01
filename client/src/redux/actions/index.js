@@ -227,6 +227,9 @@ export const registerSeller = credentials => async (dispatch, getState) => {
 export const fetchSeller = () => async dispatch => {
   try {
     const res = await axios.get("/api/current_seller");
+    if (res.data.phoneNumber) {
+      res.data.phoneNumber = res.data.phoneNumber.toString();
+    }
     dispatch({ type: FETCH_SELLER, payload: res.data });
   } catch (error) {
     console.log(error);
