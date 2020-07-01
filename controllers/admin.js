@@ -256,6 +256,47 @@ route.post(
   }
 );
 
+route.post("/api/seller/reset", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const seller = await Seller.findOne({ email });
+    if (!seller) {
+      return res
+        .status(401)
+        .send({ message: "No seller with that email found" });
+    }
+    const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
+      expiresIn: "30 minutes"
+    });
+    // **TODO** from email address to be fixed
+    transporter.sendMail(
+      {
+        to: email,
+        from: "kevinkhalifa911@gmail.com",
+        subject: "Password Resetting",
+        html: `<html lang="en">
+          <body>
+              <h5 style="font-family: Arial, Helvetica, sans-serif;">You requested for password reset</h5>
+              <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
+                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password
+              </p>
+          </body>
+          </html>`
+      },
+      (error, info) => {
+        if (error) console.log(error);
+        console.log("Sending message info: ", info);
+      }
+    );
+    res.send({
+      message:
+        "Check your email inbox for instructions from us on how to reset your password."
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {
     const { sellerId } = req.params;

@@ -47,11 +47,24 @@ class LoginForm extends React.Component {
           </button>
         </form>
         <br />
-        <p className="forgot-password-link-wrapper">
-          <Link style={{ color: "#f76b1a" }} to="/password/reset">
-            Forgot password?
-          </Link>
-        </p>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "10px",
+            justifyContent: "space-between"
+          }}
+        >
+          <p className="forgot-password-link-wrapper">
+            <Link style={{ color: "#f76b1a" }} to="/password/reset">
+              Forgot password?
+            </Link>
+          </p>
+          <p className="forgot-password-link-wrapper">
+            <Link style={{ color: "#f76b1a" }} to="/seller/sign-in">
+              Sign In As A Seller
+            </Link>
+          </p>
+        </div>
         <a
           href="/auth/google"
           className="btn btn-md btn-block mt-3 secondary-google"

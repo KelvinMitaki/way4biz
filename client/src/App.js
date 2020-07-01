@@ -87,7 +87,7 @@ class App extends React.Component {
                     }
                   />
                   <Route
-                    path="/seller/login"
+                    path="/seller/sign-in"
                     exact
                     render={() =>
                       this.props.isSignedIn ? (
