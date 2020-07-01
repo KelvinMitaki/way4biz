@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import validator from "validator";
 import AuthHeader from "../Authenticate/AuthHeader";
 import { fetchSeller, sendMessage } from "../../redux/actions";
+import { Redirect } from "react-router-dom";
 
 export class SellerPhoneNumber extends Component {
   componentDidMount() {
@@ -12,46 +13,49 @@ export class SellerPhoneNumber extends Component {
   }
   render() {
     if (this.props.initialValues) {
-      return (
-        <div>
-          <AuthHeader />
-          <br />
-          <br />
-          <br />
-          <br />
-          <form
-            onSubmit={this.props.handleSubmit(formValues =>
-              this.props.sendMessage(formValues)
-            )}
-          >
-            <Field
-              type="text"
-              name="phoneNumber"
-              label="Phone Number"
-              component={PhoneNumber}
-            />
-            <button
-              style={{ cursor: "pointer" }}
-              className="btn btn-md btn-block primary-button mt-3"
-              disabled={!this.props.valid || this.props.loading}
-              type="submit"
+      if (Object.keys(this.props.initialValues).length > 0) {
+        return (
+          <div>
+            <AuthHeader />
+            <br />
+            <br />
+            <br />
+            <br />
+            <form
+              onSubmit={this.props.handleSubmit(formValues =>
+                this.props.sendMessage(formValues)
+              )}
             >
-              {this.props.loading && (
-                <span
-                  className="spinner-grow spinner-grow-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-              )}
-              {this.props.loading ? (
-                <span> {"  "}Loading...</span>
-              ) : (
-                <span>Send SMS</span>
-              )}
-            </button>
-          </form>
-        </div>
-      );
+              <Field
+                type="text"
+                name="phoneNumber"
+                label="Phone Number"
+                component={PhoneNumber}
+              />
+              <button
+                style={{ cursor: "pointer" }}
+                className="btn btn-md btn-block primary-button mt-3"
+                disabled={!this.props.valid || this.props.loading}
+                type="submit"
+              >
+                {this.props.loading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                {this.props.loading ? (
+                  <span> {"  "}Loading...</span>
+                ) : (
+                  <span>Send SMS</span>
+                )}
+              </button>
+            </form>
+          </div>
+        );
+      }
+      return <Redirect to="/seller/register" />;
     } else {
       return null;
     }

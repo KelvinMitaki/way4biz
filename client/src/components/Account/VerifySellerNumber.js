@@ -4,24 +4,26 @@ import { reduxForm, Field } from "redux-form";
 import validator from "validator";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import PhoneNumber from "./PhoneNumber";
+import VerificationField from "./VerificationField";
 
 export class VerifySellerNumber extends Component {
   render() {
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <AuthHeader />
         <br />
         <br />
         <br />
         <h2>VERIFY YOUR PHONE NUMBER</h2>
+        <br />
         <p>Please enter the code that was sent to</p>
+        <br />
         <form>
           <Field
             type="text"
             name="code"
             label="VERIFICATION CODE"
-            component={PhoneNumber}
+            component={VerificationField}
           />
           <button
             style={{ cursor: "pointer" }}
@@ -39,11 +41,18 @@ export class VerifySellerNumber extends Component {
             {this.props.loading ? (
               <span> {"  "}Loading...</span>
             ) : (
-              <span>Send SMS</span>
+              <span>Verify And Continue</span>
             )}
           </button>
           <br />
-          <Link to="/confirm/phoneNumber">Change My Phone Number</Link>
+          <p
+            style={{ textAlign: "center" }}
+            className="forgot-password-link-wrapper"
+          >
+            <Link style={{ color: "#f76b1a" }} to="/confirm/phoneNumber">
+              Change Phone Number
+            </Link>
+          </p>
         </form>
       </div>
     );
