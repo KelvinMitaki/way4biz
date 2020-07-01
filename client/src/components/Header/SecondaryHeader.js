@@ -26,8 +26,8 @@ class SecondaryHeader extends React.Component {
           <Link className="mx-4 secondary-header-link" to="/support-center">
             Support Center
           </Link>
-          <Link className="mx-4 secondary-header-link" to="terms-conditions">
-            Terms and Conditions
+          <Link className="mx-4 secondary-header-link" to="/privacy-policy">
+            Privacy Policy
           </Link>
         </div>
         <div id="small-screen-secondary-header">
@@ -50,18 +50,18 @@ class SecondaryHeader extends React.Component {
             <Link className="carousel-link" to="/support-center">
               Support Center
             </Link>
-            {/* <Link className="carousel-link" to="terms-conditions">
-              Terms and Conditions
-            </Link> */}
+            <Link className="carousel-link" to="/privacy-policy">
+              Privacy Policy
+            </Link>
           </OwlCarousel>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    isSignedIn: state.auth.isSignedIn,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 
