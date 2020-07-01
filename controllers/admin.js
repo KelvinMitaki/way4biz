@@ -140,13 +140,25 @@ route.post(
   }
 );
 
-// CONFIRM PHONE NUMBER
-route.get(`/api/confirm/email/:emailToken/seller`, async (req, res) => {
+route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   try {
+    const { emailToken } = req.params;
+    const decoded = jwt.verify(emailToken, process.env.CONFIRM_EMAIL_JWT);
+    if (!decoded._id) {
+      return res.status(401).send({ message: "Invalid token" });
+    }
+    const seller = await Seller.findById(decoded._id);
+    if (!seller) {
+      return res.status(401).send({ message: "No seller with that email" });
+    }
+    seller.verified = true;
+    await seller.save();
+    res.redirect("/confirm/phoneNumber");
   } catch (error) {
     res.status(500).send(error);
   }
 });
+// CONFIRM PHONE NUMBER
 
 route.get("/api/products/:sellerId", isSeller, async (req, res) => {
   try {
