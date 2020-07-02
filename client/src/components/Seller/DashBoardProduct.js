@@ -12,16 +12,16 @@ class DashBoardProduct extends React.Component {
             <div className="row">
               <div className="col d-flex dashboard-product-section box-container">
                 <div id="dashboard-product-image" className="col col-lg-5">
-                  <img src="product-imgs/1.jpg" />
+                  <img src={product.imageUrl} />
                   <div className="ml-2">
-                    <p>Samsung LG "32</p>
+                    <p>{product.name}</p>
                   </div>
                 </div>
                 <div id="dashboard-product-quantity" className="col col-lg-2">
-                  10
+                  {product.stockQuantity}
                 </div>
                 <div id="dashboard-product-price" className="col col-lg-2">
-                  Ksh.30,000
+                  Ksh.{product.price}
                 </div>
                 <div id="dashboard-product-status" className="col col-lg-2">
                   Live
@@ -35,6 +35,7 @@ class DashBoardProduct extends React.Component {
         </React.Fragment>
       ));
     }
+    return null;
   }
 }
 const mapStateToProps = state => {
