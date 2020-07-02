@@ -3,6 +3,7 @@ import "./MyCart.css";
 import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { deleteFromCart } from "../../redux/actions";
 
 class MyCart extends React.Component {
   render() {
@@ -42,12 +43,17 @@ class MyCart extends React.Component {
                       </div>
                       <div>
                         <p>
-                          Ksh.{(item.price * item.quantity).toLocaleString()}{" "}
+                          Ksh.{(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                       <div id="remove-cart">
                         <i className="fa fa-trash mr-1"></i>
-                        <span className="remove-text">Remove</span>
+                        <span
+                          className="remove-text"
+                          onClick={() => this.props.deleteFromCart(item)}
+                        >
+                          Remove
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -63,7 +69,13 @@ class MyCart extends React.Component {
               <div className="my-5">
                 <div className="total">
                   <p>Total</p>
-                  <p>Ksh.30,000</p>
+                  <p>
+                    Ksh.
+                    {this.props.cart
+                      .map(item => item.price * item.quantity)
+                      .reduce((acc, curr) => acc + curr, 0)
+                      .toLocaleString()}
+                  </p>
                 </div>
                 <div className="shipping">
                   <p>Shipping</p>
@@ -95,4 +107,4 @@ const mapStateToProps = state => {
     cart: state.cartReducer.cart
   };
 };
-export default withRouter(connect(mapStateToProps)(MyCart));
+export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
