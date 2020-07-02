@@ -15,7 +15,10 @@ class SellerDashBoard extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-md-9">
-            <div style={{ height: "2000px" }}></div>
+            <div className="dashboard-content">
+              <h1 style={{ textAlign: "center" }}>Welcome Someone</h1>
+              <hr />
+            </div>
           </div>
         </div>
       </div>
