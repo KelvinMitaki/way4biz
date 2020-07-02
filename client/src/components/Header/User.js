@@ -39,12 +39,14 @@ class User extends React.Component {
               <NavLink to="/wishlist" className="primary-link my-account-link">
                 WishList
               </NavLink>
-              <NavLink
-                to="/seller-dashboard"
-                className="primary-link my-account-link"
-              >
-                My Store
-              </NavLink>
+              {this.props.user.storeName && (
+                <NavLink
+                  to="/seller-dashboard"
+                  className="primary-link my-account-link"
+                >
+                  My Store
+                </NavLink>
+              )}
 
               <a className="logout-link" href="/api/logout">
                 Logout
@@ -70,9 +72,9 @@ class User extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps)(User);
