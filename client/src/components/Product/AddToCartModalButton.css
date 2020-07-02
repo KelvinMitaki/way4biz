@@ -42,7 +42,7 @@
   top: 0px;
   transition: all 1.3s;
   width: 100vw;
-  z-index: 10000000;
+  z-index: 1000000;
 }
 
 .continue-btn,

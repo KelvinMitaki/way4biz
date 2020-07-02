@@ -32,7 +32,7 @@ class SecondaryHeader extends React.Component {
             items={2}
             loop={true}
             autoplay={true}
-            autoplayTimeout={3000}
+            // autoplayTimeout={3000}
           >
             {!this.props.isSignedIn && (
               <Link className="carousel-link" to="/seller/register">

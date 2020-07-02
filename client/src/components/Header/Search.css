@@ -6,6 +6,7 @@
   align-items: center;
   position: relative;
   z-index: 200;
+  /* flex-direction: column; */
 }
 
 .header-input-search {
@@ -18,6 +19,7 @@
 .header-input-search:focus {
   box-shadow: none;
   outline: none;
+  border: none;
 }
 
 #header-search-btn {
@@ -37,7 +39,6 @@
 }
 
 .search-output {
-  min-height: 0px;
   height: auto;
   width: 100%;
   position: absolute;
