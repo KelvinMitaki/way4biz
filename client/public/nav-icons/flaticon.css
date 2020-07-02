@@ -1,6 +1,6 @@
 /*
   	Flaticon icon font: Flaticon
-  	Creation date: 26/06/2020 15:00
+  	Creation date: 02/07/2020 17:02
   	*/
 
 @font-face {
@@ -46,4 +46,19 @@
 }
 .flaticon-heart:before {
   content: "\f104";
+}
+.flaticon-notification:before {
+  content: "\f105";
+}
+.flaticon-web-browser:before {
+  content: "\f106";
+}
+.flaticon-packing:before {
+  content: "\f107";
+}
+.flaticon-box:before {
+  content: "\f108";
+}
+.flaticon-writing:before {
+  content: "\f109";
 }

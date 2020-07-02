@@ -16,11 +16,17 @@
 .accordion-toggle-text {
   color: #f76b1a;
   border: none;
+  text-decoration: none;
 }
 
 .accordion-toggle-text:focus {
   border: none !important;
   color: #f76b1a;
+}
+
+.card-products {
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 #dashboard-products-sm-screen {
