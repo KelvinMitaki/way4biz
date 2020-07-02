@@ -15,7 +15,7 @@ import {
   FETCH_USER_FAILED,
   CHECKOUT_USER,
   CHECKOUT_USER_FAILED,
-  FETCH_PRODUCTS,
+  FETCH_PRODUCTS_SEARCH,
   FETCH_PRODUCTS_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
@@ -28,7 +28,8 @@ import {
   SELLER_LOG_IN_FAILED,
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  FETCH_PRODUCTS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -156,12 +157,12 @@ export const checkoutUser = (credentials, history) => async (
   }
 };
 
-export const fetchProducts = searchTerm => async dispatch => {
+export const fetchProductsSearch = searchTerm => async dispatch => {
   try {
     const res = await axios.post("/api/product/search", {
       searchTerm
     });
-    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_PRODUCTS_FAILED });
     console.log(error);
@@ -336,6 +337,18 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
     dispatch({ type: ADD_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchProducts = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/products`);
+    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);

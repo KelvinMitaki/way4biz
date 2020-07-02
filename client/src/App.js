@@ -12,7 +12,7 @@ import Account from "./components/Account/Account";
 import ChangePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
-import { fetchUser } from "./redux/actions";
+import { fetchUser, fetchProducts } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
@@ -31,8 +31,9 @@ import Sell from "./components/Seller/Sell";
 
 class App extends React.Component {
   componentDidMount() {
-    const { fetchUser } = this.props;
+    const { fetchUser, fetchProducts } = this.props;
     fetchUser();
+    fetchProducts();
   }
   render() {
     if (this.props.isSignedIn !== null) {
@@ -111,7 +112,7 @@ class App extends React.Component {
                       )
                     }
                   />
-                  <Route path="/product" exact component={Product} />
+                  <Route path="/product/:productId" exact component={Product} />
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
                   <Route
@@ -251,4 +252,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUser })(App);
+export default connect(mapStateToProps, { fetchUser, fetchProducts })(App);
