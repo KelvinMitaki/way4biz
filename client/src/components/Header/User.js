@@ -39,6 +39,12 @@ class User extends React.Component {
               <NavLink to="/wishlist" className="primary-link my-account-link">
                 WishList
               </NavLink>
+              <NavLink
+                to="/seller-dashboard"
+                className="primary-link my-account-link"
+              >
+                My Store
+              </NavLink>
 
               <a className="logout-link" href="/api/logout">
                 Logout
