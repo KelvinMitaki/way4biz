@@ -38,7 +38,7 @@ class MyCart extends React.Component {
 
                     <div className="col-12 d-flex secondary-details">
                       <div>
-                        <QuantityCounter />
+                        <QuantityCounter quantity={item.quantity} item={item} />
                       </div>
                       <div>
                         <p>Ksh.{item.price.toLocaleString()} </p>
