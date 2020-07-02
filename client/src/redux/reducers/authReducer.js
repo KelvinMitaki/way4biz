@@ -30,7 +30,8 @@ const INITIAL_STATE = {
   editUserError: null,
   checkoutUserError: null,
   updatePasswordMessage: null,
-  updatePasswordError: null
+  updatePasswordError: null,
+  resetPasswordError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -70,7 +71,7 @@ export default (state = INITIAL_STATE, action) => {
     case RESET_PASSWORD:
       return { ...state, success: action.payload.message };
     case RESET_PASSWORD_FAILED:
-      return { ...state, error: "No user with that email found" };
+      return { ...state, resetPasswordError: "No user with that email found" };
     case EDIT_USER:
       if (action.payload.isLoggedIn) {
         return {
