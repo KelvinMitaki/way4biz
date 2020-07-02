@@ -9,6 +9,8 @@ import "./SellerProducts.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { fetchSellerProducts } from "../../redux/actions";
+import DashBoardProduct from "./DashBoardProduct";
+import DashBoardProductMediumScreen from "./DashBoardProductMediumScreens";
 import { connect } from "react-redux";
 
 class SellerProcucts extends React.Component {
@@ -28,27 +30,131 @@ class SellerProcucts extends React.Component {
               <div className="row">
                 <div id="dashboard-products-lg-screen" className="col-lg-12">
                   <Tabs
-                    defaultActiveKey="Total Products"
+                    defaultActiveKey="total-products"
                     id="uncontrolled-tab-example"
+                    className="tab"
                   >
-                    <Tab eventKey="Total Products" title="total-products">
-                      <div>The quick brown fox jumped over the lazy dog</div>
+                    <Tab
+                      tabClassName="my-tab"
+                      eventKey="total-products"
+                      title="Total Products"
+                    >
+                      <div className="container">
+                        <div className="row no-gutters dashboard-product-titles">
+                          <div className="col d-flex mt-4 mb-2">
+                            <h6
+                              className="col-lg-5"
+                              style={{ textAlign: "left" }}
+                            >
+                              Item
+                            </h6>
+                            <h6 className="col-lg-2">Quantity</h6>
+                            <h6 className="col-lg-2">Price</h6>
+                            <h6 className="col-lg-2">Status</h6>
+                            <h6 className="col-lg-1"></h6>
+                          </div>
+                        </div>
+                      </div>
+                      <DashBoardProduct />
                     </Tab>
-                    <Tab eventKey="Live On Site" title="live-on-site">
-                      <div>The quick brown fox jumped over the lazy dog</div>
+                    <Tab
+                      eventKey="live-on-site"
+                      title="Live On Site"
+                      tabClassName="my-tab"
+                    >
+                      <div className="container">
+                        <div className="row no-gutters dashboard-product-titles">
+                          <div className="col d-flex mt-4 mb-2">
+                            <h6
+                              className="col-lg-5"
+                              style={{ textAlign: "left" }}
+                            >
+                              Item
+                            </h6>
+                            <h6 className="col-lg-2">Quantity</h6>
+                            <h6 className="col-lg-2">Price</h6>
+                            <h6 className="col-lg-2">Status</h6>
+                            <h6 className="col-lg-1"></h6>
+                          </div>
+                        </div>
+                      </div>
+                      <DashBoardProduct />
                     </Tab>
-                    <Tab eventKey="Under Preview" title="under-preview">
-                      <div>The quick brown fox jumped over the lazy dog</div>
+                    <Tab
+                      eventKey="under-preview"
+                      title="Under Preview"
+                      tabClassName="my-tab"
+                    >
+                      <div className="container">
+                        <div className="row no-gutters dashboard-product-titles">
+                          <div className="col d-flex mt-4 mb-2">
+                            <h6
+                              className="col-lg-5"
+                              style={{ textAlign: "left" }}
+                            >
+                              Item
+                            </h6>
+                            <h6 className="col-lg-2">Quantity</h6>
+                            <h6 className="col-lg-2">Price</h6>
+                            <h6 className="col-lg-2">Status</h6>
+                            <h6 className="col-lg-1"></h6>
+                          </div>
+                        </div>
+                      </div>
+                      <DashBoardProduct />
                     </Tab>
-                    <Tab eventKey="Rejected" title="rejected">
-                      <div>The quick brown fox jumped over the lazy dog</div>
+                    <Tab
+                      eventKey="rejected"
+                      title="Rejected"
+                      tabClassName="my-tab"
+                    >
+                      <div className="container">
+                        <div className="row no-gutters dashboard-product-titles">
+                          <div className="col d-flex mt-4 mb-2">
+                            <h6
+                              className="col-lg-5"
+                              style={{ textAlign: "left" }}
+                            >
+                              Item
+                            </h6>
+                            <h6 className="col-lg-2">Quantity</h6>
+                            <h6 className="col-lg-2">Price</h6>
+                            <h6 className="col-lg-2">Status</h6>
+                            <h6 className="col-lg-1"></h6>
+                          </div>
+                        </div>
+                      </div>
+                      <DashBoardProduct />
                     </Tab>
-                    <Tab eventKey="Sold Out" title="sold-out">
-                      <div>The quick brown fox jumped over the lazy dog</div>
+                    <Tab
+                      eventKey="sold-out"
+                      title="Sold Out"
+                      tabClassName="my-tab"
+                    >
+                      <div className="container">
+                        <div className="row no-gutters dashboard-product-titles">
+                          <div className="col d-flex mt-4 mb-2">
+                            <h6
+                              className="col-lg-5"
+                              style={{ textAlign: "left" }}
+                            >
+                              Item
+                            </h6>
+                            <h6 className="col-lg-2">Quantity</h6>
+                            <h6 className="col-lg-2">Price</h6>
+                            <h6 className="col-lg-2">Status</h6>
+                            <h6 className="col-lg-1"></h6>
+                          </div>
+                        </div>
+                      </div>
+                      <DashBoardProduct />
                     </Tab>
                   </Tabs>
                 </div>
-                <div id="dashboard-products-sm-screen" className="col">
+                <div
+                  id="dashboard-products-sm-screen"
+                  className="col-md-9 mx-auto"
+                >
                   <Accordion defaultActiveKey="0">
                     <Card>
                       <Card.Header>
@@ -56,12 +162,15 @@ class SellerProcucts extends React.Component {
                           as={Button}
                           variant="link"
                           eventKey="0"
+                          className="accordion-toggle-text"
                         >
                           Total Products
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="0">
-                        <Card.Body>Hello! I'm the body</Card.Body>
+                        <Card.Body>
+                          <DashBoardProductMediumScreen />
+                        </Card.Body>
                       </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -75,7 +184,9 @@ class SellerProcucts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="1">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                          <DashBoardProduct />
+                        </Card.Body>
                       </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -89,7 +200,9 @@ class SellerProcucts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="2">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                          <DashBoardProduct />
+                        </Card.Body>
                       </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -103,7 +216,9 @@ class SellerProcucts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="3">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                          <DashBoardProduct />
+                        </Card.Body>
                       </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -117,7 +232,9 @@ class SellerProcucts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                          <DashBoardProduct />
+                        </Card.Body>
                       </Accordion.Collapse>
                     </Card>
                   </Accordion>

@@ -2,6 +2,27 @@
   padding: 20px;
 }
 
+.tab {
+  /* color: #fff; */
+  /* background-color: #f76b1a; */
+  color: #f76b1a !important;
+}
+
+.my-tab {
+  color: #f76b1a !important;
+  border: none;
+}
+
+.accordion-toggle-text {
+  color: #f76b1a;
+  border: none;
+}
+
+.accordion-toggle-text:focus {
+  border: none !important;
+  color: #f76b1a;
+}
+
 #dashboard-products-sm-screen {
   display: none;
 }
@@ -10,10 +31,16 @@
   #dashboard-products-lg-screen {
     display: none;
   }
-}
 
-@media screen and (max-width: 960px) {
+  #dashboard-products-sm-screen {
+    display: block;
+  }
+
   #dashboard-products-sm-screen {
     display: block;
   }
 }
+
+/* @media screen and (max-width: 960px) {
+
+} */
