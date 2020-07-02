@@ -12,11 +12,7 @@ class SecondaryHeader extends React.Component {
       <div className="secondary-header d-flex primary-background">
         <div id="large-screen-secondary-header" className="d-flex">
           {!this.props.isSignedIn && (
-            <Link
-              // activeClassName="secondary-header-active"
-              className="mx-4 secondary-header-link"
-              to="/seller/register"
-            >
+            <Link className="mx-4 secondary-header-link" to="/seller/register">
               Sell with us
             </Link>
           )}
@@ -59,9 +55,9 @@ class SecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 

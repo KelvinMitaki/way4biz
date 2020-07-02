@@ -73,6 +73,11 @@ hr {
   padding: 20px;
 }
 
+.product-owl-carousel {
+  position: relative;
+  z-index: -5;
+}
+
 #features h4 {
   border-bottom: 1px solid #eee;
   padding-bottom: 20px;

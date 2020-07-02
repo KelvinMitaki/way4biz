@@ -1,5 +1,6 @@
 #mini-menu {
   position: fixed;
+  z-index: 100;
   bottom: 0px;
   background-color: #fff;
   width: 100vw;

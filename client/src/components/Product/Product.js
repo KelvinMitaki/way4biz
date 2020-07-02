@@ -60,6 +60,7 @@ class Product extends React.Component {
                   autoplay={true}
                   autoplayTimeout={4000}
                   dots={true}
+                  className="product-owl-carousel"
                 >
                   <div>
                     <img src="product-imgs/1.jpg" alt="product-image" />
