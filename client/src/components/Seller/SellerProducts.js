@@ -185,7 +185,7 @@ class SellerProducts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="1">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -201,7 +201,7 @@ class SellerProducts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="2">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -217,7 +217,7 @@ class SellerProducts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="3">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -233,7 +233,7 @@ class SellerProducts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>

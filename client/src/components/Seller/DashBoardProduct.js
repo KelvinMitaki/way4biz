@@ -21,7 +21,7 @@ class DashBoardProduct extends React.Component {
                   {product.stockQuantity}
                 </div>
                 <div id="dashboard-product-price" className="col col-lg-2">
-                  Ksh.{product.price}
+                  Ksh.{product.price.toLocaleString()}
                 </div>
                 <div id="dashboard-product-status" className="col col-lg-2">
                   Live
