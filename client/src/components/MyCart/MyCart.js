@@ -23,7 +23,8 @@ class MyCart extends React.Component {
                       <div className="container">
                         <div className="row cart-product-details">
                           <img
-                            src="product-imgs/1.jpg"
+                            src={item.imageUrl}
+                            alt={item.name}
                             className="col col-md-6 mr -md-4"
                           />
                           <div className="price-title my-auto col col-md-6">

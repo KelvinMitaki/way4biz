@@ -9,7 +9,11 @@ class Cart extends React.Component {
     return (
       <Link to="/cart" className="secondary-link">
         <div className="icon cart-icon flaticon-shopping-cart">
-          <span className="badge">{this.props.cart.length}</span>
+          <span className="badge">
+            {this.props.cart
+              .map(item => item.quantity)
+              .reduce((cur, acc) => cur + acc, 0)}
+          </span>
         </div>
       </Link>
     );
