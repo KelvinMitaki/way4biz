@@ -82,7 +82,7 @@ class SellerProducts extends React.Component {
                     </Tab>
                     <Tab
                       eventKey="under-preview"
-                      title="Under Preview"
+                      title="Under Review"
                       tabClassName="my-tab"
                     >
                       <div className="container">
@@ -153,7 +153,7 @@ class SellerProducts extends React.Component {
                 </div>
                 <div
                   id="dashboard-products-sm-screen"
-                  className="col-md-9 mx-auto"
+                  className="col-md-10 mx-auto"
                 >
                   <Accordion defaultActiveKey="0">
                     <Card>
@@ -168,7 +168,7 @@ class SellerProducts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="0">
-                        <Card.Body>
+                        <Card.Body className="card-products">
                           <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
@@ -185,7 +185,7 @@ class SellerProducts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="1">
-                        <Card.Body>
+                        <Card.Body className="card-products">
                           <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
@@ -198,11 +198,11 @@ class SellerProducts extends React.Component {
                           eventKey="2"
                           className="accordion-toggle-text"
                         >
-                          Under Preview
+                          Under Review
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="2">
-                        <Card.Body>
+                        <Card.Body className="card-products">
                           <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
@@ -219,7 +219,7 @@ class SellerProducts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="3">
-                        <Card.Body>
+                        <Card.Body className="card-products">
                           <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
@@ -236,7 +236,7 @@ class SellerProducts extends React.Component {
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
-                        <Card.Body>
+                        <Card.Body className="card-products">
                           <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
@@ -251,9 +251,9 @@ class SellerProducts extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts
+    sellerProducts: state.sellerRegister.sellerProducts,
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

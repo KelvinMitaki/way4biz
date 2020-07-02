@@ -2,11 +2,12 @@ import React from "react";
 
 import "./DashBoardProductMediumScreens.css";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class DashBoardProductMediumScreen extends React.Component {
   render() {
     if (this.props.sellerProducts.length !== 0) {
-      return this.props.sellerProducts.map(p => (
+      return this.props.sellerProducts.map((p) => (
         <React.Fragment key={p._id}>
           <div className="container">
             <div className="row">
@@ -26,7 +27,17 @@ class DashBoardProductMediumScreen extends React.Component {
                       </div>
                       <div>
                         <strong>Status:</strong>
-                        <p>Live</p>
+                        <p
+                          className="bg-success"
+                          style={{
+                            display: "block",
+                            color: "#fff",
+                            textAlign: "center",
+                            borderRadius: "3px",
+                          }}
+                        >
+                          Live
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -34,7 +45,11 @@ class DashBoardProductMediumScreen extends React.Component {
                     <p>
                       <strong>Qty:</strong> {p.stockQuantity}
                     </p>
-                    <p>Edit</p>
+                    <p>
+                      <Link className="btn btn-sm btn-danger" to="/sell">
+                        Edit
+                      </Link>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -46,9 +61,9 @@ class DashBoardProductMediumScreen extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts
+    sellerProducts: state.sellerRegister.sellerProducts,
   };
 };
 export default connect(mapStateToProps)(DashBoardProductMediumScreen);
