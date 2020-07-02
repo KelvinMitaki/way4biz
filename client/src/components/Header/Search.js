@@ -40,8 +40,8 @@ class Search extends React.Component {
             {this.props.searchedProducts.length > 0 &&
               this.props.searchedProducts.map(product => (
                 <div className="my-2" key={product._id}>
-                  <h4>{product.name}</h4>
-                  <p>{product.description}</p>
+                  <strong>{product.name}</strong>
+                  <br />
                 </div>
               ))}
           </div>
