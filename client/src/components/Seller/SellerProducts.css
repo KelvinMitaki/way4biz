@@ -16,6 +16,7 @@
 .accordion-toggle-text {
   color: #f76b1a;
   border: none;
+  text-decoration: none;
 }
 
 .accordion-toggle-text:focus {

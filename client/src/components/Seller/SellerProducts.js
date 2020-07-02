@@ -179,6 +179,7 @@ class SellerProcucts extends React.Component {
                           as={Button}
                           variant="link"
                           eventKey="1"
+                          className="accordion-toggle-text"
                         >
                           Live On Site
                         </Accordion.Toggle>
@@ -195,6 +196,7 @@ class SellerProcucts extends React.Component {
                           as={Button}
                           variant="link"
                           eventKey="2"
+                          className="accordion-toggle-text"
                         >
                           Under Preview
                         </Accordion.Toggle>
@@ -211,6 +213,7 @@ class SellerProcucts extends React.Component {
                           as={Button}
                           variant="link"
                           eventKey="3"
+                          className="accordion-toggle-text"
                         >
                           Rejected
                         </Accordion.Toggle>
@@ -227,6 +230,7 @@ class SellerProcucts extends React.Component {
                           as={Button}
                           variant="link"
                           eventKey="4"
+                          className="accordion-toggle-text"
                         >
                           Sold Out
                         </Accordion.Toggle>
