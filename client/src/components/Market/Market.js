@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Market.css";
+import { connect } from "react-redux";
 
 class Market extends React.Component {
   render() {
@@ -11,6 +12,25 @@ class Market extends React.Component {
           <h1>Selling</h1>
         </div>
         <div className="row products">
+          {this.props.products.length !== 0 &&
+            this.props.products.map(product => (
+              <Link
+                key={product._id}
+                to="/product"
+                className="col-6 col-md-4 col-lg-2 product"
+              >
+                <img
+                  width="254px"
+                  height="254px"
+                  src={product.imageUrl}
+                  alt={product.name}
+                />
+                <div>
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="price">Ksh.{product.price.toLocaleString()}</p>
+                </div>
+              </Link>
+            ))}
           <Link to="/product" className="col-6 col-md-4 col-lg-2 product">
             <img src="product-imgs/1.jpg" />
             <div>
@@ -112,5 +132,9 @@ class Market extends React.Component {
     );
   }
 }
-
-export default Market;
+const mapStateToProps = state => {
+  return {
+    products: state.product.products
+  };
+};
+export default connect(mapStateToProps)(Market);
