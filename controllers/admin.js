@@ -293,7 +293,7 @@ route.post(
     ),
   check("specifications")
     .trim()
-    .isLength({ min: 10 })
+    .isLength({ min: 20 })
     .withMessage(
       "Please enter a valid specifications with 20 characters minimum"
     ),

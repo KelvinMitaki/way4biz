@@ -112,7 +112,7 @@ class App extends React.Component {
                       )
                     }
                   />
-                  <Route path="/product" exact component={Product} />
+                  <Route path="/product/:productId" exact component={Product} />
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
                   <Route

@@ -59,6 +59,11 @@ export class Sell extends Component {
             label="Product Description"
             component={SellerTextArea}
           />
+          <Field
+            name="specifications"
+            label="Product Specifications"
+            component={SellerTextArea}
+          />
           {/* <div className="form-primary-error">
             {this.props.registerError && this.props.registerError}
           </div> */}
@@ -149,6 +154,13 @@ const validate = formValues => {
   ) {
     errors.description =
       "Please enter a description with a minimum of 20 characters";
+  }
+  if (
+    !formValues.specifications ||
+    (formValues.specifications && formValues.specifications.trim().length < 20)
+  ) {
+    errors.specifications =
+      "Please enter specifications with 20 characters minimum";
   }
   if (
     !formValues.imageUrl ||
