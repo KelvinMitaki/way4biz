@@ -258,6 +258,9 @@ route.post("/api/reset", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
+    if (!user.password) {
+      return res.status(404).send({ message: "No user with that email found" });
+    }
     const seller = await Seller.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {

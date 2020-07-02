@@ -14,13 +14,9 @@ class SellerDashBoardHeader extends React.Component {
         <Logo id="seller-logo" />
         <ul id="seller-header-menu-items">
           <li className="my-4">
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-acive"
-              to="/"
-            >
+            <a className="link" href="/">
               Buy
-            </NavLink>
+            </a>
           </li>
           <li className="my-4">
             <NavLink

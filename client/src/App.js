@@ -24,6 +24,9 @@ import VerifySellerNumber from "./components/Account/VerifySellerNumber";
 import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
+import SellerOrders from "./components/Seller/SellerOrders";
+import SellerProcucts from "./components/Seller/SellerProducts";
+import Review from "./components/Seller/Review";
 
 class App extends React.Component {
   componentDidMount() {
@@ -43,6 +46,39 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerDashBoard />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller-orders"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerOrders />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller-review"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <Review />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller-products"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerProcucts />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )

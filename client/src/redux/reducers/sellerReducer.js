@@ -3,7 +3,8 @@ import {
   REGISTER_SELLER_FAILED,
   FETCH_SELLER_NUMBER,
   INVALID_VERIFICATION_CODE,
-  RESET_TOKEN_CHECK
+  RESET_TOKEN_CHECK,
+  FETCH_SELLER_PRODUCTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -11,7 +12,8 @@ const INITIAL_STATE = {
   sellerNumber: null,
   sellerRegisterError: null,
   errorVerifying: null,
-  resetToken: null
+  resetToken: null,
+  sellerProducts: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, errorVerifying: action.payload };
     case RESET_TOKEN_CHECK:
       return { ...state, resetToken: action.payload };
+    case FETCH_SELLER_PRODUCTS:
+      return { ...state, sellerProducts: action.payload };
     default:
       return state;
   }

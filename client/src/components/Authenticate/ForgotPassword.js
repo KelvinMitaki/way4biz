@@ -38,7 +38,8 @@ export class ForgotPassword extends Component {
                       component={AuthField}
                     />
                     <div style={{ color: "red", width: "400px" }}>
-                      {this.props.error && this.props.error}
+                      {this.props.resetPasswordError &&
+                        this.props.resetPasswordError}
                     </div>
                     <button
                       style={{ cursor: "pointer" }}
@@ -82,7 +83,7 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    error: state.auth.error,
+    resetPasswordError: state.auth.resetPasswordError,
     success: state.auth.success
   };
 };

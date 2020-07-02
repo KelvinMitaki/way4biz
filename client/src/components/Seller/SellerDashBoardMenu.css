@@ -1,10 +1,11 @@
 #seller-dashboard-menu {
-  height: calc(100vh - 90px);
+  height: 100vh;
+  /* min-height: calc(100vh - 90px); */
   width: 100%;
   margin: 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 90px;
+  top: 0px;
 }
 
 #seller-dashboard-menu ul {
@@ -16,7 +17,11 @@
   overflow-y: auto;
 }
 
-.seller-menu-acive {
+.seller-menu-active {
+  color: #f76b1a;
+}
+
+#seller-menu-items li .link:hover {
   color: #f76b1a;
 }
 

@@ -11,6 +11,7 @@
   position: absolute;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 .seller-menu-slide-in {
@@ -77,10 +78,6 @@
   overflow-y: auto;
   padding-left: 10px;
 }
-
-/* #seller-menu-slider-profile {
-  height: 15%;
-} */
 
 @media screen and (min-width: 961px) {
   #hamburger-menu-wrapper {

@@ -1,15 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
 
-const modal = (props) => {
+const modal = props => {
   return (
     <div>
       <div
         className="modal-wrapper"
         style={{
-          transform: props.show ? "translateY(-30vh)" : "translateY(-200vh)",
-          opacity: props.show ? "1" : "0",
+          transform: props.show ? "translateY(-30vh)" : "translateY(-400vh)",
+          opacity: props.show ? "1" : "0"
         }}
       >
         <div className="modal-header">
@@ -21,14 +22,14 @@ const modal = (props) => {
           <div className="container">
             <div className="row">
               <div className="col-md-6 my-2">
-                <a className="btn btn-md continue-btn " href="/">
+                <Link className="btn btn-md continue-btn " to="/">
                   Continue Shopping
-                </a>
+                </Link>
               </div>
               <div className="col-md-6 my-2">
-                <a className="btn btn-md shopping-btn-modal" href="/cart">
+                <Link className="btn btn-md shopping-btn-modal" to="/cart">
                   Proceed To Cart
-                </a>
+                </Link>
               </div>
             </div>
           </div>
