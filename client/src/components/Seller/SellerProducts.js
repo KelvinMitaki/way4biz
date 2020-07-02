@@ -20,7 +20,7 @@ class SellerProcucts extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-md-9">
-            <div className="product-contentm"></div>
+            <div className="product-content"></div>
           </div>
         </div>
       </div>
