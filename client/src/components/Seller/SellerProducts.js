@@ -20,14 +20,18 @@ class SellerProcucts extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-md-9">
-            <div className="product-contentm">
-              <h1>All Products</h1>
-            </div>
+            <div className="product-contentm"></div>
           </div>
         </div>
       </div>
     );
   }
 }
-
-export default connect(null, { fetchSellerProducts })(SellerProcucts);
+const mapStateToProps = state => {
+  return {
+    sellerProcucts: state.seller.sellerProcucts
+  };
+};
+export default connect(mapStateToProps, { fetchSellerProducts })(
+  SellerProcucts
+);
