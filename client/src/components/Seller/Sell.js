@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
 import { registerSeller, addProduct } from "../../redux/actions";
-import AuthHeader from "../Authenticate/AuthHeader";
-import SelectField from "../Checkout/SelectField";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
