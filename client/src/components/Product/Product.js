@@ -9,11 +9,12 @@ import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions";
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false,
+      modalShow: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -21,18 +22,18 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
   }
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
   }
@@ -43,19 +44,20 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl,
+        src: product.imageUrl
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800,
+        height: 1800
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
     };
   }
 
   render() {
     if (this.props.product) {
+      const { product } = this.props;
       return (
         <React.Fragment>
           <Header />
@@ -134,7 +136,8 @@ class Product extends React.Component {
                   <div>
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
-                      onClick={this.handleClick}
+                      onChange={this.handleClick}
+                      onClick={() => this.props.addToCart(product)}
                     >
                       Add to Cart
                     </button>
@@ -169,12 +172,12 @@ const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
     product = state.product.products.find(
-      (product) =>
+      product =>
         product._id.toString() === [ownProps.match.params.productId].toString()
     );
   }
   return {
-    product,
+    product
   };
 };
-export default connect(mapStateToProps)(Product);
+export default connect(mapStateToProps, { addToCart })(Product);
