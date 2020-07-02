@@ -4,8 +4,13 @@ import "./SellerProducts.css";
 
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
+import { fetchSellerProducts } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class SellerProcucts extends React.Component {
+  componentDidMount() {
+    this.props.fetchSellerProducts();
+  }
   render() {
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -16,7 +21,7 @@ class SellerProcucts extends React.Component {
           </div>
           <div className="col-md-9">
             <div className="product-contentm">
-              <h1>hey</h1>
+              <h1>All Products</h1>
             </div>
           </div>
         </div>
@@ -25,4 +30,4 @@ class SellerProcucts extends React.Component {
   }
 }
 
-export default SellerProcucts;
+export default connect(null, { fetchSellerProducts })(SellerProcucts);

@@ -95,12 +95,7 @@ class SellerHamburgerMenu extends React.Component {
               <hr />
               <ul id="seller-others-links">
                 <li className="my-4">
-                  <a
-                    className="link"
-                    activeClassName="seller-menu-acive"
-                    exact
-                    href="/"
-                  >
+                  <a className="link" href="/">
                     Buy
                   </a>
                 </li>
