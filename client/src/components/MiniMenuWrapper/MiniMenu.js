@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Tooltip from "react-png-tooltip";
 
 import { connect } from "react-redux";

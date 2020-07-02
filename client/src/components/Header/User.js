@@ -5,10 +5,6 @@ import "./User.css";
 import { connect } from "react-redux";
 
 class User extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div id="user-auth" style={{ cursor: "pointer" }}>
