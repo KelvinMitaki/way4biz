@@ -61,6 +61,9 @@ class MiniMenu extends React.Component {
                     <NavLink className="primary-link" to="/wishlist">
                       Wishlist
                     </NavLink>
+                    <NavLink className="primary-link" to="/seller-dashboard">
+                      My Store
+                    </NavLink>
                     <a className="mini-logout-link" href="/api/logout">
                       Logout
                     </a>
