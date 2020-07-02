@@ -62,7 +62,10 @@ class Product extends React.Component {
           {this.props.product && (
             <div id="container-fluid">
               {this.state.modalShow ? (
-                <div onClick={this.handleClick} className="back-shed"></div>
+                <div
+                  onClick={this.handleCloseModal}
+                  className="back-shed"
+                ></div>
               ) : null}
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">

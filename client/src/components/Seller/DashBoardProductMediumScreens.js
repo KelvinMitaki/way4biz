@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 class DashBoardProductMediumScreen extends React.Component {
   render() {
     if (this.props.sellerProducts.length !== 0) {
-      return this.props.sellerProducts.map(p => (
+      return this.props.sellerProducts.map((p) => (
         <React.Fragment key={p._id}>
           <div className="container">
             <div className="row">
@@ -21,9 +21,17 @@ class DashBoardProductMediumScreen extends React.Component {
                         src={p.imageUrl}
                         alt={p.name}
                       />
-                      <p>
-                        <strong>{p.name}</strong>
-                      </p>
+                      <div>
+                        <Link
+                          className="seller-md-db-product-link"
+                          to="/"
+                          title={p.name}
+                        >
+                          <h5 className="seller-md-db-product-name">
+                            {p.name}
+                          </h5>
+                        </Link>
+                      </div>
                     </div>
                     <div className="seller-db-md-screen-price-status">
                       <div>
@@ -38,7 +46,7 @@ class DashBoardProductMediumScreen extends React.Component {
                             display: "block",
                             color: "#fff",
                             textAlign: "center",
-                            borderRadius: "3px"
+                            borderRadius: "3px",
                           }}
                         >
                           Live
@@ -69,9 +77,9 @@ class DashBoardProductMediumScreen extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts
+    sellerProducts: state.sellerRegister.sellerProducts,
   };
 };
 export default connect(mapStateToProps)(DashBoardProductMediumScreen);
