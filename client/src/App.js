@@ -28,6 +28,7 @@ import SellerOrders from "./components/Seller/SellerOrders";
 import Review from "./components/Seller/Review";
 import SellerProducts from "./components/Seller/SellerProducts";
 import Sell from "./components/Seller/Sell";
+import SellerEdit from "./components/Seller/SellerEdit";
 
 class App extends React.Component {
   componentDidMount() {
@@ -92,6 +93,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerProducts />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller/edit/:productId"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerEdit />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
