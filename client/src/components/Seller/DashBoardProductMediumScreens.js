@@ -15,21 +15,25 @@ class DashBoardProductMediumScreen extends React.Component {
                   <div className="db-md-top">
                     <div>
                       <img height="100px" width="100px" src={p.imageUrl} />
-                      <p>{p.name}</p>
+                      <p>
+                        <strong>{p.name}</strong>
+                      </p>
                     </div>
                     <div className="seller-db-md-screen-price-status">
                       <div>
-                        <p>Price:</p>
+                        <strong>Price:</strong>
                         <p>Ksh.{p.price.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p>Status:</p>
+                        <strong>Status:</strong>
                         <p>Live</p>
                       </div>
                     </div>
                   </div>
                   <div className="db-md-bottom">
-                    <p>Qty:{p.stockQuantity}</p>
+                    <p>
+                      <strong>Qty:</strong> {p.stockQuantity}
+                    </p>
                     <p>Edit</p>
                   </div>
                 </div>
