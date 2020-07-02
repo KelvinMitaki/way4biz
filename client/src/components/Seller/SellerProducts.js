@@ -155,7 +155,7 @@ class SellerProducts extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerProducts: state.seller.sellerProducts
+    sellerProducts: state.sellerRegister.sellerProducts
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

@@ -266,7 +266,7 @@ export const verifyCode = (formValues, history) => async (
   getState
 ) => {
   try {
-    formValues.phoneNumber = getState().seller.sellerNumber.number;
+    formValues.phoneNumber = getState().sellerRegister.sellerNumber.number;
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
@@ -299,7 +299,10 @@ export const forgotPassword = (formvalues, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
+    await axios.post(
+      `/api/reset/${getState().sellerRegister.resetToken}`,
+      formvalues
+    );
     dispatch({ type: LOADING_STOP });
     history.push("/sign-in");
   } catch (error) {
