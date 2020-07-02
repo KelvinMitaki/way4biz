@@ -15,7 +15,7 @@ import {
   FETCH_USER_FAILED,
   CHECKOUT_USER,
   CHECKOUT_USER_FAILED,
-  FETCH_PRODUCTS,
+  FETCH_PRODUCTS_SEARCH,
   FETCH_PRODUCTS_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
@@ -156,12 +156,12 @@ export const checkoutUser = (credentials, history) => async (
   }
 };
 
-export const fetchProducts = searchTerm => async dispatch => {
+export const fetchProductsSearch = searchTerm => async dispatch => {
   try {
     const res = await axios.post("/api/product/search", {
       searchTerm
     });
-    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_PRODUCTS_FAILED });
     console.log(error);
