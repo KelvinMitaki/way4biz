@@ -9,6 +9,8 @@ import AuthHeader from "../Authenticate/AuthHeader";
 import SelectField from "../Checkout/SelectField";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerTextArea from "../Account/SellerTextArea";
+import SellerDropDown from "./SellerDropDown";
+import SellerCheckBox from "./SellerCheckBox";
 
 const category = [
   { key: "nairobi", text: "Nairobi", value: "nairobi" },
@@ -62,20 +64,21 @@ export class Sell extends Component {
             type="checkbox"
             name="freeShipping"
             label="Free Shipping"
-            component={AuthField}
+            component={SellerCheckBox}
           />
           {/* DROPDOWNS */}
           <Field
             options={category}
             name="category"
             label="Product Category"
-            component={SelectField}
+            component={SellerDropDown}
           />
+          <br />
           <Field
             options={category}
             name="subcategory"
             label="Product Subcategory"
-            component={SelectField}
+            component={SellerDropDown}
           />
           {/* DROPDOWNS */}
           <Field
