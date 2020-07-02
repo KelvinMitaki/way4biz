@@ -352,3 +352,21 @@ export const fetchProducts = () => async dispatch => {
     console.log(error.response);
   }
 };
+
+export const editProduct = (formvalues, productId, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.patch(
+      `/api/product/${getState().auth.user._id}/${productId}`,
+      formvalues
+    );
+    dispatch({ type: LOADING_STOP });
+    history.push("/seller-products");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};

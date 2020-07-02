@@ -47,7 +47,7 @@ class SellerHamburgerMenu extends React.Component {
                   color="#f76b1a"
                   isOpen={true}
                   menuClicked={this.handleClick}
-                  className="float-right"
+                  className="float-right "
                 />
               </div>
               <h6>MY ACCOUNT</h6>

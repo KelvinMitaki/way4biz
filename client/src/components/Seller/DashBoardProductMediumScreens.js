@@ -51,7 +51,10 @@ class DashBoardProductMediumScreen extends React.Component {
                       <strong>Qty:</strong> {p.stockQuantity}
                     </p>
                     <p>
-                      <Link className="btn btn-sm btn-danger" to="/seller/sell">
+                      <Link
+                        className="btn btn-sm btn-danger"
+                        to={`/seller/edit/${p._id}`}
+                      >
                         Edit
                       </Link>
                     </p>
