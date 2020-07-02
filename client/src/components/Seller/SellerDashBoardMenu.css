@@ -17,7 +17,11 @@
   overflow-y: auto;
 }
 
-.seller-menu-acive {
+.seller-menu-active {
+  color: #f76b1a;
+}
+
+#seller-menu-items li .link:hover {
   color: #f76b1a;
 }
 

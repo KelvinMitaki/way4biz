@@ -11,7 +11,7 @@ class SellerDashBoardMenu extends React.Component {
           <li className="my-4">
             <NavLink
               className="link"
-              activeClassName="seller-menu-acive"
+              activeClassName="seller-menu-active"
               to="/seller-dashboard"
             >
               Dashboard
@@ -20,7 +20,7 @@ class SellerDashBoardMenu extends React.Component {
           <li className="my-4">
             <NavLink
               className="link"
-              activeClassName="seller-menu-acive"
+              activeClassName="seller-menu-active"
               to="/seller-products"
             >
               Products
@@ -29,7 +29,7 @@ class SellerDashBoardMenu extends React.Component {
           <li className="my-4">
             <NavLink
               className="link"
-              activeClassName="seller-menu-acive"
+              activeClassName="seller-menu-active"
               to="/seller-orders"
             >
               Orders
