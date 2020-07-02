@@ -41,7 +41,9 @@ class MyCart extends React.Component {
                         <QuantityCounter quantity={item.quantity} item={item} />
                       </div>
                       <div>
-                        <p>Ksh.{item.price.toLocaleString()} </p>
+                        <p>
+                          Ksh.{(item.price * item.quantity).toLocaleString()}{" "}
+                        </p>
                       </div>
                       <div id="remove-cart">
                         <i className="fa fa-trash mr-1"></i>
