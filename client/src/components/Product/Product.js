@@ -27,6 +27,8 @@ class Product extends React.Component {
         modalShow: !prevState.modalShow
       };
     });
+    const { product, addToCart } = this.props;
+    addToCart(product);
   }
 
   handleCloseModal(e) {
@@ -57,7 +59,6 @@ class Product extends React.Component {
 
   render() {
     if (this.props.product) {
-      const { product } = this.props;
       return (
         <React.Fragment>
           <Header />
@@ -136,8 +137,7 @@ class Product extends React.Component {
                   <div>
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
-                      onChange={this.handleClick}
-                      onClick={() => this.props.addToCart(product)}
+                      onClick={this.handleClick}
                     >
                       Add to Cart
                     </button>

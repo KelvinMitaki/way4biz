@@ -28,7 +28,8 @@ import {
   FETCH_SELLER_PRODUCTS,
   ADD_PRODUCT,
   FETCH_PRODUCTS,
-  ADD_TO_CART
+  ADD_TO_CART,
+  REMOVE_FROM_CART
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -375,6 +376,13 @@ export const editProduct = (formvalues, productId, history) => async (
 export const addToCart = product => {
   return {
     type: ADD_TO_CART,
+    payload: product
+  };
+};
+
+export const removeFromCart = product => {
+  return {
+    type: REMOVE_FROM_CART,
     payload: product
   };
 };

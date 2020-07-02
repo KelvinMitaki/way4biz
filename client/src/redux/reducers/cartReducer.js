@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/types";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/types";
 
 const INITIAL_STATE = {
   cart: [],
@@ -25,7 +25,26 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         cart: [...state.cart, { ...action.payload, quantity: 1 }]
       };
-
+    case REMOVE_FROM_CART:
+      const existingCartItem = state.cart.find(
+        item => item._id.toString() === action.payload._id.toString()
+      );
+      if (existingCartItem.quantity === 1) {
+        return {
+          ...state,
+          cart: state.cart.filter(
+            item => item._id.toString() !== action.payload._id.toString()
+          )
+        };
+      }
+      return {
+        ...state,
+        cart: state.cart.map(item =>
+          item._id.toString() === action.payload.toString()
+            ? { ...action.payload, quantity: action.payload.quantity - 1 }
+            : item
+        )
+      };
     default:
       return state;
   }
