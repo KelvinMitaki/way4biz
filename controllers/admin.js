@@ -317,8 +317,15 @@ route.post(
         category,
         imageUrl
       } = req.body;
+      let freeShipping = req.body.freeShipping;
+
+      if (freeShipping !== true) {
+        freeShipping = false;
+      }
+
       const product = new Product({
         name,
+        freeShipping,
         price,
         stockQuantity,
         category,

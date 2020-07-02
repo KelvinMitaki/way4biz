@@ -4,7 +4,7 @@ import AuthField from "../Authenticate/AuthField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { registerSeller } from "../../redux/actions";
+import { registerSeller, addProduct } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import SelectField from "../Checkout/SelectField";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
@@ -13,12 +13,20 @@ import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
 
 const category = [
-  { key: "nairobi", text: "Nairobi", value: "nairobi" },
-  { key: "kajiado", text: "Kajiado", value: "kajiado" },
-  { key: "kisumu", text: "Kisumu", value: "kisumu" },
-  { key: "mombasa", text: "Mombasa", value: "mombasa" },
-  { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
+  { key: "phones", text: "Phones", value: "phones" },
+  { key: "clothes", text: "Clothes", value: "clothes" },
+  { key: "gadgets", text: "Gadgets", value: "gadgets" },
+  { key: "electronics", text: "Electronics", value: "electronics" },
+  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "toys", text: "Toys", value: "toys" }
+];
+const subcategory = [
+  { key: "iphones", text: "iPhones", value: "iphones" },
+  { key: "android", text: "Android", value: "android" },
+  { key: "laptops", text: "Laptops", value: "laptops" },
+  { key: "televisions", text: "Televisions", value: "televisions" },
+  { key: "tablets", text: "Tablets", value: "tablets" },
+  { key: "shoes", text: "Shoes", value: "shoes" }
 ];
 
 export class Sell extends Component {
@@ -30,7 +38,7 @@ export class Sell extends Component {
         <br />
         <form
           onSubmit={this.props.handleSubmit(formValues =>
-            console.log(formValues)
+            this.props.addProduct(formValues, this.props.history)
           )}
         >
           <Field
@@ -42,7 +50,7 @@ export class Sell extends Component {
           <Field
             type="number"
             name="price"
-            label="Price Of The Product"
+            label="Price Of The Product in Ksh"
             component={AuthField}
           />
 
@@ -75,7 +83,7 @@ export class Sell extends Component {
           />
           <br />
           <Field
-            options={category}
+            options={subcategory}
             name="subcategory"
             label="Product Subcategory"
             component={SellerDropDown}
@@ -160,5 +168,5 @@ export default withRouter(
   reduxForm({
     validate,
     form: "Sell"
-  })(connect(mapStateToProps, { registerSeller })(Sell))
+  })(connect(mapStateToProps, { registerSeller, addProduct })(Sell))
 );

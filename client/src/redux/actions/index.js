@@ -27,7 +27,8 @@ import {
   SELLER_LOG_IN,
   SELLER_LOG_IN_FAILED,
   RESET_TOKEN_CHECK,
-  FETCH_SELLER_PRODUCTS
+  FETCH_SELLER_PRODUCTS,
+  ADD_PRODUCT
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -315,6 +316,23 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
     );
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const addProduct = (product, history) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(
+      `/api/product/${getState().auth.user._id}`,
+      product
+    );
+    console.log(res.data);
+    dispatch({ type: ADD_PRODUCT });
+    dispatch({ type: LOADING_STOP });
+    history.push("/seller-products");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
