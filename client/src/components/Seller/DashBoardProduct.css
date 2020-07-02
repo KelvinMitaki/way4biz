@@ -1,3 +1,22 @@
 .dashboard-product-section {
-  min-height: 100px;
+  min-height: 150px;
+  padding: 10px;
+  border-left: 3px solid #f76b1a;
+  display: flex;
+  align-items: center;
+}
+
+#dashboard-product-image {
+  display: flex;
+  align-items: center;
+}
+
+#dashboard-product-image img {
+  height: 100px;
+}
+
+@media screen and (max-width: 960px) {
+  .dashboard-product-section {
+    height: auto;
+  }
 }
