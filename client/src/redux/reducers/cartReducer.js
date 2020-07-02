@@ -1,7 +1,8 @@
 import { ADD_TO_CART } from "../actions/types";
 
 const INITIAL_STATE = {
-  cart: []
+  cart: [],
+  wishlist: []
 };
 
 export default (state = INITIAL_STATE, action) => {
