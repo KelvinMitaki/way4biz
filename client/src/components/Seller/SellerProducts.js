@@ -51,7 +51,7 @@ class SellerProducts extends React.Component {
                             <h6 className="col-lg-2">Quantity</h6>
                             <h6 className="col-lg-2">Price</h6>
                             <h6 className="col-lg-2">Status</h6>
-                            <h6 className="col-lg-1"></h6>
+                            <h6 className="col-lg-1"> </h6>
                           </div>
                         </div>
                       </div>
@@ -74,7 +74,7 @@ class SellerProducts extends React.Component {
                             <h6 className="col-lg-2">Quantity</h6>
                             <h6 className="col-lg-2">Price</h6>
                             <h6 className="col-lg-2">Status</h6>
-                            <h6 className="col-lg-1"></h6>
+                            <h6 className="col-lg-1"> </h6>
                           </div>
                         </div>
                       </div>
@@ -97,7 +97,7 @@ class SellerProducts extends React.Component {
                             <h6 className="col-lg-2">Quantity</h6>
                             <h6 className="col-lg-2">Price</h6>
                             <h6 className="col-lg-2">Status</h6>
-                            <h6 className="col-lg-1"></h6>
+                            <h6 className="col-lg-1"> </h6>
                           </div>
                         </div>
                       </div>
@@ -120,7 +120,7 @@ class SellerProducts extends React.Component {
                             <h6 className="col-lg-2">Quantity</h6>
                             <h6 className="col-lg-2">Price</h6>
                             <h6 className="col-lg-2">Status</h6>
-                            <h6 className="col-lg-1"></h6>
+                            <h6 className="col-lg-1"> </h6>
                           </div>
                         </div>
                       </div>
@@ -143,7 +143,7 @@ class SellerProducts extends React.Component {
                             <h6 className="col-lg-2">Quantity</h6>
                             <h6 className="col-lg-2">Price</h6>
                             <h6 className="col-lg-2">Status</h6>
-                            <h6 className="col-lg-1"></h6>
+                            <h6 className="col-lg-1"> </h6>
                           </div>
                         </div>
                       </div>
@@ -251,9 +251,9 @@ class SellerProducts extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts,
+    sellerProducts: state.sellerRegister.sellerProducts
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

@@ -7,9 +7,6 @@ import Cart from "./Cart";
 import HeaderWishList from "./HeaderWishList";
 
 class Icons extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div id={this.props.id}>

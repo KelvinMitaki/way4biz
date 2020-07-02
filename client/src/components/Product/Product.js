@@ -69,37 +69,37 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
-                          alt="product-image"
+                          alt={this.props.product.name}
                         />
                       </div>
                     </OwlCarousel>

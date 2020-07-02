@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./AuthHeader.css";
 
 class AuthHeader extends React.Component {
