@@ -9,6 +9,7 @@ import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions";
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,8 @@ class Product extends React.Component {
         modalShow: !prevState.modalShow
       };
     });
+    const { product, addToCart } = this.props;
+    addToCart(product);
   }
 
   getImageProps() {
@@ -164,4 +167,4 @@ const mapStateToProps = (state, ownProps) => {
     product
   };
 };
-export default connect(mapStateToProps)(Product);
+export default connect(mapStateToProps, { addToCart })(Product);

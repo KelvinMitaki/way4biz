@@ -27,7 +27,8 @@ import {
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
   ADD_PRODUCT,
-  FETCH_PRODUCTS
+  FETCH_PRODUCTS,
+  ADD_TO_CART
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -369,4 +370,11 @@ export const editProduct = (formvalues, productId, history) => async (
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
+};
+
+export const addToCart = product => {
+  return {
+    type: ADD_TO_CART,
+    payload: product
+  };
 };
