@@ -32,9 +32,9 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(SellerDashBoard);
