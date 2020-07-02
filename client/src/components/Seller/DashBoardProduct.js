@@ -37,7 +37,7 @@ class DashBoardProduct extends React.Component {
                   </p>
                 </div>
                 <div id="dashboard-product-edit" className="col col-lg-1">
-                  <Link to="/sell" className="btn btn-sm btn-danger">
+                  <Link to="/seller/sell" className="btn btn-sm btn-danger">
                     Edit
                   </Link>
                 </div>
