@@ -25,6 +25,7 @@ import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
+import SellerProcucts from "./components/Seller/SellerProducts";
 
 class App extends React.Component {
   componentDidMount() {
@@ -65,7 +66,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerOrders />
+                  <SellerProcucts />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
