@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cart: state.cart.map(item =>
-          item._id.toString() === action.payload.toString()
+          item._id.toString() === action.payload._id.toString()
             ? { ...action.payload, quantity: action.payload.quantity - 1 }
             : item
         )
