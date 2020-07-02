@@ -7,13 +7,13 @@ import { connect } from "react-redux";
 class DashBoardProduct extends React.Component {
   render() {
     if (this.props.sellerProducts.length !== 0) {
-      return this.props.sellerProducts.map((product) => (
+      return this.props.sellerProducts.map(product => (
         <React.Fragment key={product._id}>
           <div className="container">
             <div className="row">
               <div className="col d-flex dashboard-product-section box-container">
                 <div id="dashboard-product-image" className="col col-lg-5">
-                  <img src={product.imageUrl} />
+                  <img src={product.imageUrl} alt={product.name} />
                   <div className="ml-2">
                     <p>{product.name}</p>
                   </div>
@@ -30,14 +30,14 @@ class DashBoardProduct extends React.Component {
                     style={{
                       color: "#fff",
                       textAlign: "center",
-                      borderRadius: "3px",
+                      borderRadius: "3px"
                     }}
                   >
                     Live
                   </p>
                 </div>
                 <div id="dashboard-product-edit" className="col col-lg-1">
-                  <Link to="/sell" className="btn btn-sm btn-danger">
+                  <Link to="/seller/sell" className="btn btn-sm btn-danger">
                     Edit
                   </Link>
                 </div>
@@ -50,9 +50,9 @@ class DashBoardProduct extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts,
+    sellerProducts: state.sellerRegister.sellerProducts
   };
 };
 export default connect(mapStateToProps)(DashBoardProduct);
