@@ -13,16 +13,26 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false
+      modalShow: false,
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
+      };
+    });
+  }
+
+  handleCloseModal(e) {
+    e.preventDefault();
+    this.setState((prevState) => {
+      return {
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -33,14 +43,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl,
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800
+        height: 1800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -128,7 +138,7 @@ class Product extends React.Component {
                     <AddToCartModalButton
                       className="modal"
                       show={this.state.modalShow}
-                      close={this.handleClick}
+                      close={this.handleCloseModal}
                     ></AddToCartModalButton>
                   </div>
                   <div id="features">
@@ -156,12 +166,12 @@ const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
     product = state.product.products.find(
-      product =>
+      (product) =>
         product._id.toString() === [ownProps.match.params.productId].toString()
     );
   }
   return {
-    product
+    product,
   };
 };
 export default connect(mapStateToProps)(Product);
