@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
 
-const modal = (props) => {
+const modal = props => {
   return (
     <div>
       <div
         className="modal-wrapper"
         style={{
           transform: props.show ? "translateY(-30vh)" : "translateY(-400vh)",
-          opacity: props.show ? "1" : "0",
+          opacity: props.show ? "1" : "0"
         }}
       >
         <div className="modal-header">
@@ -22,12 +22,12 @@ const modal = (props) => {
           <div className="container">
             <div className="row">
               <div className="col-md-6 my-2">
-                <Link to="/" className="btn btn-md continue-btn ">
+                <Link className="btn btn-md continue-btn " to="/">
                   Continue Shopping
                 </Link>
               </div>
               <div className="col-md-6 my-2">
-                <Link to="/cart" className="btn btn-md shopping-btn-modal">
+                <Link className="btn btn-md shopping-btn-modal" to="/cart">
                   Proceed To Cart
                 </Link>
               </div>

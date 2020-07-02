@@ -6,9 +6,9 @@ class AuthHeader extends React.Component {
   render() {
     return (
       <div id="auth-header" className="primary-background">
-        <Link to="/" className="link secondary-link">
+        <a href="/" className="link secondary-link">
           <h1>LOGO</h1>
-        </Link>
+        </a>
       </div>
     );
   }
