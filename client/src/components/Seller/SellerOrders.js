@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./SellerDashBoard.css";
+import "./SellerOrders.css";
 
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
