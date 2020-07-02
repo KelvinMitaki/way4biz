@@ -76,8 +76,8 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   let initialValues;
-  if (state.seller.seller && Object.keys(state.seller.seller)) {
-    initialValues = state.seller.seller;
+  if (state.sellerRegister.seller && Object.keys(state.sellerRegister.seller)) {
+    initialValues = state.sellerRegister.seller;
   }
   return {
     loading: state.auth.loading,

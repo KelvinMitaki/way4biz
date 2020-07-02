@@ -5,7 +5,7 @@
 
 .form-input input,
 .form-input textarea {
-  border: none;
+  border: 1px solid #d4d4d4;
 }
 
 /* .form-input textarea {
@@ -16,7 +16,7 @@
 .form-input textarea:focus {
   box-shadow: none;
   outline: none;
-  border: none !important;
+  border: 1px solid #d4d4d4;
 }
 
 .authenticate-field {

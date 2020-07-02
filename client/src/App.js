@@ -25,8 +25,9 @@ import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
-import SellerProcucts from "./components/Seller/SellerProducts";
 import Review from "./components/Seller/Review";
+import SellerProducts from "./components/Seller/SellerProducts";
+import Sell from "./components/Seller/Sell";
 
 class App extends React.Component {
   componentDidMount() {
@@ -63,6 +64,17 @@ class App extends React.Component {
               }
             />
             <Route
+              path="/seller/sell"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <Sell />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
               path="/seller-review"
               exact
               render={() =>
@@ -78,7 +90,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerProcucts />
+                  <SellerProducts />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )

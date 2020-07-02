@@ -35,6 +35,14 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    imageUrl: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String,
+      default: "Under Review"
+    },
     seller: {
       type: mongoose.Types.ObjectId,
       ref: "Seller",
