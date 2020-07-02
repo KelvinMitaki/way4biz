@@ -296,6 +296,10 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid category"),
+  check("imageUrl")
+    .trim()
+    .isURL()
+    .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
     const errors = validationResult(req);
@@ -310,7 +314,8 @@ route.post(
         stockQuantity,
         subcategory,
         description,
-        category
+        category,
+        imageUrl
       } = req.body;
       const product = new Product({
         name,
@@ -319,7 +324,8 @@ route.post(
         category,
         subcategory,
         seller: sellerId,
-        description
+        description,
+        imageUrl
       });
       await product.save();
       res.status(201).send(product);

@@ -27,6 +27,7 @@ import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
 import Review from "./components/Seller/Review";
 import SellerProducts from "./components/Seller/SellerProducts";
+import Sell from "./components/Seller/Sell";
 
 class App extends React.Component {
   componentDidMount() {
@@ -57,6 +58,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerOrders />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller/sell"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <Sell />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
