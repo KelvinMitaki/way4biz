@@ -18,6 +18,7 @@ class SellerDashBoard extends React.Component {
             <div className="dashboard-content">
               <h1 style={{ textAlign: "center" }}>Welcome Someone</h1>
               <hr />
+              <div></div>
             </div>
           </div>
         </div>

@@ -1,0 +1,19 @@
+.product-content {
+  padding: 20px;
+}
+
+#dashboard-products-sm-screen {
+  display: none;
+}
+
+@media screen and (max-width: 540px) {
+  #dashboard-products-lg-screen {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #dashboard-products-sm-screen {
+    display: block;
+  }
+}
