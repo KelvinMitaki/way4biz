@@ -81,17 +81,21 @@ class SellerHamburgerMenu extends React.Component {
                     Orders
                   </NavLink>
                 </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller-review"
+                  >
+                    Reviews
+                  </NavLink>
+                </li>
               </ul>
               <h6>OTHERS</h6>
               <hr />
               <ul id="seller-others-links">
                 <li className="my-4">
-                  <a
-                    className="link"
-                    activeClassName="seller-menu-acive"
-                    exact
-                    href="/"
-                  >
+                  <a className="link" href="/">
                     Buy
                   </a>
                 </li>

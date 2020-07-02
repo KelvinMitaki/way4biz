@@ -6,13 +6,13 @@
   display: none;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 960px) {
   #dashboard-products-lg-screen {
     display: none;
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 960px) {
   #dashboard-products-sm-screen {
     display: block;
   }

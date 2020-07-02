@@ -11,6 +11,7 @@
   position: absolute;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 .seller-menu-slide-in {

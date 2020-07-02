@@ -35,6 +35,15 @@ class SellerDashBoardMenu extends React.Component {
               Orders
             </NavLink>
           </li>
+          <li className="my-4">
+            <NavLink
+              className="link"
+              activeClassName="seller-menu-active"
+              to="/seller-review"
+            >
+              Reviews
+            </NavLink>
+          </li>
         </ul>
         <div id="seller-menu-profile">Profile</div>
       </div>
