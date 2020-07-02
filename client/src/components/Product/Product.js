@@ -45,108 +45,111 @@ class Product extends React.Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <Header />
-        {this.props.product && (
-          <div id="container-fluid">
-            {this.state.modalShow ? (
-              <div onClick={this.handleClick} className="back-shed"></div>
-            ) : null}
-            <div className="row" id="product">
-              <div className="col-lg-6 product-imgs">
-                <ReactImageMagnify {...this.getImageProps()} />
-                <div className="feature-imgs d-flex mb-4">
-                  <OwlCarousel
-                    items={5}
-                    loop={true}
-                    autoplay={true}
-                    autoplayTimeout={4000}
-                    dots={true}
-                    className="product-owl-carousel"
-                  >
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt="product-image"
-                      />
-                    </div>
-                  </OwlCarousel>
+    if (this.props.product) {
+      return (
+        <React.Fragment>
+          <Header />
+          {this.props.product && (
+            <div id="container-fluid">
+              {this.state.modalShow ? (
+                <div onClick={this.handleClick} className="back-shed"></div>
+              ) : null}
+              <div className="row" id="product">
+                <div className="col-lg-6 product-imgs">
+                  <ReactImageMagnify {...this.getImageProps()} />
+                  <div className="feature-imgs d-flex mb-4">
+                    <OwlCarousel
+                      items={5}
+                      loop={true}
+                      autoplay={true}
+                      autoplayTimeout={4000}
+                      dots={true}
+                      className="product-owl-carousel"
+                    >
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt="product-image"
+                        />
+                      </div>
+                    </OwlCarousel>
+                  </div>
                 </div>
-              </div>
-              <div className="col-lg-6 product-info">
-                <div className="product-name-wishlist">
-                  <h3 id="prod-name">{this.props.product.name}</h3>
-                  <p className="flaticon-heart secondary-text"></p>
-                </div>
-                <div className="price-rating d-flex">
-                  <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
-                  <Rating />
-                </div>
-                <div id="prod-description">
-                  <h3>Product Details</h3>
-                  <p>{this.props.product.description}</p>
-                </div>
-                <div>
-                  <button
-                    className="btn btn-md my-3 add-to-cart btn-block"
-                    onClick={this.handleClick}
-                  >
-                    Add to Cart
-                  </button>
-                  <AddToCartModalButton
-                    className="modal"
-                    show={this.state.modalShow}
-                    close={this.handleClick}
-                  ></AddToCartModalButton>
-                </div>
-                <div id="features">
-                  <h5>Features and Specifications</h5>
-                  <p>{this.props.product.specifications}</p>
-                  {/* <ul>
-                  <li>32 inches</li>
-                  <li>IPS Technology</li>
-                  <li>Touch Screen</li>
-                </ul> */}
+                <div className="col-lg-6 product-info">
+                  <div className="product-name-wishlist">
+                    <h3 id="prod-name">{this.props.product.name}</h3>
+                    <p className="flaticon-heart secondary-text"></p>
+                  </div>
+                  <div className="price-rating d-flex">
+                    <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
+                    <Rating />
+                  </div>
+                  <div id="prod-description">
+                    <h3>Product Details</h3>
+                    <p>{this.props.product.description}</p>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-md my-3 add-to-cart btn-block"
+                      onClick={this.handleClick}
+                    >
+                      Add to Cart
+                    </button>
+                    <AddToCartModalButton
+                      className="modal"
+                      show={this.state.modalShow}
+                      close={this.handleClick}
+                    ></AddToCartModalButton>
+                  </div>
+                  <div id="features">
+                    <h5>Features and Specifications</h5>
+                    <p>{this.props.product.specifications}</p>
+                    {/* <ul>
+                    <li>32 inches</li>
+                    <li>IPS Technology</li>
+                    <li>Touch Screen</li>
+                  </ul> */}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        <Footer />
-        <MiniMenuWrapper />
-      </React.Fragment>
-    );
+          )}
+          <Footer />
+          <MiniMenuWrapper />
+        </React.Fragment>
+      );
+    }
+    return null;
   }
 }
 const mapStateToProps = (state, ownProps) => {
