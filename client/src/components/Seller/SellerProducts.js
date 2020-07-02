@@ -13,7 +13,7 @@ import DashBoardProduct from "./DashBoardProduct";
 import DashBoardProductMediumScreen from "./DashBoardProductMediumScreens";
 import { connect } from "react-redux";
 
-class SellerProcucts extends React.Component {
+class SellerProducts extends React.Component {
   componentDidMount() {
     this.props.fetchSellerProducts();
   }
@@ -186,7 +186,7 @@ class SellerProcucts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="1">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -203,7 +203,7 @@ class SellerProcucts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="2">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -220,7 +220,7 @@ class SellerProcucts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="3">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -237,7 +237,7 @@ class SellerProcucts extends React.Component {
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
                         <Card.Body>
-                          <DashBoardProduct />
+                          <DashBoardProductMediumScreen />
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
@@ -251,11 +251,11 @@ class SellerProcucts extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerProcucts: state.seller.sellerProcucts,
+    sellerProducts: state.sellerRegister.sellerProducts
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(
-  SellerProcucts
+  SellerProducts
 );

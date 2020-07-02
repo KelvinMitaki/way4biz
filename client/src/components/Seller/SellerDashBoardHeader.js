@@ -22,7 +22,7 @@ class SellerDashBoardHeader extends React.Component {
             <NavLink
               className="link"
               activeClassName="seller-menu-acive"
-              to="/seller-products"
+              to="/seller/sell"
             >
               Sell
             </NavLink>

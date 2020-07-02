@@ -27,7 +27,8 @@ import {
   SELLER_LOG_IN,
   SELLER_LOG_IN_FAILED,
   RESET_TOKEN_CHECK,
-  FETCH_SELLER_PRODUCTS
+  FETCH_SELLER_PRODUCTS,
+  ADD_PRODUCT
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -265,7 +266,7 @@ export const verifyCode = (formValues, history) => async (
   getState
 ) => {
   try {
-    formValues.phoneNumber = getState().seller.sellerNumber.number;
+    formValues.phoneNumber = getState().sellerRegister.sellerNumber.number;
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
@@ -298,7 +299,10 @@ export const forgotPassword = (formvalues, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
+    await axios.post(
+      `/api/reset/${getState().sellerRegister.resetToken}`,
+      formvalues
+    );
     dispatch({ type: LOADING_STOP });
     history.push("/sign-in");
   } catch (error) {
@@ -315,6 +319,23 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
     );
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const addProduct = (product, history) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(
+      `/api/product/${getState().auth.user._id}`,
+      product
+    );
+    console.log(res.data);
+    dispatch({ type: ADD_PRODUCT });
+    dispatch({ type: LOADING_STOP });
+    history.push("/seller-products");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
