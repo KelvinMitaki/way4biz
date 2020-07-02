@@ -61,9 +61,11 @@ class MiniMenu extends React.Component {
                     <NavLink className="primary-link" to="/wishlist">
                       Wishlist
                     </NavLink>
-                    <NavLink className="primary-link" to="/seller-dashboard">
-                      My Store
-                    </NavLink>
+                    {this.props.user.storeName && (
+                      <NavLink className="primary-link" to="/seller-dashboard">
+                        My Store
+                      </NavLink>
+                    )}
                     <a className="mini-logout-link" href="/api/logout">
                       Logout
                     </a>
@@ -85,9 +87,9 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 
