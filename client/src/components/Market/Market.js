@@ -13,11 +13,12 @@ class Market extends React.Component {
         </div>
         <div className="row products">
           {this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <Link
                 key={product._id}
                 to={`/product/${product._id}`}
                 className="col-6 col-md-4 col-lg-2 product"
+                title={product.name}
               >
                 <img src={product.imageUrl} alt={product.name} />
                 <div>
@@ -31,9 +32,9 @@ class Market extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    products: state.product.products
+    products: state.product.products,
   };
 };
 export default connect(mapStateToProps)(Market);
