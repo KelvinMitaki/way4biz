@@ -21,8 +21,49 @@ class SellerDashBoard extends React.Component {
                 <div className="dashboard-content">
                   <h1 style={{ textAlign: "center" }}>
                     Welcome {this.props.user.firstName}
+                    <hr />
+                    <div className="container">
+                      <div className="row mt-5">
+                        <div>
+                          <h3 className="my-2">Store Summary</h3>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="box-container big-number-wrapper">
+                            <h1 className="big-number">0</h1>
+                            <h6>NEW ORDERS</h6>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="box-container big-number-wrapper">
+                            <h1 className="big-number">0</h1>
+                            <h6>Months</h6>
+                            <h6>SELLING ON WAY 4 BIZ</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row mt-5">
+                        <div>
+                          <h3 className="my-2">Store Performance</h3>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="box-container big-number-wrapper">
+                            <h1 className="big-number">0</h1>
+                            <h6>SUCCESSFUL SALES</h6>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="box-container big-number-wrapper">
+                            <h1 className="big-number">0</h1>
+                            <h6>QUALITY RATING</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </h1>
-                  <hr />
                 </div>
               </div>
             </div>
