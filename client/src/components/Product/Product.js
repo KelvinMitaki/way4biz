@@ -1,7 +1,7 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
 import OwlCarousel from "react-owl-carousel";
-
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -10,6 +10,7 @@ import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions";
+import { IconContext } from "react-icons/lib";
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -125,19 +126,23 @@ class Product extends React.Component {
                 <div className="col-lg-6 product-info">
                   <div className="product-name-wishlist">
                     <h3 id="prod-name">{this.props.product.name}</h3>
-                    {!this.state.clicked ? (
-                      <i
-                        onClick={() => this.setState({ clicked: true })}
-                        class="fa fa-heart-o"
-                        aria-hidden="true"
-                      ></i>
-                    ) : (
-                      <i
-                        onClick={() => this.setState({ clicked: false })}
-                        class="fa fa-heart"
-                        aria-hidden="true"
-                      ></i>
-                    )}
+                    <IconContext.Provider value={{ size: "2em" }}>
+                      {this.state.clicked ? (
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => this.setState({ clicked: false })}
+                        >
+                          <IoMdHeart />
+                        </div>
+                      ) : (
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => this.setState({ clicked: true })}
+                        >
+                          <IoMdHeartEmpty />
+                        </div>
+                      )}
+                    </IconContext.Provider>
                   </div>
                   <div className="price-rating d-flex">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>

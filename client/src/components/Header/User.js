@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { AiOutlineUser } from "react-icons/ai";
 
 import "./User.css";
 import { connect } from "react-redux";
@@ -8,17 +10,32 @@ class User extends React.Component {
   render() {
     return (
       <div id="user-auth" style={{ cursor: "pointer" }}>
-        <div className="icon user-icon flaticon-user secondary-link">
-          {this.props.user ? (
-            <span>Hello, {this.props.user.firstName} </span>
-          ) : (
-            <span
-              style={{ height: "100%", display: "flex", alignItems: "center" }}
-            >
-              Sign In | Join
+        {/* <div className="icon user-icon flaticon-user secondary-link"> */}
+        <IconContext.Provider value={{ className: "icon user-icon" }}>
+          <div className="icon-container">
+            <AiOutlineUser />
+            <span>
+              {this.props.user ? (
+                <span style={{ color: "#f76b1a" }}>
+                  Hello, {this.props.user.firstName}{" "}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    color: "#f76b1a",
+                  }}
+                >
+                  Sign In | Join
+                </span>
+              )}
             </span>
-          )}
-        </div>
+          </div>
+        </IconContext.Provider>
+
+        {/* </div> */}
         <div id="auth-info">
           {this.props.user ? (
             <div className="my-account mt-4">
@@ -68,9 +85,9 @@ class User extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(User);

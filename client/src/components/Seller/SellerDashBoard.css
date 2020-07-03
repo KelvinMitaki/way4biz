@@ -5,3 +5,14 @@
 .dashboard-content hr {
   background-color: #eee;
 }
+
+.big-number {
+  font-size: 100px;
+  color: #d4d4d4;
+}
+
+.big-number-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 20 0px;
+}
