@@ -31,7 +31,9 @@ class MyCart extends React.Component {
                           <div className="price-title my-auto col col-md-6">
                             <h6>Seller:{item.seller} </h6>
                             <h5 className="product-name">{item.name}</h5>
-                            <p>Price: ksh.{item.price.toLocaleString()} </p>
+                            <strong>
+                              Price: ksh.{item.price.toLocaleString()}{" "}
+                            </strong>
                           </div>
                         </div>
                       </div>
@@ -68,7 +70,7 @@ class MyCart extends React.Component {
 
               <div className="my-5">
                 <div className="total">
-                  <p>Total</p>
+                  <strong>Total</strong>
                   <p>
                     Ksh.
                     {this.props.cart
@@ -78,7 +80,7 @@ class MyCart extends React.Component {
                   </p>
                 </div>
                 <div className="shipping">
-                  <p>Shipping</p>
+                  <strong>Shipping</strong>
                   <p>Shipping fees not yet included</p>
                 </div>
               </div>

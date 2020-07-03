@@ -29,7 +29,11 @@ class MiniMenu extends React.Component {
             <NavLink to="/cart" className="primary-link col-3">
               <div className="mini-menu-item mini-cart">
                 <div className="flaticon-shopping-cart mini-menu-icon">
-                  <span className="badge">0</span>
+                  <span className="badge">
+                    {this.props.cart
+                      .map(item => item.quantity)
+                      .reduce((cur, acc) => cur + acc, 0)}
+                  </span>
                 </div>
                 <p>Cart</p>
               </div>
@@ -89,7 +93,8 @@ class MiniMenu extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    cart: state.cartReducer.cart
   };
 };
 
