@@ -14,7 +14,8 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false
+      modalShow: false,
+      clicked: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -124,7 +125,19 @@ class Product extends React.Component {
                 <div className="col-lg-6 product-info">
                   <div className="product-name-wishlist">
                     <h3 id="prod-name">{this.props.product.name}</h3>
-                    <p className="flaticon-heart secondary-text"></p>
+                    {!this.state.clicked ? (
+                      <i
+                        onClick={() => this.setState({ clicked: true })}
+                        class="fa fa-heart-o"
+                        aria-hidden="true"
+                      ></i>
+                    ) : (
+                      <i
+                        onClick={() => this.setState({ clicked: false })}
+                        class="fa fa-heart"
+                        aria-hidden="true"
+                      ></i>
+                    )}
                   </div>
                   <div className="price-rating d-flex">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
