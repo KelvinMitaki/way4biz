@@ -8,25 +8,24 @@
 }
 
 .icon {
-  min-width: 90px;
   display: flex;
   align-items: center;
-  font-size: 25px;
+  font-size: 35px;
   justify-content: center;
 }
 
-.icon::before {
+/* .icon::before {
   margin: 0px;
-}
+} */
 
-.icon span {
+/* .icon span {
   display: block;
-  font-size: 15px;
-}
+  font-size: 10px;
+} */
 
-.badge {
+/* .badge {
   font-size: 20px;
-}
+} */
 
 /* .icon:hover {
   color: #f76b1a;
