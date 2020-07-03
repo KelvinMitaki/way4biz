@@ -6,11 +6,16 @@ import PaymentMethods from "./PaymentMethods";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { reduxForm } from "redux-form";
+import { connect } from "react-redux";
 
 class CheckOut extends React.Component {
   render() {
+    if (this.props.cart.length === 0) {
+      return <Redirect to="/" />;
+    }
+    const { user } = this.props;
     return (
       <React.Fragment>
         <Header />
@@ -26,9 +31,13 @@ class CheckOut extends React.Component {
                   <h3>Address Details</h3>
                   <hr />
                   <div id="current-address">
-                    <h6>John Doe</h6>
-                    <p>00100, Kahawa West / Roysambu / Zimmerman,Nairobi</p>
-                    <p> +254712345678</p>
+                    <h6>
+                      {user.firstName} {user.lastName}
+                    </h6>
+                    <p>
+                      {user.address} / {user.town} / {user.city}
+                    </p>
+                    <p> +254{user.phoneNumber}</p>
                   </div>
                   <EditAddressSection />
                   <br />
@@ -76,5 +85,12 @@ class CheckOut extends React.Component {
     );
   }
 }
-
-export default withRouter(reduxForm({ form: "Chekout" })(CheckOut));
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    cart: state.cartReducer.cart
+  };
+};
+export default withRouter(
+  reduxForm({ form: "Chekout" })(connect(mapStateToProps)(CheckOut))
+);
