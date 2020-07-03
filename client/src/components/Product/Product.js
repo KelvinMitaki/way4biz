@@ -16,7 +16,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false
+      clicked: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -24,9 +24,9 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
     const { product, addToCart } = this.props;
@@ -35,9 +35,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -48,14 +48,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl,
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800
+        height: 1800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -125,8 +125,10 @@ class Product extends React.Component {
                 </div>
                 <div className="col-lg-6 product-info">
                   <div className="product-name-wishlist">
-                    <h3 id="prod-name">{this.props.product.name}</h3>
-                    <IconContext.Provider value={{ size: "2em" }}>
+                    <h3>{this.props.product.name}</h3>
+                    <IconContext.Provider
+                      value={{ size: "2em", color: "#f76b1a" }}
+                    >
                       {this.state.clicked ? (
                         <div
                           style={{ cursor: "pointer" }}
@@ -190,12 +192,12 @@ const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
     product = state.product.products.find(
-      product =>
+      (product) =>
         product._id.toString() === [ownProps.match.params.productId].toString()
     );
   }
   return {
-    product
+    product,
   };
 };
 export default connect(mapStateToProps, { addToCart })(Product);
