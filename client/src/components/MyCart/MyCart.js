@@ -29,7 +29,7 @@ class MyCart extends React.Component {
                             className="col col-md-6 mr -md-4"
                           />
                           <div className="price-title my-auto col col-md-6">
-                            <h6>Seller:{item.seller} </h6>
+                            <h6>Seller:{item.seller.storeName} </h6>
                             <h5 className="product-name">{item.name}</h5>
                             <strong>
                               Price: ksh.{item.price.toLocaleString()}{" "}

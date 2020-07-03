@@ -9,7 +9,10 @@ const Cart = require("../models/Cart");
 
 route.get("/api/products", async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find()
+      .populate("seller", "storeName")
+      .exec();
+
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
