@@ -39,12 +39,12 @@
   width: 100%;
 }
 
-.product-name {
+.product-name,
+.store-name {
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: large;
 }
 
 .price {

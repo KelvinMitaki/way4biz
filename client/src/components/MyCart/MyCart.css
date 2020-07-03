@@ -74,6 +74,12 @@
   justify-content: space-between;
 }
 
+.cart-product-details {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .checkout-button {
   height: 50px;
   background-color: #f76b1a;
