@@ -350,29 +350,78 @@ route.post(
   }
 );
 
-route.patch("/api/product/:sellerId/:productId", isSeller, async (req, res) => {
-  try {
-    const { productId, sellerId } = req.params;
-    const { name, price, stockQuantity } = req.body;
-    const product = await Product.findOne({
-      _id: productId,
-      seller: sellerId
-    });
-    if (name) {
+route.patch(
+  "/api/product/:sellerId/:productId",
+  check("name").trim().not().isEmpty().withMessage("Please enter a valid name"),
+  check("price").isFloat().withMessage("please enter a valid price"),
+  check("stockQuantity")
+    .isNumeric()
+    .withMessage("please enter a valid stock quantity"),
+  check("subcategory")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("please enter a valid sub category"),
+  check("description")
+    .trim()
+    .isLength({ min: 20 })
+    .withMessage(
+      "Please enter a valid description with a minimum of 20 characters"
+    ),
+  check("specifications")
+    .trim()
+    .isLength({ min: 20 })
+    .withMessage(
+      "Please enter a valid specifications with 20 characters minimum"
+    ),
+  check("category")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid category"),
+  check("imageUrl")
+    .trim()
+    .isURL()
+    .withMessage("please enter a valid image url"),
+  isSeller,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, sellerId } = req.params;
+      const {
+        name,
+        price,
+        stockQuantity,
+        freeShipping,
+        category,
+        subcategory,
+        description,
+        imageUrl,
+        specifications
+      } = req.body;
+      const product = await Product.findOne({
+        _id: productId,
+        seller: sellerId
+      });
+      product.specifications = specifications;
       product.name = name;
-    }
-    if (price) {
+      product.freeShipping = freeShipping;
+      product.description = description;
       product.price = price;
-    }
-    if (stockQuantity) {
+      product.category = category;
+      product.imageUrl = imageUrl;
       product.stockQuantity = stockQuantity;
+      product.subcategory = subcategory;
+      await product.save();
+      res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
     }
-    await product.save();
-    res.send(product);
-  } catch (error) {
-    res.status(500).send(error);
   }
-});
+);
 route.delete(
   "/api/product/:sellerId/:productId",
   isSeller,

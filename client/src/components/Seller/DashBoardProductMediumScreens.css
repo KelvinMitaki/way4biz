@@ -26,3 +26,19 @@
   height: 100%;
   padding: 10px 0px;
 }
+
+.seller-md-db-product-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 150px;
+}
+
+.seller-md-db-product-link {
+  color: #000;
+}
+
+.seller-md-db-product-link:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}

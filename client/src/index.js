@@ -5,6 +5,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { createStore, compose, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
@@ -19,9 +21,11 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ScrollToTop>
-        <App />
-      </ScrollToTop>
+      <PersistGate persistor={persistStore(store)}>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </PersistGate>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

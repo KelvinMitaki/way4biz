@@ -28,6 +28,11 @@
 
 .product:hover {
   box-shadow: 0 0 10px #d4d4d4;
+  text-decoration: none;
+}
+
+.product:hover .product-name {
+  color: #f76b1a;
 }
 
 .product img {

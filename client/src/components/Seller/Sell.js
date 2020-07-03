@@ -4,7 +4,7 @@ import AuthField from "../Authenticate/AuthField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { registerSeller, addProduct } from "../../redux/actions";
+import { addProduct } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
@@ -178,5 +178,5 @@ export default withRouter(
   reduxForm({
     validate,
     form: "Sell"
-  })(connect(mapStateToProps, { registerSeller, addProduct })(Sell))
+  })(connect(mapStateToProps, { addProduct })(Sell))
 );

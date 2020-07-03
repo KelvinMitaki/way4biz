@@ -2,6 +2,7 @@ import React from "react";
 import "./Search.css";
 import { fetchProductsSearch } from "../../redux/actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Search extends React.Component {
   constructor(props) {
@@ -39,9 +40,15 @@ class Search extends React.Component {
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
               this.props.searchedProducts.map(product => (
-                <div className="my-2" key={product._id}>
-                  <h4>{product.name}</h4>
-                  <p>{product.description}</p>
+                <div key={product._id}>
+                  <p className="searched-output-link-wrapper">
+                    <Link
+                      to={`/product/${product._id}`}
+                      className="searched-product-link"
+                    >
+                      {product.name}
+                    </Link>
+                  </p>
                 </div>
               ))}
           </div>

@@ -9,16 +9,30 @@ import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions";
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false
+      modalShow: false,
+      clicked: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   handleClick(e) {
+    e.preventDefault();
+    this.setState(prevState => {
+      return {
+        modalShow: !prevState.modalShow
+      };
+    });
+    const { product, addToCart } = this.props;
+    addToCart(product);
+  }
+
+  handleCloseModal(e) {
     e.preventDefault();
     this.setState(prevState => {
       return {
@@ -52,7 +66,10 @@ class Product extends React.Component {
           {this.props.product && (
             <div id="container-fluid">
               {this.state.modalShow ? (
-                <div onClick={this.handleClick} className="back-shed"></div>
+                <div
+                  onClick={this.handleCloseModal}
+                  className="back-shed"
+                ></div>
               ) : null}
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
@@ -108,7 +125,19 @@ class Product extends React.Component {
                 <div className="col-lg-6 product-info">
                   <div className="product-name-wishlist">
                     <h3 id="prod-name">{this.props.product.name}</h3>
-                    <p className="flaticon-heart secondary-text"></p>
+                    {!this.state.clicked ? (
+                      <i
+                        onClick={() => this.setState({ clicked: true })}
+                        class="fa fa-heart-o"
+                        aria-hidden="true"
+                      ></i>
+                    ) : (
+                      <i
+                        onClick={() => this.setState({ clicked: false })}
+                        class="fa fa-heart"
+                        aria-hidden="true"
+                      ></i>
+                    )}
                   </div>
                   <div className="price-rating d-flex">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
@@ -128,7 +157,7 @@ class Product extends React.Component {
                     <AddToCartModalButton
                       className="modal"
                       show={this.state.modalShow}
-                      close={this.handleClick}
+                      close={this.handleCloseModal}
                     ></AddToCartModalButton>
                   </div>
                   <div id="features">
@@ -164,4 +193,4 @@ const mapStateToProps = (state, ownProps) => {
     product
   };
 };
-export default connect(mapStateToProps)(Product);
+export default connect(mapStateToProps, { addToCart })(Product);

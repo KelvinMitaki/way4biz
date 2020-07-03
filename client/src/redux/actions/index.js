@@ -27,7 +27,10 @@ import {
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
   ADD_PRODUCT,
-  FETCH_PRODUCTS
+  FETCH_PRODUCTS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  DELETE_FROM_CART
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -351,4 +354,43 @@ export const fetchProducts = () => async dispatch => {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
+};
+
+export const editProduct = (formvalues, productId, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.patch(
+      `/api/product/${getState().auth.user._id}/${productId}`,
+      formvalues
+    );
+    dispatch({ type: LOADING_STOP });
+    history.push("/seller-products");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const addToCart = product => {
+  return {
+    type: ADD_TO_CART,
+    payload: product
+  };
+};
+
+export const removeFromCart = product => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: product
+  };
+};
+
+export const deleteFromCart = product => {
+  return {
+    type: DELETE_FROM_CART,
+    payload: product
+  };
 };

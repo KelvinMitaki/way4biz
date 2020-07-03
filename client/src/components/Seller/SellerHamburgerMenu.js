@@ -8,21 +8,24 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   }
   render() {
     return (
       <div id="hamburger-menu-wrapper">
+        {this.state.open ? (
+          <div onClick={this.handleClick} className="back-shed"></div>
+        ) : null}
         <HamburgerMenu
           width={20}
           height={15}
@@ -47,7 +50,7 @@ class SellerHamburgerMenu extends React.Component {
                   color="#f76b1a"
                   isOpen={true}
                   menuClicked={this.handleClick}
-                  className="float-right"
+                  className="float-right "
                 />
               </div>
               <h6>MY ACCOUNT</h6>
