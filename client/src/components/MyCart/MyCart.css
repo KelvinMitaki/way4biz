@@ -49,6 +49,10 @@
   cursor: pointer;
 }
 
+.icon-trash {
+  font-size: 15px !important;
+}
+
 #cart-total-checkout {
   position: -webkit-sticky;
   position: sticky;

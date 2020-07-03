@@ -4,6 +4,8 @@ import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteFromCart } from "../../redux/actions";
+import { IconContext } from "react-icons";
+import { FaTrashAlt } from "react-icons/fa";
 
 class MyCart extends React.Component {
   render() {
@@ -17,7 +19,7 @@ class MyCart extends React.Component {
                   <h3>Cart({this.props.cart.length})</h3>
                 </div>
               </div>
-              {this.props.cart.map(item => (
+              {this.props.cart.map((item) => (
                 <React.Fragment key={item._id}>
                   <div className="row box-container mb-5">
                     <div className="col-12">
@@ -49,13 +51,19 @@ class MyCart extends React.Component {
                         </p>
                       </div>
                       <div id="remove-cart">
-                        <i className="fa fa-trash mr-1"></i>
-                        <span
-                          className="remove-text"
-                          onClick={() => this.props.deleteFromCart(item)}
+                        <IconContext.Provider
+                          value={{ className: "icon icon-trash mr-1 " }}
                         >
-                          Remove
-                        </span>
+                          <div className="icon-container">
+                            <FaTrashAlt />
+                            <span
+                              className="remove-text"
+                              onClick={() => this.props.deleteFromCart(item)}
+                            >
+                              Remove
+                            </span>
+                          </div>
+                        </IconContext.Provider>
                       </div>
                     </div>
                   </div>
@@ -74,7 +82,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map(item => item.price * item.quantity)
+                      .map((item) => item.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
@@ -104,9 +112,9 @@ class MyCart extends React.Component {
     return <h2>No Items In Your Cart</h2>;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
