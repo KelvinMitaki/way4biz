@@ -3,6 +3,7 @@ import "./MyCart.css";
 import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { deleteFromCart } from "../../redux/actions";
 
 class MyCart extends React.Component {
   render() {
@@ -28,9 +29,11 @@ class MyCart extends React.Component {
                             className="col col-md-6 mr -md-4"
                           />
                           <div className="price-title my-auto col col-md-6">
-                            <h6>Seller:{item.seller} </h6>
+                            <h6>Seller:{item.seller.storeName} </h6>
                             <h5 className="product-name">{item.name}</h5>
-                            <p>Price: ksh.{item.price.toLocaleString()} </p>
+                            <strong>
+                              Price: ksh.{item.price.toLocaleString()}{" "}
+                            </strong>
                           </div>
                         </div>
                       </div>
@@ -41,11 +44,18 @@ class MyCart extends React.Component {
                         <QuantityCounter quantity={item.quantity} item={item} />
                       </div>
                       <div>
-                        <p>Ksh.{item.price.toLocaleString()} </p>
+                        <p>
+                          Ksh.{(item.price * item.quantity).toLocaleString()}
+                        </p>
                       </div>
                       <div id="remove-cart">
                         <i className="fa fa-trash mr-1"></i>
-                        <span className="remove-text">Remove</span>
+                        <span
+                          className="remove-text"
+                          onClick={() => this.props.deleteFromCart(item)}
+                        >
+                          Remove
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -60,11 +70,17 @@ class MyCart extends React.Component {
 
               <div className="my-5">
                 <div className="total">
-                  <p>Total</p>
-                  <p>Ksh.30,000</p>
+                  <strong>Total</strong>
+                  <p>
+                    Ksh.
+                    {this.props.cart
+                      .map(item => item.price * item.quantity)
+                      .reduce((acc, curr) => acc + curr, 0)
+                      .toLocaleString()}
+                  </p>
                 </div>
                 <div className="shipping">
-                  <p>Shipping</p>
+                  <strong>Shipping</strong>
                   <p>Shipping fees not yet included</p>
                 </div>
               </div>
@@ -93,4 +109,4 @@ const mapStateToProps = state => {
     cart: state.cartReducer.cart
   };
 };
-export default withRouter(connect(mapStateToProps)(MyCart));
+export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
