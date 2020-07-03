@@ -16,6 +16,16 @@ class CheckOut extends React.Component {
       return <Redirect to="/" />;
     }
     const { user } = this.props;
+    const VAT = Math.ceil(
+      this.props.cart
+        .map(item => item.price * item.quantity)
+        .reduce((acc, curr) => acc + curr, 0) * 0.01
+    ).toLocaleString();
+    const shipping = Math.floor(Math.random() * 5000).toLocaleString();
+    const total = this.props.cart
+      .map(item => item.price * item.quantity)
+      .reduce((acc, curr) => acc + curr, 0)
+      .toLocaleString();
     return (
       <React.Fragment>
         <Header />
@@ -50,20 +60,26 @@ class CheckOut extends React.Component {
                   <div className="checkout-sub-total">
                     <div>
                       <p>Total</p>
-                      <p>30,000</p>
+                      <p>{total}</p>
                     </div>
                     <div>
                       <p>VAT</p>
-                      <p>300</p>
+                      <p>{VAT}</p>
                     </div>
                     <div>
                       <p>Shipping</p>
-                      <p>1,500</p>
+                      <p>{shipping}</p>
                     </div>
                     <hr />
                     <div>
                       <p>Total</p>
-                      <p>31,800</p>
+                      <p>
+                        {(
+                          parseInt(total.replace(",", "")) +
+                          parseInt(VAT) +
+                          parseInt(shipping)
+                        ).toLocaleString()}
+                      </p>
                     </div>
                     <div>
                       <button
