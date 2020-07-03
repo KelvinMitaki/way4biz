@@ -125,6 +125,19 @@
   padding: 0px;
 }
 
+.icon-container {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  height: 100%;
+}
+
+.icon-container .badge {
+  font-size: 12px;
+  margin: 0px;
+  padding: 0px;
+}
+
 @media screen and (max-width: 920px) {
   .secondary-button,
   .secondary-google,
