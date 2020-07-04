@@ -358,6 +358,8 @@ route.get("/api/password/reset/callback", (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// CHECK FOR PASSWORD LENGTH
 route.post("/api/reset/:resetToken", async (req, res) => {
   try {
     const { resetToken } = req.params;

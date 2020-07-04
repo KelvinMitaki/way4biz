@@ -261,4 +261,16 @@ route.post("/api/cart", auth, check(""), async (req, res) => {
   }
 });
 
+// CREATE PRODUCT INDEX
+route.get("/api/products/find/categories", async (req, res) => {
+  try {
+    await Product.find().distinct("category", (err, uniqueCategories) => {
+      if (err) return res.send(err);
+      res.send(uniqueCategories);
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = route;
