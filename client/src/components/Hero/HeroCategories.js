@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./HeroCategories.css";
+import { connect } from "react-redux";
 
 class HeroCategories extends React.Component {
   render() {
@@ -14,19 +15,18 @@ class HeroCategories extends React.Component {
         </div>
         <ul className="category">
           <li>All Categories</li>
-          <li>Women's Clothing</li>
-          <li>Men's Clothing</li>
-          <li>Baby's Clothing</li>
-          <li>Electronics</li>
-          <li>Sports and Outdoors</li>
-          <li>Beauty Health,Hair</li>
-          <li>Bags and Shoes</li>
-          <li>Automobiles</li>
-          <li>Jewelery and watches</li>
+          {this.props.categories.length !== 0 &&
+            this.props.categories.map(category => (
+              <li key={category._id}>{category._id}</li>
+            ))}
         </ul>
       </div>
     );
   }
 }
-
-export default HeroCategories;
+const mapStateToProps = state => {
+  return {
+    categories: state.product.categories
+  };
+};
+export default connect(mapStateToProps)(HeroCategories);
