@@ -30,7 +30,8 @@ import {
   FETCH_PRODUCTS,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  DELETE_FROM_CART
+  DELETE_FROM_CART,
+  FETCH_CATEGORIES
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -393,4 +394,16 @@ export const deleteFromCart = product => {
     type: DELETE_FROM_CART,
     payload: product
   };
+};
+
+export const fetchCategories = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/products/find/categories");
+    dispatch({ type: FETCH_CATEGORIES, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
 };
