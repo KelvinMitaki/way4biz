@@ -49,6 +49,10 @@
   cursor: pointer;
 }
 
+.icon-trash {
+  font-size: 15px !important;
+}
+
 #cart-total-checkout {
   position: -webkit-sticky;
   position: sticky;
@@ -68,6 +72,12 @@
 .shipping {
   display: flex;
   justify-content: space-between;
+}
+
+.cart-product-details {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .checkout-button {

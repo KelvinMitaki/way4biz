@@ -4,6 +4,8 @@ import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteFromCart } from "../../redux/actions";
+import { IconContext } from "react-icons";
+import { FaTrashAlt } from "react-icons/fa";
 
 class MyCart extends React.Component {
   render() {
@@ -17,26 +19,32 @@ class MyCart extends React.Component {
                   <h3>Cart({this.props.cart.length})</h3>
                 </div>
               </div>
-              {this.props.cart.map(item => (
+              {this.props.cart.map((item) => (
                 <React.Fragment key={item._id}>
-                  <div className="row box-container mb-5">
+                  <div className="row box-container">
                     <div className="col-12">
-                      <div className="container">
-                        <div className="row cart-product-details">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.name}
-                            className="col col-md-6 mr -md-4"
-                          />
-                          <div className="price-title my-auto col col-md-6">
-                            <h6>Seller:{item.seller.storeName} </h6>
-                            <h5 className="product-name">{item.name}</h5>
-                            <strong>
-                              Price: ksh.{item.price.toLocaleString()}{" "}
-                            </strong>
-                          </div>
+                      {/* <div className="container"> */}
+                      <div className="row no-gutters cart-product-details">
+                        <div className="col-6 col-md-6">
+                          <img src={item.imageUrl} alt={item.name} />
+                        </div>
+                        <div className="price-title col-6 col-md-6">
+                          <p
+                            className="store-name"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            Seller:{item.seller.storeName}
+                          </p>
+                          <p
+                            className="product-name"
+                            style={{ fontWeight: "bolder" }}
+                          >
+                            {item.name}
+                          </p>
+                          <p>Price: ksh.{item.price.toLocaleString()}</p>
                         </div>
                       </div>
+                      {/* </div> */}
                     </div>
 
                     <div className="col-12 d-flex secondary-details">
@@ -49,13 +57,19 @@ class MyCart extends React.Component {
                         </p>
                       </div>
                       <div id="remove-cart">
-                        <i className="fa fa-trash mr-1"></i>
-                        <span
-                          className="remove-text"
-                          onClick={() => this.props.deleteFromCart(item)}
+                        <IconContext.Provider
+                          value={{ className: "icon icon-trash mr-1 " }}
                         >
-                          Remove
-                        </span>
+                          <div className="icon-container">
+                            <FaTrashAlt />
+                            <span
+                              className="remove-text"
+                              onClick={() => this.props.deleteFromCart(item)}
+                            >
+                              Remove
+                            </span>
+                          </div>
+                        </IconContext.Provider>
                       </div>
                     </div>
                   </div>
@@ -74,7 +88,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map(item => item.price * item.quantity)
+                      .map((item) => item.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
@@ -104,9 +118,9 @@ class MyCart extends React.Component {
     return <h2>No Items In Your Cart</h2>;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
