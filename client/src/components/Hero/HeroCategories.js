@@ -5,12 +5,9 @@ import "./HeroCategories.css";
 class HeroCategories extends React.Component {
   render() {
     return (
-      <div id="categories">
+      <div id={this.props.id}>
         <div className="category-head">
           <h3>Categories</h3>
-          {/* <div>
-                        <Link id="all-categories" to="/">All</Link>
-                    </div> */}
         </div>
         <ul className="category">
           <li>All Categories</li>

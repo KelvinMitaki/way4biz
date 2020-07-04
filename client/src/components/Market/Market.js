@@ -11,13 +11,13 @@ class Market extends React.Component {
         <div className="col market-head">
           <h1>Selling</h1>
         </div>
-        <div className="row products">
+        <div className="products-section">
           {this.props.products.length !== 0 &&
             this.props.products.map((product) => (
               <Link
                 key={product._id}
                 to={`/product/${product._id}`}
-                className="col-6 col-md-4 col-lg-2 product"
+                className="product"
                 title={product.name}
               >
                 <img src={product.imageUrl} alt={product.name} />

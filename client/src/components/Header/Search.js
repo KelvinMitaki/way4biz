@@ -33,7 +33,6 @@ class Search extends React.Component {
           />
           <div className="input-group-append">
             <button id="header-search-btn">
-              {/* <i className="fa fa-search " style={{ fontSize: "25px" }}></i> */}
               <IconContext.Provider value={{ className: "icon mr-1 " }}>
                 <div className="icon-container">
                   <AiOutlineSearch />

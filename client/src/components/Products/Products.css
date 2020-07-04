@@ -1,0 +1,29 @@
+#products-categories {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 110px;
+  border: 1px solid #eee;
+}
+
+.products-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.products-section {
+  background-color: #f8f9f9;
+}
+
+@media screen and (max-width: 960px) {
+  #products-categories {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .products-section {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 10px;
+  }
+}

@@ -14,10 +14,10 @@ class SellerDashBoard extends React.Component {
           <React.Fragment>
             <SellerDashBoardHeader />
             <div className="row no-gutters">
-              <div className="col-md-3">
+              <div className="col-lg-3">
                 <SellerDashBoardMenu />
               </div>
-              <div className="col-md-9">
+              <div className="col-lg-9 mx-auto">
                 <div className="dashboard-content">
                   <h1 style={{ textAlign: "center" }}>
                     Welcome {this.props.user.firstName}
