@@ -49,7 +49,7 @@ class MiniMenu extends React.Component {
                     <FaOpencart />
                     <span className="badge">
                       {this.props.cart
-                        .map((item) => item.quantity)
+                        .map(item => item.quantity)
                         .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -122,10 +122,10 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    cart: state.cartReducer.cart,
+    cart: state.cartReducer.cart
   };
 };
 
