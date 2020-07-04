@@ -13,7 +13,7 @@ class Market extends React.Component {
         </div>
         <div className="row products">
           {this.props.products.length !== 0 &&
-            this.props.products.map((product) => (
+            this.props.products.map(product => (
               <Link
                 key={product._id}
                 to={`/product/${product._id}`}
@@ -22,8 +22,10 @@ class Market extends React.Component {
               >
                 <img src={product.imageUrl} alt={product.name} />
                 <div>
-                  <h3 className="product-name">{product.name}</h3>
-                  <p className="price">Ksh.{product.price.toLocaleString()}</p>
+                  <p className="product-name">{product.name}</p>
+                  <strong className="price">
+                    Ksh.{product.price.toLocaleString()}
+                  </strong>
                 </div>
               </Link>
             ))}
@@ -32,9 +34,9 @@ class Market extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.products
   };
 };
 export default connect(mapStateToProps)(Market);
