@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
@@ -5,7 +6,6 @@ const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
-const Cart = require("../models/Cart");
 
 route.get("/api/products", async (req, res) => {
   try {
@@ -272,8 +272,7 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
     const test = cart.map(item => {
       return {
         product: item._id,
-        quantity: item.quantity,
-        buyer: _id
+        quantity: item.quantity
       };
     });
     const price = cart
@@ -282,7 +281,8 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
     const order = new Order({
       items: test,
       paymentMethod: formValues.payment,
-      totalPrice: price
+      totalPrice: price,
+      buyer: _id
     });
     await order.save();
     res.send(order);
