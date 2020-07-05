@@ -28,6 +28,16 @@ if (cluster.isMaster) {
     uri: process.env.MONGO_URI,
     collection: "sessions"
   });
+  const mongooseConnect = async () => {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    });
+    console.log("connected to the database");
+  };
+  mongooseConnect();
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(bodyParser.json());
@@ -50,17 +60,6 @@ if (cluster.isMaster) {
   app.use(authRoutes);
   app.use(shopRoutes);
   app.use(adminRoutes);
-
-  const mongooseConnect = async () => {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
-    });
-    console.log("connected to the database");
-  };
-  mongooseConnect();
 
   if (process.env.NODE_ENV === "production") {
     // SERVING STATIC FILES

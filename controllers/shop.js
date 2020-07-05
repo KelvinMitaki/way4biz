@@ -11,6 +11,7 @@ route.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find()
       .populate("seller", "storeName")
+      .select("-stockQuantity")
       .exec();
 
     res.send(products);
@@ -291,9 +292,24 @@ route.get("/api/products/find/categories", async (req, res) => {
     // });
     const category = await Product.aggregate([
       { $group: { _id: "$category" } },
-      { $limit: 9 }
+      { $limit: 9 },
+      { $sort: { _id: 1 } }
     ]);
     res.send(category);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/all/categories", async (req, res) => {
+  try {
+    const categories = await Product.aggregate([
+      {
+        $group: { _id: "$category" }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+    res.send(categories);
   } catch (error) {
     res.status(500).send(error);
   }
