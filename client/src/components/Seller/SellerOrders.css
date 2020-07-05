@@ -1,0 +1,15 @@
+#dashboard-orders-sm-screen {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  @media screen and (max-width: 960px) {
+    #dashboard-orders-lg-screen {
+      display: none;
+    }
+
+    #dashboard-orders-sm-screen {
+      display: block;
+    }
+  }
+}
