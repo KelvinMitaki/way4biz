@@ -17,7 +17,7 @@
   text-decoration: none;
 }
 
-.category {
+.categories {
   padding: 20px 0px 20px 0px;
   background-color: #fff;
   height: calc(80vh - 50px);
@@ -27,7 +27,7 @@
   flex-direction: column;
 }
 
-.category li {
+.categories li {
   height: 50px;
   display: flex;
   width: 100%;
@@ -36,15 +36,21 @@
   cursor: pointer;
 }
 
-.category li:hover {
+.categories li:hover {
   color: #f76b1a;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   border-left: 1px solid #eee;
+  text-decoration: none;
+}
+
+.categories li a:hover {
+  color: #f76b1a !important;
+  text-decoration: none;
 }
 
 @media screen and (min-height: 950px) {
-  .category {
+  .categories {
     height: calc(50vh - 20px);
   }
 }

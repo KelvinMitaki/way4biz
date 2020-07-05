@@ -6,8 +6,8 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import "./Cart.css";
 function Cart() {
   return (
-    <div className="body">
-      <div className="main-content">
+    <div className="main">
+      <div className="content">
         <Header />
         <MyCart />
       </div>

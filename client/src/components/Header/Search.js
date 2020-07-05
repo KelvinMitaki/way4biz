@@ -10,13 +10,13 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      typing: "",
+      typing: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
   async handleChange(e) {
     this.setState({
-      typing: e.target.value,
+      typing: e.target.value
     });
 
     this.props.fetchProductsSearch(e.target.value);
@@ -30,10 +30,10 @@ class Search extends React.Component {
             onChange={this.handleChange}
             className="form-control header-input-search"
             placeholder="bata shoes"
+            value={this.state.typing}
           />
           <div className="input-group-append">
             <button id="header-search-btn">
-              {/* <i className="fa fa-search " style={{ fontSize: "25px" }}></i> */}
               <IconContext.Provider value={{ className: "icon mr-1 " }}>
                 <div className="icon-container">
                   <AiOutlineSearch />
@@ -46,8 +46,11 @@ class Search extends React.Component {
         {this.state.typing !== "" ? (
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
-              this.props.searchedProducts.map((product) => (
-                <div key={product._id}>
+              this.props.searchedProducts.map(product => (
+                <div
+                  onClick={() => this.setState({ typing: "" })}
+                  key={product._id}
+                >
                   <p className="searched-output-link-wrapper">
                     <Link
                       to={`/product/${product._id}`}
@@ -64,9 +67,9 @@ class Search extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    searchedProducts: state.product.searchedProducts,
+    searchedProducts: state.product.searchedProducts
   };
 };
 export default connect(mapStateToProps, { fetchProductsSearch })(Search);

@@ -10,7 +10,6 @@
   height: 100vh;
   position: absolute;
   display: flex;
-  /* background-color: rgba(0, 0, 0, 0.7); */
   z-index: 10000000;
 }
 
@@ -41,7 +40,7 @@
 }
 
 .seller-menu-section {
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;

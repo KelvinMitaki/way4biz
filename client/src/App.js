@@ -29,6 +29,7 @@ import Review from "./components/Seller/Review";
 import SellerProducts from "./components/Seller/SellerProducts";
 import Sell from "./components/Seller/Sell";
 import SellerEdit from "./components/Seller/SellerEdit";
+import Products from "./components/Products/Products";
 
 class App extends React.Component {
   componentDidMount() {
@@ -42,8 +43,13 @@ class App extends React.Component {
       return (
         <div id="main">
           <MobileLogo />
-          <div className="content">
+          <div>
             <Route path="/" exact component={Home} />
+            <Route
+              path="/products/category/:category"
+              exact
+              component={Products}
+            />
             <Route
               path="/seller-dashboard"
               exact

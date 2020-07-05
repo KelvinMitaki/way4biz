@@ -8,10 +8,12 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 class Home extends React.Component {
   render() {
     return (
-      <div>
-        <Header />
-        <Hero />
-        <Market />
+      <div className="main">
+        <div className="content">
+          <Header />
+          <Hero />
+          <Market />
+        </div>
         <Footer />
         <MiniMenuWrapper />
       </div>
