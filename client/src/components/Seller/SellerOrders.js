@@ -22,7 +22,7 @@ class SellerOrders extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9">
-            <div className="container">
+            <div className="container seller-dashboard-wrapper">
               <div className="row">
                 <div className="col">
                   <h3>Orders</h3>
@@ -45,10 +45,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>
@@ -66,10 +66,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>
@@ -90,10 +90,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>
@@ -114,10 +114,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>
@@ -138,10 +138,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>
@@ -162,10 +162,10 @@ class SellerOrders extends React.Component {
                             >
                               All
                             </h6>
-                            <h6 className="col-lg-1">No. of Items</h6>
-                            <h6 className="col-lg-3">Destination</h6>
-                            <h6 className="col-lg-1">Return Policy</h6>
-                            <h6 className="col-lg-1">Total AMount</h6>
+                            <h6 className="col-lg-2">No. of Items</h6>
+                            <h6 className="col-lg-2">Destination</h6>
+
+                            <h6 className="col-lg-2">Total AMount</h6>
                             <h6 className="col-lg-2">Status</h6>
                           </div>
                         </div>

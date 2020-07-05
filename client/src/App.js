@@ -30,6 +30,7 @@ import SellerProducts from "./components/Seller/SellerProducts";
 import Sell from "./components/Seller/Sell";
 import SellerEdit from "./components/Seller/SellerEdit";
 import Products from "./components/Products/Products";
+import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 
 class App extends React.Component {
   componentDidMount() {
@@ -50,6 +51,7 @@ class App extends React.Component {
               exact
               component={Products}
             />
+            <Route path="/order/details" component={SellerOrderDetails} />
             <Route
               path="/seller-dashboard"
               exact
@@ -263,16 +265,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);
