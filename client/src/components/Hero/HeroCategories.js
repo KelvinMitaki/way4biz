@@ -2,6 +2,7 @@ import React from "react";
 
 import "./HeroCategories.css";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class HeroCategories extends React.Component {
   render() {
@@ -10,10 +11,14 @@ class HeroCategories extends React.Component {
         <div className="category-head">
           <h3>Categories</h3>
         </div>
-        <ul className="category">
-          <li>All Categories</li>
+        <ul className="categories">
+          <li>
+            <Link to="/categories" style={{ color: "#000" }}>
+              All Categories
+            </Link>
+          </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map(category => (
+            this.props.categories.map((category) => (
               <li key={category._id}>{category._id}</li>
             ))}
         </ul>
@@ -21,9 +26,9 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    categories: state.product.categories
+    categories: state.product.categories,
   };
 };
 export default connect(mapStateToProps)(HeroCategories);
