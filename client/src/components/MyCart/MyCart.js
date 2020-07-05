@@ -9,6 +9,8 @@ import { FaTrashAlt } from "react-icons/fa";
 
 class MyCart extends React.Component {
   render() {
+    console.log(this.props.cart);
+
     if (this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">
@@ -20,28 +22,33 @@ class MyCart extends React.Component {
                 </div>
               </div>
               {this.props.cart.map(item => (
-                <React.Fragment key={item._id}>
+                <React.Fragment key={item.product._id}>
                   <div className="row box-container">
                     <div className="col-12">
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
                         <div className="col-6 col-md-6">
-                          <img src={item.imageUrl} alt={item.name} />
+                          <img
+                            src={item.product.imageUrl}
+                            alt={item.product.name}
+                          />
                         </div>
                         <div className="price-title col-6 col-md-6">
                           <p
                             className="store-name"
                             style={{ fontWeight: "bold" }}
                           >
-                            Seller:{item.seller.storeName}
+                            Seller:{item.product.seller.storeName}
                           </p>
                           <p
                             className="product-name"
                             style={{ fontWeight: "bolder" }}
                           >
-                            {item.name}
+                            {item.product.name}
                           </p>
-                          <p>Price: ksh.{item.price.toLocaleString()}</p>
+                          <p>
+                            Price: ksh.{item.product.price.toLocaleString()}
+                          </p>
                         </div>
                       </div>
                       {/* </div> */}
@@ -53,7 +60,10 @@ class MyCart extends React.Component {
                       </div>
                       <div>
                         <p>
-                          Ksh.{(item.price * item.quantity).toLocaleString()}
+                          Ksh.
+                          {(
+                            item.product.price * item.quantity
+                          ).toLocaleString()}
                         </p>
                       </div>
                       <div id="remove-cart">
@@ -87,7 +97,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map(item => item.price * item.quantity)
+                      .map(item => item.product.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
