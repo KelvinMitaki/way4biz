@@ -5,7 +5,9 @@ import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper.js";
 import "./MainCategories.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { singleCategory } from "../../redux/actions/index.js";
 
 class MainCategories extends React.Component {
   render() {
@@ -22,33 +24,22 @@ class MainCategories extends React.Component {
               </div>
             </div>
             <div className="container categories-section box-container">
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
-              <Link to="/" className="individual-category">
-                <div>Men Clothings</div>
-              </Link>
+              {this.props.categories.length !== 0 &&
+                this.props.categories.map(category => (
+                  <Link
+                    key={category._id}
+                    to={`/products/category/${category._id}`}
+                    className="individual-category"
+                    onClick={() =>
+                      this.props.singleCategory(
+                        category._id,
+                        this.props.history
+                      )
+                    }
+                  >
+                    <div>{category._id}</div>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
@@ -58,5 +49,11 @@ class MainCategories extends React.Component {
     );
   }
 }
-
-export default MainCategories;
+const mapStateToProps = state => {
+  return {
+    categories: state.product.categories
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { singleCategory })(MainCategories)
+);
