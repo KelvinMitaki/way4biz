@@ -148,7 +148,7 @@ class Product extends React.Component {
                   </div>
                   <div className="price-rating d-flex">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
-                    <Rating />
+                    <Rating size={24} />
                   </div>
                   <div id="prod-description">
                     <h3>Product Details</h3>

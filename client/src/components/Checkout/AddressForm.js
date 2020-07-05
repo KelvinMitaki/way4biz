@@ -18,95 +18,98 @@ const category = [
   { key: "kisumu", text: "Kisumu", value: "kisumu" },
   { key: "mombasa", text: "Mombasa", value: "mombasa" },
   { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
+  { key: "meru", text: "Meru", value: "meru" },
 ];
 
 class AddressForm extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
-        <div className="container">
-          <div className="row">
-            <div
-              className="col-md-9 my-5 mx-auto box-container"
-              id="address-form"
-            >
-              <h3 className="legend">Address</h3>
-              {/* <hr /> */}
-              <form
-                onSubmit={this.props.handleSubmit(formValues =>
-                  this.props.checkoutUser(formValues, this.props.history)
-                )}
+      <div className="main">
+        <div className="content">
+          <Header />
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-md-9 my-5 mx-auto box-container"
+                id="address-form"
               >
-                <Field
-                  type="text"
-                  name="firstName"
-                  label="First Name"
-                  component={FormField}
-                />
-                <Field
-                  type="text"
-                  name="lastName"
-                  label="Last Name"
-                  component={FormField}
-                />
-                <Field
-                  type="text"
-                  name="phoneNumber"
-                  label="Phone Number"
-                  component={AddressPhoneNumber}
-                />
-                <Field
-                  name="address"
-                  label="Delivery Address"
-                  component={TextareaForm}
-                />
-                <Field
-                  name="city"
-                  label="City"
-                  options={category}
-                  component={SelectField}
-                />
-                <Field
-                  name="town"
-                  label="Town"
-                  options={category}
-                  component={SelectField}
-                />
-
-                <button
-                  className="btn btn-md btn-block address-btn mt-3 "
-                  disabled={!this.props.valid || this.props.loading}
-                  type="submit"
+                <h3 className="legend">Address</h3>
+                {/* <hr /> */}
+                <form
+                  onSubmit={this.props.handleSubmit((formValues) =>
+                    this.props.checkoutUser(formValues, this.props.history)
+                  )}
                 >
-                  {this.props.loading && (
-                    <span
-                      className="spinner-grow spinner-grow-sm"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                  )}
-                  {this.props.loading ? (
-                    <span> {"  "}Loading...</span>
-                  ) : (
-                    <span>Proceed To Checkout</span>
-                  )}
-                </button>
-                <div className="form-primary-error">
-                  {this.props.checkoutUserError && this.props.checkoutUserError}
-                </div>
-              </form>
+                  <Field
+                    type="text"
+                    name="firstName"
+                    label="First Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="lastName"
+                    label="Last Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="phoneNumber"
+                    label="Phone Number"
+                    component={AddressPhoneNumber}
+                  />
+                  <Field
+                    name="address"
+                    label="Delivery Address"
+                    component={TextareaForm}
+                  />
+                  <Field
+                    name="city"
+                    label="City"
+                    options={category}
+                    component={SelectField}
+                  />
+                  <Field
+                    name="town"
+                    label="Town"
+                    options={category}
+                    component={SelectField}
+                  />
+
+                  <button
+                    className="btn btn-md btn-block address-btn mt-3 "
+                    disabled={!this.props.valid || this.props.loading}
+                    type="submit"
+                  >
+                    {this.props.loading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    {this.props.loading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Proceed To Checkout</span>
+                    )}
+                  </button>
+                  <div className="form-primary-error">
+                    {this.props.checkoutUserError &&
+                      this.props.checkoutUserError}
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
         <Footer />
         <MiniMenuWrapper />
-      </React.Fragment>
+      </div>
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -147,11 +150,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
     loading: state.auth.loading,
-    checkoutUserError: state.auth.checkoutUserError
+    checkoutUserError: state.auth.checkoutUserError,
   };
 };
 export default withRouter(

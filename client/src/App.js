@@ -43,7 +43,7 @@ class App extends React.Component {
       return (
         <div id="main">
           <MobileLogo />
-          <div className="content">
+          <div>
             <Route path="/" exact component={Home} />
             <Route path="/test/products" exact component={Products} />
             <Route
@@ -270,5 +270,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

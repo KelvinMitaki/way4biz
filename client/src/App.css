@@ -1,4 +1,5 @@
-#main {
+#main,
+.main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -138,7 +139,15 @@
   padding: 0px;
 }
 
+.market-rating {
+  width: 50px;
+}
+
 @media screen and (max-width: 920px) {
+  .content {
+    margin-bottom: 65px;
+  }
+
   .secondary-button,
   .secondary-google,
   .primary-button,
