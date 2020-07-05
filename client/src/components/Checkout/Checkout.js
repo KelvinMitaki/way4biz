@@ -87,10 +87,26 @@ class CheckOut extends React.Component {
                       </div>
                       <div>
                         <button
-                          disabled={this.props.invalid || this.props.pristine}
                           className="btn btn-md order-btn"
+                          disabled={
+                            !this.props.valid ||
+                            this.props.loading ||
+                            this.props.pristine
+                          }
+                          type="submit"
                         >
-                          Order Now
+                          {this.props.loading && (
+                            <span
+                              className="spinner-grow spinner-grow-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                          )}
+                          {this.props.loading ? (
+                            <span> {"  "}Loading...</span>
+                          ) : (
+                            <span>Order Now</span>
+                          )}
                         </button>
                       </div>
                     </div>
@@ -109,7 +125,8 @@ class CheckOut extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
+    loading: state.auth.loading
   };
 };
 export default withRouter(

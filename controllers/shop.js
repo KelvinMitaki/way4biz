@@ -266,22 +266,26 @@ route.post(
 
 route.post("/api/new/order", auth, check(""), async (req, res) => {
   try {
-    const { cartItems } = req.body;
-    // CART SHOULD BE AN ARRAY WITH THE PRODUCT  AND QUANTITY
-    const itemPriceArr = cartItems.map(item => {
-      return item.product.price * item.quantity;
+    const { formValues, cart } = req.body;
+    const { _id } = req.session.user;
+    console.log(_id);
+    const test = cart.map(item => {
+      return {
+        product: item._id,
+        quantity: item.quantity,
+        buyer: _id
+      };
     });
-
-    // TOTAL PRICE
-    // PAYMENT METHOD
-    console.log(cartItems);
-    // const totalPrice = itemPriceArr.reduce((acc, curr) => acc + curr, 0);
-    // const cart = new Cart({
-    //   items: cartItems,
-    //   totalPrice
-    // });
-    // await cart.save();
-    // res.send({ cart });
+    const price = cart
+      .map(item => item.price)
+      .reduce((acc, curr) => acc + curr, 0);
+    const order = new Order({
+      items: test,
+      paymentMethod: formValues.payment,
+      totalPrice: price
+    });
+    await order.save();
+    res.send(order);
   } catch (error) {
     res.status(500).send(error);
   }
