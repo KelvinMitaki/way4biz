@@ -169,7 +169,7 @@ export const fetchProductsSearch = searchTerm => async dispatch => {
     dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_PRODUCTS_FAILED });
-    console.log(error);
+    console.log(error.response);
   }
 };
 
