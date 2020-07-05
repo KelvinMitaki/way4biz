@@ -3,7 +3,7 @@ import React from "react";
 import "./HeroCategories.css";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { singleCategory } from "../../redux/actions";
+import { singleCategory, fetchAllCategories } from "../../redux/actions";
 
 class HeroCategories extends React.Component {
   render() {
@@ -14,7 +14,11 @@ class HeroCategories extends React.Component {
         </div>
         <ul className="categories">
           <li>
-            <Link to="/categories" style={{ color: "#000" }}>
+            <Link
+              to="/categories"
+              onClick={() => this.props.fetchAllCategories()}
+              style={{ color: "#000" }}
+            >
               All Categories
             </Link>
           </li>
@@ -40,5 +44,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory })(HeroCategories)
+  connect(mapStateToProps, { singleCategory, fetchAllCategories })(
+    HeroCategories
+  )
 );

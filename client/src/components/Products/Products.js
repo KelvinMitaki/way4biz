@@ -11,10 +11,6 @@ import { connect } from "react-redux";
 
 class Products extends React.Component {
   render() {
-    console.log(this.props.singleCategoryProducts);
-    if (this.props.singleCategoryProducts.length === 0) {
-      return <Redirect to="/" />;
-    }
     return (
       <div id="products">
         <Header />
