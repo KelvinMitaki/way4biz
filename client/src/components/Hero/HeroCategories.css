@@ -34,6 +34,15 @@
   align-items: center;
   padding-left: 20px;
   cursor: pointer;
+  text-transform: capitalize;
+  font-size: medium;
+  font-weight: 400;
+  justify-content: space-between;
+}
+
+.right-arrow {
+  font-size: 28px;
+  display: none;
 }
 
 .categories li:hover {
@@ -44,9 +53,17 @@
   text-decoration: none;
 }
 
+.categories li:hover .right-arrow {
+  display: block;
+}
+
 .categories li a:hover {
   color: #f76b1a !important;
   text-decoration: none;
+}
+
+.right-arrow {
+  font-size: 25px;
 }
 
 @media screen and (min-height: 950px) {

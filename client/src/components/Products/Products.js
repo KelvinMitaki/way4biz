@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { IconContext } from "react-icons";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
 import "./Products.css";
 import Header from "../Header/Header";
