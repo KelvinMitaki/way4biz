@@ -1,4 +1,13 @@
 .seller-dashboard-order-wrapper {
   height: 100px;
-  background-color: aqua;
+  align-items: center;
+  padding: 0px;
+}
+
+#view-order-details-link a {
+  color: #f76b1a;
+}
+
+#view-order-details-link a:hover {
+  text-decoration: none;
 }

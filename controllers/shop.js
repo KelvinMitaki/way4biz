@@ -268,7 +268,6 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
   try {
     const { formValues, cart } = req.body;
     const { _id } = req.session.user;
-    console.log(_id);
     const test = cart.map(item => {
       return {
         product: item._id,
