@@ -113,10 +113,31 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
 route.post("/api/product/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
-    const product = await Product.find({
-      name: { $regex: searchTerm, $options: "i" }
-    });
-    res.send(product);
+    // const product = await Product.find(
+    //   {
+    //     name: { $regex: searchTerm, $options: "i" }
+    //   },
+    //   "name"
+    // );
+    const test = await Product.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            path: "name",
+            query: searchTerm
+          }
+        }
+      },
+      {
+        $limit: 10
+      },
+      {
+        $project: {
+          name: 1
+        }
+      }
+    ]);
+    res.send(test);
   } catch (error) {
     res.status(500).send(error);
   }
