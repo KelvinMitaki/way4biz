@@ -264,20 +264,24 @@ route.post(
   }
 );
 
-route.post("/api/cart", auth, check(""), async (req, res) => {
+route.post("/api/new/order", auth, check(""), async (req, res) => {
   try {
     const { cartItems } = req.body;
     // CART SHOULD BE AN ARRAY WITH THE PRODUCT  AND QUANTITY
     const itemPriceArr = cartItems.map(item => {
       return item.product.price * item.quantity;
     });
-    const totalPrice = itemPriceArr.reduce((acc, curr) => acc + curr, 0);
-    const cart = new Cart({
-      items: cartItems,
-      totalPrice
-    });
-    await cart.save();
-    res.send({ cart });
+
+    // TOTAL PRICE
+    // PAYMENT METHOD
+    console.log(cartItems);
+    // const totalPrice = itemPriceArr.reduce((acc, curr) => acc + curr, 0);
+    // const cart = new Cart({
+    //   items: cartItems,
+    //   totalPrice
+    // });
+    // await cart.save();
+    // res.send({ cart });
   } catch (error) {
     res.status(500).send(error);
   }
