@@ -19,7 +19,7 @@ class PaymentMethods extends React.Component {
 
           <div className="payment-method-info">
             <div>
-              <img src="mpesa.png" />
+              <img src="mpesa.png" alt="m-pesa" />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -41,7 +41,7 @@ class PaymentMethods extends React.Component {
 
           <div className="payment-method-info">
             <div>
-              <img src="debit.png" />
+              <img src="debit.png" alt="debit" />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
