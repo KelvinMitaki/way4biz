@@ -31,7 +31,8 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   DELETE_FROM_CART,
-  FETCH_CATEGORIES
+  FETCH_CATEGORIES,
+  SINGLE_CATEGORY
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -402,6 +403,19 @@ export const fetchCategories = () => async dispatch => {
     const res = await axios.get("/api/products/find/categories");
     dispatch({ type: FETCH_CATEGORIES, payload: res.data });
     dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const singleCategory = (category, history) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/products/${category}`);
+    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+    history.push(`/products/category/${category}`);
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);

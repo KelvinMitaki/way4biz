@@ -2,14 +2,16 @@ import {
   FETCH_PRODUCTS_SEARCH,
   FETCH_PRODUCTS_FAILED,
   FETCH_PRODUCTS,
-  FETCH_CATEGORIES
+  FETCH_CATEGORIES,
+  SINGLE_CATEGORY
 } from "../actions/types";
 
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
   products: [],
-  categories: []
+  categories: [],
+  singleCategoryProducts: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,6 +24,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, productsError: "Fetching products failed" };
     case FETCH_CATEGORIES:
       return { ...state, categories: action.payload };
+    case SINGLE_CATEGORY:
+      return { ...state, singleCategoryProducts: action.payload };
     default:
       return state;
   }
