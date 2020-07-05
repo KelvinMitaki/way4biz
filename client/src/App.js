@@ -25,7 +25,7 @@ import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
-import Review from "./components/Seller/Review";
+import Review from "./components/Seller/SellerDashBoardReviews";
 import SellerProducts from "./components/Seller/SellerProducts";
 import Sell from "./components/Seller/Sell";
 import SellerEdit from "./components/Seller/SellerEdit";
