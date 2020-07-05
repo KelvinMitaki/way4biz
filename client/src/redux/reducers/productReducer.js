@@ -3,7 +3,8 @@ import {
   FETCH_PRODUCTS_FAILED,
   FETCH_PRODUCTS,
   FETCH_CATEGORIES,
-  SINGLE_CATEGORY
+  SINGLE_CATEGORY,
+  FETCH_ALL_CATEGORIES
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,6 +27,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, categories: action.payload };
     case SINGLE_CATEGORY:
       return { ...state, singleCategoryProducts: action.payload };
+    case FETCH_ALL_CATEGORIES:
+      return { ...state, categories: action.payload };
     default:
       return state;
   }
