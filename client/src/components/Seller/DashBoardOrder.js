@@ -25,7 +25,7 @@ class DashBoardOrder extends React.Component {
                       </p>
                       <p>
                         <strong className="mr-2">Date:</strong>
-                        {order.createdAt.toLocaleString()}
+                        {new Date(order.createdAt).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
