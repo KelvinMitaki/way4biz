@@ -11,8 +11,7 @@ import { Provider } from "react-redux";
 import { createStore, compose, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
 import thunk from "redux-thunk";
-// import ScrollToTop from "./ScrollToTop";
-// import ScrollToTop from "react-router-scroll-top";
+import ScrollToTop from "./ScrollToTop";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -22,9 +21,8 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <PersistGate persistor={persistStore(store)}>
-        {/* <ScrollToTop> */}
+        <ScrollToTop />
         <App />
-        {/* </ScrollToTop> */}
       </PersistGate>
     </BrowserRouter>
   </Provider>,

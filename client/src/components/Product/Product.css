@@ -95,6 +95,11 @@
     padding: 20px 10px;
   }
 
+  .product-features-reviews-specifications {
+    margin: 0px;
+    padding: 10px;
+  }
+
   .product-features-reviews-specifications-sidebar {
     display: none;
   }
