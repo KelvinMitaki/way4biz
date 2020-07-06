@@ -1,11 +1,27 @@
-#product {
-  background-color: #f8f9f9;
-  padding: 50px 100px;
+.product-wrapper {
   margin-bottom: 70px;
 }
 
-hr {
+#product {
+  background-color: #f8f9f9;
+  padding: 50px 100px;
+}
+
+/* hr {
   background-color: #eee;
+} */
+
+.stock-badge {
+  border-radius: 3px;
+  color: #fff;
+}
+
+.in-stock-badge {
+  background-color: #f76b1a;
+}
+
+.out-of-stock-badge {
+  background-color: red;
 }
 
 .product-imgs img {
@@ -32,66 +48,32 @@ hr {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  /* background-color: #f76b1a; */
 }
 
-.product-name-wishlist .flaticon-heart {
-  font-size: large;
-  font-weight: bold;
-  cursor: pointer;
+.product-price,
+.product-rating {
+  padding: 10px 10px;
 }
 
-#prod-description {
-  border: 1px solid #eee;
-  background-color: #fff;
-}
-
-#prod-description h3 {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  padding: 10px;
-}
-
-#prod-description p {
-  padding: 10px;
-}
-
-.price-rating {
-  justify-content: space-between;
-  padding: 20px 10px;
-  display: flex;
-  align-items: center;
-}
-
-.price-rating h4 {
-  font-size: large;
-}
-
-#features {
-  background-color: #fff;
-  border: 1px solid #eee;
+.product-features-reviews-specifications {
+  margin: 0px;
   padding: 20px;
 }
 
 .product-owl-carousel {
   position: relative;
   z-index: -5;
+  background-color: #fff !important;
 }
 
-#features h4 {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
-}
-
-#features ul {
-  list-style: none;
+.product-owl-carousel div img {
+  width: 50px;
 }
 
 .add-to-cart {
   background-color: #f76b1a;
   color: #fff;
   height: 40px;
-  /* margin: 0px !imp; */
 }
 
 .add-to-cart:focus {
@@ -106,6 +88,6 @@ hr {
   }
 
   .product-info {
-    padding: 0px 10px;
+    padding: 20px 10px;
   }
 }

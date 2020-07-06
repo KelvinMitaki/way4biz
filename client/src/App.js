@@ -31,6 +31,7 @@ import Sell from "./components/Seller/Sell";
 import SellerEdit from "./components/Seller/SellerEdit";
 import Products from "./components/Products/Products";
 import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
+import "react-responsive-tabs/styles.css";
 
 class App extends React.Component {
   componentDidMount() {

@@ -11,12 +11,15 @@ import Rating from "./Rating";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
+import ProductSecondaryDetails from "./ProductSecondaryDetails";
+
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
       clicked: false,
+      // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -61,11 +64,12 @@ class Product extends React.Component {
 
   render() {
     if (this.props.product) {
+      const { stockQuantity } = this.props.product;
       return (
         <React.Fragment>
           <Header />
           {this.props.product && (
-            <div id="container-fluid">
+            <div className="container-fluid product-wrapper">
               {this.state.modalShow ? (
                 <div
                   onClick={this.handleCloseModal}
@@ -75,12 +79,12 @@ class Product extends React.Component {
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
                   <ReactImageMagnify {...this.getImageProps()} />
-                  <div className="feature-imgs d-flex mb-4">
+                  <div className="feature-imgs d-flex">
                     <OwlCarousel
                       items={5}
                       loop={true}
                       autoplay={true}
-                      autoplayTimeout={4000}
+                      autoplayTimeout={10000}
                       dots={true}
                       className="product-owl-carousel"
                     >
@@ -124,8 +128,18 @@ class Product extends React.Component {
                   </div>
                 </div>
                 <div className="col-lg-6 product-info">
+                  {stockQuantity > 0 ? (
+                    <span className="badge stock-badge in-stock-badge">
+                      In Stock
+                    </span>
+                  ) : (
+                    <span className="badge stock-badge out-of-stock-badge">
+                      In Stock
+                    </span>
+                  )}
+
                   <div className="product-name-wishlist">
-                    <h3>{this.props.product.name}</h3>
+                    <h5 className="mr-2">{this.props.product.name}</h5>
                     <IconContext.Provider
                       value={{ size: "2em", color: "#f76b1a" }}
                     >
@@ -146,14 +160,13 @@ class Product extends React.Component {
                       )}
                     </IconContext.Provider>
                   </div>
-                  <div className="price-rating d-flex">
+                  <div className="product-rating">
+                    <Rating size={20} />
+                  </div>
+                  <div className="product-price">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
-                    <Rating size={24} />
                   </div>
-                  <div id="prod-description">
-                    <h3>Product Details</h3>
-                    <p>{this.props.product.description}</p>
-                  </div>
+
                   <div>
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
@@ -167,15 +180,15 @@ class Product extends React.Component {
                       close={this.handleCloseModal}
                     ></AddToCartModalButton>
                   </div>
-                  <div id="features">
-                    <h5>Features and Specifications</h5>
-                    <p>{this.props.product.specifications}</p>
-                    {/* <ul>
-                    <li>32 inches</li>
-                    <li>IPS Technology</li>
-                    <li>Touch Screen</li>
-                  </ul> */}
-                  </div>
+                </div>
+              </div>
+              <div className="row product-features-reviews-specifications">
+                <div className="col-lg-2"></div>
+                <div className="col-lg-10">
+                  <ProductSecondaryDetails
+                    details={this.props.product.description}
+                    specifications={this.props.product.specifications}
+                  />
                 </div>
               </div>
             </div>
