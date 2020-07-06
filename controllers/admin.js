@@ -465,6 +465,22 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
             }
           }
         }
+      },
+      {
+        $unwind: "$productSellerData"
+      },
+      {
+        $group: {
+          _id: "$_id",
+          items: { $push: "$items" },
+          productSellerData: {
+            $push: "$productSellerData"
+          },
+          paymentMethod: {
+            $first: "$paymentMethod"
+          },
+          buyer: { $first: "$buyer" }
+        }
       }
     ]);
     res.send(test);

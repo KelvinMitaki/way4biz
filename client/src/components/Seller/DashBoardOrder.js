@@ -47,5 +47,9 @@ class DashBoardOrder extends React.Component {
     );
   }
 }
-
-export default connect(null, { fetchSellerOrders })(DashBoardOrder);
+const mapStateToProps = state => {
+  return {
+    sellerOrders: state.sellerRegister.sellerOrders
+  };
+};
+export default connect(mapStateToProps, { fetchSellerOrders })(DashBoardOrder);
