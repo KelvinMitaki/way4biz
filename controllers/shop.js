@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
@@ -5,12 +6,12 @@ const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
-const Cart = require("../models/Cart");
 
 route.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find()
       .populate("seller", "storeName")
+      .select("-stockQuantity")
       .exec();
 
     res.send(products);
@@ -152,6 +153,7 @@ route.get("/api/product/:productId", async (req, res) => {
   }
 });
 
+// BUYER ORDERS
 route.get("/api/orders", auth, async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.session.user._id });
@@ -263,20 +265,27 @@ route.post(
   }
 );
 
-route.post("/api/cart", auth, check(""), async (req, res) => {
+route.post("/api/new/order", auth, check(""), async (req, res) => {
   try {
-    const { cartItems } = req.body;
-    // CART SHOULD BE AN ARRAY WITH THE PRODUCT  AND QUANTITY
-    const itemPriceArr = cartItems.map(item => {
-      return item.product.price * item.quantity;
+    const { formValues, cart } = req.body;
+    const { _id } = req.session.user;
+    const test = cart.map(item => {
+      return {
+        product: item._id,
+        quantity: item.quantity
+      };
     });
-    const totalPrice = itemPriceArr.reduce((acc, curr) => acc + curr, 0);
-    const cart = new Cart({
-      items: cartItems,
-      totalPrice
+    const price = cart
+      .map(item => item.price)
+      .reduce((acc, curr) => acc + curr, 0);
+    const order = new Order({
+      items: test,
+      paymentMethod: formValues.payment,
+      totalPrice: price,
+      buyer: _id
     });
-    await cart.save();
-    res.send({ cart });
+    await order.save();
+    res.send(order);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -291,9 +300,24 @@ route.get("/api/products/find/categories", async (req, res) => {
     // });
     const category = await Product.aggregate([
       { $group: { _id: "$category" } },
-      { $limit: 9 }
+      { $limit: 9 },
+      { $sort: { _id: 1 } }
     ]);
     res.send(category);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/all/categories", async (req, res) => {
+  try {
+    const categories = await Product.aggregate([
+      {
+        $group: { _id: "$category" }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+    res.send(categories);
   } catch (error) {
     res.status(500).send(error);
   }

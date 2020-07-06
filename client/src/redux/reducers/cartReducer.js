@@ -1,7 +1,8 @@
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  DELETE_FROM_CART
+  DELETE_FROM_CART,
+  MAKE_ORDER
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -56,6 +57,8 @@ export default (state = INITIAL_STATE, action) => {
           item => item._id.toString() !== action.payload._id.toString()
         )
       };
+    case MAKE_ORDER:
+      return { ...state, cart: [] };
     default:
       return state;
   }

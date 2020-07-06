@@ -9,21 +9,22 @@ import Header from "../Header/Header";
 import { withRouter, Redirect } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import { makeOrder } from "../../redux/actions";
 
 class CheckOut extends React.Component {
   render() {
     if (this.props.cart.length === 0) {
       return <Redirect to="/" />;
     }
-    const { user } = this.props;
+    const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map((item) => item.price * item.quantity)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
     const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
-      .map((item) => item.price * item.quantity)
+      .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -31,8 +32,8 @@ class CheckOut extends React.Component {
         <div className="content">
           <Header />
           <form
-            onSubmit={this.props.handleSubmit((formValues) =>
-              console.log(formValues)
+            onSubmit={this.props.handleSubmit(formValues =>
+              this.props.makeOrder({ formValues, cart })
             )}
           >
             <div className="container main-checkout-wrapper">
@@ -86,10 +87,26 @@ class CheckOut extends React.Component {
                       </div>
                       <div>
                         <button
-                          disabled={this.props.invalid || this.props.pristine}
                           className="btn btn-md order-btn"
+                          disabled={
+                            !this.props.valid ||
+                            this.props.loading ||
+                            this.props.pristine
+                          }
+                          type="submit"
                         >
-                          Order Now
+                          {this.props.loading && (
+                            <span
+                              className="spinner-grow spinner-grow-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                          )}
+                          {this.props.loading ? (
+                            <span> {"  "}Loading...</span>
+                          ) : (
+                            <span>Order Now</span>
+                          )}
                         </button>
                       </div>
                     </div>
@@ -105,12 +122,15 @@ class CheckOut extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
+    loading: state.auth.loading
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout" })(connect(mapStateToProps)(CheckOut))
+  reduxForm({ form: "Chekout" })(
+    connect(mapStateToProps, { makeOrder })(CheckOut)
+  )
 );

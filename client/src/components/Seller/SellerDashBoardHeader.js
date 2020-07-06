@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import "./SellerDashBoardHeader.css";
 import Logo from "../Header/Logo";
@@ -14,9 +14,9 @@ class SellerDashBoardHeader extends React.Component {
         <Logo id="seller-logo" />
         <ul id="seller-header-menu-items">
           <li className="my-4">
-            <a className="link" href="/">
+            <Link className="link" to="/">
               Buy
-            </a>
+            </Link>
           </li>
           <li className="my-4">
             <NavLink

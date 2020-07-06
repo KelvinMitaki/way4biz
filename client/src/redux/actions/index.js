@@ -33,7 +33,9 @@ import {
   DELETE_FROM_CART,
   FETCH_CATEGORIES,
   SINGLE_CATEGORY,
-  FETCH_ALL_CATEGORIES
+  FETCH_ALL_CATEGORIES,
+  MAKE_ORDER,
+  FETCH_SELLER_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -169,7 +171,7 @@ export const fetchProductsSearch = searchTerm => async dispatch => {
     dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_PRODUCTS_FAILED });
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -432,5 +434,30 @@ export const fetchAllCategories = () => async dispatch => {
   } catch (error) {
     console.log(error.response);
     dispatch({ type: LOADING_STOP });
+  }
+};
+
+export const makeOrder = credentials => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+
+    const res = await axios.post("/api/new/order", credentials);
+    dispatch({ type: MAKE_ORDER });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchSellerOrders = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/seller/orders");
+    dispatch({ type: FETCH_SELLER_ORDERS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
   }
 };

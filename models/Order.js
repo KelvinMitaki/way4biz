@@ -4,30 +4,22 @@ const OrderSchema = new mongoose.Schema(
   {
     buyer: {
       type: mongoose.Types.ObjectId,
-      ref: "User"
-    },
-    cart: {
-      type: mongoose.Types.ObjectId,
-      ref: "Cart"
-    },
-    firstName: {
-      type: String,
       required: true
     },
-    lastName: {
-      type: String,
-      required: true
-    },
-    deliveryAddress: {
-      type: String,
-      required: true
-    },
-    region: {
-      type: String,
-      required: true
-    },
-    city: {
-      type: String,
+    items: [
+      {
+        product: {
+          type: mongoose.Types.ObjectId,
+          ref: "Product"
+        },
+        quantity: {
+          type: Number,
+          required: true
+        }
+      }
+    ],
+    totalPrice: {
+      type: Number,
       required: true
     },
     paymentMethod: {
