@@ -5,56 +5,60 @@ import "./DashBoardProduct.css";
 import { connect } from "react-redux";
 
 class DashBoardProduct extends React.Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
-    if (this.props.sellerProducts.length !== 0) {
-      return this.props.sellerProducts.map((product) => (
-        <React.Fragment key={product._id}>
-          <div className="container">
-            <div className="row">
-              <div className="col d-flex dashboard-product-section box-container">
-                <div id="dashboard-product-image" className="col col-lg-5">
-                  <img src={product.imageUrl} alt={product.name} />
-                  <div style={{ maxWidth: "150px" }} className="ml-2">
-                    <h5 id="seller-db-prod-name">
-                      <Link to="/" title={product.name}>
-                        {product.name}
-                      </Link>
-                    </h5>
-                  </div>
-                </div>
-                <div id="dashboard-product-quantity" className="col col-lg-2">
-                  {product.stockQuantity}
-                </div>
-                <div id="dashboard-product-price" className="col col-lg-2">
-                  Ksh.{product.price.toLocaleString()}
-                </div>
-                <div id="dashboard-product-status" className="col col-lg-2">
-                  <p
-                    className="bg-success"
-                    style={{
-                      color: "#fff",
-                      textAlign: "center",
-                      borderRadius: "3px",
-                    }}
-                  >
-                    Live
-                  </p>
-                </div>
-                <div id="dashboard-product-edit" className="col col-lg-1">
-                  <Link
-                    to={`/seller/edit/${product._id}`}
-                    className="btn btn-sm btn-danger"
-                  >
-                    Edit
-                  </Link>
-                </div>
-              </div>
-            </div>
+    return (
+      <div className="container-fluid p-4" style={{ backgroundColor: "white" }}>
+        <div className="row no-gutters y">
+          <div className="col d-flex mb-2">
+            <h6 className="col-lg-5 p-0" style={{ textAlign: "left" }}>
+              Item
+            </h6>
+            <h6 className="col-lg-2 p-0">Quantity</h6>
+            <h6 className="col-lg-2 p-0">Price</h6>
+            <h6 className="col-lg-2 p-0">Status</h6>
+            <h6 className="col-lg-1 p-0"> </h6>
           </div>
-        </React.Fragment>
-      ));
-    }
-    return null;
+        </div>
+        <div className="row no-gutters dashboard-product-wrapper box-container">
+          {/* mapping will take place here */}
+          <div className="col-md-12 col-lg-5 dashboard-product-image">
+            <img src="/1.jpg" />
+            <p className="seller-db-prod-name mr-3 w-100">
+              <Link to="/" title="Title Here">
+                Great Beer Great Beer Great Beer Great Beer Great Beer Great
+                Beer Great Beer
+              </Link>
+            </p>
+          </div>
+          <div className="col-md-6 col-lg-2">
+            <p className="x mr-2">
+              <strong>Qty:</strong>
+            </p>
+            <p>10</p>
+          </div>
+          <div className="col-md-6 col-lg-2">
+            <p className="x mr-2">
+              <strong>Price:</strong>
+            </p>
+            <p>Ksh.10,000</p>
+          </div>
+          <div className="col-md-6 col-lg-2">
+            <p className="x mr-2">
+              <strong>Status:</strong>
+            </p>
+            <p className="live">Live</p>
+          </div>
+          <div className="col-md-6 col-lg-1">
+            <Link to="/" className="btn btn-sm btn-danger">
+              Edit
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 const mapStateToProps = (state) => {
