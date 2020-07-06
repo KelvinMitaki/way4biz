@@ -11,7 +11,6 @@ route.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find()
       .populate("seller", "storeName")
-      .select("-stockQuantity")
       .exec();
 
     res.send(products);
