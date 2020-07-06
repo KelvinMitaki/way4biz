@@ -13,6 +13,7 @@ const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
 const Seller = require("../models/Seller");
 const User = require("../models/User");
+const Order = require("../models/Order");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -436,4 +437,14 @@ route.delete(
   }
 );
 
+route.get("/api/seller/orders", isSeller, async (req, res) => {
+  try {
+    const { user } = req.session;
+    const test = await Order.find({}).populate("items.product").select("items");
+
+    console.log(test);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

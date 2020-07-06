@@ -153,6 +153,7 @@ route.get("/api/product/:productId", async (req, res) => {
   }
 });
 
+// BUYER ORDERS
 route.get("/api/orders", auth, async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.session.user._id });

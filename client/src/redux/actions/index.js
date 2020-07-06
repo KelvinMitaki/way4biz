@@ -34,7 +34,8 @@ import {
   FETCH_CATEGORIES,
   SINGLE_CATEGORY,
   FETCH_ALL_CATEGORIES,
-  MAKE_ORDER
+  MAKE_ORDER,
+  FETCH_SELLER_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -436,13 +437,24 @@ export const fetchAllCategories = () => async dispatch => {
   }
 };
 
-export const makeOrder = credentials => async (dispatch, getState) => {
+export const makeOrder = credentials => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
 
     const res = await axios.post("/api/new/order", credentials);
-    console.log(res.data);
     dispatch({ type: MAKE_ORDER });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchSellerOrders = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/seller/orders");
+    console.log(res.data);
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });

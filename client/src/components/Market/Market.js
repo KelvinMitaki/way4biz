@@ -17,8 +17,8 @@ class Market extends React.Component {
         </div>
         <div className="products-section">
           {this.props.products.length !== 0 &&
-            this.props.products.map((product) => (
-              <div className="product">
+            this.props.products.map(product => (
+              <div className="product" key={product._id}>
                 <Link
                   key={product._id}
                   to={`/product/${product._id}`}
@@ -37,7 +37,7 @@ class Market extends React.Component {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px",
+                    padding: "0px 10px"
                   }}
                   className="my-2"
                 >
@@ -50,9 +50,9 @@ class Market extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.products
   };
 };
 export default connect(mapStateToProps)(Market);

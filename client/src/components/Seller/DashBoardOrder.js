@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
+import { fetchSellerOrders } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class DashBoardOrder extends React.Component {
+  componentDidMount() {
+    this.props.fetchSellerOrders();
+  }
   render() {
     return (
       <div className="container">
@@ -43,4 +48,4 @@ class DashBoardOrder extends React.Component {
   }
 }
 
-export default DashBoardOrder;
+export default connect(null, { fetchSellerOrders })(DashBoardOrder);
