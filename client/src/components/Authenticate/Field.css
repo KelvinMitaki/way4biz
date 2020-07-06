@@ -1,19 +1,27 @@
 .form-input {
-  width: 400px;
+  width: 500px;
   margin: auto;
 }
 
 .form-input input,
-.form-input textarea {
+.form-input select {
+  height: 50px;
+}
+
+.form-input input,
+.form-input textarea,
+.form-input select {
   border: 1px solid #d4d4d4;
 }
 
-/* .form-input textarea {
+.form-input textarea {
+  resize: none;
   border-radius: 40px;
-} */
+}
 
 .form-input input:focus,
-.form-input textarea:focus {
+.form-input textarea:focus,
+.form-input select:focus {
   box-shadow: none;
   outline: none;
   border: 1px solid #d4d4d4;
@@ -23,6 +31,17 @@
   border: 1px solid #eee;
   border-radius: 40px;
   height: 50px;
+}
+
+textarea {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+textarea::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .phone {

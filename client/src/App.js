@@ -25,11 +25,13 @@ import SellerLogin from "./components/Account/SellerLogin";
 import ResetPassword from "./components/Authenticate/ResetPassword";
 import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
-import Review from "./components/Seller/Review";
+import Review from "./components/Seller/SellerDashBoardReviews";
 import SellerProducts from "./components/Seller/SellerProducts";
-import Sell from "./components/Seller/Sell";
-import SellerEdit from "./components/Seller/SellerEdit";
+import SellerDashBoardNewProduct from "./components/Seller/SellerDashBoardNewProduct";
+import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProductEdit";
 import Products from "./components/Products/Products";
+import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
+import "react-responsive-tabs/styles.css";
 
 class App extends React.Component {
   componentDidMount() {
@@ -50,6 +52,7 @@ class App extends React.Component {
               exact
               component={Products}
             />
+            <Route path="/order/details" component={SellerOrderDetails} />
             <Route
               path="/seller-dashboard"
               exact
@@ -77,7 +80,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <Sell />
+                  <SellerDashBoardNewProduct />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -110,7 +113,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerEdit />
+                  <SellerDashBoardProductEdit />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -263,16 +266,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

@@ -2,14 +2,20 @@
   display: none;
 }
 
-@media screen and (max-width: 960px) {
-  @media screen and (max-width: 960px) {
-    #dashboard-orders-lg-screen {
-      display: none;
-    }
+.seller-dashboard-wrapper {
+  margin: 20px;
+}
 
-    #dashboard-orders-sm-screen {
-      display: block;
-    }
+@media screen and (max-width: 960px) {
+  #dashboard-orders-lg-screen {
+    display: none;
+  }
+
+  #dashboard-orders-sm-screen {
+    display: block;
+  }
+
+  .seller-dashboard-wrapper {
+    margin: 0px;
   }
 }

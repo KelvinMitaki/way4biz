@@ -5,15 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "server": "env-cmd -f ./config/keys.env  nodemon index.js",
+    "server": "env-cmd -f ./config/keys.env  nodemon --ignore \"client\" index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "client/src/*.js"
-    ]
   },
   "keywords": [],
   "author": "",

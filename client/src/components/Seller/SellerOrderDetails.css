@@ -1,0 +1,15 @@
+.seller-db-order-details-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.order-product img {
+  width: 100%;
+}
+
+.arrow-icon {
+  font-size: 35px;
+  color: #f76b1a;
+}

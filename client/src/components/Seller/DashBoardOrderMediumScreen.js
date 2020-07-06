@@ -15,16 +15,14 @@ class DashBoardOrderMediumScreen extends React.Component {
             </div>
             <div id="db-md-order-items">
               <p>Qty:6</p>
-              <p>
-                <Link to="/">View Items</Link>
+              <p id="view-order-details-link">
+                <Link to="/order/details">View Items</Link>
               </p>
             </div>
             <div id="db-md-order-destination">
               <p>Destination:Rongai</p>
             </div>
-            <div id="db-md-order-policy">
-              <p>Return Policy</p>
-            </div>
+
             <div id="db-md-order-amount-status">
               <p>Toatal:Ksh.30,000</p>
               <p>Status:Delivered</p>

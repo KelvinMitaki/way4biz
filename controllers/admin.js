@@ -13,6 +13,7 @@ const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
 const Seller = require("../models/Seller");
 const User = require("../models/User");
+const Order = require("../models/Order");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -436,4 +437,57 @@ route.delete(
   }
 );
 
+route.get("/api/seller/orders", isSeller, async (req, res) => {
+  try {
+    const { user } = req.session;
+
+    const test = await Order.aggregate([
+      { $project: { items: 1, paymentMethod: 1, buyer: 1, createdAt: 1 } },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "productData"
+        }
+      },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          createdAt: 1,
+          productSellerData: {
+            $filter: {
+              input: "$productData",
+              as: "d",
+              cond: { $eq: ["$$d.seller", user._id] }
+            }
+          }
+        }
+      },
+      {
+        $unwind: "$productSellerData"
+      },
+      {
+        $group: {
+          _id: "$_id",
+          items: { $push: "$items" },
+          productSellerData: {
+            $push: "$productSellerData"
+          },
+          paymentMethod: {
+            $first: "$paymentMethod"
+          },
+          buyer: { $first: "$buyer" },
+          createdAt: { $first: "$createdAt" }
+        }
+      }
+    ]);
+    res.send(test);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

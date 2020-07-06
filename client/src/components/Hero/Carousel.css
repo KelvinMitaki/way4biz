@@ -11,7 +11,7 @@
 @media screen and (min-height: 950px) {
   .hero-carousel,
   .slider {
-    height: calc(50vh - 20px);
+    height: calc(50vh - 20px); /* 313px */
   }
 }
 
@@ -19,7 +19,7 @@
   .hero-carousel,
   .slider {
     width: 100vw;
-    height: 40vh;
+    height: 40vh; /* 266px */
     position: relative;
     left: 0px;
   }
