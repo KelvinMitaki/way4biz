@@ -38,7 +38,6 @@
 }
 
 .search-output {
-  height: auto;
   width: 100%;
   position: absolute;
   top: 64px;
@@ -46,6 +45,8 @@
   border-top: 1px solid #fff;
   border-right: 1px solid #fff;
   border-left: 1px solid #fff;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .search-output div {
@@ -55,7 +56,8 @@
 
 .searched-output-link-wrapper {
   margin: none;
-  padding: 15px 10px;
+  padding: 10px;
+  border-bottom: 1px solid #d4d4d4;
 }
 
 .searched-output-link-wrapper:hover {
@@ -65,12 +67,36 @@
 .searched-product-link {
   color: #000;
   font-weight: bold;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.search-product-image,
+.search-product-image img {
+  height: 100%;
+}
+
 .searched-product-link:hover {
   text-decoration: none;
   color: #f76b1a;
 }
 
+.search-product-image {
+  flex: 1;
+}
+
+.search-product-name {
+  flex: 8;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.search-product-price {
+  flex: 1;
+}
 @media screen and (max-width: 960px) {
   #header-search {
     width: 100% !important;

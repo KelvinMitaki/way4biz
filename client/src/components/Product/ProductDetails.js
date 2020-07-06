@@ -1,6 +1,6 @@
 import React from "react";
 
-class ProductFeaturesSpecifications extends React.Component {
+class ProductDetails extends React.Component {
   render() {
     console.log(this.props);
     return (
@@ -11,4 +11,4 @@ class ProductFeaturesSpecifications extends React.Component {
   }
 }
 
-export default ProductFeaturesSpecifications;
+export default ProductDetails;

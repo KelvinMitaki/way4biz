@@ -14,8 +14,8 @@ class Review extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 reviews-wrapper">
-            <div className="review-wrapper">
+          <div className="col-lg-9 reviews-wrapper m-0">
+            <div className="review-wrapper mb-3">
               <h1>Review 1</h1>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -28,7 +28,7 @@ class Review extends React.Component {
               </p>
             </div>
 
-            <div>
+            <div className="review-wrapper">
               <h1>Review 2</h1>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.

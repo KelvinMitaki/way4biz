@@ -1,15 +1,16 @@
 .product-wrapper {
   margin-bottom: 70px;
+  padding: 0px 20px;
 }
 
 #product {
-  background-color: #f8f9f9;
+  background-color: #eaecee;
   padding: 50px 100px;
 }
 
-/* hr {
+hr {
   background-color: #eee;
-} */
+}
 
 .stock-badge {
   border-radius: 3px;
@@ -30,6 +31,7 @@
 
 .feature-imgs {
   justify-content: space-evenly;
+  margin-top: 20px;
 }
 
 .product-info {
@@ -40,7 +42,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 10px;
+  padding: 10px 0px;
 }
 
 #prod-name {
@@ -52,7 +54,7 @@
 
 .product-price,
 .product-rating {
-  padding: 10px 10px;
+  padding: 10px 0px;
 }
 
 .product-rating {
@@ -86,6 +88,9 @@
 }
 
 @media screen and (max-width: 960px) {
+  .product-wrapper {
+    padding: 0;
+  }
   #product {
     background-color: #f8f9f9;
     padding: 20px;
