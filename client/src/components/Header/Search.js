@@ -24,6 +24,12 @@ class Search extends React.Component {
   render() {
     return (
       <div id={this.props.id} className="col">
+        {this.state.typing !== "" ? (
+          <div
+            onClick={() => this.setState({ typing: "" })}
+            className="light-shed"
+          ></div>
+        ) : null}
         <div className="input-group">
           <input
             type="text"

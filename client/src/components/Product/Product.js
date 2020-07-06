@@ -130,7 +130,7 @@ class Product extends React.Component {
                     </OwlCarousel>
                   </div>
                 </div>
-                <div className="col-lg-6 product-info">
+                <div className="col-lg-6 product-info pt-2">
                   {stockQuantity > 0 ? (
                     <span className="badge stock-badge in-stock-badge">
                       In Stock

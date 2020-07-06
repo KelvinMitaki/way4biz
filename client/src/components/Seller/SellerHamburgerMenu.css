@@ -10,7 +10,7 @@
   height: 100vh;
   position: absolute;
   display: flex;
-  z-index: 10000000;
+  z-index: 100000;
 }
 
 .seller-menu-slide-in {
