@@ -24,8 +24,8 @@ class Products extends React.Component {
             <div className="col-lg-9" style={{ padding: "0px" }}>
               <div className="products-section">
                 {this.props.singleCategoryProducts.length !== 0 &&
-                  this.props.singleCategoryProducts.map((product) => (
-                    <div className="product">
+                  this.props.singleCategoryProducts.map(product => (
+                    <div key={product._id} className="product">
                       <Link
                         key={product._id}
                         to={`/product/${product._id}`}
@@ -44,7 +44,7 @@ class Products extends React.Component {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px",
+                          padding: "0px 10px"
                         }}
                         className="mb-2"
                       >
@@ -62,9 +62,9 @@ class Products extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    singleCategoryProducts: state.product.singleCategoryProducts,
+    singleCategoryProducts: state.product.singleCategoryProducts
   };
 };
 export default connect(mapStateToProps)(Products);

@@ -5,7 +5,7 @@
 
 #product {
   background-color: #eaecee;
-  padding: 50px 100px;
+  padding: 50px 40px;
 }
 
 hr {
@@ -63,7 +63,7 @@ hr {
 
 .product-features-reviews-specifications {
   margin: 0px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .product-owl-carousel {

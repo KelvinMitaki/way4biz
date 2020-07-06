@@ -6,7 +6,7 @@
   width: 90%;
   border-radius: 10px;
   position: absolute;
-  z-index: 3000000000;
+  z-index: 50000;
 }
 
 .modal-header {
@@ -40,9 +40,10 @@
   height: 100vh;
   position: fixed;
   top: 0px;
+  left: 0px;
   transition: all 1.3s;
   width: 100vw;
-  z-index: 1000000;
+  z-index: 9000;
 }
 
 .continue-btn,
