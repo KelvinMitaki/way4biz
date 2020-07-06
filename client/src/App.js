@@ -27,8 +27,8 @@ import AdminDashBoard from "./components/Admin/AdminDashBoard";
 import SellerOrders from "./components/Seller/SellerOrders";
 import Review from "./components/Seller/SellerDashBoardReviews";
 import SellerProducts from "./components/Seller/SellerProducts";
-import Sell from "./components/Seller/Sell";
-import SellerEdit from "./components/Seller/SellerEdit";
+import SellerDashBoardNewProduct from "./components/Seller/SellerDashBoardNewProduct";
+import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProductEdit";
 import Products from "./components/Products/Products";
 import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 import "react-responsive-tabs/styles.css";
@@ -80,7 +80,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <Sell />
+                  <SellerDashBoardNewProduct />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -113,7 +113,7 @@ class App extends React.Component {
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerEdit />
+                  <SellerDashBoardProductEdit />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )

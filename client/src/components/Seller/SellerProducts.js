@@ -3,6 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Accordion from "react-bootstrap/Accordion";
 import { Card, Button } from "react-bootstrap";
+// import Tabs from "react-responsive-tabs";
 
 import "./SellerProducts.css";
 
@@ -22,7 +23,7 @@ class SellerProducts extends React.Component {
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
         <div className="row no-gutters">
-          <div className="col-md-3">
+          <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9 mt-5">
