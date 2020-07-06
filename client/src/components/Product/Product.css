@@ -55,6 +55,10 @@
   padding: 10px 10px;
 }
 
+.product-rating {
+  display: flex;
+}
+
 .product-features-reviews-specifications {
   margin: 0px;
   padding: 20px;
@@ -89,5 +93,9 @@
 
   .product-info {
     padding: 20px 10px;
+  }
+
+  .product-features-reviews-specifications-sidebar {
+    display: none;
   }
 }

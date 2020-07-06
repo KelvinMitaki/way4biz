@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
+import { Link } from "react-router-dom";
 
 class Product extends React.Component {
   constructor(props) {
@@ -162,6 +163,11 @@ class Product extends React.Component {
                   </div>
                   <div className="product-rating">
                     <Rating size={20} />
+                    <span className="ml-2">
+                      <Link style={{ color: "#f76b1a" }} to="/">
+                        (0 Reviews)
+                      </Link>
+                    </span>
                   </div>
                   <div className="product-price">
                     <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
@@ -183,7 +189,11 @@ class Product extends React.Component {
                 </div>
               </div>
               <div className="row product-features-reviews-specifications">
-                <div className="col-lg-2"></div>
+                <div className="col-lg-2 product-features-reviews-specifications-sidebar">
+                  <div>
+                    <p>Seller Store Details Here</p>
+                  </div>
+                </div>
                 <div className="col-lg-10">
                   <ProductSecondaryDetails
                     details={this.props.product.description}
