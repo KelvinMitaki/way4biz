@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 import "./Market.css";
 import { connect } from "react-redux";
-import { IconContext } from "react-icons";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Heart from "../Products/Heart";
 
 class Market extends React.Component {

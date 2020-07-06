@@ -13,13 +13,14 @@ export class SellerLogin extends Component {
       <div>
         <AuthHeader />
         <br />
+        <h2 style={{ textAlign: "center" }}>Sign In</h2>
         <br />
         <div className="form-primary-error">
           {this.props.error && this.props.error}
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             return this.props.sellerLogIn(formValues, this.props.history);
           })}
         >
@@ -62,7 +63,7 @@ export class SellerLogin extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||
@@ -79,10 +80,10 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     error: state.auth.error,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 export default withRouter(

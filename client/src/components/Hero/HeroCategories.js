@@ -4,6 +4,8 @@ import "./HeroCategories.css";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { singleCategory, fetchAllCategories } from "../../redux/actions";
+import { IconContext } from "react-icons";
+import { RiArrowDropRightLine } from "react-icons/ri";
 
 class HeroCategories extends React.Component {
   render() {
@@ -21,9 +23,12 @@ class HeroCategories extends React.Component {
             >
               All Categories
             </Link>
+            <IconContext.Provider value={{ className: "right-arrow" }}>
+              <RiArrowDropRightLine />
+            </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map(category => (
+            this.props.categories.map((category) => (
               <li
                 key={category._id}
                 onClick={() =>
@@ -31,6 +36,9 @@ class HeroCategories extends React.Component {
                 }
               >
                 {category._id}
+                <IconContext.Provider value={{ className: "right-arrow" }}>
+                  <RiArrowDropRightLine />
+                </IconContext.Provider>
               </li>
             ))}
         </ul>
@@ -38,9 +46,9 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    categories: state.product.categories
+    categories: state.product.categories,
   };
 };
 export default withRouter(
