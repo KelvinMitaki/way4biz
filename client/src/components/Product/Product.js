@@ -194,7 +194,7 @@ class Product extends React.Component {
                     <p>Seller Store Details Here</p>
                   </div>
                 </div>
-                <div className="col-lg-10">
+                <div className="col-lg-10 p-0">
                   <ProductSecondaryDetails
                     details={this.props.product.description}
                     specifications={this.props.product.specifications}

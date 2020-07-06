@@ -13,10 +13,10 @@ class DashBoardOrder extends React.Component {
     return (
       <div className="container">
         <div className="row no-gutters">
-          <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
-            {this.props.sellerOrders.length !== 0 &&
-              this.props.sellerOrders.map(order => (
-                <React.Fragment key={order._id}>
+          {this.props.sellerOrders.length !== 0 &&
+            this.props.sellerOrders.map((order) => (
+              <React.Fragment key={order._id}>
+                <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
                   <div id="dashboard-order-id" className="col-lg-4">
                     <div>
                       <p>
@@ -43,9 +43,9 @@ class DashBoardOrder extends React.Component {
                   <div id="dashboard-order-total-amount" className="col-lg-2">
                     ksh.
                     {order.productSellerData
-                      .map(prod => {
+                      .map((prod) => {
                         const matchingProd = order.items.find(
-                          item => item.product === prod._id
+                          (item) => item.product === prod._id
                         );
                         if (matchingProd) {
                           return prod.price * matchingProd.quantity;
@@ -58,17 +58,17 @@ class DashBoardOrder extends React.Component {
                   <div id="dashboard-delivery-status" className="col-lg-1">
                     Delivered
                   </div>
-                </React.Fragment>
-              ))}
-          </div>
+                </div>
+              </React.Fragment>
+            ))}
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerOrders: state.sellerRegister.sellerOrders
+    sellerOrders: state.sellerRegister.sellerOrders,
   };
 };
 export default connect(mapStateToProps, { fetchSellerOrders })(DashBoardOrder);
