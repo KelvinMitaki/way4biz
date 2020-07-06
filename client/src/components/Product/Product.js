@@ -135,7 +135,7 @@ class Product extends React.Component {
                     </span>
                   ) : (
                     <span className="badge stock-badge out-of-stock-badge">
-                      In Stock
+                      Out Of Stock
                     </span>
                   )}
 

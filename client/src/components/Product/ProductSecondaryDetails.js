@@ -2,15 +2,15 @@ import React from "react";
 import Tabs from "react-responsive-tabs";
 
 import "./ProductSecondaryDetails.css";
-import ProductFeaturesSpecifications from "./ProductFeaturesSpecifications";
+import ProductDetails from "./ProductDetails";
 import ProductCustomerReviews from "./ProductCustomerReviews";
 
 class ProductSecondaryDetails extends React.Component {
   state = {
     productTabs: [
       {
-        name: "Features & Specifications",
-        data: <ProductFeaturesSpecifications data={this.props.details} />,
+        name: "Product Details",
+        data: <ProductDetails data={this.props.details} />,
       },
       {
         name: "Customer Reviews",
