@@ -440,9 +440,34 @@ route.delete(
 route.get("/api/seller/orders", isSeller, async (req, res) => {
   try {
     const { user } = req.session;
-    const test = await Order.find({}).populate("items.product").select("items");
 
-    console.log(test);
+    const test = await Order.aggregate([
+      { $project: { items: 1, paymentMethod: 1, buyer: 1 } },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "productData"
+        }
+      },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          productSellerData: {
+            $filter: {
+              input: "$productData",
+              as: "d",
+              cond: { $eq: ["$$d.seller", user._id] }
+            }
+          }
+        }
+      }
+    ]);
+    res.send(test);
   } catch (error) {
     res.status(500).send(error);
   }
