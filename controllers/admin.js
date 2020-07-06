@@ -442,7 +442,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
     const { user } = req.session;
 
     const test = await Order.aggregate([
-      { $project: { items: 1, paymentMethod: 1, buyer: 1 } },
+      { $project: { items: 1, paymentMethod: 1, buyer: 1, createdAt: 1 } },
       { $unwind: "$items" },
       {
         $lookup: {
@@ -457,6 +457,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           items: 1,
           paymentMethod: 1,
           buyer: 1,
+          createdAt: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -479,7 +480,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           paymentMethod: {
             $first: "$paymentMethod"
           },
-          buyer: { $first: "$buyer" }
+          buyer: { $first: "$buyer" },
+          createdAt: { $first: "$createdAt" }
         }
       }
     ]);

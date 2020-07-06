@@ -14,33 +14,52 @@ class DashBoardOrder extends React.Component {
       <div className="container">
         <div className="row no-gutters">
           <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
-            <div id="dashboard-order-id" className="col-lg-4">
-              <div>
-                <p>
-                  <strong className="mr-2">Order id:</strong>9628252920
-                </p>
-                <p>
-                  <strong className="mr-2">Date:</strong>20/2/2000
-                </p>
-              </div>
-            </div>
-            <div id="dashboard-order-num-items" className="col-lg-2">
-              <div>
-                <p>10</p>
-                <p id="view-order-details-link">
-                  <Link to="/order/details">View Items</Link>
-                </p>
-              </div>
-            </div>
-            <div id="dashboard-order-destination" className="col-lg-2">
-              Rongai
-            </div>
-            <div id="dashboard-order-total-amount" className="col-lg-2">
-              ksh.30,000
-            </div>
-            <div id="dashboard-delivery-status" className="col-lg-1">
-              Delivered
-            </div>
+            {this.props.sellerOrders.length !== 0 &&
+              this.props.sellerOrders.map(order => (
+                <React.Fragment key={order._id}>
+                  <div id="dashboard-order-id" className="col-lg-4">
+                    <div>
+                      <p>
+                        <strong className="mr-2">Order id:</strong>
+                        {order._id}
+                      </p>
+                      <p>
+                        <strong className="mr-2">Date:</strong>
+                        {order.createdAt.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div id="dashboard-order-num-items" className="col-lg-2">
+                    <div>
+                      <p>{order.items.length}</p>
+                      <p id="view-order-details-link">
+                        <Link to="/order/details">View Items</Link>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="dashboard-order-destination" className="col-lg-2">
+                    Rongai
+                  </div>
+                  <div id="dashboard-order-total-amount" className="col-lg-2">
+                    ksh.
+                    {order.productSellerData
+                      .map(prod => {
+                        const matchingProd = order.items.find(
+                          item => item.product === prod._id
+                        );
+                        if (matchingProd) {
+                          return prod.price * matchingProd.quantity;
+                        }
+                        return null;
+                      })
+                      .reduce((acc, curr) => acc + curr, 0)
+                      .toLocaleString()}
+                  </div>
+                  <div id="dashboard-delivery-status" className="col-lg-1">
+                    Delivered
+                  </div>
+                </React.Fragment>
+              ))}
           </div>
         </div>
       </div>
