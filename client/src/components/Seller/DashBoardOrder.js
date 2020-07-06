@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import { fetchSellerOrders } from "../../redux/actions";
+import {
+  fetchSellerOrders,
+  fetchSellerOrderDetails
+} from "../../redux/actions";
 import { connect } from "react-redux";
 
 class DashBoardOrder extends React.Component {
@@ -14,7 +17,7 @@ class DashBoardOrder extends React.Component {
       <div className="container">
         <div className="row no-gutters">
           {this.props.sellerOrders.length !== 0 &&
-            this.props.sellerOrders.map((order) => (
+            this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
                 <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
                   <div id="dashboard-order-id" className="col-lg-4">
@@ -33,7 +36,17 @@ class DashBoardOrder extends React.Component {
                     <div>
                       <p>{order.items.length}</p>
                       <p id="view-order-details-link">
-                        <Link to="/order/details">View Items</Link>
+                        <Link
+                          to="/order/details"
+                          onClick={() =>
+                            this.props.fetchSellerOrderDetails({
+                              items: order.items,
+                              productSellerData: order.productSellerData
+                            })
+                          }
+                        >
+                          View Items
+                        </Link>
                       </p>
                     </div>
                   </div>
@@ -43,9 +56,9 @@ class DashBoardOrder extends React.Component {
                   <div id="dashboard-order-total-amount" className="col-lg-2">
                     ksh.
                     {order.productSellerData
-                      .map((prod) => {
+                      .map(prod => {
                         const matchingProd = order.items.find(
-                          (item) => item.product === prod._id
+                          item => item.product === prod._id
                         );
                         if (matchingProd) {
                           return prod.price * matchingProd.quantity;
@@ -66,9 +79,12 @@ class DashBoardOrder extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerOrders: state.sellerRegister.sellerOrders,
+    sellerOrders: state.sellerRegister.sellerOrders
   };
 };
-export default connect(mapStateToProps, { fetchSellerOrders })(DashBoardOrder);
+export default connect(mapStateToProps, {
+  fetchSellerOrders,
+  fetchSellerOrderDetails
+})(DashBoardOrder);

@@ -52,7 +52,16 @@ class App extends React.Component {
               exact
               component={Products}
             />
-            <Route path="/order/details" component={SellerOrderDetails} />
+            <Route
+              path="/order/details"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerOrderDetails />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
             <Route
               path="/seller-dashboard"
               exact
@@ -266,16 +275,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
