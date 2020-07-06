@@ -43,8 +43,9 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post("/api/login", credentials);
-    if (res.data.user && res.data.user.phoneNumber) {
-      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+
+    if (res.data && res.data.phoneNumber) {
+      res.data.phoneNumber = res.data.phoneNumber.toString();
     }
     dispatch({
       type: LOG_IN,
