@@ -454,7 +454,7 @@ export const fetchSellerOrders = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/seller/orders");
-    console.log(res.data);
+    dispatch({ type: FETCH_SELLER_ORDERS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
