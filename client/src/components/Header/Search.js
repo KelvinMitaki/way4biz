@@ -10,13 +10,13 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      typing: "",
+      typing: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
   async handleChange(e) {
     this.setState({
-      typing: e.target.value,
+      typing: e.target.value
     });
 
     this.props.fetchProductsSearch(e.target.value);
@@ -46,7 +46,7 @@ class Search extends React.Component {
         {this.state.typing !== "" ? (
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
-              this.props.searchedProducts.map((product) => (
+              this.props.searchedProducts.map(product => (
                 <div
                   onClick={() => this.setState({ typing: "" })}
                   key={product._id}
@@ -57,10 +57,12 @@ class Search extends React.Component {
                       className="searched-product-link"
                     >
                       <div className="search-product-image mr-4">
-                        <img src="/1.jpg" />
+                        <img src={product.imageUrl} alt={product.name} />
                       </div>
                       <p className="search-product-name">{product.name}</p>
-                      <p className="search-product-price">ksh.4,000</p>
+                      <p className="search-product-price">
+                        <strong>ksh.{product.price.toLocaleString()}</strong>
+                      </p>
                     </Link>
                   </div>
                 </div>
@@ -71,9 +73,9 @@ class Search extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    searchedProducts: state.product.searchedProducts,
+    searchedProducts: state.product.searchedProducts
   };
 };
 export default connect(mapStateToProps, { fetchProductsSearch })(Search);

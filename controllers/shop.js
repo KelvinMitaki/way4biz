@@ -133,7 +133,9 @@ route.post("/api/product/search", async (req, res) => {
       },
       {
         $project: {
-          name: 1
+          name: 1,
+          imageUrl: 1,
+          price: 1
         }
       }
     ]);
