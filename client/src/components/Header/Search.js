@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineSearch } from "react-icons/ai";
+import reactSringReplace from "react-string-replace";
 
 class Search extends React.Component {
   constructor(props) {
@@ -65,7 +66,25 @@ class Search extends React.Component {
                       <div className="search-product-image mr-4">
                         <img src={product.imageUrl} alt={product.name} />
                       </div>
-                      <p className="search-product-name">{product.name}</p>
+                      <p className="search-product-name">
+                        {reactSringReplace(
+                          product.name,
+                          this.state.typing,
+                          (match, i) => {
+                            return (
+                              <span
+                                key={i}
+                                style={{
+                                  fontWeight: "bold",
+                                  textDecoration: "underline"
+                                }}
+                              >
+                                {match}
+                              </span>
+                            );
+                          }
+                        )}
+                      </p>
                       <p className="search-product-price">
                         <strong>ksh.{product.price.toLocaleString()}</strong>
                       </p>
