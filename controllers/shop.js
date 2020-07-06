@@ -11,7 +11,6 @@ route.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find()
       .populate("seller", "storeName")
-      .select("-stockQuantity")
       .exec();
 
     res.send(products);
@@ -134,7 +133,9 @@ route.post("/api/product/search", async (req, res) => {
       },
       {
         $project: {
-          name: 1
+          name: 1,
+          imageUrl: 1,
+          price: 1
         }
       }
     ]);

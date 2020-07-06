@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import { fetchSellerOrders } from "../../redux/actions";
+import {
+  fetchSellerOrders,
+  fetchSellerOrderDetails
+} from "../../redux/actions";
 import { connect } from "react-redux";
 
 class DashBoardOrder extends React.Component {
@@ -13,10 +16,10 @@ class DashBoardOrder extends React.Component {
     return (
       <div className="container">
         <div className="row no-gutters">
-          <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
-            {this.props.sellerOrders.length !== 0 &&
-              this.props.sellerOrders.map(order => (
-                <React.Fragment key={order._id}>
+          {this.props.sellerOrders.length !== 0 &&
+            this.props.sellerOrders.map(order => (
+              <React.Fragment key={order._id}>
+                <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
                   <div id="dashboard-order-id" className="col-lg-4">
                     <div>
                       <p>
@@ -33,7 +36,17 @@ class DashBoardOrder extends React.Component {
                     <div>
                       <p>{order.items.length}</p>
                       <p id="view-order-details-link">
-                        <Link to="/order/details">View Items</Link>
+                        <Link
+                          to="/order/details"
+                          onClick={() =>
+                            this.props.fetchSellerOrderDetails({
+                              items: order.items,
+                              productSellerData: order.productSellerData
+                            })
+                          }
+                        >
+                          View Items
+                        </Link>
                       </p>
                     </div>
                   </div>
@@ -58,9 +71,9 @@ class DashBoardOrder extends React.Component {
                   <div id="dashboard-delivery-status" className="col-lg-1">
                     Delivered
                   </div>
-                </React.Fragment>
-              ))}
-          </div>
+                </div>
+              </React.Fragment>
+            ))}
         </div>
       </div>
     );
@@ -71,4 +84,7 @@ const mapStateToProps = state => {
     sellerOrders: state.sellerRegister.sellerOrders
   };
 };
-export default connect(mapStateToProps, { fetchSellerOrders })(DashBoardOrder);
+export default connect(mapStateToProps, {
+  fetchSellerOrders,
+  fetchSellerOrderDetails
+})(DashBoardOrder);

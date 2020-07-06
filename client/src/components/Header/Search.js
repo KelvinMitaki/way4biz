@@ -51,14 +51,20 @@ class Search extends React.Component {
                   onClick={() => this.setState({ typing: "" })}
                   key={product._id}
                 >
-                  <p className="searched-output-link-wrapper">
+                  <div className="searched-output-link-wrapper">
                     <Link
                       to={`/product/${product._id}`}
                       className="searched-product-link"
                     >
-                      {product.name}
+                      <div className="search-product-image mr-4">
+                        <img src={product.imageUrl} alt={product.name} />
+                      </div>
+                      <p className="search-product-name">{product.name}</p>
+                      <p className="search-product-price">
+                        <strong>ksh.{product.price.toLocaleString()}</strong>
+                      </p>
                     </Link>
-                  </p>
+                  </div>
                 </div>
               ))}
           </div>

@@ -65,7 +65,9 @@ class Product extends React.Component {
 
   render() {
     if (this.props.product) {
+      console.log(this.props.product);
       const { stockQuantity } = this.props.product;
+      console.log(stockQuantity);
       return (
         <React.Fragment>
           <Header />
@@ -135,7 +137,7 @@ class Product extends React.Component {
                     </span>
                   ) : (
                     <span className="badge stock-badge out-of-stock-badge">
-                      In Stock
+                      Out Of Stock
                     </span>
                   )}
 
@@ -194,7 +196,7 @@ class Product extends React.Component {
                     <p>Seller Store Details Here</p>
                   </div>
                 </div>
-                <div className="col-lg-10">
+                <div className="col-lg-10 p-0">
                   <ProductSecondaryDetails
                     details={this.props.product.description}
                     specifications={this.props.product.specifications}
