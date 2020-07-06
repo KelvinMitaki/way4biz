@@ -24,7 +24,7 @@
   box-shadow: none !important;
   padding: 0px !important;
   position: relative;
-  z-index: 100000;
+  z-index: 10000;
 }
 
 #account-mini-link-wrapper {
@@ -43,8 +43,6 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  /* position: absolute;
-  z-index: 50000000; */
 }
 
 .account-mini-links .primary-link {
