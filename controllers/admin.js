@@ -453,11 +453,29 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
         }
       },
       {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyerUser"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyerSeller"
+        }
+      },
+      {
         $project: {
           items: 1,
           paymentMethod: 1,
           buyer: 1,
           createdAt: 1,
+          buyerUser: 1,
+          buyerSeller: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -474,14 +492,16 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
         $group: {
           _id: "$_id",
           items: { $push: "$items" },
-          productSellerData: {
-            $push: "$productSellerData"
-          },
           paymentMethod: {
             $first: "$paymentMethod"
           },
+          buyerSeller: { $first: "$buyerSeller" },
+          buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
-          createdAt: { $first: "$createdAt" }
+          createdAt: { $first: "$createdAt" },
+          productSellerData: {
+            $push: "$productSellerData"
+          }
         }
       }
     ]);

@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {
   render() {
-    const { buyerForSeller } = this.props;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -70,18 +69,26 @@ class SellerOrderDetails extends React.Component {
                       </div>
                       <div className="col-md-6 col-lg-2">
                         <p>
-                          <strong className="x mr-2">Qty:</strong>10
+                          <strong className="x mr-2">Qty:</strong>
+                          {this.props.sellerOrderDetails.items.map(item => {
+                            const prodExist = data._id === item.product;
+                            if (prodExist) {
+                              return item.quantity;
+                            }
+                            return null;
+                          })}
                         </p>
                       </div>
                       <div className="col-md-6 col-lg-2">
                         <p>
-                          <strong className="mr-2 x">Amount:</strong>ksh.10,000
+                          <strong className="mr-2 x">Amount:</strong>ksh.
+                          {data.price.toLocaleString()}
                         </p>
                       </div>
                       <div className="col-md-6 col-lg-3">
                         <p id="buyer-destination">
                           <strong className="mr-2 x">Destination:</strong>
-                          {`${buyerForSeller.address}/${buyerForSeller.town}/${buyerForSeller.city}`}
+                          {`${this.props.sellerOrderDetails.buyer[0].address}/${this.props.sellerOrderDetails.buyer[0].town}/${this.props.sellerOrderDetails.buyer[0].city}`}
                         </p>
                       </div>
                     </div>
@@ -96,8 +103,7 @@ class SellerOrderDetails extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrderDetails: state.sellerRegister.sellerOrderDetails,
-    buyerForSeller: state.sellerRegister.buyerForSeller
+    sellerOrderDetails: state.detailsPersist.sellerOrderDetails
   };
 };
 export default connect(mapStateToProps)(SellerOrderDetails);
