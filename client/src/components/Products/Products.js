@@ -54,7 +54,7 @@ class Products extends React.Component {
                         }}
                         className="mb-2"
                       >
-                        <Heart />
+                        <Heart product={product} />
                       </div>
                     </div>
                   ))}

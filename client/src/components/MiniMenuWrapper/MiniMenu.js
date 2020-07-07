@@ -109,7 +109,10 @@ class MiniMenu extends React.Component {
                         <span className="ml-2">My Store</span>
                       </NavLink>
                     )}
-                    <a className="mini-logout-link" href="/api/logout">
+                    <a
+                      className="mini-logout-link primary-link"
+                      href="/api/logout"
+                    >
                       Logout
                     </a>
                   </div>
