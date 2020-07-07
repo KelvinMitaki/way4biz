@@ -1,0 +1,13 @@
+#buy-again-link {
+  color: #f76b1a;
+}
+
+#buy-again-link:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .order-details-wrapper {
+    margin-bottom: 60px;
+  }
+}

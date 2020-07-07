@@ -18,7 +18,7 @@
 }
 
 .seller-menu-active {
-  color: #f76b1a;
+  color: #f76b1a !important;
 }
 
 #seller-menu-items li .link:hover {

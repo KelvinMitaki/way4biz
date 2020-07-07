@@ -36,6 +36,12 @@ export class AccountMenu extends Component {
             Wishlist
           </NavLink>
         </div>
+        <br />
+        <div className="account-menu-wrapper">
+          <a id="account-logout" href="/api/logout" className="navlink">
+            Logout
+          </a>
+        </div>
       </div>
     );
   }

@@ -36,7 +36,6 @@ class SellerHamburgerMenu extends React.Component {
           className="seller-hamburger"
         />
         {this.state.open ? (
-          // <div className="seller-menu-section-wrapper">
           <div
             className={`seller-menu-section-wrapper ${
               this.state.open ? "seller-menu-slide-in" : "seller-menu-slide-out"
