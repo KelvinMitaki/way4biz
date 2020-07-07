@@ -45,9 +45,7 @@ class DashBoardOrder extends React.Component {
             </div>
           </div>
           <div className="col-6 col-lg-3">
-            <div>
-              <strong className="x mr-2">Destination:</strong>Rongai
-            </div>
+            <div>Rongai</div>
           </div>
           <div className="col-6 col-lg-2">
             <div>Ksh.30,000</div>
