@@ -23,7 +23,9 @@ export class Orders extends Component {
               <AccountMenu />
             </div>
             <div className="col-lg-8 box-container  orders-wrapper">
-              <h3 className="mb-4">Orders({this.props.buyerOrders.length})</h3>
+              <h3 style={{ textAlign: "center" }} className="mb-4">
+                Orders({this.props.buyerOrders.length})
+              </h3>
               <div className="container-fluid">
                 <div className="row y">
                   <div className="col-lg-5">Order Info</div>
