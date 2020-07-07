@@ -69,12 +69,19 @@ class SellerOrderDetails extends React.Component {
                       </div>
                       <div className="col-md-6 col-lg-2">
                         <p>
-                          <strong className="x mr-2">Qty:</strong>10
+                          <strong className="x mr-2">Qty:</strong>
+                          {this.props.sellerOrderDetails.items.map(item => {
+                            const prodExist = data._id === item.product;
+                            if (prodExist) {
+                              return item.quantity;
+                            }
+                          })}
                         </p>
                       </div>
                       <div className="col-md-6 col-lg-2">
                         <p>
-                          <strong className="mr-2 x">Amount:</strong>ksh.10,000
+                          <strong className="mr-2 x">Amount:</strong>ksh.
+                          {data.price.toLocaleString()}
                         </p>
                       </div>
                       <div className="col-md-6 col-lg-3">
