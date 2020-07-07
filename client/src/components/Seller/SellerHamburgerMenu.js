@@ -8,15 +8,15 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   }
@@ -105,7 +105,7 @@ class SellerHamburgerMenu extends React.Component {
                   <NavLink
                     className="link"
                     activeClassName="seller-menu-acive"
-                    to="/seller-products"
+                    to="/seller/sell"
                   >
                     Sell
                   </NavLink>
@@ -114,7 +114,7 @@ class SellerHamburgerMenu extends React.Component {
                   <NavLink
                     className="link"
                     activeClassName="seller-menu-acive"
-                    to="/seller-orders"
+                    to="/seller/do/something"
                   >
                     Do Something
                   </NavLink>
