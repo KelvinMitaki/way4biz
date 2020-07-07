@@ -69,7 +69,9 @@
 .hamburg {
   height: 10%;
 }
-
+.seller-menu-acive {
+  color: #f76b1a !important;
+}
 #seller-account-links,
 #seller-others-links {
   width: 100%;
