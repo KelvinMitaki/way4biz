@@ -15,58 +15,69 @@ class BuyerOrderDetails extends Component {
     this.props.fetchBuyerOrderDetails(this.props.match.params.orderId);
   }
   render() {
-    if (this.props.buyerOrderDetails) {
-      const { buyerOrderDetails } = this.props;
-      return (
-        <React.Fragment>
-          <AccountHeader />
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-4">
-                <AccountMenu />
-              </div>
-              <div className="col-lg-8 box-container order-details-wrapper">
-                <div className="container-fluid">
-                  <div className="row">
-                    <IconContext.Provider
-                      value={{ className: "arrow-icon ml-3 my-2" }}
-                    >
-                      <div className="d-flex align-items-center">
-                        <Link to="/orders">
-                          <BsArrowLeft />
-                        </Link>
-                        <h3 className="ml-3">Order Details</h3>
-                      </div>
-                    </IconContext.Provider>
-                  </div>
+    const { buyerOrderDetails } = this.props;
+    return (
+      <React.Fragment>
+        <AccountHeader />
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4">
+              <AccountMenu />
+            </div>
+            <div className="col-lg-8 box-container order-details-wrapper">
+              <div className="container-fluid">
+                <div className="row">
+                  <IconContext.Provider
+                    value={{ className: "arrow-icon ml-3 my-2" }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <Link to="/orders">
+                        <BsArrowLeft />
+                      </Link>
+                      <h3 className="ml-3">Order Details</h3>
+                    </div>
+                  </IconContext.Provider>
                 </div>
-                <div className="container-fluid">
-                  <div className="buyer-order-details-info my-2">
-                    <div style={{ borderBottom: "1px solid #eee" }}></div>
-                    <p className="mt-3">
-                      <strong>Order No: </strong>
-                      {buyerOrderDetails._id}
-                    </p>
-                    <p>
-                      <strong>Items Ordered:</strong>{" "}
-                      {buyerOrderDetails.items.length} items
-                    </p>
-                    <strong>Placed on: </strong>
-                    {new Date(buyerOrderDetails.createdAt).toLocaleDateString()}
-                    <br />
-                    <strong className="mb-3">Total: </strong>Ksh.
-                    {buyerOrderDetails.totalPrice.toLocaleString()}
-                    <div style={{ borderBottom: "1px solid #eee" }}></div>
-                  </div>
-                  <div className="container-fluid p-0">
-                    <h5 className="my-2" style={{ textTransform: "uppercase" }}>
-                      Items in your order
-                    </h5>
-                  </div>
-                  <div className="container-fluid p-0">
-                    {/* mapping here */}
+              </div>
+              <div className="container-fluid">
+                <div className="buyer-order-details-info my-2">
+                  <div style={{ borderBottom: "1px solid #eee" }}></div>
+                  <p className="mt-3">
+                    <strong>Order No: </strong>
+                    {buyerOrderDetails &&
+                      Object.keys(buyerOrderDetails).length !== 0 &&
+                      buyerOrderDetails._id}
+                  </p>
+                  <p>
+                    <strong>Items Ordered:</strong>{" "}
+                    {buyerOrderDetails &&
+                      Object.keys(buyerOrderDetails).length !== 0 &&
+                      buyerOrderDetails.items.length}{" "}
+                    items
+                  </p>
+                  <strong>Placed on: </strong>
+                  {buyerOrderDetails &&
+                    Object.keys(buyerOrderDetails).length !== 0 &&
+                    new Date(buyerOrderDetails.createdAt).toLocaleDateString()}
+                  <br />
+                  <strong className="mb-3">Total: </strong>Ksh.
+                  {buyerOrderDetails &&
+                    Object.keys(buyerOrderDetails).length !== 0 &&
+                    buyerOrderDetails.totalPrice.toLocaleString()}
+                  <div style={{ borderBottom: "1px solid #eee" }}></div>
+                </div>
+                <div className="container-fluid p-0">
+                  <h5 className="my-2" style={{ textTransform: "uppercase" }}>
+                    Items in your order
+                  </h5>
+                </div>
+                <div className="container-fluid p-0">
+                  {/* mapping here */}
 
-                    {buyerOrderDetails.items.map(item => {
+                  {buyerOrderDetails &&
+                    Object.keys(buyerOrderDetails).length !== 0 &&
+                    buyerOrderDetails.items.length !== 0 &&
+                    buyerOrderDetails.items.map(item => {
                       return (
                         <div
                           className="buyer-order-detail-wrapper box-container"
@@ -92,7 +103,7 @@ class BuyerOrderDetails extends Component {
                             </div>
                             <div className="col-lg-6 d-flex flex-column justify-content-center">
                               <p>
-                                <strong>Quantity:</strong>
+                                <strong>Quantity: </strong>
                                 {item.quantity}
                               </p>
                               <p>
@@ -122,17 +133,15 @@ class BuyerOrderDetails extends Component {
                         </div>
                       );
                     })}
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <Footer />
-          <MiniMenuWrapper />
-        </React.Fragment>
-      );
-    }
-    return null;
+        </div>
+        <Footer />
+        <MiniMenuWrapper />
+      </React.Fragment>
+    );
   }
 }
 const mapStateToProps = state => {
