@@ -40,11 +40,11 @@ export class Orders extends Component {
                       >
                         <div className="col-6 col-lg-6">
                           <p>
-                            <strong className="x mr-2">ID:</strong>
+                            <strong className="mr-2">Order ID:</strong>
                             {order._id}
                           </p>
                           <p>
-                            <strong className="x mr-2">Date:</strong>
+                            <strong className="mr-2">Date:</strong>
                             {new Date(order.createdAt).toLocaleDateString()}
                           </p>
                         </div>
