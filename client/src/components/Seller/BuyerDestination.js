@@ -10,14 +10,14 @@ export class BuyerDestination extends Component {
     return (
       <div>
         <strong className="x mr-2">Destination:</strong>
-        {this.props.buyerForSeller && this.props.buyerForSeller.address}
+        {this.props.buyer.address}
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    buyerForSeller: state.sellerRegister.buyerForSeller,
+    buyerForSeller: state.sellerRegister.buyerForSeller
   };
 };
 export default connect(mapStateToProps, { fetchBuyerForSeller })(

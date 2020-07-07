@@ -64,7 +64,17 @@ class DashBoardOrder extends React.Component {
                     </div>
                     </div> */}
                   <div className="col-md-6 col-lg-3">
-                    {order.buyer && <BuyerDestination buyerId={order.buyer} />}
+                    {order.buyerSeller.length !== 0 ? (
+                      <BuyerDestination
+                        buyerId={order.buyer}
+                        buyer={order.buyerSeller[0]}
+                      />
+                    ) : (
+                      <BuyerDestination
+                        buyerId={order.buyer}
+                        buyer={order.buyerUser[0]}
+                      />
+                    )}
                   </div>
                   <div className="col-md-6 col-lg-2">
                     <div>
