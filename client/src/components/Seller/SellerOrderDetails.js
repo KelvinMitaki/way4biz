@@ -75,6 +75,7 @@ class SellerOrderDetails extends React.Component {
                             if (prodExist) {
                               return item.quantity;
                             }
+                            return null;
                           })}
                         </p>
                       </div>

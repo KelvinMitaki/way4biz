@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
 
 import "./Order.css";
-import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
