@@ -81,17 +81,18 @@ class BuyerOrderDetails extends Component {
                           <div className="row">
                             <div className="col-lg-6 d-flex align-items-center">
                               <img src="/1.jpg" height="150px" />
-                              <p>
-                                Great Beer Great Beer Great Beer Great Beer
-                                Great Beer Great Beer
-                              </p>
+                              <p>{item.product.name}</p>
                             </div>
                             <div className="col-lg-6 d-flex flex-column justify-content-center">
                               <p>
-                                <strong>Quantity:</strong>10
+                                <strong>Quantity:</strong>
+                                {item.quantity}
                               </p>
                               <p>
-                                <strong>Total Price:</strong>10,000
+                                <strong>Total Price: </strong>
+                                {(
+                                  item.product.price * item.quantity
+                                ).toLocaleString()}
                               </p>
                             </div>
                           </div>
