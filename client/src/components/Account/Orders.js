@@ -8,7 +8,6 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { fetchBuyerOrders } from "../../redux/actions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
 export class Orders extends Component {
   componentDidMount() {
