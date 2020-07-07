@@ -39,7 +39,7 @@ class Market extends React.Component {
                   }}
                   className="my-2"
                 >
-                  <Heart />
+                  <Heart product={product} />
                 </div>
               </div>
             ))}
