@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
-
+import { Link } from "react-router-dom";
 import "./Order.css";
 
 import Footer from "../Footer/Footer";
@@ -41,7 +41,7 @@ export class Orders extends Component {
                         className="row buyer-order-wrapper box-container"
                       >
                         <div className="col-6 col-lg-5">
-                          <p>
+                          <p className="buyer-order-id">
                             <strong className="mr-2">ID:</strong>
                             {order._id}
                           </p>

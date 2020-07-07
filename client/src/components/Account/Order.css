@@ -34,3 +34,12 @@
     margin-bottom: 60px;
   }
 }
+
+@media screen and (max-width: 420px) {
+  .buyer-order-id {
+    width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
