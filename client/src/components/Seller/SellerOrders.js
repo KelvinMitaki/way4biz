@@ -46,7 +46,7 @@ class SellerOrders extends React.Component {
             <div className="container seller-dashboard-wrapper">
               <div className="row">
                 <div className="col">
-                  <h3>Orders</h3>
+                  <h3 style={{ textAlign: "center" }}>Orders</h3>
                 </div>
               </div>
               <div className="row  my-4">

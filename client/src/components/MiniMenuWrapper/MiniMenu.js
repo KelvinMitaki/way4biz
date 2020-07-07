@@ -9,11 +9,9 @@ import {
   AiOutlineHeart
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
-
 import { connect } from "react-redux";
-
-import "./MiniMenu.css";
 import { GoClippy } from "react-icons/go";
+import "./MiniMenu.css";
 
 class MiniMenu extends React.Component {
   render() {
@@ -21,7 +19,12 @@ class MiniMenu extends React.Component {
       <div id="mini-menu">
         <div className="container-fluid">
           <div className="row flex-wrap">
-            <NavLink to="/" exact className="primary-link col-3">
+            <NavLink
+              to="/"
+              activeClassName="active"
+              exact
+              className="primary-link col-3"
+            >
               <div className="mini-menu-item">
                 {/* <div className="flaticon-home mini-menu-icon"></div> */}
                 <IconContext.Provider value={{ className: "mini-menu-icon" }}>

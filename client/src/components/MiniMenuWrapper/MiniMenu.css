@@ -75,7 +75,9 @@
   font-weight: 500;
   padding: 10px;
 }
-
+.active {
+  color: #f76b1a !important;
+}
 @media screen and (max-width: 380px) {
   .mini-menu-item p {
     font-size: 10px !important;
