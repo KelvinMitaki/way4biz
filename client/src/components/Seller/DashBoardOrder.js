@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import {
-  fetchSellerOrderDetails,
-  fetchBuyerForSeller,
-} from "../../redux/actions";
+import { fetchSellerOrderDetails } from "../../redux/actions";
 import { connect } from "react-redux";
 import BuyerDestination from "./BuyerDestination";
 
@@ -29,7 +26,7 @@ class DashBoardOrder extends React.Component {
           {/* mapping here */}
           {this.props.sellerOrders &&
             this.props.sellerOrders.length !== 0 &&
-            this.props.sellerOrders.map((order) => (
+            this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
                   <div className="col-md-6 col-lg-4">
@@ -53,7 +50,7 @@ class DashBoardOrder extends React.Component {
                         onClick={() =>
                           this.props.fetchSellerOrderDetails({
                             items: order.items,
-                            productSellerData: order.productSellerData,
+                            productSellerData: order.productSellerData
                           })
                         }
                       >
@@ -74,9 +71,9 @@ class DashBoardOrder extends React.Component {
                       <strong className="x mr-2">Amount:</strong>
                       Ksh.
                       {order.productSellerData
-                        .map((prod) => {
+                        .map(prod => {
                           const matchingProd = order.items.find(
-                            (item) => item.product === prod._id
+                            item => item.product === prod._id
                           );
                           if (matchingProd) {
                             return prod.price * matchingProd.quantity;
