@@ -22,7 +22,8 @@ class DashBoardOrder extends React.Component {
         </div>
         <div className="row dashboard-order-wrapper box-container no-gutters">
           {/* mapping will take place here */}
-          {this.props.sellerOrders.length !== 0 &&
+          {this.props.sellerOrders &&
+            this.props.sellerOrders.length !== 0 &&
             this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
                 <div className="col-6 col-lg-4">
