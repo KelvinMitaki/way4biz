@@ -38,7 +38,8 @@ import {
   FETCH_SELLER_ORDERS,
   FETCH_SELLER_ORDER_DETAILS,
   FETCH_BUYER_ORDERS,
-  ADD_TO_WISHLIST
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -488,6 +489,13 @@ export const fetchBuyerOrders = () => async dispatch => {
 export const addToWishlist = product => {
   return {
     type: ADD_TO_WISHLIST,
+    payload: product
+  };
+};
+
+export const removeFromWishlist = product => {
+  return {
+    type: REMOVE_FROM_WISHLIST,
     payload: product
   };
 };

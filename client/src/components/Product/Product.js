@@ -9,7 +9,11 @@ import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
-import { addToCart, addToWishlist } from "../../redux/actions";
+import {
+  addToCart,
+  addToWishlist,
+  removeFromWishlist
+} from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link } from "react-router-dom";
@@ -68,6 +72,10 @@ class Product extends React.Component {
       console.log(this.props.product);
       const { stockQuantity } = this.props.product;
       console.log(stockQuantity);
+
+      const itemInWishlist = this.props.wishlist.find(
+        item => item._id === this.props.product._id
+      );
       return (
         <React.Fragment>
           <Header />
@@ -146,10 +154,13 @@ class Product extends React.Component {
                     <IconContext.Provider
                       value={{ size: "2em", color: "#f76b1a" }}
                     >
-                      {this.state.clicked ? (
+                      {this.state.clicked || itemInWishlist ? (
                         <div
                           style={{ cursor: "pointer" }}
-                          onClick={() => this.setState({ clicked: false })}
+                          onClick={() => {
+                            this.props.removeFromWishlist(this.props.product);
+                            this.setState({ clicked: false });
+                          }}
                         >
                           <IoMdHeart />
                         </div>
@@ -225,7 +236,12 @@ const mapStateToProps = (state, ownProps) => {
     );
   }
   return {
-    product
+    product,
+    wishlist: state.cartReducer.wishlist
   };
 };
-export default connect(mapStateToProps, { addToCart, addToWishlist })(Product);
+export default connect(mapStateToProps, {
+  addToCart,
+  addToWishlist,
+  removeFromWishlist
+})(Product);

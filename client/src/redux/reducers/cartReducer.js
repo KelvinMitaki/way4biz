@@ -3,7 +3,8 @@ import {
   REMOVE_FROM_CART,
   DELETE_FROM_CART,
   MAKE_ORDER,
-  ADD_TO_WISHLIST
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -62,6 +63,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, cart: [] };
     case ADD_TO_WISHLIST:
       return { ...state, wishlist: [...state.wishlist, action.payload] };
+    case REMOVE_FROM_WISHLIST:
+      return {
+        ...state,
+        wishlist: state.wishlist.filter(item => item._id !== action.payload._id)
+      };
     default:
       return state;
   }
