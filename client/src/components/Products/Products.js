@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import "./Products.css";
 import Header from "../Header/Header";
@@ -9,9 +9,15 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Categories from "../Hero/HeroCategories";
 import { connect } from "react-redux";
 import Heart from "./Heart";
+import { singleCategory } from "../../redux/actions";
 
 class Products extends React.Component {
-  state = {};
+  componentDidMount() {
+    this.props.singleCategory(
+      this.props.match.params.category,
+      this.props.history
+    );
+  }
   render() {
     return (
       <div id="products">
@@ -67,4 +73,6 @@ const mapStateToProps = state => {
     singleCategoryProducts: state.product.singleCategoryProducts
   };
 };
-export default connect(mapStateToProps)(Products);
+export default withRouter(
+  connect(mapStateToProps, { singleCategory })(Products)
+);
