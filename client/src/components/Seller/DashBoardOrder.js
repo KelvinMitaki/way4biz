@@ -2,59 +2,66 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import {
-  fetchSellerOrders,
-  fetchSellerOrderDetails
-} from "../../redux/actions";
+import { fetchSellerOrderDetails } from "../../redux/actions";
 import { connect } from "react-redux";
 
 class DashBoardOrder extends React.Component {
-  componentDidMount() {
-    this.props.fetchSellerOrders();
-  }
   render() {
     return (
-      <div className="container">
-        <div className="row no-gutters">
+      <div className="container-fluid p-4" style={{ backgroundColor: "#fff" }}>
+        <div className="row no-gutters y">
+          <div className="col d-flex mb-2">
+            <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
+              Order Info
+            </h6>
+            <h6 className="col-lg-2 p-0">Items No.</h6>
+            <h6 className="col-lg-3 p-0">Destination</h6>
+            <h6 className="col-lg-2 p-0">Total Amount</h6>
+            <h6 className="col-lg-1 p-0">Status</h6>
+          </div>
+        </div>
+        <div className="row dashboard-order-wrapper box-container no-gutters">
+          {/* mapping will take place here */}
           {this.props.sellerOrders.length !== 0 &&
             this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
-                <div className="col-lg-12 d-flex box-container seller-dashboard-order-wrapper">
-                  <div id="dashboard-order-id" className="col-lg-4">
-                    <div>
-                      <p>
-                        <strong className="mr-2">Order id:</strong>
-                        {order._id}
-                      </p>
-                      <p>
-                        <strong className="mr-2">Date:</strong>
-                        {new Date(order.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
+                <div className="col-6 col-lg-4">
+                  <div>
+                    <strong className="mr-2">ID:</strong>
+                    {order._id}
                   </div>
-                  <div id="dashboard-order-num-items" className="col-lg-2">
-                    <div>
-                      <p>{order.items.length}</p>
-                      <p id="view-order-details-link">
-                        <Link
-                          to="/order/details"
-                          onClick={() =>
-                            this.props.fetchSellerOrderDetails({
-                              items: order.items,
-                              productSellerData: order.productSellerData
-                            })
-                          }
-                        >
-                          View Items
-                        </Link>
-                      </p>
-                    </div>
+                  <div>
+                    <strong className="mr-2">Date:</strong>
+                    {new Date(order.createdAt).toLocaleDateString()}
                   </div>
-                  <div id="dashboard-order-destination" className="col-lg-2">
-                    Rongai
+                </div>
+                <div className="col-6 col-lg-2">
+                  <div>
+                    <strong className="x mr-2">Qty:</strong>
+                    {order.items.length}
                   </div>
-                  <div id="dashboard-order-total-amount" className="col-lg-2">
-                    ksh.
+                  <div className="view-order-details-link">
+                    <Link
+                      to="/order/details"
+                      onClick={() =>
+                        this.props.fetchSellerOrderDetails({
+                          items: order.items,
+                          productSellerData: order.productSellerData
+                        })
+                      }
+                    >
+                      View Items
+                    </Link>
+                  </div>
+                </div>
+                <div className="col-6 col-lg-3">
+                  <div>
+                    <strong className="x mr-2">Destination:</strong>Rongai
+                  </div>
+                </div>
+                <div className="col-6 col-lg-2">
+                  <div>
+                    Ksh.
                     {order.productSellerData
                       .map(prod => {
                         const matchingProd = order.items.find(
@@ -68,9 +75,9 @@ class DashBoardOrder extends React.Component {
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </div>
-                  <div id="dashboard-delivery-status" className="col-lg-1">
-                    Delivered
-                  </div>
+                </div>
+                <div className="col-6 col-lg-1">
+                  <div>Delivered</div>
                 </div>
               </React.Fragment>
             ))}
@@ -79,12 +86,5 @@ class DashBoardOrder extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    sellerOrders: state.sellerRegister.sellerOrders
-  };
-};
-export default connect(mapStateToProps, {
-  fetchSellerOrders,
-  fetchSellerOrderDetails
-})(DashBoardOrder);
+
+export default connect(null, { fetchSellerOrderDetails })(DashBoardOrder);

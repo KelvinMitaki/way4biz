@@ -48,7 +48,8 @@
   display: none;
 }
 
-.seller-db-panel {
+.seller-db-panel,
+.order-db-panel {
   background-color: #fff !important;
 }
 
@@ -68,7 +69,8 @@
     max-width: 400px;
   }
 
-  .seller-db-panel {
+  .seller-db-panel,
+  .order-db-panel {
     max-height: 500px;
     overflow-y: auto;
   }
