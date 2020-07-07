@@ -6,8 +6,7 @@ import {
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
   FETCH_SELLER_ORDERS,
-  FETCH_SELLER_ORDER_DETAILS,
-  FETCH_BUYER_FOR_SELLER
+  FETCH_SELLER_ORDER_DETAILS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -43,8 +42,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerOrders: action.payload };
     case FETCH_SELLER_ORDER_DETAILS:
       return { ...state, sellerOrderDetails: action.payload };
-    case FETCH_BUYER_FOR_SELLER:
-      return { ...state, buyerForSeller: action.payload };
     default:
       return state;
   }
