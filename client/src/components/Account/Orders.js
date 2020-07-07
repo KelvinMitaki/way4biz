@@ -60,7 +60,7 @@ export class Orders extends Component {
                         </div>
                         <div className="col-6 col-lg-2">
                           <p>
-                            <Link to="/">See Details</Link>
+                            <Link to="/buyer/order/details">See Details</Link>
                           </p>
                         </div>
                       </div>

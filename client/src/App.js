@@ -32,6 +32,7 @@ import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProdu
 import Products from "./components/Products/Products";
 import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 import "react-responsive-tabs/styles.css";
+import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 
 class App extends React.Component {
   componentDidMount() {
@@ -234,6 +235,19 @@ class App extends React.Component {
                       )
                     }
                   />
+
+                  <Route
+                    path="/buyer/order/details"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <BuyerOrderDetails />
+                      )
+                    }
+                  />
+
                   <Route
                     path="/orders"
                     exact
@@ -275,16 +289,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);
