@@ -47,7 +47,10 @@ class BuyerOrderDetails extends Component {
                       <strong>Order No: </strong>
                       {buyerOrderDetails._id}
                     </p>
-                    <p>{buyerOrderDetails.items.length} items</p>
+                    <p>
+                      <strong>Items Ordered:</strong>{" "}
+                      {buyerOrderDetails.items.length} items
+                    </p>
                     <strong>Placed on: </strong>
                     {new Date(buyerOrderDetails.createdAt).toLocaleDateString()}
                     <br />
