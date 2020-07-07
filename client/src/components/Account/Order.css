@@ -1,3 +1,14 @@
+.buyer-order-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-left: 3px solid #f76b1a;
+}
+
+.buyer-orders-wrapper div {
+  margin-bottom: 10px;
+}
+
 .order-item {
   display: flex;
   align-items: center;

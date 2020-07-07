@@ -14,10 +14,10 @@
   border: 1px solid #d4d4d4;
 }
 
-.form-input textarea {
+/* .form-input textarea {
   resize: none;
   border-radius: 40px;
-}
+} */
 
 .form-input input:focus,
 .form-input textarea:focus,

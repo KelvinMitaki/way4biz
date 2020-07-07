@@ -20,12 +20,14 @@ class DashBoardProduct extends React.Component {
             <h6 className="col-lg-1 p-0"> </h6>
           </div>
         </div>
-        <div className="row no-gutters dashboard-product-wrapper box-container">
-          {/* mapping will take place here */}
+        <div className="container-fluid p-0">
           {this.props.products &&
             this.props.products.length !== 0 &&
-            this.props.products.map(product => (
-              <React.Fragment key={product._id}>
+            this.props.products.map((product) => (
+              <div
+                key={product._id}
+                className="row no-gutters dashboard-product-wrapper box-container"
+              >
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
                   <img src={product.imageUrl} />
                   <p className="seller-db-prod-name mr-3 w-100">
@@ -60,7 +62,7 @@ class DashBoardProduct extends React.Component {
                     Edit
                   </Link>
                 </div>
-              </React.Fragment>
+              </div>
             ))}
         </div>
       </div>
