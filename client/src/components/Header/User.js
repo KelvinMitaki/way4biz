@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IconContext } from "react-icons";
-import { AiOutlineUser } from "react-icons/ai";
-
+import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { GoClippy } from "react-icons/go";
 import "./User.css";
 import { connect } from "react-redux";
+import { FaStore } from "react-icons/fa";
 
 class User extends React.Component {
   render() {
@@ -44,20 +45,24 @@ class User extends React.Component {
                 to="/account"
                 className="primary-link my-account-link"
               >
-                My Account
+                <AiOutlineUser />
+                <span className="ml-2">My Account</span>
               </NavLink>
               <NavLink to="/orders" className="primary-link my-account-link">
-                Orders
+                <GoClippy />
+                <span className="ml-2">Orders</span>
               </NavLink>
               <NavLink to="/wishlist" className="primary-link my-account-link">
-                WishList
+                <AiOutlineHeart />
+                <span className="ml-2">WishList</span>
               </NavLink>
               {this.props.user.storeName && (
                 <NavLink
                   to="/seller-dashboard"
                   className="primary-link my-account-link"
                 >
-                  My Store
+                  <FaStore />
+                  <span className="ml-2">My Store</span>
                 </NavLink>
               )}
 
