@@ -490,4 +490,21 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/seller/buyer/:buyerId", isSeller, async (req, res) => {
+  try {
+    const { buyerId } = req.params;
+    const buyer = await User.findById(buyerId);
+    if (buyer) {
+      return res.send(buyer);
+    }
+    const seller = await Seller.findById(buyerId);
+    if (seller) {
+      return res.send(seller);
+    }
+
+    res.status(404).send({ message: "No Buyer with that ID found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
