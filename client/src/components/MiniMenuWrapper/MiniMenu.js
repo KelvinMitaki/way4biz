@@ -2,12 +2,18 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Tooltip from "react-png-tooltip";
 import { IconContext } from "react-icons";
-import { AiOutlineHome, AiOutlineBars, AiOutlineUser } from "react-icons/ai";
-import { FaOpencart } from "react-icons/fa";
+import {
+  AiOutlineHome,
+  AiOutlineBars,
+  AiOutlineUser,
+  AiOutlineHeart
+} from "react-icons/ai";
+import { FaOpencart, FaStore } from "react-icons/fa";
 
 import { connect } from "react-redux";
 
 import "./MiniMenu.css";
+import { GoClippy } from "react-icons/go";
 
 class MiniMenu extends React.Component {
   render() {
@@ -83,17 +89,21 @@ class MiniMenu extends React.Component {
                       activeClassName="active"
                       exact
                     >
-                      My Account
+                      <AiOutlineUser />
+                      <span className="ml-2">My Account</span>
                     </NavLink>
                     <NavLink className="primary-link" to="/orders">
-                      Orders
+                      <GoClippy />
+                      <span className="ml-2">Orders</span>
                     </NavLink>
                     <NavLink className="primary-link" to="/wishlist">
-                      Wishlist
+                      <AiOutlineHeart />
+                      <span className="ml-2">Wishlist</span>
                     </NavLink>
                     {this.props.user.storeName && (
                       <NavLink className="primary-link" to="/seller-dashboard">
-                        My Store
+                        <FaStore />
+                        <span className="ml-2">My Store</span>
                       </NavLink>
                     )}
                     <a className="mini-logout-link" href="/api/logout">
