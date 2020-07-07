@@ -9,7 +9,7 @@ import Header from "../Header/Header";
 import AddToCartModalButton from "./AddToCartModalButton";
 import Rating from "./Rating";
 import { connect } from "react-redux";
-import { addToCart } from "../../redux/actions";
+import { addToCart, addToWishlist } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false,
+      clicked: false
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -28,9 +28,9 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
     const { product, addToCart } = this.props;
@@ -39,9 +39,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
   }
@@ -52,14 +52,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl,
+        src: product.imageUrl
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800,
+        height: 1800
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
     };
   }
 
@@ -156,7 +156,10 @@ class Product extends React.Component {
                       ) : (
                         <div
                           style={{ cursor: "pointer" }}
-                          onClick={() => this.setState({ clicked: true })}
+                          onClick={() => {
+                            this.props.addToWishlist(this.props.product);
+                            this.setState({ clicked: true });
+                          }}
                         >
                           <IoMdHeartEmpty />
                         </div>
@@ -217,12 +220,12 @@ const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
     product = state.product.products.find(
-      (product) =>
+      product =>
         product._id.toString() === [ownProps.match.params.productId].toString()
     );
   }
   return {
-    product,
+    product
   };
 };
-export default connect(mapStateToProps, { addToCart })(Product);
+export default connect(mapStateToProps, { addToCart, addToWishlist })(Product);

@@ -2,7 +2,8 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   DELETE_FROM_CART,
-  MAKE_ORDER
+  MAKE_ORDER,
+  ADD_TO_WISHLIST
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -59,6 +60,8 @@ export default (state = INITIAL_STATE, action) => {
       };
     case MAKE_ORDER:
       return { ...state, cart: [] };
+    case ADD_TO_WISHLIST:
+      return { ...state, wishlist: [...state.wishlist, action.payload] };
     default:
       return state;
   }
