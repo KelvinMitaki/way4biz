@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 import "./AccountMenu.css";
+import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { GoClippy } from "react-icons/go";
 
 export class AccountMenu extends Component {
   render() {
@@ -13,7 +15,8 @@ export class AccountMenu extends Component {
             to="/account"
             className="navlink"
           >
-            My Account
+            <AiOutlineUser />
+            <span className="ml-2">My Account</span>
           </NavLink>
         </div>
         <br />
@@ -23,7 +26,8 @@ export class AccountMenu extends Component {
             to="/orders"
             className="navlink"
           >
-            Orders
+            <GoClippy />
+            <span className="ml-2">Orders</span>
           </NavLink>
         </div>
         <br />
@@ -33,7 +37,8 @@ export class AccountMenu extends Component {
             to="/wishlist"
             className="navlink"
           >
-            Wishlist
+            <AiOutlineHeart />
+            <span className="ml-2">Wishlist</span>
           </NavLink>
         </div>
         <br />
