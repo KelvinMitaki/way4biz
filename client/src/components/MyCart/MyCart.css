@@ -36,7 +36,8 @@
   align-items: flex-start;
 }
 
-#remove-cart:hover {
+#remove-cart:hover,
+#remove-wishlist:hover {
   color: #f76b1a;
 }
 
