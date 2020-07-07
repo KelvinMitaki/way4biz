@@ -69,13 +69,19 @@ export class Wishlist extends Component {
                         <div className="col-lg-5 wishlist-more-info">
                           <div className="row">
                             <div className="col-6">
-                              <Link
-                                id="order-today-link"
-                                to="/cart"
-                                onClick={() => this.props.addToCart(item)}
-                              >
-                                Order Today
-                              </Link>
+                              {item.stockQuantity !== 0 ? (
+                                <Link
+                                  id="order-today-link"
+                                  to="/cart"
+                                  onClick={() => this.props.addToCart(item)}
+                                >
+                                  Order Today
+                                </Link>
+                              ) : (
+                                <div className="badge stock-badge out-of-stock-badge">
+                                  out of stock
+                                </div>
+                              )}
                             </div>
                             <div
                               id="remove-wishlist"
