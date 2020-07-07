@@ -26,21 +26,22 @@ export class Orders extends Component {
               <h3 className="mb-4">Orders({this.props.buyerOrders.length})</h3>
               <div className="container-fluid">
                 <div className="row y">
-                  <div className="col-lg-6">Order Info</div>
+                  <div className="col-lg-5">Order Info</div>
                   <div className="col-lg-3">Amount</div>
                   <div className="col-lg-3">Status</div>
+                  <div className="col-lg-1"></div>
                 </div>
                 <div className="container-fluid">
                   {/* mapping here */}
                   {this.props.buyerOrders.length !== 0 &&
-                    this.props.buyerOrders.map(order => (
+                    this.props.buyerOrders.map((order) => (
                       <div
                         key={order._id}
                         className="row buyer-order-wrapper box-container"
                       >
-                        <div className="col-6 col-lg-6">
+                        <div className="col-6 col-lg-5">
                           <p>
-                            <strong className="mr-2">Order ID:</strong>
+                            <strong className="mr-2">ID:</strong>
                             {order._id}
                           </p>
                           <p>
@@ -54,8 +55,13 @@ export class Orders extends Component {
                             {order.totalPrice.toLocaleString()}
                           </p>
                         </div>
-                        <div className="col-6 col-lg-3">
+                        <div className="col-6 col-lg-2">
                           <p>Delivered</p>
+                        </div>
+                        <div className="col-6 col-lg-2">
+                          <p>
+                            <Link to="/">See Details</Link>
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -70,9 +76,9 @@ export class Orders extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    buyerOrders: state.product.buyerOrders
+    buyerOrders: state.product.buyerOrders,
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);

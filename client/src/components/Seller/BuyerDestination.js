@@ -8,7 +8,7 @@ export class BuyerDestination extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="id-cut">
         <strong className="x mr-2">Destination:</strong>
         {this.props.buyerForSeller && this.props.buyerForSeller.address}
       </div>

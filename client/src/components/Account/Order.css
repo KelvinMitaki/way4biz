@@ -5,8 +5,17 @@
   border-left: 3px solid #f76b1a;
 }
 
-.buyer-orders-wrapper div {
+.buyer-order-wrapper div {
   margin-bottom: 10px;
+}
+
+.buyer-order-wrapper div p a {
+  color: #f76b1a;
+}
+
+.buyer-order-wrapper div p a:hover {
+  text-decoration: none;
+  color: #f76b1a;
 }
 
 .order-item {
