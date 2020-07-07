@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
       }
       return {
         ...state,
-        cart: [...state.cart, { ...action.payload, quantity: 1 }]
+        cart: [{ ...action.payload, quantity: 1 }, ...state.cart]
       };
     case REMOVE_FROM_CART:
       const existingCartItem = state.cart.find(
@@ -62,7 +62,7 @@ export default (state = INITIAL_STATE, action) => {
     case MAKE_ORDER:
       return { ...state, cart: [] };
     case ADD_TO_WISHLIST:
-      return { ...state, wishlist: [...state.wishlist, action.payload] };
+      return { ...state, wishlist: [action.payload, ...state.wishlist] };
     case REMOVE_FROM_WISHLIST:
       return {
         ...state,
