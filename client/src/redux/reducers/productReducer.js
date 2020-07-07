@@ -4,7 +4,8 @@ import {
   FETCH_PRODUCTS,
   FETCH_CATEGORIES,
   SINGLE_CATEGORY,
-  FETCH_ALL_CATEGORIES
+  FETCH_ALL_CATEGORIES,
+  FETCH_BUYER_ORDERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
   productsError: null,
   products: [],
   categories: [],
-  singleCategoryProducts: []
+  singleCategoryProducts: [],
+  buyerOrders: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, singleCategoryProducts: action.payload };
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };
+    case FETCH_BUYER_ORDERS:
+      return { ...state, buyerOrders: action.payload };
     default:
       return state;
   }
