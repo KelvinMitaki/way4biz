@@ -36,7 +36,8 @@ import {
   FETCH_ALL_CATEGORIES,
   MAKE_ORDER,
   FETCH_SELLER_ORDERS,
-  FETCH_SELLER_ORDER_DETAILS
+  FETCH_SELLER_ORDER_DETAILS,
+  FETCH_BUYER_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -469,4 +470,16 @@ export const fetchSellerOrderDetails = orderDetails => {
     type: FETCH_SELLER_ORDER_DETAILS,
     payload: orderDetails
   };
+};
+
+export const fetchBuyerOrders = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/orders");
+    dispatch({ type: FETCH_BUYER_ORDERS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
 };
