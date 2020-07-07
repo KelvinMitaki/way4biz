@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import { fetchSellerOrderDetails } from "../../redux/actions";
+import {
+  fetchSellerOrderDetails,
+  fetchBuyerForSeller,
+} from "../../redux/actions";
 import { connect } from "react-redux";
+import BuyerDestination from "./BuyerDestination";
 
 class DashBoardOrder extends React.Component {
   render() {
@@ -57,14 +61,17 @@ class DashBoardOrder extends React.Component {
                       </Link>
                     </div>
                   </div>
-                  <div className="col-md-6 col-lg-3">
+                  {/* <div className="col-md-6 col-lg-3">
                     <div>
-                      <strong className="x mr-2">Destination:</strong>Rongai
+                      Rongai
                     </div>
+                    </div> */}
+                  <div className="col-md-6 col-lg-3">
+                    {order.buyer && <BuyerDestination buyerId={order.buyer} />}
                   </div>
                   <div className="col-md-6 col-lg-2">
                     <div>
-                      <strong className="mr-2">Amount:</strong>
+                      <strong className="x mr-2">Amount:</strong>
                       Ksh.
                       {order.productSellerData
                         .map((prod) => {
@@ -82,7 +89,7 @@ class DashBoardOrder extends React.Component {
                   </div>
                   <div className="col-md-6 col-lg-1">
                     <div>
-                      <strong className="mr-2">Status:</strong>Delivered
+                      <strong className="x mr-2">Status:</strong>Delivered
                     </div>
                   </div>
                 </div>
