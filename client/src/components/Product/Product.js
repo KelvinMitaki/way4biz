@@ -191,6 +191,7 @@ class Product extends React.Component {
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
                       onClick={this.handleClick}
+                      disabled={this.props.product.stockQuantity === 0}
                     >
                       Add to Cart
                     </button>
