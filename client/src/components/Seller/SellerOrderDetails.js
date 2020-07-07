@@ -95,7 +95,7 @@ class SellerOrderDetails extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrderDetails: state.sellerRegister.sellerOrderDetails
+    sellerOrderDetails: state.detailsPersist.sellerOrderDetails
   };
 };
 export default connect(mapStateToProps)(SellerOrderDetails);

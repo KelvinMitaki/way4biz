@@ -16,8 +16,7 @@ const INITIAL_STATE = {
   errorVerifying: null,
   resetToken: null,
   sellerProducts: [],
-  sellerOrders: [],
-  sellerOrderDetails: []
+  sellerOrders: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,8 +38,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerProducts: action.payload };
     case FETCH_SELLER_ORDERS:
       return { ...state, sellerOrders: action.payload };
-    case FETCH_SELLER_ORDER_DETAILS:
-      return { ...state, sellerOrderDetails: action.payload };
     default:
       return state;
   }
