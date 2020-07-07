@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./DashBoardOrder.css";
-import { fetchSellerOrderDetails } from "../../redux/actions";
+import {
+  fetchSellerOrderDetails,
+  fetchBuyerForSeller
+} from "../../redux/actions";
 import { connect } from "react-redux";
+import BuyerDestination from "./BuyerDestination";
 
 class DashBoardOrder extends React.Component {
   render() {
@@ -118,7 +122,7 @@ class DashBoardOrder extends React.Component {
                     </div>
                   </div>
                   <div className="col-6 col-lg-3">
-                    <div>Rongai</div>
+                    {order.buyer && <BuyerDestination buyerId={order.buyer} />}
                   </div>
                   <div className="col-6 col-lg-2">
                     <div>

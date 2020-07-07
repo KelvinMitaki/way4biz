@@ -499,3 +499,15 @@ export const removeFromWishlist = product => {
     payload: product
   };
 };
+
+export const fetchBuyerForSeller = buyerId => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/seller/buyer/${buyerId}`);
+    console.log(res.data);
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
