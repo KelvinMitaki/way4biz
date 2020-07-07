@@ -5,8 +5,6 @@ import "./DashBoardProduct.css";
 
 class DashBoardProduct extends React.Component {
   render() {
-    console.log(this.props);
-
     return (
       <div className="container-fluid p-4" style={{ backgroundColor: "white" }}>
         <div className="row no-gutters y">
@@ -23,13 +21,13 @@ class DashBoardProduct extends React.Component {
         <div className="container-fluid p-0">
           {this.props.products &&
             this.props.products.length !== 0 &&
-            this.props.products.map((product) => (
+            this.props.products.map(product => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
-                  <img src={product.imageUrl} />
+                  <img src={product.imageUrl} alt={product.name} />
                   <p className="seller-db-prod-name mr-3 w-100">
                     <Link to={`/product/${product._id}`} title="Title Here">
                       {product.name}

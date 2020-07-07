@@ -32,6 +32,7 @@ import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProdu
 import Products from "./components/Products/Products";
 import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 import "react-responsive-tabs/styles.css";
+import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 
 class App extends React.Component {
   componentDidMount() {
@@ -53,7 +54,7 @@ class App extends React.Component {
               component={Products}
             />
             <Route
-              path="/order/details"
+              path="/order/details/:orderId"
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerOrderDetails />
@@ -234,6 +235,19 @@ class App extends React.Component {
                       )
                     }
                   />
+
+                  <Route
+                    path="/buyer/order/details/:orderId"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <BuyerOrderDetails />
+                      )
+                    }
+                  />
+
                   <Route
                     path="/orders"
                     exact

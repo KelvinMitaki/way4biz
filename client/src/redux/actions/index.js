@@ -40,7 +40,7 @@ import {
   FETCH_BUYER_ORDERS,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  FETCH_BUYER_FOR_SELLER
+  FETCH_BUYER_ORDER_DETAILS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -501,11 +501,11 @@ export const removeFromWishlist = product => {
   };
 };
 
-export const fetchBuyerForSeller = buyerId => async dispatch => {
+export const fetchBuyerOrderDetails = orderId => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
-    const res = await axios.get(`/api/seller/buyer/${buyerId}`);
-    dispatch({ type: FETCH_BUYER_FOR_SELLER, payload: res.data });
+    const res = await axios.get(`/api/buyer/order/details/${orderId}`);
+    dispatch({ type: FETCH_BUYER_ORDER_DETAILS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });

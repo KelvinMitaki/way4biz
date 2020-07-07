@@ -6,6 +6,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {
   render() {
@@ -47,30 +48,51 @@ class SellerOrderDetails extends React.Component {
               </div>
               <div className="container-fluid seller-orders-wrapper">
                 {/* mapping here */}
-                <div className="row box-container seller-order-wrapper">
-                  <div className="col-md-6 col-lg-5 d-flex align-items-center">
-                    <img height="100px" src="/1.jpg" />
-                    <p>
-                      <strong>Great Beer</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-2">
-                    <p>
-                      <strong className="x mr-2">Qty:</strong>10
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-2">
-                    <p>
-                      <strong className="mr-2 x">Amount:</strong>ksh.10,000
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-3">
-                    <p id="buyer-destination">
-                      <strong className="mr-2 x">Destination:</strong>Gefeferi
-                      gwa kiongo
-                    </p>
-                  </div>
-                </div>
+                {this.props.sellerOrderDetails &&
+                  this.props.sellerOrderDetails.productSellerData &&
+                  this.props.sellerOrderDetails.productSellerData.length !==
+                    0 &&
+                  this.props.sellerOrderDetails.productSellerData.map(data => (
+                    <div
+                      className="row box-container seller-order-wrapper"
+                      key={data._id}
+                    >
+                      <div className="col-md-6 col-lg-5 d-flex align-items-center">
+                        <img
+                          height="100px"
+                          src={data.imageUrl}
+                          alt={data.name}
+                        />
+                        <p>
+                          <strong>{data.name}</strong>
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-2">
+                        <p>
+                          <strong className="x mr-2">Qty:</strong>
+                          {this.props.sellerOrderDetails.items.map(item => {
+                            const prodExist = data._id === item.product;
+                            if (prodExist) {
+                              return item.quantity;
+                            }
+                            return null;
+                          })}
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-2">
+                        <p>
+                          <strong className="mr-2 x">Amount:</strong>ksh.
+                          {data.price.toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-3">
+                        <p id="buyer-destination">
+                          <strong className="mr-2 x">Destination:</strong>
+                          {`${this.props.sellerOrderDetails.buyer[0].address}/${this.props.sellerOrderDetails.buyer[0].town}/${this.props.sellerOrderDetails.buyer[0].city}`}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -79,5 +101,9 @@ class SellerOrderDetails extends React.Component {
     );
   }
 }
-
-export default SellerOrderDetails;
+const mapStateToProps = state => {
+  return {
+    sellerOrderDetails: state.detailsPersist.sellerOrderDetails
+  };
+};
+export default connect(mapStateToProps)(SellerOrderDetails);

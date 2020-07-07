@@ -6,11 +6,12 @@ import storage from "redux-persist/lib/storage";
 import productReducer from "./productReducer";
 import sellerRegisterReducer from "./sellerRegisterReducer";
 import cartReducer from "./cartReducer";
+import OrderDetailsPersist from "./OrderDetailsPersist";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cartReducer"]
+  whitelist: ["cartReducer", "detailsPersist"]
 };
 
 const reducers = combineReducers({
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   auth: authReducer,
   product: productReducer,
   sellerRegister: sellerRegisterReducer,
-  cartReducer: cartReducer
+  cartReducer: cartReducer,
+  detailsPersist: OrderDetailsPersist
 });
 export default persistReducer(persistConfig, reducers);
