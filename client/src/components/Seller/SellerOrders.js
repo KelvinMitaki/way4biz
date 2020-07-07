@@ -6,16 +6,24 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 
 import DashBoardOrder from "./DashBoardOrder";
+import { fetchSellerOrders } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class SellerOrders extends React.Component {
+  componentDidMount() {
+    this.props.fetchSellerOrders();
+  }
   getTabs() {
     let tabs = [
-      { title: "All", data: <DashBoardOrder /> },
+      {
+        title: "All",
+        data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />
+      },
       { title: "New", data: <DashBoardOrder /> },
       { title: "Shipped", data: <DashBoardOrder /> },
       { title: "Delivered", data: <DashBoardOrder /> },
       { title: "Returned", data: <DashBoardOrder /> },
-      { title: "Cancelled", data: <DashBoardOrder /> },
+      { title: "Cancelled", data: <DashBoardOrder /> }
     ];
 
     return tabs.map((tab, index) => ({
@@ -23,7 +31,7 @@ class SellerOrders extends React.Component {
       getContent: () => tab.data,
       key: index,
       tabClassName: "tab",
-      panelClassName: "order-db-panel",
+      panelClassName: "order-db-panel"
     }));
   }
   render() {
@@ -59,5 +67,9 @@ class SellerOrders extends React.Component {
     );
   }
 }
-
-export default SellerOrders;
+const mapStateToProps = state => {
+  return {
+    sellerOrders: state.sellerRegister.sellerOrders
+  };
+};
+export default connect(mapStateToProps, { fetchSellerOrders })(SellerOrders);
