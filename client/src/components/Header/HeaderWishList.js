@@ -4,6 +4,7 @@ import { IconContext } from "react-icons";
 import { AiOutlineHeart } from "react-icons/ai";
 
 import "./HeaderWishList.css";
+import { connect } from "react-redux";
 
 class HeaderWishList extends React.Component {
   render() {
@@ -15,7 +16,7 @@ class HeaderWishList extends React.Component {
         >
           <div className="icon-container">
             <AiOutlineHeart />
-            <span className="badge">0</span>
+            <span className="badge">{this.props.wishlist.length}</span>
           </div>
         </IconContext.Provider>
         {/* <span className="badge">0</span> */}
@@ -24,5 +25,9 @@ class HeaderWishList extends React.Component {
     );
   }
 }
-
-export default HeaderWishList;
+const mapStateToProps = state => {
+  return {
+    wishlist: state.cartReducer.wishlist
+  };
+};
+export default connect(mapStateToProps)(HeaderWishList);
