@@ -327,7 +327,9 @@ route.get("/api/fetch/all/categories", async (req, res) => {
 route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
   try {
     const { orderId } = req.params;
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId)
+      .populate("items.product")
+      .exec();
     if (!order) {
       return res.status(404).send({ message: "No order with that Id" });
     }
