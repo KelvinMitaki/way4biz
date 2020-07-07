@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
 
 import "./Order.css";
+
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { fetchBuyerOrders } from "../../redux/actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 export class Orders extends Component {
   componentDidMount() {
@@ -33,7 +35,7 @@ export class Orders extends Component {
                 <div className="container-fluid">
                   {/* mapping here */}
                   {this.props.buyerOrders.length !== 0 &&
-                    this.props.buyerOrders.map((order) => (
+                    this.props.buyerOrders.map(order => (
                       <div
                         key={order._id}
                         className="row buyer-order-wrapper box-container"
@@ -59,7 +61,9 @@ export class Orders extends Component {
                         </div>
                         <div className="col-6 col-lg-2">
                           <p>
-                            <Link to="/buyer/order/details">See Details</Link>
+                            <Link to={`/buyer/order/details/${order._id}`}>
+                              See Details
+                            </Link>
                           </p>
                         </div>
                       </div>
@@ -75,9 +79,9 @@ export class Orders extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    buyerOrders: state.product.buyerOrders,
+    buyerOrders: state.product.buyerOrders
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);

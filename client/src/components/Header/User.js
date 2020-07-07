@@ -25,7 +25,7 @@ class User extends React.Component {
                     height: "100%",
                     display: "flex",
                     alignItems: "center",
-                    color: "#f76b1a",
+                    color: "#f76b1a"
                   }}
                 >
                   Sign In | Join
@@ -85,9 +85,9 @@ class User extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps)(User);

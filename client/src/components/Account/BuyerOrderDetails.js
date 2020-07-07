@@ -38,11 +38,12 @@ class BuyerOrderDetails extends Component {
                 <div className="buyer-order-details-info my-2">
                   <div style={{ borderBottom: "1px solid #eee" }}></div>
                   <p className="mt-3">
-                    <strong>Order No.</strong>26426282529
+                    <strong>Order No:</strong>26426282529
                   </p>
                   <p>10 items</p>
-                  <p>Place on 12/4/05</p>
-                  <p className="mb-3">Total Ksh.40,000</p>
+                  <strong>Placed on: </strong>
+                  <br />
+                  <strong className="mb-3">Total: </strong>Ksh.40,000
                   <div style={{ borderBottom: "1px solid #eee" }}></div>
                 </div>
                 <div className="container-fluid p-0">
