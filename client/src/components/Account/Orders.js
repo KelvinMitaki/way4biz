@@ -32,24 +32,33 @@ export class Orders extends Component {
                 </div>
                 <div className="container-fluid">
                   {/* mapping here */}
-                  <div className="row buyer-order-wrapper box-container">
-                    <div className="col-6 col-lg-6">
-                      <p>
-                        <strong className="x mr-2">ID:</strong>324364363
-                      </p>
-                      <p>
-                        <strong className="x mr-2">Date:</strong>1/1/2020
-                      </p>
-                    </div>
-                    <div className="col-6 col-lg-3">
-                      <p>
-                        <strong className="x mr-2">Price</strong>Ksh.30,000
-                      </p>
-                    </div>
-                    <div className="col-6 col-lg-3">
-                      <p>Delivered</p>
-                    </div>
-                  </div>
+                  {this.props.buyerOrders.length !== 0 &&
+                    this.props.buyerOrders.map(order => (
+                      <div
+                        key={order._id}
+                        className="row buyer-order-wrapper box-container"
+                      >
+                        <div className="col-6 col-lg-6">
+                          <p>
+                            <strong className="x mr-2">ID:</strong>
+                            {order._id}
+                          </p>
+                          <p>
+                            <strong className="x mr-2">Date:</strong>
+                            {new Date(order.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="col-6 col-lg-3">
+                          <p>
+                            <strong className="x mr-2">Price</strong>Ksh.
+                            {order.totalPrice.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className="col-6 col-lg-3">
+                          <p>Delivered</p>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
@@ -61,9 +70,9 @@ export class Orders extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    buyerOrders: state.product.buyerOrders,
+    buyerOrders: state.product.buyerOrders
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);
