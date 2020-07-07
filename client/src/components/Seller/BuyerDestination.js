@@ -7,8 +7,18 @@ export class BuyerDestination extends Component {
     this.props.fetchBuyerForSeller(this.props.buyerId);
   }
   render() {
-    return <div>Rongai</div>;
+    return (
+      <div>
+        {this.props.buyerForSeller && this.props.buyerForSeller.address}
+      </div>
+    );
   }
 }
-
-export default connect(null, { fetchBuyerForSeller })(BuyerDestination);
+const mapStateToProps = state => {
+  return {
+    buyerForSeller: state.sellerRegister.buyerForSeller
+  };
+};
+export default connect(mapStateToProps, { fetchBuyerForSeller })(
+  BuyerDestination
+);

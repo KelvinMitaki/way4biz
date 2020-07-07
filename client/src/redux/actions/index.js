@@ -39,7 +39,8 @@ import {
   FETCH_SELLER_ORDER_DETAILS,
   FETCH_BUYER_ORDERS,
   ADD_TO_WISHLIST,
-  REMOVE_FROM_WISHLIST
+  REMOVE_FROM_WISHLIST,
+  FETCH_BUYER_FOR_SELLER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -504,7 +505,7 @@ export const fetchBuyerForSeller = buyerId => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get(`/api/seller/buyer/${buyerId}`);
-    console.log(res.data);
+    dispatch({ type: FETCH_BUYER_FOR_SELLER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
