@@ -324,4 +324,8 @@ route.get("/api/fetch/all/categories", async (req, res) => {
   }
 });
 
+route.get("/api/current_user/hey", (req, res) => {
+  res.send({ message: "Hey there" });
+});
+
 module.exports = route;

@@ -6,9 +6,11 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {
   render() {
+    const { buyerForSeller } = this.props;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -47,30 +49,43 @@ class SellerOrderDetails extends React.Component {
               </div>
               <div className="container-fluid seller-orders-wrapper">
                 {/* mapping here */}
-                <div className="row box-container seller-order-wrapper">
-                  <div className="col-md-6 col-lg-5 d-flex align-items-center">
-                    <img height="100px" src="/1.jpg" />
-                    <p>
-                      <strong>Great Beer</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-2">
-                    <p>
-                      <strong className="x mr-2">Qty:</strong>10
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-2">
-                    <p>
-                      <strong className="mr-2 x">Amount:</strong>ksh.10,000
-                    </p>
-                  </div>
-                  <div className="col-md-6 col-lg-3">
-                    <p id="buyer-destination">
-                      <strong className="mr-2 x">Destination:</strong>Gefeferi
-                      gwa kiongo
-                    </p>
-                  </div>
-                </div>
+                {this.props.sellerOrderDetails &&
+                  this.props.sellerOrderDetails.productSellerData &&
+                  this.props.sellerOrderDetails.productSellerData.length !==
+                    0 &&
+                  this.props.sellerOrderDetails.productSellerData.map(data => (
+                    <div
+                      className="row box-container seller-order-wrapper"
+                      key={data._id}
+                    >
+                      <div className="col-md-6 col-lg-5 d-flex align-items-center">
+                        <img
+                          height="100px"
+                          src={data.imageUrl}
+                          alt={data.name}
+                        />
+                        <p>
+                          <strong>{data.name}</strong>
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-2">
+                        <p>
+                          <strong className="x mr-2">Qty:</strong>10
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-2">
+                        <p>
+                          <strong className="mr-2 x">Amount:</strong>ksh.10,000
+                        </p>
+                      </div>
+                      <div className="col-md-6 col-lg-3">
+                        <p id="buyer-destination">
+                          <strong className="mr-2 x">Destination:</strong>
+                          {`${buyerForSeller.address}/${buyerForSeller.town}/${buyerForSeller.city}`}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -79,5 +94,10 @@ class SellerOrderDetails extends React.Component {
     );
   }
 }
-
-export default SellerOrderDetails;
+const mapStateToProps = state => {
+  return {
+    sellerOrderDetails: state.sellerRegister.sellerOrderDetails,
+    buyerForSeller: state.sellerRegister.buyerForSeller
+  };
+};
+export default connect(mapStateToProps)(SellerOrderDetails);
