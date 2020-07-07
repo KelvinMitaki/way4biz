@@ -1,24 +1,37 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { connect } from "react-redux";
+import { addToWishlist, removeFromWishlist } from "../../redux/actions";
 
 class Heart extends React.Component {
-  state = {};
+  state = {
+    clicked: false
+  };
   render() {
+    const itemInWishlist = this.props.wishlist.find(
+      item => item._id === this.props.product._id
+    );
     return (
       <div>
         <IconContext.Provider value={{ size: "1.5em", color: "#f76b1a" }}>
-          {this.state.clicked ? (
+          {this.state.clicked || itemInWishlist ? (
             <div
               style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ clicked: false })}
+              onClick={() => {
+                this.props.removeFromWishlist(this.props.product);
+                this.setState({ clicked: false });
+              }}
             >
               <IoMdHeart />
             </div>
           ) : (
             <div
               style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ clicked: true })}
+              onClick={() => {
+                this.props.addToWishlist(this.props.product);
+                this.setState({ clicked: true });
+              }}
             >
               <IoMdHeartEmpty />
             </div>
@@ -28,5 +41,11 @@ class Heart extends React.Component {
     );
   }
 }
-
-export default Heart;
+const mapStateToProps = state => {
+  return {
+    wishlist: state.cartReducer.wishlist
+  };
+};
+export default connect(mapStateToProps, { addToWishlist, removeFromWishlist })(
+  Heart
+);

@@ -22,7 +22,7 @@ export class Wishlist extends Component {
               <AccountMenu />
             </div>
             <div className="col-lg-8 box-container wishlist">
-              <h4>Saved Items</h4>
+              <h4 style={{ textAlign: "center" }}>Saved Items</h4>
               {/* show this component if wishlist is empty */}
               {this.props.wishlist.length === 0 && (
                 <React.Fragment>
@@ -49,7 +49,10 @@ export class Wishlist extends Component {
                 {/* mapping here */}
                 {this.props.wishlist.length !== 0 &&
                   this.props.wishlist.map(item => (
-                    <div className="wishlist-product-wrapper box-container">
+                    <div
+                      className="wishlist-product-wrapper box-container"
+                      key={item._id}
+                    >
                       <div className="row align-items-center">
                         <div className="col-lg-7 wishlist-item-image">
                           <div className="row align-items-center">
