@@ -53,7 +53,7 @@ class App extends React.Component {
               component={Products}
             />
             <Route
-              path="/order/details"
+              path="/order/details/:orderId"
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerOrderDetails />

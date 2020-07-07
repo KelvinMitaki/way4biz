@@ -46,11 +46,15 @@ class DashBoardOrder extends React.Component {
                     </div>
                     <div className="view-order-details-link">
                       <Link
-                        to="/order/details"
+                        to={`/order/details/${order._id}`}
                         onClick={() =>
                           this.props.fetchSellerOrderDetails({
                             items: order.items,
-                            productSellerData: order.productSellerData
+                            productSellerData: order.productSellerData,
+                            buyer:
+                              order.buyerSeller.length !== 0
+                                ? order.buyerSeller
+                                : order.buyerUser
                           })
                         }
                       >

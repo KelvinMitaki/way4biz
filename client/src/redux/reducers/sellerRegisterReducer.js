@@ -17,8 +17,7 @@ const INITIAL_STATE = {
   resetToken: null,
   sellerProducts: [],
   sellerOrders: [],
-  sellerOrderDetails: [],
-  buyerForSeller: null
+  sellerOrderDetails: []
 };
 
 export default (state = INITIAL_STATE, action) => {

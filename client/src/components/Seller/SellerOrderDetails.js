@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {
   render() {
-    const { buyerForSeller } = this.props;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -81,7 +80,7 @@ class SellerOrderDetails extends React.Component {
                       <div className="col-md-6 col-lg-3">
                         <p id="buyer-destination">
                           <strong className="mr-2 x">Destination:</strong>
-                          {`${buyerForSeller.address}/${buyerForSeller.town}/${buyerForSeller.city}`}
+                          {`${this.props.sellerOrderDetails.buyer[0].address}/${this.props.sellerOrderDetails.buyer[0].town}/${this.props.sellerOrderDetails.buyer[0].city}`}
                         </p>
                       </div>
                     </div>
@@ -96,8 +95,7 @@ class SellerOrderDetails extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrderDetails: state.sellerRegister.sellerOrderDetails,
-    buyerForSeller: state.sellerRegister.buyerForSeller
+    sellerOrderDetails: state.sellerRegister.sellerOrderDetails
   };
 };
 export default connect(mapStateToProps)(SellerOrderDetails);
