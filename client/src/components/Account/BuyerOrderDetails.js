@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { connect } from "react-redux";
-import { fetchBuyerOrderDetails } from "../../redux/actions";
+import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -80,7 +80,11 @@ class BuyerOrderDetails extends Component {
 
                           <div className="row">
                             <div className="col-lg-6 d-flex align-items-center">
-                              <img src="/1.jpg" height="150px" />
+                              <img
+                                src={item.product.imageUrl}
+                                alt={item.product.name}
+                                height="150px"
+                              />
                               <p>{item.product.name}</p>
                             </div>
                             <div className="col-lg-6 d-flex flex-column justify-content-center">
@@ -101,7 +105,13 @@ class BuyerOrderDetails extends Component {
                             className="d-flex justify-content-end p-3"
                           >
                             <p>
-                              <Link id="buy-again-link" to="/cart">
+                              <Link
+                                id="buy-again-link"
+                                to="/cart"
+                                onClick={() =>
+                                  this.props.addToCart(item.product)
+                                }
+                              >
                                 Buy Again
                               </Link>
                             </p>
@@ -128,5 +138,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchBuyerOrderDetails })(BuyerOrderDetails)
+  connect(mapStateToProps, { fetchBuyerOrderDetails, addToCart })(
+    BuyerOrderDetails
+  )
 );
