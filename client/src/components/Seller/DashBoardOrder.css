@@ -1,13 +1,21 @@
-.seller-dashboard-order-wrapper {
-  height: 100px;
+.dashboard-order-wrapper {
+  display: flex;
   align-items: center;
-  padding: 0px;
+  margin: 0px;
+  border-left: 3px solid #f76b1a;
+  padding-left: 10px;
 }
 
-#view-order-details-link a {
+.view-order-details-link a {
   color: #f76b1a;
 }
 
-#view-order-details-link a:hover {
+.view-order-details-link a:hover {
   text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .dashboard-order-wrapper div {
+    margin-bottom: 10px;
+  }
 }
