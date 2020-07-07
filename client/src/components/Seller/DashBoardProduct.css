@@ -1,7 +1,7 @@
 .dashboard-product-wrapper {
   display: flex;
   align-items: center;
-  margin: 0px;
+  /* margin: 0px; */
   border-left: 3px solid #f76b1a;
 }
 
