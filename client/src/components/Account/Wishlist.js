@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/actions";
+import { addToCart, removeFromWishlist } from "../../redux/actions";
 
 export class Wishlist extends Component {
   render() {
@@ -78,7 +78,9 @@ export class Wishlist extends Component {
                               id="remove-wishlist"
                               className="col-6"
                               style={{ cursor: "pointer" }}
-                              onClick={() => this.props.removeFromCart(item)}
+                              onClick={() =>
+                                this.props.removeFromWishlist(item)
+                              }
                             >
                               <IconContext.Provider
                                 value={{ className: "helloo" }}
@@ -107,6 +109,6 @@ const mapStateToProps = state => {
     wishlist: state.cartReducer.wishlist
   };
 };
-export default connect(mapStateToProps, { addToCart, removeFromCart })(
+export default connect(mapStateToProps, { addToCart, removeFromWishlist })(
   Wishlist
 );
