@@ -1,8 +1,142 @@
-.hero-carousel,
-.slider {
-  height: calc(80vh - 20px);
+.hero-main-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
+  display: flex;
 }
 
+#hero-main-wrapper-left {
+  flex: 4;
+  height: 100%;
+  padding-right: 5px;
+}
+
+#hero-main-wrapper-right {
+  flex: 2;
+  height: 100%;
+  padding-left: 5px;
+}
+
+.hero-carousel-wrapper {
+  height: 60%;
+  padding-bottom: 5px;
+}
+
+.random-stuff-wrapper {
+  height: 40%;
+  padding-top: 5px;
+}
+
+.hero-carousel,
+.hero-account-section,
+.random-stuff {
+  height: 100%;
+  /* border: 1px solid #d4d4d4; */
+  border-radius: 10px;
+}
+
+#hero-sliders,
+.slider {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.slider img {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px !important;
+  position: relative;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.random-stuff {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 2px;
+}
+.random-stuff div {
+  height: 100%;
+  background-color: #fff;
+}
+
+.random-stuff div img {
+  height: 80%;
+  width: 100%;
+}
+
+.random-stuff div h6 {
+  font-weight: bolder;
+  text-align: center;
+}
+
+.hero-account-section {
+  background: linear-gradient(to bottom right, #f76b1a, yellow);
+  /* background: radial-gradient(yellow, #f76b1a); */
+  padding: 50px 0px;
+}
+
+.hero-user {
+  font-size: 80px;
+  color: #fff;
+}
+
+.hero-auth-btns {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.hero-auth-btns a {
+  border: none;
+  min-width: 80px;
+}
+
+.hero-auth-btns a:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.sign-in-hero-btn,
+.sign-in-hero-btn:hover {
+  background-color: #fff;
+  color: #f76b1a;
+}
+
+.join-hero-btn,
+.join-hero-btn:hover {
+  background-color: #f76b1a;
+  color: #fff;
+}
+
+@media screen and (max-width: 960px) {
+  .hero-carousel-wrapper {
+    height: 250px;
+  }
+
+  #hero-main-wrapper-left {
+    flex: 4;
+    height: 100%;
+    padding: 0px 5px;
+  }
+  #hero-main-wrapper-right {
+    display: none;
+  }
+
+  .random-stuff-wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .hero-carousel-wrapper {
+    height: 200px;
+  }
+}
+
+/*
 .slider img {
   height: 100%;
   width: 100%;
@@ -11,7 +145,7 @@
 @media screen and (min-height: 950px) {
   .hero-carousel,
   .slider {
-    height: calc(50vh - 20px); /* 313px */
+    height: calc(50vh - 20px); 
   }
 }
 
@@ -19,8 +153,8 @@
   .hero-carousel,
   .slider {
     width: 100vw;
-    height: 40vh; /* 266px */
+    height: 40vh; 
     position: relative;
     left: 0px;
   }
-}
+} */

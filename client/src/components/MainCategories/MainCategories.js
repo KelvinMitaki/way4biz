@@ -7,9 +7,15 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper.js";
 import "./MainCategories.css";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { singleCategory } from "../../redux/actions/index.js";
+import {
+  singleCategory,
+  fetchAllCategories
+} from "../../redux/actions/index.js";
 
 class MainCategories extends React.Component {
+  componentDidMount() {
+    this.props.fetchAllCategories();
+  }
   render() {
     return (
       <div className="main">
@@ -55,5 +61,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory })(MainCategories)
+  connect(mapStateToProps, { singleCategory, fetchAllCategories })(
+    MainCategories
+  )
 );

@@ -30,7 +30,7 @@ class Products extends React.Component {
             <div className="col-lg-9" style={{ padding: "0px" }}>
               <div className="products-section">
                 {this.props.singleCategoryProducts.length !== 0 &&
-                  this.props.singleCategoryProducts.map(product => (
+                  this.props.singleCategoryProducts.map((product) => (
                     <div key={product._id} className="product">
                       <Link
                         key={product._id}
@@ -41,7 +41,7 @@ class Products extends React.Component {
                         <img src={product.imageUrl} alt={product.name} />
                         <div>
                           <p className="product-name">{product.name}</p>
-                          <p className="price">
+                          <p style={{ fontWeight: "bolder" }} className="price">
                             Ksh.{product.price.toLocaleString()}{" "}
                           </p>
                         </div>
@@ -50,11 +50,16 @@ class Products extends React.Component {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px"
+                          padding: "0px 10px",
                         }}
                         className="mb-2"
                       >
-                        <Heart />
+                        <Heart product={product} />
+                        {product.freeShipping && (
+                          <p className="lead" style={{ fontSize: "smaller" }}>
+                            Free Shipping
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -68,9 +73,9 @@ class Products extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    singleCategoryProducts: state.product.singleCategoryProducts
+    singleCategoryProducts: state.product.singleCategoryProducts,
   };
 };
 export default withRouter(

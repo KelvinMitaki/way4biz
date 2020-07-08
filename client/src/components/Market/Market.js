@@ -15,7 +15,7 @@ class Market extends React.Component {
         </div>
         <div className="products-section">
           {this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div className="product" key={product._id}>
                 <Link
                   key={product._id}
@@ -26,20 +26,25 @@ class Market extends React.Component {
                   <img src={product.imageUrl} alt={product.name} />
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
-                    <strong className="price">
+                    <p style={{ fontWeight: "bolder" }} className="price">
                       Ksh.{product.price.toLocaleString()}
-                    </strong>
+                    </p>
                   </div>
                 </Link>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px"
+                    padding: "0px 10px",
                   }}
                   className="my-2"
                 >
                   <Heart product={product} />
+                  {product.freeShipping && (
+                    <p className="lead" style={{ fontSize: "smaller" }}>
+                      Free Shipping
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -48,9 +53,9 @@ class Market extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    products: state.product.products
+    products: state.product.products,
   };
 };
 export default connect(mapStateToProps)(Market);

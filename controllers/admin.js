@@ -1,13 +1,20 @@
+const AWS = require("aws-sdk");
 const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const route = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { v1: uuidV1 } = require("uuid");
 const { check, validationResult } = require("express-validator");
 const client = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET,
+});
 
 const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
@@ -18,8 +25,8 @@ const Order = require("../models/Order");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY
-    }
+      api_key: process.env.SENDGRID_API_KEY,
+    },
   })
 );
 
@@ -75,7 +82,7 @@ route.post(
         description,
         storeName,
         city,
-        address
+        address,
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -103,13 +110,13 @@ route.post(
         description,
         storeName: storeName.toLowerCase(),
         city,
-        address
+        address,
       });
       const token = jwt.sign(
         { _id: seller._id },
         process.env.CONFIRM_EMAIL_JWT,
         {
-          expiresIn: "1 hour"
+          expiresIn: "1 hour",
         }
       );
       await seller.save();
@@ -126,7 +133,7 @@ route.post(
               <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller>here</a> to confirm your email
           </p>
       </body>
-      </html>`
+      </html>`,
         },
         (error, info) => {
           if (error) {
@@ -137,7 +144,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account"
+          "An email has been sent to your email address, please check it to confirm your account",
       });
     } catch (error) {
       res.status(500).send(error);
@@ -170,7 +177,7 @@ route.post("/api/twilio", async (req, res) => {
     const { phoneNumber } = req.body;
     await client.verify.services(process.env.TWILIO_SID).verifications.create({
       to: `+254${phoneNumber}`,
-      channel: "sms"
+      channel: "sms",
     });
     req.session.phoneNumber = phoneNumber;
     res.redirect("/api/number/verify");
@@ -200,12 +207,12 @@ route.post("/api/twilio/verify", async (req, res) => {
       .services(process.env.TWILIO_SID)
       .verificationChecks.create({
         to: `+254${phoneNumber}`,
-        code
+        code,
       });
     if (!data.valid) {
       return res.status(401).send({
         message:
-          "The Verification code you entered is invalid. Please try again"
+          "The Verification code you entered is invalid. Please try again",
       });
     }
     const seller = await Seller.findById(req.session.seller._id);
@@ -323,7 +330,7 @@ route.post(
         description,
         category,
         specifications,
-        imageUrl
+        imageUrl,
       } = req.body;
       let freeShipping = req.body.freeShipping;
 
@@ -341,7 +348,7 @@ route.post(
         seller: sellerId,
         description,
         imageUrl,
-        specifications
+        specifications,
       });
       await product.save();
       res.status(201).send(product);
@@ -401,11 +408,11 @@ route.patch(
         subcategory,
         description,
         imageUrl,
-        specifications
+        specifications,
       } = req.body;
       const product = await Product.findOne({
         _id: productId,
-        seller: sellerId
+        seller: sellerId,
       });
       product.specifications = specifications;
       product.name = name;
@@ -449,24 +456,24 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           from: "products",
           localField: "items.product",
           foreignField: "_id",
-          as: "productData"
-        }
+          as: "productData",
+        },
       },
       {
         $lookup: {
           from: "users",
           localField: "buyer",
           foreignField: "_id",
-          as: "buyerUser"
-        }
+          as: "buyerUser",
+        },
       },
       {
         $lookup: {
           from: "sellers",
           localField: "buyer",
           foreignField: "_id",
-          as: "buyerSeller"
-        }
+          as: "buyerSeller",
+        },
       },
       {
         $project: {
@@ -480,30 +487,30 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
             $filter: {
               input: "$productData",
               as: "d",
-              cond: { $eq: ["$$d.seller", user._id] }
-            }
-          }
-        }
+              cond: { $eq: ["$$d.seller", user._id] },
+            },
+          },
+        },
       },
       {
-        $unwind: "$productSellerData"
+        $unwind: "$productSellerData",
       },
       {
         $group: {
           _id: "$_id",
           items: { $push: "$items" },
           paymentMethod: {
-            $first: "$paymentMethod"
+            $first: "$paymentMethod",
           },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
           createdAt: { $first: "$createdAt" },
           productSellerData: {
-            $push: "$productSellerData"
-          }
-        }
-      }
+            $push: "$productSellerData",
+          },
+        },
+      },
     ]);
     res.send(test);
   } catch (error) {
@@ -523,6 +530,23 @@ route.get("/api/seller/buyer/:buyerId", isSeller, async (req, res) => {
     }
 
     res.status(404).send({ message: "No Buyer with that ID found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/image/upload", isSeller, async (req, res) => {
+  try {
+    const key = `${req.session.user._id}/${uuidV1()}.jpeg`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: "e-commerce-gig",
+        ContentType: "image/jpeg",
+        Key: key,
+      },
+      (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
+    );
   } catch (error) {
     res.status(500).send(error);
   }

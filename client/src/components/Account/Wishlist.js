@@ -69,7 +69,7 @@ export class Wishlist extends Component {
                         <div className="col-lg-5 wishlist-more-info">
                           <div className="row">
                             <div className="col-6">
-                              {item.stockQuantity !== 0 ? (
+                              {item.stockQuantity >= 1 ? (
                                 <Link
                                   id="order-today-link"
                                   to="/cart"

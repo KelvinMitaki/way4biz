@@ -5,7 +5,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteFromCart } from "../../redux/actions";
 import { IconContext } from "react-icons";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaOpencart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class MyCart extends React.Component {
   render() {
@@ -25,10 +26,10 @@ class MyCart extends React.Component {
                     <div className="col-12">
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
-                        <div className="col-6 col-md-6">
+                        <div className="col-5 col-md-6">
                           <img src={item.imageUrl} alt={item.name} />
                         </div>
-                        <div className="price-title col-6 col-md-6">
+                        <div className="price-title col-7 col-md-6">
                           <p
                             className="store-name"
                             style={{ fontWeight: "bold" }}
@@ -114,7 +115,20 @@ class MyCart extends React.Component {
         </div>
       );
     }
-    return <h2>No Items In Your Cart</h2>;
+    return (
+      <div className="container-fluid no-items-in-cart">
+        <IconContext.Provider value={{ className: "empty-cart-icon" }}>
+          <FaOpencart />
+        </IconContext.Provider>
+        <p className="mt-3">
+          No items in your cart. Proceed to shopping and add some items in your
+          cart. Your cart items will appear here.
+        </p>
+        <Link to="/" className="btn btn-lg empty-cart-to-shop-btn my-3">
+          Proceed To Shopping
+        </Link>
+      </div>
+    );
   }
 }
 const mapStateToProps = state => {

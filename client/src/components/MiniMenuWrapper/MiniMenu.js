@@ -6,7 +6,7 @@ import {
   AiOutlineHome,
   AiOutlineBars,
   AiOutlineUser,
-  AiOutlineHeart
+  AiOutlineHeart,
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -58,7 +58,7 @@ class MiniMenu extends React.Component {
                     <FaOpencart />
                     <span className="badge">
                       {this.props.cart
-                        .map(item => item.quantity)
+                        .map((item) => item.quantity)
                         .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -109,9 +109,14 @@ class MiniMenu extends React.Component {
                         <span className="ml-2">My Store</span>
                       </NavLink>
                     )}
-                    <a className="mini-logout-link" href="/api/logout">
-                      Logout
-                    </a>
+                    <div id="mini-logout-link-wrapper">
+                      <a
+                        className="mini-logout-link primary-link"
+                        href="/api/logout"
+                      >
+                        Logout
+                      </a>
+                    </div>
                   </div>
                 </Tooltip>
               </div>
@@ -135,10 +140,10 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 

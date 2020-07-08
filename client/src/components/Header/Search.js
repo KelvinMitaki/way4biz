@@ -11,13 +11,13 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      typing: ""
+      typing: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
   async handleChange(e) {
     this.setState({
-      typing: e.target.value
+      typing: e.target.value,
     });
 
     this.props.fetchProductsSearch(e.target.value);
@@ -53,7 +53,7 @@ class Search extends React.Component {
         {this.state.typing !== "" ? (
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
-              this.props.searchedProducts.map(product => (
+              this.props.searchedProducts.map((product) => (
                 <div
                   onClick={() => this.setState({ typing: "" })}
                   key={product._id}
@@ -76,7 +76,7 @@ class Search extends React.Component {
                                 key={i}
                                 style={{
                                   fontWeight: "bold",
-                                  textDecoration: "underline"
+                                  textDecoration: "underline",
                                 }}
                               >
                                 {match}
@@ -98,9 +98,9 @@ class Search extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    searchedProducts: state.product.searchedProducts
+    searchedProducts: state.product.searchedProducts,
   };
 };
 export default connect(mapStateToProps, { fetchProductsSearch })(Search);
