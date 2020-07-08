@@ -70,8 +70,11 @@ class Product extends React.Component {
   render() {
     if (this.props.product) {
       const { stockQuantity } = this.props.product;
-
       const itemInWishlist = this.props.wishlist.find(
+        item => item._id === this.props.product._id
+      );
+      let itemInCart = false;
+      itemInCart = this.props.cart.find(
         item => item._id === this.props.product._id
       );
       return (
@@ -191,7 +194,12 @@ class Product extends React.Component {
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
                       onClick={this.handleClick}
-                      disabled={this.props.product.stockQuantity === 0}
+                      disabled={
+                        this.props.product.stockQuantity === 0 ||
+                        (itemInCart &&
+                          itemInCart.quantity ===
+                            this.props.product.stockQuantity)
+                      }
                     >
                       Add to Cart
                     </button>
@@ -236,7 +244,8 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     product,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
+    cart: state.cartReducer.cart
   };
 };
 export default connect(mapStateToProps, {
