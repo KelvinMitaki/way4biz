@@ -45,6 +45,10 @@
   overflow: hidden;
 }
 
+.product-name {
+  font-size: smaller;
+}
+
 .price {
   margin: 10px 0px;
   font-weight: 600;
