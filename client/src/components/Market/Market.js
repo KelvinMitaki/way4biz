@@ -40,6 +40,11 @@ class Market extends React.Component {
                   className="my-2"
                 >
                   <Heart product={product} />
+                  {product.freeShipping && (
+                    <p className="lead" style={{ fontSize: "smaller" }}>
+                      Free Shipping
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
