@@ -1,13 +1,20 @@
+const AWS = require("aws-sdk");
 const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const route = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { v1: uuidV1 } = require("uuid");
 const { check, validationResult } = require("express-validator");
 const client = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET
+});
 
 const Product = require("../models/Product");
 const isSeller = require("../middlewares/is-seller");
@@ -523,6 +530,23 @@ route.get("/api/seller/buyer/:buyerId", isSeller, async (req, res) => {
     }
 
     res.status(404).send({ message: "No Buyer with that ID found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/image/upload", isSeller, async (req, res) => {
+  try {
+    const key = `${req.session.user._id}/${uuidV1()}.jpeg`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: "e-commerce-gig",
+        ContentType: "image/jpeg",
+        Key: key
+      },
+      (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
+    );
   } catch (error) {
     res.status(500).send(error);
   }

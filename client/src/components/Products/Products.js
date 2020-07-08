@@ -55,6 +55,11 @@ class Products extends React.Component {
                         className="mb-2"
                       >
                         <Heart product={product} />
+                        {product.freeShipping && (
+                          <p className="lead" style={{ fontSize: "smaller" }}>
+                            Free Shipping
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}

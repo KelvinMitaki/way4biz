@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.705.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
@@ -28,6 +29,7 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "twilio": "^3.47.0"
+    "twilio": "^3.47.0",
+    "uuid": "^8.2.0"
   }
 }
