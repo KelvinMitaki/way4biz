@@ -542,7 +542,7 @@ route.get("/api/image/upload", isSeller, async (req, res) => {
       "putObject",
       {
         Bucket: "e-commerce-gig",
-        ContentType: "jpeg",
+        ContentType: "image/jpeg",
         Key: key
       },
       (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
