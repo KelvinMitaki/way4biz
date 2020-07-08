@@ -276,6 +276,12 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
         quantity: item.quantity
       };
     });
+    cart.forEach(async item => {
+      await Product.findByIdAndUpdate(item._id, {
+        $inc: { stockQuantity: -item.quantity }
+      });
+    });
+    console.log(test);
     const price = cart
       .map(item => item.price)
       .reduce((acc, curr) => acc + curr, 0);
@@ -286,6 +292,7 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
       buyer: _id
     });
     await order.save();
+
     res.send(order);
   } catch (error) {
     res.status(500).send(error);
