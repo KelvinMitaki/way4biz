@@ -31,19 +31,19 @@ class HeroCarousel extends React.Component {
             <div className="random-stuff">
               <div>
                 <img src="1.jpg" />
-                <h6>Stuff</h6>
+                <h6 className="hero-product-name">Stuff</h6>
               </div>
               <div>
                 <img src="1.jpg" />
-                <h6>Stuff</h6>
+                <h6 className="hero-product-name">Stuff</h6>
               </div>
               <div>
                 <img src="1.jpg" />
-                <h6>Stuff</h6>
+                <h6 className="hero-product-name">Stuff</h6>
               </div>
               <div>
                 <img src="1.jpg" />
-                <h6>Stuff</h6>
+                <h6 className="hero-product-name">Stuff</h6>
               </div>
             </div>
           </div>
