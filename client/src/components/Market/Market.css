@@ -45,6 +45,10 @@
   overflow: hidden;
 }
 
+.product-name {
+  font-size: smaller;
+}
+
 .price {
   margin: 10px 0px;
   font-weight: 600;
@@ -72,11 +76,17 @@
     box-shadow: none;
   }
 
-  .product-name {
-    font-size: large;
-  }
-
   .price {
     font-weight: normal;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .product-name,
+  .store-name {
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

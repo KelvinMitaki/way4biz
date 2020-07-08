@@ -78,6 +78,13 @@
 .active {
   color: #f76b1a !important;
 }
+
+#mini-logout-link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
 @media screen and (max-width: 380px) {
   .mini-menu-item p {
     font-size: 10px !important;

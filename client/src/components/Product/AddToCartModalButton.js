@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
 
-const modal = props => {
+const modal = (props) => {
   return (
     <div>
       <div
         className="modal-wrapper"
         style={{
-          transform: props.show ? "translateY(-30vh)" : "translateY(-400vh)",
-          opacity: props.show ? "1" : "0"
+          transform: props.show ? "translateY(-15vh)" : "translateY(-400vh)",
+          opacity: props.show ? "1" : "0",
         }}
       >
         <div className="modal-header">
