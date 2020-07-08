@@ -42,11 +42,19 @@ export class AccountMenu extends Component {
           </NavLink>
         </div>
         <br />
-        <div className="account-menu-wrapper">
-          <a id="account-logout" href="/api/logout" className="navlink">
+        {/* <br /> */}
+        <div className="account-menu-wrapper account-logout-wrapper">
+          <a
+            id="account-logout"
+            // className="logout-link"
+            href="/api/logout"
+            className="navlink"
+          >
             Logout
           </a>
         </div>
+        <br />
+        {/* <br /> */}
       </div>
     );
   }
