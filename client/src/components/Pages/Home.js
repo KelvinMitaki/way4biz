@@ -4,8 +4,13 @@ import Market from "../Market/Market";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import { fetchProducts } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class Home extends React.Component {
+  componentDidMount() {
+    this.props.fetchProducts();
+  }
   render() {
     return (
       <div className="main">
@@ -21,4 +26,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default connect(null, { fetchProducts })(Home);

@@ -20,7 +20,7 @@ class MyCart extends React.Component {
                   <h3>Cart({this.props.cart.length})</h3>
                 </div>
               </div>
-              {this.props.cart.map((item) => (
+              {this.props.cart.map(item => (
                 <React.Fragment key={item._id}>
                   <div className="row box-container">
                     <div className="col-12">
@@ -88,7 +88,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map((item) => item.price * item.quantity)
+                      .map(item => item.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
@@ -131,9 +131,9 @@ class MyCart extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    cart: state.cartReducer.cart,
+    cart: state.cartReducer.cart
   };
 };
 export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
