@@ -3,49 +3,20 @@ import { Carousel } from "react-bootstrap";
 // import { Carousel } from "react-responsive-carousel";
 import { IconContext } from "react-icons";
 import { FaUserCircle } from "react-icons/fa";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./Carousel.css";
 import { connect } from "react-redux";
 
 class HeroCarousel extends React.Component {
-  state = {
-    item1: null,
-    item2: null,
-    item3: null,
-    item4: null
-  };
-  componentDidMount() {
-    this.setState({
-      item1: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ]
-    });
-    this.setState({
-      item2: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ]
-    });
-    this.setState({
-      item3: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ]
-    });
-    this.setState({
-      item4: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ]
-    });
-  }
   render() {
     if (this.props.products.length !== 0) {
-      // const randomStop = Math.ceil(Math.random() * this.props.products.length);
-      // const randomStart = randomStop < 4 ? randomStop + 4 : randomStop - 4;
-      // const trimmedProducts = this.props.products.slice(
-      //   randomStart,
-      //   randomStop
-      // );
-
+      const randomStop = Math.ceil(Math.random() * this.props.products.length);
+      const randomStart = randomStop < 4 ? randomStop + 4 : randomStop - 4;
+      const trimmedProducts = this.props.products.slice(
+        randomStart,
+        randomStop
+      );
       return (
         <div className="hero-main-wrapper">
           <div id="hero-main-wrapper-left">
@@ -66,66 +37,12 @@ class HeroCarousel extends React.Component {
             </div>
             <div className="random-stuff-wrapper">
               <div className="random-stuff">
-                {this.state.item1 && (
-                  <React.Fragment>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        this.props.history.push(
-                          `/product/${this.state.item1._id}`
-                        )
-                      }
-                    >
-                      <img
-                        src={this.state.item1.imageUrl}
-                        alt={this.state.item1.name}
-                      />
-                      <h6>{this.state.item1.name}</h6>
-                    </div>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        this.props.history.push(
-                          `/product/${this.state.item2._id}`
-                        )
-                      }
-                    >
-                      <img
-                        src={this.state.item2.imageUrl}
-                        alt={this.state.item2.name}
-                      />
-                      <h6>{this.state.item2.name}</h6>
-                    </div>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        this.props.history.push(
-                          `/product/${this.state.item3._id}`
-                        )
-                      }
-                    >
-                      <img
-                        src={this.state.item3.imageUrl}
-                        alt={this.state.item3.name}
-                      />
-                      <h6>{this.state.item3.name}</h6>
-                    </div>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        this.props.history.push(
-                          `/product/${this.state.item4._id}`
-                        )
-                      }
-                    >
-                      <img
-                        src={this.state.item4.imageUrl}
-                        alt={this.state.item4.name}
-                      />
-                      <h6>{this.state.item4.name}</h6>
-                    </div>
-                  </React.Fragment>
-                )}
+                {trimmedProducts.map(item => (
+                  <div key={item._id}>
+                    <img src={item.imageUrl} alt={item.name} />
+                    <h6>{item.name}</h6>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -160,4 +77,4 @@ const mapStateToProps = state => {
     products: state.product.products
   };
 };
-export default withRouter(connect(mapStateToProps)(HeroCarousel));
+export default connect(mapStateToProps)(HeroCarousel);
