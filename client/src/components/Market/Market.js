@@ -31,6 +31,14 @@ class Market extends React.Component {
                     </p>
                   </div>
                 </Link>
+                <div style={{ height: "10px", padding: "0px 10px" }}>
+                  {product.freeShipping && (
+                    <p className="lead" style={{ fontSize: "smaller" }}>
+                      Free Shipping
+                    </p>
+                  )}
+                </div>
+
                 <div
                   style={{
                     display: "flex",
@@ -40,11 +48,6 @@ class Market extends React.Component {
                   className="my-2"
                 >
                   <Heart product={product} />
-                  {product.freeShipping && (
-                    <p className="lead" style={{ fontSize: "smaller" }}>
-                      Free Shipping
-                    </p>
-                  )}
                 </div>
               </div>
             ))}

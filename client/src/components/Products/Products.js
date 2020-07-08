@@ -40,12 +40,30 @@ class Products extends React.Component {
                       >
                         <img src={product.imageUrl} alt={product.name} />
                         <div>
-                          <p className="product-name">{product.name}</p>
-                          <p style={{ fontWeight: "bolder" }} className="price">
+                          <p
+                            className="product-name"
+                            style={{ padding: "0px 10px" }}
+                          >
+                            {product.name}
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bolder",
+                              padding: "0px 10px",
+                            }}
+                            className="price"
+                          >
                             Ksh.{product.price.toLocaleString()}{" "}
                           </p>
                         </div>
                       </Link>
+                      <div style={{ height: "10px", padding: "0px 10px" }}>
+                        {product.freeShipping && (
+                          <p className="lead" style={{ fontSize: "smaller" }}>
+                            Free Shipping
+                          </p>
+                        )}
+                      </div>
                       <div
                         style={{
                           display: "flex",
@@ -55,11 +73,6 @@ class Products extends React.Component {
                         className="mb-2"
                       >
                         <Heart product={product} />
-                        {product.freeShipping && (
-                          <p className="lead" style={{ fontSize: "smaller" }}>
-                            Free Shipping
-                          </p>
-                        )}
                       </div>
                     </div>
                   ))}

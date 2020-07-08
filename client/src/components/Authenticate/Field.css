@@ -54,7 +54,7 @@ textarea::-webkit-scrollbar {
 
 .phone-prepend span {
   height: 50px;
-  border: 1px solid #eee;
+  border: 1px solid #d4d4d4;
   border-top-left-radius: 40px !important;
   border-bottom-left-radius: 40px !important;
   border-radius: 40px;
