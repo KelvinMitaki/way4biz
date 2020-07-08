@@ -281,7 +281,6 @@ route.post("/api/new/order", auth, check(""), async (req, res) => {
         $inc: { stockQuantity: -item.quantity }
       });
     });
-    console.log(test);
     const price = cart
       .map(item => item.price)
       .reduce((acc, curr) => acc + curr, 0);

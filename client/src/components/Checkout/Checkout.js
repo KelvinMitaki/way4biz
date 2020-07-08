@@ -9,11 +9,13 @@ import Header from "../Header/Header";
 import { withRouter, Redirect } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { makeOrder } from "../../redux/actions";
+import { makeOrder, fetchProducts } from "../../redux/actions";
 
 class CheckOut extends React.Component {
   render() {
     if (this.props.cart.length === 0) {
+      this.props.fetchProducts();
+      console.log("redirected");
       return <Redirect to="/" />;
     }
     const { user, cart } = this.props;
@@ -131,6 +133,6 @@ const mapStateToProps = state => {
 };
 export default withRouter(
   reduxForm({ form: "Chekout" })(
-    connect(mapStateToProps, { makeOrder })(CheckOut)
+    connect(mapStateToProps, { makeOrder, fetchProducts })(CheckOut)
   )
 );
