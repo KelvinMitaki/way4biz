@@ -6,7 +6,8 @@ import {
   SINGLE_CATEGORY,
   FETCH_ALL_CATEGORIES,
   FETCH_BUYER_ORDERS,
-  FETCH_BUYER_ORDER_DETAILS
+  FETCH_BUYER_ORDER_DETAILS,
+  FETCH_MORE_PRODUCTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -16,7 +17,9 @@ const INITIAL_STATE = {
   categories: [],
   singleCategoryProducts: [],
   buyerOrders: [],
-  buyerOrderDetails: null
+  buyerOrderDetails: null,
+  productCount: null,
+  hasMore: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,7 +27,16 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_PRODUCTS_SEARCH:
       return { ...state, searchedProducts: action.payload };
     case FETCH_PRODUCTS:
-      return { ...state, products: action.payload };
+      return {
+        ...state,
+        products: action.payload.products,
+        productCount: action.payload.productCount
+      };
+    case FETCH_MORE_PRODUCTS:
+      return {
+        ...state,
+        products: [...state.products, ...action.payload.products]
+      };
     case FETCH_PRODUCTS_FAILED:
       return { ...state, productsError: "Fetching products failed" };
     case FETCH_CATEGORIES:
