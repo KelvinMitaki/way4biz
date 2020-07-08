@@ -7,7 +7,8 @@ import {
   FETCH_ALL_CATEGORIES,
   FETCH_BUYER_ORDERS,
   FETCH_BUYER_ORDER_DETAILS,
-  FETCH_MORE_PRODUCTS
+  FETCH_MORE_PRODUCTS,
+  HAS_MORE_FALSE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -37,6 +38,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         products: [...state.products, ...action.payload.products]
       };
+    case HAS_MORE_FALSE:
+      return { ...state, hasMore: false };
     case FETCH_PRODUCTS_FAILED:
       return { ...state, productsError: "Fetching products failed" };
     case FETCH_CATEGORIES:

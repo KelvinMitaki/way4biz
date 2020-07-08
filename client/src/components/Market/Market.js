@@ -4,13 +4,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./Market.css";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
-import { fetchMoreProducts } from "../../redux/actions";
+import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 
 class Market extends React.Component {
   fetchMoreData = () => {
-    if (this.props.products.length <= this.props.productCount) {
+    if (this.props.products.length < this.props.productCount) {
       return this.props.fetchMoreProducts();
     }
+    this.props.hasMoreFalse();
   };
   render() {
     return (
@@ -77,4 +78,6 @@ const mapStateToProps = state => {
     hasMore: state.product.hasMore
   };
 };
-export default connect(mapStateToProps, { fetchMoreProducts })(Market);
+export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
+  Market
+);
