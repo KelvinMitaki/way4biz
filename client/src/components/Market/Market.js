@@ -1,21 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import "./Market.css";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
+import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 
 class Market extends React.Component {
-  state = {};
+  fetchMoreData = () => {
+    if (this.props.products.length < this.props.productCount) {
+      return this.props.fetchMoreProducts();
+    }
+    this.props.hasMoreFalse();
+  };
   render() {
     return (
       <div className="container-fluid market">
         <div className="col market-head">
           <h1>Selling</h1>
         </div>
-        <div className="products-section">
+        <InfiniteScroll
+          className="products-section"
+          dataLength={this.props.products.length}
+          next={this.fetchMoreData}
+          hasMore={this.props.hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>You've seen it all</b>
+            </p>
+          }
+        >
           {this.props.products.length !== 0 &&
-            this.props.products.map((product) => (
+            this.props.products.map(product => (
               <div className="product" key={product._id}>
                 <Link
                   key={product._id}
@@ -35,7 +52,7 @@ class Market extends React.Component {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px",
+                    padding: "0px 10px"
                   }}
                   className="my-2"
                 >
@@ -48,14 +65,18 @@ class Market extends React.Component {
                 </div>
               </div>
             ))}
-        </div>
+        </InfiniteScroll>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
+    productCount: state.product.productCount,
+    hasMore: state.product.hasMore
   };
 };
-export default connect(mapStateToProps)(Market);
+export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
+  Market
+);

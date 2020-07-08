@@ -6,18 +6,20 @@ import { addToWishlist, removeFromWishlist } from "../../redux/actions";
 
 class Heart extends React.Component {
   state = {
-    clicked: false
+    clicked: false,
   };
   render() {
     const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product._id
+      (item) => item._id === this.props.product._id
     );
     return (
-      <div>
-        <IconContext.Provider value={{ size: "1.5em", color: "#f76b1a" }}>
+      <div className="mt-2 p-0">
+        <IconContext.Provider
+          value={{ size: "1.5em", color: "#f76b1a", margin: "0px" }}
+        >
           {this.state.clicked || itemInWishlist ? (
             <div
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", margin: "0px", padding: "0px" }}
               onClick={() => {
                 this.props.removeFromWishlist(this.props.product);
                 this.setState({ clicked: false });
@@ -27,7 +29,7 @@ class Heart extends React.Component {
             </div>
           ) : (
             <div
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", margin: "0px", padding: "0px" }}
               onClick={() => {
                 this.props.addToWishlist(this.props.product);
                 this.setState({ clicked: true });
@@ -41,9 +43,9 @@ class Heart extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 export default connect(mapStateToProps, { addToWishlist, removeFromWishlist })(
