@@ -1,6 +1,6 @@
 .market {
-  margin: 50px 0px 40px 0px;
-  padding: 30px 0px;
+  margin: 10px 0px 40px 0px;
+  padding: 20px 0px;
 }
 
 .market-head h1 {
@@ -61,7 +61,7 @@
 
 @media screen and (max-width: 960px) {
   .market {
-    padding: 30px 0px 0px 0px;
+    padding: 20px 0px 0px 0px;
   }
 
   .product div {
