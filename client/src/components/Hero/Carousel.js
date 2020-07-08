@@ -81,7 +81,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item1.imageUrl}
                         alt={this.state.item1.name}
                       />
-                      <h6>{this.state.item1.name}</h6>
+
+                      <h6 className="hero-product-name">
+                        {this.state.item1.name}
+                      </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item1.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -95,7 +101,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item2.imageUrl}
                         alt={this.state.item2.name}
                       />
-                      <h6>{this.state.item2.name}</h6>
+
+                      <h6 className="hero-product-name">
+                        {this.state.item2.name}
+                      </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item2.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -109,7 +121,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item3.imageUrl}
                         alt={this.state.item3.name}
                       />
-                      <h6>{this.state.item3.name}</h6>
+
+                      <h6 className="hero-product-name">
+                        {this.state.item3.name}
+                      </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item3.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -123,7 +141,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item4.imageUrl}
                         alt={this.state.item4.name}
                       />
-                      <h6>{this.state.item4.name}</h6>
+
+                      <h6 className="hero-product-name">
+                        {this.state.item4.name}
+                      </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item4.price}</small>
+                      </p>
                     </div>
                   </React.Fragment>
                 )}

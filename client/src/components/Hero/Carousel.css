@@ -111,6 +111,13 @@
   color: #fff;
 }
 
+.hero-product-name {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 960px) {
   .hero-carousel-wrapper {
     height: 250px;

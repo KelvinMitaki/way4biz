@@ -63,6 +63,25 @@ class Market extends React.Component {
                       </p>
                     )}
                   </div>
+
+                  <div style={{ height: "10px", padding: "0px 10px" }}>
+                    {product.freeShipping && (
+                      <p className="lead" style={{ fontSize: "smaller" }}>
+                        Free Shipping
+                      </p>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "0px 10px"
+                    }}
+                    className="my-2"
+                  >
+                    <Heart product={product} />
+                  </div>
                 </div>
               ))}
           </InfiniteScroll>
