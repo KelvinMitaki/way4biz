@@ -26,6 +26,7 @@ route.post("/api/products/skip/:category", async (req, res) => {
   try {
     const { category } = req.params;
     const { itemsToSkip } = req.body;
+    console.log(itemsToSkip);
     const products = await Product.find({ category })
       .skip(itemsToSkip)
       .limit(6);

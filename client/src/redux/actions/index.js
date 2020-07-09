@@ -42,7 +42,9 @@ import {
   REMOVE_FROM_WISHLIST,
   FETCH_BUYER_ORDER_DETAILS,
   FETCH_MORE_PRODUCTS,
-  HAS_MORE_FALSE
+  HAS_MORE_FALSE,
+  MORE_SINGLE_CATEGORY_PRODUCTS,
+  HAS_MORE_CATEGORY_FALSE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -357,19 +359,6 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   }
 };
 
-export const fetchProducts = () => async (dispatch, getState) => {
-  try {
-    const itemsToSkip = getState().product.products.length;
-    dispatch({ type: LOADING_START });
-    const res = await axios.post(`/api/products`, { itemsToSkip });
-    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
-  } catch (error) {
-    dispatch({ type: LOADING_STOP });
-    console.log(error.response);
-  }
-};
-
 export const editProduct = (formvalues, productId, history) => async (
   dispatch,
   getState
@@ -415,26 +404,6 @@ export const fetchCategories = () => async dispatch => {
     const res = await axios.get("/api/products/find/categories");
     dispatch({ type: FETCH_CATEGORIES, payload: res.data });
     dispatch({ type: LOADING_STOP });
-  } catch (error) {
-    dispatch({ type: LOADING_STOP });
-    console.log(error.response);
-  }
-};
-
-export const singleCategory = (category, history) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    const itemsToSkip = getState().product.singleCategoryProducts.length;
-
-    dispatch({ type: LOADING_START });
-    const res = await axios.post(`/api/products/skip/${category}`, {
-      itemsToSkip
-    });
-    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
-    dispatch({ type: LOADING_STOP });
-    history.push(`/products/category/${category}`);
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
@@ -523,6 +492,28 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
   }
 };
 
+export const hasMoreFalse = () => {
+  return {
+    type: HAS_MORE_FALSE
+  };
+};
+export const hasMoreCategoryFalse = () => {
+  return {
+    type: HAS_MORE_CATEGORY_FALSE
+  };
+};
+export const fetchProducts = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
+    console.log(res.data);
+    dispatch({ type: FETCH_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
 export const fetchMoreProducts = () => async (dispatch, getState) => {
   try {
     const itemsToSkip = getState().product.products.length;
@@ -535,9 +526,37 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
     console.log(error.response);
   }
 };
-
-export const hasMoreFalse = () => {
-  return {
-    type: HAS_MORE_FALSE
-  };
+export const singleCategory = (category, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(`/api/products/skip/${category}`, {
+      itemsToSkip: 0
+    });
+    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+    history.push(`/products/category/${category}`);
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+export const moreSingleCategoryProducts = category => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const itemsToSkip = getState().product.singleCategoryProducts.length;
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(`/api/products/skip/${category}`, {
+      itemsToSkip
+    });
+    dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
 };

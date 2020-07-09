@@ -29,10 +29,10 @@ import Review from "./components/Seller/SellerDashBoardReviews";
 import SellerProducts from "./components/Seller/SellerProducts";
 import SellerDashBoardNewProduct from "./components/Seller/SellerDashBoardNewProduct";
 import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProductEdit";
-import Products from "./components/Products/Products";
 import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 import "react-responsive-tabs/styles.css";
 import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
+import ProductParent from "./components/Products/ProductParent";
 
 class App extends React.Component {
   componentDidMount() {
@@ -51,7 +51,7 @@ class App extends React.Component {
             <Route
               path="/products/category/:category"
               exact
-              component={Products}
+              component={ProductParent}
             />
             <Route
               path="/order/details/:orderId"
@@ -289,16 +289,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
