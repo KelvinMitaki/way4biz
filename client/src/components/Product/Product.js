@@ -204,7 +204,7 @@ class Product extends React.Component {
                   <div className="product-rating">
                     <Rating size={18} clickable={false} value={5} />
                     <span className="ml-2">
-                      <Link style={{ color: "#f76b1a" }} to="/">
+                      <Link style={{ color: "#f76b1a" }} to="/product/reviews">
                         (0 Reviews)
                       </Link>
                     </span>

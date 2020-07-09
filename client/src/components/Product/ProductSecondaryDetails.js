@@ -4,6 +4,7 @@ import Tabs from "react-responsive-tabs";
 import "./ProductSecondaryDetails.css";
 import ProductDetails from "./ProductDetails";
 import ProductCustomerReviews from "./ProductCustomerReviews";
+import ProductReviews from "./ProductReviews";
 
 class ProductSecondaryDetails extends React.Component {
   state = {
@@ -14,7 +15,7 @@ class ProductSecondaryDetails extends React.Component {
       },
       {
         name: "Customer Reviews",
-        data: <ProductCustomerReviews data={this.props.specifications} />,
+        data: <ProductReviews />,
       },
     ],
   };
