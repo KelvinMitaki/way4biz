@@ -7,27 +7,31 @@ class Rating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: this.props.value,
     };
     this.ratingChanged = this.ratingChanged.bind(this);
   }
 
   ratingChanged(val) {
+    if (!this.props.clickable) {
+      return;
+    }
     this.setState({
-      value: val
+      value: val,
     });
     console.log(this.state.value);
   }
 
   render() {
     return (
-      <div>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <BeautyStars
           value={this.state.value}
-          onChange={val => this.ratingChanged(val)}
+          onChange={(val) => this.ratingChanged(val)}
           size={this.props.size}
           activeColor={"#f76b10"}
           inactiveColor={"#d4d4d4"}
+          style={{ width: "100%" }}
         />
       </div>
     );

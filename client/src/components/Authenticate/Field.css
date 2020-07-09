@@ -38,11 +38,11 @@ textarea {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
-textarea::-webkit-scrollbar {
-  /* WebKit */
+/* textarea::-webkit-scrollbar {
+
   width: 0;
   height: 0;
-}
+} */
 
 .phone {
   height: 50px;

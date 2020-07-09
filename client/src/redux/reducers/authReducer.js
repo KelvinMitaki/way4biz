@@ -15,7 +15,9 @@ import {
   CHECKOUT_USER_FAILED,
   UPDATE_PASSWORD_LOGGED_IN,
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
-  REGISTER_SELLER
+  REGISTER_SELLER,
+  SIGN_IN_CLICK,
+  REGISTER_CLICK
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -30,7 +32,8 @@ const INITIAL_STATE = {
   checkoutUserError: null,
   updatePasswordMessage: null,
   updatePasswordError: null,
-  resetPasswordError: null
+  resetPasswordError: null,
+  signInOpen: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -103,7 +106,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     case REGISTER_SELLER:
       return { ...state, showEmailConfirm: true };
-
+    case SIGN_IN_CLICK:
+      return { ...state, signInOpen: true };
+    case REGISTER_CLICK:
+      return { ...state, signInOpen: false };
     default:
       return state;
   }
