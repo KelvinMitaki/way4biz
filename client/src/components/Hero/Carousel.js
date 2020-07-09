@@ -13,28 +13,28 @@ class HeroCarousel extends React.Component {
     item1: null,
     item2: null,
     item3: null,
-    item4: null,
+    item4: null
   };
   componentDidMount() {
     this.setState({
       item1: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item2: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item3: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item4: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
   }
 
@@ -81,9 +81,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item1.imageUrl}
                         alt={this.state.item1.name}
                       />
+
                       <h6 className="hero-product-name">
                         {this.state.item1.name}
                       </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item1.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -97,9 +101,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item2.imageUrl}
                         alt={this.state.item2.name}
                       />
+
                       <h6 className="hero-product-name">
                         {this.state.item2.name}
                       </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item2.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -113,9 +121,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item3.imageUrl}
                         alt={this.state.item3.name}
                       />
+
                       <h6 className="hero-product-name">
                         {this.state.item3.name}
                       </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item3.price}</small>
+                      </p>
                     </div>
                     <div
                       style={{ cursor: "pointer" }}
@@ -129,9 +141,13 @@ class HeroCarousel extends React.Component {
                         src={this.state.item4.imageUrl}
                         alt={this.state.item4.name}
                       />
+
                       <h6 className="hero-product-name">
                         {this.state.item4.name}
                       </h6>
+                      <p style={{ textAlign: "center" }}>
+                        <small>Ksh.{this.state.item4.price}</small>
+                      </p>
                     </div>
                   </React.Fragment>
                 )}
@@ -164,9 +180,9 @@ class HeroCarousel extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.products
   };
 };
 export default withRouter(connect(mapStateToProps)(HeroCarousel));

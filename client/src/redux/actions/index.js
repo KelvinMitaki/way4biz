@@ -40,7 +40,9 @@ import {
   FETCH_BUYER_ORDERS,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  FETCH_BUYER_ORDER_DETAILS
+  FETCH_BUYER_ORDER_DETAILS,
+  FETCH_MORE_PRODUCTS,
+  HAS_MORE_FALSE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -355,10 +357,12 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   }
 };
 
-export const fetchProducts = () => async dispatch => {
+export const fetchProducts = () => async (dispatch, getState) => {
   try {
+    const itemsToSkip = getState().product.products.length;
     dispatch({ type: LOADING_START });
-    const res = await axios.get(`/api/products`);
+    const res = await axios.post(`/api/products`, { itemsToSkip });
+    console.log(res.data);
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
@@ -511,4 +515,23 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
+};
+
+export const fetchMoreProducts = () => async (dispatch, getState) => {
+  try {
+    const itemsToSkip = getState().product.products.length;
+    dispatch({ type: LOADING_START });
+    const res = await axios.post("/api/products", { itemsToSkip });
+    dispatch({ type: FETCH_MORE_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const hasMoreFalse = () => {
+  return {
+    type: HAS_MORE_FALSE
+  };
 };
