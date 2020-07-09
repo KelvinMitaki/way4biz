@@ -526,10 +526,7 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, history) => async (
-  dispatch,
-  getState
-) => {
+export const singleCategory = (category, history) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post(`/api/products/skip/${category}`, {

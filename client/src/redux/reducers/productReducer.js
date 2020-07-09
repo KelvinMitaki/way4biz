@@ -39,9 +39,13 @@ export default (state = INITIAL_STATE, action) => {
         productCount: action.payload.productCount
       };
     case FETCH_MORE_PRODUCTS:
+      const productIds = new Set(state.products.map(p => p._id));
       return {
         ...state,
-        products: [...state.products, ...action.payload.products]
+        products: [
+          ...state.products,
+          ...action.payload.products.filter(prod => !productIds.has(prod._id))
+        ]
       };
 
     case HAS_MORE_FALSE:
@@ -60,11 +64,12 @@ export default (state = INITIAL_STATE, action) => {
         categoryProductCount: action.payload.productCount
       };
     case MORE_SINGLE_CATEGORY_PRODUCTS:
+      const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
       return {
         ...state,
         singleCategoryProducts: [
           ...state.singleCategoryProducts,
-          ...action.payload.products
+          ...action.payload.products.filter(prod => !prodIds.has(prod._id))
         ],
         itemsToSkip: state.itemsToSkip + 6
       };

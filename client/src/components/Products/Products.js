@@ -19,15 +19,9 @@ function Products(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
-      console.log(props.length < props.categoryProductCount);
-      console.log(props.categoryProductCount);
-      console.log(props.length);
       if (props.length < props.categoryProductCount) {
-        console.log("fetching");
-        console.log(props.match.params);
         return props.moreSingleCategoryProducts(props.match.params.category);
       }
-      console.log("not fetching");
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
@@ -37,6 +31,7 @@ function Products(props) {
       }
     });
     if (node) observer.current.observe(node);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
