@@ -7,7 +7,7 @@ import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 
 function Market(props) {
   const observer = useRef();
-  const lastBookElementRef = useCallback(
+  const lastItemElementRef = useCallback(
     (node) => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
@@ -38,7 +38,7 @@ function Market(props) {
               return (
                 <div
                   className="product"
-                  ref={lastBookElementRef}
+                  ref={lastItemElementRef}
                   key={product._id}
                 >
                   <Link

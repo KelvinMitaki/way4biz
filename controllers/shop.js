@@ -6,6 +6,7 @@ const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
+const { db } = require("../models/Product");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -21,14 +22,24 @@ route.post("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/products/:category", async (req, res) => {
+route.post("/api/products/skip/:category", async (req, res) => {
   try {
     const { category } = req.params;
-    const products = await Product.find({ category });
+    const { itemsToSkip } = req.body;
+    const products = await Product.find({ category })
+      .skip(itemsToSkip)
+      .limit(4);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
-    res.send(products);
+    const productCount = await Product.aggregate([
+      {
+        $match: { category: category }
+      },
+      { $count: category }
+    ]);
+
+    res.send({ products, productCount: productCount[0][category] });
   } catch (error) {
     res.status(500).send(error);
   }
