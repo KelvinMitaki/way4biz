@@ -14,17 +14,21 @@ import {
   addToCart,
   addToWishlist,
   removeFromWishlist,
+  fetchSingleProduct
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Product extends React.Component {
+  componentDidMount() {
+    this.props.fetchSingleProduct(this.props.match.params.productId);
+  }
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false,
+      clicked: false
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -33,9 +37,9 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
     const { product, addToCart } = this.props;
@@ -44,9 +48,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
   }
@@ -57,14 +61,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl,
+        src: product.imageUrl
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800,
+        height: 1800
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
     };
   }
 
@@ -72,11 +76,11 @@ class Product extends React.Component {
     if (this.props.product) {
       const { stockQuantity } = this.props.product;
       const itemInWishlist = this.props.wishlist.find(
-        (item) => item._id === this.props.product._id
+        item => item._id === this.props.product._id
       );
       let itemInCart = false;
       itemInCart = this.props.cart.find(
-        (item) => item._id === this.props.product._id
+        item => item._id === this.props.product._id
       );
       return (
         <React.Fragment>
@@ -304,7 +308,7 @@ class Product extends React.Component {
                     <div>
                       <p
                         style={{
-                          color: "#000",
+                          color: "#000"
                         }}
                       >
                         Store Name Store Name Store Name Store Name Store Name
@@ -313,7 +317,7 @@ class Product extends React.Component {
                       <small>
                         <Link
                           style={{
-                            color: "#f76b1a",
+                            color: "#f76b1a"
                           }}
                           to="/"
                         >
@@ -367,19 +371,24 @@ class Product extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
-    product = state.product.products.find(
-      (product) =>
-        product._id.toString() === [ownProps.match.params.productId].toString()
-    );
+    product =
+      state.product.products.find(
+        product =>
+          product._id.toString() ===
+          [ownProps.match.params.productId].toString()
+      ) || state.product.product;
   }
   return {
     product,
     wishlist: state.cartReducer.wishlist,
-    cart: state.cartReducer.cart,
+    cart: state.cartReducer.cart
   };
 };
-export default connect(mapStateToProps, {
-  addToCart,
-  addToWishlist,
-  removeFromWishlist,
-})(Product);
+export default withRouter(
+  connect(mapStateToProps, {
+    addToCart,
+    addToWishlist,
+    removeFromWishlist,
+    fetchSingleProduct
+  })(Product)
+);

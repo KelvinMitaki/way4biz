@@ -10,7 +10,8 @@ import {
   FETCH_MORE_PRODUCTS,
   HAS_MORE_FALSE,
   MORE_SINGLE_CATEGORY_PRODUCTS,
-  HAS_MORE_CATEGORY_FALSE
+  HAS_MORE_CATEGORY_FALSE,
+  FETCH_SINGLE_PRODUCT
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -25,7 +26,8 @@ const INITIAL_STATE = {
   hasMore: true,
   hasMoreCategories: true,
   categoryProductCount: null,
-  itemsToSkip: 0
+  itemsToSkip: 0,
+  product: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -79,6 +81,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, buyerOrders: action.payload };
     case FETCH_BUYER_ORDER_DETAILS:
       return { ...state, buyerOrderDetails: action.payload };
+    case FETCH_SINGLE_PRODUCT:
+      return { ...state, product: action.payload };
     default:
       return state;
   }
