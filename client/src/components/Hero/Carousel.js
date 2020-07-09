@@ -16,28 +16,28 @@ class HeroCarousel extends React.Component {
     item1: null,
     item2: null,
     item3: null,
-    item4: null
+    item4: null,
   };
   componentDidMount() {
     this.setState({
       item1: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ]
+      ],
     });
     this.setState({
       item2: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ]
+      ],
     });
     this.setState({
       item3: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ]
+      ],
     });
     this.setState({
       item4: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ]
+      ],
     });
   }
 
@@ -180,7 +180,7 @@ class HeroCarousel extends React.Component {
                       display: "flex",
                       justifyContent: "space-evenly",
                       alignItems: "center",
-                      width: "100%"
+                      width: "100%",
                     }}
                     className="mt-4"
                   >
@@ -188,11 +188,14 @@ class HeroCarousel extends React.Component {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <Link to="/account" className="hero-account-link">
-                        <FaUserAlt fontSize={40} />
+                        <div className="hero-account-icon-wrapper">
+                          <FaUserAlt />
+                        </div>
+
                         <p>Account</p>
                       </Link>
                     </div>
@@ -200,11 +203,13 @@ class HeroCarousel extends React.Component {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <Link to="/orders" className="hero-account-link">
-                        <GoClippy fontSize={40} />
+                        <div className="hero-account-icon-wrapper">
+                          <GoClippy />
+                        </div>
                         <p>Orders</p>
                       </Link>
                     </div>
@@ -212,11 +217,13 @@ class HeroCarousel extends React.Component {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <Link to="/pending/reviews" className="hero-account-link">
-                        <MdRateReview fontSize={40} />
+                        <div className="hero-account-icon-wrapper">
+                          <MdRateReview />
+                        </div>
 
                         <p> Reviews</p>
                       </Link>
@@ -250,10 +257,10 @@ class HeroCarousel extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(

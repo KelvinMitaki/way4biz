@@ -252,7 +252,7 @@ class Product extends React.Component {
                 </div>
               </div>
               <div className="row product-features-reviews-specifications mt-3">
-                <div className="col-lg-2 product-features-reviews-specifications-sidebar box-container">
+                {/* <div className="col-lg-2 product-features-reviews-specifications-sidebar box-container">
                   <div className="product-seller-store">
                     <h5
                       className="my-2"
@@ -273,7 +273,7 @@ class Product extends React.Component {
                       >
                         {this.props.product.seller.storeName}
                       </p>
-                      {/* <Rating size={20} /> */}
+                      
                       <small>
                         <Link
                           style={{
@@ -310,8 +310,8 @@ class Product extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-lg-10 p-0">
+                </div> */}
+                <div className="col p-0">
                   <ProductSecondaryDetails
                     details={this.props.product.description}
                     specifications={this.props.product.specifications}
