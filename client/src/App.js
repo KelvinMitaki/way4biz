@@ -34,6 +34,7 @@ import "react-responsive-tabs/styles.css";
 import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 import ProductParent from "./components/Products/ProductParent";
 import PendingReviews from "./components/Account/PendingReviews";
+import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
 
 class App extends React.Component {
   componentDidMount() {
@@ -49,6 +50,11 @@ class App extends React.Component {
           <MobileLogo />
           <div>
             <Route path="/" exact component={Home} />
+            <Route
+              path="/product/reviews"
+              exact
+              component={ProductReviewsWrapper}
+            />
             <Route
               path="/products/category/:category"
               exact
