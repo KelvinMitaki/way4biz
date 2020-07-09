@@ -77,20 +77,23 @@ route.post("/api/products/:category", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/products/category/:subcategory", async (req, res) => {
-  try {
-    const { subcategory } = req.params;
-    const products = await Product.find({ subcategory });
-    if (!products || products.length === 0) {
-      return res
-        .status(404)
-        .send({ message: "No products in that subcategory" });
+route.get(
+  "/api/products/category/subcategory/:subcategory",
+  async (req, res) => {
+    try {
+      const { subcategory } = req.params;
+      const products = await Product.find({ subcategory });
+      if (!products || products.length === 0) {
+        return res
+          .status(404)
+          .send({ message: "No products in that subcategory" });
+      }
+      res.send(products);
+    } catch (error) {
+      res.status(500).send(error);
     }
-    res.send(products);
-  } catch (error) {
-    res.status(500).send(error);
   }
-});
+);
 
 route.post("/api/products/category/:subcategory", async (req, res) => {
   try {

@@ -11,7 +11,8 @@ import {
   HAS_MORE_FALSE,
   MORE_SINGLE_CATEGORY_PRODUCTS,
   HAS_MORE_CATEGORY_FALSE,
-  FETCH_SINGLE_PRODUCT
+  FETCH_SINGLE_PRODUCT,
+  FETCH_RELATED_PRODUCTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -27,7 +28,8 @@ const INITIAL_STATE = {
   hasMoreCategories: true,
   categoryProductCount: null,
   itemsToSkip: 0,
-  product: null
+  product: null,
+  relatedProducts: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -83,6 +85,13 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, buyerOrderDetails: action.payload };
     case FETCH_SINGLE_PRODUCT:
       return { ...state, product: action.payload };
+    case FETCH_RELATED_PRODUCTS:
+      return {
+        ...state,
+        relatedProducts: action.payload.filter(
+          item => item._id !== state.product._id
+        )
+      };
     default:
       return state;
   }

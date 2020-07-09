@@ -14,7 +14,8 @@ import {
   addToCart,
   addToWishlist,
   removeFromWishlist,
-  fetchSingleProduct
+  fetchSingleProduct,
+  fetchRelatedProducts
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -23,6 +24,12 @@ import { Link, withRouter } from "react-router-dom";
 class Product extends React.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId);
+  }
+  componentDidUpdate() {
+    if (this.props.relatedProducts.length === 0) {
+      this.props.product &&
+        this.props.fetchRelatedProducts(this.props.product.subcategory);
+    }
   }
   constructor(props) {
     super(props);
@@ -82,6 +89,7 @@ class Product extends React.Component {
       itemInCart = this.props.cart.find(
         item => item._id === this.props.product._id
       );
+
       return (
         <React.Fragment>
           <Header />
@@ -229,66 +237,16 @@ class Product extends React.Component {
               <div className="related-products">
                 <h3>Related Products</h3>
                 <div className="related-products-wrapper">
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
+                  {this.props.relatedProducts.length !== 0 &&
+                    this.props.relatedProducts.map(item => (
+                      <Link key={item._id} to={`/product/${item._id}`}>
+                        <div key={item._id} className="related-product">
+                          <img src={item.imageUrl} alt={item.name} />
+                          <p>{item.name}</p>
+                          <p>Ksh.{item.price.toLocaleString()} </p>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
               </div>
               <div className="row product-features-reviews-specifications mt-3">
@@ -381,7 +339,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     product,
     wishlist: state.cartReducer.wishlist,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
+    relatedProducts: state.product.relatedProducts
   };
 };
 export default withRouter(
@@ -389,6 +348,7 @@ export default withRouter(
     addToCart,
     addToWishlist,
     removeFromWishlist,
-    fetchSingleProduct
+    fetchSingleProduct,
+    fetchRelatedProducts
   })(Product)
 );

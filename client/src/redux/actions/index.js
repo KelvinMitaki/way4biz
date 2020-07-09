@@ -47,7 +47,8 @@ import {
   HAS_MORE_CATEGORY_FALSE,
   SIGN_IN_CLICK,
   REGISTER_CLICK,
-  FETCH_SINGLE_PRODUCT
+  FETCH_SINGLE_PRODUCT,
+  FETCH_RELATED_PRODUCTS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -581,6 +582,20 @@ export const fetchSingleProduct = productId => async dispatch => {
     dispatch({ type: LOADING_START });
     const res = await axios.get(`/api/product/${productId}`);
     dispatch({ type: FETCH_SINGLE_PRODUCT, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRelatedProducts = subcategory => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(
+      `/api/products/category/subcategory/${subcategory}`
+    );
+    dispatch({ type: FETCH_RELATED_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
