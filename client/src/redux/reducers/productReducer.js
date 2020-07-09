@@ -20,7 +20,8 @@ const INITIAL_STATE = {
   buyerOrders: [],
   buyerOrderDetails: null,
   productCount: null,
-  hasMore: true
+  hasMore: true,
+  categoryProductCount: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -45,7 +46,11 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_CATEGORIES:
       return { ...state, categories: action.payload };
     case SINGLE_CATEGORY:
-      return { ...state, singleCategoryProducts: action.payload };
+      return {
+        ...state,
+        singleCategoryProducts: action.payload.products,
+        categoryProductCount: action.payload.productCount
+      };
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };
     case FETCH_BUYER_ORDERS:

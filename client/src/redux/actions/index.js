@@ -362,7 +362,6 @@ export const fetchProducts = () => async (dispatch, getState) => {
     const itemsToSkip = getState().product.products.length;
     dispatch({ type: LOADING_START });
     const res = await axios.post(`/api/products`, { itemsToSkip });
-    console.log(res.data);
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
@@ -422,10 +421,17 @@ export const fetchCategories = () => async dispatch => {
   }
 };
 
-export const singleCategory = (category, history) => async dispatch => {
+export const singleCategory = (category, history) => async (
+  dispatch,
+  getState
+) => {
   try {
+    const itemsToSkip = getState().product.singleCategoryProducts.length;
+
     dispatch({ type: LOADING_START });
-    const res = await axios.get(`/api/products/${category}`);
+    const res = await axios.post(`/api/products/skip/${category}`, {
+      itemsToSkip
+    });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: LOADING_STOP });
     history.push(`/products/category/${category}`);

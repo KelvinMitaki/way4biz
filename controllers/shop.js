@@ -22,7 +22,7 @@ route.post("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/products/:category", async (req, res) => {
+route.post("/api/products/skip/:category", async (req, res) => {
   try {
     const { category } = req.params;
     const { itemsToSkip } = req.body;
@@ -39,7 +39,7 @@ route.get("/api/products/:category", async (req, res) => {
       { $count: category }
     ]);
 
-    res.send({ products, productCount: productCount[0] });
+    res.send({ products, productCount: productCount[0][category] });
   } catch (error) {
     res.status(500).send(error);
   }
