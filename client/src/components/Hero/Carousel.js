@@ -7,6 +7,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import "./Carousel.css";
 import { connect } from "react-redux";
+import { signInClick, registerClick } from "../../redux/actions";
 
 class HeroCarousel extends React.Component {
   state = {
@@ -165,10 +166,18 @@ class HeroCarousel extends React.Component {
                 </p>
               </div>
               <div className="hero-auth-btns my-4">
-                <Link to="/sign-in" className="btn btn-md sign-in-hero-btn">
+                <Link
+                  onClick={() => this.props.signInClick()}
+                  to="/sign-in"
+                  className="btn btn-md sign-in-hero-btn"
+                >
                   Sign In
                 </Link>
-                <Link to="/" className="btn btn-md join-hero-btn">
+                <Link
+                  onClick={() => this.props.registerClick()}
+                  to="/sign-in"
+                  className="btn btn-md join-hero-btn"
+                >
                   Join
                 </Link>
               </div>
@@ -185,4 +194,6 @@ const mapStateToProps = state => {
     products: state.product.products
   };
 };
-export default withRouter(connect(mapStateToProps)(HeroCarousel));
+export default withRouter(
+  connect(mapStateToProps, { registerClick, signInClick })(HeroCarousel)
+);
