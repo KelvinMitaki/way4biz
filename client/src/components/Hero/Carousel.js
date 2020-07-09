@@ -161,11 +161,11 @@ class HeroCarousel extends React.Component {
                   <FaUserCircle />
                 </IconContext.Provider>
                 <p className="mt-3" style={{ fontWeight: "bolder" }}>
-                  Welcome Here
+                  Welcome to Way4Biz
                 </p>
               </div>
               <div className="hero-auth-btns my-4">
-                <Link to="/" className="btn btn-md sign-in-hero-btn">
+                <Link to="/sign-in" className="btn btn-md sign-in-hero-btn">
                   Sign In
                 </Link>
                 <Link to="/" className="btn btn-md join-hero-btn">
