@@ -46,7 +46,9 @@ import {
   MORE_SINGLE_CATEGORY_PRODUCTS,
   HAS_MORE_CATEGORY_FALSE,
   SIGN_IN_CLICK,
-  REGISTER_CLICK
+  REGISTER_CLICK,
+  FETCH_SINGLE_PRODUCT,
+  FETCH_RELATED_PRODUCTS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -348,7 +350,7 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post(
-      `/api/product/${getState().auth.user._id}`,
+      `/api/product/add/${getState().auth.user._id}`,
       product
     );
     console.log(res.data);
@@ -368,7 +370,7 @@ export const editProduct = (formvalues, productId, history) => async (
   try {
     dispatch({ type: LOADING_START });
     await axios.patch(
-      `/api/product/${getState().auth.user._id}/${productId}`,
+      `/api/product/edit/${getState().auth.user._id}/${productId}`,
       formvalues
     );
     dispatch({ type: LOADING_STOP });
@@ -573,4 +575,30 @@ export const registerClick = () => {
   return {
     type: REGISTER_CLICK
   };
+};
+
+export const fetchSingleProduct = productId => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/product/${productId}`);
+    dispatch({ type: FETCH_SINGLE_PRODUCT, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRelatedProducts = subcategory => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(
+      `/api/products/category/subcategory/${subcategory}`
+    );
+    dispatch({ type: FETCH_RELATED_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
 };

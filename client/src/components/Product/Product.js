@@ -14,17 +14,28 @@ import {
   addToCart,
   addToWishlist,
   removeFromWishlist,
+  fetchSingleProduct,
+  fetchRelatedProducts
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Product extends React.Component {
+  componentDidMount() {
+    this.props.fetchSingleProduct(this.props.match.params.productId);
+  }
+  componentDidUpdate() {
+    if (this.props.relatedProducts.length === 0) {
+      this.props.product &&
+        this.props.fetchRelatedProducts(this.props.product.subcategory);
+    }
+  }
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false,
+      clicked: false
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -33,9 +44,9 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
     const { product, addToCart } = this.props;
@@ -44,9 +55,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        modalShow: !prevState.modalShow,
+        modalShow: !prevState.modalShow
       };
     });
   }
@@ -57,14 +68,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl,
+        src: product.imageUrl
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800,
+        height: 1800
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
     };
   }
 
@@ -72,12 +83,13 @@ class Product extends React.Component {
     if (this.props.product) {
       const { stockQuantity } = this.props.product;
       const itemInWishlist = this.props.wishlist.find(
-        (item) => item._id === this.props.product._id
+        item => item._id === this.props.product._id
       );
       let itemInCart = false;
       itemInCart = this.props.cart.find(
-        (item) => item._id === this.props.product._id
+        item => item._id === this.props.product._id
       );
+
       return (
         <React.Fragment>
           <Header />
@@ -186,7 +198,7 @@ class Product extends React.Component {
                       <FaStore />
                     </IconContext.Provider>
                     <p className="store-name ml-2">
-                      Store Name Store Name Store Name Store Name Store Name
+                      {this.props.product.seller.storeName}
                     </p>
                   </div>
                   <div className="product-rating">
@@ -225,66 +237,16 @@ class Product extends React.Component {
               <div className="related-products">
                 <h3>Related Products</h3>
                 <div className="related-products-wrapper">
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
-                  <div className="related-product">
-                    <img src="/1.jpg" />
-                    <p>Related</p>
-                    <p>Ksh.20,000</p>
-                  </div>
+                  {this.props.relatedProducts.length !== 0 &&
+                    this.props.relatedProducts.map(item => (
+                      <Link key={item._id} to={`/product/${item._id}`}>
+                        <div key={item._id} className="related-product">
+                          <img src={item.imageUrl} alt={item.name} />
+                          <p>{item.name}</p>
+                          <p>Ksh.{item.price.toLocaleString()} </p>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
               </div>
               <div className="row product-features-reviews-specifications mt-3">
@@ -304,16 +266,16 @@ class Product extends React.Component {
                     <div>
                       <p
                         style={{
-                          color: "#000",
+                          color: "#000"
                         }}
                       >
-                        Store Name Store Name Store Name Store Name Store Name
+                        {this.props.product.seller.storeName}
                       </p>
                       <Rating size={20} />
                       <small>
                         <Link
                           style={{
-                            color: "#f76b1a",
+                            color: "#f76b1a"
                           }}
                           to="/"
                         >
@@ -367,19 +329,26 @@ class Product extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
-    product = state.product.products.find(
-      (product) =>
-        product._id.toString() === [ownProps.match.params.productId].toString()
-    );
+    product =
+      state.product.products.find(
+        product =>
+          product._id.toString() ===
+          [ownProps.match.params.productId].toString()
+      ) || state.product.product;
   }
   return {
     product,
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
+    relatedProducts: state.product.relatedProducts
   };
 };
-export default connect(mapStateToProps, {
-  addToCart,
-  addToWishlist,
-  removeFromWishlist,
-})(Product);
+export default withRouter(
+  connect(mapStateToProps, {
+    addToCart,
+    addToWishlist,
+    removeFromWishlist,
+    fetchSingleProduct,
+    fetchRelatedProducts
+  })(Product)
+);
