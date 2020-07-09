@@ -44,7 +44,9 @@ import {
   FETCH_MORE_PRODUCTS,
   HAS_MORE_FALSE,
   MORE_SINGLE_CATEGORY_PRODUCTS,
-  HAS_MORE_CATEGORY_FALSE
+  HAS_MORE_CATEGORY_FALSE,
+  SIGN_IN_CLICK,
+  REGISTER_CLICK
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -502,11 +504,10 @@ export const hasMoreCategoryFalse = () => {
     type: HAS_MORE_CATEGORY_FALSE
   };
 };
-export const fetchProducts = () => async (dispatch, getState) => {
+export const fetchProducts = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
-    console.log(res.data);
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
@@ -560,4 +561,16 @@ export const moreSingleCategoryProducts = category => async (
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
+};
+
+export const signInClick = () => {
+  return {
+    type: SIGN_IN_CLICK
+  };
+};
+
+export const registerClick = () => {
+  return {
+    type: REGISTER_CLICK
+  };
 };

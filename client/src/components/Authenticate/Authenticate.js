@@ -4,42 +4,16 @@ import "./Authenticate.css";
 import AuthHeader from "./AuthHeader";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import { signInClick, registerClick } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class Authenticate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      signInOpen: true
-    };
-
-    this.handleSignInClick = this.handleSignInClick.bind(this);
-    this.handleRegisterClick = this.handleRegisterClick.bind(this);
-  }
-
   handleSignInClick(e) {
-    this.setState(prevState => {
-      if (!prevState.signInOpen) {
-        return {
-          signInOpen: true
-        };
-      }
-      return {
-        signInOpen: prevState.signInOpen
-      };
-    });
+    this.props.signInClick();
   }
 
   handleRegisterClick(e) {
-    this.setState(prevState => {
-      if (prevState.signInOpen) {
-        return {
-          signInOpen: false
-        };
-      }
-      return {
-        signInOpen: prevState.signInOpen
-      };
-    });
+    this.props.registerClick();
   }
 
   render() {
@@ -51,7 +25,7 @@ class Authenticate extends React.Component {
             <div className="col" id="auth-navigator">
               <div>
                 <p onClick={this.handleSignInClick} className="mr-4">
-                  {this.state.signInOpen ? (
+                  {this.props.signInOpen ? (
                     <span style={{ color: "#f76b1a" }}> Sign in</span>
                   ) : (
                     <span> Sign in</span>
@@ -61,7 +35,7 @@ class Authenticate extends React.Component {
               |
               <div>
                 <p onClick={this.handleRegisterClick} className="ml-4">
-                  {!this.state.signInOpen ? (
+                  {!this.props.signInOpen ? (
                     <span style={{ color: "#f76b1a" }}> Register</span>
                   ) : (
                     <span> Register</span>
@@ -72,7 +46,7 @@ class Authenticate extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              {this.state.signInOpen ? (
+              {this.props.signInOpen ? (
                 <LoginForm />
               ) : (
                 <RegisterForm handleSignInClick={this.handleSignInClick} />
@@ -84,5 +58,11 @@ class Authenticate extends React.Component {
     );
   }
 }
-
-export default Authenticate;
+const mapStateToProps = state => {
+  return {
+    signInOpen: state.auth.signInOpen
+  };
+};
+export default connect(mapStateToProps, { signInClick, registerClick })(
+  Authenticate
+);
