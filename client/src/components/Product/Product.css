@@ -128,6 +128,15 @@ hr {
   -webkit-overflow-scrolling: touch;
 }
 
+.related-products-wrapper a {
+  color: #000;
+}
+
+.related-products-wrapper a:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
 .related-products-wrapper::-webkit-scrollbar {
   height: 5px !important;
 }
@@ -151,10 +160,19 @@ hr {
   display: inline-block;
   zoom: 1;
   float: none;
+  text-align: center;
 }
 
 .related-product img {
   width: 100%;
+}
+
+.related-product-name {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: smaller;
 }
 
 @media screen and (max-width: 960px) {

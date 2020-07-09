@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import "./AccountMenu.css";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 
 export class AccountMenu extends Component {
@@ -42,7 +43,17 @@ export class AccountMenu extends Component {
           </NavLink>
         </div>
         <br />
-        {/* <br /> */}
+        <div className="account-menu-wrapper">
+          <NavLink
+            activeClassName="account-active"
+            to="/pending/reviews"
+            className="navlink"
+          >
+            <MdRateReview />
+            <span className="ml-2">Pending Reviews</span>
+          </NavLink>
+        </div>
+        <br />
         <div className="account-menu-wrapper account-logout-wrapper">
           <a
             id="account-logout"

@@ -2,12 +2,14 @@ import React from "react";
 import { Carousel } from "react-bootstrap";
 // import { Carousel } from "react-responsive-carousel";
 import { IconContext } from "react-icons";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaUserAlt } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
 
 import "./Carousel.css";
 import { connect } from "react-redux";
 import { signInClick, registerClick } from "../../redux/actions";
+import { MdRateReview } from "react-icons/md";
+import { GoClippy } from "react-icons/go";
 
 class HeroCarousel extends React.Component {
   state = {
@@ -159,28 +161,87 @@ class HeroCarousel extends React.Component {
             <div className="hero-account-section">
               <div className="d-flex justify-content-center flex-column align-items-center">
                 <IconContext.Provider value={{ className: "hero-user" }}>
-                  <FaUserCircle />
+                  {this.props.user ? (
+                    <React.Fragment>
+                      <FaUserCircle />
+                      <strong>Hi, {this.props.user.firstName}</strong>
+                    </React.Fragment>
+                  ) : (
+                    <FaUserCircle />
+                  )}
                 </IconContext.Provider>
-                <p className="mt-3" style={{ fontWeight: "bolder" }}>
-                  Welcome to Way4Biz
-                </p>
+                {!this.props.user ? (
+                  <p className="mt-3" style={{ fontWeight: "bolder" }}>
+                    Welcome to Way4Biz
+                  </p>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      width: "100%"
+                    }}
+                    className="mt-4"
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <Link to="/account" className="hero-account-link">
+                        <FaUserAlt fontSize={40} />
+                        <p>Account</p>
+                      </Link>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <Link to="/orders" className="hero-account-link">
+                        <GoClippy fontSize={40} />
+                        <p>Orders</p>
+                      </Link>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <Link to="/pending/reviews" className="hero-account-link">
+                        <MdRateReview fontSize={40} />
+
+                        <p> Reviews</p>
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="hero-auth-btns my-4">
-                <Link
-                  onClick={() => this.props.signInClick()}
-                  to="/sign-in"
-                  className="btn btn-md sign-in-hero-btn"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  onClick={() => this.props.registerClick()}
-                  to="/sign-in"
-                  className="btn btn-md join-hero-btn"
-                >
-                  Join
-                </Link>
-              </div>
+              {!this.props.user ? (
+                <div className="hero-auth-btns my-4">
+                  <Link
+                    onClick={() => this.props.signInClick()}
+                    to="/sign-in"
+                    className="btn btn-md sign-in-hero-btn"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    onClick={() => this.props.registerClick()}
+                    to="/sign-in"
+                    className="btn btn-md join-hero-btn"
+                  >
+                    Join
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -191,7 +252,8 @@ class HeroCarousel extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.products,
+    user: state.auth.user
   };
 };
 export default withRouter(

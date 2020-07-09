@@ -117,7 +117,19 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
+.hero-account-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.hero-account-link:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.hero-account-link p {
+  color: #333;
+}
 @media screen and (max-width: 960px) {
   .hero-carousel-wrapper {
     height: 250px;

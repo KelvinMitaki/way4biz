@@ -179,10 +179,12 @@ export const checkoutUser = (credentials, history) => async (
 
 export const fetchProductsSearch = searchTerm => async dispatch => {
   try {
-    const res = await axios.post("/api/product/search", {
-      searchTerm
-    });
-    dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
+    if (searchTerm.trim()) {
+      const res = await axios.post("/api/product/search", {
+        searchTerm
+      });
+      dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
+    }
   } catch (error) {
     dispatch({ type: FETCH_PRODUCTS_FAILED });
     console.log(error.response);
