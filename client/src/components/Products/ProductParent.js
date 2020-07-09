@@ -12,15 +12,24 @@ export class ProductParent extends Component {
     );
   }
   render() {
+    console.log("parent", this.props.singleCategoryProducts.length);
     return (
       <React.Fragment>
-        {this.props.categoryProductCount !== null && <Products />}
+        {this.props.categoryProductCount !== null && (
+          <Products
+            length={this.props.singleCategoryProducts.length}
+            key={this.props.location.key}
+          />
+        )}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => {
-  return { categoryProductCount: state.product.categoryProductCount };
+  return {
+    categoryProductCount: state.product.categoryProductCount,
+    singleCategoryProducts: state.product.singleCategoryProducts
+  };
 };
 export default withRouter(
   connect(mapStateToProps, { singleCategory })(ProductParent)

@@ -549,11 +549,15 @@ export const moreSingleCategoryProducts = category => async (
 ) => {
   try {
     const itemsToSkip = getState().product.singleCategoryProducts.length;
-    dispatch({ type: LOADING_START });
-    const res = await axios.post(`/api/products/skip/${category}`, {
-      itemsToSkip
-    });
-    dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+    const prodCount = getState().product.categoryProductCount;
+    const singleProdLength = getState().product.singleCategoryProducts.length;
+    if (singleProdLength < prodCount) {
+      dispatch({ type: LOADING_START });
+      const res = await axios.post(`/api/products/skip/${category}`, {
+        itemsToSkip
+      });
+      dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+    }
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });

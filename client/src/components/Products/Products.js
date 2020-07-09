@@ -19,12 +19,10 @@ function Products(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
-      console.log(
-        props.singleCategoryProducts.length < props.categoryProductCount
-      );
+      console.log(props.length < props.categoryProductCount);
       console.log(props.categoryProductCount);
-      console.log(props.singleCategoryProducts.length);
-      if (props.singleCategoryProducts.length < props.categoryProductCount) {
+      console.log(props.length);
+      if (props.length < props.categoryProductCount) {
         console.log("fetching");
         console.log(props.match.params);
         return props.moreSingleCategoryProducts(props.match.params.category);
