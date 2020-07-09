@@ -33,6 +33,7 @@ import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
 import "react-responsive-tabs/styles.css";
 import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 import ProductParent from "./components/Products/ProductParent";
+import PendingReviews from "./components/Account/PendingReviews";
 
 class App extends React.Component {
   componentDidMount() {
@@ -214,6 +215,17 @@ class App extends React.Component {
                     }
                   />
                   <Route
+                    path="/pending/reviews"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <PendingReviews />
+                      )
+                    }
+                  />
+                  <Route
                     path="/checkout"
                     exact
                     render={() =>
@@ -289,16 +301,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);
