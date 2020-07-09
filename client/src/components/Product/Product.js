@@ -190,7 +190,7 @@ class Product extends React.Component {
                       <FaStore />
                     </IconContext.Provider>
                     <p className="store-name ml-2">
-                      Store Name Store Name Store Name Store Name Store Name
+                      {this.props.product.seller.storeName}
                     </p>
                   </div>
                   <div className="product-rating">
@@ -311,7 +311,7 @@ class Product extends React.Component {
                           color: "#000"
                         }}
                       >
-                        Store Name Store Name Store Name Store Name Store Name
+                        {this.props.product.seller.storeName}
                       </p>
                       <Rating size={20} />
                       <small>
