@@ -1,6 +1,6 @@
 import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import "./SellerHamburgerMenu.css";
 
@@ -97,9 +97,9 @@ class SellerHamburgerMenu extends React.Component {
               <hr />
               <ul id="seller-others-links">
                 <li className="my-4">
-                  <a className="link" href="/">
+                  <Link className="link" to="/">
                     Buy
-                  </a>
+                  </Link>
                 </li>
                 <li className="my-4">
                   <NavLink
@@ -120,9 +120,9 @@ class SellerHamburgerMenu extends React.Component {
                   </NavLink>
                 </li>
                 <li className="my-4">
-                  <a className="link" href="/api/logout">
+                  <Link className="link" to="/api/logout">
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
