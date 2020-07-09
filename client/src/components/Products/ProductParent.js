@@ -12,7 +12,6 @@ export class ProductParent extends Component {
     );
   }
   render() {
-    console.log("parent", this.props.singleCategoryProducts.length);
     return (
       <React.Fragment>
         {this.props.categoryProductCount !== null && (
