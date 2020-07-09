@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Product from "./components/Product/Product";
 import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
@@ -34,6 +33,8 @@ import "react-responsive-tabs/styles.css";
 import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 import ProductParent from "./components/Products/ProductParent";
 import PendingReviews from "./components/Account/PendingReviews";
+import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
+import ParentProduct from "./components/Product/ParentProduct";
 
 class App extends React.Component {
   componentDidMount() {
@@ -49,6 +50,11 @@ class App extends React.Component {
           <MobileLogo />
           <div>
             <Route path="/" exact component={Home} />
+            <Route
+              path="/product/reviews"
+              exact
+              component={ProductReviewsWrapper}
+            />
             <Route
               path="/products/category/:category"
               exact
@@ -145,7 +151,11 @@ class App extends React.Component {
                       )
                     }
                   />
-                  <Route path="/product/:productId" exact component={Product} />
+                  <Route
+                    path="/product/:productId"
+                    exact
+                    component={ParentProduct}
+                  />
                   <Route path="/categories" exact component={MainCategories} />
                   <Route path="/cart" exact component={Cart} />
                   <Route
@@ -301,16 +311,16 @@ class App extends React.Component {
     return null;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
