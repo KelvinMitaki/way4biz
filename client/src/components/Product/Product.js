@@ -190,7 +190,7 @@ class Product extends React.Component {
                     </p>
                   </div>
                   <div className="product-rating">
-                    <Rating size={10} clickable={false} value={5} />
+                    <Rating size={18} clickable={false} value={5} />
                     <span className="ml-2">
                       <Link style={{ color: "#f76b1a" }} to="/">
                         (0 Reviews)
@@ -309,7 +309,7 @@ class Product extends React.Component {
                       >
                         Store Name Store Name Store Name Store Name Store Name
                       </p>
-                      <Rating size={15} />
+                      <Rating size={20} />
                       <small>
                         <Link
                           style={{
