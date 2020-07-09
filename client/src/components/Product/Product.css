@@ -87,6 +87,24 @@ hr {
   box-shadow: none;
 }
 
+.product-seller-store {
+  /* display: flex; */
+  padding-left: 10px;
+}
+.product-seller-store-icon {
+  font-size: 60px;
+  color: black;
+}
+
+.seller-recommendation-product {
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.seller-recommendation-product img {
+  width: 100%;
+}
+
 @media screen and (max-width: 960px) {
   .product-wrapper {
     padding: 0;

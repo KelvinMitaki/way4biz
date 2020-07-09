@@ -2,6 +2,7 @@ import React from "react";
 import ReactImageMagnify from "react-image-magnify";
 import OwlCarousel from "react-owl-carousel";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { FaStore } from "react-icons/fa";
 import "./Product.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -12,7 +13,7 @@ import { connect } from "react-redux";
 import {
   addToCart,
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -23,7 +24,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false
+      clicked: false,
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -32,9 +33,9 @@ class Product extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
     const { product, addToCart } = this.props;
@@ -43,9 +44,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -56,14 +57,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl,
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800
+        height: 1800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -71,11 +72,11 @@ class Product extends React.Component {
     if (this.props.product) {
       const { stockQuantity } = this.props.product;
       const itemInWishlist = this.props.wishlist.find(
-        item => item._id === this.props.product._id
+        (item) => item._id === this.props.product._id
       );
       let itemInCart = false;
       itemInCart = this.props.cart.find(
-        item => item._id === this.props.product._id
+        (item) => item._id === this.props.product._id
       );
       return (
         <React.Fragment>
@@ -213,8 +214,62 @@ class Product extends React.Component {
               </div>
               <div className="row product-features-reviews-specifications">
                 <div className="col-lg-2 product-features-reviews-specifications-sidebar">
-                  <div>
-                    <p>Seller Store Details Here</p>
+                  <div className="product-seller-store">
+                    <h5
+                      className="my-2"
+                      style={{ textDecoration: "underline" }}
+                    >
+                      Seller Store
+                    </h5>
+                    <IconContext.Provider
+                      value={{ className: "product-seller-store-icon" }}
+                    >
+                      <FaStore />
+                    </IconContext.Provider>
+                    <div>
+                      <p
+                        style={{
+                          color: "#000",
+                        }}
+                      >
+                        Store Name Store Name Store Name Store Name Store Name
+                      </p>
+                      <Rating size={15} />
+                      <small>
+                        <Link
+                          style={{
+                            color: "#f76b1a",
+                          }}
+                          to="/"
+                        >
+                          Visit Store
+                        </Link>
+                      </small>
+                    </div>
+                    <h6
+                      className="my-2"
+                      style={{ fontSize: "15px", fontWeight: "bolder" }}
+                    >
+                      Seller Recommendations
+                    </h6>
+                    <div style={{ borderTop: "1px solid #d4d4d4" }}></div>
+                    <div id="seller-recommendation-products">
+                      <div className="seller-recommendation-product">
+                        <img src="/1.jpg" alt="helloo" />
+                        <p>Item Name</p>
+                        <p>Ksh.20,000</p>
+                      </div>
+                      <div className="seller-recommendation-product">
+                        <img src="/1.jpg" alt="helloo" />
+                        <p>Item Name</p>
+                        <p>Ksh.20,000</p>
+                      </div>
+                      <div className="seller-recommendation-product">
+                        <img src="/1.jpg" alt="helloo" />
+                        <p>Item Name</p>
+                        <p>Ksh.20,000</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="col-lg-10 p-0">
@@ -238,18 +293,18 @@ const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
     product = state.product.products.find(
-      product =>
+      (product) =>
         product._id.toString() === [ownProps.match.params.productId].toString()
     );
   }
   return {
     product,
     wishlist: state.cartReducer.wishlist,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default connect(mapStateToProps, {
   addToCart,
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 })(Product);
