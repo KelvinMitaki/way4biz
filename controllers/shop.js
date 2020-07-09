@@ -7,13 +7,16 @@ const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 
-route.get("/api/products", async (req, res) => {
+route.post("/api/products", async (req, res) => {
   try {
+    const { itemsToSkip } = req.body;
     const products = await Product.find()
+      .skip(itemsToSkip)
+      .limit(6)
       .populate("seller", "storeName")
       .exec();
-
-    res.send(products);
+    const productCount = await Product.estimatedDocumentCount();
+    res.send({ products, productCount });
   } catch (error) {
     res.status(500).send(error);
   }
