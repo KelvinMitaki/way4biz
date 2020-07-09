@@ -179,8 +179,18 @@ class Product extends React.Component {
                       )}
                     </IconContext.Provider>
                   </div>
+                  <div className="product-store">
+                    <IconContext.Provider
+                      value={{ className: "product-store-icon-wrapper" }}
+                    >
+                      <FaStore />
+                    </IconContext.Provider>
+                    <p className="store-name ml-2">
+                      Store Name Store Name Store Name Store Name Store Name
+                    </p>
+                  </div>
                   <div className="product-rating">
-                    <Rating size={20} />
+                    <Rating size={10} clickable={false} value={5} />
                     <span className="ml-2">
                       <Link style={{ color: "#f76b1a" }} to="/">
                         (0 Reviews)
@@ -212,8 +222,73 @@ class Product extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="row product-features-reviews-specifications">
-                <div className="col-lg-2 product-features-reviews-specifications-sidebar">
+              <div className="related-products">
+                <h3>Related Products</h3>
+                <div className="related-products-wrapper">
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                  <div className="related-product">
+                    <img src="/1.jpg" />
+                    <p>Related</p>
+                    <p>Ksh.20,000</p>
+                  </div>
+                </div>
+              </div>
+              <div className="row product-features-reviews-specifications mt-3">
+                <div className="col-lg-2 product-features-reviews-specifications-sidebar box-container">
                   <div className="product-seller-store">
                     <h5
                       className="my-2"

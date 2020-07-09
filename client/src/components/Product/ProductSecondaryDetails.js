@@ -26,7 +26,7 @@ class ProductSecondaryDetails extends React.Component {
       getContent: () => productTab.data,
       key: index,
       tabClassName: "tab",
-      panelClassName: "panel",
+      panelClassName: "product-panel",
     }));
   };
   render() {

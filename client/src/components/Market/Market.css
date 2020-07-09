@@ -85,7 +85,7 @@
 @media screen and (max-width: 540px) {
   .product-name,
   .store-name {
-    width: 200px;
+    width: 140px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
