@@ -7,6 +7,7 @@ const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 const { db } = require("../models/Product");
+const Review = require("../models/Reviews");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -361,6 +362,15 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
       return res.status(404).send({ message: "No order with that Id" });
     }
     res.send(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
+  try {
+    const reviews = Review.find({ user: req.session.user._id });
+    res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -13,6 +13,11 @@ const ReviewSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true
+  },
+  order: {
+    type: mongoose.Types.ObjectId,
+    ref: "Order",
+    required: true
   }
 });
 const Review = mongoose.model("Review", ReviewSchema);
