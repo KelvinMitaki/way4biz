@@ -35,6 +35,7 @@ import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
 import ProductParent from "./components/Products/ProductParent";
 import PendingReviews from "./components/Account/PendingReviews";
 import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
+import AddReview from "./components/Account/AddReview";
 
 class App extends React.Component {
   componentDidMount() {
@@ -217,6 +218,17 @@ class App extends React.Component {
                         <Redirect to="/sign-in" />
                       ) : (
                         <AddressForm />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/add/review"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <AddReview />
                       )
                     }
                   />

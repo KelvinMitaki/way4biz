@@ -52,7 +52,7 @@ class PendingReviews extends React.Component {
                       </div>
                     </div>
                     <div className="col-md-2 rate-link-wrapper">
-                      <Link to="/">Rate</Link>
+                      <Link to="/add/review">Rate</Link>
                     </div>
                   </div>
                   <div className="buyer-pending-review box-container row">
