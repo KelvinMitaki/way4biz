@@ -8,7 +8,6 @@ class ProductReviews extends React.Component {
     return (
       <div style={{ borderTop: "1px solid #d4d4d4" }}>
         {/* mapping here */}
-
         <div className="buyer-review-wrapper">
           <Rating size={15} clickable={false} value={5} />
           <p>

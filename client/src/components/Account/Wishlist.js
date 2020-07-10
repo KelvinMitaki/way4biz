@@ -48,27 +48,25 @@ export class Wishlist extends Component {
               <div className="container-fluid wishlist-saved-items">
                 {/* mapping here */}
                 {this.props.wishlist.length !== 0 &&
-                  this.props.wishlist.map(item => (
+                  this.props.wishlist.map((item) => (
                     <div
                       className="wishlist-product-wrapper box-container"
                       key={item._id}
                     >
                       <div className="row align-items-center">
-                        <div className="col-lg-7 wishlist-item-image">
+                        <div className="col-12 wishlist-item-image">
                           <div className="row align-items-center">
-                            <div className="image col-md-4 p-0">
+                            <div className="image col-md-3 p-0">
                               <img src={item.imageUrl} alt={item.name} />
                             </div>
-                            <div className="col-md-8">
-                              <h4 id="wishlist-product-name" className="my-3">
-                                {item.name}
-                              </h4>
+                            <div className="col-md-9">
+                              <h4 className="my-3">{item.name}</h4>
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-5 wishlist-more-info">
-                          <div className="row">
-                            <div className="col-6">
+                        <div className="col-12 wishlist-more-info">
+                          <div className="row my-3">
+                            <div className="col-6 d-flex justify-content-center">
                               {item.stockQuantity >= 1 ? (
                                 <Link
                                   id="order-today-link"
@@ -85,7 +83,7 @@ export class Wishlist extends Component {
                             </div>
                             <div
                               id="remove-wishlist"
-                              className="col-6"
+                              className="col-6 d-flex justify-content-center"
                               style={{ cursor: "pointer" }}
                               onClick={() =>
                                 this.props.removeFromWishlist(item)
@@ -113,9 +111,9 @@ export class Wishlist extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 export default connect(mapStateToProps, { addToCart, removeFromWishlist })(
