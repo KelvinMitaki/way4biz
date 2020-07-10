@@ -48,7 +48,8 @@ import {
   SIGN_IN_CLICK,
   REGISTER_CLICK,
   FETCH_SINGLE_PRODUCT,
-  FETCH_RELATED_PRODUCTS
+  FETCH_RELATED_PRODUCTS,
+  FETCH_PENDING_REVIEWS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -598,6 +599,18 @@ export const fetchRelatedProducts = subcategory => async dispatch => {
       `/api/products/category/subcategory/${subcategory}`
     );
     dispatch({ type: FETCH_RELATED_PRODUCTS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchPendingReviews = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/pending/reviews");
+    dispatch({ type: FETCH_PENDING_REVIEWS, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
