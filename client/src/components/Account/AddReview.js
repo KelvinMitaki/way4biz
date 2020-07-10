@@ -8,7 +8,7 @@ import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import Rating from "../Product/Rating";
-import { redirectOnFail } from "../../redux/actions";
+import { redirectOnFail, submitReview } from "../../redux/actions";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import AddReviewForm from "./AddReviewForm";
@@ -44,13 +44,37 @@ class AddReview extends Component {
               <div className="d-flex justify-content-center my-3">
                 <Rating clickable={true} />
               </div>
-              <form style={{ textAlign: "center" }}>
+              <form
+                style={{ textAlign: "center" }}
+                onSubmit={this.props.handleSubmit(formValues =>
+                  submitReview(
+                    formValues,
+                    this.props.match.params.productId,
+                    this.props.match.params.orderId
+                  )
+                )}
+              >
                 <Field name="firstName" component={AddReviewForm} type="text" />
                 <Field name="title" component={AddReviewForm} type="text" />
                 <Field name="body" component={AddReviewForm} type="text" />
 
-                <button className="btn btn-md submit-review-btn">
-                  Submit Review
+                <button
+                  className="btn btn-md submit-review-btn"
+                  disabled={!this.props.valid || this.props.loading}
+                  type="submit"
+                >
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Submit Review</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -66,7 +90,7 @@ const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
-    (formValues.firstName && formValues.trim().length === 0)
+    (formValues.firstName && formValues.firstName.trim().length === 0)
   ) {
     errors.firstName = "Please enter a valid first name";
   }
@@ -84,8 +108,13 @@ const validate = formValues => {
   }
   return errors;
 };
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user
+  };
+};
 export default withRouter(
-  reduxForm({ validate, form: "AddReview" })(
-    connect(null, { redirectOnFail })(AddReview)
+  connect(mapStateToProps, { redirectOnFail })(
+    reduxForm({ validate, form: "AddReview" })(AddReview)
   )
 );

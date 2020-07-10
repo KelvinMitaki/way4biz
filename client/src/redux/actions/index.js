@@ -627,7 +627,6 @@ export const redirectOnFail = (
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
-    console.log(res.data);
     dispatch({ type: LOADING_STOP });
     if (!res.data.order) {
       history.push("/pending/reviews");
@@ -635,6 +634,5 @@ export const redirectOnFail = (
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     history.push("/pending/reviews");
-    console.log(error.response);
   }
 };

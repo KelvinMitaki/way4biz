@@ -10,10 +10,9 @@ const AddReviewForm = props => {
           placeholder={props.placeholder}
           className="form-control review-form-field"
         />
-      </div>
-
-      <div style={{ color: "red" }}>
-        {props.meta.touched && props.meta.error}
+        <span style={{ color: "red" }}>
+          {props.meta.touched && props.meta.error}
+        </span>
       </div>
     </div>
   );
