@@ -31,7 +31,6 @@ class Rating extends React.Component {
           size={this.props.size}
           activeColor={"#f76b10"}
           inactiveColor={"#d4d4d4"}
-          style={{ width: "100%" }}
         />
       </div>
     );

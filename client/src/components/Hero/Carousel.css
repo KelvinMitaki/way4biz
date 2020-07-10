@@ -130,6 +130,16 @@
 .hero-account-link p {
   color: #333;
 }
+
+.hero-account-icon-wrapper {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #f76b1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @media screen and (max-width: 960px) {
   .hero-carousel-wrapper {
     height: 250px;

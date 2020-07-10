@@ -41,7 +41,7 @@ class PendingReviews extends React.Component {
                 <div className="buyer-pending-reviews-wrapper mt-2 container">
                   {/* mapping takes place here */}
                   <div className="buyer-pending-review box-container row">
-                    <div className="col-md-7 d-flex">
+                    <div className="col-md-10 d-flex">
                       <img src="/1.jpg" />
                       <div id="buyer-review-product-name">
                         <h6>
@@ -51,12 +51,27 @@ class PendingReviews extends React.Component {
                         <p>Ksh.30,0000</p>
                       </div>
                     </div>
-                    <div className="col-md-5 rate-link-wrapper">
+                    <div className="col-md-2 rate-link-wrapper">
+                      <Link to="/add/review">Rate</Link>
+                    </div>
+                  </div>
+                  <div className="buyer-pending-review box-container row">
+                    <div className="col-md-10 d-flex">
+                      <img src="/1.jpg" />
+                      <div id="buyer-review-product-name">
+                        <h6>
+                          Test Seller With This Test Seller With This Test
+                          Seller With This Test Seller With This
+                        </h6>
+                        <p>Ksh.30,0000</p>
+                      </div>
+                    </div>
+                    <div className="col-md-2 rate-link-wrapper">
                       <Link to="/">Rate</Link>
                     </div>
                   </div>
                   <div className="buyer-pending-review box-container row">
-                    <div className="col-md-7 d-flex">
+                    <div className="col-md-10 d-flex">
                       <img src="/1.jpg" />
                       <div id="buyer-review-product-name">
                         <h6>
@@ -66,22 +81,7 @@ class PendingReviews extends React.Component {
                         <p>Ksh.30,0000</p>
                       </div>
                     </div>
-                    <div className="col-md-5 rate-link-wrapper">
-                      <Link to="/">Rate</Link>
-                    </div>
-                  </div>
-                  <div className="buyer-pending-review box-container row">
-                    <div className="col-md-7 d-flex">
-                      <img src="/1.jpg" />
-                      <div id="buyer-review-product-name">
-                        <h6>
-                          Test Seller With This Test Seller With This Test
-                          Seller With This Test Seller With This
-                        </h6>
-                        <p>Ksh.30,0000</p>
-                      </div>
-                    </div>
-                    <div className="col-md-5 rate-link-wrapper">
+                    <div className="col-md-2 rate-link-wrapper">
                       <Link to="/">Rate</Link>
                     </div>
                   </div>

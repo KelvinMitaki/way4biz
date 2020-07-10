@@ -55,7 +55,7 @@
 }
 
 #wishlist-product-name {
-  max-width: 200px;
+  width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
