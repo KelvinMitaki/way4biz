@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
-import { Link } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import "./AddReview.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -8,17 +8,30 @@ import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import Rating from "../Product/Rating";
-
+import axios from "axios";
 class AddReview extends Component {
   state = {
     review: "",
+    error: null
   };
-  handleChange = (e) => {
+  async componentDidMount() {
+    try {
+      const res = await axios.get(
+        `/api/url/add/review/${this.props.match.params.productId}/${this.props.match.params.orderId}`
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.response);
+      this.setState({ error: error.response.data });
+    }
+  }
+  handleChange = e => {
     this.setState({
-      review: e.target.value,
+      review: e.target.value
     });
   };
   render() {
+    if (this.state.error) return <Redirect to="/pending/reviews" />;
     return (
       <div>
         <AccountHeader />
@@ -83,4 +96,4 @@ class AddReview extends Component {
   }
 }
 
-export default AddReview;
+export default withRouter(AddReview);

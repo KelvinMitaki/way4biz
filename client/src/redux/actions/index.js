@@ -604,3 +604,18 @@ export const fetchRelatedProducts = subcategory => async dispatch => {
     console.log(error.response);
   }
 };
+
+export const submitReview = (review, productId, orderId) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post(
+      `/api/new/review/${productId}/${orderId}`,
+      review
+    );
+    console.log(res);
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};

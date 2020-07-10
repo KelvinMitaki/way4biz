@@ -366,7 +366,7 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
-
+// FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT
 route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.session.user._id });
@@ -375,6 +375,8 @@ route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// CHECK ON ORDERS WHERE REVIEWED===FALSE
 route.get("/api/pending/reviews", auth, async (req, res) => {
   try {
   } catch (error) {
@@ -400,6 +402,8 @@ route.post(
       }
       const { title, body } = req.body;
       const { orderId, productId } = req.params;
+      await Product.findById(productId);
+      await Order.findById(orderId);
       const review = new Review({
         title,
         body,
@@ -417,6 +421,15 @@ route.post(
     }
   }
 );
+route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
+  try {
+    const { productId, orderId } = req.params;
+    await Order.findOne({ _id: orderId, "items.product": productId });
+    res.send({ message: "Ok" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
