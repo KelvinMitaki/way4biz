@@ -45,7 +45,7 @@ class AddReview extends Component {
                 <Rating clickable={true} />
               </div>
               <form style={{ textAlign: "center" }}>
-                <Field name="username" component={AddReviewForm} type="text" />
+                <Field name="firstName" component={AddReviewForm} type="text" />
                 <Field name="title" component={AddReviewForm} type="text" />
                 <Field name="body" component={AddReviewForm} type="text" />
 
@@ -64,7 +64,24 @@ class AddReview extends Component {
 }
 const validate = formValues => {
   const errors = {};
-
+  if (
+    !formValues.firstName ||
+    (formValues.firstName && formValues.trim().length === 0)
+  ) {
+    errors.firstName = "Please enter a valid first name";
+  }
+  if (
+    !formValues.title ||
+    (formValues.title && formValues.title.trim().length < 2)
+  ) {
+    errors.title = "Please enter a valid title";
+  }
+  if (
+    !formValues.body ||
+    (formValues.body && formValues.body.trim().length < 2)
+  ) {
+    errors.body = "Please enter a valid review";
+  }
   return errors;
 };
 export default withRouter(
