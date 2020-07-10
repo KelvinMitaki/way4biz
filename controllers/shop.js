@@ -369,13 +369,34 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
 
 route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
   try {
-    const reviews = Review.find({ user: req.session.user._id });
+    const reviews = await Review.find({ user: req.session.user._id });
     res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
   }
 });
-
+route.post(
+  "/api/new/review",
+  auth,
+  check("title")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please enter a valid title"),
+  check("body")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please enter a valid body"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
