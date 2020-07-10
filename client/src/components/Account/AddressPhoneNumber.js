@@ -4,7 +4,7 @@ import "../Authenticate/Field.css";
 
 const AddressPhoneNumber = (props) => {
   return (
-    <div className="form-group">
+    <div className="form-group form-input2">
       <strong>{props.label}</strong>
       <div className="input-group">
         <br />

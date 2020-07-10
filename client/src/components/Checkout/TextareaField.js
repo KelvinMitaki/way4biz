@@ -2,7 +2,7 @@ import React from "react";
 
 const TextareaForm = (props) => {
   return (
-    <div className="form-group">
+    <div className="form-group form-input2">
       <strong>{props.label}</strong>
       <br />
       <textarea {...props.input} className="form-control" rows="5"></textarea>
