@@ -252,65 +252,6 @@ class Product extends React.Component {
                 </div>
               </div>
               <div className="row product-features-reviews-specifications mt-3">
-                {/* <div className="col-lg-2 product-features-reviews-specifications-sidebar box-container">
-                  <div className="product-seller-store">
-                    <h5
-                      className="my-2"
-                      style={{ textDecoration: "underline" }}
-                    >
-                      Seller Store
-                    </h5>
-                    <IconContext.Provider
-                      value={{ className: "product-seller-store-icon" }}
-                    >
-                      <FaStore />
-                    </IconContext.Provider>
-                    <div>
-                      <p
-                        style={{
-                          color: "#000",
-                        }}
-                      >
-                        {this.props.product.seller.storeName}
-                      </p>
-                      
-                      <small>
-                        <Link
-                          style={{
-                            color: "#f76b1a",
-                          }}
-                          to="/"
-                        >
-                          Visit Store
-                        </Link>
-                      </small>
-                    </div>
-                    <h6
-                      className="my-2"
-                      style={{ fontSize: "15px", fontWeight: "bolder" }}
-                    >
-                      Seller Recommendations
-                    </h6>
-                    <div style={{ borderTop: "1px solid #d4d4d4" }}></div>
-                    <div id="seller-recommendation-products">
-                      <div className="seller-recommendation-product">
-                        <img src="/1.jpg" alt="helloo" />
-                        <p>Item Name</p>
-                        <p>Ksh.20,000</p>
-                      </div>
-                      <div className="seller-recommendation-product">
-                        <img src="/1.jpg" alt="helloo" />
-                        <p>Item Name</p>
-                        <p>Ksh.20,000</p>
-                      </div>
-                      <div className="seller-recommendation-product">
-                        <img src="/1.jpg" alt="helloo" />
-                        <p>Item Name</p>
-                        <p>Ksh.20,000</p>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                 <div className="col p-0">
                   <ProductSecondaryDetails
                     details={this.props.product.description}
