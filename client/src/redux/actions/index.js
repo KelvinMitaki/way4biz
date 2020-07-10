@@ -612,7 +612,7 @@ export const submitReview = (review, productId, orderId) => async dispatch => {
       `/api/new/review/${productId}/${orderId}`,
       review
     );
-    console.log(res);
+    console.log(res.data);
     dispatch({ type: LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });

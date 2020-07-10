@@ -8,13 +8,11 @@ import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import Rating from "../Product/Rating";
-import axios from "axios";
 import { redirectOnFail } from "../../redux/actions";
 import { connect } from "react-redux";
+import { reduxForm, Field } from "redux-form";
+import AddReviewForm from "./AddReviewForm";
 class AddReview extends Component {
-  state = {
-    review: ""
-  };
   componentDidMount() {
     this.props.redirectOnFail(
       this.props.match.params.productId,
@@ -22,11 +20,7 @@ class AddReview extends Component {
       this.props.history
     );
   }
-  handleChange = e => {
-    this.setState({
-      review: e.target.value
-    });
-  };
+
   render() {
     return (
       <div>
@@ -51,33 +45,10 @@ class AddReview extends Component {
                 <Rating clickable={true} />
               </div>
               <form style={{ textAlign: "center" }}>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="Brian"
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="eg.I love it,I hate it..."
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="Review here..."
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
+                <Field name="username" component={AddReviewForm} type="text" />
+                <Field name="title" component={AddReviewForm} type="text" />
+                <Field name="body" component={AddReviewForm} type="text" />
+
                 <button className="btn btn-md submit-review-btn">
                   Submit Review
                 </button>
@@ -91,5 +62,13 @@ class AddReview extends Component {
     );
   }
 }
+const validate = formValues => {
+  const errors = {};
 
-export default withRouter(connect(null, { redirectOnFail })(AddReview));
+  return errors;
+};
+export default withRouter(
+  reduxForm({ validate, form: "AddReview" })(
+    connect(null, { redirectOnFail })(AddReview)
+  )
+);

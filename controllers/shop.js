@@ -402,8 +402,14 @@ route.post(
       }
       const { title, body } = req.body;
       const { orderId, productId } = req.params;
-      await Product.findById(productId);
-      await Order.findById(orderId);
+      const order = await Order.findOne({
+        _id: orderId,
+        buyer: req.session.user._id,
+        items: { $elemMatch: { reviewed: false, product: productId } }
+      });
+      if (!order) {
+        return res.status(404).send({ message: "No order with that ID" });
+      }
       const review = new Review({
         title,
         body,
@@ -426,9 +432,9 @@ route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
     const { productId, orderId } = req.params;
     const order = await Order.findOne({
       _id: orderId,
+      buyer: req.session.user._id,
       items: { $elemMatch: { reviewed: false, product: productId } }
     });
-    console.log(order);
     res.send({ order });
   } catch (error) {
     res.status(500).send(error);
