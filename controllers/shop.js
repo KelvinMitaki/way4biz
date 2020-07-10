@@ -366,7 +366,7 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
-// FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT
+// FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT  WHICH SHOULD APPEAR ON THE PRODUCT
 route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.session.user._id });
@@ -376,9 +376,25 @@ route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
   }
 });
 
-// CHECK ON ORDERS WHERE REVIEWED===FALSE
+// CHECK ON ORDERS FOR LOGGED IN USER WHERE REVIEWED===FALSE
 route.get("/api/pending/reviews", auth, async (req, res) => {
   try {
+    const orders = await Order.aggregate([
+      { $match: { buyer: req.session.user._id } },
+      // { $project: { buyer: 1, delivered: 1, items: 1 } },
+      {
+        $project: {
+          items: {
+            $filter: {
+              input: "$items",
+              as: "i",
+              cond: { $eq: ["$$i.reviewed", false] }
+            }
+          }
+        }
+      }
+    ]);
+    res.send(orders);
   } catch (error) {
     res.status(500).send(error);
   }

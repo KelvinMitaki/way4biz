@@ -447,7 +447,9 @@ route.delete(
 route.get("/api/seller/orders", isSeller, async (req, res) => {
   try {
     const { user } = req.session;
-
+    if (!user.isSeller) {
+      return res.status(401).send({ message: "Not authorized" });
+    }
     const test = await Order.aggregate([
       { $project: { items: 1, paymentMethod: 1, buyer: 1, createdAt: 1 } },
       { $unwind: "$items" },
