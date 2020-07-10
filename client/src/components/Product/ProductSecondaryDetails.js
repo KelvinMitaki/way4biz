@@ -3,7 +3,6 @@ import Tabs from "react-responsive-tabs";
 
 import "./ProductSecondaryDetails.css";
 import ProductDetails from "./ProductDetails";
-import ProductCustomerReviews from "./ProductCustomerReviews";
 import ProductReviews from "./ProductReviews";
 
 class ProductSecondaryDetails extends React.Component {
