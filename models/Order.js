@@ -15,6 +15,10 @@ const OrderSchema = new mongoose.Schema(
         quantity: {
           type: Number,
           required: true
+        },
+        reviewed: {
+          type: Boolean,
+          default: false
         }
       }
     ],

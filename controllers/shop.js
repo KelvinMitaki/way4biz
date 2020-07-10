@@ -375,8 +375,14 @@ route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/pending/reviews", auth, async (req, res) => {
+  try {
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.post(
-  "/api/new/review",
+  "/api/new/review/:productId/:orderId",
   auth,
   check("title")
     .trim()
@@ -392,6 +398,20 @@ route.post(
       if (!errors.isEmpty()) {
         return res.status(401).send(errors.array()[0].msg);
       }
+      const { title, body } = req.body;
+      const { orderId, productId } = req.params;
+      const review = new Review({
+        title,
+        body,
+        user: req.session.user._id,
+        order: orderId
+      });
+      await review.save();
+      await Order.findOneAndUpdate(
+        { "items.product": productId },
+        { $set: { "items.$.reviewed": true } }
+      );
+      res.send(review);
     } catch (error) {
       res.status(500).send(error);
     }
