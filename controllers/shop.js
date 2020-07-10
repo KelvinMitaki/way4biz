@@ -424,8 +424,12 @@ route.post(
 route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
   try {
     const { productId, orderId } = req.params;
-    await Order.findOne({ _id: orderId, "items.product": productId });
-    res.send({ message: "Ok" });
+    const order = await Order.findOne({
+      _id: orderId,
+      items: { $elemMatch: { reviewed: false, product: productId } }
+    });
+    console.log(order);
+    res.send({ order });
   } catch (error) {
     res.status(500).send(error);
   }

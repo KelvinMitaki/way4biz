@@ -9,21 +9,18 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import Rating from "../Product/Rating";
 import axios from "axios";
+import { redirectOnFail } from "../../redux/actions";
+import { connect } from "react-redux";
 class AddReview extends Component {
   state = {
-    review: "",
-    error: null
+    review: ""
   };
-  async componentDidMount() {
-    try {
-      const res = await axios.get(
-        `/api/url/add/review/${this.props.match.params.productId}/${this.props.match.params.orderId}`
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.response);
-      this.setState({ error: error.response.data });
-    }
+  componentDidMount() {
+    this.props.redirectOnFail(
+      this.props.match.params.productId,
+      this.props.match.params.orderId,
+      this.props.history
+    );
   }
   handleChange = e => {
     this.setState({
@@ -31,7 +28,6 @@ class AddReview extends Component {
     });
   };
   render() {
-    if (this.state.error) return <Redirect to="/pending/reviews" />;
     return (
       <div>
         <AccountHeader />
@@ -96,4 +92,4 @@ class AddReview extends Component {
   }
 }
 
-export default withRouter(AddReview);
+export default withRouter(connect(null, { redirectOnFail })(AddReview));
