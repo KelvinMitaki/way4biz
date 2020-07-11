@@ -7,6 +7,7 @@ const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 const { db } = require("../models/Product");
+const Review = require("../models/Reviews");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -365,7 +366,96 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT  WHICH SHOULD APPEAR ON THE PRODUCT
+route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
+  try {
+    const reviews = await Review.find({ user: req.session.user._id });
+    res.send(reviews);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
+// CHECK ON ORDERS FOR LOGGED IN USER WHERE REVIEWED===FALSE
+route.get("/api/pending/reviews", auth, async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      { $match: { buyer: req.session.user._id } },
+      // { $project: { buyer: 1, delivered: 1, items: 1 } },
+      {
+        $project: {
+          items: {
+            $filter: {
+              input: "$items",
+              as: "i",
+              cond: { $eq: ["$$i.reviewed", false] }
+            }
+          }
+        }
+      }
+    ]);
+    res.send(orders);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post(
+  "/api/new/review/:productId/:orderId",
+  auth,
+  check("title")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please enter a valid title"),
+  check("body")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please enter a valid body"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { title, body } = req.body;
+      const { orderId, productId } = req.params;
+      const order = await Order.findOne({
+        _id: orderId,
+        buyer: req.session.user._id,
+        items: { $elemMatch: { reviewed: false, product: productId } }
+      });
+      if (!order) {
+        return res.status(404).send({ message: "No order with that ID" });
+      }
+      const review = new Review({
+        title,
+        body,
+        user: req.session.user._id,
+        order: orderId
+      });
+      await review.save();
+      await Order.findOneAndUpdate(
+        { "items.product": productId },
+        { $set: { "items.$.reviewed": true } }
+      );
+      res.send(review);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
+  try {
+    const { productId, orderId } = req.params;
+    const order = await Order.findOne({
+      _id: orderId,
+      buyer: req.session.user._id,
+      items: { $elemMatch: { reviewed: false, product: productId } }
+    });
+    res.send({ order });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

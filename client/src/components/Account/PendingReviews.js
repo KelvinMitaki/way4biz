@@ -7,8 +7,13 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { MdRateReview } from "react-icons/md";
+import { fetchPendingReviews } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class PendingReviews extends React.Component {
+  componentDidMount() {
+    this.props.fetchPendingReviews();
+  }
   render() {
     return (
       <div>
@@ -96,5 +101,11 @@ class PendingReviews extends React.Component {
     );
   }
 }
-
-export default PendingReviews;
+const mapStateToProps = state => {
+  return {
+    pendingReviewProducts: state.product.pendingReviewProducts
+  };
+};
+export default connect(mapStateToProps, { fetchPendingReviews })(
+  PendingReviews
+);

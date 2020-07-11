@@ -48,7 +48,7 @@ export class Wishlist extends Component {
               <div className="container-fluid wishlist-saved-items">
                 {/* mapping here */}
                 {this.props.wishlist.length !== 0 &&
-                  this.props.wishlist.map((item) => (
+                  this.props.wishlist.map(item => (
                     <div
                       className="wishlist-product-wrapper box-container"
                       key={item._id}
@@ -90,7 +90,7 @@ export class Wishlist extends Component {
                               }
                             >
                               <IconContext.Provider
-                                value={{ className: "helloo" }}
+                                value={{ className: "wishlist-trash" }}
                               >
                                 <FaTrashAlt />
                                 <span className="ml-2">Remove</span>
@@ -111,9 +111,9 @@ export class Wishlist extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    wishlist: state.cartReducer.wishlist,
+    wishlist: state.cartReducer.wishlist
   };
 };
 export default connect(mapStateToProps, { addToCart, removeFromWishlist })(

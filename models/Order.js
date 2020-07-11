@@ -15,12 +15,20 @@ const OrderSchema = new mongoose.Schema(
         quantity: {
           type: Number,
           required: true
+        },
+        reviewed: {
+          type: Boolean,
+          default: false
         }
       }
     ],
     totalPrice: {
       type: Number,
       required: true
+    },
+    delivered: {
+      type: Boolean,
+      default: false
     },
     paymentMethod: {
       type: String,
