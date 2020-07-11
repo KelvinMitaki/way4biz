@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { singleCategory } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import Products from "./Products";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 export class ProductParent extends Component {
   componentDidMount() {
@@ -12,6 +13,7 @@ export class ProductParent extends Component {
     );
   }
   render() {
+    if (this.props.singleCategoryLoading) return <ScreenLoader />;
     return (
       <React.Fragment>
         {this.props.categoryProductCount !== null && (
@@ -27,7 +29,8 @@ export class ProductParent extends Component {
 const mapStateToProps = state => {
   return {
     categoryProductCount: state.product.categoryProductCount,
-    singleCategoryProducts: state.product.singleCategoryProducts
+    singleCategoryProducts: state.product.singleCategoryProducts,
+    singleCategoryLoading: state.auth.singleCategoryLoading
   };
 };
 export default withRouter(

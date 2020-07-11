@@ -42,7 +42,7 @@ class SellerProducts extends React.Component {
     }));
   }
   render() {
-    if (this.props.loading) return <ScreenLoader />;
+    if (this.props.sellerProductsLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -73,7 +73,7 @@ class SellerProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerProducts: state.sellerRegister.sellerProducts,
-    loading: state.auth.loading
+    sellerProductsLoading: state.auth.sellerProductsLoading
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

@@ -8,6 +8,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import DashBoardOrder from "./DashBoardOrder";
 import { fetchSellerOrders } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerOrders extends React.Component {
   componentDidMount() {
@@ -35,6 +36,7 @@ class SellerOrders extends React.Component {
     }));
   }
   render() {
+    if (this.props.sellerOrdersLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -69,7 +71,8 @@ class SellerOrders extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrders: state.sellerRegister.sellerOrders
+    sellerOrders: state.sellerRegister.sellerOrders,
+    sellerOrdersLoading: state.auth.sellerOrdersLoading
   };
 };
 export default connect(mapStateToProps, { fetchSellerOrders })(SellerOrders);

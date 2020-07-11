@@ -21,7 +21,13 @@ import {
   FETCH_ORDERS_LOADING_START,
   FETCH_ORDERS_LOADING_STOP,
   FETCH_PENDING_REVIEWS_LOADING_START,
-  FETCH_PENDING_REVIEWS_LOADING_STOP
+  FETCH_PENDING_REVIEWS_LOADING_STOP,
+  FETCH_SELLER_ORDERS_START,
+  FETCH_SELLER_ORDERS_STOP,
+  FETCH_SELLER_PRODUCTS_START,
+  FETCH_SELLER_PRODUCTS_STOP,
+  SINGLE_CATEGORY_START,
+  SINGLE_CATEGORY_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -39,7 +45,10 @@ const INITIAL_STATE = {
   resetPasswordError: null,
   signInOpen: true,
   fetchOrdersLoading: false,
-  pendingReviewsLoading: false
+  pendingReviewsLoading: false,
+  sellerOrdersLoading: false,
+  sellerProductsLoading: false,
+  singleCategoryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -124,6 +133,18 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, pendingReviewsLoading: true };
     case FETCH_PENDING_REVIEWS_LOADING_STOP:
       return { ...state, pendingReviewsLoading: false };
+    case FETCH_SELLER_ORDERS_START:
+      return { ...state, sellerOrdersLoading: true };
+    case FETCH_SELLER_ORDERS_STOP:
+      return { ...state, sellerOrdersLoading: false };
+    case FETCH_SELLER_PRODUCTS_START:
+      return { ...state, sellerProductsLoading: true };
+    case FETCH_SELLER_PRODUCTS_STOP:
+      return { ...state, sellerProductsLoading: false };
+    case SINGLE_CATEGORY_START:
+      return { ...state, singleCategoryLoading: true };
+    case SINGLE_CATEGORY_STOP:
+      return { ...state, singleCategoryLoading: false };
     default:
       return state;
   }

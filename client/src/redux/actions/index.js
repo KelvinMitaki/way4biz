@@ -53,7 +53,13 @@ import {
   FETCH_ORDERS_LOADING_START,
   FETCH_ORDERS_LOADING_STOP,
   FETCH_PENDING_REVIEWS_LOADING_START,
-  FETCH_PENDING_REVIEWS_LOADING_STOP
+  FETCH_PENDING_REVIEWS_LOADING_STOP,
+  FETCH_SELLER_ORDERS_START,
+  FETCH_SELLER_ORDERS_STOP,
+  FETCH_SELLER_PRODUCTS_START,
+  FETCH_SELLER_PRODUCTS_STOP,
+  SINGLE_CATEGORY_START,
+  SINGLE_CATEGORY_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -341,14 +347,14 @@ export const forgotPassword = (formvalues, history) => async (
 
 export const fetchSellerProducts = () => async (dispatch, getState) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_SELLER_PRODUCTS_START });
     const res = await axios.get(
       `/api/products/seller/${getState().auth.user._id}`
     );
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -448,12 +454,12 @@ export const makeOrder = credentials => async dispatch => {
 
 export const fetchSellerOrders = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_SELLER_ORDERS_START });
     const res = await axios.get("/api/seller/orders");
     dispatch({ type: FETCH_SELLER_ORDERS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_ORDERS_STOP });
     console.log(error.response);
   }
 };
@@ -538,15 +544,15 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
 };
 export const singleCategory = (category, history) => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/${category}`, {
       itemsToSkip: 0
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
     history.push(`/products/category/${category}`);
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
     console.log(error.response);
   }
 };
