@@ -6,7 +6,7 @@ import "./ScreenLoader.css";
 
 class ScreenLoader extends React.Component {
   state = {
-    loading: true,
+    loading: true
   };
 
   render() {

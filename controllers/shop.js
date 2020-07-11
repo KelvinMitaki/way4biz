@@ -460,12 +460,10 @@ route.post(
         product: productId
       });
       await review.save();
-      console.log("productId", productId);
       const test = await Order.findOneAndUpdate(
         { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
-      console.log(test);
       await Product.findByIdAndUpdate(productId, { rating });
       res.send(review);
     } catch (error) {
