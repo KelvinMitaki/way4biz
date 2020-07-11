@@ -15,17 +15,19 @@ class PendingReviews extends React.Component {
     this.props.fetchPendingReviews();
   }
   render() {
-    const test = this.props.pendingReviewProducts
-      .map(product => {
-        return product.items;
-      })
-      .reduce((acc, cur) => acc.concat(cur), [])
-      .filter(
-        (item, i, arr) =>
-          i === arr.findIndex(item2 => item2.product === item.product)
-      );
+    let test;
+    if (this.props.pendingReviewProducts) {
+      test = this.props.pendingReviewProducts
+        .map(product => {
+          return product.items;
+        })
+        .reduce((acc, cur) => acc.concat(cur), [])
+        .filter(
+          (item, i, arr) =>
+            i === arr.findIndex(item2 => item2.product === item.product)
+        );
+    }
 
-    console.log(test);
     return (
       <div>
         <AccountHeader />
@@ -36,73 +38,52 @@ class PendingReviews extends React.Component {
             </div>
             <div className="col-lg-8  box-container">
               {/* show if no pending reviews */}
-              {/* <div className="container-fluid buyer-no-pending-reviews">
-                <IconContext.Provider value={{ className: "no-reviews-icon" }}>
-                  <MdRateReview />
-                </IconContext.Provider>
-                <p className="mt-3">
-                  You have no orders with pending reviews yet. Orders delivered
-                  to you will appear here for you to review and rate them
-                </p>
-                <Link
-                  to="/"
-                  className="btn btn-md mt-3 pending-review-shopping-btn"
-                >
-                  Continue Shopping
-                </Link>
-              </div> */}
+              {this.props.pendingReviewProducts.length === 0 && (
+                <div className="container-fluid buyer-no-pending-reviews">
+                  <IconContext.Provider
+                    value={{ className: "no-reviews-icon" }}
+                  >
+                    <MdRateReview />
+                  </IconContext.Provider>
+                  <p className="mt-3">
+                    You have no orders with pending reviews yet. Orders
+                    delivered to you will appear here for you to review and rate
+                    them
+                  </p>
+                  <Link
+                    to="/"
+                    className="btn btn-md mt-3 pending-review-shopping-btn"
+                  >
+                    Continue Shopping
+                  </Link>
+                </div>
+              )}
               {/* show if there is pending reviews */}
-              <div className="container-fluid buyer-pending-reviews">
-                <h4>Pending Reviews</h4>
-                <div className="buyer-pending-reviews-wrapper mt-2 container">
-                  {/* mapping takes place here */}
-                  <div className="buyer-pending-review box-container row">
-                    <div className="col-md-10 d-flex">
-                      <img src="/1.jpg" />
-                      <div id="buyer-review-product-name">
-                        <h6>
-                          Test Seller With This Test Seller With This Test
-                          Seller With This Test Seller With This
-                        </h6>
-                        <p>Ksh.30,0000</p>
+              {this.props.pendingReviewProducts.length !== 0 && (
+                <div className="container-fluid buyer-pending-reviews">
+                  <h4>Pending Reviews</h4>
+                  <div className="buyer-pending-reviews-wrapper mt-2 container">
+                    {/* mapping takes place here */}
+                    {test.map(item => (
+                      <div className="buyer-pending-review box-container row">
+                        <div className="col-md-10 d-flex">
+                          <img src="/1.jpg" />
+                          <div id="buyer-review-product-name">
+                            <h6>
+                              Test Seller With This Test Seller With This Test
+                              Seller With This Test Seller With This
+                            </h6>
+                            <p>Ksh.30,0000</p>
+                          </div>
+                        </div>
+                        <div className="col-md-2 rate-link-wrapper">
+                          <Link to="/add/review">Rate</Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-2 rate-link-wrapper">
-                      <Link to="/add/review">Rate</Link>
-                    </div>
-                  </div>
-                  <div className="buyer-pending-review box-container row">
-                    <div className="col-md-10 d-flex">
-                      <img src="/1.jpg" />
-                      <div id="buyer-review-product-name">
-                        <h6>
-                          Test Seller With This Test Seller With This Test
-                          Seller With This Test Seller With This
-                        </h6>
-                        <p>Ksh.30,0000</p>
-                      </div>
-                    </div>
-                    <div className="col-md-2 rate-link-wrapper">
-                      <Link to="/">Rate</Link>
-                    </div>
-                  </div>
-                  <div className="buyer-pending-review box-container row">
-                    <div className="col-md-10 d-flex">
-                      <img src="/1.jpg" />
-                      <div id="buyer-review-product-name">
-                        <h6>
-                          Test Seller With This Test Seller With This Test
-                          Seller With This Test Seller With This
-                        </h6>
-                        <p>Ksh.30,0000</p>
-                      </div>
-                    </div>
-                    <div className="col-md-2 rate-link-wrapper">
-                      <Link to="/">Rate</Link>
-                    </div>
+                    ))}
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
