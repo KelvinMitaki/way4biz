@@ -26,7 +26,10 @@ class CarouselSkeleton extends React.Component {
                 .map(() => {
                   return (
                     <React.Fragment>
-                      <Skeleton elemClass={"hero-random-image"} />
+                      <div className="hero-random-image-wrapper">
+                        <Skeleton elemClass={"hero-random-image"} />
+                      </div>
+
                       {/* <Skeleton elemClass={"hero-product-name"} />
                       <Skeleton elemClass={"hero-product-price"} /> */}
                     </React.Fragment>
