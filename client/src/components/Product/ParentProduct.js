@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Product from "./Product";
 import { fetchSingleProduct } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 export class ParentProduct extends Component {
   componentDidMount() {
@@ -16,12 +17,14 @@ export class ParentProduct extends Component {
     }
   }
   render() {
+    if (this.props.singleProductLoad) return <ScreenLoader />;
     return this.props.product && <Product key={this.props.location.key} />;
   }
 }
 const mapStateToProps = state => {
   return {
-    product: state.product.product
+    product: state.product.product,
+    singleProductLoad: state.product.singleProductLoad
   };
 };
 export default withRouter(

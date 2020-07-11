@@ -59,7 +59,9 @@ import {
   FETCH_SELLER_PRODUCTS_START,
   FETCH_SELLER_PRODUCTS_STOP,
   SINGLE_CATEGORY_START,
-  SINGLE_CATEGORY_STOP
+  SINGLE_CATEGORY_STOP,
+  SINGLE_PRODUCT_START,
+  SINGLE_PRODUCT_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -592,12 +594,12 @@ export const registerClick = () => {
 
 export const fetchSingleProduct = productId => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: SINGLE_PRODUCT_START });
     const res = await axios.get(`/api/product/${productId}`);
     dispatch({ type: FETCH_SINGLE_PRODUCT, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_PRODUCT_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_PRODUCT_STOP });
     console.log(error.response);
   }
 };

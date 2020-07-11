@@ -34,14 +34,10 @@ class Product extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.product);
     this.props.product &&
       this.props.fetchRelatedProducts(this.props.product.subcategory);
   }
   componentDidUpdate(prevProps) {
-    console.log("updated");
-    console.log(prevProps === undefined);
-    console.log(prevProps);
     if (!prevProps.product) {
       console.log(this.props.product);
       this.props.fetchRelatedProducts(this.props.product.subcategory);
@@ -272,12 +268,7 @@ class Product extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   let product;
   if (state.product.products.length !== 0) {
-    product =
-      state.product.products.find(
-        product =>
-          product._id.toString() ===
-          [ownProps.match.params.productId].toString()
-      ) || state.product.product;
+    product = state.product.product;
   }
   return {
     product,
