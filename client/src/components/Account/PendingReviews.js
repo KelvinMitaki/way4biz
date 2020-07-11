@@ -15,6 +15,17 @@ class PendingReviews extends React.Component {
     this.props.fetchPendingReviews();
   }
   render() {
+    const test = this.props.pendingReviewProducts
+      .map(product => {
+        return product.items;
+      })
+      .reduce((acc, cur) => acc.concat(cur), [])
+      .filter(
+        (item, i, arr) =>
+          i === arr.findIndex(item2 => item2.product === item.product)
+      );
+
+    console.log(test);
     return (
       <div>
         <AccountHeader />
