@@ -15,7 +15,7 @@ class CarouselSkeleton extends React.Component {
                 .fill("")
                 .map(() => {
                   return (
-                    <div>
+                    <div key={Math.random()}>
                       <BoxSkeleton elemClass={"hero-random-image"} />
                     </div>
                   );
