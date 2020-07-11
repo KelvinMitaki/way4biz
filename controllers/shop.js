@@ -392,6 +392,31 @@ route.get("/api/pending/reviews", auth, async (req, res) => {
             }
           }
         }
+      },
+      {
+        $unwind: "$items"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "productData"
+        }
+      },
+      {
+        $unwind: "$productData"
+      },
+      {
+        $group: {
+          _id: "$_id",
+          items: {
+            $push: "$items"
+          },
+          productData: {
+            $push: "$productData"
+          }
+        }
       }
     ]);
     res.send(orders);
