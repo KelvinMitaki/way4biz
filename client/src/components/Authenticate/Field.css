@@ -4,24 +4,30 @@
 }
 
 .form-input input,
-.form-input select {
+.form-input select,
+.form-input2 input,
+.form-input2 select {
   height: 50px;
 }
 
 .form-input input,
 .form-input textarea,
-.form-input select {
+.form-input select,
+.form-input2 input,
+.form-input2 select {
   border: 1px solid #d4d4d4;
 }
 
-/* .form-input textarea {
+textarea {
   resize: none;
-  border-radius: 40px;
-} */
+}
 
 .form-input input:focus,
 .form-input textarea:focus,
-.form-input select:focus {
+.form-input select:focus,
+.form-input2 input:focus,
+.form-input2 textarea:focus,
+.form-input2 select:focus {
   box-shadow: none;
   outline: none;
   border: 1px solid #d4d4d4;

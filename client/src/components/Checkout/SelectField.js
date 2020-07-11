@@ -2,7 +2,7 @@ import React from "react";
 
 const SelectField = (props) => {
   return (
-    <div className="form-group">
+    <div className="form-group form-input2">
       <strong>{props.label}</strong>
       <br />
       <select {...props.input} className="form-control">
