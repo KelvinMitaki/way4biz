@@ -49,7 +49,9 @@ import {
   REGISTER_CLICK,
   FETCH_SINGLE_PRODUCT,
   FETCH_RELATED_PRODUCTS,
-  FETCH_PENDING_REVIEWS
+  FETCH_PENDING_REVIEWS,
+  FETCH_ORDERS_LOADING_START,
+  FETCH_ORDERS_LOADING_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -463,10 +465,10 @@ export const fetchSellerOrderDetails = orderDetails => {
 
 export const fetchBuyerOrders = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get("/api/orders");
     dispatch({ type: FETCH_BUYER_ORDERS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);

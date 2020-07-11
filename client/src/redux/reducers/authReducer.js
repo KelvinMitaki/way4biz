@@ -17,7 +17,9 @@ import {
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
   SIGN_IN_CLICK,
-  REGISTER_CLICK
+  REGISTER_CLICK,
+  FETCH_ORDERS_LOADING_START,
+  FETCH_ORDERS_LOADING_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -33,7 +35,8 @@ const INITIAL_STATE = {
   updatePasswordMessage: null,
   updatePasswordError: null,
   resetPasswordError: null,
-  signInOpen: true
+  signInOpen: true,
+  fetchOrdersLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -110,6 +113,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, signInOpen: true };
     case REGISTER_CLICK:
       return { ...state, signInOpen: false };
+    case FETCH_ORDERS_LOADING_START:
+      return { ...state, fetchOrdersLoading: true };
+    case FETCH_ORDERS_LOADING_STOP:
+      return { ...state, fetchOrdersLoading: false };
     default:
       return state;
   }
