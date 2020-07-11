@@ -7,12 +7,16 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import Rating from "../Product/Rating";
+// import Rating from "../Product/Rating";
 import { redirectOnFail, submitReview } from "../../redux/actions";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import AddReviewForm from "./AddReviewForm";
+import BeautyStars from "beauty-stars";
 class AddReview extends Component {
+  state = {
+    value: 0,
+  };
   componentDidMount() {
     this.props.redirectOnFail(
       this.props.match.params.productId,
@@ -20,6 +24,13 @@ class AddReview extends Component {
       this.props.history
     );
   }
+
+  ratingChanged = (val) => {
+    this.setState({
+      value: val,
+    });
+    console.log(this.state.value);
+  };
 
   render() {
     return (
@@ -42,11 +53,18 @@ class AddReview extends Component {
                 </div>
               </IconContext.Provider>
               <div className="d-flex justify-content-center my-3">
-                <Rating clickable={true} />
+                {/* <Rating clickable={true} /> */}
+                <BeautyStars
+                  value={this.state.value}
+                  onChange={(val) => this.ratingChanged(val)}
+                  size={30}
+                  activeColor={"#f76b10"}
+                  inactiveColor={"#d4d4d4"}
+                />
               </div>
               <form
                 style={{ textAlign: "center" }}
-                onSubmit={this.props.handleSubmit(formValues =>
+                onSubmit={this.props.handleSubmit((formValues) =>
                   submitReview(
                     formValues,
                     this.props.match.params.productId,
@@ -59,7 +77,7 @@ class AddReview extends Component {
                 <Field name="body" component={AddReviewForm} type="text" />
 
                 <button
-                  className="btn btn-md submit-review-btn"
+                  className="btn btn-md mb-3 submit-review-btn"
                   disabled={!this.props.valid || this.props.loading}
                   type="submit"
                 >
@@ -86,7 +104,7 @@ class AddReview extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -108,9 +126,9 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
   };
 };
 export default withRouter(
