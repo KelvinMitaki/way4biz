@@ -19,12 +19,11 @@ class PendingReviews extends React.Component {
     if (this.props.pendingReviewProducts) {
       test = this.props.pendingReviewProducts
         .map(product => {
-          return product.items;
+          return product.productData;
         })
         .reduce((acc, cur) => acc.concat(cur), [])
         .filter(
-          (item, i, arr) =>
-            i === arr.findIndex(item2 => item2.product === item.product)
+          (item, i, arr) => i === arr.findIndex(item2 => item2._id === item._id)
         );
     }
 
@@ -65,15 +64,15 @@ class PendingReviews extends React.Component {
                   <div className="buyer-pending-reviews-wrapper mt-2 container">
                     {/* mapping takes place here */}
                     {test.map(item => (
-                      <div className="buyer-pending-review box-container row">
+                      <div
+                        key={item._id}
+                        className="buyer-pending-review box-container row"
+                      >
                         <div className="col-md-10 d-flex">
-                          <img src="/1.jpg" />
+                          <img src={item.imageUrl} />
                           <div id="buyer-review-product-name">
-                            <h6>
-                              Test Seller With This Test Seller With This Test
-                              Seller With This Test Seller With This
-                            </h6>
-                            <p>Ksh.30,0000</p>
+                            <h6>{item.name}</h6>
+                            <p>Ksh.{item.price.toLocaleString()} </p>
                           </div>
                         </div>
                         <div className="col-md-2 rate-link-wrapper">
