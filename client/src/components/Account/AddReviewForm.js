@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddReviewForm = props => {
+const AddReviewForm = (props) => {
   return (
     <div>
       <div className="form-group my-4">
@@ -10,9 +10,9 @@ const AddReviewForm = props => {
           placeholder={props.placeholder}
           className="form-control review-form-field"
         />
-        <span style={{ color: "red" }}>
+        <p className="d-flex justify-content-start" style={{ color: "red" }}>
           {props.meta.touched && props.meta.error}
-        </span>
+        </p>
       </div>
     </div>
   );

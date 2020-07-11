@@ -63,19 +63,28 @@
   background-color: #fff;
 }
 
-.random-stuff div img {
-  height: 80%;
+.hero-random-image-wrapper {
+  height: 50%;
+}
+
+.hero-random-image {
+  height: auto;
   width: 100%;
 }
 
-.random-stuff div h6 {
+.hero-product-name {
   font-weight: bolder;
   text-align: center;
+  height: 20px;
+}
+
+.hero-product-price {
+  text-align: center;
+  height: 10px;
 }
 
 .hero-account-section {
   background: linear-gradient(to bottom right, #f76b1a, yellow);
-  /* background: radial-gradient(yellow, #f76b1a); */
   padding: 50px 0px;
 }
 
@@ -164,26 +173,3 @@
     height: 200px;
   }
 }
-
-/*
-.slider img {
-  height: 100%;
-  width: 100%;
-}
-
-@media screen and (min-height: 950px) {
-  .hero-carousel,
-  .slider {
-    height: calc(50vh - 20px); 
-  }
-}
-
-@media screen and (max-width: 960px) {
-  .hero-carousel,
-  .slider {
-    width: 100vw;
-    height: 40vh; 
-    position: relative;
-    left: 0px;
-  }
-} */
