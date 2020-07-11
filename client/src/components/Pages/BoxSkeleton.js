@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./Skeleton.css";
+import "./BoxSkeleton.css";
 
-class Skeleton extends React.Component {
+class BoxSkeleton extends React.Component {
   render() {
     return (
       <div className={this.props.elemClass} id="skeleton-wrapper">
@@ -14,4 +14,4 @@ class Skeleton extends React.Component {
   }
 }
 
-export default Skeleton;
+export default BoxSkeleton;

@@ -94,23 +94,19 @@ class HeroCarousel extends React.Component {
                           )
                         }
                       >
-                        <div className="hero-random-image-wrapper">
-                          <img
-                            src={this.state.item1.imageUrl}
-                            alt={this.state.item1.name}
-                            className="hero-random-image"
-                          />
-                        </div>
-                        <div>
-                          <h6 className="hero-product-name">
-                            {this.state.item1.name}
-                          </h6>
-                        </div>
-                        <div>
-                          <p className="hero-product-price">
-                            <small>Ksh.{this.state.item1.price}</small>
-                          </p>
-                        </div>
+                        <img
+                          src={this.state.item1.imageUrl}
+                          alt={this.state.item1.name}
+                          className="hero-random-image"
+                        />
+
+                        <h6 className="hero-product-name">
+                          {this.state.item1.name}
+                        </h6>
+
+                        <p className="hero-product-price">
+                          <small>Ksh.{this.state.item1.price}</small>
+                        </p>
                       </div>
                       <div
                         style={{ cursor: "pointer" }}

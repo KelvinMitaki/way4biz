@@ -63,24 +63,17 @@
   background-color: #fff;
 }
 
-.hero-random-image-wrapper {
-  height: 50%;
-}
-
 .hero-random-image {
-  height: auto;
   width: 100%;
 }
 
 .hero-product-name {
   font-weight: bolder;
   text-align: center;
-  height: 20px;
 }
 
 .hero-product-price {
   text-align: center;
-  height: 10px;
 }
 
 .hero-account-section {

@@ -1,6 +1,8 @@
 #skeleton-wrapper {
-  background-color: #f2f3f4;
+  background-color: #f2f3f4 !important;
   overflow: hidden;
+  position: relative;
+  top: 0px;
 }
 
 @keyframes lfr {
@@ -12,12 +14,12 @@
   }
 }
 
-.skeleton {
+.header-skeleton {
   height: 100%;
   animation: lfr infinite 0.9s linear forwards;
 }
 
-.skeleton-indicator {
+.header-skeleton-indicator {
   width: 50%;
   height: 100%;
   background-color: #eaeded;
