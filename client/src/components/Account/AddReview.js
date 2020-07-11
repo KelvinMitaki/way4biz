@@ -1,23 +1,36 @@
 import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
-import { Link } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import "./AddReview.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import Rating from "../Product/Rating";
-
+// import Rating from "../Product/Rating";
+import { redirectOnFail, submitReview } from "../../redux/actions";
+import { connect } from "react-redux";
+import { reduxForm, Field } from "redux-form";
+import AddReviewForm from "./AddReviewForm";
+import BeautyStars from "beauty-stars";
 class AddReview extends Component {
   state = {
-    review: "",
+    value: 0
   };
-  handleChange = (e) => {
+  componentDidMount() {
+    this.props.redirectOnFail(
+      this.props.match.params.productId,
+      this.props.match.params.orderId,
+      this.props.history
+    );
+  }
+
+  ratingChanged = val => {
     this.setState({
-      review: e.target.value,
+      value: val
     });
   };
+
   render() {
     return (
       <div>
@@ -39,38 +52,67 @@ class AddReview extends Component {
                 </div>
               </IconContext.Provider>
               <div className="d-flex justify-content-center my-3">
-                <Rating clickable={true} />
+                {/* <Rating clickable={true} /> */}
+                <BeautyStars
+                  value={this.state.value}
+                  onChange={val => this.ratingChanged(val)}
+                  size={30}
+                  activeColor={"#f76b10"}
+                  inactiveColor={"#d4d4d4"}
+                />
               </div>
-              <form style={{ textAlign: "center" }}>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="Brian"
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="eg.I love it,I hate it..."
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group my-4">
-                  <input
-                    type="text"
-                    className="form-control review-field"
-                    placeholder="Review here..."
-                    value={this.state.review}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <button className="btn btn-md submit-review-btn">
-                  Submit Review
+              <form
+                style={{ textAlign: "center" }}
+                onSubmit={this.props.handleSubmit(formValues =>
+                  this.props.submitReview(
+                    formValues,
+                    this.state.value,
+                    this.props.match.params.productId,
+                    this.props.match.params.orderId,
+                    this.props.history
+                  )
+                )}
+              >
+                <Field
+                  name="firstName"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="Your Name"
+                />
+                <Field
+                  name="title"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="e.g I like it/I love it"
+                />
+                <Field
+                  name="body"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="Your Review..."
+                />
+
+                <button
+                  className="btn btn-md mb-3 submit-review-btn"
+                  disabled={
+                    !this.props.valid ||
+                    this.props.loading ||
+                    this.state.value === 0
+                  }
+                  type="submit"
+                >
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Submit Review</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -82,5 +124,36 @@ class AddReview extends Component {
     );
   }
 }
-
-export default AddReview;
+const validate = formValues => {
+  const errors = {};
+  if (
+    !formValues.firstName ||
+    (formValues.firstName && formValues.firstName.trim().length === 0)
+  ) {
+    errors.firstName = "Please enter a valid first name";
+  }
+  if (
+    !formValues.title ||
+    (formValues.title && formValues.title.trim().length < 2)
+  ) {
+    errors.title = "Please enter a valid title";
+  }
+  if (
+    !formValues.body ||
+    (formValues.body && formValues.body.trim().length < 2)
+  ) {
+    errors.body = "Please enter a valid review";
+  }
+  return errors;
+};
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user,
+    loading: state.auth.loading
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { redirectOnFail, submitReview })(
+    reduxForm({ validate, form: "AddReview" })(AddReview)
+  )
+);

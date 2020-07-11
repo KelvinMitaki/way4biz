@@ -60,7 +60,11 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
+.wishlist-trash {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 @media screen and (max-width: 960px) {
   .wishlist {
     min-height: 60vh;

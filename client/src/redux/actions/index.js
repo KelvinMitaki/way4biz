@@ -48,7 +48,8 @@ import {
   SIGN_IN_CLICK,
   REGISTER_CLICK,
   FETCH_SINGLE_PRODUCT,
-  FETCH_RELATED_PRODUCTS
+  FETCH_RELATED_PRODUCTS,
+  FETCH_PENDING_REVIEWS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -602,5 +603,56 @@ export const fetchRelatedProducts = subcategory => async dispatch => {
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
+  }
+};
+
+export const fetchPendingReviews = () => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get("/api/pending/reviews");
+    dispatch({ type: FETCH_PENDING_REVIEWS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+
+export const submitReview = (
+  review,
+  rating,
+  productId,
+  orderId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    await axios.post(`/api/new/review/${productId}/${orderId}`, {
+      title: review.title,
+      body: review.body,
+      rating
+    });
+    dispatch({ type: LOADING_STOP });
+    history.push("/pending/reviews");
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
+export const redirectOnFail = (
+  productId,
+  orderId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
+    dispatch({ type: LOADING_STOP });
+    if (!res.data.order) {
+      history.push("/pending/reviews");
+    }
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    history.push("/pending/reviews");
   }
 };

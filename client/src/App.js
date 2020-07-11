@@ -226,7 +226,7 @@ class App extends React.Component {
                     }
                   />
                   <Route
-                    path="/add/review"
+                    path="/add/review/:productId/:orderId"
                     exact
                     render={() =>
                       this.props.isSignedIn === false ? (
