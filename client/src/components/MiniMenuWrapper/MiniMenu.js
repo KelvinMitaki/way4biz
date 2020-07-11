@@ -9,6 +9,7 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
+import { MdRateReview } from "react-icons/md";
 import { connect } from "react-redux";
 import { GoClippy } from "react-icons/go";
 import "./MiniMenu.css";
@@ -102,6 +103,10 @@ class MiniMenu extends React.Component {
                     <NavLink className="primary-link" to="/wishlist">
                       <AiOutlineHeart />
                       <span className="ml-2">Wishlist</span>
+                    </NavLink>
+                    <NavLink className="primary-link" to="/pending/reviews">
+                      <MdRateReview />
+                      <span className="ml-2">Pending Reviews</span>
                     </NavLink>
                     {this.props.user.storeName && (
                       <NavLink className="primary-link" to="/seller-dashboard">
