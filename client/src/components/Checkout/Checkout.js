@@ -15,7 +15,6 @@ class CheckOut extends React.Component {
   render() {
     if (this.props.cart.length === 0) {
       this.props.fetchProducts();
-      console.log("redirected");
       return <Redirect to="/" />;
     }
     const { user, cart } = this.props;

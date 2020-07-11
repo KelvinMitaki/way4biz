@@ -618,15 +618,22 @@ export const fetchPendingReviews = () => async dispatch => {
   }
 };
 
-export const submitReview = (review, productId, orderId) => async dispatch => {
+export const submitReview = (
+  review,
+  rating,
+  productId,
+  orderId,
+  history
+) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
-    const res = await axios.post(
-      `/api/new/review/${productId}/${orderId}`,
-      review
-    );
-    console.log(res.data);
+    await axios.post(`/api/new/review/${productId}/${orderId}`, {
+      title: review.title,
+      body: review.body,
+      rating
+    });
     dispatch({ type: LOADING_STOP });
+    history.push("/pending/reviews");
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
