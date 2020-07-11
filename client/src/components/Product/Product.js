@@ -34,10 +34,19 @@ class Product extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
+    console.log(this.props.product);
     this.props.product &&
       this.props.fetchRelatedProducts(this.props.product.subcategory);
   }
-
+  componentDidUpdate(prevProps) {
+    console.log("updated");
+    console.log(prevProps === undefined);
+    console.log(prevProps);
+    if (!prevProps.product) {
+      console.log(this.props.product);
+      this.props.fetchRelatedProducts(this.props.product.subcategory);
+    }
+  }
   handleClick(e) {
     e.preventDefault();
     this.setState(prevState => {
@@ -83,7 +92,7 @@ class Product extends React.Component {
     );
     let itemInCart = false;
     itemInCart = this.props.cart.find(
-      item => item._id === this.props.product._id
+      item => item._id === this.props.product && this.props.product._id
     );
     if (!this.props.product) return <ScreenLoader />;
     return (
