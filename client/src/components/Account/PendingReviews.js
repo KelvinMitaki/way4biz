@@ -19,6 +19,11 @@ class PendingReviews extends React.Component {
     if (this.props.pendingReviewProducts) {
       test = this.props.pendingReviewProducts
         .map(product => {
+          product.productData = product.productData.map(data => ({
+            ...data,
+            orderId: product._id
+          }));
+
           return product.productData;
         })
         .reduce((acc, cur) => acc.concat(cur), [])
@@ -26,7 +31,6 @@ class PendingReviews extends React.Component {
           (item, i, arr) => i === arr.findIndex(item2 => item2._id === item._id)
         );
     }
-
     return (
       <div>
         <AccountHeader />
@@ -76,7 +80,9 @@ class PendingReviews extends React.Component {
                           </div>
                         </div>
                         <div className="col-md-2 rate-link-wrapper">
-                          <Link to="/add/review">Rate</Link>
+                          <Link to={`/add/review/${item._id}/${item.orderId}`}>
+                            Rate
+                          </Link>
                         </div>
                       </div>
                     ))}
