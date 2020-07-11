@@ -441,8 +441,9 @@ route.post(
       if (!errors.isEmpty()) {
         return res.status(401).send(errors.array()[0].msg);
       }
-      const { title, body } = req.body;
+      const { title, body, rating } = req.body;
       const { orderId, productId } = req.params;
+
       const order = await Order.findOne({
         _id: orderId,
         buyer: req.session.user._id,
@@ -462,6 +463,7 @@ route.post(
         { "items.product": productId },
         { $set: { "items.$.reviewed": true } }
       );
+      await Product.findByIdAndUpdate(productId, { rating });
       res.send(review);
     } catch (error) {
       res.status(500).send(error);

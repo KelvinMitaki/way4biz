@@ -32,7 +32,6 @@ class AddReview extends Component {
   };
 
   render() {
-    console.log(this.state.value);
     return (
       <div>
         <AccountHeader />
@@ -67,14 +66,31 @@ class AddReview extends Component {
                 onSubmit={this.props.handleSubmit(formValues =>
                   this.props.submitReview(
                     formValues,
+                    this.state.value,
                     this.props.match.params.productId,
-                    this.props.match.params.orderId
+                    this.props.match.params.orderId,
+                    this.props.history
                   )
                 )}
               >
-                <Field name="firstName" component={AddReviewForm} type="text" />
-                <Field name="title" component={AddReviewForm} type="text" />
-                <Field name="body" component={AddReviewForm} type="text" />
+                <Field
+                  name="firstName"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="Your Name"
+                />
+                <Field
+                  name="title"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="e.g I like it/I love it"
+                />
+                <Field
+                  name="body"
+                  component={AddReviewForm}
+                  type="text"
+                  placeholder="Your Review..."
+                />
 
                 <button
                   className="btn btn-md mb-3 submit-review-btn"
@@ -132,11 +148,12 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
+    loading: state.auth.loading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { redirectOnFail })(
+  connect(mapStateToProps, { redirectOnFail, submitReview })(
     reduxForm({ validate, form: "AddReview" })(AddReview)
   )
 );
