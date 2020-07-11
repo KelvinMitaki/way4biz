@@ -19,7 +19,9 @@ import {
   SIGN_IN_CLICK,
   REGISTER_CLICK,
   FETCH_ORDERS_LOADING_START,
-  FETCH_ORDERS_LOADING_STOP
+  FETCH_ORDERS_LOADING_STOP,
+  FETCH_PENDING_REVIEWS_LOADING_START,
+  FETCH_PENDING_REVIEWS_LOADING_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -36,7 +38,8 @@ const INITIAL_STATE = {
   updatePasswordError: null,
   resetPasswordError: null,
   signInOpen: true,
-  fetchOrdersLoading: false
+  fetchOrdersLoading: false,
+  pendingReviewsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -117,6 +120,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchOrdersLoading: true };
     case FETCH_ORDERS_LOADING_STOP:
       return { ...state, fetchOrdersLoading: false };
+    case FETCH_PENDING_REVIEWS_LOADING_START:
+      return { ...state, pendingReviewsLoading: true };
+    case FETCH_PENDING_REVIEWS_LOADING_STOP:
+      return { ...state, pendingReviewsLoading: false };
     default:
       return state;
   }

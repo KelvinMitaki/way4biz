@@ -51,7 +51,9 @@ import {
   FETCH_RELATED_PRODUCTS,
   FETCH_PENDING_REVIEWS,
   FETCH_ORDERS_LOADING_START,
-  FETCH_ORDERS_LOADING_STOP
+  FETCH_ORDERS_LOADING_STOP,
+  FETCH_PENDING_REVIEWS_LOADING_START,
+  FETCH_PENDING_REVIEWS_LOADING_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -470,7 +472,7 @@ export const fetchBuyerOrders = () => async dispatch => {
     dispatch({ type: FETCH_BUYER_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
 };
@@ -610,12 +612,12 @@ export const fetchRelatedProducts = subcategory => async dispatch => {
 
 export const fetchPendingReviews = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_START });
     const res = await axios.get("/api/pending/reviews");
     dispatch({ type: FETCH_PENDING_REVIEWS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
     console.log(error.response);
   }
 };
