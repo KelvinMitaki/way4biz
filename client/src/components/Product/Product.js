@@ -20,6 +20,7 @@ import {
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class Product extends React.Component {
   constructor(props) {
@@ -33,7 +34,8 @@ class Product extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
-    this.props.fetchRelatedProducts(this.props.product.subcategory);
+    this.props.product &&
+      this.props.fetchRelatedProducts(this.props.product.subcategory);
   }
 
   handleClick(e) {
@@ -74,15 +76,16 @@ class Product extends React.Component {
   }
 
   render() {
-    const { stockQuantity } = this.props.product && this.props.product;
+    const stockQuantity =
+      this.props.product && this.props.product.stockQuantity;
     const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product._id
+      item => item._id === this.props.product && this.props.product._id
     );
     let itemInCart = false;
     itemInCart = this.props.cart.find(
       item => item._id === this.props.product._id
     );
-
+    if (!this.props.product) return <ScreenLoader />;
     return (
       <React.Fragment>
         <Header />

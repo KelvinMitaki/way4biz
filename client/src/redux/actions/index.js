@@ -429,13 +429,13 @@ export const fetchCategories = () => async dispatch => {
 
 export const fetchAllCategories = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.get("/api/fetch/all/categories");
     dispatch({ type: FETCH_ALL_CATEGORIES, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
   } catch (error) {
     console.log(error.response);
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
   }
 };
 
