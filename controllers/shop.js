@@ -380,7 +380,7 @@ route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
 route.get("/api/pending/reviews", auth, async (req, res) => {
   try {
     const orders = await Order.aggregate([
-      { $match: { buyer: req.session.user._id } },
+      { $match: { buyer: req.session.user._id, delivered: true } },
       // { $project: { buyer: 1, delivered: 1, items: 1 } },
       {
         $project: {
@@ -456,13 +456,16 @@ route.post(
         title,
         body,
         user: req.session.user._id,
-        order: orderId
+        order: orderId,
+        product: productId
       });
       await review.save();
-      await Order.findOneAndUpdate(
-        { "items.product": productId },
+      console.log("productId", productId);
+      const test = await Order.findOneAndUpdate(
+        { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
+      console.log(test);
       await Product.findByIdAndUpdate(productId, { rating });
       res.send(review);
     } catch (error) {
