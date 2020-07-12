@@ -1,28 +1,28 @@
 import React, { useRef, useCallback } from "react";
 import { Link, withRouter } from "react-router-dom";
-
-import "./Products.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-
 import Categories from "../Hero/HeroCategories";
 import { connect } from "react-redux";
 import Heart from "./Heart";
 import {
   singleCategory,
   moreSingleCategoryProducts,
-  hasMoreCategoryFalse,
+  hasMoreCategoryFalse
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
 import { FiFilter } from "react-icons/fi";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
+import "./Products.css";
+import { reduxForm, Field } from "redux-form";
+import ProductsForm from "./ProductsForm";
 
 function Products(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback((node) => {
+  const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
         return props.moreSingleCategoryProducts(props.match.params.category);
@@ -30,7 +30,7 @@ function Products(props) {
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
+    observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -53,40 +53,72 @@ function Products(props) {
                 <div className="row my-3">
                   <div className="d-flex ml-3">
                     <p className="mr-1">Price:</p>
-                    <input
-                      style={{ width: "80px" }}
+                    <Field
+                      name="min"
                       type="number"
                       placeholder="min"
+                      style={{ width: "80px" }}
+                      component={ProductsForm}
                     />
                     -
-                    <input
-                      style={{ width: "80px" }}
+                    <Field
+                      name="max"
                       type="number"
                       placeholder="max"
+                      style={{ width: "80px" }}
+                      component={ProductsForm}
                     />
                   </div>
 
                   <div className="d-flex ml-4">
-                    <input type="checkbox" className="mr-1" />
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="rating"
+                      type="checkbox"
+                      className="mr-1"
+                      component={ProductsForm}
+                    />
                     <Rating clickable={false} size={15} value={4} />
                     <span className="ml-2">&up</span>{" "}
                   </div>
                   <div className="d-flex ml-5">
-                    <input type="checkbox" />
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="freeShipping"
+                      type="checkbox"
+                      component={ProductsForm}
+                    />
                     <p className="ml-1">Free Shipping</p>
                   </div>
                 </div>
                 <div className="row my-3">
                   <div className="d-flex ml-3">
-                    <input type="checkbox" />
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="latest"
+                      type="checkbox"
+                      component={ProductsForm}
+                    />
                     <p className="ml-1">Latest</p>
                   </div>
                   <div className="d-flex ml-3">
-                    <input type="radio" />
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="price"
+                      type="radio"
+                      value="lowestPrice"
+                      component={ProductsForm}
+                    />
                     <p className="ml-1">Lowest Price</p>
                   </div>
                   <div className="d-flex ml-3">
-                    <input type="radio" />
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="price"
+                      type="radio"
+                      value="highestPrice"
+                      component={ProductsForm}
+                    />
                     <p className="ml-1">Highest Price</p>
                   </div>
                 </div>
@@ -179,7 +211,7 @@ function Products(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px",
+                                padding: "0px 10px"
                               }}
                               className="price"
                             >
@@ -198,7 +230,7 @@ function Products(props) {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "0px 10px",
+                            padding: "0px 10px"
                           }}
                           className="mb-2"
                         >
@@ -226,7 +258,7 @@ function Products(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px",
+                              padding: "0px 10px"
                             }}
                             className="price"
                           >
@@ -245,7 +277,7 @@ function Products(props) {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px",
+                          padding: "0px 10px"
                         }}
                         className="mb-2"
                       >
@@ -263,16 +295,18 @@ function Products(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
-    categoryProductCount: state.product.categoryProductCount,
+    categoryProductCount: state.product.categoryProductCount
   };
 };
 export default withRouter(
-  connect(mapStateToProps, {
-    singleCategory,
-    hasMoreCategoryFalse,
-    moreSingleCategoryProducts,
-  })(Products)
+  reduxForm({ form: "Products" })(
+    connect(mapStateToProps, {
+      singleCategory,
+      hasMoreCategoryFalse,
+      moreSingleCategoryProducts
+    })(Products)
+  )
 );
