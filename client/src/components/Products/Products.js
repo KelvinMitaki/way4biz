@@ -93,7 +93,7 @@ function Products(props) {
               </div>
               <div className="container products-sm-top">
                 <div className="row sort-sm-section-wrapper">
-                  <div className="sort-sm-section">
+                  <div className="sort-sm-section" id="filter-section">
                     <IconContext.Provider value={{ className: "sort-sm-icon" }}>
                       <FiFilter />
                       <span>
@@ -101,10 +101,33 @@ function Products(props) {
                       </span>
                     </IconContext.Provider>
                     <div id="filter-stuff">
-                      <h3>Helloo WOrld</h3>
+                      <div className="d-flex ml-3">
+                        <p className="mr-1">Price:</p>
+                        <input
+                          style={{ width: "80px" }}
+                          type="number"
+                          placeholder="min"
+                        />
+                        -
+                        <input
+                          style={{ width: "80px" }}
+                          type="number"
+                          placeholder="max"
+                        />
+                      </div>
+
+                      <div className="d-flex ml-4">
+                        <input type="checkbox" className="mr-1" />
+                        <Rating clickable={false} size={15} value={4} />
+                        <span className="ml-2">&up</span>{" "}
+                      </div>
+                      <div className="d-flex ml-5">
+                        <input type="checkbox" />
+                        <p className="ml-1">Free Shipping</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="sort-sm-section">
+                  <div className="sort-sm-section" id="sort-section">
                     <IconContext.Provider value={{ className: "sort-sm-icon" }}>
                       <span>
                         <MdArrowDropDown />
@@ -112,7 +135,18 @@ function Products(props) {
                       <FaSortAmountDownAlt />
                     </IconContext.Provider>
                     <div id="sort-stuff">
-                      <h3>Helloo WOrld</h3>
+                      <div className="d-flex ml-3">
+                        <input type="checkbox" />
+                        <p className="ml-1">Latest</p>
+                      </div>
+                      <div className="d-flex ml-3">
+                        <input type="radio" />
+                        <p className="ml-1">Lowest Price</p>
+                      </div>
+                      <div className="d-flex ml-3">
+                        <input type="radio" />
+                        <p className="ml-1">Highest Price</p>
+                      </div>
                     </div>
                   </div>
                 </div>

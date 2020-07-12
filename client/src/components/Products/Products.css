@@ -35,6 +35,44 @@
   display: none;
 }
 
+#filter-stuff {
+  margin-top: 0px;
+  min-width: 200px;
+  min-height: 200px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 30px 10px 20px 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  left: 0px;
+}
+
+#sort-stuff {
+  margin-top: 0px;
+  min-width: 200px;
+  min-height: 200px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 30px 10px 20px 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  right: 0px;
+}
+
+#sort-section:hover #sort-stuff {
+  display: block;
+}
+
+#filter-section:hover #filter-stuff {
+  display: block;
+}
+
 .products-lg-top div {
   align-items: center;
 }
