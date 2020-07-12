@@ -9,12 +9,14 @@ import { IconContext } from "react-icons";
 import { MdRateReview } from "react-icons/md";
 import { fetchPendingReviews } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class PendingReviews extends React.Component {
   componentDidMount() {
     this.props.fetchPendingReviews();
   }
   render() {
+    if (this.props.pendingReviewsLoading) return <ScreenLoader />;
     let test;
     if (this.props.pendingReviewProducts) {
       test = this.props.pendingReviewProducts
@@ -100,7 +102,8 @@ class PendingReviews extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    pendingReviewProducts: state.product.pendingReviewProducts
+    pendingReviewProducts: state.product.pendingReviewProducts,
+    pendingReviewsLoading: state.auth.pendingReviewsLoading
   };
 };
 export default connect(mapStateToProps, { fetchPendingReviews })(

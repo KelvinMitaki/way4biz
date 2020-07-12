@@ -11,12 +11,14 @@ import {
   singleCategory,
   fetchAllCategories
 } from "../../redux/actions/index.js";
+import ScreenLoader from "../Pages/ScreenLoader.js";
 
 class MainCategories extends React.Component {
   componentDidMount() {
     this.props.fetchAllCategories();
   }
   render() {
+    if (this.props.singleCategoryLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -57,7 +59,8 @@ class MainCategories extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    categories: state.product.categories
+    categories: state.product.categories,
+    singleCategoryLoading: state.auth.singleCategoryLoading
   };
 };
 export default withRouter(

@@ -8,6 +8,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { fetchSellerProducts } from "../../redux/actions";
 import DashBoardProduct from "./DashBoardProduct";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerProducts extends React.Component {
   state = {};
@@ -41,6 +42,7 @@ class SellerProducts extends React.Component {
     }));
   }
   render() {
+    if (this.props.sellerProductsLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -70,7 +72,8 @@ class SellerProducts extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerProducts: state.sellerRegister.sellerProducts
+    sellerProducts: state.sellerRegister.sellerProducts,
+    sellerProductsLoading: state.auth.sellerProductsLoading
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

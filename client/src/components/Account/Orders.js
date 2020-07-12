@@ -8,12 +8,14 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { fetchBuyerOrders } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 export class Orders extends Component {
   componentDidMount() {
     this.props.fetchBuyerOrders();
   }
   render() {
+    if (this.props.fetchOrdersLoading) return <ScreenLoader />;
     return (
       <React.Fragment>
         <AccountHeader />
@@ -82,7 +84,8 @@ export class Orders extends Component {
 }
 const mapStateToProps = state => {
   return {
-    buyerOrders: state.product.buyerOrders
+    buyerOrders: state.product.buyerOrders,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);
