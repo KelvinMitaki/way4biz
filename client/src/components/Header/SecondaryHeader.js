@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./SecondaryHeader.css";
 import { connect } from "react-redux";
-import "react-multi-carousel/lib/styles.css";
-import Carousel from "react-multi-carousel";
+// import "react-multi-carousel/lib/styles.css";
+// import Carousel from "react-multi-carousel";
 
 class SecondaryHeader extends React.Component {
   render() {
@@ -46,7 +46,7 @@ class SecondaryHeader extends React.Component {
           </Link>
         </div>
         <div id="small-screen-secondary-header">
-          <Carousel
+          {/* <Carousel
             responsive={responsive}
             swipeable={true}
             draggable={true}
@@ -72,7 +72,7 @@ class SecondaryHeader extends React.Component {
             <Link className="carousel-link" to="/privacy-policy">
               Privacy Policy
             </Link>
-          </Carousel>
+          </Carousel> */}
         </div>
       </div>
     );

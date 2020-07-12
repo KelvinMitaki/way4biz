@@ -20,8 +20,8 @@ import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
-import "react-multi-carousel/lib/styles.css";
-import Carousel from "react-multi-carousel";
+// import "react-multi-carousel/lib/styles.css";
+// import Carousel from "react-multi-carousel";
 
 class Product extends React.Component {
   constructor(props) {
@@ -117,7 +117,7 @@ class Product extends React.Component {
                   <ReactImageMagnify {...this.getImageProps()} />
 
                   <div className="feature-imgs">
-                    <Carousel
+                    {/* <Carousel
                       responsive={responsive}
                       swipeable={true}
                       draggable={true}
@@ -163,7 +163,7 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
-                    </Carousel>
+                    </Carousel> */}
                   </div>
                 </div>
                 <div className="col-lg-6 product-info pt-2">
