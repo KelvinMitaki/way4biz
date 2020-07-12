@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import "./Products.css";

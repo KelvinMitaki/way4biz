@@ -75,7 +75,7 @@ class PendingReviews extends React.Component {
                         className="buyer-pending-review box-container row"
                       >
                         <div className="col-md-10 d-flex">
-                          <img src={item.imageUrl} />
+                          <img src={item.imageUrl} alt={item.name} />
                           <div id="buyer-review-product-name">
                             <h6>{item.name}</h6>
                             <p>Ksh.{item.price.toLocaleString()} </p>

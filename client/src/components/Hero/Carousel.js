@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { signInClick, registerClick } from "../../redux/actions";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
-import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCarousel extends React.Component {
   state = {
@@ -17,44 +16,42 @@ class HeroCarousel extends React.Component {
     item2: null,
     item3: null,
     item4: null,
-    loading: false,
+    loading: false
   };
   componentDidMount() {
     this.setState({
-      loading: true,
+      loading: true
     });
 
     setTimeout(() => {
       this.setState({
-        loading: false,
+        loading: false
       });
     }, 5000);
 
     this.setState({
       item1: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item2: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item3: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
     this.setState({
       item4: this.props.products[
         Math.floor(Math.random() * this.props.products.length)
-      ],
+      ]
     });
   }
 
   render() {
-    const { loading } = this.state;
-
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -187,7 +184,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%",
+                    width: "100%"
                   }}
                   className="mt-4"
                 >
@@ -195,7 +192,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -210,7 +207,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -224,7 +221,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -262,10 +259,10 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default withRouter(
