@@ -372,7 +372,7 @@ route.get("/api/product/reviews/:productId", auth, async (req, res) => {
     const { productId } = req.params;
     const reviews = await Review.find({ product: productId })
       .populate("user")
-      .populate("seller");
+      .populate("userSeller");
     res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
@@ -459,15 +459,16 @@ route.post(
         title,
         body,
         user: req.session.user._id,
+        userSeller: req.session.user._id,
         order: orderId,
-        product: productId
+        product: productId,
+        rating
       });
       await review.save();
       await Order.findOneAndUpdate(
         { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
-      await Product.findByIdAndUpdate(productId, { rating });
       res.send(review);
     } catch (error) {
       res.status(500).send(error);

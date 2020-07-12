@@ -203,7 +203,13 @@ class Product extends React.Component {
                   <Rating size={18} clickable={false} value={5} />
                   <span className="ml-2">
                     <Link style={{ color: "#f76b1a" }} to="/product/reviews">
-                      (0 Reviews)
+                      (
+                      {this.props.productReviews.length === 1 ? (
+                        <span>{this.props.productReviews.length} Review</span>
+                      ) : (
+                        <span>{this.props.productReviews.length} Reviews</span>
+                      )}{" "}
+                      )
                     </Link>
                   </span>
                 </div>
@@ -274,7 +280,8 @@ const mapStateToProps = (state, ownProps) => {
     product,
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
-    relatedProducts: state.product.relatedProducts
+    relatedProducts: state.product.relatedProducts,
+    productReviews: state.product.productReviews
   };
 };
 export default withRouter(
