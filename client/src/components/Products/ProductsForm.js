@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchFilteredProducts } from "../../redux/actions";
 const ProductsForm = props => {
+  console.log(props.input.value);
   return (
     <div>
       <input
