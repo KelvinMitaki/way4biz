@@ -19,6 +19,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import "./Products.css";
 import { reduxForm, Field } from "redux-form";
 import ProductsForm from "./ProductsForm";
+import BottomPageLoader from "../Pages/BottomPageLoader";
 
 function Products(props) {
   const observer = useRef();
@@ -287,6 +288,8 @@ function Products(props) {
                   );
                 })}
             </div>
+            {props.singleCategoryProducts.length !==
+              props.categoryProductCount && <BottomPageLoader />}
           </div>
         </div>
       </div>
