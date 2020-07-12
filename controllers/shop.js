@@ -58,6 +58,8 @@ route.post("/api/products/filter/:category", async (req, res) => {
       highestPrice
     } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
+    // **TODO** FIX FILTERING
+
     let products = await Product.find({ category });
     if (freeShipping) {
       products = products.filter(product => product.freeShipping === true);
