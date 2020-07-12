@@ -6,14 +6,13 @@ import "./ScreenLoader.css";
 
 class ScreenLoader extends React.Component {
   state = {
-    loading: true
+    loading: true,
   };
 
   render() {
     const override = css`
       display: block;
       margin: 0 auto;
-      border-color: red;
     `;
     return (
       <div id="full-screen-loader">

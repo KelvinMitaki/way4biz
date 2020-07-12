@@ -16,8 +16,9 @@ class Review extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9 reviews-wrapper m-0">
+            {/* mapping here */}
             <div className="review-wrapper mb-3">
-              <Rating clickable={false} size={15} />
+              <Rating clickable={false} size={15} value={4} />
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Consequatur minus libero ipsum illum temporibus quisquam
