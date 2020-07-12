@@ -7,6 +7,8 @@ const ProductsForm = props => {
         type={props.type}
         {...props.input}
         placeholder={props.placeholder}
+        style={props.style}
+        className={props.className}
       />
     </div>
   );
