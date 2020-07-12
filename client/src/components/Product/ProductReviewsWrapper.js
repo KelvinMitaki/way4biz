@@ -1,7 +1,7 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import "./ProductReviewsWrapper.css";
 import Header from "../Header/Header";
@@ -10,9 +10,15 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Rating from "./Rating";
 import { connect } from "react-redux";
+import { fetchProductReviews } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class ProductReviewsWrapper extends React.Component {
+  componentDidMount() {
+    this.props.fetchProductReviews(this.props.match.params.productId);
+  }
   render() {
+    if (this.props.fetchOrdersLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -27,7 +33,7 @@ class ProductReviewsWrapper extends React.Component {
                       //   fontWeight: "bold",
                       fontSize: "25px",
                       textDecoration: "none",
-                      color: "#000",
+                      color: "#000"
                     }}
                     className="ml-2 "
                   >
@@ -40,7 +46,7 @@ class ProductReviewsWrapper extends React.Component {
             <div style={{ borderTop: "1px solid #d4d4d4" }}>
               {/* mapping here */}
               {this.props.productReviews.length !== 0 &&
-                this.props.productReviews.map((prod) => (
+                this.props.productReviews.map(prod => (
                   <div className="buyer-review-wrapper" key={prod._id}>
                     <Rating size={15} clickable={false} value={prod.rating} />
 
@@ -72,9 +78,12 @@ class ProductReviewsWrapper extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     productReviews: state.product.productReviews,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
-export default connect(mapStateToProps)(ProductReviewsWrapper);
+export default withRouter(
+  connect(mapStateToProps, { fetchProductReviews })(ProductReviewsWrapper)
+);
