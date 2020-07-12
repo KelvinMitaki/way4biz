@@ -4,6 +4,7 @@ import "./SellerDashBoardReviews.css";
 
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
+import Rating from "../Product/Rating";
 
 class Review extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class Review extends React.Component {
           </div>
           <div className="col-lg-9 reviews-wrapper m-0">
             <div className="review-wrapper mb-3">
-              <h1>Review 1</h1>
+              <Rating clickable={false} size={15} />
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Consequatur minus libero ipsum illum temporibus quisquam
@@ -26,6 +27,7 @@ class Review extends React.Component {
                 Iusto harum nesciunt consequatur eius consectetur iure tenetur
                 qui aspernatur reprehenderit!
               </p>
+              <h6 className="my-2">By Fred on 1/1/1</h6>
             </div>
 
             <div className="review-wrapper">
