@@ -27,7 +27,9 @@ import {
   FETCH_SELLER_PRODUCTS_START,
   FETCH_SELLER_PRODUCTS_STOP,
   SINGLE_CATEGORY_START,
-  SINGLE_CATEGORY_STOP
+  SINGLE_CATEGORY_STOP,
+  FETCH_USER_START,
+  FETCH_USER_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -145,6 +147,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, singleCategoryLoading: true };
     case SINGLE_CATEGORY_STOP:
       return { ...state, singleCategoryLoading: false };
+    case FETCH_USER_START:
+      return { ...state, loading: true };
+    case FETCH_USER_STOP:
+      return { ...state, loading: false };
     default:
       return state;
   }

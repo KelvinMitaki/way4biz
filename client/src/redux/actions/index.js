@@ -61,7 +61,10 @@ import {
   SINGLE_CATEGORY_START,
   SINGLE_CATEGORY_STOP,
   SINGLE_PRODUCT_START,
-  SINGLE_PRODUCT_STOP
+  SINGLE_PRODUCT_STOP,
+  PRODUCT_REVIEWS,
+  FETCH_USER_START,
+  FETCH_USER_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -122,17 +125,17 @@ export const register = credentials => async (dispatch, getState) => {
 
 export const fetchUser = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_USER_START });
     const res = await axios.get("/api/current_user");
     console.log("Cpus: ", res.data.Cpus);
     if (res.data.user.phoneNumber) {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: FETCH_USER, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_USER_STOP });
   } catch (error) {
     dispatch({ type: FETCH_USER_FAILED });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_USER_STOP });
   }
 };
 
@@ -666,5 +669,17 @@ export const redirectOnFail = (
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     history.push("/pending/reviews");
+  }
+};
+
+export const fetchProductReviews = productId => async dispatch => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.get(`/api/product/reviews/${productId}`);
+    dispatch({ type: PRODUCT_REVIEWS, payload: res.data });
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
   }
 };

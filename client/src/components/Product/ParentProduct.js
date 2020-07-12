@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Product from "./Product";
-import { fetchSingleProduct } from "../../redux/actions";
+import { fetchSingleProduct, fetchProductReviews } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 export class ParentProduct extends Component {
   componentDidMount() {
+    this.props.fetchProductReviews(this.props.match.params.productId);
     this.props.fetchSingleProduct(this.props.match.params.productId);
   }
   componentDidUpdate(prevProps) {
@@ -28,5 +29,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchSingleProduct })(ParentProduct)
+  connect(mapStateToProps, { fetchSingleProduct, fetchProductReviews })(
+    ParentProduct
+  )
 );
