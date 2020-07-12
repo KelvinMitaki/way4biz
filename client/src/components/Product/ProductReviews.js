@@ -19,7 +19,10 @@ class ProductReviews extends React.Component {
               </h5>
               <p>{prod.body}</p>
               <p className="my-2 lead" style={{ fontSize: "15px" }}>
-                By {prod.userSeller.firstName}
+                By{" "}
+                {prod.userSeller
+                  ? prod.userSeller.firstName
+                  : prod.user.firstName}
                 <span className="ml-2">
                   on {new Date(prod.createdAt).toLocaleDateString()}{" "}
                 </span>
