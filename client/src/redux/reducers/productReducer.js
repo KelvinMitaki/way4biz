@@ -13,7 +13,10 @@ import {
   HAS_MORE_CATEGORY_FALSE,
   FETCH_SINGLE_PRODUCT,
   FETCH_RELATED_PRODUCTS,
-  FETCH_PENDING_REVIEWS
+  FETCH_PENDING_REVIEWS,
+  SINGLE_PRODUCT_START,
+  SINGLE_PRODUCT_STOP,
+  PRODUCT_REVIEWS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -31,7 +34,9 @@ const INITIAL_STATE = {
   itemsToSkip: 0,
   product: null,
   relatedProducts: [],
-  pendingReviewProducts: []
+  pendingReviewProducts: [],
+  singleProductLoad: false,
+  productReviews: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -96,6 +101,12 @@ export default (state = INITIAL_STATE, action) => {
       };
     case FETCH_PENDING_REVIEWS:
       return { ...state, pendingReviewProducts: action.payload };
+    case SINGLE_PRODUCT_START:
+      return { ...state, singleProductLoad: true };
+    case SINGLE_PRODUCT_STOP:
+      return { ...state, singleProductLoad: false };
+    case PRODUCT_REVIEWS:
+      return { ...state, productReviews: action.payload };
     default:
       return state;
   }

@@ -367,9 +367,12 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
   }
 });
 // FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT  WHICH SHOULD APPEAR ON THE PRODUCT
-route.get("/api/buyer/fetch/reviews", auth, async (req, res) => {
+route.get("/api/product/reviews/:productId", auth, async (req, res) => {
   try {
-    const reviews = await Review.find({ user: req.session.user._id });
+    const { productId } = req.params;
+    const reviews = await Review.find({ product: productId })
+      .populate("user")
+      .populate("userSeller");
     res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
@@ -456,17 +459,16 @@ route.post(
         title,
         body,
         user: req.session.user._id,
+        userSeller: req.session.user._id,
         order: orderId,
-        product: productId
+        product: productId,
+        rating
       });
       await review.save();
-      console.log("productId", productId);
-      const test = await Order.findOneAndUpdate(
+      await Order.findOneAndUpdate(
         { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
-      console.log(test);
-      await Product.findByIdAndUpdate(productId, { rating });
       res.send(review);
     } catch (error) {
       res.status(500).send(error);

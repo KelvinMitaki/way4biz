@@ -17,7 +17,19 @@ import {
   UPDATE_PASSWORD_LOGGED_IN_FAILED,
   REGISTER_SELLER,
   SIGN_IN_CLICK,
-  REGISTER_CLICK
+  REGISTER_CLICK,
+  FETCH_ORDERS_LOADING_START,
+  FETCH_ORDERS_LOADING_STOP,
+  FETCH_PENDING_REVIEWS_LOADING_START,
+  FETCH_PENDING_REVIEWS_LOADING_STOP,
+  FETCH_SELLER_ORDERS_START,
+  FETCH_SELLER_ORDERS_STOP,
+  FETCH_SELLER_PRODUCTS_START,
+  FETCH_SELLER_PRODUCTS_STOP,
+  SINGLE_CATEGORY_START,
+  SINGLE_CATEGORY_STOP,
+  FETCH_USER_START,
+  FETCH_USER_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -33,7 +45,12 @@ const INITIAL_STATE = {
   updatePasswordMessage: null,
   updatePasswordError: null,
   resetPasswordError: null,
-  signInOpen: true
+  signInOpen: true,
+  fetchOrdersLoading: false,
+  pendingReviewsLoading: false,
+  sellerOrdersLoading: false,
+  sellerProductsLoading: false,
+  singleCategoryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -110,6 +127,30 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, signInOpen: true };
     case REGISTER_CLICK:
       return { ...state, signInOpen: false };
+    case FETCH_ORDERS_LOADING_START:
+      return { ...state, fetchOrdersLoading: true };
+    case FETCH_ORDERS_LOADING_STOP:
+      return { ...state, fetchOrdersLoading: false };
+    case FETCH_PENDING_REVIEWS_LOADING_START:
+      return { ...state, pendingReviewsLoading: true };
+    case FETCH_PENDING_REVIEWS_LOADING_STOP:
+      return { ...state, pendingReviewsLoading: false };
+    case FETCH_SELLER_ORDERS_START:
+      return { ...state, sellerOrdersLoading: true };
+    case FETCH_SELLER_ORDERS_STOP:
+      return { ...state, sellerOrdersLoading: false };
+    case FETCH_SELLER_PRODUCTS_START:
+      return { ...state, sellerProductsLoading: true };
+    case FETCH_SELLER_PRODUCTS_STOP:
+      return { ...state, sellerProductsLoading: false };
+    case SINGLE_CATEGORY_START:
+      return { ...state, singleCategoryLoading: true };
+    case SINGLE_CATEGORY_STOP:
+      return { ...state, singleCategoryLoading: false };
+    case FETCH_USER_START:
+      return { ...state, loading: true };
+    case FETCH_USER_STOP:
+      return { ...state, loading: false };
     default:
       return state;
   }
