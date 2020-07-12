@@ -20,12 +20,12 @@ class SecondaryHeader extends React.Component {
     const responsive = {
       tablet: {
         breakpoint: { max: 960, min: 541 },
-        items: 3,
+        items: 3
       },
       iphone: {
         breakpoint: { max: 540, min: 0 },
-        items: 2,
-      },
+        items: 2
+      }
     };
     return (
       <div className="secondary-header d-flex primary-background">
@@ -78,9 +78,9 @@ class SecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    isSignedIn: state.auth.isSignedIn,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 
