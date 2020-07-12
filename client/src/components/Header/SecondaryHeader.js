@@ -1,13 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
 import "./SecondaryHeader.css";
 import { connect } from "react-redux";
+import "react-multi-carousel/lib/styles.css";
+import Carousel from "react-multi-carousel";
 
 class SecondaryHeader extends React.Component {
   render() {
+    // const responsive = {
+    //   screenBreakpoints: {
+    //     breakpoint: {
+    //       max: 960,
+    //       min: 0,
+    //     },
+    //     items: 2,
+    //   },
+    // };
+
+    const responsive = {
+      tablet: {
+        breakpoint: { max: 960, min: 541 },
+        items: 3,
+      },
+      iphone: {
+        breakpoint: { max: 540, min: 0 },
+        items: 2,
+      },
+    };
     return (
       <div className="secondary-header d-flex primary-background">
         <div id="large-screen-secondary-header" className="d-flex">
@@ -27,12 +46,15 @@ class SecondaryHeader extends React.Component {
           </Link>
         </div>
         <div id="small-screen-secondary-header">
-          <OwlCarousel
-            className="owl-carousel-header primary-background"
-            items={2}
-            loop={true}
-            autoplay={true}
-            // autoplayTimeout={3000}
+          <Carousel
+            responsive={responsive}
+            swipeable={true}
+            draggable={true}
+            showDots={false}
+            removeArrowOnDeviceType={["tablet", "iphone"]}
+            autoPlay={true}
+            containerClass={"owl-carousel-header"}
+            infinite={true}
           >
             {!this.props.isSignedIn && (
               <Link className="carousel-link" to="/seller/register">
@@ -43,13 +65,14 @@ class SecondaryHeader extends React.Component {
             <Link className="carousel-link" to="/customer-service">
               Customer Service
             </Link>
+
             <Link className="carousel-link" to="/support-center">
               Support Center
             </Link>
             <Link className="carousel-link" to="/privacy-policy">
               Privacy Policy
             </Link>
-          </OwlCarousel>
+          </Carousel>
         </div>
       </div>
     );

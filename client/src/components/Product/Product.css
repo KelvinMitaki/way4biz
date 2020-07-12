@@ -25,12 +25,7 @@ hr {
   background-color: red;
 }
 
-.product-imgs img {
-  width: 100%;
-}
-
 .feature-imgs {
-  justify-content: space-evenly;
   margin-top: 20px;
 }
 
@@ -67,13 +62,12 @@ hr {
 }
 
 .product-owl-carousel {
-  position: relative;
-  z-index: -5;
   background-color: #fff !important;
+  height: 100%;
 }
 
 .product-owl-carousel div img {
-  width: 50px;
+  width: 60px;
 }
 
 .add-to-cart {

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
-import OwlCarousel from "react-owl-carousel";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { FaStore } from "react-icons/fa";
 import "./Product.css";
@@ -21,6 +20,8 @@ import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
+import "react-multi-carousel/lib/styles.css";
+import Carousel from "react-multi-carousel";
 
 class Product extends React.Component {
   constructor(props) {
@@ -91,6 +92,13 @@ class Product extends React.Component {
       (item) => item._id === this.props.product && this.props.product._id
     );
 
+    const responsive = {
+      screenBreakpoints: {
+        breakpoint: { max: 4000, min: 0 },
+        items: 5,
+      },
+    };
+
     if (!this.props.product) return <ScreenLoader />;
     return (
       <React.Fragment>
@@ -103,14 +111,17 @@ class Product extends React.Component {
             <div className="row" id="product">
               <div className="col-lg-6 product-imgs">
                 <ReactImageMagnify {...this.getImageProps()} />
-                <div className="feature-imgs d-flex">
-                  <OwlCarousel
-                    items={5}
-                    loop={true}
-                    autoplay={true}
-                    autoplayTimeout={10000}
-                    dots={true}
-                    className="product-owl-carousel"
+
+                <div className="feature-imgs">
+                  <Carousel
+                    responsive={responsive}
+                    swipeable={true}
+                    draggable={true}
+                    showDots={false}
+                    removeArrowOnDeviceType={["screenBreakpoints"]}
+                    autoPlay={true}
+                    infinite={true}
+                    containerClass={"product-owl-carousel"}
                   >
                     <div>
                       <img
@@ -148,7 +159,7 @@ class Product extends React.Component {
                         alt={this.props.product.name}
                       />
                     </div>
-                  </OwlCarousel>
+                  </Carousel>
                 </div>
               </div>
               <div className="col-lg-6 product-info pt-2">
