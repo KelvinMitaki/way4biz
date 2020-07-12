@@ -218,7 +218,10 @@ class Product extends React.Component {
                   )}
 
                   <span className="ml-2">
-                    <Link style={{ color: "#f76b1a" }} to="/product/reviews">
+                    <Link
+                      style={{ color: "#f76b1a" }}
+                      to={`/product/main/reviews/${this.props.product._id}`}
+                    >
                       (
                       {this.props.productReviews.length === 1 ? (
                         <span>{this.props.productReviews.length} Review</span>
