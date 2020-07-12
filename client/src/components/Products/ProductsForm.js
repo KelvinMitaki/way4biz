@@ -3,13 +3,12 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchFilteredProducts } from "../../redux/actions";
 const ProductsForm = props => {
-  console.log(props.input.value);
   return (
     <div>
       <input
         onClick={() => {
           props.fetchFilteredProducts(
-            props.input.name === "price" ? props.input.value : props.input.name,
+            props.input.name === "price" ? props.input.value : props.products,
             props.match.params.category
           );
         }}
@@ -22,7 +21,11 @@ const ProductsForm = props => {
     </div>
   );
 };
-
+const mapStateToProps = state => {
+  return {
+    products: state.form.Products
+  };
+};
 export default withRouter(
-  connect(null, { fetchFilteredProducts })(ProductsForm)
+  connect(mapStateToProps, { fetchFilteredProducts })(ProductsForm)
 );

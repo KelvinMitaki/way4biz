@@ -55,20 +55,21 @@ route.post("/api/products/filter/:category", async (req, res) => {
       rating,
       freeShipping,
       lowestPrice,
+
       highestPrice
     } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
     // **TODO** FIX FILTERING
 
-    let products = await Product.find({ category });
-    if (freeShipping) {
-      products = products.filter(product => product.freeShipping === true);
-    }
-    if (rating) {
-      products = products.filter(product => product.rating >= 4);
-    }
-
-    res.send(products);
+    // let products = await Product.find({ category });
+    // if (freeShipping) {
+    //   products = products.filter(product => product.freeShipping === true);
+    // }
+    // if (rating) {
+    //   products = products.filter(product => product.rating >= 4);
+    // }
+    console.log(req.body);
+    res.send(req.body);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -20,6 +20,7 @@ import "./Products.css";
 import { reduxForm, Field } from "redux-form";
 import ProductsForm from "./ProductsForm";
 import BottomPageLoader from "../Pages/BottomPageLoader";
+import ProductsInput from "./ProductsInput";
 
 function Products(props) {
   const observer = useRef();
@@ -51,78 +52,7 @@ function Products(props) {
           <div className="col-lg-9" style={{ padding: "0px" }}>
             <div className="products-top">
               <div className="container products-lg-top">
-                <div className="row my-3">
-                  <div className="d-flex ml-3">
-                    <p className="mr-1">Price:</p>
-                    <Field
-                      name="min"
-                      type="number"
-                      placeholder="min"
-                      style={{ width: "80px" }}
-                      component={ProductsForm}
-                    />
-                    -
-                    <Field
-                      name="max"
-                      type="number"
-                      placeholder="max"
-                      style={{ width: "80px" }}
-                      component={ProductsForm}
-                    />
-                  </div>
-
-                  <div className="d-flex ml-4">
-                    <Field
-                      style={{ cursor: "pointer" }}
-                      name="rating"
-                      type="checkbox"
-                      className="mr-1"
-                      component={ProductsForm}
-                    />
-                    <Rating clickable={false} size={15} value={4} />
-                    <span className="ml-2">&up</span>{" "}
-                  </div>
-                  <div className="d-flex ml-5">
-                    <Field
-                      style={{ cursor: "pointer" }}
-                      name="freeShipping"
-                      type="checkbox"
-                      component={ProductsForm}
-                    />
-                    <p className="ml-1">Free Shipping</p>
-                  </div>
-                </div>
-                <div className="row my-3">
-                  <div className="d-flex ml-3">
-                    <Field
-                      style={{ cursor: "pointer" }}
-                      name="latest"
-                      type="checkbox"
-                      component={ProductsForm}
-                    />
-                    <p className="ml-1">Latest</p>
-                  </div>
-                  <div className="d-flex ml-3">
-                    <Field
-                      style={{ cursor: "pointer" }}
-                      name="price"
-                      type="radio"
-                      value="lowestPrice"
-                      component={ProductsForm}
-                    />
-                    <p className="ml-1">Lowest Price</p>
-                  </div>
-                  <div className="d-flex ml-3">
-                    <Field
-                      style={{ cursor: "pointer" }}
-                      name="price"
-                      type="radio"
-                      value="highestPrice"
-                      component={ProductsForm}
-                    />
-                    <p className="ml-1">Highest Price</p>
-                  </div>
-                </div>
+                <ProductsInput />
               </div>
               <div className="container products-sm-top">
                 <div className="row sort-sm-section-wrapper">
