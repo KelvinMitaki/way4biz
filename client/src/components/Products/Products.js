@@ -15,6 +15,10 @@ import {
   hasMoreCategoryFalse,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
+import { IconContext } from "react-icons";
+import { FiFilter } from "react-icons/fi";
+import { FaSortAmountDownAlt } from "react-icons/fa";
+import { MdArrowDropDown } from "react-icons/md";
 
 function Products(props) {
   const observer = useRef();
@@ -88,8 +92,30 @@ function Products(props) {
                 </div>
               </div>
               <div className="container products-sm-top">
-                <div className="row"></div>
-                <div className="row"></div>
+                <div className="row sort-sm-section-wrapper">
+                  <div className="sort-sm-section">
+                    <IconContext.Provider value={{ className: "sort-sm-icon" }}>
+                      <FiFilter />
+                      <span>
+                        <MdArrowDropDown />
+                      </span>
+                    </IconContext.Provider>
+                    <div id="filter-stuff">
+                      <h3>Helloo WOrld</h3>
+                    </div>
+                  </div>
+                  <div className="sort-sm-section">
+                    <IconContext.Provider value={{ className: "sort-sm-icon" }}>
+                      <span>
+                        <MdArrowDropDown />
+                      </span>
+                      <FaSortAmountDownAlt />
+                    </IconContext.Provider>
+                    <div id="sort-stuff">
+                      <h3>Helloo WOrld</h3>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="products-section">
