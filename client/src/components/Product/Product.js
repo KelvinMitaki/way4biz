@@ -200,10 +200,35 @@ class Product extends React.Component {
                   </p>
                 </div>
                 <div className="product-rating">
-                  <Rating size={18} clickable={false} value={5} />
+                  {this.props.productReviews.length !== 0 ? (
+                    <React.Fragment>
+                      <Rating
+                        size={18}
+                        clickable={false}
+                        value={Math.round(
+                          this.props.productReviews
+                            .map(p => p.rating)
+                            .reduce((acc, cur) => acc + cur, 0) /
+                            this.props.productReviews.length
+                        )}
+                      />
+                    </React.Fragment>
+                  ) : (
+                    <Rating size={18} clickable={false} value={0} />
+                  )}
+
                   <span className="ml-2">
-                    <Link style={{ color: "#f76b1a" }} to="/product/reviews">
-                      (0 Reviews)
+                    <Link
+                      style={{ color: "#f76b1a" }}
+                      to={`/product/main/reviews/${this.props.product._id}`}
+                    >
+                      (
+                      {this.props.productReviews.length === 1 ? (
+                        <span>{this.props.productReviews.length} Review</span>
+                      ) : (
+                        <span>{this.props.productReviews.length} Reviews</span>
+                      )}{" "}
+                      )
                     </Link>
                   </span>
                 </div>
@@ -237,7 +262,7 @@ class Product extends React.Component {
               <div className="related-products-wrapper">
                 {this.props.relatedProducts.length !== 0 &&
                   this.props.relatedProducts.map(item => (
-                    <Link key={item._id} to={`/product/${item._id}`}>
+                    <a key={item._id} href={`/product/${item._id}`}>
                       <div key={item._id} className="related-product">
                         <img src={item.imageUrl} alt={item.name} />
                         <p className="related-product-name">{item.name}</p>
@@ -245,7 +270,7 @@ class Product extends React.Component {
                           Ksh.{item.price.toLocaleString()}{" "}
                         </p>
                       </div>
-                    </Link>
+                    </a>
                   ))}
               </div>
               <div className="row product-features-reviews-specifications mt-3">
@@ -274,7 +299,8 @@ const mapStateToProps = (state, ownProps) => {
     product,
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
-    relatedProducts: state.product.relatedProducts
+    relatedProducts: state.product.relatedProducts,
+    productReviews: state.product.productReviews
   };
 };
 export default withRouter(

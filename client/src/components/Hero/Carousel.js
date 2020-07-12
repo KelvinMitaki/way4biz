@@ -12,49 +12,16 @@ import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCarousel extends React.Component {
-  state = {
-    item1: null,
-    item2: null,
-    item3: null,
-    item4: null,
-    loading: false,
-  };
-  componentDidMount() {
-    this.setState({
-      loading: true,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-      });
-    }, 5000);
-
-    this.setState({
-      item1: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ],
-    });
-    this.setState({
-      item2: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ],
-    });
-    this.setState({
-      item3: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ],
-    });
-    this.setState({
-      item4: this.props.products[
-        Math.floor(Math.random() * this.props.products.length)
-      ],
-    });
-  }
-
   render() {
-    const { loading } = this.state;
+    if (this.props.products.length === 0) return <ScreenLoader />;
 
+    const randomStop = Math.ceil(Math.random() * this.props.products.length);
+    const randomStart = randomStop < 4 ? randomStop + 4 : randomStop - 4;
+
+    const trimmedProducts = this.props.products.slice(
+      randomStart > randomStop ? randomStop : randomStart,
+      randomStop > randomStart ? randomStop : randomStart
+    );
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -72,95 +39,28 @@ class HeroCarousel extends React.Component {
           </div>
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
-              {this.state.item1 && (
-                <React.Fragment>
+              {trimmedProducts &&
+                trimmedProducts.map(prod => (
                   <div
+                    key={prod._id}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
-                      this.props.history.push(
-                        `/product/${this.state.item1._id}`
-                      )
+                      this.props.history.push(`/product/${prod._id}`)
                     }
                   >
                     <img
-                      src={this.state.item1.imageUrl}
-                      alt={this.state.item1.name}
+                      src={prod.imageUrl}
+                      alt={prod.name}
                       className="hero-random-image"
                     />
 
-                    <h6 className="hero-product-name">
-                      {this.state.item1.name}
-                    </h6>
+                    <h6 className="hero-product-name">{prod.name}</h6>
 
                     <p className="hero-product-price">
-                      <small>Ksh.{this.state.item1.price}</small>
+                      <small>Ksh.{prod.price.toLocaleString()}</small>
                     </p>
                   </div>
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      this.props.history.push(
-                        `/product/${this.state.item2._id}`
-                      )
-                    }
-                  >
-                    <img
-                      src={this.state.item2.imageUrl}
-                      alt={this.state.item2.name}
-                      className="hero-random-image"
-                    />
-
-                    <h6 className="hero-product-name">
-                      {this.state.item2.name}
-                    </h6>
-                    <p className="hero-product-price">
-                      <small>Ksh.{this.state.item2.price}</small>
-                    </p>
-                  </div>
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      this.props.history.push(
-                        `/product/${this.state.item3._id}`
-                      )
-                    }
-                  >
-                    <img
-                      src={this.state.item3.imageUrl}
-                      alt={this.state.item3.name}
-                      className="hero-random-image"
-                    />
-
-                    <h6 className="hero-product-name">
-                      {this.state.item3.name}
-                    </h6>
-                    <p className="hero-product-price">
-                      <small>Ksh.{this.state.item3.price}</small>
-                    </p>
-                  </div>
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      this.props.history.push(
-                        `/product/${this.state.item4._id}`
-                      )
-                    }
-                  >
-                    <img
-                      src={this.state.item4.imageUrl}
-                      alt={this.state.item4.name}
-                      className="hero-random-image"
-                    />
-
-                    <h6 className="hero-product-name">
-                      {this.state.item4.name}
-                    </h6>
-                    <p className="hero-product-price">
-                      <small>Ksh.{this.state.item4.price}</small>
-                    </p>
-                  </div>
-                </React.Fragment>
-              )}
+                ))}
             </div>
           </div>
         </div>
@@ -187,7 +87,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%",
+                    width: "100%"
                   }}
                   className="mt-4"
                 >
@@ -195,7 +95,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -210,7 +110,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -224,7 +124,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -262,10 +162,10 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default withRouter(

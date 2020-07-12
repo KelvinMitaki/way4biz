@@ -1,11 +1,8 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import { Link, withRouter } from "react-router-dom";
-
-import "./Products.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-
 import Categories from "../Hero/HeroCategories";
 import { connect } from "react-redux";
 import Heart from "./Heart";
@@ -14,6 +11,14 @@ import {
   moreSingleCategoryProducts,
   hasMoreCategoryFalse
 } from "../../redux/actions";
+import Rating from "../Product/Rating";
+import { IconContext } from "react-icons";
+import { FiFilter } from "react-icons/fi";
+import { FaSortAmountDownAlt } from "react-icons/fa";
+import { MdArrowDropDown } from "react-icons/md";
+import "./Products.css";
+import { reduxForm, Field } from "redux-form";
+import ProductsForm from "./ProductsForm";
 
 function Products(props) {
   const observer = useRef();
@@ -43,6 +48,142 @@ function Products(props) {
             <Categories id="products-categories" />
           </div>
           <div className="col-lg-9" style={{ padding: "0px" }}>
+            <div className="products-top">
+              <div className="container products-lg-top">
+                <div className="row my-3">
+                  <div className="d-flex ml-3">
+                    <p className="mr-1">Price:</p>
+                    <Field
+                      name="min"
+                      type="number"
+                      placeholder="min"
+                      style={{ width: "80px" }}
+                      component={ProductsForm}
+                    />
+                    -
+                    <Field
+                      name="max"
+                      type="number"
+                      placeholder="max"
+                      style={{ width: "80px" }}
+                      component={ProductsForm}
+                    />
+                  </div>
+
+                  <div className="d-flex ml-4">
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="rating"
+                      type="checkbox"
+                      className="mr-1"
+                      component={ProductsForm}
+                    />
+                    <Rating clickable={false} size={15} value={4} />
+                    <span className="ml-2">&up</span>{" "}
+                  </div>
+                  <div className="d-flex ml-5">
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="freeShipping"
+                      type="checkbox"
+                      component={ProductsForm}
+                    />
+                    <p className="ml-1">Free Shipping</p>
+                  </div>
+                </div>
+                <div className="row my-3">
+                  <div className="d-flex ml-3">
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="latest"
+                      type="checkbox"
+                      component={ProductsForm}
+                    />
+                    <p className="ml-1">Latest</p>
+                  </div>
+                  <div className="d-flex ml-3">
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="price"
+                      type="radio"
+                      value="lowestPrice"
+                      component={ProductsForm}
+                    />
+                    <p className="ml-1">Lowest Price</p>
+                  </div>
+                  <div className="d-flex ml-3">
+                    <Field
+                      style={{ cursor: "pointer" }}
+                      name="price"
+                      type="radio"
+                      value="highestPrice"
+                      component={ProductsForm}
+                    />
+                    <p className="ml-1">Highest Price</p>
+                  </div>
+                </div>
+              </div>
+              <div className="container products-sm-top">
+                <div className="row sort-sm-section-wrapper">
+                  <div className="sort-sm-section" id="filter-section">
+                    <IconContext.Provider value={{ className: "sort-sm-icon" }}>
+                      <FiFilter />
+                      <span>
+                        <MdArrowDropDown />
+                      </span>
+                    </IconContext.Provider>
+                    <div id="filter-stuff">
+                      <div className="d-flex ml-3">
+                        <p className="mr-1">Price:</p>
+                        <input
+                          style={{ width: "80px" }}
+                          type="number"
+                          placeholder="min"
+                        />
+                        -
+                        <input
+                          style={{ width: "80px" }}
+                          type="number"
+                          placeholder="max"
+                        />
+                      </div>
+
+                      <div className="d-flex ml-4">
+                        <input type="checkbox" className="mr-1" />
+                        <Rating clickable={false} size={15} value={4} />
+                        <span className="ml-2">&up</span>{" "}
+                      </div>
+                      <div className="d-flex ml-5">
+                        <input type="checkbox" />
+                        <p className="ml-1">Free Shipping</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sort-sm-section" id="sort-section">
+                    <IconContext.Provider value={{ className: "sort-sm-icon" }}>
+                      <span>
+                        <MdArrowDropDown />
+                      </span>
+                      <FaSortAmountDownAlt />
+                    </IconContext.Provider>
+                    <div id="sort-stuff">
+                      <div className="d-flex ml-3">
+                        <input type="checkbox" />
+                        <p className="ml-1">Latest</p>
+                      </div>
+                      <div className="d-flex ml-3">
+                        <input type="radio" />
+                        <p className="ml-1">Lowest Price</p>
+                      </div>
+                      <div className="d-flex ml-3">
+                        <input type="radio" />
+                        <p className="ml-1">Highest Price</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="products-section">
               {props.singleCategoryProducts.length !== 0 &&
                 props.singleCategoryProducts.map((product, index) => {
@@ -161,9 +302,11 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, {
-    singleCategory,
-    hasMoreCategoryFalse,
-    moreSingleCategoryProducts
-  })(Products)
+  reduxForm({ form: "Products" })(
+    connect(mapStateToProps, {
+      singleCategory,
+      hasMoreCategoryFalse,
+      moreSingleCategoryProducts
+    })(Products)
+  )
 );

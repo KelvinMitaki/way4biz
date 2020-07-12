@@ -52,7 +52,7 @@ class App extends React.Component {
           <div>
             <Route path="/" exact component={Home} />
             <Route
-              path="/product/reviews"
+              path="/product/main/reviews/:productId"
               exact
               component={ProductReviewsWrapper}
             />

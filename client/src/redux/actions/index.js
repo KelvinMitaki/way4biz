@@ -674,12 +674,12 @@ export const redirectOnFail = (
 
 export const fetchProductReviews = productId => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/product/reviews/${productId}`);
     dispatch({ type: PRODUCT_REVIEWS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
 };

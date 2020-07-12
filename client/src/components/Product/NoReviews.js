@@ -14,3 +14,4 @@ class NoReviews extends React.Component {
     );
   }
 }
+export default NoReviews;

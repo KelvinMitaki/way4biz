@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
-import { Link, withRouter, Redirect } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./AddReview.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";

@@ -3,6 +3,7 @@ import Rating from "./Rating";
 
 import "./ProductReviews.css";
 import { connect } from "react-redux";
+import NoReviews from "./NoReviews";
 
 class ProductReviews extends React.Component {
   render() {
@@ -11,19 +12,29 @@ class ProductReviews extends React.Component {
         {/* mapping here */}
         {this.props.productReviews.length !== 0 &&
           this.props.productReviews.map(prod => (
-            <div className="buyer-review-wrapper">
-              <Rating size={15} clickable={false} value={5} />
-              <p>
-                The quick brown fox jumped over the lazy dog. The quick brown
-                fox jumped over the lazy dog. The quick brown fox jumped over
-                the lazy dog. The quick brown fox jumped over the lazy dog.
-              </p>
-              <p className="my-2">
-                By Fred
-                <span className="ml-2">on 1/1/001</span>
+            <div className="buyer-review-wrapper" key={prod._id}>
+              <Rating size={15} clickable={false} value={prod.rating} />
+
+              <h5>
+                <strong>{prod.title}</strong>
+              </h5>
+              <p>{prod.body}</p>
+              <p className="my-2 lead" style={{ fontSize: "15px" }}>
+                By{" "}
+                {prod.userSeller
+                  ? prod.userSeller.firstName
+                  : prod.user.firstName}
+                <span className="ml-2">
+                  on {new Date(prod.createdAt).toLocaleDateString()}{" "}
+                </span>
               </p>
             </div>
           ))}
+        {this.props.productReviews.length === 0 && (
+          <h3>
+            <NoReviews />
+          </h3>
+        )}
       </div>
     );
   }

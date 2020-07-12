@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 import { singleCategory, fetchAllCategories } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { RiArrowDropRightLine } from "react-icons/ri";
-// import Skeleton from "react-loading-skeleton";
 
 class HeroCategories extends React.Component {
   render() {
