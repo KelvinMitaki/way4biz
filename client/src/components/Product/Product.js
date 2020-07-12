@@ -200,7 +200,29 @@ class Product extends React.Component {
                   </p>
                 </div>
                 <div className="product-rating">
-                  <Rating size={18} clickable={false} value={5} />
+                  {this.props.productReviews.length !== 0 ? (
+                    <React.Fragment>
+                      {console.log(
+                        this.props.productReviews
+                          .map(p => p.rating)
+                          .reduce((acc, cur) => acc + cur, 0) /
+                          this.props.productReviews.length
+                      )}
+                      <Rating
+                        size={18}
+                        clickable={false}
+                        value={
+                          this.props.productReviews
+                            .map(p => p.rating)
+                            .reduce((acc, cur) => acc + cur, 0) /
+                          this.props.productReviews.length
+                        }
+                      />
+                    </React.Fragment>
+                  ) : (
+                    <Rating size={18} clickable={false} value={0} />
+                  )}
+
                   <span className="ml-2">
                     <Link style={{ color: "#f76b1a" }} to="/product/reviews">
                       (
