@@ -211,12 +211,12 @@ class Product extends React.Component {
                       <Rating
                         size={18}
                         clickable={false}
-                        value={
+                        value={Math.round(
                           this.props.productReviews
                             .map(p => p.rating)
                             .reduce((acc, cur) => acc + cur, 0) /
-                          this.props.productReviews.length
-                        }
+                            this.props.productReviews.length
+                        )}
                       />
                     </React.Fragment>
                   ) : (
