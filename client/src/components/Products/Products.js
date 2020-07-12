@@ -12,12 +12,13 @@ import Heart from "./Heart";
 import {
   singleCategory,
   moreSingleCategoryProducts,
-  hasMoreCategoryFalse
+  hasMoreCategoryFalse,
 } from "../../redux/actions";
+import Rating from "../Product/Rating";
 
 function Products(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback(node => {
+  const lastItemElementRef = useCallback((node) => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
         return props.moreSingleCategoryProducts(props.match.params.category);
@@ -25,7 +26,7 @@ function Products(props) {
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
+    observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -43,6 +44,54 @@ function Products(props) {
             <Categories id="products-categories" />
           </div>
           <div className="col-lg-9" style={{ padding: "0px" }}>
+            <div className="products-top">
+              <div className="container products-lg-top">
+                <div className="row my-3">
+                  <div className="d-flex ml-3">
+                    <p className="mr-1">Price:</p>
+                    <input
+                      style={{ width: "80px" }}
+                      type="number"
+                      placeholder="min"
+                    />
+                    -
+                    <input
+                      style={{ width: "80px" }}
+                      type="number"
+                      placeholder="max"
+                    />
+                  </div>
+
+                  <div className="d-flex ml-4">
+                    <input type="checkbox" className="mr-1" />
+                    <Rating clickable={false} size={15} value={4} />
+                    <span className="ml-2">&up</span>{" "}
+                  </div>
+                  <div className="d-flex ml-5">
+                    <input type="checkbox" />
+                    <p className="ml-1">Free Shipping</p>
+                  </div>
+                </div>
+                <div className="row my-3">
+                  <div className="d-flex ml-3">
+                    <input type="checkbox" />
+                    <p className="ml-1">Latest</p>
+                  </div>
+                  <div className="d-flex ml-3">
+                    <input type="radio" />
+                    <p className="ml-1">Lowest Price</p>
+                  </div>
+                  <div className="d-flex ml-3">
+                    <input type="radio" />
+                    <p className="ml-1">Highest Price</p>
+                  </div>
+                </div>
+              </div>
+              <div className="container products-sm-top">
+                <div className="row"></div>
+                <div className="row"></div>
+              </div>
+            </div>
             <div className="products-section">
               {props.singleCategoryProducts.length !== 0 &&
                 props.singleCategoryProducts.map((product, index) => {
@@ -70,7 +119,7 @@ function Products(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px"
+                                padding: "0px 10px",
                               }}
                               className="price"
                             >
@@ -89,7 +138,7 @@ function Products(props) {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "0px 10px"
+                            padding: "0px 10px",
                           }}
                           className="mb-2"
                         >
@@ -117,7 +166,7 @@ function Products(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px"
+                              padding: "0px 10px",
                             }}
                             className="price"
                           >
@@ -136,7 +185,7 @@ function Products(props) {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px"
+                          padding: "0px 10px",
                         }}
                         className="mb-2"
                       >
@@ -154,16 +203,16 @@ function Products(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
-    categoryProductCount: state.product.categoryProductCount
+    categoryProductCount: state.product.categoryProductCount,
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     singleCategory,
     hasMoreCategoryFalse,
-    moreSingleCategoryProducts
+    moreSingleCategoryProducts,
   })(Products)
 );

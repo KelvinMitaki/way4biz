@@ -5,6 +5,16 @@
   border: 1px solid #eee;
 }
 
+.products-top {
+  width: 100%;
+  /* height: 80px;
+  background-color: red; */
+}
+
+.products-lg-top div {
+  align-items: center;
+}
+
 .products-section {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -18,6 +28,9 @@
 
 @media screen and (max-width: 960px) {
   #products-categories {
+    display: none;
+  }
+  .products-lg-top {
     display: none;
   }
 }
