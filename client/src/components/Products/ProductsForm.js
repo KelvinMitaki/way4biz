@@ -4,6 +4,7 @@ const ProductsForm = props => {
   return (
     <div>
       <input
+        onClick={() => console.log("cliecked")}
         type={props.type}
         {...props.input}
         placeholder={props.placeholder}
