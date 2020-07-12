@@ -26,97 +26,98 @@ const category = [
 class Account extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <AccountHeader />
-        <div className="container account-wrapper">
-          <div className="row">
-            <div className="col-lg-4">
-              <AccountMenu />
-            </div>
-            <div className="col-lg-8  box-container" id="address-form">
-              <h3 className="legend">My Account</h3>
-              {/* <hr /> */}
-              <form
-                onSubmit={this.props.handleSubmit((formValues) =>
-                  this.props.editUser(formValues, this.props.history)
-                )}
-              >
-                <Field
-                  type="text"
-                  name="firstName"
-                  label="First Name"
-                  component={FormField}
-                />
-                <Field
-                  type="text"
-                  name="lastName"
-                  label="Last Name"
-                  component={FormField}
-                />
-                <Field
-                  type="text"
-                  name="phoneNumber"
-                  label="Phone Number"
-                  component={AddressPhoneNumber}
-                />
-                <Field
-                  name="address"
-                  label="Delivery Address"
-                  component={TextareaForm}
-                />
-                <Field
-                  name="city"
-                  label="City"
-                  options={category}
-                  component={SelectField}
-                />
-                <Field
-                  name="town"
-                  label="Town"
-                  options={category}
-                  component={SelectField}
-                />
-
-                <button
-                  className="btn btn-md btn-block address-btn mt-3 "
-                  disabled={
-                    !this.props.valid ||
-                    this.props.loading ||
-                    this.props.pristine
-                  }
-                  type="submit"
-                >
-                  {this.props.loading && (
-                    <span
-                      className="spinner-grow spinner-grow-sm"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                  )}
-                  {this.props.loading ? (
-                    <span> {"  "}Loading...</span>
-                  ) : (
-                    <span>Save</span>
-                  )}
-                </button>
-              </form>
-              <div className="form-primary-error">
-                {this.props.editUserError && this.props.editUserError}
+      <div className="main">
+        <div className="content">
+          <AccountHeader />
+          <div className="container account-wrapper">
+            <div className="row">
+              <div className="col-lg-4">
+                <AccountMenu />
               </div>
-              <br />
-              {!this.props.googleId && (
-                <p>
-                  <Link style={{ color: "#f76b1a" }} to="/change-password">
-                    Change password
-                  </Link>
-                </p>
-              )}
+              <div className="col-lg-8  box-container" id="address-form">
+                <h3 className="legend">My Account</h3>
+                <form
+                  onSubmit={this.props.handleSubmit((formValues) =>
+                    this.props.editUser(formValues, this.props.history)
+                  )}
+                >
+                  <Field
+                    type="text"
+                    name="firstName"
+                    label="First Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="lastName"
+                    label="Last Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="phoneNumber"
+                    label="Phone Number"
+                    component={AddressPhoneNumber}
+                  />
+                  <Field
+                    name="address"
+                    label="Delivery Address"
+                    component={TextareaForm}
+                  />
+                  <Field
+                    name="city"
+                    label="City"
+                    options={category}
+                    component={SelectField}
+                  />
+                  <Field
+                    name="town"
+                    label="Town"
+                    options={category}
+                    component={SelectField}
+                  />
+
+                  <button
+                    className="btn btn-md btn-block address-btn mt-3 "
+                    disabled={
+                      !this.props.valid ||
+                      this.props.loading ||
+                      this.props.pristine
+                    }
+                    type="submit"
+                  >
+                    {this.props.loading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    {this.props.loading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Save</span>
+                    )}
+                  </button>
+                </form>
+                <div className="form-primary-error">
+                  {this.props.editUserError && this.props.editUserError}
+                </div>
+                <br />
+                {!this.props.googleId && (
+                  <p>
+                    <Link style={{ color: "#f76b1a" }} to="/change-password">
+                      Change password
+                    </Link>
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>
         <Footer />
         <MiniMenuWrapper />
-      </React.Fragment>
+      </div>
     );
   }
 }

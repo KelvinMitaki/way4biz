@@ -35,66 +35,70 @@ class PendingReviews extends React.Component {
         );
     }
     return (
-      <div>
-        <AccountHeader />
-        <div className="container pending-reviews-wrapper">
-          <div className="row">
-            <div className="col-lg-4">
-              <AccountMenu />
-            </div>
-            <div className="col-lg-8  box-container">
-              {/* show if no pending reviews */}
-              {this.props.pendingReviewProducts.length === 0 && (
-                <div className="container-fluid buyer-no-pending-reviews">
-                  <IconContext.Provider
-                    value={{ className: "no-reviews-icon" }}
-                  >
-                    <MdRateReview />
-                  </IconContext.Provider>
-                  <p className="mt-3">
-                    You have no orders with pending reviews yet. Orders
-                    delivered to you will appear here for you to review and rate
-                    them
-                  </p>
-                  <Link
-                    to="/"
-                    className="btn btn-md mt-3 pending-review-shopping-btn"
-                  >
-                    Continue Shopping
-                  </Link>
-                </div>
-              )}
-              {/* show if there is pending reviews */}
-              {this.props.pendingReviewProducts.length !== 0 && (
-                <div className="container-fluid buyer-pending-reviews">
-                  <h4>Pending Reviews</h4>
-                  <div className="buyer-pending-reviews-wrapper mt-2 container">
-                    {/* mapping takes place here */}
-                    {test.map((item) => (
-                      <div
-                        key={item._id}
-                        className="buyer-pending-review box-container row"
-                      >
-                        <div className="col-md-10 d-flex">
-                          <img src={item.imageUrl} alt={item.name} />
-                          <div id="buyer-review-product-name">
-                            <div className="mb-3">
-                              <h6>{item.name}</h6>
-                            </div>
+      <div className="main">
+        <div className="content">
+          <AccountHeader />
+          <div className="container pending-reviews-wrapper">
+            <div className="row">
+              <div className="col-lg-4">
+                <AccountMenu />
+              </div>
+              <div className="col-lg-8  box-container">
+                {/* show if no pending reviews */}
+                {this.props.pendingReviewProducts.length === 0 && (
+                  <div className="container-fluid buyer-no-pending-reviews">
+                    <IconContext.Provider
+                      value={{ className: "no-reviews-icon" }}
+                    >
+                      <MdRateReview />
+                    </IconContext.Provider>
+                    <p className="mt-3">
+                      You have no orders with pending reviews yet. Orders
+                      delivered to you will appear here for you to review and
+                      rate them
+                    </p>
+                    <Link
+                      to="/"
+                      className="btn btn-md mt-3 pending-review-shopping-btn"
+                    >
+                      Continue Shopping
+                    </Link>
+                  </div>
+                )}
+                {/* show if there is pending reviews */}
+                {this.props.pendingReviewProducts.length !== 0 && (
+                  <div className="container-fluid buyer-pending-reviews">
+                    <h4>Pending Reviews</h4>
+                    <div className="buyer-pending-reviews-wrapper mt-2 container">
+                      {/* mapping takes place here */}
+                      {test.map((item) => (
+                        <div
+                          key={item._id}
+                          className="buyer-pending-review box-container row"
+                        >
+                          <div className="col-md-10 d-flex">
+                            <img src={item.imageUrl} alt={item.name} />
+                            <div id="buyer-review-product-name">
+                              <div className="mb-3">
+                                <h6>{item.name}</h6>
+                              </div>
 
-                            <p>Ksh.{item.price.toLocaleString()} </p>
+                              <p>Ksh.{item.price.toLocaleString()} </p>
+                            </div>
+                          </div>
+                          <div className="col-md-2 rate-link-wrapper">
+                            <Link
+                              to={`/add/review/${item._id}/${item.orderId}`}
+                            >
+                              Rate
+                            </Link>
                           </div>
                         </div>
-                        <div className="col-md-2 rate-link-wrapper">
-                          <Link to={`/add/review/${item._id}/${item.orderId}`}>
-                            Rate
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
