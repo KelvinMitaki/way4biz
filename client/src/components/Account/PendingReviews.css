@@ -50,8 +50,12 @@
   align-items: flex-start;
 }
 
+#buyer-review-product-name div {
+  width: 100%;
+}
+
 #buyer-review-product-name h6 {
-  width: 70%;
+  /* width: 100%; */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
