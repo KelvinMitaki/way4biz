@@ -686,16 +686,11 @@ export const fetchProductReviews = productId => async dispatch => {
     console.log(error.response);
   }
 };
-export const fetchFilteredProducts = (filter, category) => async (
-  dispatch,
-  getState
-) => {
-  console.log(filter);
-  console.log(getState().form.Products);
+export const fetchFilteredProducts = (filter, category) => async dispatch => {
   try {
     dispatch({ type: FILTERED_PRODUCTS_START });
-    // const res = await axios.post(`/api/products/filter/${category}`, filter);
-    // console.log(res.data);
+    const res = await axios.post(`/api/products/filter/${category}`, filter);
+    console.log(res.data);
     // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
     dispatch({ type: FILTERED_PRODUCTS_STOP });
   } catch (error) {
