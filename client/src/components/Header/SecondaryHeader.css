@@ -29,11 +29,6 @@
   display: none;
 }
 
-.owl-carousel-header {
-  position: relative;
-  z-index: -10 !important;
-}
-
 .owl-stage {
   display: flex;
   background-color: #00001e !important;
@@ -58,16 +53,14 @@
 }
 
 .owl-carousel-header {
-  display: flex;
   height: 30px !important;
-  flex-direction: row !important;
-  position: relative;
-  top: 0px;
+  width: 100vw;
+  padding: 0px 20px;
 }
 
 .carousel-link,
 .carousel-link:hover {
-  display: inline-block !important;
+  display: inline !important;
   color: #f76b1a;
   text-decoration: none;
 }
@@ -81,10 +74,11 @@
 @media screen and (max-width: 960px) {
   #large-screen-secondary-header {
     display: none !important;
+    background-color: red;
   }
 
   #small-screen-secondary-header {
-    display: initial;
+    display: block;
   }
 }
 

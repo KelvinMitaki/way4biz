@@ -1,6 +1,5 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
-import OwlCarousel from "react-owl-carousel";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { FaStore } from "react-icons/fa";
 import "./Product.css";
@@ -15,19 +14,21 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts
+  fetchRelatedProducts,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
+// import "react-multi-carousel/lib/styles.css";
+// import Carousel from "react-multi-carousel";
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false
+      clicked: false,
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -45,9 +46,9 @@ class Product extends React.Component {
   }
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
     const { product, addToCart } = this.props;
@@ -56,9 +57,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -69,14 +70,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl,
       },
       largeImage: {
         src: product.imageUrl,
         width: 1200,
-        height: 1800
+        height: 1800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -84,209 +85,227 @@ class Product extends React.Component {
     const stockQuantity =
       this.props.product && this.props.product.stockQuantity;
     const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product && this.props.product._id
+      (item) => item._id === this.props.product && this.props.product._id
     );
     let itemInCart = false;
     itemInCart = this.props.cart.find(
-      item => item._id === this.props.product && this.props.product._id
+      (item) => item._id === this.props.product && this.props.product._id
     );
+
+    const responsive = {
+      screenBreakpoints: {
+        breakpoint: { max: 4000, min: 0 },
+        items: 5,
+      },
+    };
+
     if (!this.props.product) return <ScreenLoader />;
     return (
-      <React.Fragment>
-        <Header />
-        {this.props.product && (
-          <div className="container-fluid product-wrapper">
-            {this.state.modalShow ? (
-              <div onClick={this.handleCloseModal} className="back-shed"></div>
-            ) : null}
-            <div className="row" id="product">
-              <div className="col-lg-6 product-imgs">
-                <ReactImageMagnify {...this.getImageProps()} />
-                <div className="feature-imgs d-flex">
-                  <OwlCarousel
-                    items={5}
-                    loop={true}
-                    autoplay={true}
-                    autoplayTimeout={10000}
-                    dots={true}
-                    className="product-owl-carousel"
-                  >
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src={this.props.product.imageUrl}
-                        alt={this.props.product.name}
-                      />
-                    </div>
-                  </OwlCarousel>
-                </div>
-              </div>
-              <div className="col-lg-6 product-info pt-2">
-                {stockQuantity >= 1 ? (
-                  <span className="badge stock-badge in-stock-badge">
-                    In Stock
-                  </span>
-                ) : (
-                  <span className="badge stock-badge out-of-stock-badge">
-                    Out Of Stock
-                  </span>
-                )}
+      <div className="main">
+        <div className="content">
+          <Header />
+          {this.props.product && (
+            <div className="container-fluid product-wrapper">
+              {this.state.modalShow ? (
+                <div
+                  onClick={this.handleCloseModal}
+                  className="back-shed"
+                ></div>
+              ) : null}
+              <div className="row" id="product">
+                <div className="col-lg-6 product-imgs">
+                  <ReactImageMagnify {...this.getImageProps()} />
 
-                <div className="product-name-wishlist">
-                  <h5 className="mr-2">{this.props.product.name}</h5>
-                  <IconContext.Provider
-                    value={{ size: "2em", color: "#f76b1a" }}
-                  >
-                    {this.state.clicked || itemInWishlist ? (
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          this.props.removeFromWishlist(this.props.product);
-                          this.setState({ clicked: false });
-                        }}
-                      >
-                        <IoMdHeart />
+                  <div className="feature-imgs">
+                    {/* <Carousel
+                      responsive={responsive}
+                      swipeable={true}
+                      draggable={true}
+                      showDots={false}
+                      removeArrowOnDeviceType={["screenBreakpoints"]}
+                      autoPlay={true}
+                      infinite={true}
+                      containerClass={"product-owl-carousel"}
+                    >
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
                       </div>
-                    ) : (
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          this.props.addToWishlist(this.props.product);
-                          this.setState({ clicked: true });
-                        }}
-                      >
-                        <IoMdHeartEmpty />
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
                       </div>
-                    )}
-                  </IconContext.Provider>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                    </Carousel> */}
+                  </div>
                 </div>
-                <div className="product-store">
-                  <IconContext.Provider
-                    value={{ className: "product-store-icon-wrapper" }}
-                  >
-                    <FaStore />
-                  </IconContext.Provider>
-                  <p className="store-name ml-2">
-                    {this.props.product.seller.storeName}
-                  </p>
-                </div>
-                <div className="product-rating">
-                  {this.props.productReviews.length !== 0 ? (
-                    <React.Fragment>
-                      <Rating
-                        size={18}
-                        clickable={false}
-                        value={Math.round(
-                          this.props.productReviews
-                            .map(p => p.rating)
-                            .reduce((acc, cur) => acc + cur, 0) /
-                            this.props.productReviews.length
-                        )}
-                      />
-                    </React.Fragment>
+                <div className="col-lg-6 product-info pt-2">
+                  {stockQuantity >= 1 ? (
+                    <span className="badge stock-badge in-stock-badge">
+                      In Stock
+                    </span>
                   ) : (
-                    <Rating size={18} clickable={false} value={0} />
+                    <span className="badge stock-badge out-of-stock-badge">
+                      Out Of Stock
+                    </span>
                   )}
 
-                  <span className="ml-2">
-                    <Link
-                      style={{ color: "#f76b1a" }}
-                      to={`/product/main/reviews/${this.props.product._id}`}
+                  <div className="product-name-wishlist">
+                    <h5 className="mr-2">{this.props.product.name}</h5>
+                    <IconContext.Provider
+                      value={{ size: "2em", color: "#f76b1a" }}
                     >
-                      (
-                      {this.props.productReviews.length === 1 ? (
-                        <span>{this.props.productReviews.length} Review</span>
+                      {this.state.clicked || itemInWishlist ? (
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            this.props.removeFromWishlist(this.props.product);
+                            this.setState({ clicked: false });
+                          }}
+                        >
+                          <IoMdHeart />
+                        </div>
                       ) : (
-                        <span>{this.props.productReviews.length} Reviews</span>
-                      )}{" "}
-                      )
-                    </Link>
-                  </span>
-                </div>
-                <div className="product-price">
-                  <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
-                </div>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            this.props.addToWishlist(this.props.product);
+                            this.setState({ clicked: true });
+                          }}
+                        >
+                          <IoMdHeartEmpty />
+                        </div>
+                      )}
+                    </IconContext.Provider>
+                  </div>
+                  <div className="product-store">
+                    <IconContext.Provider
+                      value={{ className: "product-store-icon-wrapper" }}
+                    >
+                      <FaStore />
+                    </IconContext.Provider>
+                    <p className="store-name ml-2">
+                      {this.props.product.seller.storeName}
+                    </p>
+                  </div>
+                  <div className="product-rating">
+                    {this.props.productReviews.length !== 0 ? (
+                      <React.Fragment>
+                        <Rating
+                          size={18}
+                          clickable={false}
+                          value={Math.round(
+                            this.props.productReviews
+                              .map((p) => p.rating)
+                              .reduce((acc, cur) => acc + cur, 0) /
+                              this.props.productReviews.length
+                          )}
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <Rating size={18} clickable={false} value={0} />
+                    )}
 
-                <div>
-                  <button
-                    className="btn btn-md my-3 add-to-cart btn-block"
-                    onClick={this.handleClick}
-                    disabled={
-                      this.props.product.stockQuantity === 0 ||
-                      (itemInCart &&
-                        itemInCart.quantity ===
-                          this.props.product.stockQuantity)
-                    }
-                  >
-                    Add to Cart
-                  </button>
-                  <AddToCartModalButton
-                    className="modal"
-                    show={this.state.modalShow}
-                    close={this.handleCloseModal}
-                  ></AddToCartModalButton>
+                    <span className="ml-2">
+                      <Link
+                        style={{ color: "#f76b1a" }}
+                        to={`/product/main/reviews/${this.props.product._id}`}
+                      >
+                        (
+                        {this.props.productReviews.length === 1 ? (
+                          <span>{this.props.productReviews.length} Review</span>
+                        ) : (
+                          <span>
+                            {this.props.productReviews.length} Reviews
+                          </span>
+                        )}{" "}
+                        )
+                      </Link>
+                    </span>
+                  </div>
+                  <div className="product-price">
+                    <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
+                  </div>
+
+                  <div>
+                    <button
+                      className="btn btn-md my-3 add-to-cart btn-block"
+                      onClick={this.handleClick}
+                      disabled={
+                        this.props.product.stockQuantity === 0 ||
+                        (itemInCart &&
+                          itemInCart.quantity ===
+                            this.props.product.stockQuantity)
+                      }
+                    >
+                      Add to Cart
+                    </button>
+                    <AddToCartModalButton
+                      className="modal"
+                      show={this.state.modalShow}
+                      close={this.handleCloseModal}
+                    ></AddToCartModalButton>
+                  </div>
+                </div>
+              </div>
+              <div className="related-products">
+                <h3>Related Products</h3>
+                <div className="related-products-wrapper">
+                  {this.props.relatedProducts.length !== 0 &&
+                    this.props.relatedProducts.map((item) => (
+                      <a key={item._id} href={`/product/${item._id}`}>
+                        <div key={item._id} className="related-product">
+                          <img src={item.imageUrl} alt={item.name} />
+                          <p className="related-product-name">{item.name}</p>
+                          <p style={{ fontWeight: "bolder" }}>
+                            Ksh.{item.price.toLocaleString()}{" "}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                </div>
+                <div className="row product-features-reviews-specifications mt-3">
+                  <div className="col p-0">
+                    <ProductSecondaryDetails
+                      details={this.props.product.description}
+                      specifications={this.props.product.specifications}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="related-products">
-              <h3>Related Products</h3>
-              <div className="related-products-wrapper">
-                {this.props.relatedProducts.length !== 0 &&
-                  this.props.relatedProducts.map(item => (
-                    <a key={item._id} href={`/product/${item._id}`}>
-                      <div key={item._id} className="related-product">
-                        <img src={item.imageUrl} alt={item.name} />
-                        <p className="related-product-name">{item.name}</p>
-                        <p style={{ fontWeight: "bolder" }}>
-                          Ksh.{item.price.toLocaleString()}{" "}
-                        </p>
-                      </div>
-                    </a>
-                  ))}
-              </div>
-              <div className="row product-features-reviews-specifications mt-3">
-                <div className="col p-0">
-                  <ProductSecondaryDetails
-                    details={this.props.product.description}
-                    specifications={this.props.product.specifications}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
         <Footer />
         <MiniMenuWrapper />
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -300,7 +319,7 @@ const mapStateToProps = (state, ownProps) => {
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
-    productReviews: state.product.productReviews
+    productReviews: state.product.productReviews,
   };
 };
 export default withRouter(
@@ -309,6 +328,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts
+    fetchRelatedProducts,
   })(Product)
 );
