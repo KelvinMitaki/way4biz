@@ -26,7 +26,11 @@ class ProductReviewsWrapper extends React.Component {
           <div id="product-reviews-wrapper" className="box-container">
             <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
               <div className="d-flex align-items-center review-wrapper">
-                <Link to="/" className="reviews-link">
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => this.props.history.goBack()}
+                  className="reviews-link"
+                >
                   <BsArrowLeft />
                   <span
                     style={{
@@ -39,7 +43,7 @@ class ProductReviewsWrapper extends React.Component {
                   >
                     Customer Reviews
                   </span>
-                </Link>
+                </div>
               </div>
             </IconContext.Provider>
             {/* <ProductReviews /> */}
