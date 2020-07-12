@@ -3,6 +3,7 @@ import Rating from "./Rating";
 
 import "./ProductReviews.css";
 import { connect } from "react-redux";
+import NoReviews from "./NoReviews";
 
 class ProductReviews extends React.Component {
   render() {
@@ -29,7 +30,11 @@ class ProductReviews extends React.Component {
               </p>
             </div>
           ))}
-        {this.props.productReviews.length === 0 && <h3>No Reviews Yet</h3>}
+        {this.props.productReviews.length === 0 && (
+          <h3>
+            <NoReviews />
+          </h3>
+        )}
       </div>
     );
   }
