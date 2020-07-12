@@ -78,7 +78,7 @@ class PendingReviews extends React.Component {
                         <div className="col-md-10 d-flex">
                           <img src={item.imageUrl} alt={item.name} />
                           <div id="buyer-review-product-name">
-                            <div>
+                            <div className="mb-3">
                               <h6>{item.name}</h6>
                             </div>
 

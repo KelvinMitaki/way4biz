@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import "./ProductReviewsWrapper.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import ProductReviews from "./ProductReviews";
+// import ProductReviews from "./ProductReviews";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import Rating from "./Rating";
+import { connect } from "react-redux";
 
 class ProductReviewsWrapper extends React.Component {
   render() {
@@ -34,7 +36,33 @@ class ProductReviewsWrapper extends React.Component {
                 </Link>
               </div>
             </IconContext.Provider>
-            <ProductReviews />
+            {/* <ProductReviews /> */}
+            <div style={{ borderTop: "1px solid #d4d4d4" }}>
+              {/* mapping here */}
+              {this.props.productReviews.length !== 0 &&
+                this.props.productReviews.map((prod) => (
+                  <div className="buyer-review-wrapper" key={prod._id}>
+                    <Rating size={15} clickable={false} value={prod.rating} />
+
+                    <h5>
+                      <strong>{prod.title}</strong>
+                    </h5>
+                    <p>{prod.body}</p>
+                    <p className="my-2 lead" style={{ fontSize: "15px" }}>
+                      By{" "}
+                      {prod.userSeller
+                        ? prod.userSeller.firstName
+                        : prod.user.firstName}
+                      <span className="ml-2">
+                        on {new Date(prod.createdAt).toLocaleDateString()}{" "}
+                      </span>
+                    </p>
+                  </div>
+                ))}
+              {this.props.productReviews.length === 0 && (
+                <h3>No Reviews Yet</h3>
+              )}
+            </div>
           </div>
         </div>
         <Footer />
@@ -44,4 +72,9 @@ class ProductReviewsWrapper extends React.Component {
   }
 }
 
-export default ProductReviewsWrapper;
+const mapStateToProps = (state) => {
+  return {
+    productReviews: state.product.productReviews,
+  };
+};
+export default connect(mapStateToProps)(ProductReviewsWrapper);
