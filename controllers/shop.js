@@ -46,33 +46,26 @@ route.post("/api/products/skip/:category", async (req, res) => {
   }
 });
 
-route.post("/api/products/:category", async (req, res) => {
+route.post("/api/products/filter/:category", async (req, res) => {
   try {
     const { category } = req.params;
-    const { min, max, sortBy } = req.body;
+    const {
+      min,
+      max,
+      rating,
+      freeShipping,
+      lowestPrice,
+      highestPrice
+    } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
-    if (min && !max) {
-      const products = await Product.find({
-        category,
-        price: { $gte: min }
-      }).sort(sortBy);
-      return res.send(products);
+    let products = await Product.find({ category });
+    if (freeShipping) {
+      products = products.filter(product => product.freeShipping === true);
     }
-    if (max && !min) {
-      const products = await Product.find({
-        category,
-        price: { $lte: max }
-      }).sort(sortBy);
-      return res.send(products);
+    if (rating) {
+      products = products.filter(product => product.rating >= 4);
     }
-    if (min && max) {
-      const products = await Product.find({
-        category,
-        price: { $gte: min, $lte: max }
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    const products = await Product.find({ category }).sort(sortBy);
+
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
