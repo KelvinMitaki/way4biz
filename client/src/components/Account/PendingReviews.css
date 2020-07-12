@@ -80,12 +80,6 @@
   .pending-reviews-wrapper {
     margin-bottom: 65px;
   }
-}
-
-@media screen and (max-width: 540px) {
-  #buyer-review-product-name h6 {
-    width: 170px;
-  }
 
   .rate-link-wrapper {
     display: flex;
@@ -93,5 +87,23 @@
     justify-content: center;
     border-top: 1px solid #d4d4d4;
     padding: 5px 0px;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  #buyer-review-product-name h6 {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #buyer-review-product-name h6 {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  #buyer-review-product-name h6 {
+    width: 130px;
   }
 }
