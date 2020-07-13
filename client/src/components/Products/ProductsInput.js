@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import {
-  fetchFilteredProducts,
-  handleChangeAction,
-  handleCheckboxAction
-} from "../../redux/actions";
+import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -106,7 +102,6 @@ const mapStateToProps = state => {
 };
 export default withRouter(
   connect(mapStateToProps, {
-    fetchFilteredProducts,
     handleChangeAction,
     handleCheckboxAction
   })(ProductsInput)

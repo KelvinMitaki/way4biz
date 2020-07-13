@@ -9,6 +9,7 @@ export class ProductParent extends Component {
   componentDidMount() {
     this.props.singleCategory(
       this.props.match.params.category,
+      this.props.filter,
       this.props.history
     );
   }
@@ -30,7 +31,8 @@ const mapStateToProps = state => {
   return {
     categoryProductCount: state.product.categoryProductCount,
     singleCategoryProducts: state.product.singleCategoryProducts,
-    singleCategoryLoading: state.auth.singleCategoryLoading
+    singleCategoryLoading: state.auth.singleCategoryLoading,
+    filter: state.filter
   };
 };
 export default withRouter(

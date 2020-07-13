@@ -664,6 +664,7 @@ export const singleCategory = (category, filter, history) => async dispatch => {
       test.freeShipping = true;
     }
     test.category = category;
+    console.log(test);
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
@@ -691,6 +692,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
       test.freeShipping = true;
     }
     test.category = category;
+    console.log(test);
     const itemsToSkip = getState().product.singleCategoryProducts.length;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
@@ -708,28 +710,28 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     console.log(error.response);
   }
 };
-export const fetchFilteredProducts = (filter, category) => async dispatch => {
-  try {
-    dispatch({ type: FILTERED_PRODUCTS_START });
-    const test = {};
+// export const fetchFilteredProducts = (filter, category) => async dispatch => {
+//   try {
+//     dispatch({ type: FILTERED_PRODUCTS_START });
+//     const test = {};
 
-    if (filter.rating) {
-      test.rating = { $gte: 4 };
-    }
-    if (filter.freeShipping) {
-      test.freeShipping = true;
-    }
-    test.category = category;
+//     if (filter.rating) {
+//       test.rating = { $gte: 4 };
+//     }
+//     if (filter.freeShipping) {
+//       test.freeShipping = true;
+//     }
+//     test.category = category;
 
-    const res = await axios.post(`/api/products/filter`, { test });
-    console.log(res.data);
-    // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
-  } catch (error) {
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
-    console.log(error.response);
-  }
-};
+//     const res = await axios.post(`/api/products/filter`, { test });
+//     console.log(res.data);
+//     // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
+//     dispatch({ type: FILTERED_PRODUCTS_STOP });
+//   } catch (error) {
+//     dispatch({ type: FILTERED_PRODUCTS_STOP });
+//     console.log(error.response);
+//   }
+// };
 
 export const handleCheckboxAction = (event, category, history) => (
   dispatch,
