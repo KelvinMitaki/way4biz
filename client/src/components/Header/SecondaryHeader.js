@@ -46,16 +46,7 @@ class SecondaryHeader extends React.Component {
           </Link>
         </div>
         <div id="small-screen-secondary-header">
-          {/* <Carousel
-            responsive={responsive}
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            removeArrowOnDeviceType={["tablet", "iphone"]}
-            autoPlay={true}
-            containerClass={"owl-carousel-header"}
-            infinite={true}
-          >
+          <div className="owl-carousel-header">
             {!this.props.isSignedIn && (
               <Link className="carousel-link" to="/seller/register">
                 Sell with us
@@ -72,7 +63,7 @@ class SecondaryHeader extends React.Component {
             <Link className="carousel-link" to="/privacy-policy">
               Privacy Policy
             </Link>
-          </Carousel> */}
+          </div>
         </div>
       </div>
     );

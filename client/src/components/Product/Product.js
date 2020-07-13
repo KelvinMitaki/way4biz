@@ -117,16 +117,7 @@ class Product extends React.Component {
                   <ReactImageMagnify {...this.getImageProps()} />
 
                   <div className="feature-imgs">
-                    {/* <Carousel
-                      responsive={responsive}
-                      swipeable={true}
-                      draggable={true}
-                      showDots={false}
-                      removeArrowOnDeviceType={["screenBreakpoints"]}
-                      autoPlay={true}
-                      infinite={true}
-                      containerClass={"product-owl-carousel"}
-                    >
+                    <div className="product-owl-carousel">
                       <div>
                         <img
                           src={this.props.product.imageUrl}
@@ -139,6 +130,7 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
+
                       <div>
                         <img
                           src={this.props.product.imageUrl}
@@ -151,19 +143,14 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
+
                       <div>
                         <img
                           src={this.props.product.imageUrl}
                           alt={this.props.product.name}
                         />
                       </div>
-                      <div>
-                        <img
-                          src={this.props.product.imageUrl}
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                    </Carousel> */}
+                    </div>
                   </div>
                 </div>
                 <div className="col-lg-6 product-info pt-2">

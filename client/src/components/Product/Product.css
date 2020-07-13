@@ -26,7 +26,7 @@ hr {
 }
 
 .feature-imgs {
-  margin-top: 20px;
+  width: 100%;
 }
 
 .product-info {
@@ -63,7 +63,30 @@ hr {
 
 .product-owl-carousel {
   background-color: #fff !important;
-  height: 100%;
+  overflow-y: hidden;
+  white-space: nowrap;
+  overflow-x: auto;
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch;
+  min-width: 100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
+}
+
+.product-owl-carousel::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background-color: transparent;
+}
+
+.product-owl-carousel div {
+  display: inline-block;
+  zoom: 1;
+  float: none;
+  margin: 0px 10px;
 }
 
 .product-owl-carousel div img {
@@ -132,7 +155,7 @@ hr {
 }
 
 .related-products-wrapper::-webkit-scrollbar {
-  height: 5px !important;
+  height: 8px !important;
 }
 
 .related-products-wrapper::-webkit-scrollbar-track {
