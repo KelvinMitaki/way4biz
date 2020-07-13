@@ -26,18 +26,10 @@ route.post("/api/products", async (req, res) => {
 route.post("/api/products/skip/:category", async (req, res) => {
   try {
     const { category } = req.params;
-    const {
-      itemsToSkip,
-      min,
-      max,
-      rating,
-      freeShipping,
-      lowestPrice,
-      latest,
-      highestPrice
-    } = req.body;
-    let products = await Product.find({ category });
-    console.log(products.length);
+    const { itemsToSkip } = req.body;
+    const products = await Product.find({ category })
+      .skip(itemsToSkip)
+      .limit(4);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
@@ -47,53 +39,45 @@ route.post("/api/products/skip/:category", async (req, res) => {
       },
       { $count: category }
     ]);
-    if (freeShipping === "on") {
-      products = products.filter(product => product.freeShipping === true);
-    }
-    if (rating === "on") {
-      products = products.filter(product => product.rating >= 4);
-    }
-    const compare = (a, b) => {
-      if (a.createdAt > b.createdAt) {
-        return -1;
-      }
-      if (b.createdAt > a.createdAt) {
-        return 1;
-      }
-      return 0;
-    };
-    if (latest === "on") {
-      products.sort(compare);
-    }
-    products.slice(itemsToSkip, 5);
+
     res.send({ products, productCount: productCount[0][category] });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-// route.post("/api/products/filter/:category", async (req, res) => {
-//   try {
-//     const { category } = req.params;
-//     const {
-//       min,
-//       max,
-//       rating,
-//       freeShipping,
-//       lowestPrice,
-//       latest,
-//       highestPrice
-//     } = req.body;
-//     // **TODO** RATING FREE SHIPPING SORT BY
-//     // **TODO** FIX FILTERING
-//     // FREE SHIPPING RATING LATEST ON
+route.post("/api/products/filter", async (req, res) => {
+  try {
+    // const { category } = req.params;
+    const { test } = req.body;
+    // **TODO** RATING FREE SHIPPING SORT BY
+    // **TODO** FIX FILTERING
+    // FREE SHIPPING RATING LATEST ON
 
-//     let products = await Product.find({ category });
-
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
+    let products = await Product.find(test);
+    // if (freeShipping === "on") {
+    //   products = products.filter(product => product.freeShipping === true);
+    // }
+    // if (rating === "on") {
+    //   products = products.filter(product => product.rating >= 4);
+    // }
+    // const compare = (a, b) => {
+    //   if (a.createdAt > b.createdAt) {
+    //     return -1;
+    //   }
+    //   if (b.createdAt > a.createdAt) {
+    //     return 1;
+    //   }
+    //   return 0;
+    // };
+    // if (latest === "on") {
+    //   products.sort(compare);
+    // }
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get(
   "/api/products/category/subcategory/:subcategory",
   async (req, res) => {

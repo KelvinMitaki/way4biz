@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-// import { fetchFilteredProducts } from "../../redux/actions";
+import { fetchFilteredProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -14,11 +14,12 @@ export class ProductsInput extends Component {
   };
   handleCheckbox = event => {
     this.setState({ [event.target.name]: event.target.value }, () => {
-      // this.props.fetchFilteredProducts(
-      //   this.state,
-      //   this.props.match.params.category
-      // );
-      // console.log(this.state);
+      this.props.fetchFilteredProducts(
+        this.state,
+        this.props.match.params.category
+      );
+
+      console.log(this.state);
     });
   };
   handleChange = event => {
@@ -90,4 +91,6 @@ export class ProductsInput extends Component {
   }
 }
 
-export default withRouter(connect(null, {})(ProductsInput));
+export default withRouter(
+  connect(null, { fetchFilteredProducts })(ProductsInput)
+);
