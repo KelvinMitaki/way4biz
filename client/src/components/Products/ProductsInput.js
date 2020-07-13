@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import {
-  fetchFilteredProducts,
-  handleCheckboxAction,
-  handleChangeAction
-} from "../../redux/actions";
+import { fetchFilteredProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -17,29 +13,20 @@ export class ProductsInput extends Component {
     latest: false
   };
   handleCheckbox = event => {
-    // this.setState({ [event.target.name]: event.target.value }, () => {
-    //   this.props.fetchFilteredProducts(
-    //     this.state,
-    //     this.props.match.params.category
-    //   );
+    this.setState({ [event.target.name]: event.target.value }, () => {
+      this.props.fetchFilteredProducts(
+        this.state,
+        this.props.match.params.category
+      );
 
-    //   console.log(this.state);
-    // });
-    this.props.handleCheckboxAction(event);
+      console.log(this.state);
+    });
   };
   handleChange = event => {
     //   **TODO CHECK WHAT'S BIGGER BTN MIN AND MAX PRICE
-    // this.setState({ [event.target.name]: event.target.value });
-    this.props.handleChangeAction(event);
+    this.setState({ [event.target.name]: event.target.value });
   };
   render() {
-    const {
-      priceMax,
-      priceMin,
-      rating,
-      freeShipping,
-      latest
-    } = this.props.filter;
     return (
       <div>
         <div className="row my-3">
@@ -50,7 +37,6 @@ export class ProductsInput extends Component {
               name="priceMin"
               placeholder="min"
               style={{ width: "80px" }}
-              // value={priceMin || ""}
             />
             -
             <input
@@ -58,7 +44,6 @@ export class ProductsInput extends Component {
               name="priceMax"
               placeholder="max"
               style={{ width: "80px" }}
-              // value={priceMax || ""}
             />
           </div>
 
@@ -68,7 +53,6 @@ export class ProductsInput extends Component {
               name="rating"
               type="checkbox"
               className="mr-1"
-              // value={rating}
             />
             <Rating clickable={false} size={15} value={4} />
             <span className="ml-2">&up</span>{" "}
@@ -78,7 +62,6 @@ export class ProductsInput extends Component {
               onClick={this.handleCheckbox}
               name="freeShipping"
               type="checkbox"
-              // value={freeShipping}
             />
             <p className="ml-1">Free Shipping</p>
           </div>
@@ -89,7 +72,6 @@ export class ProductsInput extends Component {
               onClick={this.handleCheckbox}
               name="latest"
               type="checkbox"
-              value={latest}
             />
 
             <p className="ml-1">Latest</p>
@@ -108,15 +90,7 @@ export class ProductsInput extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    filter: state.filter
-  };
-};
+
 export default withRouter(
-  connect(mapStateToProps, {
-    fetchFilteredProducts,
-    handleChangeAction,
-    handleCheckboxAction
-  })(ProductsInput)
+  connect(null, { fetchFilteredProducts })(ProductsInput)
 );
