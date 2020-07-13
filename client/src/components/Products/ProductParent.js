@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { singleCategory } from "../../redux/actions";
+import { singleCategory, revertFilter } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import Products from "./Products";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 export class ProductParent extends Component {
+  state = {};
   componentDidMount() {
     this.props.singleCategory(
       this.props.match.params.category,
@@ -13,6 +14,16 @@ export class ProductParent extends Component {
       this.props.history
     );
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.category !== nextProps.match.params.category) {
+      this.props.revertFilter(
+        nextProps.match.params.category,
+        this.props.filter,
+        this.props.history
+      );
+    }
+  }
+
   render() {
     if (this.props.singleCategoryLoading) return <ScreenLoader />;
     return (
@@ -36,5 +47,5 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory })(ProductParent)
+  connect(mapStateToProps, { singleCategory, revertFilter })(ProductParent)
 );

@@ -34,11 +34,7 @@ class HeroCategories extends React.Component {
               <li
                 key={category._id}
                 onClick={() =>
-                  this.props.singleCategory(
-                    category._id,
-                    this.props.filter,
-                    this.props.history
-                  )
+                  this.props.history.push(`/products/category/${category._id}`)
                 }
               >
                 <div>

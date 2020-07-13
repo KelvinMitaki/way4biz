@@ -1,4 +1,8 @@
-import { HANDLE_CHANGE, HANDLE_CHECKBOX } from "../actions/types";
+import {
+  HANDLE_CHANGE,
+  HANDLE_CHECKBOX,
+  REVERT_FILTER
+} from "../actions/types";
 
 const INITIAL_STATE = {
   priceMax: null,
@@ -19,6 +23,15 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         [action.payload.event.name]: action.payload.event.checked
+      };
+    case REVERT_FILTER:
+      return {
+        ...state,
+        priceMax: null,
+        priceMin: null,
+        rating: false,
+        freeShipping: false,
+        latest: false
       };
     default:
       return state;
