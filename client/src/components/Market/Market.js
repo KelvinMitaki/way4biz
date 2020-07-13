@@ -4,6 +4,7 @@ import "./Market.css";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
 import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
+import RandomCategories from "./RandomCategories";
 
 function Market(props) {
   const observer = useRef();
@@ -28,9 +29,8 @@ function Market(props) {
 
   return (
     <div className="container-fluid market">
-      <div className="col market-head">
-        <h1>Selling</h1>
-      </div>
+      {/* <div className="col market-head"></div> */}
+      <RandomCategories />
       <div className="products-section">
         {props.products.length !== 0 &&
           props.products.map((product, index) => {
