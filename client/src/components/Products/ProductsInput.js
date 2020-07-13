@@ -13,13 +13,13 @@ export class ProductsInput extends Component {
     latest: false
   };
   handleCheckbox = event => {
-    this.setState({ [event.target.name]: event.target.value }, () => {
-      this.props.fetchFilteredProducts(
-        this.state,
-        this.props.match.params.category
-      );
-
-      console.log(this.state);
+    const { name, checked } = event.target;
+    this.setState({ [name]: checked }, () => {
+      // this.props.fetchFilteredProducts(
+      //   this.state,
+      //   this.props.match.params.category
+      // );
+      localStorage.setItem([name], checked);
     });
   };
   handleChange = event => {
