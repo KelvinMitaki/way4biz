@@ -20,8 +20,9 @@ import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
-// import "react-multi-carousel/lib/styles.css";
-// import Carousel from "react-multi-carousel";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 class Product extends React.Component {
   constructor(props) {
@@ -113,26 +114,13 @@ class Product extends React.Component {
                   />
 
                   <div className="feature-imgs">
-                    <div className="product-owl-carousel">
-                      <div>
-                        <img
-                          src={this.props.product.imageUrl}
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          src={this.props.product.imageUrl}
-                          alt={this.props.product.name}
-                        />
-                      </div>
-
-                      <div>
-                        <img
-                          src={this.props.product.imageUrl}
-                          alt={this.props.product.name}
-                        />
-                      </div>
+                    <OwlCarousel
+                      // loop={true}
+                      dots={true}
+                      items={4}
+                      className="product-owl-carousel"
+                      autoplay={true}
+                    >
                       <div>
                         <img
                           src={this.props.product.imageUrl}
@@ -163,13 +151,7 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
-                      <div>
-                        <img
-                          src={this.props.product.imageUrl}
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                    </div>
+                    </OwlCarousel>
                   </div>
                 </div>
                 <div className="col-lg-6 product-info pt-2">
@@ -305,7 +287,7 @@ class Product extends React.Component {
                     />
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <h3>Recommended For You</h3>
                   <div className="recommended-products-wrapper">
                     {this.props.relatedProducts.length !== 0 &&
@@ -323,7 +305,7 @@ class Product extends React.Component {
                         </a>
                       ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           )}
