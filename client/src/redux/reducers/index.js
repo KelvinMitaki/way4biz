@@ -7,11 +7,12 @@ import productReducer from "./productReducer";
 import sellerRegisterReducer from "./sellerRegisterReducer";
 import cartReducer from "./cartReducer";
 import OrderDetailsPersist from "./OrderDetailsPersist";
+import filterReducer from "./filterReducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cartReducer", "detailsPersist"]
+  whitelist: ["cartReducer", "detailsPersist", "filter"]
 };
 
 const reducers = combineReducers({
@@ -20,6 +21,7 @@ const reducers = combineReducers({
   product: productReducer,
   sellerRegister: sellerRegisterReducer,
   cartReducer: cartReducer,
-  detailsPersist: OrderDetailsPersist
+  detailsPersist: OrderDetailsPersist,
+  filter: filterReducer
 });
 export default persistReducer(persistConfig, reducers);
