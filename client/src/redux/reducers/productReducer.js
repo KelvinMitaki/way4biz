@@ -16,7 +16,10 @@ import {
   FETCH_PENDING_REVIEWS,
   SINGLE_PRODUCT_START,
   SINGLE_PRODUCT_STOP,
-  PRODUCT_REVIEWS
+  PRODUCT_REVIEWS,
+  FILTERED_PRODUCTS_START,
+  FILTERED_PRODUCTS_STOP,
+  FILTERED_PRODUCTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -36,7 +39,8 @@ const INITIAL_STATE = {
   relatedProducts: [],
   pendingReviewProducts: [],
   singleProductLoad: false,
-  productReviews: []
+  productReviews: [],
+  filteredProductsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -107,6 +111,13 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, singleProductLoad: false };
     case PRODUCT_REVIEWS:
       return { ...state, productReviews: action.payload };
+    case FILTERED_PRODUCTS:
+      return { ...state, singleCategoryProducts: action.payload };
+    case FILTERED_PRODUCTS_START:
+      return { ...state, filteredProductsLoading: true };
+    case FILTERED_PRODUCTS_STOP:
+      return { ...state, filteredProductsLoading: false };
+
     default:
       return state;
   }

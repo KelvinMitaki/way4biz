@@ -4,12 +4,16 @@ import "./Market.css";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
 import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
+<<<<<<< HEAD
 import RandomCategories from "./RandomCategories";
+=======
+import BottomPageLoader from "../Pages/BottomPageLoader";
+>>>>>>> dbcec9788de749fd3dbaea4ac7455803770e5497
 
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -17,7 +21,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -66,7 +70,7 @@ function Market(props) {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "0px 10px",
+                      padding: "0px 10px"
                     }}
                     className="my-2"
                   >
@@ -102,7 +106,7 @@ function Market(props) {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px",
+                    padding: "0px 10px"
                   }}
                   className="my-2"
                 >
@@ -112,14 +116,15 @@ function Market(props) {
             );
           })}
       </div>
+      {props.hasMore && <BottomPageLoader />}
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore,
+    hasMore: state.product.hasMore
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(

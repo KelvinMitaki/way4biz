@@ -1,7 +1,7 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./ProductReviewsWrapper.css";
 import Header from "../Header/Header";

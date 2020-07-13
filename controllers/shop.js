@@ -46,33 +46,33 @@ route.post("/api/products/skip/:category", async (req, res) => {
   }
 });
 
-route.post("/api/products/:category", async (req, res) => {
+route.post("/api/products/filter", async (req, res) => {
   try {
-    const { category } = req.params;
-    const { min, max, sortBy } = req.body;
+    // const { category } = req.params;
+    const { test } = req.body;
     // **TODO** RATING FREE SHIPPING SORT BY
-    if (min && !max) {
-      const products = await Product.find({
-        category,
-        price: { $gte: min }
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    if (max && !min) {
-      const products = await Product.find({
-        category,
-        price: { $lte: max }
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    if (min && max) {
-      const products = await Product.find({
-        category,
-        price: { $gte: min, $lte: max }
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    const products = await Product.find({ category }).sort(sortBy);
+    // **TODO** FIX FILTERING
+    // FREE SHIPPING RATING LATEST ON
+
+    let products = await Product.find(test);
+    // if (freeShipping === "on") {
+    //   products = products.filter(product => product.freeShipping === true);
+    // }
+    // if (rating === "on") {
+    //   products = products.filter(product => product.rating >= 4);
+    // }
+    // const compare = (a, b) => {
+    //   if (a.createdAt > b.createdAt) {
+    //     return -1;
+    //   }
+    //   if (b.createdAt > a.createdAt) {
+    //     return 1;
+    //   }
+    //   return 0;
+    // };
+    // if (latest === "on") {
+    //   products.sort(compare);
+    // }
     res.send(products);
   } catch (error) {
     res.status(500).send(error);

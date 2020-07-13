@@ -6,7 +6,7 @@ import "./BottomPageLoader.css";
 
 class BottomPageLoader extends React.Component {
   state = {
-    loading: true,
+    loading: true
   };
 
   render() {
@@ -15,7 +15,7 @@ class BottomPageLoader extends React.Component {
       margin: 0 auto;
     `;
     return (
-      <div id="bottom-page-loader">
+      <div id="bottom-page-loader" className="mb-4">
         <FadeLoader
           loading={this.state.loading}
           size={40}

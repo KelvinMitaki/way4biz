@@ -1,10 +1,6 @@
 import React from "react";
 import "./Search.css";
-import {
-  fetchProductsSearch,
-  fetchSingleProduct,
-  fetchProductReviews
-} from "../../redux/actions";
+import { fetchProductsSearch, fetchProductReviews } from "../../redux/actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { IconContext } from "react-icons";
