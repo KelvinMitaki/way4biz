@@ -425,6 +425,7 @@ route.get("/api/pending/reviews", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// ADD A NEW REVIEW
 route.post(
   "/api/new/review/:productId/:orderId",
   auth,
@@ -467,6 +468,13 @@ route.post(
         { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
+      const product = await Product.findById(productId);
+      const reviews = await Review.find({ product: productId });
+      product.rating = Math.round(
+        reviews.map(order => order.rating).reduce((acc, cur) => acc + cur, 0) /
+          reviews.length
+      );
+      await product.save();
       res.send(review);
     } catch (error) {
       res.status(500).send(error);
