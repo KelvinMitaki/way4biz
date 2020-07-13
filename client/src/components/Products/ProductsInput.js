@@ -3,7 +3,8 @@ import Rating from "../Product/Rating";
 import {
   handleChangeAction,
   handleCheckboxAction,
-  singleCategory
+  singleCategory,
+  handleRadioButtonAction
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -24,13 +25,18 @@ class ProductsInput extends Component {
 
     this.props.handleChangeAction({ name, value });
   };
+  handleRadioButton = event => {
+    const { name, value } = event.target;
+    this.props.handleRadioButtonAction({ name, value });
+  };
   render() {
     const {
       priceMax,
       priceMin,
       rating,
       freeShipping,
-      latest
+      latest,
+      price
     } = this.props.filter;
     return (
       <div>
@@ -103,11 +109,23 @@ class ProductsInput extends Component {
             <p className="ml-1">Latest</p>
           </div>
           <div className="d-flex ml-3">
-            <input name="price" type="radio" />
+            <input
+              name="price"
+              checked={price === "lowestPrice"}
+              value="lowestPrice"
+              type="radio"
+              onChange={this.handleRadioButton}
+            />
             <p className="ml-1">Lowest Price</p>
           </div>
           <div className="d-flex ml-3">
-            <input name="price" type="radio" />
+            <input
+              name="price"
+              checked={price === "highestPrice"}
+              value="highestPrice"
+              type="radio"
+              onChange={this.handleRadioButton}
+            />
 
             <p className="ml-1">Highest Price</p>
           </div>
@@ -125,6 +143,7 @@ export default withRouter(
   connect(mapStateToProps, {
     handleChangeAction,
     handleCheckboxAction,
-    singleCategory
+    singleCategory,
+    handleRadioButtonAction
   })(ProductsInput)
 );

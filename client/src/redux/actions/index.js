@@ -70,7 +70,8 @@ import {
   FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
   HANDLE_CHANGE,
-  REVERT_FILTER
+  REVERT_FILTER,
+  RADIO_BUTTON
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -660,7 +661,7 @@ export const singleCategory = (category, filter, history) => async (
 ) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
@@ -677,11 +678,15 @@ export const singleCategory = (category, filter, history) => async (
     if (filter.priceMin > filter.priceMax) {
       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
+    if (filter.latest) {
+      sort.latest = 1;
+    }
     test.category = category;
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
-      test
+      test,
+      sort
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
@@ -698,7 +703,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
 ) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
@@ -714,6 +719,9 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     if (filter.priceMin > filter.priceMax) {
       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
+    if (filter.latest) {
+      sort.latest = 1;
+    }
     test.category = category;
     const itemsToSkip = getState().product.singleCategoryProducts.length;
     const prodCount = getState().product.categoryProductCount;
@@ -722,7 +730,8 @@ export const moreSingleCategoryProducts = (category, filter) => async (
       dispatch({ type: LOADING_START });
       const res = await axios.post(`/api/products/skip/category`, {
         itemsToSkip,
-        test
+        test,
+        sort
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }
@@ -780,4 +789,12 @@ export const revertFilter = (category, filter, history) => (
     type: REVERT_FILTER
   });
   dispatch(singleCategory(category, getState().filter, history));
+};
+export const handleRadioButtonAction = event => dispatch => {
+  dispatch({
+    type: RADIO_BUTTON,
+    payload: {
+      event
+    }
+  });
 };

@@ -1,7 +1,8 @@
 import {
   HANDLE_CHANGE,
   HANDLE_CHECKBOX,
-  REVERT_FILTER
+  REVERT_FILTER,
+  RADIO_BUTTON
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -9,7 +10,9 @@ const INITIAL_STATE = {
   priceMin: null,
   rating: false,
   freeShipping: false,
-  latest: false
+  latest: false,
+  price: null
+  //   lowestPrice: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,6 +27,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         [action.payload.event.name]: action.payload.event.checked
       };
+    case RADIO_BUTTON:
+      return { ...state, price: action.payload.event.value };
     case REVERT_FILTER:
       return {
         ...state,

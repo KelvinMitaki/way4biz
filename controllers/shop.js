@@ -25,8 +25,11 @@ route.post("/api/products", async (req, res) => {
 });
 route.post("/api/products/skip/category", async (req, res) => {
   try {
-    const { itemsToSkip, test } = req.body;
-    const products = await Product.find(test).skip(itemsToSkip).limit(4);
+    const { itemsToSkip, test, sort } = req.body;
+    const products = await Product.find(test)
+      .skip(itemsToSkip)
+      .limit(4)
+      .sort(sort);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
