@@ -9,9 +9,11 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   singleCategory,
-  fetchAllCategories
+  fetchAllCategories,
 } from "../../redux/actions/index.js";
 import ScreenLoader from "../Pages/ScreenLoader.js";
+import { IconContext } from "react-icons";
+import { AiOutlineBars } from "react-icons/ai";
 
 class MainCategories extends React.Component {
   componentDidMount() {
@@ -33,7 +35,7 @@ class MainCategories extends React.Component {
             </div>
             <div className="container categories-section box-container">
               {this.props.categories.length !== 0 &&
-                this.props.categories.map(category => (
+                this.props.categories.map((category) => (
                   <Link
                     key={category._id}
                     to={`/products/category/${category._id}`}
@@ -45,7 +47,12 @@ class MainCategories extends React.Component {
                       )
                     }
                   >
-                    <div>{category._id}</div>
+                    <IconContext.Provider
+                      value={{ className: "small-screen-category-icon" }}
+                    >
+                      <AiOutlineBars />
+                    </IconContext.Provider>
+                    <div className="ml-2">{category._id}</div>
                   </Link>
                 ))}
             </div>
@@ -57,10 +64,10 @@ class MainCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.product.categories,
-    singleCategoryLoading: state.auth.singleCategoryLoading
+    singleCategoryLoading: state.auth.singleCategoryLoading,
   };
 };
 export default withRouter(

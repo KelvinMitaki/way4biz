@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { singleCategory, fetchAllCategories } from "../../redux/actions";
 import { IconContext } from "react-icons";
+import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
 
 class HeroCategories extends React.Component {
@@ -21,7 +22,8 @@ class HeroCategories extends React.Component {
               onClick={() => this.props.fetchAllCategories()}
               style={{ color: "#000" }}
             >
-              All Categories
+              <AiOutlineBars />
+              <span className="ml-2">All Categories</span>
             </Link>
             <IconContext.Provider value={{ className: "right-arrow" }}>
               <RiArrowDropRightLine />
@@ -35,7 +37,10 @@ class HeroCategories extends React.Component {
                   this.props.singleCategory(category._id, this.props.history)
                 }
               >
-                {category._id}
+                <div>
+                  <AiOutlineBars />
+                  <span className="ml-2">{category._id}</span>
+                </div>
                 <IconContext.Provider value={{ className: "right-arrow" }}>
                   <RiArrowDropRightLine />
                 </IconContext.Provider>
