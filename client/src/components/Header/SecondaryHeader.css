@@ -23,7 +23,7 @@
 .secondary-header-link:hover {
   color: #f76b1a;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 #small-screen-secondary-header {
@@ -54,7 +54,7 @@
   zoom: 1;
   float: none;
   margin: 0px 15px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .small-screen-secondary-header-link,

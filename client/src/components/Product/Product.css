@@ -61,39 +61,18 @@ hr {
 
 .product-features-reviews-specifications {
   margin: 0px;
-  padding: 10px;
 }
 
 .product-owl-carousel {
   background-color: #fff !important;
-  overflow-y: hidden;
-  white-space: nowrap;
-  overflow-x: auto;
-  background-color: #fff;
-  -webkit-overflow-scrolling: touch;
-  min-width: 100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0px 10px;
-}
-
-.product-owl-carousel::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-  background-color: transparent;
 }
 
 .product-owl-carousel div {
-  display: inline-block;
-  zoom: 1;
-  float: none;
-  margin: 0px 10px;
+  background-color: #fff;
 }
 
 .product-owl-carousel div img {
-  width: 60px;
+  width: 60px !important;
 }
 
 .add-to-cart {
@@ -108,7 +87,6 @@ hr {
 }
 
 .product-seller-store {
-  /* display: flex; */
   padding-left: 10px;
 }
 .product-seller-store-icon {
@@ -211,6 +189,10 @@ hr {
   #product {
     background-color: #f8f9f9;
     padding: 20px;
+  }
+
+  .product-imgs {
+    padding: 0px;
   }
 
   .product-info {

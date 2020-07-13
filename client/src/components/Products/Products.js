@@ -9,7 +9,7 @@ import Heart from "./Heart";
 import {
   singleCategory,
   moreSingleCategoryProducts,
-  hasMoreCategoryFalse
+  hasMoreCategoryFalse,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -23,7 +23,7 @@ import ProductsInput from "./ProductsInput";
 
 function Products(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback(node => {
+  const lastItemElementRef = useCallback((node) => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
         return props.moreSingleCategoryProducts(
@@ -34,7 +34,7 @@ function Products(props) {
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
+    observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -44,9 +44,9 @@ function Products(props) {
   }, []);
 
   return (
-    <div id="products">
+    <div>
       <Header />
-      <div className="container-fluid">
+      <div className="container-fluid" id="products">
         <div className="row">
           <div className="col-lg-3">
             <Categories id="products-categories" />
@@ -68,17 +68,19 @@ function Products(props) {
                     <div id="filter-stuff">
                       <div className="d-flex ml-3">
                         <p className="mr-1">Price:</p>
-                        <input
-                          style={{ width: "80px" }}
-                          type="number"
-                          placeholder="min"
-                        />
-                        -
-                        <input
-                          style={{ width: "80px" }}
-                          type="number"
-                          placeholder="max"
-                        />
+                        <div>
+                          <input
+                            style={{ width: "80px" }}
+                            type="number"
+                            placeholder="min"
+                          />
+                          -
+                          <input
+                            style={{ width: "80px" }}
+                            type="number"
+                            placeholder="max"
+                          />
+                        </div>
                       </div>
 
                       <div className="d-flex ml-4">
@@ -144,7 +146,7 @@ function Products(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px"
+                                padding: "0px 10px",
                               }}
                               className="price"
                             >
@@ -163,7 +165,7 @@ function Products(props) {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "0px 10px"
+                            padding: "0px 10px",
                           }}
                           className="mb-2"
                         >
@@ -191,7 +193,7 @@ function Products(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px"
+                              padding: "0px 10px",
                             }}
                             className="price"
                           >
@@ -210,7 +212,7 @@ function Products(props) {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px"
+                          padding: "0px 10px",
                         }}
                         className="mb-2"
                       >
@@ -230,11 +232,11 @@ function Products(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
-    filter: state.filter
+    filter: state.filter,
   };
 };
 export default withRouter(
@@ -242,7 +244,7 @@ export default withRouter(
     connect(mapStateToProps, {
       singleCategory,
       hasMoreCategoryFalse,
-      moreSingleCategoryProducts
+      moreSingleCategoryProducts,
     })(Products)
   )
 );

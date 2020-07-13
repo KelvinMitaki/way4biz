@@ -3,9 +3,10 @@ import Rating from "../Product/Rating";
 import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import "./ProductsInput.css";
 
-export class ProductsInput extends Component {
-  handleCheckbox = event => {
+class ProductsInput extends Component {
+  handleCheckbox = (event) => {
     const { checked, name } = event.target;
 
     this.props.handleCheckboxAction(
@@ -14,7 +15,7 @@ export class ProductsInput extends Component {
       this.props.history
     );
   };
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
 
     this.props.handleChangeAction({ name, value });
@@ -25,28 +26,36 @@ export class ProductsInput extends Component {
       priceMin,
       rating,
       freeShipping,
-      latest
+      latest,
     } = this.props.filter;
     return (
       <div>
         <div className="row my-3">
           <div className="d-flex ml-3">
             <p className="mr-1">Price:</p>
-            <input
-              onChange={this.handleChange}
-              name="priceMin"
-              placeholder="min"
-              style={{ width: "80px" }}
-              value={priceMin || ""}
-            />
-            -
-            <input
-              onChange={this.handleChange}
-              name="priceMax"
-              placeholder="max"
-              style={{ width: "80px" }}
-              value={priceMax || ""}
-            />
+            <div className="box-container sort-input-wrapper">
+              <input
+                onChange={this.handleChange}
+                name="priceMin"
+                placeholder="min"
+                style={{ width: "80px" }}
+                value={priceMin || ""}
+              />
+              -
+              <input
+                onChange={this.handleChange}
+                name="priceMax"
+                placeholder="max"
+                style={{ width: "80px" }}
+                value={priceMax || ""}
+              />
+              <button
+                className="btn btn-sm ml-2"
+                style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+              >
+                OK
+              </button>
+            </div>
           </div>
 
           <div className="d-flex ml-4">
@@ -95,14 +104,14 @@ export class ProductsInput extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    filter: state.filter
+    filter: state.filter,
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     handleChangeAction,
-    handleCheckboxAction
+    handleCheckboxAction,
   })(ProductsInput)
 );
