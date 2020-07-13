@@ -66,31 +66,41 @@ function Products(props) {
                       </span>
                     </IconContext.Provider>
                     <div id="filter-stuff">
-                      <div className="d-flex ml-3">
+                      <div className="d-flex ">
                         <p className="mr-1">Price:</p>
                         <div>
                           <input
                             style={{ width: "80px" }}
                             type="number"
                             placeholder="min"
+                            className="filter-price-input"
                           />
                           -
                           <input
                             style={{ width: "80px" }}
                             type="number"
                             placeholder="max"
+                            className="filter-price-input"
                           />
                         </div>
                       </div>
 
-                      <div className="d-flex ml-4">
-                        <input type="checkbox" className="mr-1" />
-                        <Rating clickable={false} size={15} value={4} />
-                        <span className="ml-2">&up</span>{" "}
+                      <div className="d-flex ">
+                        <div className="checkbox ml-1 ">
+                          <input type="checkbox" id="checkbox_1" />
+                          <label htmlFor="checkbox_1" className="d-flex">
+                            <Rating clickable={false} size={10} value={4} />
+                            <span className="ml-2">&up</span>{" "}
+                          </label>
+                        </div>
                       </div>
-                      <div className="d-flex ml-5">
-                        <input type="checkbox" />
-                        <p className="ml-1">Free Shipping</p>
+                      <div className="d-flex">
+                        <div className="checkbox">
+                          <input type="checkbox" id="checkbox_2" />
+                          <label htmlFor="checkbox_2" className="ml-1">
+                            Latest
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -103,16 +113,28 @@ function Products(props) {
                     </IconContext.Provider>
                     <div id="sort-stuff">
                       <div className="d-flex ml-3">
-                        <input type="checkbox" />
-                        <p className="ml-1">Latest</p>
+                        <div className="checkbox">
+                          <input type="checkbox" id="checkbox_3" />
+                          <label htmlFor="checkbox_3" className="ml-1">
+                            Latest
+                          </label>
+                        </div>
                       </div>
                       <div className="d-flex ml-3">
-                        <input type="radio" />
-                        <p className="ml-1">Lowest Price</p>
+                        <div className="radio">
+                          <input name="hey" type="radio" id="radio_1" />
+                          <label htmlFor="radio_1" className="ml-1">
+                            Lowest Price
+                          </label>
+                        </div>
                       </div>
                       <div className="d-flex ml-3">
-                        <input type="radio" />
-                        <p className="ml-1">Highest Price</p>
+                        <div className="radio">
+                          <input name="hey" type="radio" id="radio_2" />
+                          <label htmlFor="radio_2" className="ml-1">
+                            Highest Price
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
