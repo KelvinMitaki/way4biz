@@ -74,8 +74,8 @@ class Product extends React.Component {
       },
       largeImage: {
         src: product.imageUrl,
-        width: 1200,
-        height: 1800,
+        width: 1000,
+        height: 1000,
       },
       enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
@@ -92,13 +92,6 @@ class Product extends React.Component {
       (item) => item._id === this.props.product && this.props.product._id
     );
 
-    const responsive = {
-      screenBreakpoints: {
-        breakpoint: { max: 4000, min: 0 },
-        items: 5,
-      },
-    };
-
     if (!this.props.product) return <ScreenLoader />;
     return (
       <div className="main">
@@ -114,7 +107,10 @@ class Product extends React.Component {
               ) : null}
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
-                  <ReactImageMagnify {...this.getImageProps()} />
+                  <ReactImageMagnify
+                    enlargedImagePosition={"over"}
+                    {...this.getImageProps()}
+                  />
 
                   <div className="feature-imgs">
                     <div className="product-owl-carousel">

@@ -7,26 +7,6 @@ import { connect } from "react-redux";
 
 class SecondaryHeader extends React.Component {
   render() {
-    // const responsive = {
-    //   screenBreakpoints: {
-    //     breakpoint: {
-    //       max: 960,
-    //       min: 0,
-    //     },
-    //     items: 2,
-    //   },
-    // };
-
-    const responsive = {
-      tablet: {
-        breakpoint: { max: 960, min: 541 },
-        items: 3,
-      },
-      iphone: {
-        breakpoint: { max: 540, min: 0 },
-        items: 2,
-      },
-    };
     return (
       <div className="secondary-header d-flex primary-background">
         <div id="large-screen-secondary-header" className="d-flex">
