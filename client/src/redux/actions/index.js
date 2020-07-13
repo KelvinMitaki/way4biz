@@ -714,12 +714,7 @@ export const fetchFilteredProducts = (filter, category) => async dispatch => {
 export const handleCheckboxAction = event => (dispatch, getState) => {
   const filter = getState().filter;
   console.log(filter);
-  return {
-    type: HANDLE_CHECKBOX,
-    payload: {
-      event
-    }
-  };
+  dispatch({ type: HANDLE_CHECKBOX, payload: { event } });
 };
 export const handleChangeAction = event => {
   return {
