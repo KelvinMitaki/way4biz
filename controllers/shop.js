@@ -26,10 +26,18 @@ route.post("/api/products", async (req, res) => {
 route.post("/api/products/skip/:category", async (req, res) => {
   try {
     const { category } = req.params;
-    const { itemsToSkip } = req.body;
-    const products = await Product.find({ category })
-      .skip(itemsToSkip)
-      .limit(4);
+    const {
+      itemsToSkip,
+      min,
+      max,
+      rating,
+      freeShipping,
+      lowestPrice,
+      latest,
+      highestPrice
+    } = req.body;
+    let products = await Product.find({ category });
+    console.log(products.length);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
@@ -39,30 +47,6 @@ route.post("/api/products/skip/:category", async (req, res) => {
       },
       { $count: category }
     ]);
-
-    res.send({ products, productCount: productCount[0][category] });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
-route.post("/api/products/filter/:category", async (req, res) => {
-  try {
-    const { category } = req.params;
-    const {
-      min,
-      max,
-      rating,
-      freeShipping,
-      lowestPrice,
-      latest,
-      highestPrice
-    } = req.body;
-    // **TODO** RATING FREE SHIPPING SORT BY
-    // **TODO** FIX FILTERING
-    // FREE SHIPPING RATING LATEST ON
-
-    let products = await Product.find({ category });
     if (freeShipping === "on") {
       products = products.filter(product => product.freeShipping === true);
     }
@@ -81,11 +65,35 @@ route.post("/api/products/filter/:category", async (req, res) => {
     if (latest === "on") {
       products.sort(compare);
     }
-    res.send(products);
+    products.slice(itemsToSkip, 5);
+    res.send({ products, productCount: productCount[0][category] });
   } catch (error) {
     res.status(500).send(error);
   }
 });
+
+// route.post("/api/products/filter/:category", async (req, res) => {
+//   try {
+//     const { category } = req.params;
+//     const {
+//       min,
+//       max,
+//       rating,
+//       freeShipping,
+//       lowestPrice,
+//       latest,
+//       highestPrice
+//     } = req.body;
+//     // **TODO** RATING FREE SHIPPING SORT BY
+//     // **TODO** FIX FILTERING
+//     // FREE SHIPPING RATING LATEST ON
+
+//     let products = await Product.find({ category });
+
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 route.get(
   "/api/products/category/subcategory/:subcategory",
   async (req, res) => {

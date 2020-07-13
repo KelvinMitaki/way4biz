@@ -18,7 +18,6 @@ import { FaSortAmountDownAlt } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
 import "./Products.css";
 import { reduxForm, Field } from "redux-form";
-import ProductsForm from "./ProductsForm";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "./ProductsInput";
 

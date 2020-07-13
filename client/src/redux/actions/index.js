@@ -550,11 +550,12 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, history) => async dispatch => {
+export const singleCategory = (category, history, filter) => async dispatch => {
   try {
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/${category}`, {
-      itemsToSkip: 0
+      itemsToSkip: 0,
+      ...filter
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
@@ -564,6 +565,7 @@ export const singleCategory = (category, history) => async dispatch => {
     console.log(error.response);
   }
 };
+
 export const moreSingleCategoryProducts = category => async (
   dispatch,
   getState
@@ -683,18 +685,6 @@ export const fetchProductReviews = productId => async dispatch => {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
-    console.log(error.response);
-  }
-};
-export const fetchFilteredProducts = (filter, category) => async dispatch => {
-  try {
-    dispatch({ type: FILTERED_PRODUCTS_START });
-    const res = await axios.post(`/api/products/filter/${category}`, filter);
-    console.log(res.data);
-    // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
-  } catch (error) {
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
