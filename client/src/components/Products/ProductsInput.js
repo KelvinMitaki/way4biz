@@ -12,7 +12,11 @@ export class ProductsInput extends Component {
   handleCheckbox = event => {
     const { checked, name } = event.target;
 
-    this.props.handleCheckboxAction({ checked, name });
+    this.props.handleCheckboxAction(
+      { checked, name },
+      this.props.match.params.category,
+      this.props.history
+    );
   };
   handleChange = event => {
     const { name, value } = event.target;

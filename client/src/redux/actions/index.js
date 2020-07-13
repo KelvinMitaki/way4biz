@@ -552,41 +552,6 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, history) => async dispatch => {
-  try {
-    dispatch({ type: SINGLE_CATEGORY_START });
-    const res = await axios.post(`/api/products/skip/${category}`, {
-      itemsToSkip: 0
-    });
-    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
-    dispatch({ type: SINGLE_CATEGORY_STOP });
-    history.push(`/products/category/${category}`);
-  } catch (error) {
-    dispatch({ type: SINGLE_CATEGORY_STOP });
-    console.log(error.response);
-  }
-};
-export const moreSingleCategoryProducts = category => async (
-  dispatch,
-  getState
-) => {
-  try {
-    const itemsToSkip = getState().product.singleCategoryProducts.length;
-    const prodCount = getState().product.categoryProductCount;
-    const singleProdLength = getState().product.singleCategoryProducts.length;
-    if (singleProdLength < prodCount) {
-      dispatch({ type: LOADING_START });
-      const res = await axios.post(`/api/products/skip/${category}`, {
-        itemsToSkip
-      });
-      dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
-    }
-    dispatch({ type: LOADING_STOP });
-  } catch (error) {
-    dispatch({ type: LOADING_STOP });
-    console.log(error.response);
-  }
-};
 
 export const signInClick = () => {
   return {
@@ -688,15 +653,61 @@ export const fetchProductReviews = productId => async dispatch => {
     console.log(error.response);
   }
 };
+export const singleCategory = (category, filter, history) => async dispatch => {
+  try {
+    const test = {};
+
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+    test.category = category;
+    dispatch({ type: SINGLE_CATEGORY_START });
+    const res = await axios.post(`/api/products/skip/category`, {
+      itemsToSkip: 0,
+      test
+    });
+    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
+    history.push(`/products/category/${category}`);
+  } catch (error) {
+    dispatch({ type: SINGLE_CATEGORY_STOP });
+    console.log(error.response);
+  }
+};
+export const moreSingleCategoryProducts = category => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const itemsToSkip = getState().product.singleCategoryProducts.length;
+    const prodCount = getState().product.categoryProductCount;
+    const singleProdLength = getState().product.singleCategoryProducts.length;
+    if (singleProdLength < prodCount) {
+      dispatch({ type: LOADING_START });
+      const res = await axios.post(`/api/products/skip/category`, {
+        itemsToSkip,
+        category
+      });
+      dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+    }
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    dispatch({ type: LOADING_STOP });
+    console.log(error.response);
+  }
+};
 export const fetchFilteredProducts = (filter, category) => async dispatch => {
   try {
     dispatch({ type: FILTERED_PRODUCTS_START });
     const test = {};
 
-    if (filter.rating === "on") {
+    if (filter.rating) {
       test.rating = { $gte: 4 };
     }
-    if (filter.freeShipping === "on") {
+    if (filter.freeShipping) {
       test.freeShipping = true;
     }
     test.category = category;
@@ -711,10 +722,13 @@ export const fetchFilteredProducts = (filter, category) => async dispatch => {
   }
 };
 
-export const handleCheckboxAction = event => (dispatch, getState) => {
-  const filter = getState().filter;
-  console.log(filter);
+export const handleCheckboxAction = (event, category, history) => (
+  dispatch,
+  getState
+) => {
   dispatch({ type: HANDLE_CHECKBOX, payload: { event } });
+  const filter = getState().filter;
+  dispatch(singleCategory(category, filter, history));
 };
 export const handleChangeAction = event => {
   return {
