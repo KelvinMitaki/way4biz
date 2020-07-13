@@ -69,7 +69,8 @@ import {
   FILTERED_PRODUCTS_STOP,
   FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
-  HANDLE_CHANGE
+  HANDLE_CHANGE,
+  REVERT_FILTER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -664,7 +665,6 @@ export const singleCategory = (category, filter, history) => async dispatch => {
       test.freeShipping = true;
     }
     test.category = category;
-    console.log(test);
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
@@ -692,7 +692,6 @@ export const moreSingleCategoryProducts = (category, filter) => async (
       test.freeShipping = true;
     }
     test.category = category;
-    console.log(test);
     const itemsToSkip = getState().product.singleCategoryProducts.length;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
@@ -748,4 +747,14 @@ export const handleChangeAction = event => {
       event
     }
   };
+};
+
+export const revertFilter = (category, filter, history) => (
+  dispatch,
+  getState
+) => {
+  dispatch({
+    type: REVERT_FILTER
+  });
+  dispatch(singleCategory(category, getState().filter, history));
 };
