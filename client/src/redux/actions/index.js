@@ -67,7 +67,9 @@ import {
   FETCH_USER_STOP,
   FILTERED_PRODUCTS_START,
   FILTERED_PRODUCTS_STOP,
-  FILTERED_PRODUCTS
+  FILTERED_PRODUCTS,
+  HANDLE_CHECKBOX,
+  HANDLE_CHANGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -689,9 +691,17 @@ export const fetchProductReviews = productId => async dispatch => {
 export const fetchFilteredProducts = (filter, category) => async dispatch => {
   try {
     dispatch({ type: FILTERED_PRODUCTS_START });
-    const res = await axios.post(`/api/products/filter/${category}`, {
-      [filter]: filter
-    });
+    const test = {};
+
+    if (filter.rating === "on") {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping === "on") {
+      test.freeShipping = true;
+    }
+    test.category = category;
+
+    const res = await axios.post(`/api/products/filter`, { test });
     console.log(res.data);
     // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
     dispatch({ type: FILTERED_PRODUCTS_STOP });
@@ -699,4 +709,21 @@ export const fetchFilteredProducts = (filter, category) => async dispatch => {
     dispatch({ type: FILTERED_PRODUCTS_STOP });
     console.log(error.response);
   }
+};
+
+export const handleCheckboxAction = event => {
+  return {
+    type: HANDLE_CHECKBOX,
+    payload: {
+      event
+    }
+  };
+};
+export const handleChangeAction = event => {
+  return {
+    type: HANDLE_CHANGE,
+    payload: {
+      event
+    }
+  };
 };

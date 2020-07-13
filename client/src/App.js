@@ -36,6 +36,7 @@ import PendingReviews from "./components/Account/PendingReviews";
 import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
 import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
+import ScreenLoader from "./components/Pages/ScreenLoader";
 
 class App extends React.Component {
   componentDidMount() {
@@ -320,19 +321,19 @@ class App extends React.Component {
         </div>
       );
     }
-    return null;
+    return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
