@@ -143,7 +143,30 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
-
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
                       <div>
                         <img
                           src={this.props.product.imageUrl}
@@ -284,6 +307,25 @@ class Product extends React.Component {
                       details={this.props.product.description}
                       specifications={this.props.product.specifications}
                     />
+                  </div>
+                </div>
+                <div>
+                  <h3>Recommended For You</h3>
+                  <div className="recommended-products-wrapper">
+                    {this.props.relatedProducts.length !== 0 &&
+                      this.props.relatedProducts.map((item) => (
+                        <a key={item._id} href={`/product/${item._id}`}>
+                          <div key={item._id} className="recommended-product">
+                            <img src={item.imageUrl} alt={item.name} />
+                            <p className="recommended-product-name">
+                              {item.name}
+                            </p>
+                            <p style={{ fontWeight: "bolder" }}>
+                              Ksh.{item.price.toLocaleString()}{" "}
+                            </p>
+                          </div>
+                        </a>
+                      ))}
                   </div>
                 </div>
               </div>

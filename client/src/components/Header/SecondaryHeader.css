@@ -23,63 +23,42 @@
 .secondary-header-link:hover {
   color: #f76b1a;
   text-decoration: none;
+  font-size: 13px;
 }
 
 #small-screen-secondary-header {
   display: none;
 }
 
-.owl-stage {
-  display: flex;
-  background-color: #00001e !important;
-}
-
-.owl-dots {
-  display: none;
-}
-
-.owl-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
-  max-width: 200px;
-  background-color: #00001e !important;
-}
-
-.owl-item .active {
-  background-color: #00001e !important;
-  width: 100% !important;
-}
-
-.owl-carousel-header {
+.small-screen-secondary-header-items {
   height: 30px !important;
   width: 100vw;
   padding: 0px 10px;
 }
 
-.owl-carousel-header {
+.small-screen-secondary-header-items {
   overflow-y: hidden;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.owl-carousel-header::-webkit-scrollbar {
+.small-screen-secondary-header-items::-webkit-scrollbar {
   width: 0px;
   height: 0px;
   background-color: transparent;
 }
 
-.owl-carousel-header .carousel-link {
+.small-screen-secondary-header-link {
   display: inline-block;
   zoom: 1;
   float: none;
   margin: 0px 15px;
+  font-size: 12px;
 }
 
-.carousel-link,
-.carousel-link:hover {
+.small-screen-secondary-header-link,
+.small-screen-secondary-header-link:hover {
   display: inline !important;
   color: #f76b1a;
   text-decoration: none;

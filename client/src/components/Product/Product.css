@@ -137,7 +137,8 @@ hr {
   padding: 0px 25px;
 }
 
-.related-products-wrapper {
+.related-products-wrapper,
+.recommended-products-wrapper {
   overflow-y: hidden;
   white-space: nowrap;
   overflow-x: scroll;
@@ -145,33 +146,39 @@ hr {
   -webkit-overflow-scrolling: touch;
 }
 
-.related-products-wrapper a {
+.related-products-wrapper a,
+.recommended-products-wrapper a {
   color: #000;
 }
 
-.related-products-wrapper a:hover {
+.related-products-wrapper a:hover,
+.recommended-products-wrapper a:hover {
   color: #f76b1a;
   text-decoration: none;
 }
 
-.related-products-wrapper::-webkit-scrollbar {
+.related-products-wrapper::-webkit-scrollbar,
+.recommended-products-wrapper::-webkit-scrollbar {
   height: 8px !important;
 }
 
-.related-products-wrapper::-webkit-scrollbar-track {
+.related-products-wrapper::-webkit-scrollbar-track,
+.recommended-products-wrapper::-webkit-scrollbar-track {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   background-color: transparent;
 }
 
-.related-products-wrapper::-webkit-scrollbar-thumb {
+.related-products-wrapper::-webkit-scrollbar-thumb,
+.recommended-products-wrapper::-webkit-scrollbar-thumb {
   height: 4px;
   width: 20px;
   background-color: #f76b1a !important;
   border-radius: 2px !important;
 }
 
-.related-product {
+.related-product,
+.recommended-product {
   width: 200px;
   margin: 0px 5px 10px 5px;
   display: inline-block;
@@ -180,11 +187,13 @@ hr {
   text-align: center;
 }
 
-.related-product img {
+.related-product img,
+.recommended-product img {
   width: 100%;
 }
 
-.related-product-name {
+.related-product-name,
+.recommended-product-name {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -9,9 +9,13 @@
 .product-no-reviews p {
   width: 70%;
   text-align: center;
+  font-size: medium;
 }
 
 @media screen and (max-width: 960px) {
+  .product-no-reviews {
+    min-height: 40vh;
+  }
   .product-no-reviews p {
     width: 80%;
   }

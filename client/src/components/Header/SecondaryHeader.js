@@ -46,21 +46,33 @@ class SecondaryHeader extends React.Component {
           </Link>
         </div>
         <div id="small-screen-secondary-header">
-          <div className="owl-carousel-header">
+          <div className="small-screen-secondary-header-items">
             {!this.props.isSignedIn && (
-              <Link className="carousel-link" to="/seller/register">
+              <Link
+                className="small-screen-secondary-header-link"
+                to="/seller/register"
+              >
                 Sell with us
               </Link>
             )}
 
-            <Link className="carousel-link" to="/customer-service">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/customer-service"
+            >
               Customer Service
             </Link>
 
-            <Link className="carousel-link" to="/support-center">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/support-center"
+            >
               Support Center
             </Link>
-            <Link className="carousel-link" to="/privacy-policy">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/privacy-policy"
+            >
               Privacy Policy
             </Link>
           </div>
