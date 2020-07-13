@@ -43,6 +43,7 @@ class MainCategories extends React.Component {
                     onClick={() =>
                       this.props.singleCategory(
                         category._id,
+                        this.props.filter,
                         this.props.history
                       )
                     }
@@ -68,6 +69,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.product.categories,
     singleCategoryLoading: state.auth.singleCategoryLoading,
+    filter: state.filter,
   };
 };
 export default withRouter(

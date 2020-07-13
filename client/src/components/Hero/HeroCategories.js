@@ -30,11 +30,15 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() =>
-                  this.props.singleCategory(category._id, this.props.history)
+                  this.props.singleCategory(
+                    category._id,
+                    this.props.filter,
+                    this.props.history
+                  )
                 }
               >
                 <div>
@@ -51,9 +55,10 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
+    filter: state.filter
   };
 };
 export default withRouter(

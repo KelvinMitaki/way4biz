@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import {
-  fetchFilteredProducts,
-  handleChangeAction,
-  handleCheckboxAction
-} from "../../redux/actions";
+import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -12,7 +8,11 @@ export class ProductsInput extends Component {
   handleCheckbox = event => {
     const { checked, name } = event.target;
 
-    this.props.handleCheckboxAction({ checked, name });
+    this.props.handleCheckboxAction(
+      { checked, name },
+      this.props.match.params.category,
+      this.props.history
+    );
   };
   handleChange = event => {
     const { name, value } = event.target;
@@ -102,7 +102,6 @@ const mapStateToProps = state => {
 };
 export default withRouter(
   connect(mapStateToProps, {
-    fetchFilteredProducts,
     handleChangeAction,
     handleCheckboxAction
   })(ProductsInput)
