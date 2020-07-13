@@ -10,9 +10,7 @@ const INITIAL_STATE = {
   priceMin: null,
   rating: false,
   freeShipping: false,
-  latest: false,
   price: null
-  //   lowestPrice: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,8 +33,7 @@ export default (state = INITIAL_STATE, action) => {
         priceMax: null,
         priceMin: null,
         rating: false,
-        freeShipping: false,
-        latest: false
+        freeShipping: false
       };
     default:
       return state;

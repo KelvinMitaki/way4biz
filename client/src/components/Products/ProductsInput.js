@@ -27,7 +27,11 @@ class ProductsInput extends Component {
   };
   handleRadioButton = event => {
     const { name, value } = event.target;
-    this.props.handleRadioButtonAction({ name, value });
+    this.props.handleRadioButtonAction(
+      this.props.match.params.category,
+      { name, value },
+      this.props.history
+    );
   };
   render() {
     const {
@@ -35,7 +39,6 @@ class ProductsInput extends Component {
       priceMin,
       rating,
       freeShipping,
-      latest,
       price
     } = this.props.filter;
     return (
@@ -98,16 +101,6 @@ class ProductsInput extends Component {
           </div>
         </div>
         <div className="row my-3">
-          <div className="d-flex ml-3">
-            <input
-              onChange={this.handleCheckbox}
-              name="latest"
-              type="checkbox"
-              checked={latest}
-            />
-
-            <p className="ml-1">Latest</p>
-          </div>
           <div className="d-flex ml-3">
             <input
               name="price"

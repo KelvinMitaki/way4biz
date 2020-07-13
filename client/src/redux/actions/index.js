@@ -678,16 +678,24 @@ export const singleCategory = (category, filter, history) => async (
     if (filter.priceMin > filter.priceMax) {
       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
-    if (filter.latest) {
-      sort.latest = 1;
+
+    if (filter.highestPrice) {
+      sort.price = -1;
+    }
+    if (filter.lowestPrice) {
+      sort.price = 1;
     }
     test.category = category;
+    if (Object.keys(sort).length === 0) {
+      sort.createdAt = 1;
+    }
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
       test,
       sort
     });
+    localStorage.setItem("trial", res.data.products.length);
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
     history.push(`/products/category/${category}`);
@@ -719,11 +727,19 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     if (filter.priceMin > filter.priceMax) {
       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
-    if (filter.latest) {
-      sort.latest = 1;
+
+    if (filter.highestPrice) {
+      sort.price = -1;
+    }
+    if (filter.lowestPrice) {
+      sort.price = 1;
     }
     test.category = category;
-    const itemsToSkip = getState().product.singleCategoryProducts.length;
+    if (Object.keys(sort).length === 0) {
+      sort.createdAt = 1;
+    }
+    console.log(localStorage.getItem("trial"));
+    const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
@@ -790,7 +806,13 @@ export const revertFilter = (category, filter, history) => (
   });
   dispatch(singleCategory(category, getState().filter, history));
 };
-export const handleRadioButtonAction = event => dispatch => {
+export const handleRadioButtonAction = (
+  category,
+  event,
+  history
+) => dispatch => {
+  dispatch(singleCategory(category, { [event.value]: event.value }, history));
+
   dispatch({
     type: RADIO_BUTTON,
     payload: {

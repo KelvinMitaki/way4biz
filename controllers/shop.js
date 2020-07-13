@@ -27,12 +27,20 @@ route.post("/api/products/skip/category", async (req, res) => {
   try {
     const { itemsToSkip, test, sort } = req.body;
     const products = await Product.find(test)
+      .sort(sort)
       .skip(itemsToSkip)
-      .limit(4)
-      .sort(sort);
+      .limit(6);
+    const ptest = await Product.aggregate([
+      { $match: test },
+      { $sort: sort },
+      { $skip: itemsToSkip },
+      { $limit: 4 },
+      { $project: { name: 1, price: 1 } }
+    ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
+
     const productCount = await Product.aggregate([
       {
         $match: test
