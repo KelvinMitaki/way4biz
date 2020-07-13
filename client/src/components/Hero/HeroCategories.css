@@ -57,6 +57,11 @@
   display: block;
 }
 
+.categories li a {
+  display: flex;
+  align-items: center;
+}
+
 .categories li a:hover {
   color: #f76b1a !important;
   text-decoration: none;

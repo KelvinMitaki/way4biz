@@ -8,10 +8,10 @@ import NoReviews from "./NoReviews";
 class ProductReviews extends React.Component {
   render() {
     return (
-      <div style={{ borderTop: "1px solid #d4d4d4" }}>
+      <div>
         {/* mapping here */}
         {this.props.productReviews.length !== 0 &&
-          this.props.productReviews.map(prod => (
+          this.props.productReviews.map((prod) => (
             <div className="buyer-review-wrapper" key={prod._id}>
               <Rating size={15} clickable={false} value={prod.rating} />
 
@@ -39,9 +39,9 @@ class ProductReviews extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    productReviews: state.product.productReviews
+    productReviews: state.product.productReviews,
   };
 };
 export default connect(mapStateToProps)(ProductReviews);

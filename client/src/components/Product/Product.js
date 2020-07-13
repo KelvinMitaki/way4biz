@@ -74,8 +74,8 @@ class Product extends React.Component {
       },
       largeImage: {
         src: product.imageUrl,
-        width: 1200,
-        height: 1800,
+        width: 1000,
+        height: 1000,
       },
       enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
@@ -92,13 +92,6 @@ class Product extends React.Component {
       (item) => item._id === this.props.product && this.props.product._id
     );
 
-    const responsive = {
-      screenBreakpoints: {
-        breakpoint: { max: 4000, min: 0 },
-        items: 5,
-      },
-    };
-
     if (!this.props.product) return <ScreenLoader />;
     return (
       <div className="main">
@@ -114,19 +107,26 @@ class Product extends React.Component {
               ) : null}
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
-                  <ReactImageMagnify {...this.getImageProps()} />
+                  <ReactImageMagnify
+                    enlargedImagePosition={"over"}
+                    {...this.getImageProps()}
+                  />
 
                   <div className="feature-imgs">
-                    {/* <Carousel
-                      responsive={responsive}
-                      swipeable={true}
-                      draggable={true}
-                      showDots={false}
-                      removeArrowOnDeviceType={["screenBreakpoints"]}
-                      autoPlay={true}
-                      infinite={true}
-                      containerClass={"product-owl-carousel"}
-                    >
+                    <div className="product-owl-carousel">
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+
                       <div>
                         <img
                           src={this.props.product.imageUrl}
@@ -163,7 +163,13 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
-                    </Carousel> */}
+                      <div>
+                        <img
+                          src={this.props.product.imageUrl}
+                          alt={this.props.product.name}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="col-lg-6 product-info pt-2">
@@ -297,6 +303,25 @@ class Product extends React.Component {
                       details={this.props.product.description}
                       specifications={this.props.product.specifications}
                     />
+                  </div>
+                </div>
+                <div>
+                  <h3>Recommended For You</h3>
+                  <div className="recommended-products-wrapper">
+                    {this.props.relatedProducts.length !== 0 &&
+                      this.props.relatedProducts.map((item) => (
+                        <a key={item._id} href={`/product/${item._id}`}>
+                          <div key={item._id} className="recommended-product">
+                            <img src={item.imageUrl} alt={item.name} />
+                            <p className="recommended-product-name">
+                              {item.name}
+                            </p>
+                            <p style={{ fontWeight: "bolder" }}>
+                              Ksh.{item.price.toLocaleString()}{" "}
+                            </p>
+                          </div>
+                        </a>
+                      ))}
                   </div>
                 </div>
               </div>

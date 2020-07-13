@@ -4,12 +4,13 @@ import "./Market.css";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
 import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
+import RandomCategories from "./RandomCategories";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    node => {
+    (node) => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -17,7 +18,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -29,9 +30,8 @@ function Market(props) {
 
   return (
     <div className="container-fluid market">
-      <div className="col market-head">
-        <h1>Selling</h1>
-      </div>
+      {/* <div className="col market-head"></div> */}
+      <RandomCategories />
       <div className="products-section">
         {props.products.length !== 0 &&
           props.products.map((product, index) => {
@@ -67,7 +67,7 @@ function Market(props) {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "0px 10px"
+                      padding: "0px 10px",
                     }}
                     className="my-2"
                   >
@@ -103,7 +103,7 @@ function Market(props) {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px"
+                    padding: "0px 10px",
                   }}
                   className="my-2"
                 >
@@ -117,11 +117,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore
+    hasMore: state.product.hasMore,
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(

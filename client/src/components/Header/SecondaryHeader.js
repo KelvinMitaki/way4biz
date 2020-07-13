@@ -7,26 +7,6 @@ import { connect } from "react-redux";
 
 class SecondaryHeader extends React.Component {
   render() {
-    // const responsive = {
-    //   screenBreakpoints: {
-    //     breakpoint: {
-    //       max: 960,
-    //       min: 0,
-    //     },
-    //     items: 2,
-    //   },
-    // };
-
-    const responsive = {
-      tablet: {
-        breakpoint: { max: 960, min: 541 },
-        items: 3
-      },
-      iphone: {
-        breakpoint: { max: 540, min: 0 },
-        items: 2
-      }
-    };
     return (
       <div className="secondary-header d-flex primary-background">
         <div id="large-screen-secondary-header" className="d-flex">
@@ -46,41 +26,44 @@ class SecondaryHeader extends React.Component {
           </Link>
         </div>
         <div id="small-screen-secondary-header">
-          {/* <Carousel
-            responsive={responsive}
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            removeArrowOnDeviceType={["tablet", "iphone"]}
-            autoPlay={true}
-            containerClass={"owl-carousel-header"}
-            infinite={true}
-          >
+          <div className="small-screen-secondary-header-items">
             {!this.props.isSignedIn && (
-              <Link className="carousel-link" to="/seller/register">
+              <Link
+                className="small-screen-secondary-header-link"
+                to="/seller/register"
+              >
                 Sell with us
               </Link>
             )}
 
-            <Link className="carousel-link" to="/customer-service">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/customer-service"
+            >
               Customer Service
             </Link>
 
-            <Link className="carousel-link" to="/support-center">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/support-center"
+            >
               Support Center
             </Link>
-            <Link className="carousel-link" to="/privacy-policy">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/privacy-policy"
+            >
               Privacy Policy
             </Link>
-          </Carousel> */}
+          </div>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 
