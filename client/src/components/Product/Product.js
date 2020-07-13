@@ -14,7 +14,7 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts
+  fetchRelatedProducts,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -29,7 +29,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false
+      clicked: false,
       // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -46,9 +46,9 @@ class Product extends React.Component {
   }
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
     const { product, addToCart } = this.props;
@@ -57,9 +57,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -70,14 +70,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl,
       },
       largeImage: {
         src: product.imageUrl,
         width: 1000,
-        height: 1000
+        height: 1000,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -85,11 +85,11 @@ class Product extends React.Component {
     const stockQuantity =
       this.props.product && this.props.product.stockQuantity;
     const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product && this.props.product._id
+      (item) => item._id === this.props.product && this.props.product._id
     );
     let itemInCart = false;
     itemInCart = this.props.cart.find(
-      item => item._id === this.props.product && this.props.product._id
+      (item) => item._id === this.props.product && this.props.product._id
     );
 
     if (!this.props.product) return <ScreenLoader />;
@@ -114,10 +114,12 @@ class Product extends React.Component {
 
                   <div className="feature-imgs">
                     <OwlCarousel
+                      loop={true}
                       dots={true}
                       items={4}
                       className="product-owl-carousel"
                       autoplay={true}
+                      controls={true}
                     >
                       <div>
                         <img
@@ -209,7 +211,7 @@ class Product extends React.Component {
                           clickable={false}
                           value={Math.round(
                             this.props.productReviews
-                              .map(p => p.rating)
+                              .map((p) => p.rating)
                               .reduce((acc, cur) => acc + cur, 0) /
                               this.props.productReviews.length
                           )}
@@ -265,7 +267,7 @@ class Product extends React.Component {
                 <h3>Related Products</h3>
                 <div className="related-products-wrapper">
                   {this.props.relatedProducts.length !== 0 &&
-                    this.props.relatedProducts.map(item => (
+                    this.props.relatedProducts.map((item) => (
                       <a key={item._id} href={`/product/${item._id}`}>
                         <div key={item._id} className="related-product">
                           <img src={item.imageUrl} alt={item.name} />
@@ -324,7 +326,7 @@ const mapStateToProps = (state, ownProps) => {
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
-    productReviews: state.product.productReviews
+    productReviews: state.product.productReviews,
   };
 };
 export default withRouter(
@@ -333,6 +335,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts
+    fetchRelatedProducts,
   })(Product)
 );
