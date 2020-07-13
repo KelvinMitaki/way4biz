@@ -23,24 +23,21 @@ route.post("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.post("/api/products/skip/:category", async (req, res) => {
+route.post("/api/products/skip/category", async (req, res) => {
   try {
-    const { category } = req.params;
-    const { itemsToSkip } = req.body;
-    const products = await Product.find({ category })
-      .skip(itemsToSkip)
-      .limit(4);
+    const { itemsToSkip, test } = req.body;
+    const products = await Product.find(test).skip(itemsToSkip).limit(4);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
     const productCount = await Product.aggregate([
       {
-        $match: { category: category }
+        $match: test
       },
-      { $count: category }
+      { $count: test.category }
     ]);
 
-    res.send({ products, productCount: productCount[0][category] });
+    res.send({ products, productCount: productCount[0][test.category] });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -428,6 +425,7 @@ route.get("/api/pending/reviews", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// ADD A NEW REVIEW
 route.post(
   "/api/new/review/:productId/:orderId",
   auth,
@@ -470,6 +468,13 @@ route.post(
         { "items.product": productId, _id: orderId },
         { $set: { "items.$.reviewed": true } }
       );
+      const product = await Product.findById(productId);
+      const reviews = await Review.find({ product: productId });
+      product.rating = Math.round(
+        reviews.map(order => order.rating).reduce((acc, cur) => acc + cur, 0) /
+          reviews.length
+      );
+      await product.save();
       res.send(review);
     } catch (error) {
       res.status(500).send(error);

@@ -13,13 +13,12 @@ export default (state = INITIAL_STATE, action) => {
     case HANDLE_CHANGE:
       return {
         ...state,
-        [action.payload.event.target.name]: action.payload.event.target.value
+        [action.payload.event.name]: action.payload.event.value
       };
     case HANDLE_CHECKBOX:
-      console.log(action.payload.event.target.value);
       return {
         ...state,
-        [action.payload.event.target.name]: action.payload.event.target.value
+        [action.payload.event.name]: action.payload.event.checked
       };
     default:
       return state;

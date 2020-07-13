@@ -1,32 +1,32 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import { fetchFilteredProducts } from "../../redux/actions";
+import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 export class ProductsInput extends Component {
-  state = {
-    priceMax: null,
-    priceMin: null,
-    rating: false,
-    freeShipping: false,
-    latest: false
-  };
   handleCheckbox = event => {
-    const { name, checked } = event.target;
-    this.setState({ [name]: checked }, () => {
-      // this.props.fetchFilteredProducts(
-      //   this.state,
-      //   this.props.match.params.category
-      // );
-      localStorage.setItem([name], checked);
-    });
+    const { checked, name } = event.target;
+
+    this.props.handleCheckboxAction(
+      { checked, name },
+      this.props.match.params.category,
+      this.props.history
+    );
   };
   handleChange = event => {
-    //   **TODO CHECK WHAT'S BIGGER BTN MIN AND MAX PRICE
-    this.setState({ [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+
+    this.props.handleChangeAction({ name, value });
   };
   render() {
+    const {
+      priceMax,
+      priceMin,
+      rating,
+      freeShipping,
+      latest
+    } = this.props.filter;
     return (
       <div>
         <div className="row my-3">
@@ -37,6 +37,7 @@ export class ProductsInput extends Component {
               name="priceMin"
               placeholder="min"
               style={{ width: "80px" }}
+              value={priceMin || ""}
             />
             -
             <input
@@ -44,24 +45,27 @@ export class ProductsInput extends Component {
               name="priceMax"
               placeholder="max"
               style={{ width: "80px" }}
+              value={priceMax || ""}
             />
           </div>
 
           <div className="d-flex ml-4">
             <input
-              onClick={this.handleCheckbox}
+              onChange={this.handleCheckbox}
               name="rating"
               type="checkbox"
               className="mr-1"
+              checked={rating}
             />
             <Rating clickable={false} size={15} value={4} />
             <span className="ml-2">&up</span>{" "}
           </div>
           <div className="d-flex ml-5">
             <input
-              onClick={this.handleCheckbox}
+              onChange={this.handleCheckbox}
               name="freeShipping"
               type="checkbox"
+              checked={freeShipping}
             />
             <p className="ml-1">Free Shipping</p>
           </div>
@@ -69,9 +73,10 @@ export class ProductsInput extends Component {
         <div className="row my-3">
           <div className="d-flex ml-3">
             <input
-              onClick={this.handleCheckbox}
+              onChange={this.handleCheckbox}
               name="latest"
               type="checkbox"
+              checked={latest}
             />
 
             <p className="ml-1">Latest</p>
@@ -90,7 +95,14 @@ export class ProductsInput extends Component {
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    filter: state.filter
+  };
+};
 export default withRouter(
-  connect(null, { fetchFilteredProducts })(ProductsInput)
+  connect(mapStateToProps, {
+    handleChangeAction,
+    handleCheckboxAction
+  })(ProductsInput)
 );
