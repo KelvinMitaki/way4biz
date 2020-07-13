@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     case HANDLE_CHANGE:
       return {
         ...state,
-        [action.payload.event.name]: action.payload.event.value
+        [action.payload.event.name]: parseInt(action.payload.event.value)
       };
     case HANDLE_CHECKBOX:
       return {

@@ -654,7 +654,10 @@ export const fetchProductReviews = productId => async dispatch => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, filter, history) => async dispatch => {
+export const singleCategory = (category, filter, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     const test = {};
 
@@ -663,6 +666,16 @@ export const singleCategory = (category, filter, history) => async dispatch => {
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
+    }
+
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
     test.category = category;
     dispatch({ type: SINGLE_CATEGORY_START });
@@ -676,6 +689,7 @@ export const singleCategory = (category, filter, history) => async dispatch => {
   } catch (error) {
     dispatch({ type: SINGLE_CATEGORY_STOP });
     console.log(error.response);
+    history.push("/categories");
   }
 };
 export const moreSingleCategoryProducts = (category, filter) => async (
@@ -690,6 +704,15 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
+    }
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
     }
     test.category = category;
     const itemsToSkip = getState().product.singleCategoryProducts.length;

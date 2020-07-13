@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
+import {
+  handleChangeAction,
+  handleCheckboxAction,
+  singleCategory
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./ProductsInput.css";
 
 class ProductsInput extends Component {
-  handleCheckbox = (event) => {
+  handleCheckbox = event => {
     const { checked, name } = event.target;
 
     this.props.handleCheckboxAction(
@@ -15,7 +19,7 @@ class ProductsInput extends Component {
       this.props.history
     );
   };
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
 
     this.props.handleChangeAction({ name, value });
@@ -26,7 +30,7 @@ class ProductsInput extends Component {
       priceMin,
       rating,
       freeShipping,
-      latest,
+      latest
     } = this.props.filter;
     return (
       <div>
@@ -52,6 +56,14 @@ class ProductsInput extends Component {
               <button
                 className="btn btn-sm ml-2"
                 style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                disabled={!priceMin || !priceMax}
+                onClick={() =>
+                  this.props.singleCategory(
+                    this.props.match.params.category,
+                    this.props.filter,
+                    this.props.history
+                  )
+                }
               >
                 OK
               </button>
@@ -104,14 +116,15 @@ class ProductsInput extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     handleChangeAction,
     handleCheckboxAction,
+    singleCategory
   })(ProductsInput)
 );
