@@ -714,12 +714,16 @@ export const fetchFilteredProducts = (filter, category) => async dispatch => {
 export const handleCheckboxAction = event => {
   return {
     type: HANDLE_CHECKBOX,
-    payload: event
+    payload: {
+      event
+    }
   };
 };
 export const handleChangeAction = event => {
   return {
     type: HANDLE_CHANGE,
-    payload: event
+    payload: {
+      event
+    }
   };
 };

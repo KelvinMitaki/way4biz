@@ -12,7 +12,7 @@ import filterReducer from "./filterReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cartReducer", "detailsPersist", "filter"]
+  whitelist: ["cartReducer", "detailsPersist"]
 };
 
 const reducers = combineReducers({
