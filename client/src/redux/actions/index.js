@@ -67,7 +67,9 @@ import {
   FETCH_USER_STOP,
   FILTERED_PRODUCTS_START,
   FILTERED_PRODUCTS_STOP,
-  FILTERED_PRODUCTS
+  FILTERED_PRODUCTS,
+  HANDLE_CHECKBOX,
+  HANDLE_CHANGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -707,4 +709,17 @@ export const fetchFilteredProducts = (filter, category) => async dispatch => {
     dispatch({ type: FILTERED_PRODUCTS_STOP });
     console.log(error.response);
   }
+};
+
+export const handleCheckboxAction = event => {
+  return {
+    type: HANDLE_CHECKBOX,
+    payload: event
+  };
+};
+export const handleChangeAction = event => {
+  return {
+    type: HANDLE_CHANGE,
+    payload: event
+  };
 };
