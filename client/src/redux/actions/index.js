@@ -677,11 +677,20 @@ export const singleCategory = (category, filter, history) => async dispatch => {
     console.log(error.response);
   }
 };
-export const moreSingleCategoryProducts = category => async (
+export const moreSingleCategoryProducts = (category, filter) => async (
   dispatch,
   getState
 ) => {
   try {
+    const test = {};
+
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+    test.category = category;
     const itemsToSkip = getState().product.singleCategoryProducts.length;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
@@ -689,7 +698,7 @@ export const moreSingleCategoryProducts = category => async (
       dispatch({ type: LOADING_START });
       const res = await axios.post(`/api/products/skip/category`, {
         itemsToSkip,
-        category
+        test
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }

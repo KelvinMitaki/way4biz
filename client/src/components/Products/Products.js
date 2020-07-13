@@ -26,7 +26,10 @@ function Products(props) {
   const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
-        return props.moreSingleCategoryProducts(props.match.params.category);
+        return props.moreSingleCategoryProducts(
+          props.match.params.category,
+          props.filter
+        );
       }
       props.hasMoreCategoryFalse();
     };
@@ -230,7 +233,8 @@ function Products(props) {
 const mapStateToProps = state => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
-    categoryProductCount: state.product.categoryProductCount
+    categoryProductCount: state.product.categoryProductCount,
+    filter: state.filter
   };
 };
 export default withRouter(
