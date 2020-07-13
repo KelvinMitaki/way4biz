@@ -67,9 +67,9 @@ hr {
   background-color: #fff !important;
 }
 
-/* .product-owl-carousel div {
-  display: inline-block;
-} */
+.product-owl-carousel div {
+  background-color: #fff;
+}
 
 .product-owl-carousel div img {
   width: 60px !important;

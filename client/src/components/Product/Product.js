@@ -115,7 +115,6 @@ class Product extends React.Component {
 
                   <div className="feature-imgs">
                     <OwlCarousel
-                      // loop={true}
                       dots={true}
                       items={4}
                       className="product-owl-carousel"
