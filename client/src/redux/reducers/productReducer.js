@@ -40,7 +40,8 @@ const INITIAL_STATE = {
   pendingReviewProducts: [],
   singleProductLoad: false,
   productReviews: [],
-  filteredProductsLoading: false
+  filteredProductsLoading: false,
+  hasMoreCategoryProducts: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -116,9 +117,17 @@ export default (state = INITIAL_STATE, action) => {
     case FILTERED_PRODUCTS:
       return { ...state, singleCategoryProducts: action.payload };
     case FILTERED_PRODUCTS_START:
-      return { ...state, filteredProductsLoading: true };
+      return {
+        ...state,
+        filteredProductsLoading: true,
+        hasMoreCategoryProducts: true
+      };
     case FILTERED_PRODUCTS_STOP:
-      return { ...state, filteredProductsLoading: false };
+      return {
+        ...state,
+        filteredProductsLoading: false,
+        hasMoreCategoryProducts: false
+      };
 
     default:
       return state;

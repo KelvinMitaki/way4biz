@@ -685,7 +685,6 @@ export const singleCategory = (category, filter, history) => async (
       sort.price = 1;
     }
     test.category = category;
-    console.log(sort);
     if (Object.keys(sort).length === 0) {
       sort.price = 1;
     }
@@ -741,7 +740,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
-      dispatch({ type: LOADING_START });
+      dispatch({ type: FILTERED_PRODUCTS_START });
       const res = await axios.post(`/api/products/skip/category`, {
         itemsToSkip: singleProdLength,
         test,
@@ -749,9 +748,9 @@ export const moreSingleCategoryProducts = (category, filter) => async (
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
     console.log(error);
     console.log(error.response);
   }
@@ -791,8 +790,8 @@ export const handleCheckboxAction = (event, category, history) => (
   dispatch(singleCategory(category, filter, history));
 };
 export const handleChangeAction = event => (dispatch, getState) => {
-  getState().product.itemsToSkip = 0;
-  getState().product.singleCategoryProducts = [];
+  // getState().product.itemsToSkip = 0;
+  // getState().product.singleCategoryProducts = [];
   dispatch({
     type: HANDLE_CHANGE,
     payload: {

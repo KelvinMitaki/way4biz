@@ -243,8 +243,7 @@ function Products(props) {
                   );
                 })}
             </div>
-            {props.singleCategoryProducts.length !==
-              props.categoryProductCount && <BottomPageLoader />}
+            {props.hasMoreCategoryProducts && <BottomPageLoader />}
           </div>
         </div>
       </div>
@@ -257,7 +256,8 @@ const mapStateToProps = state => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
-    filter: state.filter
+    filter: state.filter,
+    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts
   };
 };
 export default withRouter(
