@@ -125,7 +125,12 @@ const validate = formValues => {
   }
   if (
     !formValues.phoneNumber ||
-    (formValues.phoneNumber && !validator.isNumeric(formValues.phoneNumber))
+    (formValues.phoneNumber &&
+      !validator.isNumeric(
+        typeof formValues.phoneNumber === "string"
+          ? formValues.phoneNumber
+          : formValues.phoneNumber.toString()
+      ))
   ) {
     errors.phoneNumber = "Please enter a valid phone number";
   }

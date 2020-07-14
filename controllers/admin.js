@@ -21,6 +21,7 @@ const isSeller = require("../middlewares/is-seller");
 const Seller = require("../models/Seller");
 const User = require("../models/User");
 const Order = require("../models/Order");
+const Review = require("../models/Reviews");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -430,6 +431,7 @@ route.patch(
     }
   }
 );
+
 route.delete(
   "/api/product/delete/:sellerId/:productId",
   isSeller,
@@ -549,6 +551,24 @@ route.get("/api/image/upload", isSeller, async (req, res) => {
       },
       (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
     );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
+  try {
+    const reviews = await Review.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "productData"
+        }
+      },
+      { $unwind: "$productData" }
+    ]);
+    res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
   }
