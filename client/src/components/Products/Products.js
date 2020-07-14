@@ -42,7 +42,6 @@ function Products(props) {
     if (node) observer.current.observe(node);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <div>
       <Header />
@@ -244,8 +243,7 @@ function Products(props) {
                   );
                 })}
             </div>
-            {props.singleCategoryProducts.length !==
-              props.categoryProductCount && <BottomPageLoader />}
+            {props.hasMoreCategoryProducts && <BottomPageLoader />}
           </div>
         </div>
       </div>
@@ -259,6 +257,7 @@ const mapStateToProps = (state) => {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
     filter: state.filter,
+    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts,
   };
 };
 export default withRouter(
