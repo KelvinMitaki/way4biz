@@ -154,7 +154,7 @@
   height: 16px;
   width: 16px;
   border: 2px solid #f76b1a;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .checkbox label::after {
@@ -221,8 +221,8 @@
 .radio label::after {
   content: "";
   display: inline-block;
-  height: 6px;
-  width: 6px;
+  height: 8px;
+  width: 8px;
   border-radius: 50%;
   background-color: #f76b1a;
 }
@@ -242,8 +242,8 @@
 }
 
 .radio label::after {
-  left: -15px;
-  top: 8px;
+  left: -16px;
+  top: 7px;
 }
 
 /*Hide the checkmark by default*/
