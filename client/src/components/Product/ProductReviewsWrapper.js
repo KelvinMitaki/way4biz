@@ -12,6 +12,7 @@ import Rating from "./Rating";
 import { connect } from "react-redux";
 import { fetchProductReviews } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import NoReviews from "./NoReviews";
 
 class ProductReviewsWrapper extends React.Component {
   componentDidMount() {
@@ -69,9 +70,7 @@ class ProductReviewsWrapper extends React.Component {
                     </p>
                   </div>
                 ))}
-              {this.props.productReviews.length === 0 && (
-                <h3>No Reviews Yet</h3>
-              )}
+              {this.props.productReviews.length === 0 && <NoReviews />}
             </div>
           </div>
         </div>

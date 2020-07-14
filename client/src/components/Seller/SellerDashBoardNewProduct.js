@@ -10,7 +10,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
-import Editor from "./Editor";
+import ControlledEditor from "./Editor";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -22,7 +22,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" },
+  { key: "watches", text: "Watches", value: "watches" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -36,7 +36,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "utensils", text: "Utensils", value: "utensils" }
 ];
 
 export class Sell extends Component {
@@ -62,7 +62,7 @@ export class Sell extends Component {
                   className="col"
                 >
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
+                    onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(formValues, this.props.history)
                     )}
                   >
@@ -142,8 +142,8 @@ export class Sell extends Component {
                         <span>Add Product</span>
                       )}
                     </button> */}
-                    <Editor />
                   </form>
+                  <ControlledEditor />
                 </div>
               </div>
             </div>
@@ -153,7 +153,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -196,14 +196,14 @@ const validate = (formValues) => {
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell",
+    form: "Sell"
   })(connect(mapStateToProps, { addProduct })(Sell))
 );

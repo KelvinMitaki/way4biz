@@ -24,7 +24,6 @@ import {
   FETCH_SELLER_REVIEWS_START,
   FETCH_SELLER_REVIEWS_STOP
 } from "../actions/types";
-import _ from "lodash";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
