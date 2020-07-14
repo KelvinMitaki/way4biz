@@ -696,7 +696,7 @@ export const singleCategory = (category, filter, history) => async (
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
-    history.push(`/products/category/${category}`);
+    // history.push(`/products/category/${category}`);
   } catch (error) {
     dispatch({ type: SINGLE_CATEGORY_STOP });
     console.log(error.response);
