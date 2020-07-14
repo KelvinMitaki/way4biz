@@ -21,7 +21,7 @@ import {
   FILTERED_PRODUCTS_STOP,
   FILTERED_PRODUCTS
 } from "../actions/types";
-
+import _ from "lodash";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
@@ -76,17 +76,19 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         singleCategoryProducts: action.payload.products,
-        categoryProductCount: action.payload.productCount
+        categoryProductCount: action.payload.productCount,
+        itemsToSkip: state.itemsToSkip + 6
       };
     case MORE_SINGLE_CATEGORY_PRODUCTS:
       const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
+
       return {
         ...state,
         singleCategoryProducts: [
           ...state.singleCategoryProducts,
           ...action.payload.products.filter(prod => !prodIds.has(prod._id))
         ],
-        itemsToSkip: state.singleCategoryProducts.length
+        itemsToSkip: state.itemsToSkip + 6
       };
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };
