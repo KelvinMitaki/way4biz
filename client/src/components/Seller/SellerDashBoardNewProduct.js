@@ -10,6 +10,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
+import Editor from "./Editor";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -74,16 +75,16 @@ export class Sell extends Component {
                       component={AuthField}
                     />
 
-                    <Field
+                    {/* <Field
                       name="description"
                       label="Product Description"
                       component={SellerTextArea}
-                    />
-                    <Field
+                    /> */}
+                    {/* <Field
                       name="specifications"
                       label="Product Specifications"
                       component={SellerTextArea}
-                    />
+                    /> */}
                     <Field
                       type="number"
                       name="stockQuantity"
@@ -117,8 +118,8 @@ export class Sell extends Component {
                       label="Image URL"
                       component={AuthField}
                     />
-
-                    <button
+                    <h5>More Info</h5>
+                    {/* <button
                       style={{ cursor: "pointer" }}
                       className="btn btn-md btn-block primary-button mt-3"
                       disabled={!this.props.valid || this.props.loading}
@@ -136,10 +137,8 @@ export class Sell extends Component {
                       ) : (
                         <span>Add Product</span>
                       )}
-                    </button>
-
-                    <br />
-                    <br />
+                    </button> */}
+                    <Editor />
                   </form>
                 </div>
               </div>
