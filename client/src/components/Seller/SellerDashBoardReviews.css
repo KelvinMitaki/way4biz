@@ -11,6 +11,10 @@
 .seller-review-product-title-name {
   display: flex;
   align-items: center;
+  text-overflow: ellipsis;
+  /* background-color: green; */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .seller-review-product-title-name:hover {
@@ -22,3 +26,7 @@
   margin: 0px 10px;
   font-size: 20px;
 }
+
+/* .seller-review-product-title-name{
+
+} */

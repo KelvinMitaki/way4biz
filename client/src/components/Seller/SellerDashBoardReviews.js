@@ -29,7 +29,7 @@ class Review extends React.Component {
             <div className="col-md-10  mx-auto box-container">
               {/* mapping here */}
               {this.props.sellerReviews.length !== 0 &&
-                this.props.sellerReviews.map(review => (
+                this.props.sellerReviews.map((review) => (
                   <div className="review-wrapper mb-3" key={review._id}>
                     <Rating clickable={false} size={15} value={4} />
                     <div className="seller-review-product-title-name">
@@ -46,8 +46,10 @@ class Review extends React.Component {
                             `/product/${review.productData._id}`
                           )
                         }
+                        title={review.productData.name}
                       >
-                        {review.productData.name}
+                        {review.productData.name} The quick brown fox jumped
+                        over the lazy dog
                       </div>
                     </div>
 
@@ -68,10 +70,10 @@ class Review extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerReviews: state.product.sellerReviews,
-    sellerReviewsLoading: state.product.sellerReviewsLoading
+    sellerReviewsLoading: state.product.sellerReviewsLoading,
   };
 };
 export default withRouter(

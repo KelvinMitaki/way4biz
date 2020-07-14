@@ -56,7 +56,11 @@ export class Sell extends Component {
                 </div>
               </div>
               <div className="row">
-                <div id="dashboard-new-lg-screen" className="col">
+                <div
+                  id="dashboard-new-lg-screen"
+                  style={{ height: "2000px" }}
+                  className="col"
+                >
                   <form
                     onSubmit={this.props.handleSubmit((formValues) =>
                       this.props.addProduct(formValues, this.props.history)
