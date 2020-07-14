@@ -69,21 +69,24 @@ function Products(props) {
                         <p className="mr-1">Price:</p>
                         <div>
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
                             type="number"
                             placeholder="min"
                             className="filter-price-input"
                           />
                           -
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
                             type="number"
                             placeholder="max"
                             className="filter-price-input"
                           />
                           <button
-                            className="btn btn-sm"
-                            style={{ backgroundColor: "red", color: "#fff" }}
+                            className="btn btn-sm ml-2"
+                            style={{
+                              backgroundColor: "#f76b1a",
+                              color: "#fff",
+                            }}
                           >
                             OK
                           </button>
