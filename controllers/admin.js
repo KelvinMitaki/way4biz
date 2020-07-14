@@ -566,6 +566,22 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
           as: "productData"
         }
       },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "userSeller",
+          foreignField: "_id",
+          as: "userSeller"
+        }
+      },
       { $unwind: "$productData" },
       { $match: { "productData.seller": req.session.user._id } },
       {
@@ -578,7 +594,9 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
           order: 1,
           product: 1,
           createdAt: 1,
-          "productData.seller": 1
+          "productData.seller": 1,
+          "productData.name": 1,
+          "productData._id": 1
         }
       }
     ]);

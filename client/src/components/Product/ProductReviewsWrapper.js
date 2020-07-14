@@ -64,7 +64,7 @@ class ProductReviewsWrapper extends React.Component {
                         ? prod.userSeller.firstName
                         : prod.user.firstName}
                       <span className="ml-2">
-                        on {new Date(prod.createdAt).toLocaleDateString()}{" "}
+                        on {new Date(prod.createdAt).toLocaleString()}{" "}
                       </span>
                     </p>
                   </div>

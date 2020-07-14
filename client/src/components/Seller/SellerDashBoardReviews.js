@@ -10,6 +10,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchSellerReviews } from "../../redux/actions";
+import { Link, withRouter } from "react-router-dom";
 
 class Review extends React.Component {
   componentDidMount() {
@@ -38,12 +39,25 @@ class Review extends React.Component {
                       >
                         <BsArrowRight />
                       </IconContext.Provider>
-                      <p>Product Name </p>
+                      <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          this.props.history.push(
+                            `/product/${review.productData._id}`
+                          )
+                        }
+                      >
+                        {review.productData.name}
+                      </div>
                     </div>
 
                     <p className="">{review.body}</p>
                     <h6 className="my-2">
-                      By Fred on {new Date(review.createdAt).toLocaleString()}{" "}
+                      By{" "}
+                      {review.user.length !== 0
+                        ? review.user[0].firstName
+                        : review.userSeller[0].firstName}{" "}
+                      on {new Date(review.createdAt).toLocaleString()}{" "}
                     </h6>
                   </div>
                 ))}
@@ -60,4 +74,6 @@ const mapStateToProps = state => {
     sellerReviewsLoading: state.product.sellerReviewsLoading
   };
 };
-export default connect(mapStateToProps, { fetchSellerReviews })(Review);
+export default withRouter(
+  connect(mapStateToProps, { fetchSellerReviews })(Review)
+);
