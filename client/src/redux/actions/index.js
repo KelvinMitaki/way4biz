@@ -816,7 +816,6 @@ export const handleRadioButtonAction = (category, event, history) => (
 ) => {
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
-  dispatch(singleCategory(category, { price: event.value }, history));
 
   dispatch({
     type: RADIO_BUTTON,
@@ -824,4 +823,5 @@ export const handleRadioButtonAction = (category, event, history) => (
       event
     }
   });
+  dispatch(singleCategory(category, getState().filter, history));
 };
