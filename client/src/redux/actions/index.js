@@ -70,7 +70,8 @@ import {
   FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
   HANDLE_CHANGE,
-  REVERT_FILTER
+  REVERT_FILTER,
+  RADIO_BUTTON
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -654,28 +655,54 @@ export const fetchProductReviews = productId => async dispatch => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, filter, history) => async dispatch => {
+export const singleCategory = (category, filter, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
     }
+
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+
+    if (filter.highestPrice) {
+      sort.price = -1;
+    }
+    if (filter.lowestPrice) {
+      sort.price = 1;
+    }
     test.category = category;
+    if (Object.keys(sort).length === 0) {
+      sort.createdAt = 1;
+    }
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
-      test
+      test,
+      sort
     });
+    localStorage.setItem("trial", res.data.products.length);
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
     history.push(`/products/category/${category}`);
   } catch (error) {
     dispatch({ type: SINGLE_CATEGORY_STOP });
     console.log(error.response);
+    history.push("/categories");
   }
 };
 export const moreSingleCategoryProducts = (category, filter) => async (
@@ -684,22 +711,43 @@ export const moreSingleCategoryProducts = (category, filter) => async (
 ) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
     }
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+
+    if (filter.highestPrice) {
+      sort.price = -1;
+    }
+    if (filter.lowestPrice) {
+      sort.price = 1;
+    }
     test.category = category;
-    const itemsToSkip = getState().product.singleCategoryProducts.length;
+    if (Object.keys(sort).length === 0) {
+      sort.createdAt = 1;
+    }
+    console.log(localStorage.getItem("trial"));
+    const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
       dispatch({ type: LOADING_START });
       const res = await axios.post(`/api/products/skip/category`, {
         itemsToSkip,
-        test
+        test,
+        sort
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }
@@ -757,4 +805,18 @@ export const revertFilter = (category, filter, history) => (
     type: REVERT_FILTER
   });
   dispatch(singleCategory(category, getState().filter, history));
+};
+export const handleRadioButtonAction = (
+  category,
+  event,
+  history
+) => dispatch => {
+  dispatch(singleCategory(category, { [event.value]: event.value }, history));
+
+  dispatch({
+    type: RADIO_BUTTON,
+    payload: {
+      event
+    }
+  });
 };

@@ -86,7 +86,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.singleCategoryProducts,
           ...action.payload.products.filter(prod => !prodIds.has(prod._id))
         ],
-        itemsToSkip: state.itemsToSkip + 6
+        itemsToSkip: state.singleCategoryProducts.length
       };
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };

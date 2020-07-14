@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import Rating from "../Product/Rating";
-import { handleChangeAction, handleCheckboxAction } from "../../redux/actions";
+import {
+  handleChangeAction,
+  handleCheckboxAction,
+  singleCategory,
+  handleRadioButtonAction
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./ProductsInput.css";
 
 class ProductsInput extends Component {
-  handleCheckbox = (event) => {
+  handleCheckbox = event => {
     const { checked, name } = event.target;
 
     this.props.handleCheckboxAction(
@@ -15,10 +20,18 @@ class ProductsInput extends Component {
       this.props.history
     );
   };
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
 
     this.props.handleChangeAction({ name, value });
+  };
+  handleRadioButton = event => {
+    const { name, value } = event.target;
+    this.props.handleRadioButtonAction(
+      this.props.match.params.category,
+      { name, value },
+      this.props.history
+    );
   };
   render() {
     const {
@@ -26,7 +39,7 @@ class ProductsInput extends Component {
       priceMin,
       rating,
       freeShipping,
-      latest,
+      price
     } = this.props.filter;
     return (
       <div>
@@ -52,6 +65,14 @@ class ProductsInput extends Component {
               <button
                 className="btn btn-sm ml-2"
                 style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                disabled={!priceMin || !priceMax}
+                onClick={() =>
+                  this.props.singleCategory(
+                    this.props.match.params.category,
+                    this.props.filter,
+                    this.props.history
+                  )
+                }
               >
                 OK
               </button>
@@ -82,20 +103,22 @@ class ProductsInput extends Component {
         <div className="row my-3">
           <div className="d-flex ml-3">
             <input
-              onChange={this.handleCheckbox}
-              name="latest"
-              type="checkbox"
-              checked={latest}
+              name="price"
+              checked={price === "lowestPrice"}
+              value="lowestPrice"
+              type="radio"
+              onChange={this.handleRadioButton}
             />
-
-            <p className="ml-1">Latest</p>
-          </div>
-          <div className="d-flex ml-3">
-            <input name="price" type="radio" />
             <p className="ml-1">Lowest Price</p>
           </div>
           <div className="d-flex ml-3">
-            <input name="price" type="radio" />
+            <input
+              name="price"
+              checked={price === "highestPrice"}
+              value="highestPrice"
+              type="radio"
+              onChange={this.handleRadioButton}
+            />
 
             <p className="ml-1">Highest Price</p>
           </div>
@@ -104,14 +127,16 @@ class ProductsInput extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     handleChangeAction,
     handleCheckboxAction,
+    singleCategory,
+    handleRadioButtonAction
   })(ProductsInput)
 );
