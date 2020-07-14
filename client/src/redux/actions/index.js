@@ -67,11 +67,13 @@ import {
   FETCH_USER_STOP,
   FILTERED_PRODUCTS_START,
   FILTERED_PRODUCTS_STOP,
-  FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
   HANDLE_CHANGE,
   REVERT_FILTER,
-  RADIO_BUTTON
+  RADIO_BUTTON,
+  FETCH_SELLER_REVIEWS_START,
+  FETCH_SELLER_REVIEWS_STOP,
+  FETCH_SELLER_REVIEWS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -824,4 +826,16 @@ export const handleRadioButtonAction = (category, event, history) => (
     }
   });
   dispatch(singleCategory(category, getState().filter, history));
+};
+
+export const fetchSellerReviews = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLER_REVIEWS_START });
+    const res = await axios.get(`/api/seller/reviews`);
+    dispatch({ type: FETCH_SELLER_REVIEWS, payload: res.data });
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
+    console.log(error.response);
+  }
 };
