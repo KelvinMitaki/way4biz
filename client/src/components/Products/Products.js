@@ -81,6 +81,12 @@ function Products(props) {
                             placeholder="max"
                             className="filter-price-input"
                           />
+                          <button
+                            className="btn btn-sm"
+                            style={{ backgroundColor: "red", color: "#fff" }}
+                          >
+                            OK
+                          </button>
                         </div>
                       </div>
 
@@ -111,14 +117,6 @@ function Products(props) {
                       <FaSortAmountDownAlt />
                     </IconContext.Provider>
                     <div id="sort-stuff">
-                      {/* <div className="d-flex ml-3">
-                        <div className="checkbox">
-                          <input type="checkbox" id="checkbox_3" />
-                          <label htmlFor="checkbox_3" className="ml-1">
-                            Latest
-                          </label>
-                        </div>
-                      </div> */}
                       <div className="d-flex ml-3">
                         <div className="radio">
                           <input name="hey" type="radio" id="radio_1" />
