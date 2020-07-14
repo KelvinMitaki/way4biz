@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   priceMin: null,
   rating: false,
   freeShipping: false,
-  price: null
+  price: "lowestPrice"
 };
 
 export default (state = INITIAL_STATE, action) => {
