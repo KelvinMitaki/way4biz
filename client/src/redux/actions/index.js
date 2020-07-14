@@ -70,7 +70,8 @@ import {
   FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
   HANDLE_CHANGE,
-  REVERT_FILTER
+  REVERT_FILTER,
+  RADIO_BUTTON
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -654,28 +655,52 @@ export const fetchProductReviews = productId => async dispatch => {
     console.log(error.response);
   }
 };
-export const singleCategory = (category, filter, history) => async dispatch => {
+export const singleCategory = (category, filter, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
     }
+
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
     test.category = category;
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
-      test
+      test,
+      sort
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
-    history.push(`/products/category/${category}`);
+    // history.push(`/products/category/${category}`);
   } catch (error) {
     dispatch({ type: SINGLE_CATEGORY_STOP });
     console.log(error.response);
+    history.push("/categories");
   }
 };
 export const moreSingleCategoryProducts = (category, filter) => async (
@@ -684,28 +709,49 @@ export const moreSingleCategoryProducts = (category, filter) => async (
 ) => {
   try {
     const test = {};
-
+    const sort = {};
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
     if (filter.freeShipping) {
       test.freeShipping = true;
     }
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
     test.category = category;
-    const itemsToSkip = getState().product.singleCategoryProducts.length;
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
+    const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
-      dispatch({ type: LOADING_START });
+      dispatch({ type: FILTERED_PRODUCTS_START });
       const res = await axios.post(`/api/products/skip/category`, {
-        itemsToSkip,
-        test
+        itemsToSkip: singleProdLength,
+        test,
+        sort
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
+    console.log(error);
     console.log(error.response);
   }
 };
@@ -738,15 +784,20 @@ export const handleCheckboxAction = (event, category, history) => (
 ) => {
   dispatch({ type: HANDLE_CHECKBOX, payload: { event } });
   const filter = getState().filter;
+
+  getState().product.singleCategoryProducts = [];
+  getState().product.itemsToSkip = 0;
   dispatch(singleCategory(category, filter, history));
 };
-export const handleChangeAction = event => {
-  return {
+export const handleChangeAction = event => (dispatch, getState) => {
+  // getState().product.itemsToSkip = 0;
+  // getState().product.singleCategoryProducts = [];
+  dispatch({
     type: HANDLE_CHANGE,
     payload: {
       event
     }
-  };
+  });
 };
 
 export const revertFilter = (category, filter, history) => (
@@ -755,6 +806,21 @@ export const revertFilter = (category, filter, history) => (
 ) => {
   dispatch({
     type: REVERT_FILTER
+  });
+  dispatch(singleCategory(category, getState().filter, history));
+};
+export const handleRadioButtonAction = (category, event, history) => (
+  dispatch,
+  getState
+) => {
+  getState().product.singleCategoryProducts = [];
+  getState().product.itemsToSkip = 0;
+
+  dispatch({
+    type: RADIO_BUTTON,
+    payload: {
+      event
+    }
   });
   dispatch(singleCategory(category, getState().filter, history));
 };

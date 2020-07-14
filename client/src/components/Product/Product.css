@@ -30,6 +30,7 @@ hr {
 
 .feature-imgs {
   width: 100%;
+  margin-top: 15px;
 }
 
 .product-info {
@@ -63,12 +64,19 @@ hr {
   margin: 0px;
 }
 
+.owl-dots {
+  display: none;
+}
+
 .product-owl-carousel {
   background-color: #fff !important;
+  display: flex;
+  /* align-items: center; */
 }
 
 .product-owl-carousel div {
   background-color: #fff;
+  align-self: center;
 }
 
 .product-owl-carousel div img {

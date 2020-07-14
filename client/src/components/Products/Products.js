@@ -10,6 +10,9 @@ import {
   singleCategory,
   moreSingleCategoryProducts,
   hasMoreCategoryFalse,
+  handleChangeAction,
+  handleRadioButtonAction,
+  handleCheckboxAction
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -23,7 +26,7 @@ import ProductsInput from "./ProductsInput";
 
 function Products(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback((node) => {
+  const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
         return props.moreSingleCategoryProducts(
@@ -34,7 +37,7 @@ function Products(props) {
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
+    observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -42,7 +45,29 @@ function Products(props) {
     if (node) observer.current.observe(node);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleCheckbox = event => {
+    const { checked, name } = event.target;
 
+    props.handleCheckboxAction(
+      { checked, name },
+      props.match.params.category,
+      props.history
+    );
+  };
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    props.handleChangeAction({ name, value });
+  };
+  const handleRadioButton = event => {
+    const { name, value } = event.target;
+    props.handleRadioButtonAction(
+      props.match.params.category,
+      { name, value },
+      props.history
+    );
+  };
+  const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
   return (
     <div>
       <Header />
@@ -66,31 +91,81 @@ function Products(props) {
                       </span>
                     </IconContext.Provider>
                     <div id="filter-stuff">
-                      <div className="d-flex ml-3">
+                      <div className="d-flex ">
                         <p className="mr-1">Price:</p>
                         <div>
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
                             type="number"
+                            name="priceMin"
                             placeholder="min"
+                            className="filter-price-input"
+                            onChange={handleChange}
+                            value={priceMin || ""}
                           />
                           -
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
+                            name="priceMax"
                             type="number"
                             placeholder="max"
+                            className="filter-price-input"
+                            onChange={handleChange}
+                            value={priceMax || ""}
                           />
+                          <button
+                            className="btn ml-2"
+                            style={{
+                              backgroundColor: "#f76b1a",
+                              color: "#fff",
+                              height: "20px",
+                              width: "20px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "12px"
+                            }}
+                            onClick={() =>
+                              props.singleCategory(
+                                props.match.params.category,
+                                props.filter,
+                                props.history
+                              )
+                            }
+                          >
+                            OK
+                          </button>
                         </div>
                       </div>
 
-                      <div className="d-flex ml-4">
-                        <input type="checkbox" className="mr-1" />
-                        <Rating clickable={false} size={15} value={4} />
-                        <span className="ml-2">&up</span>{" "}
+                      <div className="d-flex ">
+                        <div className="checkbox ml-1 ">
+                          <input
+                            type="checkbox"
+                            id="checkbox_1"
+                            name="rating"
+                            checked={rating}
+                            onChange={handleCheckbox}
+                          />
+                          <label htmlFor="checkbox_1" className="d-flex">
+                            <Rating clickable={false} size={10} value={4} />
+                            <span className="ml-2">&up</span>{" "}
+                          </label>
+                        </div>
                       </div>
-                      <div className="d-flex ml-5">
-                        <input type="checkbox" />
-                        <p className="ml-1">Free Shipping</p>
+                      <div className="d-flex">
+                        <div className="checkbox">
+                          <input
+                            type="checkbox"
+                            name="freeShipping"
+                            checked={freeShipping}
+                            onChange={handleCheckbox}
+                            id="checkbox_2"
+                          />
+                          <label htmlFor="checkbox_2" className="ml-1">
+                            Free Shipping
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -103,16 +178,35 @@ function Products(props) {
                     </IconContext.Provider>
                     <div id="sort-stuff">
                       <div className="d-flex ml-3">
-                        <input type="checkbox" />
-                        <p className="ml-1">Latest</p>
+                        <div className="radio">
+                          <input
+                            name="price"
+                            checked={price === "lowestPrice"}
+                            value="lowestPrice"
+                            onChange={handleRadioButton}
+                            type="radio"
+                            id="radio_1"
+                          />
+                          <label htmlFor="radio_1" className="ml-1">
+                            Lowest Price
+                          </label>
+                        </div>
                       </div>
+                      {/* <hr style={{ backgroundColor: "green !important" }} /> */}
                       <div className="d-flex ml-3">
-                        <input type="radio" />
-                        <p className="ml-1">Lowest Price</p>
-                      </div>
-                      <div className="d-flex ml-3">
-                        <input type="radio" />
-                        <p className="ml-1">Highest Price</p>
+                        <div className="radio">
+                          <input
+                            name="price"
+                            checked={price === "highestPrice"}
+                            value="highestPrice"
+                            onChange={handleRadioButton}
+                            type="radio"
+                            id="radio_2"
+                          />
+                          <label htmlFor="radio_2" className="ml-1">
+                            Highest Price
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -146,7 +240,7 @@ function Products(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px",
+                                padding: "0px 10px"
                               }}
                               className="price"
                             >
@@ -165,7 +259,7 @@ function Products(props) {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "0px 10px",
+                            padding: "0px 10px"
                           }}
                           className="mb-2"
                         >
@@ -174,6 +268,7 @@ function Products(props) {
                       </div>
                     );
                   }
+
                   return (
                     <div key={product._id} className="product">
                       <Link
@@ -193,7 +288,7 @@ function Products(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px",
+                              padding: "0px 10px"
                             }}
                             className="price"
                           >
@@ -212,7 +307,7 @@ function Products(props) {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px",
+                          padding: "0px 10px"
                         }}
                         className="mb-2"
                       >
@@ -222,8 +317,7 @@ function Products(props) {
                   );
                 })}
             </div>
-            {props.singleCategoryProducts.length !==
-              props.categoryProductCount && <BottomPageLoader />}
+            {props.hasMoreCategoryProducts && <BottomPageLoader />}
           </div>
         </div>
       </div>
@@ -232,19 +326,24 @@ function Products(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
     filter: state.filter,
+    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts
   };
 };
+
 export default withRouter(
   reduxForm({ form: "Products" })(
     connect(mapStateToProps, {
       singleCategory,
       hasMoreCategoryFalse,
       moreSingleCategoryProducts,
+      handleRadioButtonAction,
+      handleCheckboxAction,
+      handleChangeAction
     })(Products)
   )
 );

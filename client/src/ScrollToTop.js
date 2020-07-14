@@ -9,7 +9,7 @@ class ScrollToTop extends Component {
   }
 
   render() {
-    return <React.Fragment />;
+    return this.props.children;
   }
 }
 

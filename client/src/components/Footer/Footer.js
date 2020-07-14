@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./Footer.css";
 
@@ -7,36 +8,59 @@ class Footer extends React.Component {
     return (
       <div className="footer primary-background">
         <div className="container">
-          <div className="row">
-            <div className="col-md-4">
-              <h4>About Us</h4>
+          <div className="row mb-4">
+            <div className="col-md-3">
+              <h6>About Way4Biz</h6>
               <div className="site-footer-info">
-                <p>About</p>
-                <p>Sitemap</p>
+                <p>
+                  <Link to="/about">About Us</Link>
+                </p>
+                <p>
+                  <Link to="/terms">Terms and Conditions</Link>
+                </p>
+                <p>
+                  <Link to="/privacy">Privacy Policy</Link>
+                </p>
               </div>
             </div>
-            <div className="col-md-4">
-              <h4>Customer Service</h4>
+            <div className="col-md-3">
+              <h6>Help Center</h6>
               <div className="site-footer-info">
-                <p>Contact Us</p>
-                <p>Help Center</p>
-                <p>Report Abuse</p>
-                {/* <p></p> */}
+                <p>
+                  <Link to="/contact">Contact Us</Link>
+                </p>
+                <p>
+                  <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>
+                </p>
+                <p>
+                  <Link to="/how-to-sell?">How to sell on Way4Biz?</Link>
+                </p>
               </div>
             </div>
-            <div className="col-md-4">
-              <h4>Buy From Us</h4>
+            <div className="col-md-3">
+              <h6>Make Money On Way4Biz</h6>
               <div className="site-footer-info">
-                <p>Categories</p>
-                <p></p>
-                <p></p>
-                <p></p>
+                <p>
+                  <Link to="/sell">Sell on Way4Biz</Link>
+                </p>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <h6>Payment Methods</h6>
+              <div className="site-footer-info">
+                <div title="mpesa" className="mb-2">
+                  <img src="/mpesa.png" />
+                </div>
+                <div title="visa">
+                  <img src="/debit.png" />
+                </div>
               </div>
             </div>
           </div>
-          <hr />
-          <div className="col copyright">
-            <p>&copy;{1900 + new Date().getYear()}. All Rights Reserved.</p>
+          <div className="row" style={{ borderTop: "1px solid #eaecee" }}>
+            <div className="col copyright">
+              <p>&copy;{1900 + new Date().getYear()}. All Rights Reserved.</p>
+            </div>
           </div>
         </div>
       </div>

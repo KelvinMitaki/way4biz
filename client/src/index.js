@@ -20,7 +20,7 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <PersistGate persistor={persistStore(store)}>
         <App />
       </PersistGate>

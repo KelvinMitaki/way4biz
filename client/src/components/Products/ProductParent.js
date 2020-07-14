@@ -23,7 +23,13 @@ export class ProductParent extends Component {
       );
     }
   }
-
+  componentWillUnmount() {
+    this.props.revertFilter(
+      this.props.match.params.category,
+      this.props.filter,
+      this.props.history
+    );
+  }
   render() {
     if (this.props.singleCategoryLoading) return <ScreenLoader />;
     return (
