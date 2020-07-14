@@ -566,7 +566,21 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
           as: "productData"
         }
       },
-      { $unwind: "$productData" }
+      { $unwind: "$productData" },
+      { $match: { "productData.seller": req.session.user._id } },
+      {
+        $project: {
+          rating: 1,
+          title: 1,
+          body: 1,
+          user: 1,
+          userSeller: 1,
+          order: 1,
+          product: 1,
+          createdAt: 1,
+          "productData.seller": 1
+        }
+      }
     ]);
     res.send(reviews);
   } catch (error) {
