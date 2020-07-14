@@ -69,18 +69,33 @@ function Products(props) {
                         <p className="mr-1">Price:</p>
                         <div>
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
                             type="number"
                             placeholder="min"
                             className="filter-price-input"
                           />
                           -
                           <input
-                            style={{ width: "80px" }}
+                            style={{ width: "50px" }}
                             type="number"
                             placeholder="max"
                             className="filter-price-input"
                           />
+                          <button
+                            className="btn ml-2"
+                            style={{
+                              backgroundColor: "#f76b1a",
+                              color: "#fff",
+                              height: "20px",
+                              width: "20px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "12px",
+                            }}
+                          >
+                            OK
+                          </button>
                         </div>
                       </div>
 
@@ -111,14 +126,6 @@ function Products(props) {
                       <FaSortAmountDownAlt />
                     </IconContext.Provider>
                     <div id="sort-stuff">
-                      {/* <div className="d-flex ml-3">
-                        <div className="checkbox">
-                          <input type="checkbox" id="checkbox_3" />
-                          <label htmlFor="checkbox_3" className="ml-1">
-                            Latest
-                          </label>
-                        </div>
-                      </div> */}
                       <div className="d-flex ml-3">
                         <div className="radio">
                           <input name="hey" type="radio" id="radio_1" />
