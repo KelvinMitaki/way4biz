@@ -82,10 +82,16 @@ function Products(props) {
                             className="filter-price-input"
                           />
                           <button
-                            className="btn btn-sm ml-2"
+                            className="btn ml-2"
                             style={{
                               backgroundColor: "#f76b1a",
                               color: "#fff",
+                              height: "20px",
+                              width: "20px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "12px",
                             }}
                           >
                             OK
