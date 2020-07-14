@@ -112,7 +112,7 @@ class ProductsInput extends Component {
           </div>
         </div>
         <div className="row my-3">
-          <div className="d-flex ml-3 radio align-items-center">
+          <div className="d-flex ml-4 radio align-items-center">
             <input
               name="price"
               checked={price === "lowestPrice"}
