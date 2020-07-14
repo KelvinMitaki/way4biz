@@ -652,6 +652,7 @@ export const fetchProductReviews = productId => async dispatch => {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
+    console.log(error);
     console.log(error.response);
   }
 };

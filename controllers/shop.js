@@ -368,7 +368,7 @@ route.get("/api/buyer/order/details/:orderId", auth, async (req, res) => {
   }
 });
 // FIX FETCH ALL REVIEWS FOR A CERTAIN PRODUCT  WHICH SHOULD APPEAR ON THE PRODUCT
-route.get("/api/product/reviews/:productId", auth, async (req, res) => {
+route.get("/api/product/reviews/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
     const reviews = await Review.find({ product: productId })
