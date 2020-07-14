@@ -123,6 +123,7 @@ class Product extends React.Component {
                       items={4}
                       className="product-owl-carousel"
                       autoplay={true}
+                      autoplayTimeout={2000}
                       controls={true}
                     >
                       <div>
