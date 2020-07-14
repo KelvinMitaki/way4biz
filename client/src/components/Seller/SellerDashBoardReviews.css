@@ -12,7 +12,6 @@
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
-  /* background-color: green; */
   white-space: nowrap;
   overflow: hidden;
 }

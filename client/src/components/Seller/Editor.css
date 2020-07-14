@@ -1,6 +1,7 @@
 .editor {
   width: 500px;
   margin: auto;
+  background-color: #fff;
 }
 
 @media screen and (max-width: 960px) {
