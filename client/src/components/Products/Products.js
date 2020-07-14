@@ -134,6 +134,7 @@ function Products(props) {
                           </label>
                         </div>
                       </div>
+                      {/* <hr style={{ backgroundColor: "green !important" }} /> */}
                       <div className="d-flex ml-3">
                         <div className="radio">
                           <input name="hey" type="radio" id="radio_2" />

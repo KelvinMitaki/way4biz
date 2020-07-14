@@ -57,7 +57,7 @@
 #sort-stuff {
   margin-top: 0px;
   min-width: 200px;
-  min-height: 200px;
+  min-height: 100px;
   background-color: #fff;
   position: absolute;
   z-index: 10000;
