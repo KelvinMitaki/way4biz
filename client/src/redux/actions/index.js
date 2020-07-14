@@ -739,7 +739,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     if (Object.keys(sort).length === 0) {
       sort.price = 1;
     }
-    const itemsToSkip = getState().product.itemsToSkip;
+    // const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {

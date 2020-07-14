@@ -10,7 +10,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchSellerReviews } from "../../redux/actions";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Review extends React.Component {
   componentDidMount() {
@@ -29,7 +29,7 @@ class Review extends React.Component {
             <div className="col-md-10  mx-auto box-container">
               {/* mapping here */}
               {this.props.sellerReviews.length !== 0 &&
-                this.props.sellerReviews.map((review) => (
+                this.props.sellerReviews.map(review => (
                   <div className="review-wrapper mb-3" key={review._id}>
                     <Rating clickable={false} size={15} value={4} />
                     <div className="seller-review-product-title-name">
@@ -70,10 +70,10 @@ class Review extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sellerReviews: state.product.sellerReviews,
-    sellerReviewsLoading: state.product.sellerReviewsLoading,
+    sellerReviewsLoading: state.product.sellerReviewsLoading
   };
 };
 export default withRouter(

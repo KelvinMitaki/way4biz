@@ -7,7 +7,6 @@ import validator from "validator";
 import { addProduct } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
-import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
 import ControlledEditor from "./Editor";

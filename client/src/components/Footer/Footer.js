@@ -49,10 +49,10 @@ class Footer extends React.Component {
               <h6>Payment Methods</h6>
               <div className="site-footer-info">
                 <div title="mpesa" className="mb-2">
-                  <img src="/mpesa.png" />
+                  <img src="/mpesa.png" alt="mpesa" />
                 </div>
                 <div title="visa">
-                  <img src="/debit.png" />
+                  <img src="/debit.png" alt="debit" />
                 </div>
               </div>
             </div>
