@@ -11,13 +11,13 @@ class ControlledEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: EditorState.createEmpty()
     };
   }
 
-  onEditorStateChange = (editorState) => {
+  onEditorStateChange = editorState => {
     this.setState({
-      editorState,
+      editorState
     });
 
     this.props.storeDescription(
@@ -35,13 +35,23 @@ class ControlledEditor extends Component {
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
           onEditorStateChange={this.onEditorStateChange}
-          customStyleMap={{
-            "demo-editor": {
-              backgroundColor: "red",
-            },
-            "demo-wrapper": {
-              backgroundColor: "green",
-            },
+          toolbar={{
+            image: {
+              className: "test",
+              component: undefined,
+              popupClassName: undefined,
+              urlEnabled: true,
+              uploadEnabled: true,
+              alignmentEnabled: true,
+              uploadCallback: undefined,
+              previewImage: false,
+              inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+              alt: { present: false, mandatory: false },
+              defaultSize: {
+                height: "500",
+                width: "500"
+              }
+            }
           }}
         />
       </div>

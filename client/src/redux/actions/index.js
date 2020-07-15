@@ -514,12 +514,12 @@ export const removeFromWishlist = product => {
 
 export const fetchBuyerOrderDetails = orderId => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/buyer/order/details/${orderId}`);
     dispatch({ type: FETCH_BUYER_ORDER_DETAILS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
 };
