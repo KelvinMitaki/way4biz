@@ -9,6 +9,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { connect } from "react-redux";
 import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -16,6 +17,7 @@ class BuyerOrderDetails extends Component {
   }
   render() {
     const { buyerOrderDetails } = this.props;
+    if (this.props.fetchOrdersLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -59,9 +61,7 @@ class BuyerOrderDetails extends Component {
                     <strong>Placed on: </strong>
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
-                      new Date(
-                        buyerOrderDetails.createdAt
-                      ).toLocaleDateString()}
+                      new Date(buyerOrderDetails.createdAt).toLocaleString()}
                     <br />
                     <strong className="mb-3">Total: </strong>Ksh.
                     {buyerOrderDetails &&
@@ -80,7 +80,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map((item) => {
+                      buyerOrderDetails.items.map(item => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -149,9 +149,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default withRouter(

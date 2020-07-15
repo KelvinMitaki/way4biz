@@ -9,6 +9,8 @@
 }
 
 .form-input input,
+.seller-input-field input,
+.seller-input-field select,
 .form-input select,
 .form-input2 input,
 .form-input2 select {
@@ -16,6 +18,7 @@
 }
 
 .form-input input,
+.seller-input-field input,
 .form-input textarea,
 .form-input select,
 .form-input2 input,
@@ -27,9 +30,11 @@ textarea {
   resize: none;
 }
 
+.seller-input-field input:focus,
 .form-input input:focus,
 .form-input textarea:focus,
 .form-input select:focus,
+.seller-input-field select:focus,
 .form-input2 input:focus,
 .form-input2 textarea:focus,
 .form-input2 select:focus {

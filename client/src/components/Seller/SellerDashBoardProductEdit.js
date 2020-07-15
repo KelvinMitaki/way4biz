@@ -10,6 +10,7 @@ import { editProduct, fetchSellerProducts } from "../../redux/actions";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EditorEdit from "./EditorEdit";
 import SellerInputField from "./SellerInputField";
+import PhotosPage from "./PhotosPage";
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
   { key: "clothes", text: "Clothes", value: "clothes" },
@@ -54,7 +55,8 @@ export class SellerEdit extends Component {
                         this.props.editProduct(
                           {
                             ...formValues,
-                            description: this.props.description
+                            description: this.props.description,
+                            imageUrl: this.props.imageUrl
                           },
                           this.props.initialValues._id,
                           this.props.history
@@ -70,7 +72,7 @@ export class SellerEdit extends Component {
                       <Field
                         type="number"
                         name="price"
-                        label="Price Of The Product in Ksh"
+                        label="Price Of The Product in Ksh."
                         component={SellerInputField}
                       />
 
@@ -100,22 +102,27 @@ export class SellerEdit extends Component {
                         label="Product Subcategory"
                         component={SellerDropDown}
                       />
+
+                      <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
+                        Image Upload
+                      </h5>
+                      <PhotosPage />
                       {/* DROPDOWNS */}
-                      <Field
+                      {/* <Field
                         type="text"
                         name="imageUrl"
                         label="Image URL"
                         component={SellerInputField}
-                      />
+                      /> */}
                       <div>
-                        <p
+                        <h5
                           style={{
                             width: "90%",
                             margin: "10px auto"
                           }}
                         >
                           Product Description
-                        </p>
+                        </h5>
                         <EditorEdit
                           html={this.props.initialValues.description}
                         />
@@ -123,7 +130,11 @@ export class SellerEdit extends Component {
                       <button
                         style={{ cursor: "pointer", width: "90%" }}
                         className="btn btn-md btn-block primary-button my-5"
-                        disabled={!this.props.valid || this.props.loading}
+                        disabled={
+                          !this.props.valid ||
+                          this.props.loading ||
+                          !this.props.imageUrl
+                        }
                         type="submit"
                       >
                         {this.props.loading && (
@@ -191,7 +202,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loading: state.auth.loading,
     initialValues,
-    description: state.product.description
+    description: state.product.description,
+    imageUrl: state.product.imageUrl
   };
 };
 export default withRouter(

@@ -13,7 +13,9 @@ const client = require("twilio")(
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET
+  secretAccessKey: process.env.AWS_SECRET,
+  signatureVersion: "v4",
+  region: "eu-west-2"
 });
 
 const Product = require("../models/Product");
@@ -307,7 +309,8 @@ route.post(
     .withMessage("Please enter a valid category"),
   check("imageUrl")
     .trim()
-    .isURL()
+    .not()
+    .isEmpty()
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
@@ -377,7 +380,8 @@ route.patch(
     .withMessage("Please enter a valid category"),
   check("imageUrl")
     .trim()
-    .isURL()
+    .not()
+    .isEmpty()
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {

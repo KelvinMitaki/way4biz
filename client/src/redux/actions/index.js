@@ -74,7 +74,10 @@ import {
   FETCH_SELLER_REVIEWS_START,
   FETCH_SELLER_REVIEWS_STOP,
   FETCH_SELLER_REVIEWS,
-  STORE_DESCRIPTION
+  STORE_DESCRIPTION,
+  STORE_IMAGE,
+  STORE_IMAGE_START,
+  STORE_IMAGE_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -377,6 +380,7 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
 export const addProduct = (product, history) => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
+
     const res = await axios.post(
       `/api/product/add/${getState().auth.user._id}`,
       product
@@ -388,6 +392,27 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
+  }
+};
+
+export const storeImage = image => async dispatch => {
+  try {
+    dispatch({ type: STORE_IMAGE_START });
+    const uploadConfig = await axios.get("/api/image/upload");
+
+    await axios.put(uploadConfig.data.url, image, {
+      headers: {
+        "Content-Type": image.type
+      }
+    });
+    dispatch({
+      type: STORE_IMAGE,
+      payload: uploadConfig.data.key
+    });
+    dispatch({ type: STORE_IMAGE_STOP });
+  } catch (error) {
+    console.log(error.response.data);
+    dispatch({ type: STORE_IMAGE_STOP });
   }
 };
 
@@ -514,12 +539,12 @@ export const removeFromWishlist = product => {
 
 export const fetchBuyerOrderDetails = orderId => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/buyer/order/details/${orderId}`);
     dispatch({ type: FETCH_BUYER_ORDER_DETAILS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
 };

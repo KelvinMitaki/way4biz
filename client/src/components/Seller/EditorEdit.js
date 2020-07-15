@@ -56,7 +56,7 @@ class EditorEdit extends Component {
               uploadEnabled: true,
               alignmentEnabled: true,
               uploadCallback: undefined,
-              previewImage: false,
+              previewImage: true,
               inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
               alt: { present: false, mandatory: false },
               defaultSize: {
