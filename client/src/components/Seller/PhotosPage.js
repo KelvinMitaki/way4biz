@@ -4,21 +4,21 @@ import { useEffect } from "react";
 import ReactDropzone from "./ReactDropzone";
 import ReactCropper from "./ReactCropper";
 import "./PhotosPage.css";
+import { storeImage } from "../../redux/actions";
+import { connect } from "react-redux";
 
-const PhotosPage = ({ uploadProfileImage }) => {
+const PhotosPage = ({ storeImage, storeImageLoading }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      files.forEach(file => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
     try {
-      // await uploadProfileImage(image,files[0].path)
+      await storeImage(image);
       handleCancelCrop();
-
-      console.log("Success");
     } catch (error) {
       console.log("error", error);
     }
@@ -27,16 +27,21 @@ const PhotosPage = ({ uploadProfileImage }) => {
     setFiles([]);
     setImage(null);
   };
-  console.log(image);
   return (
     <div
       className="container p-0 box-container"
       style={{ width: "90%", margin: "20px auto", borderRadius: "10px" }}
     >
       <div className="row product-image-upload-hero no-gutters">
-        <div className="col-lg-4">Step 1-Add Photo</div>
-        <div className="col-lg-4">Step 2-Resize</div>
-        <div className="col-lg-4">Step 3-Preview</div>
+        <div className="col-lg-4" style={{ textAlign: "center" }}>
+          Step 1-Add Photo
+        </div>
+        <div className="col-lg-4" style={{ textAlign: "center" }}>
+          Step 2-Resize
+        </div>
+        <div className="col-lg-4" style={{ textAlign: "center" }}>
+          Step 3-Preview
+        </div>
       </div>
       <hr className="mb-3" />
       <div className="row no-gutters align-items-center drop-stuff">
@@ -56,15 +61,30 @@ const PhotosPage = ({ uploadProfileImage }) => {
                 style={{
                   minHeight: "200px",
                   // height: "100%",
-                  minWidth: "200px",
-                  overflow: "hidden",
+                  width: "1200px",
+                  overflow: "hidden"
                   // flex: "2",
                 }}
               />
-              <div className="mt-3 product-upload-btn-wrapper">
-                <button className="ml-5" onClick={handleUploadImage}>
-                  Upload Image
-                </button>
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={handleUploadImage}
+                className="mt-3 product-upload-btn-wrapper"
+              >
+                <div style={{ textAlign: "center" }}>
+                  {storeImageLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {storeImageLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Upload Image</span>
+                  )}
+                </div>
               </div>
             </React.Fragment>
           )}
@@ -73,5 +93,9 @@ const PhotosPage = ({ uploadProfileImage }) => {
     </div>
   );
 };
-
-export default PhotosPage;
+const mapStateToProps = state => {
+  return {
+    storeImageLoading: state.product.storeImageLoading
+  };
+};
+export default connect(mapStateToProps, { storeImage })(PhotosPage);

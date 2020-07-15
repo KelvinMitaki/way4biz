@@ -13,7 +13,9 @@ const client = require("twilio")(
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET
+  secretAccessKey: process.env.AWS_SECRET,
+  signatureVersion: "v4",
+  region: "eu-west-2"
 });
 
 const Product = require("../models/Product");
