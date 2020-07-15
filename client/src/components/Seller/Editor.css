@@ -3,6 +3,9 @@
   margin: auto;
   background-color: #fff;
 }
+.test {
+  width: 100%;
+}
 
 @media screen and (max-width: 960px) {
   .editor {

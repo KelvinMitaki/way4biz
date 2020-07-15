@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import AuthField from "../Authenticate/AuthField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
@@ -17,7 +16,7 @@ const category = [
   { key: "gadgets", text: "Gadgets", value: "gadgets" },
   { key: "electronics", text: "Electronics", value: "electronics" },
   { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" },
+  { key: "toys", text: "Toys", value: "toys" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -25,7 +24,7 @@ const subcategory = [
   { key: "laptops", text: "Laptops", value: "laptops" },
   { key: "televisions", text: "Televisions", value: "televisions" },
   { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" },
+  { key: "shoes", text: "Shoes", value: "shoes" }
 ];
 
 export class SellerEdit extends Component {
@@ -51,11 +50,11 @@ export class SellerEdit extends Component {
                 <div className="row">
                   <div id="dashboard-edit-lg-screen" className="col">
                     <form
-                      onSubmit={this.props.handleSubmit((formValues) =>
+                      onSubmit={this.props.handleSubmit(formValues =>
                         this.props.editProduct(
                           {
                             ...formValues,
-                            description: this.props.description,
+                            description: this.props.description
                           },
                           this.props.initialValues._id,
                           this.props.history
@@ -112,7 +111,7 @@ export class SellerEdit extends Component {
                         <p
                           style={{
                             width: "90%",
-                            margin: "10px auto",
+                            margin: "10px auto"
                           }}
                         >
                           Product Description
@@ -122,9 +121,8 @@ export class SellerEdit extends Component {
                         />
                       </div>
                       <button
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", width: "90%" }}
                         className="btn btn-md btn-block primary-button my-5"
-                        style={{ width: "90%" }}
                         disabled={!this.props.valid || this.props.loading}
                         type="submit"
                       >
@@ -153,7 +151,7 @@ export class SellerEdit extends Component {
     return null;
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -187,20 +185,20 @@ const mapStateToProps = (state, ownProps) => {
   let initialValues;
   if (state.sellerRegister.sellerProducts.length !== 0) {
     initialValues = state.sellerRegister.sellerProducts.find(
-      (p) => p._id.toString() === ownProps.match.params.productId.toString()
+      p => p._id.toString() === ownProps.match.params.productId.toString()
     );
   }
   return {
     loading: state.auth.loading,
     initialValues,
-    description: state.product.description,
+    description: state.product.description
   };
 };
 export default withRouter(
   connect(mapStateToProps, { editProduct, fetchSellerProducts })(
     reduxForm({
       validate,
-      form: "SellerEdit",
+      form: "SellerEdit"
     })(SellerEdit)
   )
 );

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import AuthField from "../Authenticate/AuthField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
@@ -22,7 +21,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" },
+  { key: "watches", text: "Watches", value: "watches" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -36,7 +35,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "utensils", text: "Utensils", value: "utensils" }
 ];
 
 export class Sell extends Component {
@@ -58,7 +57,7 @@ export class Sell extends Component {
               <div className="row">
                 <div id="dashboard-new-lg-screen" className="col">
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
+                    onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(
                         { ...formValues, description: this.props.description },
                         this.props.history
@@ -117,11 +116,10 @@ export class Sell extends Component {
 
                     <ControlledEditor />
                     <button
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", width: "90%" }}
                       className="btn btn-md btn-block primary-button my-5"
                       disabled={!this.props.valid || this.props.loading}
                       type="submit"
-                      style={{ width: "90%" }}
                     >
                       {this.props.loading && (
                         <span
@@ -146,7 +144,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -176,15 +174,15 @@ const validate = (formValues) => {
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    description: state.product.description,
+    description: state.product.description
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell",
+    form: "Sell"
   })(connect(mapStateToProps, { addProduct })(Sell))
 );
