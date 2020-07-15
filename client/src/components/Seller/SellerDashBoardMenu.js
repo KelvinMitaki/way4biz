@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
-import { MdBorderColor, MdRateReview } from "react-icons/md";
+import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
+import { GoClippy } from "react-icons/go";
 
 import "./SellerDashBoardMenu.css";
 
@@ -37,7 +38,7 @@ class SellerDashBoardMenu extends React.Component {
               activeClassName="seller-menu-active"
               to="/seller-orders"
             >
-              <MdBorderColor className="mr-2" />
+              <GoClippy className="mr-2" />
               Orders
             </NavLink>
           </li>

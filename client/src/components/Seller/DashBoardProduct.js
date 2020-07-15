@@ -19,9 +19,14 @@ class DashBoardProduct extends React.Component {
           </div>
         </div>
         <div className="container-fluid p-0">
+          <input
+            type="text"
+            placeholder="Search product..."
+            className="mt-2 mb-3"
+          />
           {this.props.products &&
             this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -29,7 +34,7 @@ class DashBoardProduct extends React.Component {
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
                   <img src={product.imageUrl} alt={product.name} />
                   <p className="seller-db-prod-name mr-3 w-100">
-                    <Link to={`/product/${product._id}`} title="Title Here">
+                    <Link to={`/product/${product._id}`} title={product.name}>
                       {product.name}
                     </Link>
                   </p>

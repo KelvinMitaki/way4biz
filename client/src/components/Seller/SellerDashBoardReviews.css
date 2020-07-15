@@ -1,5 +1,5 @@
 .reviews-wrapper {
-  padding: 20px;
+  padding: 20px 0px;
 }
 
 .review-wrapper {
@@ -11,6 +11,9 @@
 .seller-review-product-title-name {
   display: flex;
   align-items: center;
+}
+
+.seller-review-product-title-name h6 {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

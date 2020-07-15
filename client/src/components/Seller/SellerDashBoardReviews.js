@@ -33,24 +33,26 @@ class Review extends React.Component {
                   <div className="review-wrapper mb-3" key={review._id}>
                     <Rating clickable={false} size={15} value={4} />
                     <div className="seller-review-product-title-name">
-                      <h6 className="my-2">{review.title}</h6>
-                      <IconContext.Provider
-                        value={{ className: "seller-review-title-arrow" }}
-                      >
-                        <BsArrowRight />
-                      </IconContext.Provider>
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          this.props.history.push(
-                            `/product/${review.productData._id}`
-                          )
-                        }
-                        title={review.productData.name}
-                      >
-                        {review.productData.name} The quick brown fox jumped
-                        over the lazy dog
-                      </div>
+                      <h6 className="my-2">
+                        {review.title}{" "}
+                        <IconContext.Provider
+                          value={{ className: "seller-review-title-arrow" }}
+                        >
+                          <BsArrowRight />
+                        </IconContext.Provider>
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            this.props.history.push(
+                              `/product/${review.productData._id}`
+                            )
+                          }
+                          title={review.productData.name}
+                        >
+                          {review.productData.name}
+                        </span>
+                        The quick brown fox jumped over the lazy dog
+                      </h6>
                     </div>
 
                     <p className="">{review.body}</p>
