@@ -1,11 +1,12 @@
 .products-upload-icon {
-  font-size: 100px;
+  font-size: 80px;
   color: #f76b1a;
   margin: 20px 0px;
 }
 
 .dropzone {
   border: dashed 4px #eee;
+  text-align: center;
 }
 
 .dropzone--isActive {

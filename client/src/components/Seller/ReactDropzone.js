@@ -30,6 +30,7 @@ const ReactDropzone = ({ setFiles }) => {
       <IconContext.Provider value={{ className: "products-upload-icon" }}>
         <RiDragDropLine />
       </IconContext.Provider>
+      <h4>Drop Image Here</h4>
     </div>
   );
 };
