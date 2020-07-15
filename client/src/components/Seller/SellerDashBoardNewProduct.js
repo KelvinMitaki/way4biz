@@ -78,7 +78,7 @@ export class Sell extends Component {
                     <Field
                       type="number"
                       name="price"
-                      label="Price Of The Product in Ksh"
+                      label="Price Of The Product in Ksh."
                       component={SellerInputField}
                     />
 
@@ -108,10 +108,14 @@ export class Sell extends Component {
                       label="Product Subcategory"
                       component={SellerDropDown}
                     />
+
+                    <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
+                      Image Upload
+                    </h5>
                     <PhotosPage />
 
                     <h5 style={{ width: "90%", margin: "auto" }}>
-                      Description
+                      Product Description
                     </h5>
 
                     <ControlledEditor />

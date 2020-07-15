@@ -1,11 +1,11 @@
 import React from "react";
 
-const AuthField = (props) => {
+const AuthField = props => {
   return (
     <div className="form-group mt-3 seller-input-field">
-      <p>
+      <h5>
         {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
-      </p>
+      </h5>
 
       <input
         className="form-control authenticate-field"
