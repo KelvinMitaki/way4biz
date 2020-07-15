@@ -62,7 +62,10 @@ export class Sell extends Component {
                 >
                   <form
                     onSubmit={this.props.handleSubmit(formValues =>
-                      this.props.addProduct(formValues, this.props.history)
+                      this.props.addProduct(
+                        { ...formValues, description: this.props.description },
+                        this.props.history
+                      )
                     )}
                   >
                     <Field
@@ -175,20 +178,7 @@ const validate = formValues => {
   if (!formValues.subcategory) {
     errors.subcategory = "Please enter a valid subcategory";
   }
-  if (
-    !formValues.description ||
-    (formValues.description && formValues.description.trim().length < 20)
-  ) {
-    errors.description =
-      "Please enter a description with a minimum of 20 characters";
-  }
-  if (
-    !formValues.specifications ||
-    (formValues.specifications && formValues.specifications.trim().length < 20)
-  ) {
-    errors.specifications =
-      "Please enter specifications with 20 characters minimum";
-  }
+
   if (
     !formValues.imageUrl ||
     (formValues.imageUrl && !validator.isURL(formValues.imageUrl))
@@ -200,7 +190,8 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    description: state.product.description
   };
 };
 export default withRouter(
