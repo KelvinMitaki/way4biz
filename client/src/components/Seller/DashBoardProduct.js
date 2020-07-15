@@ -53,7 +53,14 @@ class DashBoardProduct extends React.Component {
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
-                  <img src={product.imageUrl} alt={product.name} />
+                  <img
+                    src={
+                      product.imageUrl.includes("http")
+                        ? product.imageUrl
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                    }
+                    alt={product.name}
+                  />
                   <p className="seller-db-prod-name mr-3 w-100">
                     <Link to={`/product/${product._id}`} title={product.name}>
                       {product.name}
@@ -96,7 +103,14 @@ class DashBoardProduct extends React.Component {
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
-                  <img src={product.imageUrl} alt={product.name} />
+                  <img
+                    src={
+                      product.imageUrl.includes("http")
+                        ? product.imageUrl
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                    }
+                    alt={product.name}
+                  />
                   <p className="seller-db-prod-name mr-3 w-100">
                     <Link to={`/product/${product._id}`} title={product.name}>
                       {product.name}
