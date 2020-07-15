@@ -67,11 +67,14 @@ import {
   FETCH_USER_STOP,
   FILTERED_PRODUCTS_START,
   FILTERED_PRODUCTS_STOP,
-  FILTERED_PRODUCTS,
   HANDLE_CHECKBOX,
   HANDLE_CHANGE,
   REVERT_FILTER,
-  RADIO_BUTTON
+  RADIO_BUTTON,
+  FETCH_SELLER_REVIEWS_START,
+  FETCH_SELLER_REVIEWS_STOP,
+  FETCH_SELLER_REVIEWS,
+  STORE_DESCRIPTION
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -101,8 +104,8 @@ export const sellerLogIn = (credentials, history) => async (
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post("/api/seller/login", credentials);
-    if (res.data.user && res.data.user.phoneNumber) {
-      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    if (res.data && res.data.phoneNumber) {
+      res.data.phoneNumber = res.data.phoneNumber.toString();
     }
     dispatch({
       type: LOG_IN,
@@ -737,7 +740,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     if (Object.keys(sort).length === 0) {
       sort.price = 1;
     }
-    const itemsToSkip = getState().product.itemsToSkip;
+    // const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
@@ -824,4 +827,23 @@ export const handleRadioButtonAction = (category, event, history) => (
     }
   });
   dispatch(singleCategory(category, getState().filter, history));
+};
+
+export const fetchSellerReviews = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLER_REVIEWS_START });
+    const res = await axios.get(`/api/seller/reviews`);
+    dispatch({ type: FETCH_SELLER_REVIEWS, payload: res.data });
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const storeDescription = description => {
+  return {
+    type: STORE_DESCRIPTION,
+    payload: description
+  };
 };

@@ -21,6 +21,7 @@ const isSeller = require("../middlewares/is-seller");
 const Seller = require("../models/Seller");
 const User = require("../models/User");
 const Order = require("../models/Order");
+const Review = require("../models/Reviews");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -299,12 +300,6 @@ route.post(
     .withMessage(
       "Please enter a valid description with a minimum of 20 characters"
     ),
-  check("specifications")
-    .trim()
-    .isLength({ min: 20 })
-    .withMessage(
-      "Please enter a valid specifications with 20 characters minimum"
-    ),
   check("category")
     .trim()
     .not()
@@ -329,7 +324,6 @@ route.post(
         subcategory,
         description,
         category,
-        specifications,
         imageUrl
       } = req.body;
       let freeShipping = req.body.freeShipping;
@@ -347,8 +341,7 @@ route.post(
         subcategory,
         seller: sellerId,
         description,
-        imageUrl,
-        specifications
+        imageUrl
       });
       await product.save();
       res.status(201).send(product);
@@ -376,12 +369,7 @@ route.patch(
     .withMessage(
       "Please enter a valid description with a minimum of 20 characters"
     ),
-  check("specifications")
-    .trim()
-    .isLength({ min: 20 })
-    .withMessage(
-      "Please enter a valid specifications with 20 characters minimum"
-    ),
+
   check("category")
     .trim()
     .not()
@@ -407,14 +395,12 @@ route.patch(
         category,
         subcategory,
         description,
-        imageUrl,
-        specifications
+        imageUrl
       } = req.body;
       const product = await Product.findOne({
         _id: productId,
         seller: sellerId
       });
-      product.specifications = specifications;
       product.name = name;
       product.freeShipping = freeShipping;
       product.description = description;
@@ -430,6 +416,7 @@ route.patch(
     }
   }
 );
+
 route.delete(
   "/api/product/delete/:sellerId/:productId",
   isSeller,
@@ -549,6 +536,56 @@ route.get("/api/image/upload", isSeller, async (req, res) => {
       },
       (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
     );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
+  try {
+    const reviews = await Review.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "productData"
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "userSeller",
+          foreignField: "_id",
+          as: "userSeller"
+        }
+      },
+      { $unwind: "$productData" },
+      { $match: { "productData.seller": req.session.user._id } },
+      {
+        $project: {
+          rating: 1,
+          title: 1,
+          body: 1,
+          user: 1,
+          userSeller: 1,
+          order: 1,
+          product: 1,
+          createdAt: 1,
+          "productData.seller": 1,
+          "productData.name": 1,
+          "productData._id": 1
+        }
+      }
+    ]);
+    res.send(reviews);
   } catch (error) {
     res.status(500).send(error);
   }

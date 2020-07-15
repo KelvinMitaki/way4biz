@@ -1,5 +1,5 @@
 .reviews-wrapper {
-  padding: 20px;
+  padding: 20px 0px;
 }
 
 .review-wrapper {
@@ -13,6 +13,12 @@
   align-items: center;
 }
 
+.seller-review-product-title-name h6 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .seller-review-product-title-name:hover {
   text-decoration: underline;
   color: #f76b1a;
@@ -22,3 +28,7 @@
   margin: 0px 10px;
   font-size: 20px;
 }
+
+/* .seller-review-product-title-name{
+
+} */

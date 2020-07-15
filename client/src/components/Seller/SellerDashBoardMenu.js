@@ -1,5 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { RiDashboardLine } from "react-icons/ri";
+import { MdRateReview } from "react-icons/md";
+import { BsFillBagFill } from "react-icons/bs";
+import { GoClippy } from "react-icons/go";
 
 import "./SellerDashBoardMenu.css";
 
@@ -14,6 +18,7 @@ class SellerDashBoardMenu extends React.Component {
               activeClassName="seller-menu-active"
               to="/seller-dashboard"
             >
+              <RiDashboardLine className="mr-2" />
               Dashboard
             </NavLink>
           </li>
@@ -23,6 +28,7 @@ class SellerDashBoardMenu extends React.Component {
               activeClassName="seller-menu-active"
               to="/seller-products"
             >
+              <BsFillBagFill className="mr-2" />
               Products
             </NavLink>
           </li>
@@ -32,6 +38,7 @@ class SellerDashBoardMenu extends React.Component {
               activeClassName="seller-menu-active"
               to="/seller-orders"
             >
+              <GoClippy className="mr-2" />
               Orders
             </NavLink>
           </li>
@@ -41,6 +48,7 @@ class SellerDashBoardMenu extends React.Component {
               activeClassName="seller-menu-active"
               to="/seller-review"
             >
+              <MdRateReview className="mr-2" />
               Reviews
             </NavLink>
           </li>

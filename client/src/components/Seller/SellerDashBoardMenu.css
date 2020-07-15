@@ -1,17 +1,17 @@
 #seller-dashboard-menu {
   height: 100vh;
-  /* min-height: calc(100vh - 90px); */
   width: 100%;
   margin: 0;
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
+  /* bottom: 0px !important; */
+  left: 0px;
 }
 
 #seller-dashboard-menu ul {
   list-style: none;
-  width: 200px;
-  padding: 50px 0px 50px 100px;
+  padding: 50px 0px 50px 80px;
   color: #fff;
   height: 80%;
   overflow-y: auto;
@@ -21,8 +21,23 @@
   color: #f76b1a !important;
 }
 
+#seller-menu-items li {
+  padding: 7px 7px;
+}
+
+#seller-menu-items li:hover {
+  background-color: #000822;
+  width: 100%;
+}
+
 #seller-menu-items li .link:hover {
   color: #f76b1a;
+  /* display: flex; */
+}
+
+#seller-menu-items .link {
+  display: flex;
+  align-items: center;
 }
 
 #seller-menu-profile {

@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import AuthField from "../Authenticate/AuthField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
 import { addProduct } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
-import SellerTextArea from "../Account/SellerTextArea";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
+import ControlledEditor from "./Editor";
+import SellerInputField from "./SellerInputField";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -21,7 +21,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" },
+  { key: "watches", text: "Watches", value: "watches" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -35,7 +35,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "utensils", text: "Utensils", value: "utensils" }
 ];
 
 export class Sell extends Component {
@@ -57,38 +57,31 @@ export class Sell extends Component {
               <div className="row">
                 <div id="dashboard-new-lg-screen" className="col">
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
-                      this.props.addProduct(formValues, this.props.history)
+                    onSubmit={this.props.handleSubmit(formValues =>
+                      this.props.addProduct(
+                        { ...formValues, description: this.props.description },
+                        this.props.history
+                      )
                     )}
                   >
                     <Field
                       type="text"
                       name="name"
                       label="Name Of The Product"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
                     <Field
                       type="number"
                       name="price"
                       label="Price Of The Product in Ksh"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
 
-                    <Field
-                      name="description"
-                      label="Product Description"
-                      component={SellerTextArea}
-                    />
-                    <Field
-                      name="specifications"
-                      label="Product Specifications"
-                      component={SellerTextArea}
-                    />
                     <Field
                       type="number"
                       name="stockQuantity"
                       label="Product Quantity"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
                     <Field
                       type="checkbox"
@@ -110,17 +103,21 @@ export class Sell extends Component {
                       label="Product Subcategory"
                       component={SellerDropDown}
                     />
-                    {/* DROPDOWNS */}
+
                     <Field
                       type="text"
                       name="imageUrl"
                       label="Image URL"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
+                    <h5 style={{ width: "90%", margin: "auto" }}>
+                      Description
+                    </h5>
 
+                    <ControlledEditor />
                     <button
-                      style={{ cursor: "pointer" }}
-                      className="btn btn-md btn-block primary-button mt-3"
+                      style={{ cursor: "pointer", width: "90%" }}
+                      className="btn btn-md btn-block primary-button my-5"
                       disabled={!this.props.valid || this.props.loading}
                       type="submit"
                     >
@@ -137,9 +134,6 @@ export class Sell extends Component {
                         <span>Add Product</span>
                       )}
                     </button>
-
-                    <br />
-                    <br />
                   </form>
                 </div>
               </div>
@@ -150,7 +144,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -170,20 +164,7 @@ const validate = (formValues) => {
   if (!formValues.subcategory) {
     errors.subcategory = "Please enter a valid subcategory";
   }
-  if (
-    !formValues.description ||
-    (formValues.description && formValues.description.trim().length < 20)
-  ) {
-    errors.description =
-      "Please enter a description with a minimum of 20 characters";
-  }
-  if (
-    !formValues.specifications ||
-    (formValues.specifications && formValues.specifications.trim().length < 20)
-  ) {
-    errors.specifications =
-      "Please enter specifications with 20 characters minimum";
-  }
+
   if (
     !formValues.imageUrl ||
     (formValues.imageUrl && !validator.isURL(formValues.imageUrl))
@@ -193,14 +174,15 @@ const validate = (formValues) => {
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
+    description: state.product.description
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell",
+    form: "Sell"
   })(connect(mapStateToProps, { addProduct })(Sell))
 );

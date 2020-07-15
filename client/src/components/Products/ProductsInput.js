@@ -112,32 +112,36 @@ class ProductsInput extends Component {
           </div>
         </div>
         <div className="row my-3">
-          <div className="d-flex ml-3 radio align-items-center">
-            <input
-              name="price"
-              checked={price === "lowestPrice"}
-              value="lowestPrice"
-              type="radio"
-              onChange={this.handleRadioButton}
-              id="radio-100"
-            />
-            <label htmlFor="radio-100" className="m-0">
-              Lowest Price
-            </label>
+          <div className="d-flex ml-4 align-items-center">
+            <div className="radio">
+              <input
+                name="price-lg"
+                checked={price === "lowestPrice"}
+                value="lowestPrice"
+                type="radio"
+                onChange={this.handleRadioButton}
+                id="radio_3"
+              />
+              <label htmlFor="radio_3" className="m-0">
+                Lowest Price
+              </label>
+            </div>
           </div>
-          <div className="d-flex ml-3 radio align-items-center">
-            <input
-              name="price"
-              checked={price === "highestPrice"}
-              value="highestPrice"
-              type="radio"
-              onChange={this.handleRadioButton}
-              id="radio-200"
-            />
+          <div className="d-flex ml-3 align-items-center">
+            <div className="radio">
+              <input
+                name="price-lg"
+                checked={price === "highestPrice"}
+                value="highestPrice"
+                type="radio"
+                onChange={this.handleRadioButton}
+                id="radio_4"
+              />
 
-            <label htmlFor="radio-200" className="m-0">
-              Highest Price
-            </label>
+              <label htmlFor="radio_4" className="m-0">
+                Highest Price
+              </label>
+            </div>
           </div>
         </div>
       </div>

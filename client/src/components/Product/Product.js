@@ -41,11 +41,9 @@ class Product extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.product) {
-      {
-        this.props.product &&
-          this.props.product.subcategory &&
-          this.props.fetchRelatedProducts(this.props.product.subcategory);
-      }
+      this.props.product &&
+        this.props.product.subcategory &&
+        this.props.fetchRelatedProducts(this.props.product.subcategory);
     }
   }
   handleClick(e) {
@@ -123,6 +121,7 @@ class Product extends React.Component {
                       items={4}
                       className="product-owl-carousel"
                       autoplay={true}
+                      autoplayTimeout={2000}
                       controls={true}
                     >
                       <div>
@@ -287,7 +286,6 @@ class Product extends React.Component {
                   <div className="col p-0">
                     <ProductSecondaryDetails
                       details={this.props.product.description}
-                      specifications={this.props.product.specifications}
                     />
                   </div>
                 </div>

@@ -10,13 +10,13 @@ class ProductSecondaryDetails extends React.Component {
     productTabs: [
       {
         name: "Product Details",
-        data: <ProductDetails data={this.props.details} />,
+        data: <ProductDetails data={this.props.details} />
       },
       {
         name: "Customer Reviews",
-        data: <ProductReviews />,
-      },
-    ],
+        data: <ProductReviews />
+      }
+    ]
   };
 
   getTabs = () => {
@@ -26,7 +26,7 @@ class ProductSecondaryDetails extends React.Component {
       getContent: () => productTab.data,
       key: index,
       tabClassName: "tab",
-      panelClassName: "product-panel",
+      panelClassName: "product-panel"
     }));
   };
   render() {

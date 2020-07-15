@@ -6,12 +6,12 @@
   color: #f76b1a !important;
 }
 
-.tab ul > li.active > a,
+/* .tab ul > li.active > a,
 .tab ul > li.active > a:hover,
 .tab ul > li.active > a:focus {
   background-color: red;
   color: white;
-}
+} */
 
 .nav-link.focus {
   border: none !important;

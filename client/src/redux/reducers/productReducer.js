@@ -19,9 +19,12 @@ import {
   PRODUCT_REVIEWS,
   FILTERED_PRODUCTS_START,
   FILTERED_PRODUCTS_STOP,
-  FILTERED_PRODUCTS
+  FILTERED_PRODUCTS,
+  FETCH_SELLER_REVIEWS,
+  FETCH_SELLER_REVIEWS_START,
+  FETCH_SELLER_REVIEWS_STOP,
+  STORE_DESCRIPTION
 } from "../actions/types";
-import _ from "lodash";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
@@ -41,7 +44,10 @@ const INITIAL_STATE = {
   singleProductLoad: false,
   productReviews: [],
   filteredProductsLoading: false,
-  hasMoreCategoryProducts: false
+  hasMoreCategoryProducts: false,
+  sellerReviews: [],
+  sellerReviewsLoading: false,
+  description: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -128,7 +134,14 @@ export default (state = INITIAL_STATE, action) => {
         filteredProductsLoading: false,
         hasMoreCategoryProducts: false
       };
-
+    case FETCH_SELLER_REVIEWS:
+      return { ...state, sellerReviews: action.payload };
+    case FETCH_SELLER_REVIEWS_START:
+      return { ...state, sellerReviewsLoading: true };
+    case FETCH_SELLER_REVIEWS_STOP:
+      return { ...state, sellerReviewsLoading: false };
+    case STORE_DESCRIPTION:
+      return { ...state, description: action.payload };
     default:
       return state;
   }
