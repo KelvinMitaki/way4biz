@@ -7,7 +7,7 @@ class ProductDetails extends React.Component {
         <p
           className="dangerous-stuff"
           dangerouslySetInnerHTML={{ __html: this.props.data }}
-          style={{ width: "100% !important", overflow: "hidden" }}
+          style={{ width: "100% !important" }}
         />
       </div>
     );

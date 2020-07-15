@@ -1,6 +1,10 @@
 import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { NavLink, Link } from "react-router-dom";
+import { RiDashboardLine } from "react-icons/ri";
+import { MdRateReview } from "react-icons/md";
+import { BsFillBagFill } from "react-icons/bs";
+import { GoClippy } from "react-icons/go";
 
 import "./SellerHamburgerMenu.css";
 
@@ -8,15 +12,15 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   }
@@ -62,6 +66,7 @@ class SellerHamburgerMenu extends React.Component {
                     exact
                     to="/seller-dashboard"
                   >
+                    <RiDashboardLine className="mr-2" />
                     Dashboard
                   </NavLink>
                 </li>
@@ -71,6 +76,7 @@ class SellerHamburgerMenu extends React.Component {
                     activeClassName="seller-menu-acive"
                     to="/seller-products"
                   >
+                    <BsFillBagFill className="mr-2" />
                     Products
                   </NavLink>
                 </li>
@@ -80,6 +86,7 @@ class SellerHamburgerMenu extends React.Component {
                     activeClassName="seller-menu-acive"
                     to="/seller-orders"
                   >
+                    <GoClippy className="mr-2" />
                     Orders
                   </NavLink>
                 </li>
@@ -89,6 +96,7 @@ class SellerHamburgerMenu extends React.Component {
                     activeClassName="seller-menu-acive"
                     to="/seller-review"
                   >
+                    <MdRateReview className="mr-2" />
                     Reviews
                   </NavLink>
                 </li>
