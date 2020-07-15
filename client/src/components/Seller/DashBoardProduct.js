@@ -4,7 +4,19 @@ import { Link } from "react-router-dom";
 import "./DashBoardProduct.css";
 
 class DashBoardProduct extends React.Component {
+  state = {
+    search: null
+  };
+  onSearchChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
   render() {
+    const test = this.props.products.filter(product => {
+      return product.name
+        .toLowerCase()
+        .includes(this.state.search && this.state.search.toLowerCase());
+    });
+
     return (
       <div className="container-fluid p-4" style={{ backgroundColor: "white" }}>
         <div className="row no-gutters y">
@@ -23,10 +35,13 @@ class DashBoardProduct extends React.Component {
             type="text"
             placeholder="Search product..."
             className="mt-2 mb-3"
+            name="search"
+            onChange={this.onSearchChange}
           />
           {this.props.products &&
+            !this.state.search &&
             this.props.products.length !== 0 &&
-            this.props.products.map((product) => (
+            this.props.products.map(product => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -67,6 +82,47 @@ class DashBoardProduct extends React.Component {
                 </div>
               </div>
             ))}
+          {test.map(product => (
+            <div
+              key={product._id}
+              className="row no-gutters dashboard-product-wrapper box-container"
+            >
+              <div className="col-md-12 col-lg-5 dashboard-product-image">
+                <img src={product.imageUrl} alt={product.name} />
+                <p className="seller-db-prod-name mr-3 w-100">
+                  <Link to={`/product/${product._id}`} title={product.name}>
+                    {product.name}
+                  </Link>
+                </p>
+              </div>
+              <div className="col-md-6 col-lg-2">
+                <p className="x mr-2">
+                  <strong>Qty:</strong>
+                </p>
+                <p>{product.stockQuantity}</p>
+              </div>
+              <div className="col-md-6 col-lg-2">
+                <p className="x mr-2">
+                  <strong>Price:</strong>
+                </p>
+                <p>Ksh.{product.price.toLocaleString()} </p>
+              </div>
+              <div className="col-md-6 col-lg-2">
+                <p className="x mr-2">
+                  <strong>Status:</strong>
+                </p>
+                <p className="live">Live</p>
+              </div>
+              <div className="col-md-6 col-lg-1">
+                <Link
+                  to={`/seller/edit/${product._id}`}
+                  className="btn btn-sm btn-danger"
+                >
+                  Edit
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );
