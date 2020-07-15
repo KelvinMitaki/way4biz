@@ -73,7 +73,8 @@ import {
   RADIO_BUTTON,
   FETCH_SELLER_REVIEWS_START,
   FETCH_SELLER_REVIEWS_STOP,
-  FETCH_SELLER_REVIEWS
+  FETCH_SELLER_REVIEWS,
+  STORE_DESCRIPTION
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -838,4 +839,11 @@ export const fetchSellerReviews = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     console.log(error.response);
   }
+};
+
+export const storeDescription = description => {
+  return {
+    type: STORE_DESCRIPTION,
+    payload: description
+  };
 };

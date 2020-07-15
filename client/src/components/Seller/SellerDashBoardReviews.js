@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchSellerReviews } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import SellerDashBoardNoReviews from "./SellerDashBoardNoReviews";
 
 class Review extends React.Component {
   componentDidMount() {
@@ -28,6 +29,9 @@ class Review extends React.Component {
           <div className="col-lg-9 reviews-wrapper m-0">
             <div className="col-md-10  mx-auto box-container">
               {/* mapping here */}
+              {this.props.sellerReviews.length === 0 && (
+                <SellerDashBoardNoReviews />
+              )}
               {this.props.sellerReviews.length !== 0 &&
                 this.props.sellerReviews.map(review => (
                   <div className="review-wrapper mb-3" key={review._id}>
@@ -48,8 +52,7 @@ class Review extends React.Component {
                         }
                         title={review.productData.name}
                       >
-                        {review.productData.name} The quick brown fox jumped
-                        over the lazy dog
+                        {review.productData.name}
                       </div>
                     </div>
 

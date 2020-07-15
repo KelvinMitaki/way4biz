@@ -3,7 +3,10 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import ".../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToMarkdown from "draftjs-to-markdown";
 import "./Editor.css";
+import { storeDescription } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class ControlledEditor extends Component {
   constructor(props) {
@@ -17,11 +20,15 @@ class ControlledEditor extends Component {
     this.setState({
       editorState
     });
+
+    this.props.storeDescription(
+      draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    );
   };
 
   render() {
     const { editorState } = this.state;
-    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+
     return (
       <div className="editor">
         <Editor
@@ -34,4 +41,4 @@ class ControlledEditor extends Component {
     );
   }
 }
-export default ControlledEditor;
+export default connect(null, { storeDescription })(ControlledEditor);

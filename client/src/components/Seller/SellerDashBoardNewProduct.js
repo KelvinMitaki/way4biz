@@ -121,8 +121,12 @@ export class Sell extends Component {
                       label="Image URL"
                       component={AuthField}
                     />
-                    <h5>More Info</h5>
-                    {/* <button
+                    <h5 style={{ width: "500px", margin: "auto" }}>
+                      Description
+                    </h5>
+
+                    <ControlledEditor />
+                    <button
                       style={{ cursor: "pointer" }}
                       className="btn btn-md btn-block primary-button mt-3"
                       disabled={!this.props.valid || this.props.loading}
@@ -140,9 +144,8 @@ export class Sell extends Component {
                       ) : (
                         <span>Add Product</span>
                       )}
-                    </button> */}
+                    </button>
                   </form>
-                  <ControlledEditor />
                 </div>
               </div>
             </div>

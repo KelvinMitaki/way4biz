@@ -300,12 +300,6 @@ route.post(
     .withMessage(
       "Please enter a valid description with a minimum of 20 characters"
     ),
-  check("specifications")
-    .trim()
-    .isLength({ min: 20 })
-    .withMessage(
-      "Please enter a valid specifications with 20 characters minimum"
-    ),
   check("category")
     .trim()
     .not()
@@ -330,7 +324,6 @@ route.post(
         subcategory,
         description,
         category,
-        specifications,
         imageUrl
       } = req.body;
       let freeShipping = req.body.freeShipping;
@@ -348,8 +341,7 @@ route.post(
         subcategory,
         seller: sellerId,
         description,
-        imageUrl,
-        specifications
+        imageUrl
       });
       await product.save();
       res.status(201).send(product);
