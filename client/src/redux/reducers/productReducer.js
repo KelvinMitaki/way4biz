@@ -26,7 +26,8 @@ import {
   STORE_DESCRIPTION,
   STORE_IMAGE,
   STORE_IMAGE_START,
-  STORE_IMAGE_STOP
+  STORE_IMAGE_STOP,
+  ADD_PRODUCT
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -51,7 +52,7 @@ const INITIAL_STATE = {
   sellerReviews: [],
   sellerReviewsLoading: false,
   description: "",
-  imageBlob: null,
+  imageUrl: null,
   storeImageLoading: false
 };
 
@@ -148,11 +149,13 @@ export default (state = INITIAL_STATE, action) => {
     case STORE_DESCRIPTION:
       return { ...state, description: action.payload };
     case STORE_IMAGE:
-      return { ...state, imageBlob: action.payload };
+      return { ...state, imageUrl: action.payload };
     case STORE_IMAGE_START:
       return { ...state, storeImageLoading: true };
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
+    case ADD_PRODUCT:
+      return { ...state, imageUrl: null };
     default:
       return state;
   }
