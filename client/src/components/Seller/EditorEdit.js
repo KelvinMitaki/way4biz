@@ -3,7 +3,6 @@ import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import ".../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToMarkdown from "draftjs-to-markdown";
 import HTMLtoDraft from "html-to-draftjs";
 import "./Editor.css";
 import { storeDescription } from "../../redux/actions";
