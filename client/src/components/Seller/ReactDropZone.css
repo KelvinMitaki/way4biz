@@ -1,0 +1,23 @@
+.products-upload-icon {
+  font-size: 100px;
+  color: #f76b1a;
+  margin: 20px 0px;
+}
+
+.dropzone {
+  border: dashed 4px #eee;
+}
+
+.dropzone--isActive {
+  border: dashed 4px #f76b1a;
+}
+
+@media screen and (max-width: 960px) {
+  .dropzone {
+    width: 100%;
+  }
+
+  .dropzone--isActive {
+    border: dashed 4px #f76b1a;
+  }
+}

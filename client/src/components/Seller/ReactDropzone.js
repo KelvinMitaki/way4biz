@@ -1,13 +1,16 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { IconContext } from "react-icons";
+import { RiDragDropLine } from "react-icons/ri";
+import "./ReactDropZone.css";
 
 const ReactDropzone = ({ setFiles }) => {
   const onDrop = useCallback(
-    acceptedFiles => {
+    (acceptedFiles) => {
       setFiles(
-        acceptedFiles.map(file => ({
+        acceptedFiles.map((file) => ({
           ...file,
-          preview: URL.createObjectURL(file)
+          preview: URL.createObjectURL(file),
         }))
       );
     },
@@ -16,15 +19,17 @@ const ReactDropzone = ({ setFiles }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
-    accept: "image/*"
+    accept: "image/*",
   });
   return (
     <div
       {...getRootProps()}
-      className={isDragActive ? `dropzone--isActive` : ""}
+      className={`dropzone ${isDragActive && "dropzone--isActive"}`}
     >
-      <input {...getInputProps()} />
-      <h1>yeah</h1>
+      <input className="products-upload-input" {...getInputProps()} />
+      <IconContext.Provider value={{ className: "products-upload-icon" }}>
+        <RiDragDropLine />
+      </IconContext.Provider>
     </div>
   );
 };
