@@ -117,7 +117,7 @@ export class Sell extends Component {
                       label="Product Subcategory"
                       component={SellerDropDown}
                     />
-                    {/* DROPDOWNS */}
+
                     <Field
                       type="text"
                       name="imageUrl"
