@@ -309,7 +309,8 @@ route.post(
     .withMessage("Please enter a valid category"),
   check("imageUrl")
     .trim()
-    .isURL()
+    .not()
+    .isEmpty()
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
@@ -379,7 +380,8 @@ route.patch(
     .withMessage("Please enter a valid category"),
   check("imageUrl")
     .trim()
-    .isURL()
+    .not()
+    .isEmpty()
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {

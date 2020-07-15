@@ -126,7 +126,11 @@ export class SellerEdit extends Component {
                       <button
                         style={{ cursor: "pointer", width: "90%" }}
                         className="btn btn-md btn-block primary-button my-5"
-                        disabled={!this.props.valid || this.props.loading}
+                        disabled={
+                          !this.props.valid ||
+                          this.props.loading ||
+                          !this.props.imageUrl
+                        }
                         type="submit"
                       >
                         {this.props.loading && (

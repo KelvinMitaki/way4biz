@@ -72,10 +72,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl
+        src: product.imageUrl.includes("http")
+          ? product.imageUrl
+          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl}`
       },
       largeImage: {
-        src: product.imageUrl,
+        src: product.imageUrl.includes("http")
+          ? product.imageUrl
+          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `,
         width: 1000,
         height: 1000
       },
@@ -126,31 +130,51 @@ class Product extends React.Component {
                     >
                       <div>
                         <img
-                          src={this.props.product.imageUrl}
+                          src={
+                            this.props.product.imageUrl.includes("http")
+                              ? this.props.product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                          }
                           alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
-                          src={this.props.product.imageUrl}
+                          src={
+                            this.props.product.imageUrl.includes("http")
+                              ? this.props.product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                          }
                           alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
-                          src={this.props.product.imageUrl}
+                          src={
+                            this.props.product.imageUrl.includes("http")
+                              ? this.props.product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                          }
                           alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
-                          src={this.props.product.imageUrl}
+                          src={
+                            this.props.product.imageUrl.includes("http")
+                              ? this.props.product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                          }
                           alt={this.props.product.name}
                         />
                       </div>
                       <div>
                         <img
-                          src={this.props.product.imageUrl}
+                          src={
+                            this.props.product.imageUrl.includes("http")
+                              ? this.props.product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                          }
                           alt={this.props.product.name}
                         />
                       </div>
@@ -273,7 +297,14 @@ class Product extends React.Component {
                     this.props.relatedProducts.map(item => (
                       <a key={item._id} href={`/product/${item._id}`}>
                         <div key={item._id} className="related-product">
-                          <img src={item.imageUrl} alt={item.name} />
+                          <img
+                            src={
+                              item.imageUrl.includes("http")
+                                ? item.imageUrl
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl}`
+                            }
+                            alt={item.name}
+                          />
                           <p className="related-product-name">{item.name}</p>
                           <p style={{ fontWeight: "bolder" }}>
                             Ksh.{item.price.toLocaleString()}{" "}

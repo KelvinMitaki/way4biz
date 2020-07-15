@@ -381,11 +381,11 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
 
-    // const res = await axios.post(
-    //   `/api/product/add/${getState().auth.user._id}`,
-    //   product
-    // );
-    // console.log(res.data);
+    const res = await axios.post(
+      `/api/product/add/${getState().auth.user._id}`,
+      product
+    );
+    console.log(res.data);
     dispatch({ type: ADD_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
