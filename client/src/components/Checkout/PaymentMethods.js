@@ -14,6 +14,7 @@ class PaymentMethods extends React.Component {
             label="Mpesa"
             name="payment"
             value="mpesa"
+            id="radio-10"
             component={RadioField}
           />
 
@@ -36,6 +37,7 @@ class PaymentMethods extends React.Component {
             label="Debit Card/Credit Card"
             name="payment"
             value="debit/credit"
+            id="radio-11"
             component={RadioField}
           />
 
