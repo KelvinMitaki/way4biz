@@ -23,7 +23,11 @@ import {
   FETCH_SELLER_REVIEWS,
   FETCH_SELLER_REVIEWS_START,
   FETCH_SELLER_REVIEWS_STOP,
-  STORE_DESCRIPTION
+  STORE_DESCRIPTION,
+  STORE_IMAGE,
+  STORE_IMAGE_START,
+  STORE_IMAGE_STOP,
+  ADD_PRODUCT
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -47,7 +51,9 @@ const INITIAL_STATE = {
   hasMoreCategoryProducts: false,
   sellerReviews: [],
   sellerReviewsLoading: false,
-  description: ""
+  description: "",
+  imageUrl: null,
+  storeImageLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -142,6 +148,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerReviewsLoading: false };
     case STORE_DESCRIPTION:
       return { ...state, description: action.payload };
+    case STORE_IMAGE:
+      return { ...state, imageUrl: action.payload };
+    case STORE_IMAGE_START:
+      return { ...state, storeImageLoading: true };
+    case STORE_IMAGE_STOP:
+      return { ...state, storeImageLoading: false };
+    case ADD_PRODUCT:
+      return { ...state, imageUrl: null };
     default:
       return state;
   }

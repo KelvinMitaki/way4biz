@@ -60,7 +60,11 @@ export class Sell extends Component {
                   <form
                     onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(
-                        { ...formValues, description: this.props.description },
+                        {
+                          ...formValues,
+                          description: this.props.description,
+                          imageUrl: this.props.imageUrl
+                        },
                         this.props.history
                       )
                     )}
@@ -105,12 +109,7 @@ export class Sell extends Component {
                       component={SellerDropDown}
                     />
                     <PhotosPage />
-                    <Field
-                      type="text"
-                      name="imageUrl"
-                      label="Image URL"
-                      component={SellerInputField}
-                    />
+
                     <h5 style={{ width: "90%", margin: "auto" }}>
                       Description
                     </h5>
@@ -119,7 +118,11 @@ export class Sell extends Component {
                     <button
                       style={{ cursor: "pointer", width: "90%" }}
                       className="btn btn-md btn-block primary-button my-5"
-                      disabled={!this.props.valid || this.props.loading}
+                      disabled={
+                        !this.props.valid ||
+                        this.props.loading ||
+                        !this.props.imageUrl
+                      }
                       type="submit"
                     >
                       {this.props.loading && (
@@ -178,7 +181,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    description: state.product.description
+    description: state.product.description,
+    imageUrl: state.product.imageUrl
   };
 };
 export default withRouter(
