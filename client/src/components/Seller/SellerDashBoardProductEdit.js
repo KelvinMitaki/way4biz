@@ -10,13 +10,14 @@ import SellerCheckBox from "./SellerCheckBox";
 import { editProduct, fetchSellerProducts } from "../../redux/actions";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EditorEdit from "./EditorEdit";
+import SellerInputField from "./SellerInputField";
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
   { key: "clothes", text: "Clothes", value: "clothes" },
   { key: "gadgets", text: "Gadgets", value: "gadgets" },
   { key: "electronics", text: "Electronics", value: "electronics" },
   { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" }
+  { key: "toys", text: "Toys", value: "toys" },
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -24,7 +25,7 @@ const subcategory = [
   { key: "laptops", text: "Laptops", value: "laptops" },
   { key: "televisions", text: "Televisions", value: "televisions" },
   { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" }
+  { key: "shoes", text: "Shoes", value: "shoes" },
 ];
 
 export class SellerEdit extends Component {
@@ -50,11 +51,11 @@ export class SellerEdit extends Component {
                 <div className="row">
                   <div id="dashboard-edit-lg-screen" className="col">
                     <form
-                      onSubmit={this.props.handleSubmit(formValues =>
+                      onSubmit={this.props.handleSubmit((formValues) =>
                         this.props.editProduct(
                           {
                             ...formValues,
-                            description: this.props.description
+                            description: this.props.description,
                           },
                           this.props.initialValues._id,
                           this.props.history
@@ -65,20 +66,20 @@ export class SellerEdit extends Component {
                         type="text"
                         name="name"
                         label="Name Of The Product"
-                        component={AuthField}
+                        component={SellerInputField}
                       />
                       <Field
                         type="number"
                         name="price"
                         label="Price Of The Product in Ksh"
-                        component={AuthField}
+                        component={SellerInputField}
                       />
 
                       <Field
                         type="number"
                         name="stockQuantity"
                         label="Product Quantity"
-                        component={AuthField}
+                        component={SellerInputField}
                       />
                       <Field
                         type="checkbox"
@@ -105,17 +106,25 @@ export class SellerEdit extends Component {
                         type="text"
                         name="imageUrl"
                         label="Image URL"
-                        component={AuthField}
+                        component={SellerInputField}
                       />
                       <div>
-                        <p>Product Description</p>
+                        <p
+                          style={{
+                            width: "90%",
+                            margin: "10px auto",
+                          }}
+                        >
+                          Product Description
+                        </p>
                         <EditorEdit
                           html={this.props.initialValues.description}
                         />
                       </div>
                       <button
                         style={{ cursor: "pointer" }}
-                        className="btn btn-md btn-block primary-button mt-3"
+                        className="btn btn-md btn-block primary-button my-5"
+                        style={{ width: "90%" }}
                         disabled={!this.props.valid || this.props.loading}
                         type="submit"
                       >
@@ -144,7 +153,7 @@ export class SellerEdit extends Component {
     return null;
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.name ||
@@ -178,20 +187,20 @@ const mapStateToProps = (state, ownProps) => {
   let initialValues;
   if (state.sellerRegister.sellerProducts.length !== 0) {
     initialValues = state.sellerRegister.sellerProducts.find(
-      p => p._id.toString() === ownProps.match.params.productId.toString()
+      (p) => p._id.toString() === ownProps.match.params.productId.toString()
     );
   }
   return {
     loading: state.auth.loading,
     initialValues,
-    description: state.product.description
+    description: state.product.description,
   };
 };
 export default withRouter(
   connect(mapStateToProps, { editProduct, fetchSellerProducts })(
     reduxForm({
       validate,
-      form: "SellerEdit"
+      form: "SellerEdit",
     })(SellerEdit)
   )
 );

@@ -10,6 +10,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
 import ControlledEditor from "./Editor";
+import SellerInputField from "./SellerInputField";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -21,7 +22,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" }
+  { key: "watches", text: "Watches", value: "watches" },
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -35,7 +36,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" }
+  { key: "utensils", text: "Utensils", value: "utensils" },
 ];
 
 export class Sell extends Component {
@@ -55,13 +56,9 @@ export class Sell extends Component {
                 </div>
               </div>
               <div className="row">
-                <div
-                  id="dashboard-new-lg-screen"
-                  style={{ height: "2000px" }}
-                  className="col"
-                >
+                <div id="dashboard-new-lg-screen" className="col">
                   <form
-                    onSubmit={this.props.handleSubmit(formValues =>
+                    onSubmit={this.props.handleSubmit((formValues) =>
                       this.props.addProduct(
                         { ...formValues, description: this.props.description },
                         this.props.history
@@ -72,30 +69,20 @@ export class Sell extends Component {
                       type="text"
                       name="name"
                       label="Name Of The Product"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
                     <Field
                       type="number"
                       name="price"
                       label="Price Of The Product in Ksh"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
 
-                    {/* <Field
-                      name="description"
-                      label="Product Description"
-                      component={SellerTextArea}
-                    /> */}
-                    {/* <Field
-                      name="specifications"
-                      label="Product Specifications"
-                      component={SellerTextArea}
-                    /> */}
                     <Field
                       type="number"
                       name="stockQuantity"
                       label="Product Quantity"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
                     <Field
                       type="checkbox"
@@ -122,18 +109,19 @@ export class Sell extends Component {
                       type="text"
                       name="imageUrl"
                       label="Image URL"
-                      component={AuthField}
+                      component={SellerInputField}
                     />
-                    <h5 style={{ width: "500px", margin: "auto" }}>
+                    <h5 style={{ width: "90%", margin: "auto" }}>
                       Description
                     </h5>
 
                     <ControlledEditor />
                     <button
                       style={{ cursor: "pointer" }}
-                      className="btn btn-md btn-block primary-button mt-3"
+                      className="btn btn-md btn-block primary-button my-5"
                       disabled={!this.props.valid || this.props.loading}
                       type="submit"
+                      style={{ width: "90%" }}
                     >
                       {this.props.loading && (
                         <span
@@ -158,7 +146,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.name ||
@@ -188,15 +176,15 @@ const validate = formValues => {
 
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
-    description: state.product.description
+    description: state.product.description,
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell"
+    form: "Sell",
   })(connect(mapStateToProps, { addProduct })(Sell))
 );

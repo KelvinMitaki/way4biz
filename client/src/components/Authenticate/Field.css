@@ -3,6 +3,11 @@
   margin: auto;
 }
 
+.seller-input-field {
+  width: 90%;
+  margin: auto;
+}
+
 .form-input input,
 .form-input select,
 .form-input2 input,

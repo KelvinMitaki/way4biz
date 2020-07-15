@@ -2,9 +2,8 @@ import React from "react";
 
 const SellerDropDown = (props) => {
   return (
-    <div className="form-group form-input">
-      <strong>{props.label}</strong>
-      <br />
+    <div className="form-group seller-input-field">
+      <p>{props.label}</p>
       <select
         {...props.input}
         className="form-control"
