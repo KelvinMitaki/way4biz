@@ -16,20 +16,23 @@ export class ReactCropper extends Component {
   render() {
     const { imagePreview } = this.props;
     return (
-      <Cropper
-        ref={this.cropper}
-        src={imagePreview}
-        style={{ height: "400", width: "100%" }}
-        preview=".img-preview"
-        aspectRatio={1}
-        viewMode={1}
-        dragMode="move"
-        guides={false}
-        scalable={true}
-        cropBoxMovable={true}
-        cropBoxResizable={true}
-        crop={this.cropImage}
-      />
+      <div className="cropper-section">
+        {" "}
+        <Cropper
+          ref={this.cropper}
+          src={imagePreview}
+          // style={{ height: "400", width: "100%" }}
+          preview=".img-preview"
+          aspectRatio={1}
+          viewMode={1}
+          dragMode="move"
+          guides={false}
+          scalable={true}
+          cropBoxMovable={true}
+          cropBoxResizable={true}
+          crop={this.cropImage}
+        />
+      </div>
     );
   }
 }

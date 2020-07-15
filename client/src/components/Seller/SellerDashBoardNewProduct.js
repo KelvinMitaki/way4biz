@@ -10,6 +10,7 @@ import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
 import ControlledEditor from "./Editor";
 import SellerInputField from "./SellerInputField";
+import PhotosPage from "./PhotosPage";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -103,7 +104,7 @@ export class Sell extends Component {
                       label="Product Subcategory"
                       component={SellerDropDown}
                     />
-
+                    <PhotosPage />
                     <Field
                       type="text"
                       name="imageUrl"

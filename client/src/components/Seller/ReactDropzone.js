@@ -19,8 +19,12 @@ const ReactDropzone = ({ setFiles }) => {
     accept: "image/*"
   });
   return (
-    <div {...getRootProps()} className={isDragActive && `dropzone--isActive`}>
+    <div
+      {...getRootProps()}
+      className={isDragActive ? `dropzone--isActive` : ""}
+    >
       <input {...getInputProps()} />
+      <h1>yeah</h1>
     </div>
   );
 };

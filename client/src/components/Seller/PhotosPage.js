@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ReactDropzone from "./ReactDropzone";
 import ReactCropper from "./ReactCropper";
+import "./PhotosPage.css";
 
 const PhotosPage = ({ uploadProfileImage }) => {
   const [files, setFiles] = useState([]);
@@ -16,6 +17,7 @@ const PhotosPage = ({ uploadProfileImage }) => {
     try {
       // await uploadProfileImage(image,files[0].path)
       handleCancelCrop();
+
       console.log("Success");
     } catch (error) {
       console.log("error", error);
@@ -25,18 +27,26 @@ const PhotosPage = ({ uploadProfileImage }) => {
     setFiles([]);
     setImage(null);
   };
+  console.log(image);
   return (
-    <div>
+    <div className="seller-products-photo-uploader">
       <ReactDropzone setFiles={setFiles} />
       {files.length > 0 && (
         <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
       )}
-      <button onClick={handleUploadImage}>Upload Image</button>
       {files.length > 0 && (
-        <div
-          className="img-preview"
-          style={{ minHeight: "200px", minWidth: "200px", overflow: "hidden" }}
-        />
+        <React.Fragment>
+          <div
+            className="img-preview"
+            style={{
+              minHeight: "200px",
+              minWidth: "200px",
+              overflow: "hidden",
+              flex: "2"
+            }}
+          />
+          <button onClick={handleUploadImage}>Upload Image</button>
+        </React.Fragment>
       )}
     </div>
   );
