@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import ReactDropzone from "./ReactDropzone";
+import ReactCropper from "./ReactCropper";
 
 const PhotosPage = ({ uploadProfileImage }) => {
   const [files, setFiles] = useState([]);
@@ -27,7 +28,16 @@ const PhotosPage = ({ uploadProfileImage }) => {
   return (
     <div>
       <ReactDropzone setFiles={setFiles} />
+      {files.length > 0 && (
+        <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
+      )}
       <button onClick={handleUploadImage}>Upload Image</button>
+      {files.length > 0 && (
+        <div
+          className="img-preview"
+          style={{ minHeight: "200px", minWidth: "200px", overflow: "hidden" }}
+        />
+      )}
     </div>
   );
 };
