@@ -5,13 +5,13 @@ import "./DashBoardProduct.css";
 
 class DashBoardProduct extends React.Component {
   state = {
-    search: null
+    search: null,
   };
-  onSearchChange = event => {
+  onSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
-    const test = this.props.products.filter(product => {
+    const test = this.props.products.filter((product) => {
       return product.name
         .toLowerCase()
         .includes(this.state.search && this.state.search.toLowerCase());
@@ -31,17 +31,20 @@ class DashBoardProduct extends React.Component {
           </div>
         </div>
         <div className="container-fluid p-0">
-          <input
-            type="text"
-            placeholder="Search product..."
-            className="mt-2 mb-3"
-            name="search"
-            onChange={this.onSearchChange}
-          />
+          <div className="form-group ">
+            <input
+              type="text"
+              placeholder="Search product..."
+              className="mt-2 mb-3 form-control search-2"
+              name="search"
+              onChange={this.onSearchChange}
+            />
+          </div>
+
           {this.props.products &&
             !this.state.search &&
             this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -82,7 +85,7 @@ class DashBoardProduct extends React.Component {
                 </div>
               </div>
             ))}
-          {test.map(product => (
+          {test.map((product) => (
             <div
               key={product._id}
               className="row no-gutters dashboard-product-wrapper box-container"
