@@ -263,6 +263,7 @@
 .radio input[type="radio"]:focus + label::after {
   color: #f76b1a;
 }
+
 @media screen and (max-width: 920px) {
   .content {
     margin-bottom: 65px;

@@ -51,8 +51,7 @@ export default MyEditor;
 //   };
 
 //   handleChange = (value) => {
-//     // this.setState({
-//     //   value: e.target.value,
+//     // this.setState({//     //   value: e.target.value,
 //     // });
 //     console.log(value);
 //   };

@@ -66,7 +66,7 @@ export class Sell extends Component {
                       this.props.addProduct(formValues, this.props.history)
                     )}
                   >
-                    <Field
+                    {/* <Field
                       type="text"
                       name="name"
                       label="Name Of The Product"
@@ -77,7 +77,7 @@ export class Sell extends Component {
                       name="price"
                       label="Price Of The Product in Ksh"
                       component={AuthField}
-                    />
+                    /> */}
 
                     {/* <Field
                       name="description"
@@ -89,7 +89,7 @@ export class Sell extends Component {
                       label="Product Specifications"
                       component={SellerTextArea}
                     /> */}
-                    <Field
+                    {/* <Field
                       type="number"
                       name="stockQuantity"
                       label="Product Quantity"
@@ -101,7 +101,7 @@ export class Sell extends Component {
                       label="Free Shipping"
                       component={SellerCheckBox}
                     />
-                    {/* DROPDOWNS */}
+               
                     <Field
                       options={category}
                       name="category"
@@ -115,13 +115,13 @@ export class Sell extends Component {
                       label="Product Subcategory"
                       component={SellerDropDown}
                     />
-                    {/* DROPDOWNS */}
+               
                     <Field
                       type="text"
                       name="imageUrl"
                       label="Image URL"
                       component={AuthField}
-                    />
+                    /> */}
                     <h5>More Info</h5>
                     {/* <button
                       style={{ cursor: "pointer" }}
