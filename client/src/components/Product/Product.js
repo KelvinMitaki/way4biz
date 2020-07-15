@@ -286,7 +286,6 @@ class Product extends React.Component {
                   <div className="col p-0">
                     <ProductSecondaryDetails
                       details={this.props.product.description}
-                      specifications={this.props.product.specifications}
                     />
                   </div>
                 </div>

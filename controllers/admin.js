@@ -369,12 +369,7 @@ route.patch(
     .withMessage(
       "Please enter a valid description with a minimum of 20 characters"
     ),
-  check("specifications")
-    .trim()
-    .isLength({ min: 20 })
-    .withMessage(
-      "Please enter a valid specifications with 20 characters minimum"
-    ),
+
   check("category")
     .trim()
     .not()
@@ -400,14 +395,12 @@ route.patch(
         category,
         subcategory,
         description,
-        imageUrl,
-        specifications
+        imageUrl
       } = req.body;
       const product = await Product.findOne({
         _id: productId,
         seller: sellerId
       });
-      product.specifications = specifications;
       product.name = name;
       product.freeShipping = freeShipping;
       product.description = description;
