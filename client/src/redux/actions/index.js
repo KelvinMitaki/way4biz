@@ -73,7 +73,8 @@ import {
   RADIO_BUTTON,
   FETCH_SELLER_REVIEWS_START,
   FETCH_SELLER_REVIEWS_STOP,
-  FETCH_SELLER_REVIEWS
+  FETCH_SELLER_REVIEWS,
+  STORE_DESCRIPTION
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -739,7 +740,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     if (Object.keys(sort).length === 0) {
       sort.price = 1;
     }
-    const itemsToSkip = getState().product.itemsToSkip;
+    // const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().product.categoryProductCount;
     const singleProdLength = getState().product.singleCategoryProducts.length;
     if (singleProdLength < prodCount) {
@@ -838,4 +839,11 @@ export const fetchSellerReviews = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     console.log(error.response);
   }
+};
+
+export const storeDescription = description => {
+  return {
+    type: STORE_DESCRIPTION,
+    payload: description
+  };
 };

@@ -20,7 +20,7 @@ import { FiFilter } from "react-icons/fi";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
 import "./Products.css";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "./ProductsInput";
 
