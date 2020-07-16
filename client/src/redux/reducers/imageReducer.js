@@ -17,7 +17,6 @@ export default (state = INITIAL_STATE, action) => {
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
     case STORE_IMAGE:
-      console.log("reached", action.payload);
       return { ...state, imageUrl: [...state.imageUrl, action.payload] };
 
     case ADD_PRODUCT:

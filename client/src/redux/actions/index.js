@@ -401,7 +401,6 @@ export const storeImage = image => async dispatch => {
   try {
     dispatch({ type: STORE_IMAGE_START });
     const uploadConfig = await axios.get("/api/image/upload");
-    console.log(uploadConfig);
     if (uploadConfig.data.url) {
       await axios.put(uploadConfig.data.url, image, {
         headers: {
