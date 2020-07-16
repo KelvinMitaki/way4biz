@@ -590,7 +590,8 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
           "productData.name": 1,
           "productData._id": 1
         }
-      }
+      },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(reviews);
   } catch (error) {
