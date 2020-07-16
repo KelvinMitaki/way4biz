@@ -56,7 +56,11 @@ class BuyerOrderDetails extends Component {
                       {buyerOrderDetails &&
                         Object.keys(buyerOrderDetails).length !== 0 &&
                         buyerOrderDetails.items.length}{" "}
-                      items
+                      {buyerOrderDetails &&
+                      Object.keys(buyerOrderDetails).length !== 0 &&
+                      buyerOrderDetails.items.length === 1
+                        ? "item"
+                        : "items"}
                     </p>
                     <strong>Placed on: </strong>
                     {buyerOrderDetails &&
