@@ -16,6 +16,7 @@ class ProductImageUploadsContainer extends React.Component {
             <div className="uploaded-product-image">
               <img
                 src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                alt={url}
               />
             </div>
             <button className="btn upload-image-trash-button">

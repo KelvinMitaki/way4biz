@@ -381,9 +381,7 @@ route.patch(
     .isEmpty()
     .withMessage("Please enter a valid category"),
   check("imageUrl")
-    .trim()
-    .not()
-    .isEmpty()
+    .isArray({ min: 1 })
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
