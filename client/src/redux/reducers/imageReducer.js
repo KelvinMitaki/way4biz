@@ -2,7 +2,8 @@ import {
   STORE_IMAGE,
   ADD_PRODUCT,
   STORE_IMAGE_START,
-  STORE_IMAGE_STOP
+  STORE_IMAGE_STOP,
+  EDIT_PRODUCT
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -18,9 +19,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: false };
     case STORE_IMAGE:
       return { ...state, imageUrl: [...state.imageUrl, action.payload] };
-
     case ADD_PRODUCT:
-      return { ...state, imageUrl: null };
+      return { ...state, imageUrl: [] };
+    case EDIT_PRODUCT:
+      return { ...state, imageUrl: [] };
     default:
       return state;
   }

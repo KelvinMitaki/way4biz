@@ -111,7 +111,9 @@ export class SellerEdit extends Component {
                       <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
                         Uploaded Images
                       </h5>
-                      <ProductImageUploadsContainer />
+                      <ProductImageUploadsContainer
+                        images={this.props.initialValues.imageUrl}
+                      />
                       {/* DROPDOWNS */}
                       {/* <Field
                         type="text"

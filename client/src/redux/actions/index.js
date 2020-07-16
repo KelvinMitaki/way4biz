@@ -79,7 +79,8 @@ import {
   STORE_IMAGE_START,
   STORE_IMAGE_STOP,
   REDIRECT_ON_FAIL_START,
-  REDIRECT_ON_FAIL_STOP
+  REDIRECT_ON_FAIL_STOP,
+  EDIT_PRODUCT
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -433,6 +434,7 @@ export const editProduct = (formvalues, productId, history) => async (
       `/api/product/edit/${getState().auth.user._id}/${productId}`,
       formvalues
     );
+    dispatch({ type: EDIT_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
