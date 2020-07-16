@@ -27,7 +27,9 @@ import {
   STORE_IMAGE,
   STORE_IMAGE_START,
   STORE_IMAGE_STOP,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  REDIRECT_ON_FAIL_START,
+  REDIRECT_ON_FAIL_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -53,7 +55,8 @@ const INITIAL_STATE = {
   sellerReviewsLoading: false,
   description: "",
   imageUrl: null,
-  storeImageLoading: false
+  storeImageLoading: false,
+  redirectOnFailLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -156,6 +159,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: false };
     case ADD_PRODUCT:
       return { ...state, imageUrl: null };
+    case REDIRECT_ON_FAIL_START:
+      return { ...state, redirectOnFailLoading: true };
+    case REDIRECT_ON_FAIL_STOP:
+      return { ...state, redirectOnFailLoading: false };
     default:
       return state;
   }

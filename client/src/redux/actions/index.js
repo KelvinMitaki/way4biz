@@ -77,7 +77,9 @@ import {
   STORE_DESCRIPTION,
   STORE_IMAGE,
   STORE_IMAGE_START,
-  STORE_IMAGE_STOP
+  STORE_IMAGE_STOP,
+  REDIRECT_ON_FAIL_START,
+  REDIRECT_ON_FAIL_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -660,14 +662,14 @@ export const redirectOnFail = (
   history
 ) => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: REDIRECT_ON_FAIL_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
-    dispatch({ type: LOADING_STOP });
     if (!res.data.order) {
       history.push("/pending/reviews");
     }
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
     history.push("/pending/reviews");
   }
 };

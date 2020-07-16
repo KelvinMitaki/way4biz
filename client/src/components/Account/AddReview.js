@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import AddReviewForm from "./AddReviewForm";
 import BeautyStars from "beauty-stars";
+import ScreenLoader from "../Pages/ScreenLoader";
 class AddReview extends Component {
   state = {
     value: 0
@@ -32,6 +33,7 @@ class AddReview extends Component {
   };
 
   render() {
+    if (this.props.redirectOnFailLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -110,7 +112,7 @@ class AddReview extends Component {
                       ></span>
                     )}
                     {this.props.sellerReviewsLoading ? (
-                      <span> {"  "}sellerReviewsLoading...</span>
+                      <span> {"  "}Loading...</span>
                     ) : (
                       <span>Submit Review</span>
                     )}
@@ -151,7 +153,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
-    sellerReviewsLoading: state.product.sellerReviewsLoading
+    sellerReviewsLoading: state.product.sellerReviewsLoading,
+    redirectOnFailLoading: state.product.redirectOnFailLoading
   };
 };
 export default withRouter(
