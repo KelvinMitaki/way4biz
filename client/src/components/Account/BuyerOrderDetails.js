@@ -56,7 +56,11 @@ class BuyerOrderDetails extends Component {
                       {buyerOrderDetails &&
                         Object.keys(buyerOrderDetails).length !== 0 &&
                         buyerOrderDetails.items.length}{" "}
-                      items
+                      {buyerOrderDetails &&
+                      Object.keys(buyerOrderDetails).length !== 0 &&
+                      buyerOrderDetails.items.length === 1
+                        ? "item"
+                        : "items"}
                     </p>
                     <strong>Placed on: </strong>
                     {buyerOrderDetails &&
@@ -80,7 +84,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map(item => {
+                      buyerOrderDetails.items.map((item) => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -100,9 +104,9 @@ class BuyerOrderDetails extends Component {
                               <div className="col-lg-6 d-flex align-items-center">
                                 <img
                                   src={
-                                    item.product.imageUrl.includes("http")
-                                      ? item.product.imageUrl
-                                      : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl} `
+                                    item.product.imageUrl[0].includes("http")
+                                      ? item.product.imageUrl[0]
+                                      : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl[0]} `
                                   }
                                   alt={item.product.name}
                                   height="150px"
@@ -128,7 +132,7 @@ class BuyerOrderDetails extends Component {
                             >
                               <p>
                                 <Link
-                                  id="buy-again-link"
+                                  className="buy-again-link"
                                   to="/cart"
                                   onClick={() =>
                                     this.props.addToCart(item.product)
@@ -153,10 +157,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default withRouter(

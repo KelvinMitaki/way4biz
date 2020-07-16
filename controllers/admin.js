@@ -310,9 +310,7 @@ route.post(
     .isEmpty()
     .withMessage("Please enter a valid category"),
   check("imageUrl")
-    .trim()
-    .not()
-    .isEmpty()
+    .isArray({ min: 1 })
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
@@ -381,9 +379,7 @@ route.patch(
     .isEmpty()
     .withMessage("Please enter a valid category"),
   check("imageUrl")
-    .trim()
-    .not()
-    .isEmpty()
+    .isArray({ min: 1 })
     .withMessage("please enter a valid image url"),
   isSeller,
   async (req, res) => {
@@ -594,6 +590,39 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
       { $sort: { createdAt: -1 } }
     ]);
     res.send(reviews);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// DELETE IMAGES FROM S3 AND DB
+route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { imageUrl } = req.body;
+    const productOwner = await Product.findOne({
+      _id: productId,
+      seller: req.session.user._id
+    });
+    if (productOwner.imageUrl.length < 2) {
+      return res.status(401).send({ message: "Permission denied" });
+    }
+    if (
+      !productOwner ||
+      (productOwner && Object.keys(productOwner).length === 0)
+    ) {
+      return res.status(401).send({ message: "unauthorized" });
+    }
+    s3.deleteObject(
+      {
+        Bucket: "e-commerce-gig",
+        Key: imageUrl
+      },
+      (err, data) => (err ? res.status(400).send(err) : console.log(data))
+    );
+    const modifiedProduct = await Product.findByIdAndUpdate(productId, {
+      $pull: { imageUrl }
+    });
+    res.send(modifiedProduct);
   } catch (error) {
     res.status(500).send(error);
   }

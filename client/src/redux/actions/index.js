@@ -77,7 +77,13 @@ import {
   STORE_DESCRIPTION,
   STORE_IMAGE,
   STORE_IMAGE_START,
-  STORE_IMAGE_STOP
+  STORE_IMAGE_STOP,
+  REDIRECT_ON_FAIL_START,
+  REDIRECT_ON_FAIL_STOP,
+  EDIT_PRODUCT,
+  DELETE_IMAGE_START,
+  DELETE_IMAGE_STOP,
+  DELETE_IMAGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -399,17 +405,22 @@ export const storeImage = image => async dispatch => {
   try {
     dispatch({ type: STORE_IMAGE_START });
     const uploadConfig = await axios.get("/api/image/upload");
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      dispatch({
+        type: STORE_IMAGE,
+        payload: uploadConfig.data.key
+      });
 
-    await axios.put(uploadConfig.data.url, image, {
-      headers: {
-        "Content-Type": image.type
-      }
-    });
-    dispatch({
-      type: STORE_IMAGE,
-      payload: uploadConfig.data.key
-    });
+      dispatch({ type: STORE_IMAGE_STOP });
+      return;
+    }
     dispatch({ type: STORE_IMAGE_STOP });
+    throw new Error("Error getting url");
   } catch (error) {
     console.log(error.response.data);
     dispatch({ type: STORE_IMAGE_STOP });
@@ -426,6 +437,7 @@ export const editProduct = (formvalues, productId, history) => async (
       `/api/product/edit/${getState().auth.user._id}/${productId}`,
       formvalues
     );
+    dispatch({ type: EDIT_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
@@ -641,16 +653,16 @@ export const submitReview = (
   history
 ) => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_SELLER_REVIEWS_START });
     await axios.post(`/api/new/review/${productId}/${orderId}`, {
       title: review.title,
       body: review.body,
       rating
     });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     history.push("/pending/reviews");
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     console.log(error.response);
   }
 };
@@ -660,14 +672,14 @@ export const redirectOnFail = (
   history
 ) => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: REDIRECT_ON_FAIL_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
-    dispatch({ type: LOADING_STOP });
     if (!res.data.order) {
       history.push("/pending/reviews");
     }
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
     history.push("/pending/reviews");
   }
 };
@@ -871,4 +883,19 @@ export const storeDescription = description => {
     type: STORE_DESCRIPTION,
     payload: description
   };
+};
+
+export const deleteImage = (imageUrl, productId) => async dispatch => {
+  try {
+    dispatch({ type: DELETE_IMAGE_START });
+    await axios.post(`/api/images/delete/${productId}`, {
+      imageUrl
+    });
+    await dispatch(fetchSellerProducts());
+    dispatch({ type: DELETE_IMAGE, payload: imageUrl });
+    dispatch({ type: DELETE_IMAGE_STOP });
+  } catch (error) {
+    dispatch({ type: DELETE_IMAGE_STOP });
+    console.log(error.response.data);
+  }
 };

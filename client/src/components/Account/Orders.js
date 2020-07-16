@@ -65,7 +65,10 @@ export class Orders extends Component {
                           </div>
                           <div className="col-6 col-lg-2">
                             <p>
-                              <Link to={`/buyer/order/details/${order._id}`}>
+                              <Link
+                                to={`/buyer/order/details/${order._id}`}
+                                className="order-details-link"
+                              >
                                 See Details
                               </Link>
                             </p>

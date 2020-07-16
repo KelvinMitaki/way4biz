@@ -11,6 +11,8 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EditorEdit from "./EditorEdit";
 import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
+import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
+import ScreenLoader from "../Pages/ScreenLoader";
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
   { key: "clothes", text: "Clothes", value: "clothes" },
@@ -33,6 +35,7 @@ export class SellerEdit extends Component {
     this.props.fetchSellerProducts();
   }
   render() {
+    if (this.props.deleteImageLoading) return <ScreenLoader />;
     if (this.props.initialValues) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -56,7 +59,10 @@ export class SellerEdit extends Component {
                           {
                             ...formValues,
                             description: this.props.description,
-                            imageUrl: this.props.imageUrl
+                            imageUrl: [
+                              ...this.props.imageUrl,
+                              ...formValues.imageUrl
+                            ]
                           },
                           this.props.initialValues._id,
                           this.props.history
@@ -107,6 +113,12 @@ export class SellerEdit extends Component {
                         Image Upload
                       </h5>
                       <PhotosPage />
+                      <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
+                        Uploaded Images
+                      </h5>
+                      <ProductImageUploadsContainer
+                        images={this.props.initialValues.imageUrl}
+                      />
                       {/* DROPDOWNS */}
                       {/* <Field
                         type="text"
@@ -185,7 +197,8 @@ const validate = formValues => {
 
   if (
     !formValues.imageUrl ||
-    (formValues.imageUrl && !validator.isURL(formValues.imageUrl))
+    (formValues.imageUrl.length !== 0 &&
+      !validator.isURL(formValues.imageUrl[0]))
   ) {
     errors.imageUrl = "Please enter a valid image url";
   }
@@ -201,9 +214,10 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     loading: state.auth.loading,
+    deleteImageLoading: state.image.deleteImageLoading,
     initialValues,
     description: state.product.description,
-    imageUrl: state.product.imageUrl
+    imageUrl: state.image.imageUrl
   };
 };
 export default withRouter(

@@ -10,6 +10,7 @@ import ScreenLoader from "./ScreenLoader";
 
 class Home extends React.Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.fetchProducts();
   }
   render() {
@@ -27,9 +28,9 @@ class Home extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    products: state.product.products
+    products: state.product.products,
   };
 };
 export default connect(mapStateToProps, { fetchProducts })(Home);

@@ -50,9 +50,9 @@ function Market(props) {
                   >
                     <img
                       src={
-                        product.imageUrl.includes("http")
-                          ? product.imageUrl
-                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                        product.imageUrl[0].includes("http")
+                          ? product.imageUrl[0]
+                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                       }
                       alt={product.name}
                     />
@@ -93,9 +93,9 @@ function Market(props) {
                 >
                   <img
                     src={
-                      product.imageUrl.includes("http")
-                        ? product.imageUrl
-                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                      product.imageUrl[0].includes("http")
+                        ? product.imageUrl[0]
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                     }
                     alt={product.name}
                   />
@@ -127,7 +127,7 @@ function Market(props) {
             );
           })}
       </div>
-      {props.hasMore && <BottomPageLoader />}
+      {props.products.length < props.productCount && <BottomPageLoader />}
     </div>
   );
 }

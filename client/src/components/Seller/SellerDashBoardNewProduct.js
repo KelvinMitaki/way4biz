@@ -11,6 +11,8 @@ import SellerCheckBox from "./SellerCheckBox";
 import ControlledEditor from "./Editor";
 import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
+import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -41,6 +43,7 @@ const subcategory = [
 
 export class Sell extends Component {
   render() {
+    if (this.props.deleteImageLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -114,7 +117,12 @@ export class Sell extends Component {
                     </h5>
                     <PhotosPage />
 
-                    <h5 style={{ width: "90%", margin: "auto" }}>
+                    <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
+                      Uploaded Images
+                    </h5>
+                    <ProductImageUploadsContainer />
+
+                    <h5 style={{ width: "90%", margin: "15px auto 5px auto" }}>
                       Product Description
                     </h5>
 
@@ -175,7 +183,8 @@ const validate = formValues => {
 
   if (
     !formValues.imageUrl ||
-    (formValues.imageUrl && !validator.isURL(formValues.imageUrl))
+    (formValues.imageUrl.length !== 0 &&
+      !validator.isURL(formValues.imageUrl[0]))
   ) {
     errors.imageUrl = "Please enter a valid image url";
   }
@@ -186,7 +195,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     description: state.product.description,
-    imageUrl: state.product.imageUrl
+    imageUrl: state.image.imageUrl,
+    deleteImageLoading: state.image.deleteImageLoading
   };
 };
 export default withRouter(

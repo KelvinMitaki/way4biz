@@ -30,12 +30,12 @@ class Product extends React.Component {
     this.state = {
       modalShow: false,
       clicked: false
-      // imgUrl: this.props.product.imageUrl,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.product &&
       this.props.fetchRelatedProducts(this.props.product.subcategory);
   }
@@ -72,14 +72,14 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        src: product.imageUrl.includes("http")
-          ? product.imageUrl
-          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl}`
+        src: product.imageUrl[0].includes("http")
+          ? product.imageUrl[0]
+          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`
       },
       largeImage: {
-        src: product.imageUrl.includes("http")
-          ? product.imageUrl
-          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `,
+        src: product.imageUrl[0].includes("http")
+          ? product.imageUrl[0]
+          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
         width: 1000,
         height: 1000
       },
@@ -131,9 +131,9 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={
-                            this.props.product.imageUrl.includes("http")
-                              ? this.props.product.imageUrl
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                            this.props.product.imageUrl[0].includes("http")
+                              ? this.props.product.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
                           }
                           alt={this.props.product.name}
                         />
@@ -141,9 +141,9 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={
-                            this.props.product.imageUrl.includes("http")
-                              ? this.props.product.imageUrl
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                            this.props.product.imageUrl[0].includes("http")
+                              ? this.props.product.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
                           }
                           alt={this.props.product.name}
                         />
@@ -151,9 +151,9 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={
-                            this.props.product.imageUrl.includes("http")
-                              ? this.props.product.imageUrl
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                            this.props.product.imageUrl[0].includes("http")
+                              ? this.props.product.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
                           }
                           alt={this.props.product.name}
                         />
@@ -161,9 +161,9 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={
-                            this.props.product.imageUrl.includes("http")
-                              ? this.props.product.imageUrl
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                            this.props.product.imageUrl[0].includes("http")
+                              ? this.props.product.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
                           }
                           alt={this.props.product.name}
                         />
@@ -171,9 +171,9 @@ class Product extends React.Component {
                       <div>
                         <img
                           src={
-                            this.props.product.imageUrl.includes("http")
-                              ? this.props.product.imageUrl
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl} `
+                            this.props.product.imageUrl[0].includes("http")
+                              ? this.props.product.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
                           }
                           alt={this.props.product.name}
                         />
@@ -295,13 +295,13 @@ class Product extends React.Component {
                 <div className="related-products-wrapper">
                   {this.props.relatedProducts.length !== 0 &&
                     this.props.relatedProducts.map(item => (
-                      <a key={item._id} href={`/product/${item._id}`}>
+                      <Link key={item._id} to={`/product/${item._id}`}>
                         <div key={item._id} className="related-product">
                           <img
                             src={
-                              item.imageUrl.includes("http")
-                                ? item.imageUrl
-                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl}`
+                              item.imageUrl[0].includes("http")
+                                ? item.imageUrl[0]
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]}`
                             }
                             alt={item.name}
                           />
@@ -310,7 +310,7 @@ class Product extends React.Component {
                             Ksh.{item.price.toLocaleString()}{" "}
                           </p>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                 </div>
                 <div className="row product-features-reviews-specifications mt-3">
@@ -327,7 +327,7 @@ class Product extends React.Component {
                       this.props.relatedProducts.map(item => (
                         <a key={item._id} href={`/product/${item._id}`}>
                           <div key={item._id} className="recommended-product">
-                            <img src={item.imageUrl} alt={item.name} />
+                            <img src={item.imageUrl[0]} alt={item.name} />
                             <p className="recommended-product-name">
                               {item.name}
                             </p>

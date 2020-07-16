@@ -29,9 +29,9 @@ class MyCart extends React.Component {
                         <div className="col-5 col-md-6">
                           <img
                             src={
-                              item.imageUrl.includes("http")
-                                ? item.imageUrl
-                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl} `
+                              item.imageUrl[0].includes("http")
+                                ? item.imageUrl[0]
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
                             }
                             alt={item.name}
                           />
