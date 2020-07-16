@@ -80,7 +80,9 @@ import {
   STORE_IMAGE_STOP,
   REDIRECT_ON_FAIL_START,
   REDIRECT_ON_FAIL_STOP,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  DELETE_IMAGE_START,
+  DELETE_IMAGE_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -880,4 +882,18 @@ export const storeDescription = description => {
     type: STORE_DESCRIPTION,
     payload: description
   };
+};
+
+export const deleteImage = (imageUrl, productId) => async dispatch => {
+  try {
+    dispatch({ type: DELETE_IMAGE_START });
+    await axios.post(`/api/images/delete/${productId}`, {
+      imageUrl
+    });
+    fetchSellerProducts();
+    dispatch({ type: DELETE_IMAGE_STOP });
+  } catch (error) {
+    dispatch({ type: DELETE_IMAGE_STOP });
+    console.log(error.response.data);
+  }
 };

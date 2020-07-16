@@ -12,6 +12,7 @@ import EditorEdit from "./EditorEdit";
 import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
 import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
+import ScreenLoader from "../Pages/ScreenLoader";
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
   { key: "clothes", text: "Clothes", value: "clothes" },
@@ -34,6 +35,7 @@ export class SellerEdit extends Component {
     this.props.fetchSellerProducts();
   }
   render() {
+    if (this.props.sellerProductsLoading) return <ScreenLoader />;
     if (this.props.initialValues) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -209,6 +211,7 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     loading: state.auth.loading,
+    sellerProductsLoading: state.auth.sellerProductsLoading,
     initialValues,
     description: state.product.description,
     imageUrl: state.image.imageUrl
