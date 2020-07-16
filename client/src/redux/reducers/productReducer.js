@@ -54,8 +54,6 @@ const INITIAL_STATE = {
   sellerReviews: [],
   sellerReviewsLoading: false,
   description: "",
-  imageUrl: null,
-  storeImageLoading: false,
   redirectOnFailLoading: false
 };
 
@@ -151,14 +149,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerReviewsLoading: false };
     case STORE_DESCRIPTION:
       return { ...state, description: action.payload };
-    case STORE_IMAGE:
-      return { ...state, imageUrl: action.payload };
-    case STORE_IMAGE_START:
-      return { ...state, storeImageLoading: true };
-    case STORE_IMAGE_STOP:
-      return { ...state, storeImageLoading: false };
-    case ADD_PRODUCT:
-      return { ...state, imageUrl: null };
     case REDIRECT_ON_FAIL_START:
       return { ...state, redirectOnFailLoading: true };
     case REDIRECT_ON_FAIL_STOP:

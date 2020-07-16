@@ -78,9 +78,9 @@ class PendingReviews extends React.Component {
                           <div className="col-md-10 d-flex">
                             <img
                               src={
-                                item.imageUrl.includes("http")
-                                  ? item.imageUrl
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl} `
+                                item.imageUrl[0].includes("http")
+                                  ? item.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
                               }
                               alt={item.name}
                             />

@@ -49,7 +49,11 @@ class HeroCarousel extends React.Component {
                     }
                   >
                     <img
-                      src={prod.imageUrl}
+                      src={
+                        prod.imageUrl[0].includes("http")
+                          ? prod.imageUrl[0]
+                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${prod.imageUrl[0]} `
+                      }
                       alt={prod.name}
                       className="hero-random-image"
                     />

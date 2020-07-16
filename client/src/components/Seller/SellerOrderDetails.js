@@ -60,7 +60,11 @@ class SellerOrderDetails extends React.Component {
                       <div className="col-md-6 col-lg-5 d-flex align-items-center">
                         <img
                           height="100px"
-                          src={data.imageUrl}
+                          src={
+                            data.imageUrl[0].includes("http")
+                              ? data.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${data.imageUrl[0]} `
+                          }
                           alt={data.name}
                         />
                         <p>

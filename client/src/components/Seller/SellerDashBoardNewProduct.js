@@ -23,7 +23,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" },
+  { key: "watches", text: "Watches", value: "watches" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -37,7 +37,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "utensils", text: "Utensils", value: "utensils" }
 ];
 
 export class Sell extends Component {
@@ -59,12 +59,12 @@ export class Sell extends Component {
               <div className="row">
                 <div id="dashboard-new-lg-screen" className="col">
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
+                    onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(
                         {
                           ...formValues,
                           description: this.props.description,
-                          imageUrl: this.props.imageUrl,
+                          imageUrl: this.props.imageUrl
                         },
                         this.props.history
                       )
@@ -158,7 +158,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -181,23 +181,24 @@ const validate = (formValues) => {
 
   if (
     !formValues.imageUrl ||
-    (formValues.imageUrl && !validator.isURL(formValues.imageUrl))
+    (formValues.imageUrl.length !== 0 &&
+      !validator.isURL(formValues.imageUrl[0]))
   ) {
     errors.imageUrl = "Please enter a valid image url";
   }
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     description: state.product.description,
-    imageUrl: state.product.imageUrl,
+    imageUrl: state.image.imageUrl
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell",
+    form: "Sell"
   })(connect(mapStateToProps, { addProduct })(Sell))
 );

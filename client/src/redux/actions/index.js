@@ -401,17 +401,23 @@ export const storeImage = image => async dispatch => {
   try {
     dispatch({ type: STORE_IMAGE_START });
     const uploadConfig = await axios.get("/api/image/upload");
+    console.log(uploadConfig);
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      dispatch({
+        type: STORE_IMAGE,
+        payload: uploadConfig.data.key
+      });
 
-    await axios.put(uploadConfig.data.url, image, {
-      headers: {
-        "Content-Type": image.type
-      }
-    });
-    dispatch({
-      type: STORE_IMAGE,
-      payload: uploadConfig.data.key
-    });
+      dispatch({ type: STORE_IMAGE_STOP });
+      return;
+    }
     dispatch({ type: STORE_IMAGE_STOP });
+    throw new Error("Error getting url");
   } catch (error) {
     console.log(error.response.data);
     dispatch({ type: STORE_IMAGE_STOP });

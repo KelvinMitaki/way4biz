@@ -99,7 +99,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
 };
 const mapStateToProps = state => {
   return {
-    storeImageLoading: state.product.storeImageLoading
+    storeImageLoading: state.image.storeImageLoading
   };
 };
 export default connect(mapStateToProps, { storeImage })(PhotosPage);
