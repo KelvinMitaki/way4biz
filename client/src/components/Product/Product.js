@@ -35,6 +35,7 @@ class Product extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.product &&
       this.props.fetchRelatedProducts(this.props.product.subcategory);
   }

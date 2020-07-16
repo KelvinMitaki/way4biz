@@ -37,15 +37,9 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
-        <div className="col-xl-4" style={{ textAlign: "center" }}>
-          Step 1-Add Photo
-        </div>
-        <div className="col-xl-4" style={{ textAlign: "center" }}>
-          Step 2-Resize
-        </div>
-        <div className="col-xl-4" style={{ textAlign: "center" }}>
-          Step 3-Preview
-        </div>
+        <div className="col-xl-4">Step 1-Add Photo</div>
+        <div className="col-xl-4">Step 2-Resize</div>
+        <div className="col-xl-4">Step 3-Preview</div>
       </div>
       <hr className="mb-3" />
       <div className="row no-gutters align-items-center drop-stuff">
