@@ -57,7 +57,14 @@ export class Wishlist extends Component {
                         <div className="col-12 wishlist-item-image">
                           <div className="row align-items-center">
                             <div className="image col-md-3 p-0">
-                              <img src={item.imageUrl} alt={item.name} />
+                              <img
+                                src={
+                                  item.imageUrl.includes("http")
+                                    ? item.imageUrl
+                                    : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl} `
+                                }
+                                alt={item.name}
+                              />
                             </div>
                             <div className="col-md-9">
                               <h4 className="my-3">{item.name}</h4>
