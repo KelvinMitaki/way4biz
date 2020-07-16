@@ -95,6 +95,7 @@ class PendingReviews extends React.Component {
                           <div className="col-md-2 rate-link-wrapper">
                             <Link
                               to={`/add/review/${item._id}/${item.orderId}`}
+                              className="pending-review-rate-link"
                             >
                               Rate
                             </Link>
