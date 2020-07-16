@@ -12,7 +12,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -33,31 +33,31 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
       style={{
         width: "90%",
         margin: "0px auto 10px auto",
-        borderRadius: "10px"
+        borderRadius: "10px",
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 1-Add Photo
         </div>
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 2-Resize
         </div>
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 3-Preview
         </div>
       </div>
       <hr className="mb-3" />
       <div className="row no-gutters align-items-center drop-stuff">
-        <div className="col-lg-4">
+        <div className="col-xl-4">
           <ReactDropzone setFiles={setFiles} />
         </div>
-        <div>
+        <div className="col-xl-4">
           {files.length > 0 && (
             <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
           )}
         </div>
-        <div>
+        <div className="col-xl-4">
           {files.length > 0 && (
             <React.Fragment>
               <div
@@ -66,7 +66,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
                   minHeight: "200px",
                   // height: "100%",
                   width: "1200px",
-                  overflow: "hidden"
+                  overflow: "hidden",
                   // flex: "2",
                 }}
               />
@@ -97,9 +97,9 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    storeImageLoading: state.product.storeImageLoading
+    storeImageLoading: state.product.storeImageLoading,
   };
 };
 export default connect(mapStateToProps, { storeImage })(PhotosPage);
