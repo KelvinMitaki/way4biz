@@ -6,11 +6,11 @@ import "./ReactDropZone.css";
 
 const ReactDropzone = ({ setFiles }) => {
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    acceptedFiles => {
       setFiles(
-        acceptedFiles.map((file) => ({
+        acceptedFiles.map(file => ({
           ...file,
-          preview: URL.createObjectURL(file),
+          preview: URL.createObjectURL(file)
         }))
       );
     },
@@ -18,8 +18,8 @@ const ReactDropzone = ({ setFiles }) => {
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    multiple: true,
-    accept: "image/*",
+    multiple: false,
+    accept: "image/*"
   });
   return (
     <div
