@@ -627,20 +627,4 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/test/:proId", async (req, res) => {
-  try {
-    const _id = req.params.proId;
-    const products = await (await Product.find({ _id })).forEach(async pro => {
-      try {
-        pro.imageUrl = new Array(pro.imageUrl);
-        await pro.save();
-      } catch (error) {
-        res.send(error);
-      }
-    });
-    res.send(products);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
 module.exports = route;
