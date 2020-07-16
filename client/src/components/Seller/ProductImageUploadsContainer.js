@@ -9,12 +9,14 @@ import { deleteImage } from "../../redux/actions";
 // **TODO** MAP IMAGES FROM THE DB AND FROM S3
 class ProductImageUploadsContainer extends React.Component {
   render() {
+    const imageLength = this.props.imageUrl.length + this.props.images.length;
+
     return (
       <div className="uploads-container box-container">
         {/* mapping here */}
         {this.props.imageUrl.length !== 0 &&
           this.props.imageUrl.map(url => (
-            <div key={url} className="uploaded-product-image-wrapper">
+            <div key={url} className={`uploaded-product-image-wrapper`}>
               <div className="uploaded-product-image">
                 <img
                   src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
@@ -25,7 +27,9 @@ class ProductImageUploadsContainer extends React.Component {
                 onClick={() =>
                   this.props.deleteImage(url, this.props.match.params.productId)
                 }
-                className="btn upload-image-trash-button"
+                className={`btn upload-image-trash-button  ${
+                  imageLength === 1 && `disabled`
+                }`}
               >
                 <FaTrashAlt className="m-0 p-0" />{" "}
                 <span className="ml-2">Delete</span>
@@ -46,7 +50,9 @@ class ProductImageUploadsContainer extends React.Component {
                 onClick={() =>
                   this.props.deleteImage(url, this.props.match.params.productId)
                 }
-                className="btn upload-image-trash-button"
+                className={`btn upload-image-trash-button  ${
+                  imageLength === 1 && `disabled`
+                }`}
               >
                 <FaTrashAlt className="m-0 p-0" />{" "}
                 <span className="ml-2">Delete</span>
