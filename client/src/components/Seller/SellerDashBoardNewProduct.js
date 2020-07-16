@@ -12,6 +12,7 @@ import ControlledEditor from "./Editor";
 import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
 import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 const category = [
   { key: "phones", text: "Phones", value: "phones" },
@@ -42,6 +43,7 @@ const subcategory = [
 
 export class Sell extends Component {
   render() {
+    if (this.props.deleteImageLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -193,7 +195,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     description: state.product.description,
-    imageUrl: state.image.imageUrl
+    imageUrl: state.image.imageUrl,
+    deleteImageLoading: state.image.deleteImageLoading
   };
 };
 export default withRouter(

@@ -35,7 +35,7 @@ export class SellerEdit extends Component {
     this.props.fetchSellerProducts();
   }
   render() {
-    if (this.props.sellerProductsLoading) return <ScreenLoader />;
+    if (this.props.deleteImageLoading) return <ScreenLoader />;
     if (this.props.initialValues) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -211,7 +211,7 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     loading: state.auth.loading,
-    sellerProductsLoading: state.auth.sellerProductsLoading,
+    deleteImageLoading: state.image.deleteImageLoading,
     initialValues,
     description: state.product.description,
     imageUrl: state.image.imageUrl

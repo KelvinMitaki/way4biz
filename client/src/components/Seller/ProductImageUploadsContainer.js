@@ -27,21 +27,8 @@ class ProductImageUploadsContainer extends React.Component {
                 }
                 className="btn upload-image-trash-button"
               >
-                {this.props.deleteImageLoading && (
-                  <span
-                    className="spinner-grow spinner-grow-sm"
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                )}
-                {this.props.deleteImageLoading ? (
-                  <span> {"  "}Loading...</span>
-                ) : (
-                  <React.Fragment>
-                    <FaTrashAlt className="m-0 p-0" />{" "}
-                    <span className="ml-2">Delete</span>
-                  </React.Fragment>
-                )}
+                <FaTrashAlt className="m-0 p-0" />{" "}
+                <span className="ml-2">Delete</span>
               </div>
             </div>
           ))}
@@ -61,21 +48,8 @@ class ProductImageUploadsContainer extends React.Component {
                 }
                 className="btn upload-image-trash-button"
               >
-                {this.props.deleteImageLoading && (
-                  <span
-                    className="spinner-grow spinner-grow-sm"
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                )}
-                {this.props.deleteImageLoading ? (
-                  <span> {"  "}Loading...</span>
-                ) : (
-                  <React.Fragment>
-                    <FaTrashAlt className="m-0 p-0" />{" "}
-                    <span className="ml-2">Delete</span>
-                  </React.Fragment>
-                )}
+                <FaTrashAlt className="m-0 p-0" />{" "}
+                <span className="ml-2">Delete</span>
               </div>
             </div>
           ))}
