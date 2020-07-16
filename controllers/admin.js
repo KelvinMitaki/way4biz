@@ -505,7 +505,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
             $push: "$productSellerData"
           }
         }
-      }
+      },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(test);
   } catch (error) {
