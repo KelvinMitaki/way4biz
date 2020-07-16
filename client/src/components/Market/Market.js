@@ -127,7 +127,7 @@ function Market(props) {
             );
           })}
       </div>
-      {props.hasMore && <BottomPageLoader />}
+      {props.products.length < props.productCount && <BottomPageLoader />}
     </div>
   );
 }
