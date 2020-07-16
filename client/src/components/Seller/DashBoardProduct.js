@@ -55,9 +55,9 @@ class DashBoardProduct extends React.Component {
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
                   <img
                     src={
-                      product.imageUrl.includes("http")
-                        ? product.imageUrl
-                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                      product.imageUrl[0].includes("http")
+                        ? product.imageUrl[0]
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                     }
                     alt={product.name}
                   />
@@ -105,9 +105,9 @@ class DashBoardProduct extends React.Component {
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
                   <img
                     src={
-                      product.imageUrl.includes("http")
-                        ? product.imageUrl
-                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                      product.imageUrl[0].includes("http")
+                        ? product.imageUrl[0]
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                     }
                     alt={product.name}
                   />

@@ -27,7 +27,14 @@ class MyCart extends React.Component {
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
                         <div className="col-5 col-md-6">
-                          <img src={item.imageUrl} alt={item.name} />
+                          <img
+                            src={
+                              item.imageUrl[0].includes("http")
+                                ? item.imageUrl[0]
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
+                            }
+                            alt={item.name}
+                          />
                         </div>
                         <div className="price-title col-7 col-md-6">
                           <p

@@ -229,7 +229,14 @@ function Products(props) {
                           title={product.name}
                           className="product-link"
                         >
-                          <img src={product.imageUrl} alt={product.name} />
+                          <img
+                            src={
+                              product.imageUrl[0].includes("http")
+                                ? product.imageUrl[0]
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
+                            }
+                            alt={product.name}
+                          />
                           <div>
                             <p
                               className="product-name"
@@ -277,7 +284,7 @@ function Products(props) {
                         title={product.name}
                         className="product-link"
                       >
-                        <img src={product.imageUrl} alt={product.name} />
+                        <img src={product.imageUrl[0]} alt={product.name} />
                         <div>
                           <p
                             className="product-name"
