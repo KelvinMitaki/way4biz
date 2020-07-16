@@ -891,7 +891,7 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
     await axios.post(`/api/images/delete/${productId}`, {
       imageUrl
     });
-    dispatch(fetchSellerProducts());
+    await dispatch(fetchSellerProducts());
     dispatch({ type: DELETE_IMAGE, payload: imageUrl });
     dispatch({ type: DELETE_IMAGE_STOP });
   } catch (error) {
