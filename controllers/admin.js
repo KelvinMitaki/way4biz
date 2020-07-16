@@ -594,4 +594,34 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// DELETE IMAGES FROM S3 AND DB
+route.delete(
+  "/api/images/delete/:productId/:imageId",
+  isSeller,
+  async (req, res) => {
+    try {
+      const { imageId, productId } = req.params;
+      const productOwner = await Product.find({
+        seller: req.session.user._id,
+        imageUrl: imageId
+      });
+      if (!productOwner || productOwner.length === 0) {
+        return res.status(400).send({ message: "unauthorized" });
+      }
+      s3.deleteObject(
+        {
+          Bucket: "e-commerce-gig",
+          Key: imageId
+        },
+        (err, data) => (err ? console.log(err) : console.log(data))
+      );
+      const modifiedProduct = await Product.findByIdAndUpdate(productId, {
+        $pull: { imageUrl: imageId }
+      });
+      res.send(modifiedProduct);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;

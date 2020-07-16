@@ -294,7 +294,7 @@ class Product extends React.Component {
                 <div className="related-products-wrapper">
                   {this.props.relatedProducts.length !== 0 &&
                     this.props.relatedProducts.map(item => (
-                      <a key={item._id} href={`/product/${item._id}`}>
+                      <Link key={item._id} to={`/product/${item._id}`}>
                         <div key={item._id} className="related-product">
                           <img
                             src={
@@ -309,7 +309,7 @@ class Product extends React.Component {
                             Ksh.{item.price.toLocaleString()}{" "}
                           </p>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                 </div>
                 <div className="row product-features-reviews-specifications mt-3">
