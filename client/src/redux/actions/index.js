@@ -82,7 +82,8 @@ import {
   REDIRECT_ON_FAIL_STOP,
   EDIT_PRODUCT,
   DELETE_IMAGE_START,
-  DELETE_IMAGE_STOP
+  DELETE_IMAGE_STOP,
+  DELETE_IMAGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -891,6 +892,7 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
       imageUrl
     });
     fetchSellerProducts();
+    dispatch({ type: DELETE_IMAGE, payload: imageUrl });
     dispatch({ type: DELETE_IMAGE_STOP });
   } catch (error) {
     dispatch({ type: DELETE_IMAGE_STOP });

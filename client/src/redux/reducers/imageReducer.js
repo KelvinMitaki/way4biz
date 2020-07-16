@@ -5,7 +5,8 @@ import {
   STORE_IMAGE_STOP,
   EDIT_PRODUCT,
   DELETE_IMAGE_START,
-  DELETE_IMAGE_STOP
+  DELETE_IMAGE_STOP,
+  DELETE_IMAGE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,6 +27,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, imageUrl: [] };
     case EDIT_PRODUCT:
       return { ...state, imageUrl: [] };
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        imageUrl: state.imageUrl.filter(image => image !== action.payload)
+      };
     case DELETE_IMAGE_START:
       return { ...state, deleteImageLoading: true };
     case DELETE_IMAGE_STOP:
