@@ -422,7 +422,8 @@ route.get("/api/pending/reviews", auth, async (req, res) => {
             $push: "$productData"
           }
         }
-      }
+      },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(orders);
   } catch (error) {
