@@ -13,7 +13,7 @@ import imageReducer from "./imageReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cartReducer", "detailsPersist", "filter"]
+  whitelist: ["cartReducer", "detailsPersist", "filter", "image"]
 };
 
 const reducers = combineReducers({

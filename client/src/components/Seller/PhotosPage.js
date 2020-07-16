@@ -37,27 +37,27 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 1-Add Photo
         </div>
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 2-Resize
         </div>
-        <div className="col-lg-4" style={{ textAlign: "center" }}>
+        <div className="col-xl-4" style={{ textAlign: "center" }}>
           Step 3-Preview
         </div>
       </div>
       <hr className="mb-3" />
       <div className="row no-gutters align-items-center drop-stuff">
-        <div className="col-lg-4">
+        <div className="col-xl-4">
           <ReactDropzone setFiles={setFiles} />
         </div>
-        <div>
+        <div className="col-xl-4">
           {files.length > 0 && (
             <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
           )}
         </div>
-        <div>
+        <div className="col-xl-4">
           {files.length > 0 && (
             <React.Fragment>
               <div
