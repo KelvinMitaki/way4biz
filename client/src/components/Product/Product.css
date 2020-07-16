@@ -147,19 +147,19 @@ hr {
 }
 
 .related-products-wrapper::-webkit-scrollbar,
-.recommended-products-wrapper::-webkit-scrollbar {
+.uploads-container::-webkit-scrollbar {
   height: 8px !important;
 }
 
 .related-products-wrapper::-webkit-scrollbar-track,
-.recommended-products-wrapper::-webkit-scrollbar-track {
+.uploads-container::-webkit-scrollbar-track {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   background-color: transparent;
 }
 
 .related-products-wrapper::-webkit-scrollbar-thumb,
-.recommended-products-wrapper::-webkit-scrollbar-thumb {
+.uploads-container::-webkit-scrollbar-thumb {
   height: 4px;
   width: 20px;
   background-color: #f76b1a !important;
