@@ -10,7 +10,7 @@ import BottomPageLoader from "../Pages/BottomPageLoader";
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -18,7 +18,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -48,7 +48,14 @@ function Market(props) {
                     title={product.name}
                     className="product-link"
                   >
-                    <img src={product.imageUrl} alt={product.name} />
+                    <img
+                      src={
+                        product.imageUrl.includes("http")
+                          ? product.imageUrl
+                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                      }
+                      alt={product.name}
+                    />
                     <div style={{ padding: "0px 10px" }}>
                       <p className="product-name">{product.name}</p>
                       <p style={{ fontWeight: "bolder" }} className="price">
@@ -67,7 +74,7 @@ function Market(props) {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "0px 10px",
+                      padding: "0px 10px"
                     }}
                     className="my-2"
                   >
@@ -84,7 +91,14 @@ function Market(props) {
                   title={product.name}
                   className="product-link"
                 >
-                  <img src={product.imageUrl} alt={product.name} />
+                  <img
+                    src={
+                      product.imageUrl.includes("http")
+                        ? product.imageUrl
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                    }
+                    alt={product.name}
+                  />
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
                     <p style={{ fontWeight: "bolder" }} className="price">
@@ -103,7 +117,7 @@ function Market(props) {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px",
+                    padding: "0px 10px"
                   }}
                   className="my-2"
                 >
@@ -117,11 +131,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore,
+    hasMore: state.product.hasMore
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
