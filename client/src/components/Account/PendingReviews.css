@@ -67,6 +67,12 @@
   text-decoration: none;
 }
 
+.pending-review-rate-link:hover {
+  padding: 3px 5px;
+  background-color: rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1140px) {
   #buyer-review-product-name h6 {
     /* width: 5; */
