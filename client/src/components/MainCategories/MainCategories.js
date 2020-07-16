@@ -17,6 +17,7 @@ import { AiOutlineBars } from "react-icons/ai";
 
 class MainCategories extends React.Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.fetchAllCategories();
   }
   render() {
