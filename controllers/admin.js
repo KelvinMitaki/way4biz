@@ -277,7 +277,9 @@ route.post(
 route.get("/api/products/seller/:sellerId", isSeller, async (req, res) => {
   try {
     const { sellerId } = req.params;
-    const products = await Product.find({ seller: sellerId });
+    const products = await Product.find({ seller: sellerId }).sort({
+      createdAt: -1
+    });
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
@@ -503,7 +505,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
             $push: "$productSellerData"
           }
         }
-      }
+      },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(test);
   } catch (error) {
@@ -587,7 +590,8 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
           "productData.name": 1,
           "productData._id": 1
         }
-      }
+      },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(reviews);
   } catch (error) {

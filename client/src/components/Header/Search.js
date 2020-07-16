@@ -67,7 +67,14 @@ class Search extends React.Component {
                       }
                     >
                       <div className="search-product-image mr-4">
-                        <img src={product.imageUrl} alt={product.name} />
+                        <img
+                          src={
+                            product.imageUrl.includes("http")
+                              ? product.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl} `
+                          }
+                          alt={product.name}
+                        />
                       </div>
                       <p className="search-product-name">
                         {reactSringReplace(

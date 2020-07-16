@@ -99,7 +99,11 @@ class BuyerOrderDetails extends Component {
                             <div className="row">
                               <div className="col-lg-6 d-flex align-items-center">
                                 <img
-                                  src={item.product.imageUrl}
+                                  src={
+                                    item.product.imageUrl.includes("http")
+                                      ? item.product.imageUrl
+                                      : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl} `
+                                  }
                                   alt={item.product.name}
                                   height="150px"
                                 />
