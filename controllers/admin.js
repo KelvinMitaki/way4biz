@@ -599,11 +599,17 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
   try {
     const { productId } = req.params;
     const { imageUrl } = req.body;
-    const productOwner = await Product.find({
+    const productOwner = await Product.findOne({
       _id: productId,
       seller: req.session.user._id
     });
-    if (!productOwner || productOwner.length === 0) {
+    if (productOwner.imageUrl.length < 2) {
+      return res.status(401).send({ message: "Permission denied" });
+    }
+    if (
+      !productOwner ||
+      (productOwner && Object.keys(productOwner).length === 0)
+    ) {
       return res.status(401).send({ message: "unauthorized" });
     }
     s3.deleteObject(

@@ -59,7 +59,10 @@ export class SellerEdit extends Component {
                           {
                             ...formValues,
                             description: this.props.description,
-                            imageUrl: this.props.imageUrl
+                            imageUrl: [
+                              ...this.props.imageUrl,
+                              ...formValues.imageUrl
+                            ]
                           },
                           this.props.initialValues._id,
                           this.props.history
