@@ -1,3 +1,4 @@
+/*global google*/
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
@@ -9,8 +10,30 @@ import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
 import { registerSeller } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
+import AutoComplete from "./Autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import SimpleMap from "./SimpleMap";
 
 export class SellerRegister extends Component {
+  state = {
+    cityLatLng: {},
+    addressLatLng: {
+      lat: -1.28585,
+      lng: 36.8263
+    }
+  };
+  handleCitySelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ cityLatLng: latlng });
+    this.props.change("city", selectedCity);
+  };
+  handleAddressSelect = async selectedAddress => {
+    const results = await geocodeByAddress(selectedAddress);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ addressLatLng: latlng });
+    this.props.change("address", selectedAddress);
+  };
   render() {
     if (this.props.showEmailConfirm) {
       return (
@@ -32,58 +55,90 @@ export class SellerRegister extends Component {
           })}
         >
           <Field
+            required="*"
             type="text"
             name="firstName"
             label="First Name"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="lastName"
             label="Last Name"
             component={AuthField}
           />
 
-          <Field type="text" name="email" label="Email" component={AuthField} />
+          <Field
+            required="*"
+            type="text"
+            name="email"
+            label="Email"
+            component={AuthField}
+          />
           {/* <div className="form-primary-error">
             {this.props.registerError && this.props.registerError}
           </div> */}
           <Field
+            required="*"
             type="text"
             name="phoneNumber"
             label="Phone Number"
             component={PhoneNumber}
           />
           <Field
+            required="*"
             type="password"
             name="password"
             label="Password"
             component={AuthField}
           />
           <Field
+            required="*"
             type="password"
             name="confirmPassword"
             label="Confirm Password"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="storeName"
             label="Store Name"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="description"
             label="Description"
             component={SellerTextArea}
           />
-          <Field type="text" name="city" label="City" component={AuthField} />
           <Field
+            required="*"
+            type="text"
+            name="city"
+            label="City"
+            component={AutoComplete}
+            options={{ types: ["(cities)"] }}
+            onSelect={this.handleCitySelect}
+          />
+          <Field
+            required="*"
             type="text"
             name="address"
             label="Street Address"
-            component={AuthField}
+            component={AutoComplete}
+            options={{
+              location: new google.maps.LatLng(this.state.cityLatLng),
+              radius: 1000,
+              types: ["establishment"]
+            }}
+            onSelect={this.handleAddressSelect}
+          />
+          <SimpleMap
+            key={this.state.addressLatLng.lat}
+            addressLatLng={this.state.addressLatLng}
           />
           <button
             style={{ cursor: "pointer" }}

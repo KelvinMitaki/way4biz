@@ -83,7 +83,8 @@ import {
   EDIT_PRODUCT,
   DELETE_IMAGE_START,
   DELETE_IMAGE_STOP,
-  DELETE_IMAGE
+  DELETE_IMAGE,
+  UNPERSIST_IMAGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -391,7 +392,6 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
       `/api/product/add/${getState().auth.user._id}`,
       product
     );
-    console.log(res.data);
     dispatch({ type: ADD_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
@@ -425,6 +425,11 @@ export const storeImage = image => async dispatch => {
     console.log(error.response.data);
     dispatch({ type: STORE_IMAGE_STOP });
   }
+};
+export const unpersistImage = () => {
+  return {
+    type: UNPERSIST_IMAGE
+  };
 };
 
 export const editProduct = (formvalues, productId, history) => async (

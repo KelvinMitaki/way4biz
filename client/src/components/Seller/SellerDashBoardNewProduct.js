@@ -3,7 +3,7 @@ import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { addProduct } from "../../redux/actions";
+import { addProduct, unpersistImage } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDropDown from "./SellerDropDown";
@@ -42,6 +42,9 @@ const subcategory = [
 ];
 
 export class Sell extends Component {
+  componentWillUnmount() {
+    this.props.unpersistImage();
+  }
   render() {
     if (this.props.deleteImageLoading) return <ScreenLoader />;
     return (
@@ -51,7 +54,7 @@ export class Sell extends Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mt-5">
+          <div className="col-lg-9 p-0 mt-5">
             <div className="container">
               <div className="row">
                 <div className="col">
@@ -59,7 +62,7 @@ export class Sell extends Component {
                 </div>
               </div>
               <div className="row">
-                <div id="dashboard-new-lg-screen" className="col">
+                <div id="dashboard-new-lg-screen" className="col p-0">
                   <form
                     onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(
@@ -203,5 +206,5 @@ export default withRouter(
   reduxForm({
     validate,
     form: "Sell"
-  })(connect(mapStateToProps, { addProduct })(Sell))
+  })(connect(mapStateToProps, { addProduct, unpersistImage })(Sell))
 );

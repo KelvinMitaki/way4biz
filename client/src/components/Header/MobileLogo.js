@@ -8,7 +8,8 @@ class MobileLogo extends React.Component {
     return (
       <div id="mobile-logo" className="primary-background">
         <Link to="/" className="link secondary-link">
-          <h1>LOGO</h1>
+          {/* <h1>LOGO</h1> */}
+          <img className="logo-img" src="/logo.jpg" alt="logo" />
         </Link>
       </div>
     );

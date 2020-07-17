@@ -9,16 +9,16 @@ import BuyerDestination from "./BuyerDestination";
 class DashBoardOrder extends React.Component {
   render() {
     return (
-      <div className="container-fluid p-4" style={{ backgroundColor: "#fff" }}>
+      <div className="container-fluid p-0" style={{ backgroundColor: "#fff" }}>
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
             <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
               Order Info
             </h6>
             <h6 className="col-lg-2 p-0">Items No.</h6>
-            <h6 className="col-lg-3 p-0">Destination</h6>
+            <h6 className="col-lg-2 p-0">Destination</h6>
             <h6 className="col-lg-2 p-0">Total Amount</h6>
-            <h6 className="col-lg-1 p-0">Status</h6>
+            <h6 className="col-lg-2 p-0">Status</h6>
           </div>
         </div>
 
@@ -26,7 +26,7 @@ class DashBoardOrder extends React.Component {
           {/* mapping here */}
           {this.props.sellerOrders &&
             this.props.sellerOrders.length !== 0 &&
-            this.props.sellerOrders.map(order => (
+            this.props.sellerOrders.map((order) => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
                   <div className="col-md-6 col-lg-4">
@@ -54,7 +54,7 @@ class DashBoardOrder extends React.Component {
                             buyer:
                               order.buyerSeller.length !== 0
                                 ? order.buyerSeller
-                                : order.buyerUser
+                                : order.buyerUser,
                           })
                         }
                       >
@@ -67,7 +67,7 @@ class DashBoardOrder extends React.Component {
                       Rongai
                     </div>
                     </div> */}
-                  <div className="col-md-6 col-lg-3">
+                  <div className="col-md-6 col-lg-2">
                     {order.buyerSeller.length !== 0 ? (
                       <BuyerDestination
                         buyerId={order.buyer}
@@ -85,9 +85,9 @@ class DashBoardOrder extends React.Component {
                       <strong className="x mr-2">Amount:</strong>
                       Ksh.
                       {order.productSellerData
-                        .map(prod => {
+                        .map((prod) => {
                           const matchingProd = order.items.find(
-                            item => item.product === prod._id
+                            (item) => item.product === prod._id
                           );
                           if (matchingProd) {
                             return prod.price * matchingProd.quantity;
@@ -98,7 +98,7 @@ class DashBoardOrder extends React.Component {
                         .toLocaleString()}
                     </div>
                   </div>
-                  <div className="col-md-6 col-lg-1">
+                  <div className="col-md-6 col-lg-2">
                     <div>
                       <strong className="x mr-2">Status:</strong>Delivered
                     </div>

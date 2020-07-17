@@ -2,10 +2,6 @@
   display: none;
 }
 
-.seller-dashboard-wrapper {
-  margin: 20px;
-}
-
 @media screen and (max-width: 960px) {
   #dashboard-orders-lg-screen {
     display: none;
@@ -16,6 +12,17 @@
   }
 
   .seller-dashboard-wrapper {
-    margin: 0px;
+    width: 100vw !important;
+    /* margin: auto; */
+    /* text-align: center; */
+  }
+
+  .seller-orders-title {
+    width: 100vw !important;
+  }
+
+  .order-tab {
+    background-color: #fff;
+    width: 100vw;
   }
 }

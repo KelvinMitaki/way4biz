@@ -8,13 +8,13 @@ import { signInClick, registerClick } from "../../redux/actions";
 import { connect } from "react-redux";
 
 class Authenticate extends React.Component {
-  handleSignInClick(e) {
+  handleSignInClick = e => {
     this.props.signInClick();
-  }
+  };
 
-  handleRegisterClick(e) {
+  handleRegisterClick = e => {
     this.props.registerClick();
-  }
+  };
 
   render() {
     return (

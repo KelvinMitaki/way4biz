@@ -2,10 +2,12 @@ import React from "react";
 
 import "../Authenticate/Field.css";
 
-const PhoneNumber = (props) => {
+const PhoneNumber = props => {
   return (
     <div className="form-group form-input">
-      <strong>{props.label}</strong>
+      <strong>
+        {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
+      </strong>
       <div className="input-group">
         <br />
         <div className="input-group-prepend phone-prepend">

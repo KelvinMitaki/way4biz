@@ -1,12 +1,11 @@
 import {
   STORE_IMAGE,
   ADD_PRODUCT,
-  STORE_IMAGE_START,
-  STORE_IMAGE_STOP,
   EDIT_PRODUCT,
   DELETE_IMAGE_START,
   DELETE_IMAGE_STOP,
-  DELETE_IMAGE
+  DELETE_IMAGE,
+  UNPERSIST_IMAGE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -31,6 +30,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deleteImageLoading: true };
     case DELETE_IMAGE_STOP:
       return { ...state, deleteImageLoading: false };
+    case UNPERSIST_IMAGE:
+      return { ...state, imageUrl: [] };
     default:
       return state;
   }

@@ -1,10 +1,9 @@
+/*global google*/
 import React from "react";
 import FormField from "./FormField";
 import "./AddressForm.css";
 import { reduxForm, Field } from "redux-form";
 import validator from "validator";
-import SelectField from "./SelectField";
-import TextareaForm from "./TextareaField";
 import { withRouter } from "react-router-dom";
 import AddressPhoneNumber from "../Account/AddressPhoneNumber";
 import Footer from "../Footer/Footer";
@@ -12,16 +11,51 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
 import { checkoutUser } from "../../redux/actions";
-const category = [
-  { key: "nairobi", text: "Nairobi", value: "nairobi" },
-  { key: "kajiado", text: "Kajiado", value: "kajiado" },
-  { key: "kisumu", text: "Kisumu", value: "kisumu" },
-  { key: "mombasa", text: "Mombasa", value: "mombasa" },
-  { key: "embu", text: "Embu", value: "embu" },
-  { key: "meru", text: "Meru", value: "meru" }
-];
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import AutoComplete from "../Account/Autocomplete";
+import SimpleMap from "../Account/SimpleMap";
 
 class AddressForm extends React.Component {
+  state = {
+    cityLatLng: {},
+    townLatLng: {},
+    addressLatLng: {
+      lat: -1.28585,
+      lng: 36.8263
+    }
+  };
+  componentDidMount() {
+    if (this.props.initialValues.city) {
+      const { city } = this.props.initialValues;
+      this.handleCitySelect(city);
+    }
+    if (this.props.initialValues.town) {
+      const { town } = this.props.initialValues;
+      this.handleTownSelect(town);
+    }
+    if (this.props.initialValues.address) {
+      const { address } = this.props.initialValues;
+      this.handleAddressSelect(address);
+    }
+  }
+  handleCitySelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ cityLatLng: latlng });
+    this.props.change("city", selectedCity);
+  };
+  handleTownSelect = async selectedTown => {
+    const results = await geocodeByAddress(selectedTown);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ townLatLng: latlng });
+    this.props.change("town", selectedTown);
+  };
+  handleAddressSelect = async selectedAddress => {
+    const results = await geocodeByAddress(selectedAddress);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ addressLatLng: latlng });
+    this.props.change("address", selectedAddress);
+  };
   render() {
     return (
       <div className="main">
@@ -59,23 +93,37 @@ class AddressForm extends React.Component {
                     component={AddressPhoneNumber}
                   />
                   <Field
-                    name="address"
-                    label="Delivery Address"
-                    component={TextareaForm}
-                  />
-                  <Field
+                    type="text"
                     name="city"
                     label="City"
-                    options={category}
-                    component={SelectField}
+                    component={AutoComplete}
+                    options={{ types: ["(cities)"] }}
+                    onSelect={this.handleCitySelect}
                   />
                   <Field
+                    type="text"
                     name="town"
                     label="Town"
-                    options={category}
-                    component={SelectField}
+                    component={AutoComplete}
+                    options={{ types: ["(cities)"] }}
+                    onSelect={this.handleTownSelect}
                   />
-
+                  <Field
+                    type="text"
+                    name="address"
+                    label="Street Address"
+                    component={AutoComplete}
+                    options={{
+                      location: new google.maps.LatLng(this.state.cityLatLng),
+                      radius: 1000,
+                      types: ["establishment"]
+                    }}
+                    onSelect={this.handleAddressSelect}
+                  />
+                  <SimpleMap
+                    key={this.state.addressLatLng.lat}
+                    addressLatLng={this.state.addressLatLng}
+                  />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
                     disabled={!this.props.valid || this.props.loading}
