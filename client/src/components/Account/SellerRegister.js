@@ -130,6 +130,7 @@ export class SellerRegister extends Component {
               radius: 1000,
               types: ["establishment"]
             }}
+            onSelect={this.handleAddressSelect}
           />
           <button
             style={{ cursor: "pointer" }}

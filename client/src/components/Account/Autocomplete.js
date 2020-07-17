@@ -9,6 +9,7 @@ const AutoComplete = props => {
       value={props.input.value}
       onChange={props.input.onChange}
       searchOptions={props.options}
+      onSelect={props.onSelect}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div className="form-group form-input mt-3">
@@ -32,7 +33,7 @@ const AutoComplete = props => {
 
               {suggestions.map(suggestion => (
                 <React.Fragment key={v1()}>
-                  <div>
+                  <div {...getSuggestionItemProps(suggestion)}>
                     <strong>{suggestion.formattedSuggestion.mainText}</strong>
                     <p>{suggestion.formattedSuggestion.secondaryText}</p>
                   </div>
