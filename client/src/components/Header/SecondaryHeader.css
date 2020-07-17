@@ -1,8 +1,9 @@
 .secondary-header {
   height: 30px;
-  width: 100vw;
+  min-width: 100vw;
   position: relative;
   z-index: -10 !important;
+  margin: auto;
 }
 
 #large-screen-secondary-header {
