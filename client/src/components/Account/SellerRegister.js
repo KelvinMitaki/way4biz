@@ -32,54 +32,74 @@ export class SellerRegister extends Component {
           })}
         >
           <Field
+            required="*"
             type="text"
             name="firstName"
             label="First Name"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="lastName"
             label="Last Name"
             component={AuthField}
           />
 
-          <Field type="text" name="email" label="Email" component={AuthField} />
+          <Field
+            required="*"
+            type="text"
+            name="email"
+            label="Email"
+            component={AuthField}
+          />
           {/* <div className="form-primary-error">
             {this.props.registerError && this.props.registerError}
           </div> */}
           <Field
+            required="*"
             type="text"
             name="phoneNumber"
             label="Phone Number"
             component={PhoneNumber}
           />
           <Field
+            required="*"
             type="password"
             name="password"
             label="Password"
             component={AuthField}
           />
           <Field
+            required="*"
             type="password"
             name="confirmPassword"
             label="Confirm Password"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="storeName"
             label="Store Name"
             component={AuthField}
           />
           <Field
+            required="*"
             type="text"
             name="description"
             label="Description"
             component={SellerTextArea}
           />
-          <Field type="text" name="city" label="City" component={AuthField} />
           <Field
+            required="*"
+            type="text"
+            name="city"
+            label="City"
+            component={AuthField}
+          />
+          <Field
+            required="*"
             type="text"
             name="address"
             label="Street Address"
