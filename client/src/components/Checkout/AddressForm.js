@@ -24,9 +24,20 @@ class AddressForm extends React.Component {
       lng: 36.8263
     }
   };
-  // componentDidMount(){
-  //   console.log(props)
-  // }
+  componentDidMount() {
+    if (this.props.initialValues.city) {
+      const { city } = this.props.initialValues;
+      this.handleCitySelect(city);
+    }
+    if (this.props.initialValues.town) {
+      const { town } = this.props.initialValues;
+      this.handleTownSelect(town);
+    }
+    if (this.props.initialValues.address) {
+      const { address } = this.props.initialValues;
+      this.handleAddressSelect(address);
+    }
+  }
   handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
