@@ -120,6 +120,7 @@ export class SellerRegister extends Component {
             type="text"
             name="city"
             label="City"
+            className="location-input"
             component={AutoComplete}
             options={{ types: ["(cities)"] }}
             onSelect={this.handleCitySelect}
@@ -129,6 +130,7 @@ export class SellerRegister extends Component {
             type="text"
             name="address"
             label="Street Address"
+            className="location-input"
             component={AutoComplete}
             options={{
               location: new google.maps.LatLng(this.state.cityLatLng),

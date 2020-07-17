@@ -13,7 +13,7 @@ const AutoComplete = (props) => {
       onSelect={props.onSelect}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div className="form-group form-input mt-3 location-input">
+        <div style={{ marginTop: "10px" }} className={props.className}>
           <strong style={{ height: "10px" }}>
             {props.label}{" "}
             <span style={{ color: "#f76b1a" }}>{props.required}</span>
