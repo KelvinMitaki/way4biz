@@ -9,6 +9,7 @@ import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
 import { registerSeller } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
+import AutoComplete from "./Autocomplete";
 
 export class SellerRegister extends Component {
   render() {
@@ -96,7 +97,7 @@ export class SellerRegister extends Component {
             type="text"
             name="city"
             label="City"
-            component={AuthField}
+            component={AutoComplete}
           />
           <Field
             required="*"
