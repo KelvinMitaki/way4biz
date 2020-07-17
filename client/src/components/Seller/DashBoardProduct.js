@@ -21,7 +21,10 @@ class DashBoardProduct extends React.Component {
       });
 
     return (
-      <div className="container-fluid" style={{ backgroundColor: "white" }}>
+      <div
+        className="container"
+        style={{ backgroundColor: "white", padding: "10px" }}
+      >
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
             <h6 className="col-lg-5 p-0" style={{ textAlign: "left" }}>

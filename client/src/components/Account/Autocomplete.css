@@ -2,8 +2,6 @@
   position: relative;
   width: 500px;
   margin: auto;
-
-  /* z-index: 20; */
 }
 
 .location-input input {
@@ -38,4 +36,10 @@
 .city-name:hover {
   background-color: #eaecee;
   color: #f76b1a;
+}
+
+@media screen and (max-width: 960px) {
+  .location-input {
+    width: 90vw;
+  }
 }
