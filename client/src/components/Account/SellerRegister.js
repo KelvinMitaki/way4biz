@@ -1,3 +1,4 @@
+/*global google*/
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
@@ -10,8 +11,25 @@ import EmailConfirm from "../Authenticate/EmailConfirm";
 import { registerSeller } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 export class SellerRegister extends Component {
+  state = {
+    cityLatLng: {},
+    addressLatLng: {}
+  };
+  handleCitySelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ cityLatLng: latlng });
+    this.props.change("city", selectedCity);
+  };
+  handleAddressSelect = async selectedAddress => {
+    const results = await geocodeByAddress(selectedAddress);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ AddressLatLng: latlng });
+    this.props.change("address", selectedAddress);
+  };
   render() {
     if (this.props.showEmailConfirm) {
       return (
@@ -98,13 +116,20 @@ export class SellerRegister extends Component {
             name="city"
             label="City"
             component={AutoComplete}
+            options={{ types: ["(cities)"] }}
+            onSelect={this.handleCitySelect}
           />
           <Field
             required="*"
             type="text"
             name="address"
             label="Street Address"
-            component={AuthField}
+            component={AutoComplete}
+            options={{
+              location: new google.maps.LatLng(this.state.cityLatLng),
+              radius: 1000,
+              types: ["establishment"]
+            }}
           />
           <button
             style={{ cursor: "pointer" }}

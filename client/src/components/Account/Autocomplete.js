@@ -30,12 +30,9 @@ const AutoComplete = props => {
             <div>
               {loading && <div>Loading...</div>}
 
-              {suggestions.map((suggestion, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    // eslint-disable-next-line
-                    key={suggestion.id}
-                  >
+              {suggestions.map(suggestion => (
+                <React.Fragment key={v1()}>
+                  <div>
                     <strong>{suggestion.formattedSuggestion.mainText}</strong>
                     <p>{suggestion.formattedSuggestion.secondaryText}</p>
                   </div>
