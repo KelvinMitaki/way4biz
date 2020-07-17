@@ -38,7 +38,6 @@ import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
 import ScrollToTop from "./ScrollToTop";
-import LocationSearchInput from "./components/PlacesAutocomplete/PlacesAutocomplete";
 
 class App extends React.Component {
   componentDidMount() {
@@ -52,7 +51,6 @@ class App extends React.Component {
       return (
         <div id="main">
           <MobileLogo />
-          <LocationSearchInput />
           <ScrollToTop>
             <div>
               <Route path="/" exact component={Home} />
