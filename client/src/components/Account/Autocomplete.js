@@ -13,14 +13,15 @@ const AutoComplete = (props) => {
       onSelect={props.onSelect}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div className="form-group form-input mt-3">
-          <strong>
+        <div className="form-group form-input mt-3 location-input">
+          <strong style={{ height: "10px" }}>
             {props.label}{" "}
             <span style={{ color: "#f76b1a" }}>{props.required}</span>
           </strong>
-          <br />
+
           <input
             className="form-control authenticate-field"
+            style={{ marginTop: "10px" }}
             type={props.type}
             {...getInputProps({ onBlur: props.input.onBlur })}
           />

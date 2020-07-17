@@ -1,8 +1,18 @@
+.location-input {
+  position: relative;
+  /* z-index: 20; */
+}
+
 .city-locations {
   background-color: #fff;
   border: 1px solid #d4d4d4;
   border-top: 0px;
-  position: relative;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .city-name {
