@@ -1,0 +1,15 @@
+.city-locations {
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  border-top: 0px;
+}
+
+.city-name {
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.city-name:hover {
+  background-color: #eaecee;
+  color: #f76b1a;
+}

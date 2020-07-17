@@ -64,13 +64,13 @@
   text-decoration: none;
 }
 
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   #large-screen-secondary-header {
     padding: 0px 80px;
   }
-}
+} */
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1200px) {
   #large-screen-secondary-header {
     display: none !important;
   }
@@ -80,11 +80,11 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+/* @media screen and (max-width: 540px) {
   .owl-item {
     font-size: medium !important;
-    /* min-width: 80px; */
+    min-width: 80px;
     width: auto;
     background-color: #00001e !important;
   }
-}
+} */

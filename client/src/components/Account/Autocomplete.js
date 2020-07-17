@@ -2,8 +2,9 @@ import React from "react";
 import { v1 } from "uuid";
 import "../Authenticate/Field.css";
 import PlacesAutocomplete from "react-places-autocomplete";
+import "./Autocomplete.css";
 
-const AutoComplete = props => {
+const AutoComplete = (props) => {
   return (
     <PlacesAutocomplete
       value={props.input.value}
@@ -28,14 +29,16 @@ const AutoComplete = props => {
             {props.meta.touched && props.meta.error}
           </div>
           {suggestions.length > 0 && (
-            <div>
+            <div className="city-locations">
               {loading && <div>Loading...</div>}
 
-              {suggestions.map(suggestion => (
+              {suggestions.map((suggestion) => (
                 <React.Fragment key={v1()}>
                   <div {...getSuggestionItemProps(suggestion)}>
-                    <strong>{suggestion.formattedSuggestion.mainText}</strong>
-                    <p>{suggestion.formattedSuggestion.secondaryText}</p>
+                    <div className="city-name">
+                      <strong>{suggestion.formattedSuggestion.mainText}</strong>
+                      <p>{suggestion.formattedSuggestion.secondaryText}</p>
+                    </div>
                   </div>
                 </React.Fragment>
               ))}
