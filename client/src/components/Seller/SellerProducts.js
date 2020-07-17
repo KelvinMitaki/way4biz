@@ -51,7 +51,7 @@ class SellerProducts extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9 mt-5">
-            <div className="container">
+            <div className="container seller-dashboard-wrapper m-0">
               <div className="row">
                 <div className="col-lg-12 p-0">
                   <Tabs
