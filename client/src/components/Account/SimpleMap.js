@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { IconContext } from "react-icons";
 
 const AnyReactComponent = () => (
   <FaMapMarkerAlt style={{ fontSize: "20px", color: "red" }} />

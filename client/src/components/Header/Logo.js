@@ -8,7 +8,7 @@ class Logo extends React.Component {
       <div id={this.props.id}>
         <Link to="/" className="link secondary-link">
           {/* <h1>LOGO</h1> */}
-          <img className="logo-img" src="/logo.jpg" />
+          <img className="logo-img" src="/logo.jpg" alt="logo" />
         </Link>
       </div>
     );
