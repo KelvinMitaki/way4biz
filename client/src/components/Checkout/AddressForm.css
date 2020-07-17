@@ -17,3 +17,18 @@
   background-color: #f76b1a;
   color: #fff;
 }
+
+.address-location-input {
+  position: relative;
+}
+
+.address-location-input input {
+  border: 1px solid #d4d4d4;
+  height: 50px;
+}
+
+.address-location-input input:focus {
+  box-shadow: none;
+  outline: none;
+  border: 1px solid #d4d4d4;
+}
