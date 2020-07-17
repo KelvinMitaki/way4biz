@@ -1,12 +1,22 @@
-const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
+const distance = require("google-distance-matrix");
 
 const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 const Review = require("../models/Reviews");
+
+route.get("/api/test/123", (req, res) => {
+  const origins = ["nairobi"];
+  const destination = ["mombasa"];
+  const mode = "DRIVING";
+  distance.key(process.env.MATRIX);
+  distance.matrix(origins, destination, mode, (err, response) =>
+    err ? res.send(err) : res.send(response)
+  );
+});
 
 route.post("/api/products", async (req, res) => {
   try {
