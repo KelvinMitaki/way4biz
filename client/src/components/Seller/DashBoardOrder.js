@@ -9,7 +9,10 @@ import BuyerDestination from "./BuyerDestination";
 class DashBoardOrder extends React.Component {
   render() {
     return (
-      <div className="container-fluid p-0" style={{ backgroundColor: "#fff" }}>
+      <div
+        className="container"
+        style={{ backgroundColor: "#fff", padding: "10px" }}
+      >
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
             <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
