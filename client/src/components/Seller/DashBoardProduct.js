@@ -5,23 +5,23 @@ import "./DashBoardProduct.css";
 
 class DashBoardProduct extends React.Component {
   state = {
-    search: null
+    search: null,
   };
-  onSearchChange = event => {
+  onSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
     const test =
       this.props.products &&
       this.props.products.length !== 0 &&
-      this.props.products.filter(product => {
+      this.props.products.filter((product) => {
         return product.name
           .toLowerCase()
           .includes(this.state.search && this.state.search.toLowerCase());
       });
 
     return (
-      <div className="container-fluid p-4" style={{ backgroundColor: "white" }}>
+      <div className="container-fluid" style={{ backgroundColor: "white" }}>
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
             <h6 className="col-lg-5 p-0" style={{ textAlign: "left" }}>
@@ -47,7 +47,7 @@ class DashBoardProduct extends React.Component {
           {this.props.products &&
             !this.state.search &&
             this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -97,7 +97,7 @@ class DashBoardProduct extends React.Component {
             ))}
           {test &&
             test.length !== 0 &&
-            test.map(product => (
+            test.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"

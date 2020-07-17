@@ -51,6 +51,7 @@
 .seller-db-panel,
 .order-db-panel {
   background-color: #fff !important;
+  padding: 4px !important;
 }
 
 .search-2:focus {

@@ -2,10 +2,6 @@
   display: none;
 }
 
-.seller-dashboard-wrapper {
-  margin: 20px;
-}
-
 @media screen and (max-width: 960px) {
   #dashboard-orders-lg-screen {
     display: none;
@@ -16,6 +12,12 @@
   }
 
   .seller-dashboard-wrapper {
-    margin: 0px;
+    width: 90%;
+    margin: auto;
+  }
+
+  .order-tab {
+    background-color: #fff;
+    width: 100vw;
   }
 }

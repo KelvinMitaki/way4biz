@@ -25,20 +25,20 @@ class SellerProducts extends React.Component {
             products={this.props.sellerProducts}
             category="total"
           />
-        )
+        ),
       },
       { title: "Live On Site", data: <DashBoardProduct category="live" /> },
       { title: "Under Review", data: <DashBoardProduct category="review" /> },
       { title: "Rejected", data: <DashBoardProduct category="rejected" /> },
-      { title: "Sold Out", data: <DashBoardProduct category="sold-out" /> }
+      { title: "Sold Out", data: <DashBoardProduct category="sold-out" /> },
     ];
 
     return tabs.map((tab, index) => ({
       title: tab.title,
       getContent: () => tab.data,
       key: index,
-      tabClassName: "tab",
-      panelClassName: "seller-db-panel"
+      tabClassName: "products-tab",
+      panelClassName: "seller-db-panel",
     }));
   }
   render() {
@@ -53,7 +53,7 @@ class SellerProducts extends React.Component {
           <div className="col-lg-9 mt-5">
             <div className="container">
               <div className="row">
-                <div className="col-lg-12">
+                <div className="col-lg-12 p-0">
                   <Tabs
                     items={this.getTabs()}
                     transformWidth={960}
@@ -70,10 +70,10 @@ class SellerProducts extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerProducts: state.sellerRegister.sellerProducts,
-    sellerProductsLoading: state.auth.sellerProductsLoading
+    sellerProductsLoading: state.auth.sellerProductsLoading,
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

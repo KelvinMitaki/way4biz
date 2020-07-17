@@ -45,6 +45,9 @@
   #dashboard-products-sm-screen {
     display: block;
   }
+  .products-tab {
+    width: 100vw !important;
+  }
 }
 
 /* @media screen and (max-width: 960px) {
