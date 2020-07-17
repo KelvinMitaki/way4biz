@@ -24,7 +24,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" }
+  { key: "watches", text: "Watches", value: "watches" },
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -38,7 +38,7 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" }
+  { key: "utensils", text: "Utensils", value: "utensils" },
 ];
 
 export class Sell extends Component {
@@ -51,7 +51,7 @@ export class Sell extends Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mt-5">
+          <div className="col-lg-9 p-0 mt-5">
             <div className="container">
               <div className="row">
                 <div className="col">
@@ -59,14 +59,14 @@ export class Sell extends Component {
                 </div>
               </div>
               <div className="row">
-                <div id="dashboard-new-lg-screen" className="col">
+                <div id="dashboard-new-lg-screen" className="col p-0">
                   <form
-                    onSubmit={this.props.handleSubmit(formValues =>
+                    onSubmit={this.props.handleSubmit((formValues) =>
                       this.props.addProduct(
                         {
                           ...formValues,
                           description: this.props.description,
-                          imageUrl: this.props.imageUrl
+                          imageUrl: this.props.imageUrl,
                         },
                         this.props.history
                       )
@@ -160,7 +160,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.name ||
@@ -191,17 +191,17 @@ const validate = formValues => {
 
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     description: state.product.description,
     imageUrl: state.image.imageUrl,
-    deleteImageLoading: state.image.deleteImageLoading
+    deleteImageLoading: state.image.deleteImageLoading,
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell"
+    form: "Sell",
   })(connect(mapStateToProps, { addProduct })(Sell))
 );

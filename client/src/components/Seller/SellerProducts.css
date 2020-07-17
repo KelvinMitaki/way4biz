@@ -2,17 +2,6 @@
   padding: 20px;
 }
 
-.my-tab {
-  color: #f76b1a !important;
-}
-
-/* .tab ul > li.active > a,
-.tab ul > li.active > a:hover,
-.tab ul > li.active > a:focus {
-  background-color: red;
-  color: white;
-} */
-
 .nav-link.focus {
   border: none !important;
 }
@@ -44,6 +33,9 @@
 
   #dashboard-products-sm-screen {
     display: block;
+  }
+  .products-tab {
+    width: 100vw !important;
   }
 }
 

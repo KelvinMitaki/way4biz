@@ -66,14 +66,13 @@
 
 @media screen and (max-width: 1024px) {
   #large-screen-secondary-header {
-    padding: 0px 130px;
+    padding: 0px 80px;
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1080px) {
   #large-screen-secondary-header {
     display: none !important;
-    background-color: red;
   }
 
   #small-screen-secondary-header {

@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.logo-img {
+  height: 80px;
+}
+
 #logo h1 {
   align-self: center;
 }

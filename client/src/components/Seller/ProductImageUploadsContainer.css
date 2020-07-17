@@ -41,6 +41,10 @@
   padding: 0px;
   border: none;
 }
+
+.disable-trash {
+  pointer-events: none;
+}
 .upload-image-trash-button:hover {
   color: #fff;
 }
