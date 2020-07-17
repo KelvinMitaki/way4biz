@@ -12,11 +12,15 @@ import { registerSeller } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import SimpleMap from "./SimpleMap";
 
 export class SellerRegister extends Component {
   state = {
     cityLatLng: {},
-    addressLatLng: {}
+    addressLatLng: {
+      lat: -1.28585,
+      lng: 36.8263
+    }
   };
   handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
@@ -27,7 +31,7 @@ export class SellerRegister extends Component {
   handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
-    this.setState({ AddressLatLng: latlng });
+    this.setState({ addressLatLng: latlng });
     this.props.change("address", selectedAddress);
   };
   render() {
@@ -131,6 +135,10 @@ export class SellerRegister extends Component {
               types: ["establishment"]
             }}
             onSelect={this.handleAddressSelect}
+          />
+          <SimpleMap
+            key={this.state.addressLatLng.lat}
+            addressLatLng={this.state.addressLatLng}
           />
           <button
             style={{ cursor: "pointer" }}

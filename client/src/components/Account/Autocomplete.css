@@ -18,6 +18,7 @@
 .city-name {
   padding: 5px;
   padding-left: 10px;
+  cursor: pointer;
 }
 
 .city-name:hover {
