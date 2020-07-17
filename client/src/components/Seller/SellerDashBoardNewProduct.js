@@ -3,7 +3,7 @@ import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { addProduct } from "../../redux/actions";
+import { addProduct, unpersistImage } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDropDown from "./SellerDropDown";
@@ -24,7 +24,7 @@ const category = [
   { key: "jewelry", text: "Jewelry", value: "jewelry" },
   { key: "bags", text: "Bags", value: "bags" },
   { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" },
+  { key: "watches", text: "Watches", value: "watches" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -38,10 +38,13 @@ const subcategory = [
   { key: "fendi", text: "Fendi", value: "fendi" },
   { key: "x-box", text: "X-box", value: "x-box" },
   { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
+  { key: "utensils", text: "Utensils", value: "utensils" }
 ];
 
 export class Sell extends Component {
+  componentWillUnmount() {
+    this.props.unpersistImage();
+  }
   render() {
     if (this.props.deleteImageLoading) return <ScreenLoader />;
     return (
@@ -61,12 +64,12 @@ export class Sell extends Component {
               <div className="row">
                 <div id="dashboard-new-lg-screen" className="col p-0">
                   <form
-                    onSubmit={this.props.handleSubmit((formValues) =>
+                    onSubmit={this.props.handleSubmit(formValues =>
                       this.props.addProduct(
                         {
                           ...formValues,
                           description: this.props.description,
-                          imageUrl: this.props.imageUrl,
+                          imageUrl: this.props.imageUrl
                         },
                         this.props.history
                       )
@@ -160,7 +163,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -191,17 +194,17 @@ const validate = (formValues) => {
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     description: state.product.description,
     imageUrl: state.image.imageUrl,
-    deleteImageLoading: state.image.deleteImageLoading,
+    deleteImageLoading: state.image.deleteImageLoading
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell",
-  })(connect(mapStateToProps, { addProduct })(Sell))
+    form: "Sell"
+  })(connect(mapStateToProps, { addProduct, unpersistImage })(Sell))
 );
