@@ -1,16 +1,12 @@
 import React from "react";
 
-const SellerDropDown = props => {
+const SellerDropDown = (props) => {
   return (
     <div className="form-group seller-input-field">
       <h5>{props.label}</h5>
-      <select
-        {...props.input}
-        className="form-control"
-        style={{ borderRadius: "40px" }}
-      >
+      <select {...props.input} className="form-control">
         <option value="choose">------Please Choose An Option------</option>
-        {props.options.map(option => (
+        {props.options.map((option) => (
           <option key={option.key} value={option.key}>
             {option.text}
           </option>

@@ -49,10 +49,18 @@ textarea {
   height: 50px;
 }
 
-textarea {
+/* textarea {
   overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+} */
+
+textarea {
+  overflow-y: auto;
+}
+
+textarea::-webkit-scrollbar {
+  width: 0px;
 }
 /* textarea::-webkit-scrollbar {
 

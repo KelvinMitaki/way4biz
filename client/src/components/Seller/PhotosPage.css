@@ -5,6 +5,10 @@
   height: 300px;
 }
 
+.product-image-upload-hero {
+  padding: 10px 0px;
+}
+
 .product-upload-btn-wrapper div {
   background-color: #f76b1a;
   color: #fff;
