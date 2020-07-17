@@ -38,6 +38,7 @@ import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
 import ScrollToTop from "./ScrollToTop";
+import LocationSearchInput from "./components/PlacesAutocomplete/PlacesAutocomplete";
 
 class App extends React.Component {
   componentDidMount() {
@@ -51,6 +52,7 @@ class App extends React.Component {
       return (
         <div id="main">
           <MobileLogo />
+          <LocationSearchInput />
           <ScrollToTop>
             <div>
               <Route path="/" exact component={Home} />
@@ -331,16 +333,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
