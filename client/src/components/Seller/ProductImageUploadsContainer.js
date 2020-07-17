@@ -2,7 +2,7 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 import "./ProductImageUploadsContainer.css";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteImage } from "../../redux/actions";
 

@@ -9,7 +9,7 @@ export class BuyerDestination extends Component {
         <div>
           <strong className="x mr-2">Destination:</strong>
         </div>
-        <p>{this.props.buyer.address} This and That</p>
+        <p>{this.props.buyer.address}</p>
       </div>
     );
   }
