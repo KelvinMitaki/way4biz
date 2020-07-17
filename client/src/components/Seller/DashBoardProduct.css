@@ -89,11 +89,20 @@
   }
 }
 
+@media screen and (max-width: 480px) {
+  .dashboard-product-wrapper div {
+    margin-bottom: 10px;
+  }
+  .seller-db-prod-name {
+    max-width: 300px;
+  }
+}
+
 @media screen and (max-width: 420px) {
   .dashboard-product-wrapper div {
     margin-bottom: 10px;
   }
   .seller-db-prod-name {
-    max-width: 100px;
+    max-width: 200px;
   }
 }
