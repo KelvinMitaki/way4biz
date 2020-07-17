@@ -53,7 +53,7 @@ class ProductImageUploadsContainer extends React.Component {
                   this.props.deleteImage(url, this.props.match.params.productId)
                 }
                 className={`btn upload-image-trash-button  ${
-                  imageLength === 1 && `disable-trash`
+                  imageLength === 1 && `disable-trash disabled`
                 }`}
               >
                 <FaTrashAlt className="m-0 p-0" />{" "}
