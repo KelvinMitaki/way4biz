@@ -10,7 +10,7 @@ import BottomPageLoader from "../Pages/BottomPageLoader";
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    node => {
+    (node) => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -18,7 +18,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -38,9 +38,9 @@ function Market(props) {
             if (props.products.length === index + 1) {
               return (
                 <div
+                  key={product._id}
                   className="product"
                   ref={lastItemElementRef}
-                  key={product._id}
                 >
                   <Link
                     key={product._id}
@@ -56,6 +56,7 @@ function Market(props) {
                       }
                       alt={product.name}
                     />
+
                     <div style={{ padding: "0px 10px" }}>
                       <p className="product-name">{product.name}</p>
                       <p style={{ fontWeight: "bolder" }} className="price">
@@ -74,7 +75,7 @@ function Market(props) {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "0px 10px"
+                      padding: "0px 10px",
                     }}
                     className="my-2"
                   >
@@ -91,6 +92,7 @@ function Market(props) {
                   title={product.name}
                   className="product-link"
                 >
+                  {/* <LazyLoad placeholder={<ProductLazyLoad />} height={300}> */}{" "}
                   <img
                     src={
                       product.imageUrl[0].includes("http")
@@ -99,6 +101,7 @@ function Market(props) {
                     }
                     alt={product.name}
                   />
+                  {/* </LazyLoad> */}
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
                     <p style={{ fontWeight: "bolder" }} className="price">
@@ -117,7 +120,7 @@ function Market(props) {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px"
+                    padding: "0px 10px",
                   }}
                   className="my-2"
                 >
@@ -131,11 +134,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore
+    hasMore: state.product.hasMore,
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
