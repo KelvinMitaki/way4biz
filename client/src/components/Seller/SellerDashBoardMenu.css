@@ -22,7 +22,10 @@
 }
 
 #seller-menu-items li {
-  padding: 7px 7px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 
 #seller-menu-items li:hover {

@@ -102,6 +102,7 @@ class AddressForm extends React.Component {
                     type="text"
                     name="city"
                     label="City"
+                    className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
                     onSelect={this.handleCitySelect}
@@ -110,6 +111,7 @@ class AddressForm extends React.Component {
                     type="text"
                     name="town"
                     label="Town"
+                    className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
                     onSelect={this.handleTownSelect}
@@ -129,6 +131,7 @@ class AddressForm extends React.Component {
                   <SimpleMap
                     key={this.state.addressLatLng.lat}
                     addressLatLng={this.state.addressLatLng}
+                    className="account-map"
                   />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "

@@ -8,10 +8,10 @@ class AdminDashBoard extends React.Component {
       <div className="container-fluid dashboard-wrapper">
         <AdminDashBoardHeader />
         <div className="row no-gutters">
-          <div className="col-md-3">
+          {/* <div className="col-md-3">
             <AdminDashBoardMenu />
-          </div>
-          <div className="col-md-9"></div>
+          </div> */}
+          <div className="col"></div>
         </div>
       </div>
     );
