@@ -11,6 +11,9 @@ class AdminDashBoardHeader extends React.Component {
       <div className="primary-background d-flex" id="admin-dashboard-header">
         <AdminHamburger />
         <Logo id="admin-logo" />
+        <ul className="admin-menu-items">
+          <li>Sellers </li>
+        </ul>
         <ProfileImage />
       </div>
     );
