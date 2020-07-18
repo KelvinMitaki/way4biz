@@ -84,7 +84,9 @@ import {
   DELETE_IMAGE_START,
   DELETE_IMAGE_STOP,
   DELETE_IMAGE,
-  UNPERSIST_IMAGE
+  UNPERSIST_IMAGE,
+  PAYMENT_DISTANCE_START,
+  PAYMENT_DISTANCE_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -902,5 +904,17 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
   } catch (error) {
     dispatch({ type: DELETE_IMAGE_STOP });
     console.log(error.response.data);
+  }
+};
+
+export const paymentPerDistance = details => async dispatch => {
+  try {
+    dispatch({ type: PAYMENT_DISTANCE_START });
+    const res = await axios.post(`/api/buyer/destination`, details);
+    console.log(res.data);
+    dispatch({ type: PAYMENT_DISTANCE_STOP });
+  } catch (error) {
+    dispatch({ type: PAYMENT_DISTANCE_STOP });
+    console.log(error.response);
   }
 };
