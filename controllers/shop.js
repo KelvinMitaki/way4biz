@@ -512,15 +512,16 @@ route.post(
     .withMessage("You must enter the destination"),
   check("mode").not().isEmpty("You must enter the mode of transport"),
   (req, res) => {
+    const { _id } = req.session.user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(401).send({ message: errors.array()[0].msg });
     }
     const { origins, destination, mode } = req.body;
-    const origins = ["nairobi"];
-    const destination = ["mombasa"];
+    // const origins = ["nairobi"];
+    // const destination = ["mombasa"];
 
-    const mode = "DRIVING";
+    // const mode = "DRIVING";
     distance.key(process.env.MATRIX);
     distance.matrix(origins, destination, mode, (err, response) =>
       err ? res.status(404).send(err) : res.send(response)
