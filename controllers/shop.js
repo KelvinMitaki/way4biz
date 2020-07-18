@@ -7,6 +7,7 @@ const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 const Review = require("../models/Reviews");
+const Distance = require("../models/Distance");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -510,22 +511,31 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("You must enter the destination"),
-  check("mode").not().isEmpty("You must enter the mode of transport"),
   (req, res) => {
     const { _id } = req.session.user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(401).send({ message: errors.array()[0].msg });
     }
-    const { origins, destination, mode } = req.body;
+    const { origins, destination } = req.body;
     // const origins = ["nairobi"];
     // const destination = ["mombasa"];
-
-    // const mode = "DRIVING";
+    // 1KM===3KSH
+    const mode = "DRIVING";
     distance.key(process.env.MATRIX);
-    distance.matrix(origins, destination, mode, (err, response) =>
-      err ? res.status(404).send(err) : res.send(response)
-    );
+    distance.matrix(origins, destination, mode, async (err, response) => {
+      if (err) {
+        return res.status(404).send(err);
+      }
+      const dist = new Distance({
+        destination: response.destination_addresses[0],
+        distance: response.rows[0].elements[0].distance.value,
+        shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
+        buyer: _id
+      });
+      await dist.save();
+      res.send(dist);
+    });
   }
 );
 route.get("/api/current_user/hey", (req, res) => {
