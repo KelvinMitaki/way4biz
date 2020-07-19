@@ -86,7 +86,8 @@ import {
   DELETE_IMAGE,
   UNPERSIST_IMAGE,
   PAYMENT_DISTANCE_START,
-  PAYMENT_DISTANCE_STOP
+  PAYMENT_DISTANCE_STOP,
+  PAYMENT_DISTANCE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -911,7 +912,8 @@ export const paymentPerDistance = details => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
-    console.log(res.data);
+
+    dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
   } catch (error) {
     dispatch({ type: PAYMENT_DISTANCE_STOP });

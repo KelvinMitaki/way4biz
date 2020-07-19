@@ -21,8 +21,8 @@ class AddressForm extends React.Component {
     townLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263,
-    },
+      lng: 36.8263
+    }
   };
   componentDidMount() {
     if (this.props.initialValues.city) {
@@ -38,19 +38,19 @@ class AddressForm extends React.Component {
       this.handleAddressSelect(address);
     }
   }
-  handleCitySelect = async (selectedCity) => {
+  handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleTownSelect = async (selectedTown) => {
+  handleTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
     this.setState({ townLatLng: latlng });
     this.props.change("town", selectedTown);
   };
-  handleAddressSelect = async (selectedAddress) => {
+  handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -70,12 +70,12 @@ class AddressForm extends React.Component {
                 <h3 className="legend">Address</h3>
                 {/* <hr /> */}
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) => {
+                  onSubmit={this.props.handleSubmit(formValues => {
                     this.props.paymentPerDistance({
                       origins: ["thika"],
                       destination: [
-                        `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`,
-                      ],
+                        `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
+                      ]
                     });
                     this.props.checkoutUser(formValues, this.props.history);
                   })}
@@ -124,7 +124,7 @@ class AddressForm extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
                     onSelect={this.handleAddressSelect}
                   />
@@ -139,7 +139,7 @@ class AddressForm extends React.Component {
                       !this.props.valid ||
                       this.props.loading ||
                       Object.keys(this.state.townLatLng).length === 0 ||
-                      Object.keys(this.state.cityLatLng).length == 0
+                      Object.keys(this.state.cityLatLng).length === 0
                     }
                     type="submit"
                   >
@@ -161,7 +161,7 @@ class AddressForm extends React.Component {
                       this.props.checkoutUserError}
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
-                      (Object.keys(this.state.cityLatLng).length == 0 && (
+                      (Object.keys(this.state.cityLatLng).length === 0 && (
                         <p>Please choose a valid destination</p>
                       ))}
                   </div>
@@ -176,7 +176,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -216,11 +216,11 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
     loading: state.auth.loading,
-    checkoutUserError: state.auth.checkoutUserError,
+    checkoutUserError: state.auth.checkoutUserError
   };
 };
 export default withRouter(

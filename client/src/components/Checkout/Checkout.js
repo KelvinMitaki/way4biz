@@ -12,6 +12,11 @@ import { connect } from "react-redux";
 import { makeOrder, fetchProducts } from "../../redux/actions";
 
 class CheckOut extends React.Component {
+  componentDidMount() {
+    if (!this.props.distance) {
+      return <Redirect to="/address" />;
+    }
+  }
   render() {
     if (this.props.cart.length === 0) {
       this.props.fetchProducts();
@@ -73,7 +78,11 @@ class CheckOut extends React.Component {
                       </div>
                       <div>
                         <p>Shipping</p>
-                        <p>{shipping}</p>
+                        <p>
+                          {Math.round(
+                            this.props.distance.shippingFees
+                          ).toLocaleString()}
+                        </p>
                       </div>
                       <hr />
                       <div>
@@ -127,7 +136,8 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    distance: state.detailsPersist.distance
   };
 };
 export default withRouter(
