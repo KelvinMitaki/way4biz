@@ -144,7 +144,10 @@ route.post("/api/product/search", async (req, res) => {
         $search: {
           autocomplete: {
             path: "name",
-            query: searchTerm
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            }
           }
         }
       },
