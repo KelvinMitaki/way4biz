@@ -6,7 +6,6 @@ import Heart from "../Products/Heart";
 import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 import RandomCategories from "./RandomCategories";
 import BottomPageLoader from "../Pages/BottomPageLoader";
-import Lazyload from "react-lazyload";
 import Image from "./Image";
 
 function Market(props) {
@@ -50,16 +49,14 @@ function Market(props) {
                     title={product.name}
                     className="product-link"
                   >
-                    <Lazyload height={234} placeholder={<BottomPageLoader />}>
-                      <img
-                        src={
-                          product.imageUrl[0].includes("http")
-                            ? product.imageUrl[0]
-                            : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
-                        }
-                        alt={product.name}
-                      />
-                    </Lazyload>
+                    <Image
+                      image={
+                        product.imageUrl[0].includes("http")
+                          ? product.imageUrl[0]
+                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
+                      }
+                      alt={product.name}
+                    />
 
                     <div style={{ padding: "0px 10px" }}>
                       <p className="product-name">{product.name}</p>
@@ -97,16 +94,14 @@ function Market(props) {
                   className="product-link"
                 >
                   {/* <LazyLoad placeholder={<ProductLazyLoad />} height={300}> */}{" "}
-                  <Lazyload height={234} placeholder={<BottomPageLoader />}>
-                    <Image
-                      image={
-                        product.imageUrl[0].includes("http")
-                          ? product.imageUrl[0]
-                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
-                      }
-                      alt={product.name}
-                    />
-                  </Lazyload>
+                  <Image
+                    image={
+                      product.imageUrl[0].includes("http")
+                        ? product.imageUrl[0]
+                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
+                    }
+                    alt={product.name}
+                  />
                   {/* </LazyLoad> */}
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>

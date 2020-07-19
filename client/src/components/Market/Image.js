@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import BottomPageLoader from "../Pages/BottomPageLoader";
+import "react-lazy-load-image-component/src/effects/blur.css";
 export class Image extends Component {
-  componentDidMount() {
-    this.observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const { isIntersecting } = entry;
-        if (isIntersecting) {
-          this.element.src = this.props.image;
-          this.observer = this.observer.disconnect();
-        }
-      });
-    });
-    this.observer.observe(this.element);
-  }
   render() {
     return (
       <React.Fragment>
-        <img
-          src={this.props.image}
-          ref={el => (this.element = el)}
+        <LazyLoadImage
+          effect="blur"
           alt={this.props.alt}
+          height={234}
+          src={this.props.image}
+          placeholder={<BottomPageLoader />}
         />
       </React.Fragment>
     );
