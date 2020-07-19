@@ -3,14 +3,20 @@
   width: 500px;
   margin: auto;
 }
-.account-map {
-  width: 90vw;
-  margin: auto;
+.address-map {
+  width: 100%;
+  height: 50vh;
 }
 
 @media screen and (max-width: 960px) {
   .map {
     width: 90vw;
+    margin: auto;
+  }
+
+  .address-map {
+    width: 100%;
+    height: 40vh;
     margin: auto;
   }
 }
