@@ -10,6 +10,14 @@ class AdminDashBoard extends React.Component {
         <AdminDashBoardHeader />
         <div className="row no-gutters" style={{ height: "2000px" }}>
           <AdminDashboardSecondaryHeader />
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3">Helloo</div>
+              <div className="col-lg-3">Helloo</div>
+              <div className="col-lg-3">Helloo</div>
+              <div className="col-lg-3">Helloo</div>
+            </div>
+          </div>
         </div>
       </div>
     );
