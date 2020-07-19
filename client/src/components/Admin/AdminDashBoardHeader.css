@@ -1,11 +1,11 @@
 #admin-dashboard-header {
   height: 90px;
   display: flex;
+  justify-content: space-between;
 }
 
 #admin-logo {
   height: 100%;
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;

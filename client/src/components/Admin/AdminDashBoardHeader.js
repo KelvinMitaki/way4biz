@@ -8,10 +8,12 @@ import ProfileImage from "../Header/ProfileImage";
 class AdminDashBoardHeader extends React.Component {
   render() {
     return (
-      <div className="primary-background" id="admin-dashboard-header">
+      <div className="primary-background">
         {/* <AdminHamburger /> */}
-        <Logo id="admin-logo" />
-        <ProfileImage />
+        <div className="container p-0" id="admin-dashboard-header">
+          <Logo id="admin-logo" />
+          <ProfileImage />
+        </div>
       </div>
     );
   }

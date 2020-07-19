@@ -2,10 +2,11 @@ import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
 import ProfileImage from "../Header/ProfileImage";
-import { RiDashboardLine } from "react-icons/ri";
+import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
-import { GrDocumentUser } from "react-icons/gr";
+// import { GrDocumentUser } from "react-icons/gr";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 
 class AdminDashboardSecondaryHeader extends React.Component {
@@ -68,8 +69,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </li>
           <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              <GrDocumentUser /> <span className="ml-2">Sellers</span>
-              {/* Sellers */}
+              <RiFileUserLine /> <span className="ml-2">Sellers</span>
             </NavLink>
           </li>
           <li>
@@ -79,7 +79,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </li>
           <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              <RiDashboardLine /> <span className="ml-2">Dashboard</span>
+              <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
           <li>
