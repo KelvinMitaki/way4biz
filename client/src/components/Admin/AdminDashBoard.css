@@ -1,0 +1,47 @@
+.admin-dashboard-top {
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.admin-big-number-wrapper {
+  min-height: 150px;
+  max-height: 200px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+}
+
+.admin-big-number {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 10%;
+}
+
+.admin-big-number span {
+  font-size: 40px;
+}
+
+.admin-big-number-wrapper h3 {
+  color: #f76b1a;
+  font-size: 40px;
+}
+
+.admin-big-number-wrapper p {
+  padding: 0 10%;
+}
+
+.admin-dashboard-center {
+  height: 400px;
+  background-color: #fff;
+  margin-top: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.admin-dashboard-center {
+  display: flex;
+  justify-content: center;
+}
