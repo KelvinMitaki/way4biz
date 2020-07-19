@@ -5,7 +5,6 @@ import ProfileImage from "../Header/ProfileImage";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
-// import { GrDocumentUser } from "react-icons/gr";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 

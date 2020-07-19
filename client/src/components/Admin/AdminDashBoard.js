@@ -9,20 +9,26 @@ import { Link } from "react-router-dom";
 
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
+import LineGraph from "./LineGraph";
 
 class AdminDashBoard extends React.Component {
   state = {
-    data: [
-      {
-        label: "Stock In",
-        value: 100,
-      },
-      {
-        label: "Stock Out",
-        value: 200,
-      },
-    ],
-    title: "test",
+    doughnatData: {
+      data: [
+        {
+          label: "Stock In",
+          value: 100,
+        },
+        {
+          label: "Stock Out",
+          value: 200,
+        },
+      ],
+      title: "test",
+    },
+    lineData: {
+      data: [20, 10],
+    },
   };
   render() {
     return (
@@ -89,9 +95,9 @@ class AdminDashBoard extends React.Component {
                     </div>
                     <div className="mt-5">
                       <DoughnutChart
-                        data={this.state.data}
+                        data={this.state.doughnatData.data}
                         colors={"#f76b1a"}
-                        title={this.state.title}
+                        title={this.state.doughnatData.title}
                       />
                     </div>
                   </div>
@@ -159,7 +165,13 @@ class AdminDashBoard extends React.Component {
                           </Link>
                         </div>
                       </div>
-                      <div className="col-lg-7"></div>
+                      <div className="col-lg-7">
+                        <LineGraph
+                          data={this.state.lineData.data}
+                          colors={"#f76b1a"}
+                          title={this.state.title}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
