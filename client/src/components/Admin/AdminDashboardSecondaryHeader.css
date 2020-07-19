@@ -1,0 +1,68 @@
+.admin-secondary-dashboard-header {
+  height: 60px;
+  background-color: #fff;
+  box-shadow: 0px 3px 12px 0px rgba(0, 0, 0, 0.1);
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0px;
+  display: flex;
+  align-items: center;
+}
+.admin-hamburger-menu-wrapper {
+  position: relative;
+  height: 60px;
+}
+
+.admin-hamburger-menu {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-dashboard-sm-menu {
+  position: absolute;
+  left: -15px;
+  min-width: 250px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  top: 60px;
+  background-color: white;
+  z-index: 9001;
+  max-height: calc(100vh - 80px);
+  min-height: calc(100vh - 140px);
+}
+
+.admin-dashboard-menu-lg-items {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  justify-content: space-around;
+  flex: 1;
+  margin: 0;
+}
+
+.admin-dashboard-menu-lg-items li a {
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+
+.admin-dashboard-menu-lg-items li a:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
+.admin-active-lg-link {
+  color: #f76b1a !important;
+}
+
+@media screen and (min-width: 961px) {
+  .admin-hamburger-menu-wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .admin-dashboard-menu-lg-items {
+    display: none;
+  }
+}

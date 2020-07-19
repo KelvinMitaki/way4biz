@@ -1,5 +1,6 @@
 #admin-dashboard-header {
   height: 90px;
+  display: flex;
 }
 
 #admin-logo {
@@ -18,9 +19,9 @@
   color: #fff;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 720px) {
   #admin-dashboard-header {
-    height: 80px;
+    display: none;
   }
 }
 
