@@ -75,7 +75,7 @@ export class VerifySellerNumber extends Component {
         </div>
       );
     }
-    return null;
+    return <Redirect to="/seller/register" />;
   }
 }
 const validate = formValues => {
