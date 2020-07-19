@@ -527,14 +527,24 @@ route.post(
       if (err) {
         return res.status(404).send(err);
       }
-      const dist = new Distance({
+      const distanceExists = await Distance.findOne({
         destination: response.destination_addresses[0],
         distance: response.rows[0].elements[0].distance.value,
         shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
         buyer: _id
       });
-      await dist.save();
-      res.send(dist);
+      if (!distanceExists) {
+        const dist = new Distance({
+          destination: response.destination_addresses[0],
+          distance: response.rows[0].elements[0].distance.value,
+          shippingFees:
+            (response.rows[0].elements[0].distance.value / 1000) * 3,
+          buyer: _id
+        });
+        await dist.save();
+        return res.send(dist);
+      }
+      res.send(distanceExists);
     });
   }
 );
