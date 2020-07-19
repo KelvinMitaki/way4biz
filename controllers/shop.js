@@ -147,12 +147,13 @@ route.post("/api/product/search", async (req, res) => {
             query: searchTerm,
             fuzzy: {
               maxEdits: 1
-            }
+            },
+            tokenOrder: "sequential"
           }
         }
       },
       {
-        $limit: 10
+        $limit: 5
       },
       {
         $project: {
