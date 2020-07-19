@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
+const distance = require("google-distance-matrix");
 
 const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const delivery = require("../middlewares/delivery");
 const Review = require("../models/Reviews");
+const Distance = require("../models/Distance");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -143,12 +144,16 @@ route.post("/api/product/search", async (req, res) => {
         $search: {
           autocomplete: {
             path: "name",
-            query: searchTerm
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            },
+            tokenOrder: "sequential"
           }
         }
       },
       {
-        $limit: 10
+        $limit: 5
       },
       {
         $project: {
@@ -501,6 +506,52 @@ route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.post(
+  "/api/buyer/destination",
+  auth,
+  check("origins").not().isEmpty().withMessage("You must enter the origin"),
+  check("destination")
+    .not()
+    .isEmpty()
+    .withMessage("You must enter the destination"),
+  (req, res) => {
+    const { _id } = req.session.user;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(401).send({ message: errors.array()[0].msg });
+    }
+    const { origins, destination } = req.body;
+    // const origins = ["nairobi"];
+    // const destination = ["mombasa"];
+    // 1KM===3KSH
+    const mode = "DRIVING";
+    distance.key(process.env.MATRIX);
+    distance.matrix(origins, destination, mode, async (err, response) => {
+      if (err) {
+        return res.status(404).send(err);
+      }
+      const distanceExists = await Distance.findOne({
+        destination: response.destination_addresses[0],
+        distance: response.rows[0].elements[0].distance.value,
+        shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
+        buyer: _id
+      });
+      if (!distanceExists) {
+        const dist = new Distance({
+          destination: response.destination_addresses[0],
+          distance: response.rows[0].elements[0].distance.value,
+          shippingFees:
+            (response.rows[0].elements[0].distance.value / 1000) * 3,
+          buyer: _id
+        });
+        await dist.save();
+        return res.send(dist);
+      }
+      res.send(distanceExists);
+    });
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

@@ -3,8 +3,14 @@
   width: 100vw;
   position: relative;
   z-index: -10 !important;
+  margin: auto;
+  max-width: 1500px;
+  /* overflow: scroll; */
 }
 
+.secondary-header::-webkit-scrollbar {
+  width: 0px;
+}
 #large-screen-secondary-header {
   display: flex;
   width: 100%;

@@ -10,7 +10,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
-import { checkoutUser } from "../../redux/actions";
+import { checkoutUser, paymentPerDistance } from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
@@ -70,9 +70,15 @@ class AddressForm extends React.Component {
                 <h3 className="legend">Address</h3>
                 {/* <hr /> */}
                 <form
-                  onSubmit={this.props.handleSubmit(formValues =>
-                    this.props.checkoutUser(formValues, this.props.history)
-                  )}
+                  onSubmit={this.props.handleSubmit(formValues => {
+                    this.props.paymentPerDistance({
+                      origins: ["thika"],
+                      destination: [
+                        `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
+                      ]
+                    });
+                    this.props.checkoutUser(formValues, this.props.history);
+                  })}
                 >
                   <Field
                     type="text"
@@ -96,6 +102,7 @@ class AddressForm extends React.Component {
                     type="text"
                     name="city"
                     label="City"
+                    className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
                     onSelect={this.handleCitySelect}
@@ -104,6 +111,7 @@ class AddressForm extends React.Component {
                     type="text"
                     name="town"
                     label="Town"
+                    className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
                     onSelect={this.handleTownSelect}
@@ -123,10 +131,16 @@ class AddressForm extends React.Component {
                   <SimpleMap
                     key={this.state.addressLatLng.lat}
                     addressLatLng={this.state.addressLatLng}
+                    className="address-map"
                   />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
-                    disabled={!this.props.valid || this.props.loading}
+                    disabled={
+                      !this.props.valid ||
+                      this.props.loading ||
+                      Object.keys(this.state.townLatLng).length === 0 ||
+                      Object.keys(this.state.cityLatLng).length === 0
+                    }
                     type="submit"
                   >
                     {this.props.loading && (
@@ -145,6 +159,11 @@ class AddressForm extends React.Component {
                   <div className="form-primary-error">
                     {this.props.checkoutUserError &&
                       this.props.checkoutUserError}
+                    {(!this.props.pristine &&
+                      Object.keys(this.state.townLatLng).length === 0) ||
+                      (Object.keys(this.state.cityLatLng).length === 0 && (
+                        <p>Please choose a valid destination</p>
+                      ))}
                   </div>
                 </form>
               </div>
@@ -205,7 +224,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { checkoutUser })(
+  connect(mapStateToProps, { checkoutUser, paymentPerDistance })(
     reduxForm({ validate, form: "AddressForm" })(AddressForm)
   )
 );

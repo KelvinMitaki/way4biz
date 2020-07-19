@@ -9,19 +9,18 @@
   body,
   #root {
     overflow-x: hidden;
-    /* height: 100%; */
   }
 }
 
 body {
-  /* background-color: #f8f9f9; */
   background-color: #eaecee;
   overflow-x: hidden;
 }
 
-/* #root {
-  font-family: "Roboto" sans-serif !important;
-} */
+#root {
+  max-width: 1500px;
+  margin: 0px auto;
+}
 
 h1,
 h2,

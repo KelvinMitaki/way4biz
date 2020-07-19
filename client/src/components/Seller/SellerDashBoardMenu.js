@@ -4,6 +4,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
 import { GoClippy } from "react-icons/go";
+import { AiOutlineTransaction } from "react-icons/ai";
 
 import "./SellerDashBoardMenu.css";
 
@@ -12,7 +13,7 @@ class SellerDashBoardMenu extends React.Component {
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
-          <li className="my-4">
+          <li>
             <NavLink
               className="link"
               activeClassName="seller-menu-active"
@@ -22,7 +23,7 @@ class SellerDashBoardMenu extends React.Component {
               Dashboard
             </NavLink>
           </li>
-          <li className="my-4">
+          <li>
             <NavLink
               className="link"
               activeClassName="seller-menu-active"
@@ -32,7 +33,7 @@ class SellerDashBoardMenu extends React.Component {
               Products
             </NavLink>
           </li>
-          <li className="my-4">
+          <li>
             <NavLink
               className="link"
               activeClassName="seller-menu-active"
@@ -42,7 +43,7 @@ class SellerDashBoardMenu extends React.Component {
               Orders
             </NavLink>
           </li>
-          <li className="my-4">
+          <li>
             <NavLink
               className="link"
               activeClassName="seller-menu-active"
@@ -50,6 +51,16 @@ class SellerDashBoardMenu extends React.Component {
             >
               <MdRateReview className="mr-2" />
               Reviews
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className="link"
+              activeClassName="seller-menu-active"
+              to="/g"
+            >
+              <AiOutlineTransaction className="mr-2" />
+              Transactions
             </NavLink>
           </li>
         </ul>

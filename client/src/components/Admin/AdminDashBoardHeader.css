@@ -1,18 +1,27 @@
 #admin-dashboard-header {
   height: 90px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #admin-logo {
   height: 100%;
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-@media screen and (max-width: 960px) {
+.admin-menu-items {
+  flex: 2;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  color: #fff;
+}
+
+@media screen and (max-width: 720px) {
   #admin-dashboard-header {
-    height: 80px;
+    display: none;
   }
 }
 

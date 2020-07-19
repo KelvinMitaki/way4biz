@@ -1,5 +1,6 @@
 .account-location-input {
   width: 100%;
+  position: relative;
 }
 
 .account-location-input input:focus {

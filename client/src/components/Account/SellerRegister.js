@@ -142,6 +142,7 @@ export class SellerRegister extends Component {
           <SimpleMap
             key={this.state.addressLatLng.lat}
             addressLatLng={this.state.addressLatLng}
+            className="map"
           />
           <button
             style={{ cursor: "pointer" }}

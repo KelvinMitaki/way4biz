@@ -9,13 +9,13 @@ const AnyReactComponent = () => (
 
 class SimpleMap extends Component {
   static defaultProps = {
-    zoom: 11,
+    zoom: 13
   };
 
   render() {
     // Important! Always set the container height explicitly
     return (
-      <div className="map">
+      <div className={this.props.className}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyCW5WOFsHh1smIGQtEs6jGo47Cd5KovebI" }}
           defaultCenter={this.props.addressLatLng}

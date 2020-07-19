@@ -6,6 +6,7 @@ import Heart from "../Products/Heart";
 import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 import RandomCategories from "./RandomCategories";
 import BottomPageLoader from "../Pages/BottomPageLoader";
+import Image from "./Image";
 
 function Market(props) {
   const observer = useRef();
@@ -38,9 +39,9 @@ function Market(props) {
             if (props.products.length === index + 1) {
               return (
                 <div
+                  key={product._id}
                   className="product"
                   ref={lastItemElementRef}
-                  key={product._id}
                 >
                   <Link
                     key={product._id}
@@ -48,14 +49,15 @@ function Market(props) {
                     title={product.name}
                     className="product-link"
                   >
-                    <img
-                      src={
+                    <Image
+                      image={
                         product.imageUrl[0].includes("http")
                           ? product.imageUrl[0]
                           : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                       }
                       alt={product.name}
                     />
+
                     <div style={{ padding: "0px 10px" }}>
                       <p className="product-name">{product.name}</p>
                       <p style={{ fontWeight: "bolder" }} className="price">
@@ -91,14 +93,16 @@ function Market(props) {
                   title={product.name}
                   className="product-link"
                 >
-                  <img
-                    src={
+                  {/* <LazyLoad placeholder={<ProductLazyLoad />} height={300}> */}{" "}
+                  <Image
+                    image={
                       product.imageUrl[0].includes("http")
                         ? product.imageUrl[0]
                         : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
                     }
                     alt={product.name}
                   />
+                  {/* </LazyLoad> */}
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
                     <p style={{ fontWeight: "bolder" }} className="price">
