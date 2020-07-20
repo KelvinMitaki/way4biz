@@ -37,6 +37,7 @@ import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
 import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
+import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -59,6 +60,7 @@ class App extends React.Component {
               exact
               component={ProductReviewsWrapper}
             />
+            <Route path="/admin-sellers" component={AdminDashBoardSellers} />
             <Route
               path="/products/category/:category"
               exact
