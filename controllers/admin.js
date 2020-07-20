@@ -649,4 +649,12 @@ route.get("/api/root/admin/stock/report", async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/verified/sellers", async (req, res) => {
+  try {
+    const verifiedSellers = await Seller.find({ verified: true });
+    res.send({ verifiedSellers });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

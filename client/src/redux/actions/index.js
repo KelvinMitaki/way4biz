@@ -90,7 +90,10 @@ import {
   PAYMENT_DISTANCE,
   GET_STOCK,
   GET_STOCK_START,
-  GET_STOCK_STOP
+  GET_STOCK_STOP,
+  FETCH_VERIFIED_SELLERS,
+  FETCH_SELLERS_STOP,
+  FETCH_SELLERS_START
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1045,7 +1048,34 @@ export const getStock = () => async dispatch => {
     dispatch({ type: GET_STOCK, payload: res.data });
     dispatch({ type: GET_STOCK_STOP });
   } catch (error) {
+    if (error.response.data.buyer) {
+      return (window.location.href = "/sign-in");
+    }
+    if (error.response.data.seller) {
+      return (window.location.href = "/seller/sign-in");
+    }
     dispatch({ type: GET_STOCK_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchVerifiedSellers = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLERS_START });
+    const res = await axios.get("/api/verified/sellers");
+    dispatch({
+      type: FETCH_VERIFIED_SELLERS,
+      payload: res.data.verifiedSellers
+    });
+    dispatch({ type: FETCH_SELLERS_STOP });
+  } catch (error) {
+    if (error.response.data.buyer) {
+      return (window.location.href = "/sign-in");
+    }
+    if (error.response.data.seller) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_SELLERS_STOP });
     console.log(error.response);
   }
 };

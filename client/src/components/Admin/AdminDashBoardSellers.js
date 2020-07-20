@@ -4,9 +4,16 @@ import "./AdminDashBoardSellers.css";
 import DashBoardHeader from "./AdminDashBoardHeader";
 import SecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { Link } from "react-router-dom";
+import { fetchVerifiedSellers } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoardSellers extends React.Component {
+  componentDidMount() {
+    this.props.fetchVerifiedSellers();
+  }
   render() {
+    if (this.props.fetchSellerLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <DashBoardHeader />
@@ -28,38 +35,42 @@ class AdminDashBoardSellers extends React.Component {
                   <h6>More</h6>
                 </div>
               </div>
-              {/* fucking mapping here */}
-              <div className="admin-seller container">
-                <div className="row box-container">
-                  <div className="col-md-6">
-                    <div className="admin-seller-details">
-                      <p>
-                        <strong className="x mr-2">Name:</strong>Hello world
-                        Hello world Hello world Hello world
-                      </p>
-                      <p>
-                        <strong className="x mr-2">StoreName:</strong>Hello
-                        world
-                      </p>
+              {/* mapping here */}
+              {this.props.verifiedSellers.length !== 0 &&
+                this.props.verifiedSellers.map(seller => (
+                  <div key={seller._id} className="admin-seller container">
+                    <div className="row box-container">
+                      <div className="col-md-6">
+                        <div className="admin-seller-details">
+                          <p>
+                            <strong className="mr-2">Name:</strong>
+                            {seller.firstName} {seller.lastName}
+                          </p>
+                          <p>
+                            <strong className="mr-2">StoreName:</strong>
+                            {seller.storeName}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-md-3 d-flex align-items-center">
+                        <p>
+                          <strong className="x mr-2">Date Joined</strong>
+                          {new Date(seller.createdAt).toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="col-md-3 d-flex align-items-center">
+                        <p>
+                          <Link
+                            to="/admin-seller"
+                            className="admin-seller-view-more"
+                          >
+                            View More
+                          </Link>
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="col-md-3 d-flex align-items-center">
-                    <p>
-                      <strong className="x mr-2">Date Joined</strong>10/10/2030
-                    </p>
-                  </div>
-                  <div className="col-md-3 d-flex align-items-center">
-                    <p>
-                      <Link
-                        to="/admin-seller"
-                        className="admin-seller-view-more"
-                      >
-                        View More
-                      </Link>
-                    </p>
-                  </div>
-                </div>
-              </div>
+                ))}
             </div>
           </div>
         </div>
@@ -67,5 +78,12 @@ class AdminDashBoardSellers extends React.Component {
     );
   }
 }
-
-export default AdminDashBoardSellers;
+const mapStateToProps = state => {
+  return {
+    verifiedSellers: state.sellerRegister.verifiedSellers,
+    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
+  };
+};
+export default connect(mapStateToProps, { fetchVerifiedSellers })(
+  AdminDashBoardSellers
+);
