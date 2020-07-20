@@ -3,20 +3,32 @@ import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
 import ProfileImage from "../Header/ProfileImage";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
-// import { GrDocumentUser } from "react-icons/gr";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { connect } from "react-redux";
+import { fetchNewSellers } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
     open: false,
+    keys: [
+      {
+        parentKey: ["Sellers", 100],
+        childKeys: [
+          { name: "Active Sellers", url: "/admin-sellers" },
+          { name: "New Sellers", url: "/admin-new-sellers", num: "100" }
+        ]
+      }
+    ]
   };
-  handleClick = (e) => {
-    this.setState((prevState) => {
+  handleClick = e => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   };
@@ -52,8 +64,16 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </div>
           {this.state.open ? (
             <div className="admin-dashboard-sm-menu">
-              <h3>Helloo World Helloo World Helloo World</h3>
-              <MenuDropdown />
+              <p>
+                <Link to="/admin-dashboard">Dashboard</Link>
+              </p>
+              <MenuDropdown data={this.state.keys[0]} />
+              <p>
+                <Link to="/orders">Orders</Link>
+              </p>
+              <p>
+                <Link to="/admin-dashboard">Categories</Link>
+              </p>
             </div>
           ) : null}
         </div>
@@ -68,9 +88,38 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine /> <span className="ml-2">Sellers</span>
-            </NavLink>
+              <span className="ml-1">
+                <MdKeyboardArrowDown />
+                {this.props.newSellers &&
+                  this.props.newSellers.sellers &&
+                  this.props.newSellers.sellers.length.toLocaleString() !==
+                    0 && (
+                    <span className="badge custom-badge ml-2">
+                      {this.props.newSellers.sellers.length.toLocaleString()}
+                    </span>
+                  )}
+              </span>
+            </a>
+
+            <div className="sellers-dropdown">
+              <p>
+                <NavLink to="/admin-sellers">Active Sellers</NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-new-sellers">
+                  New Sellers
+                  {this.props.newSellers &&
+                    this.props.newSellers.sellers &&
+                    this.props.newSellers.sellers.length !== 0 && (
+                      <span className="badge custom-badge ml-2">
+                        {this.props.newSellers.sellers.length}
+                      </span>
+                    )}
+                </NavLink>
+              </p>
+            </div>
           </li>
           <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
@@ -82,16 +131,20 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
               <RiDashboardLine /> <span className="ml-2">Dashboard</span>
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <ProfileImage />
       </div>
     );
   }
 }
-
-export default AdminDashboardSecondaryHeader;
+const mapStateToProps = state => {
+  return {
+    newSellers: state.sellerRegister.newSellers
+  };
+};
+export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);

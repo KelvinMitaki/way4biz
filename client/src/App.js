@@ -37,6 +37,11 @@ import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
 import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
+import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
+import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
+import AdminDashBoardNewSellers from "./components/Admin/AdminDashBoardNewSellers";
+import AdminDashBoardNewSeller from "./components/Admin/AdminDashBoardNewSeller";
+import SellerProfiling from "./components/Seller/SellerProfiling";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -58,6 +63,47 @@ class App extends React.Component {
               path="/product/main/reviews/:productId"
               exact
               component={ProductReviewsWrapper}
+            />
+            <Route path="/seller/profiling" exact component={SellerProfiling} />
+            <Route
+              path="/admin-sellers"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-seller/:sellerId"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardSeller />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-new-sellers"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardNewSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-new-seller/:sellerId"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardNewSeller />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
             />
             <Route
               path="/products/category/:category"
@@ -96,6 +142,17 @@ class App extends React.Component {
                 )
               }
             />
+            {/* <Route
+              path="/seller/profiling"
+              exact
+              render={() =>
+                this.props.user ? (
+                  <SellerProfiling />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            /> */}
             <Route
               path="/seller/sell"
               exact

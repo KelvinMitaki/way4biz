@@ -13,56 +13,56 @@ class SellerDashBoardMenu extends React.Component {
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
-          <li>
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-active"
-              to="/seller-dashboard"
-            >
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/seller-dashboard"
+          >
+            <li>
               <RiDashboardLine className="mr-2" />
               Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-active"
-              to="/seller-products"
-            >
+            </li>
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/seller-products"
+          >
+            <li>
               <BsFillBagFill className="mr-2" />
               Products
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-active"
-              to="/seller-orders"
-            >
+            </li>
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/seller-orders"
+          >
+            <li>
               <GoClippy className="mr-2" />
               Orders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-active"
-              to="/seller-review"
-            >
+            </li>
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/seller-review"
+          >
+            <li>
               <MdRateReview className="mr-2" />
               Reviews
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className="link"
-              activeClassName="seller-menu-active"
-              to="/g"
-            >
+            </li>
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/g"
+          >
+            <li>
               <AiOutlineTransaction className="mr-2" />
               Transactions
-            </NavLink>
-          </li>
+            </li>
+          </NavLink>
         </ul>
         <div id="seller-menu-profile">Profile</div>
       </div>

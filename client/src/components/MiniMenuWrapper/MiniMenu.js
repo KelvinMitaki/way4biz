@@ -6,7 +6,7 @@ import {
   AiOutlineHome,
   AiOutlineBars,
   AiOutlineUser,
-  AiOutlineHeart
+  AiOutlineHeart,
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
@@ -51,15 +51,12 @@ class MiniMenu extends React.Component {
 
             <NavLink to="/cart" className="primary-link col-3">
               <div className="mini-menu-item mini-cart">
-                {/* <div className="flaticon-shopping-cart mini-menu-icon">
-                  <span className="badge">0</span>
-                </div> */}
                 <IconContext.Provider value={{ className: "mini-menu-icon" }}>
                   <div className="icon-container">
                     <FaOpencart />
-                    <span className="badge">
+                    <span className="badge ml-1">
                       {this.props.cart
-                        .map(item => item.quantity)
+                        .map((item) => item.quantity)
                         .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -103,7 +100,10 @@ class MiniMenu extends React.Component {
                     <NavLink className="primary-link" to="/wishlist">
                       <AiOutlineHeart />
                       <span className="ml-2">
-                        Wishlist({this.props.wishlist.length}){" "}
+                        Wishlist
+                        <span className="badge custom-badge ml-2">
+                          {this.props.wishlist.length}
+                        </span>{" "}
                       </span>
                     </NavLink>
                     <NavLink className="primary-link" to="/pending/reviews">
@@ -147,11 +147,11 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 

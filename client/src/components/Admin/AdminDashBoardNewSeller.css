@@ -1,0 +1,20 @@
+/* .accept-sell-request {
+  border-top: 1px solid #d4d4d4;
+} */
+
+.accept-sell-request-btn {
+  background-color: #f76b1a;
+  color: #fff;
+  border: none;
+  border-radius: 0px;
+}
+
+.accept-sell-request-btn:hover {
+  color: #fff;
+}
+
+.accept-sell-request-btn:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}

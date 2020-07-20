@@ -33,6 +33,11 @@ const OrderSchema = new mongoose.Schema(
     paymentMethod: {
       type: String,
       required: true
+    },
+    distance: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "Distance"
     }
   },
   { timestamps: true }

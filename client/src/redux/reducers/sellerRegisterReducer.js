@@ -5,7 +5,15 @@ import {
   INVALID_VERIFICATION_CODE,
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
-  FETCH_SELLER_ORDERS
+  FETCH_SELLER_ORDERS,
+  FETCH_VERIFIED_SELLERS,
+  FETCH_SELLERS_START,
+  FETCH_SELLERS_STOP,
+  FETCH_VERIFIED_SELLER,
+  FETCH_NEW_SELLER,
+  FETCH_NEW_SELLERS,
+  FETCH_NEW_SELLERS_START,
+  FETCH_NEW_SELLERS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -15,7 +23,13 @@ const INITIAL_STATE = {
   errorVerifying: null,
   resetToken: null,
   sellerProducts: [],
-  sellerOrders: []
+  sellerOrders: [],
+  verifiedSellers: [],
+  fetchSellersLoading: false,
+  verifiedSeller: null,
+  newSellers: null,
+  newSeller: null,
+  newSellerLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,7 +42,11 @@ export default (state = INITIAL_STATE, action) => {
         sellerRegisterError: action.payload
       };
     case FETCH_SELLER_NUMBER:
-      return { ...state, sellerNumber: { number: action.payload } };
+      return {
+        ...state,
+        sellerNumber:
+          typeof action.payload === "number" ? { number: action.payload } : {}
+      };
     case INVALID_VERIFICATION_CODE:
       return { ...state, errorVerifying: action.payload };
     case RESET_TOKEN_CHECK:
@@ -37,6 +55,22 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerProducts: action.payload };
     case FETCH_SELLER_ORDERS:
       return { ...state, sellerOrders: action.payload };
+    case FETCH_VERIFIED_SELLERS:
+      return { ...state, verifiedSellers: action.payload };
+    case FETCH_SELLERS_START:
+      return { ...state, fetchSellersLoading: true };
+    case FETCH_SELLERS_STOP:
+      return { ...state, fetchSellersLoading: false };
+    case FETCH_VERIFIED_SELLER:
+      return { ...state, verifiedSeller: action.payload };
+    case FETCH_NEW_SELLER:
+      return { ...state, newSeller: action.payload };
+    case FETCH_NEW_SELLERS:
+      return { ...state, newSellers: action.payload };
+    case FETCH_NEW_SELLERS_START:
+      return { ...state, newSellerLoading: true };
+    case FETCH_NEW_SELLERS_STOP:
+      return { ...state, newSellerLoading: false };
     default:
       return state;
   }

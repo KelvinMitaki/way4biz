@@ -1,0 +1,12 @@
+.admin-seller-details p {
+  display: flex;
+}
+
+.admin-seller-view-more {
+  color: #f76b1a;
+}
+
+.admin-seller-view-more:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}

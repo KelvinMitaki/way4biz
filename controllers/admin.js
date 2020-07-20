@@ -627,4 +627,65 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// PROTECT THIS ROUTE LATER
+route.get("/api/root/admin/stock/report", isSeller, async (req, res) => {
+  try {
+    const stockQuantity = await Product.aggregate([
+      { $project: { stockQuantity: 1, _id: 0 } }
+    ]);
+    const sOut = await Order.aggregate([
+      { $project: { "items.quantity": 1, _id: 0 } },
+      { $unwind: "$items" },
+      { $project: { quantity: "$items.quantity" } }
+    ]);
+    const stockIn = stockQuantity
+      .map(s => s.stockQuantity)
+      .reduce((acc, cur) => acc + cur, 0);
+    const stockOut = sOut
+      .map(s => s.quantity)
+      .reduce((acc, cur) => acc + cur, 0);
+    res.send({ stockIn, stockOut });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/verified/sellers", isSeller, async (req, res) => {
+  try {
+    const verifiedSellers = await Seller.find({ isSeller: true });
+    res.send({ verifiedSellers });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/verified/seller/:sellerId", isSeller, async (req, res) => {
+  try {
+    const seller = await Seller.findById(req.params.sellerId);
+    if (!seller || Object.keys(seller).length === 0) {
+      return res.status(404).send({ message: "No seller found" });
+    }
+    res.send(seller);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/new/sellers", isSeller, async (req, res) => {
+  try {
+    const sellers = await Seller.find({ isSeller: false });
+    res.send({ sellers });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/new/seller/:sellerId", isSeller, async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const seller = await Seller.findById(sellerId);
+    if (!seller || Object.keys(seller).length === 0) {
+      return res.status(404).send({ message: "No seller found" });
+    }
+    res.send(seller);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
