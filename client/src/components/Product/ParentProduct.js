@@ -15,6 +15,7 @@ export class ParentProduct extends Component {
       this.props.match.params.productId !== prevProps.match.params.productId
     ) {
       this.props.fetchSingleProduct(this.props.match.params.productId);
+      this.props.fetchProductReviews(this.props.match.params.productId);
     }
   }
   render() {
@@ -25,6 +26,7 @@ export class ParentProduct extends Component {
 const mapStateToProps = state => {
   return {
     product: state.product.product,
+    relatedProducts: state.product.relatedProducts,
     singleProductLoad: state.product.singleProductLoad
   };
 };

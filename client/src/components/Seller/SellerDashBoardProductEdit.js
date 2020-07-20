@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import validator from "validator";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDropDown from "./SellerDropDown";
@@ -19,7 +19,7 @@ const category = [
   { key: "gadgets", text: "Gadgets", value: "gadgets" },
   { key: "electronics", text: "Electronics", value: "electronics" },
   { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" },
+  { key: "toys", text: "Toys", value: "toys" }
 ];
 const subcategory = [
   { key: "iphones", text: "iPhones", value: "iphones" },
@@ -27,7 +27,7 @@ const subcategory = [
   { key: "laptops", text: "Laptops", value: "laptops" },
   { key: "televisions", text: "Televisions", value: "televisions" },
   { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" },
+  { key: "shoes", text: "Shoes", value: "shoes" }
 ];
 
 export class SellerEdit extends Component {
@@ -54,15 +54,15 @@ export class SellerEdit extends Component {
                 <div className="row">
                   <div id="dashboard-edit-lg-screen" className="col p-0">
                     <form
-                      onSubmit={this.props.handleSubmit((formValues) =>
+                      onSubmit={this.props.handleSubmit(formValues =>
                         this.props.editProduct(
                           {
                             ...formValues,
                             description: this.props.description,
                             imageUrl: [
                               ...this.props.imageUrl,
-                              ...formValues.imageUrl,
-                            ],
+                              ...formValues.imageUrl
+                            ]
                           },
                           this.props.initialValues._id,
                           this.props.history
@@ -130,7 +130,7 @@ export class SellerEdit extends Component {
                         <h5
                           style={{
                             width: "90%",
-                            margin: "10px auto",
+                            margin: "10px auto"
                           }}
                         >
                           Product Description
@@ -171,10 +171,10 @@ export class SellerEdit extends Component {
         </div>
       );
     }
-    return null;
+    return <Redirect to="/seller-products" />;
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.name ||
@@ -209,7 +209,7 @@ const mapStateToProps = (state, ownProps) => {
   let initialValues;
   if (state.sellerRegister.sellerProducts.length !== 0) {
     initialValues = state.sellerRegister.sellerProducts.find(
-      (p) => p._id.toString() === ownProps.match.params.productId.toString()
+      p => p._id.toString() === ownProps.match.params.productId.toString()
     );
   }
   return {
@@ -217,14 +217,14 @@ const mapStateToProps = (state, ownProps) => {
     deleteImageLoading: state.image.deleteImageLoading,
     initialValues,
     description: state.product.description,
-    imageUrl: state.image.imageUrl,
+    imageUrl: state.image.imageUrl
   };
 };
 export default withRouter(
   connect(mapStateToProps, { editProduct, fetchSellerProducts })(
     reduxForm({
       validate,
-      form: "SellerEdit",
+      form: "SellerEdit"
     })(SellerEdit)
   )
 );

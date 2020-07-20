@@ -5,7 +5,11 @@ import {
   INVALID_VERIFICATION_CODE,
   RESET_TOKEN_CHECK,
   FETCH_SELLER_PRODUCTS,
-  FETCH_SELLER_ORDERS
+  FETCH_SELLER_ORDERS,
+  FETCH_VERIFIED_SELLERS,
+  FETCH_SELLERS_START,
+  FETCH_SELLERS_STOP,
+  FETCH_VERIFIED_SELLER
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -15,7 +19,10 @@ const INITIAL_STATE = {
   errorVerifying: null,
   resetToken: null,
   sellerProducts: [],
-  sellerOrders: []
+  sellerOrders: [],
+  verifiedSellers: [],
+  fetchSellersLoading: false,
+  verifiedSeller: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,6 +44,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerProducts: action.payload };
     case FETCH_SELLER_ORDERS:
       return { ...state, sellerOrders: action.payload };
+    case FETCH_VERIFIED_SELLERS:
+      return { ...state, verifiedSellers: action.payload };
+    case FETCH_SELLERS_START:
+      return { ...state, fetchSellersLoading: true };
+    case FETCH_SELLERS_STOP:
+      return { ...state, fetchSellersLoading: false };
+    case FETCH_VERIFIED_SELLER:
+      return { ...state, verifiedSeller: action.payload };
     default:
       return state;
   }

@@ -9,7 +9,7 @@ const AnyReactComponent = () => (
 
 class SimpleMap extends Component {
   static defaultProps = {
-    zoom: 11,
+    zoom: 13
   };
 
   render() {

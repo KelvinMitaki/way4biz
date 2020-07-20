@@ -16,14 +16,14 @@ class DoughnutChart extends React.Component {
       //   maintainAspectRatio: false,
       // },
       data: {
-        labels: this.props.data.map((d) => d.label),
+        labels: this.props.data.map(d => d.label),
         datasets: [
           {
-            data: this.props.data.map((d) => d.value),
-            backgroundColor: this.props.colors,
-          },
-        ],
-      },
+            data: this.props.data.map(d => d.value),
+            backgroundColor: this.props.colors
+          }
+        ]
+      }
     });
   }
   render() {

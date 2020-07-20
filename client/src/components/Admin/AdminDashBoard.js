@@ -6,31 +6,28 @@ import { AiOutlineUsergroupAdd, AiFillPushpin } from "react-icons/ai";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { BsArrowRepeat } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
+import { getStock } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      data: [
-        {
-          label: "Stock In",
-          value: 100,
-        },
-        {
-          label: "Stock Out",
-          value: 200,
-        },
-      ],
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
+  componentDidMount() {
+    this.props.getStock();
+  }
+
   render() {
+    if (this.props.stock.length === 0) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <AdminDashBoardHeader />
@@ -95,7 +92,7 @@ class AdminDashBoard extends React.Component {
                     </div>
                     <div className="mt-5">
                       <DoughnutChart
-                        data={this.state.doughnatData.data}
+                        data={this.props.stock}
                         colors={"#f76b1a"}
                         title={this.state.doughnatData.title}
                       />
@@ -190,5 +187,9 @@ class AdminDashBoard extends React.Component {
     );
   }
 }
-
-export default AdminDashBoard;
+const mapStateToProps = state => {
+  return {
+    stock: state.product.stock
+  };
+};
+export default connect(mapStateToProps, { getStock })(AdminDashBoard);

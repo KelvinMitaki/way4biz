@@ -27,7 +27,10 @@ import {
   REDIRECT_ON_FAIL_START,
   REDIRECT_ON_FAIL_STOP,
   STORE_IMAGE_START,
-  STORE_IMAGE_STOP
+  STORE_IMAGE_STOP,
+  GET_STOCK_START,
+  GET_STOCK_STOP,
+  GET_STOCK
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -53,7 +56,9 @@ const INITIAL_STATE = {
   sellerReviewsLoading: false,
   description: "",
   redirectOnFailLoading: false,
-  storeImageLoading: false
+  storeImageLoading: false,
+  stock: [],
+  stockLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -156,6 +161,18 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: true };
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
+    case GET_STOCK_START:
+      return { ...state, stockLoading: true };
+    case GET_STOCK_STOP:
+      return { ...state, stockLoading: false };
+    case GET_STOCK:
+      return {
+        ...state,
+        stock: [
+          { label: "Stock In", value: action.payload.stockIn },
+          { label: "Stock Out", value: action.payload.stockOut }
+        ]
+      };
     default:
       return state;
   }
