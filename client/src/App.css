@@ -270,6 +270,10 @@
   padding: 3px;
 }
 
+#download-guide-link {
+  color: #f76b1a;
+}
+
 @media screen and (max-width: 920px) {
   .content {
     margin-bottom: 65px;

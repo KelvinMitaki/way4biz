@@ -4,9 +4,30 @@ class SellerOrientationGuide extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
   }
+
+  handleClick = (e) => {
+    this.props.proceed(true);
+  };
   render() {
     return (
       <div className="container">
+        <h3
+          className="mb-3"
+          style={{ textDecoration: "underline", textAlign: "center" }}
+        >
+          Orientation Guide
+        </h3>
+        <div>
+          <a
+            className="my-2"
+            href="/1.jpg"
+            download
+            id="download-guide-link"
+            onClick={this.handleClick}
+          >
+            Download PDF Guide
+          </a>
+        </div>
         <p>
           What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
           and typesetting industry. Lorem Ipsum has been the industry's standard

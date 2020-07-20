@@ -12,6 +12,8 @@ class LineGraph extends React.Component {
     this.adminLineGraph = new Chart(this.canvasRef.current, {
       type: "line",
       options: {
+        maintainAspectRatio: true,
+        responsive: true,
         title: {
           display: true,
           text: "Daily Sales",
@@ -22,7 +24,7 @@ class LineGraph extends React.Component {
               ticks: {
                 min: 0,
                 max: 200,
-                stepSize: 0,
+                stepSize: 50,
               },
             },
           ],
