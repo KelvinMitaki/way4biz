@@ -64,6 +64,7 @@ class App extends React.Component {
               exact
               component={ProductReviewsWrapper}
             />
+            <Route path="/seller/profiling" exact component={SellerProfiling} />
             <Route
               path="/admin-sellers"
               render={() =>
@@ -135,7 +136,7 @@ class App extends React.Component {
                 )
               }
             />
-            <Route
+            {/* <Route
               path="/seller/profiling"
               exact
               render={() =>
@@ -145,7 +146,7 @@ class App extends React.Component {
                   <Redirect to="/seller/sign-in" />
                 )
               }
-            />
+            /> */}
             <Route
               path="/seller/sell"
               exact

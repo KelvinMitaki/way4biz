@@ -5,43 +5,60 @@ import SellerTermsAndConditions from "./SellerTermsAndConditions";
 import SellerOrientationGuide from "./SellerOrientationGuide";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
-// import SellerOrientationGuide from "./SellerOrientationGuide";
 
 class SellerProfiling extends React.Component {
   state = {
     open: 0,
-    data: [
-      <SellerTermsAndConditions checked={this.handleCheck} />,
-      <SellerOrientationGuide checked={this.handleCheck} />,
-    ],
-    checked: false,
+    proceed: false,
   };
 
   handleCheck = (val) => {
     this.setState({
-      checked: val,
+      proceed: val,
     });
   };
 
   handleIncrement = (e) => {
     e.preventDefault();
-    this.setState((prevState) => {
-      return {
-        open: prevState.open + 1,
-      };
+    this.setState({
+      open: this.state.open + 1,
     });
   };
 
   handleDecrement = (e) => {
     e.preventDefault();
-    this.setState((prevState) => {
-      return {
-        open: prevState - 1,
-      };
+    this.setState({
+      open: this.state.open - 1,
     });
   };
 
+  setUpData() {
+    console.log(this.state.open);
+    switch (this.state.open) {
+      case 0:
+        return <SellerTermsAndConditions proceed={this.handleCheck} />;
+      case 1:
+        return <SellerOrientationGuide proceed={this.handleCheck} />;
+      default:
+        break;
+    }
+  }
+
   render() {
+    let nextButton;
+    if (this.state.proceed) {
+      nextButton = (
+        <button className="btn btn-md" onClick={this.handleIncrement}>
+          Next
+        </button>
+      );
+    } else {
+      nextButton = (
+        <button className="btn btn-md" onClick={this.handleIncrement} disabled>
+          Next
+        </button>
+      );
+    }
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -49,27 +66,22 @@ class SellerProfiling extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mx-auto">
-            <div>{this.state.data[this.state.open]}</div>
-            <div className="nav-btns">
-              {this.state.open == 0 ? null : (
-                <button
-                  className="btn btn-md float-left"
-                  onClick={this.handleIncrement}
-                >
+          <div
+            className="col-lg-9 mx-auto py-3"
+            style={{ backgroundColor: "#fff" }}
+          >
+            {this.setUpData()}
+
+            <div className="nav-btns container my-3">
+              {this.state.open == 0 ? (
+                <div></div>
+              ) : (
+                <button className="btn btn-md" onClick={this.handleDecrement}>
                   Back
                 </button>
               )}
 
-              {this.state.open == this.state.data.length - 1 ? null : (
-                <button
-                  className="btn btn-md float-right"
-                  onClick={this.handleDecrement}
-                  disabled={!this.state.checked}
-                >
-                  Next
-                </button>
-              )}
+              {this.state.open == 4 ? null : nextButton}
             </div>
           </div>
         </div>
