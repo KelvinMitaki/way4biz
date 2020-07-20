@@ -9,7 +9,9 @@ import {
   FETCH_VERIFIED_SELLERS,
   FETCH_SELLERS_START,
   FETCH_SELLERS_STOP,
-  FETCH_VERIFIED_SELLER
+  FETCH_VERIFIED_SELLER,
+  FETCH_NEW_SELLER,
+  FETCH_NEW_SELLERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -22,7 +24,9 @@ const INITIAL_STATE = {
   sellerOrders: [],
   verifiedSellers: [],
   fetchSellersLoading: false,
-  verifiedSeller: null
+  verifiedSeller: null,
+  newSellers: null,
+  newSeller: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -56,6 +60,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchSellersLoading: false };
     case FETCH_VERIFIED_SELLER:
       return { ...state, verifiedSeller: action.payload };
+    case FETCH_NEW_SELLER:
+      return { ...state, newSeller: action.payload };
+    case FETCH_NEW_SELLERS:
+      return { ...state, newSellers: action.payload };
     default:
       return state;
   }
