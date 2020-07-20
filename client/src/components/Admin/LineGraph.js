@@ -18,7 +18,7 @@ class LineGraph extends React.Component {
             {
               type: "time",
               time: {
-                unit: "month",
+                unit: "day",
                 // day: "MMM D",
               },
             },
