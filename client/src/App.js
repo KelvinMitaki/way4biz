@@ -41,6 +41,7 @@ import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
 import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
 import AdminDashBoardNewSellers from "./components/Admin/AdminDashBoardNewSellers";
 import AdminDashBoardNewSeller from "./components/Admin/AdminDashBoardNewSeller";
+import SellerProfiling from "./components/Seller/SellerProfiling";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -129,6 +130,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerOrders />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller/profiling"
+              exact
+              render={() =>
+                this.props.user ? (
+                  <SellerProfiling />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -365,16 +377,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

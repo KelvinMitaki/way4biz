@@ -1,9 +1,11 @@
 import React from "react";
 
 import "./SellerProfiling.css";
-import "./SellerTermsAndConditions";
-import "./SellerOrientationGuide";
+import SellerTermsAndConditions from "./SellerTermsAndConditions";
 import SellerOrientationGuide from "./SellerOrientationGuide";
+import SellerDashBoardMenu from "./SellerDashBoardMenu";
+import SellerDashBoardHeader from "./SellerDashBoardHeader";
+// import SellerOrientationGuide from "./SellerOrientationGuide";
 
 class SellerProfiling extends React.Component {
   state = {
