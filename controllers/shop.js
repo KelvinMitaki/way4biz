@@ -256,77 +256,94 @@ route.post(
   }
 );
 
+// route.post(
+//   "/api/checkout/payment",
+//   auth,
+//   delivery,
+//   check("paymentMethod")
+//     .trim()
+//     .isLength({ min: 2 })
+//     .withMessage("Please check your payment method"),
+//   async (req, res) => {
+//     try {
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         return res.status(401).send({ message: errors.array()[0].msg });
+//       }
+//       const {
+//         firstName,
+//         lastName,
+//         number,
+//         deliveryAddress,
+//         region,
+//         city
+//       } = req.delivery;
+//       const { paymentMethod } = req.body;
+//       const order = new Order({
+//         firstName,
+//         lastName,
+//         number,
+//         deliveryAddress,
+//         region,
+//         city,
+//         paymentMethod
+//       });
+//       await order.save();
+//       res.status(201).send(order);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   }
+// );
+
 route.post(
-  "/api/checkout/payment",
+  "/api/new/order",
   auth,
-  delivery,
-  check("paymentMethod")
-    .trim()
-    .isLength({ min: 2 })
-    .withMessage("Please check your payment method"),
+  check("formValues.paymentMethod")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid payment method"),
+  check("formValues.distanceId")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid location"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const {
-        firstName,
-        lastName,
-        number,
-        deliveryAddress,
-        region,
-        city
-      } = req.delivery;
-      const { paymentMethod } = req.body;
+      const { formValues, cart } = req.body;
+      const { _id } = req.session.user;
+      const test = cart.map(item => {
+        return {
+          product: item._id,
+          quantity: item.quantity
+        };
+      });
+      cart.forEach(async item => {
+        await Product.findByIdAndUpdate(item._id, {
+          $inc: { stockQuantity: -item.quantity }
+        });
+      });
+      const price = cart
+        .map(item => item.price)
+        .reduce((acc, curr) => acc + curr, 0);
       const order = new Order({
-        firstName,
-        lastName,
-        number,
-        deliveryAddress,
-        region,
-        city,
-        paymentMethod
+        items: test,
+        paymentMethod: formValues.payment,
+        totalPrice: price,
+        buyer: _id,
+        distance: formValues.distanceId
       });
       await order.save();
-      res.status(201).send(order);
+
+      res.send(order);
     } catch (error) {
       res.status(500).send(error);
     }
   }
 );
-
-route.post("/api/new/order", auth, check(""), async (req, res) => {
-  try {
-    const { formValues, cart } = req.body;
-    const { _id } = req.session.user;
-    const test = cart.map(item => {
-      return {
-        product: item._id,
-        quantity: item.quantity
-      };
-    });
-    cart.forEach(async item => {
-      await Product.findByIdAndUpdate(item._id, {
-        $inc: { stockQuantity: -item.quantity }
-      });
-    });
-    const price = cart
-      .map(item => item.price)
-      .reduce((acc, curr) => acc + curr, 0);
-    const order = new Order({
-      items: test,
-      paymentMethod: formValues.payment,
-      totalPrice: price,
-      buyer: _id
-    });
-    await order.save();
-
-    res.send(order);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
 
 // CREATE PRODUCT INDEX
 route.get("/api/products/find/categories", async (req, res) => {

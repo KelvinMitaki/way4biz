@@ -499,11 +499,13 @@ export const fetchAllCategories = () => async dispatch => {
   }
 };
 
-export const makeOrder = credentials => async dispatch => {
+export const makeOrder = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
-
-    await axios.post("/api/new/order", credentials);
+    const distanceId =
+      getState().detailsPersist.distance &&
+      getState().detailsPersist.distance._id;
+    await axios.post("/api/new/order", { ...credentials, distanceId });
     dispatch({ type: MAKE_ORDER });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
