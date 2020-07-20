@@ -96,7 +96,9 @@ import {
   FETCH_SELLERS_START,
   FETCH_VERIFIED_SELLER,
   FETCH_NEW_SELLER,
-  FETCH_NEW_SELLERS
+  FETCH_NEW_SELLERS,
+  FETCH_NEW_SELLERS_START,
+  FETCH_NEW_SELLERS_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1350,10 +1352,10 @@ export const fetchNewSellers = () => async dispatch => {
 };
 export const fetchNewSeller = (sellerId, history) => async dispatch => {
   try {
-    dispatch({ type: FETCH_SELLERS_START });
+    dispatch({ type: FETCH_NEW_SELLERS_START });
     const res = await axios.get(`/api/new/seller/${sellerId}`);
     dispatch({ type: FETCH_NEW_SELLER, payload: res.data });
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: FETCH_NEW_SELLERS_STOP });
   } catch (error) {
     if (
       error &&
@@ -1372,7 +1374,7 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
       return (window.location.href = "/seller/sign-in");
     }
     history.push("/");
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: FETCH_NEW_SELLERS_STOP });
     console.log(error.response);
   }
 };

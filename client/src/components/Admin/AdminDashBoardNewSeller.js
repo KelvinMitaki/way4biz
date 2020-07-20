@@ -18,6 +18,7 @@ class AdminDashBoardSeller extends React.Component {
     );
   }
   render() {
+    if (this.props.newSellerLoading) return <ScreenLoader />;
     if (!this.props.newSeller) return <ScreenLoader />;
     if (this.props.newSeller && Object.keys(this.props.newSeller) !== 0) {
       const {
@@ -70,7 +71,8 @@ class AdminDashBoardSeller extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    newSeller: state.sellerRegister.newSeller
+    newSeller: state.sellerRegister.newSeller,
+    newSellerLoading: state.sellerRegister.newSellerLoading
   };
 };
 export default withRouter(
