@@ -35,7 +35,13 @@ export default (state = INITIAL_STATE, action) => {
         sellerRegisterError: action.payload
       };
     case FETCH_SELLER_NUMBER:
-      return { ...state, sellerNumber: { number: action.payload } };
+      return {
+        ...state,
+        sellerNumber:
+          Object.keys(action.payload).length !== 0
+            ? { number: action.payload }
+            : {}
+      };
     case INVALID_VERIFICATION_CODE:
       return { ...state, errorVerifying: action.payload };
     case RESET_TOKEN_CHECK:

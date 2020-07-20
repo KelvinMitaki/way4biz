@@ -20,6 +20,7 @@ export class VerifySellerNumber extends Component {
       return <Redirect to="/seller/register" />;
     }
     if (this.props.sellerNumber) {
+      console.log(this.props.sellerNumber);
       return (
         <div style={{ textAlign: "center" }}>
           <AuthHeader />
