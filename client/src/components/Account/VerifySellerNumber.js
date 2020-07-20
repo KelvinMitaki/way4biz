@@ -13,7 +13,7 @@ export class VerifySellerNumber extends Component {
   }
   render() {
     if (this.props.sellerNumber) {
-      if (Object.keys(this.props.sellerNumber).length === 0) {
+      if (!this.props.sellerNumber.number) {
         return <Redirect to="/seller/register" />;
       }
       return (

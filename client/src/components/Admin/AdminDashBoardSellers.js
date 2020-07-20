@@ -13,7 +13,7 @@ class AdminDashBoardSellers extends React.Component {
     this.props.fetchVerifiedSellers();
   }
   render() {
-    if (this.props.fetchSellerLoading) return <ScreenLoader />;
+    if (this.props.fetchSellersLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <DashBoardHeader />
@@ -81,7 +81,7 @@ class AdminDashBoardSellers extends React.Component {
 const mapStateToProps = state => {
   return {
     verifiedSellers: state.sellerRegister.verifiedSellers,
-    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
   };
 };
 export default connect(mapStateToProps, { fetchVerifiedSellers })(
