@@ -14,10 +14,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
     open: false,
     keys: [
       {
-        parentKey: "Seller",
+        parentKey: ["Sellers", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
-          { name: "New Sellers", url: "/admin-new-sellers" },
+          { name: "New Sellers", url: "/admin-new-sellers", num: "100" },
         ],
       },
     ],

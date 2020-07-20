@@ -12,9 +12,6 @@ class DoughnutChart extends React.Component {
   componentDidMount() {
     this.adminDoughnutChart = new Chart(this.canvasRef.current, {
       type: "doughnut",
-      // options: {
-      //   maintainAspectRatio: false,
-      // },
       data: {
         labels: ["Stock in", "Stock out"],
 

@@ -28,13 +28,21 @@ class MenuDropdown extends React.Component {
     return (
       <div>
         <span className="accordion">
-          {parentKey}
+          {parentKey[0]}
+          <span className="badge custom-badge ml-1">{parentKey[1]}</span>
           <MdKeyboardArrowDown className="ml-1" />
         </span>
         <div className="panel">
           {childKeys.map((childKey) => (
             <p key={Math.random()}>
-              <NavLink to={childKey.url}>{childKey.name}</NavLink>
+              <NavLink to={childKey.url} style={{ width: "100%" }}>
+                {childKey.name}
+                {childKey.num > 0 ? (
+                  <span className="bagde custom-badge ml-1">
+                    {childKey.num}
+                  </span>
+                ) : null}
+              </NavLink>
             </p>
           ))}
         </div>
