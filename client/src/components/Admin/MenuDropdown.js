@@ -24,17 +24,17 @@ class MenuDropdown extends React.Component {
   }
   render() {
     const { parentKey, childKeys } = this.props.data;
-    console.log(childKeys);
+    // console.log(childKeys);
     return (
       <div>
-        <p className="accordion">
+        <span className="accordion">
           {parentKey}
-          <MdKeyboardArrowDown />
-        </p>
+          <MdKeyboardArrowDown className="ml-1" />
+        </span>
         <div className="panel">
           {childKeys.map((childKey) => (
             <p key={Math.random()}>
-              <NavLink to={"/" + childKey.url}>{childKey.name}</NavLink>
+              <NavLink to={childKey.url}>{childKey.name}</NavLink>
             </p>
           ))}
         </div>

@@ -39,6 +39,7 @@ import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
 import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
 import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
+import AdminDashBoardNewSellers from "./components/Admin/AdminDashBoardNewSellers";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -63,6 +64,10 @@ class App extends React.Component {
             />
             <Route path="/admin-sellers" component={AdminDashBoardSellers} />
             <Route path="/admin-seller" component={AdminDashBoardSeller} />
+            <Route
+              path="/admin-new-sellers"
+              component={AdminDashBoardNewSellers}
+            />
             <Route
               path="/products/category/:category"
               exact
