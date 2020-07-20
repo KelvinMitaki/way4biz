@@ -94,8 +94,14 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/admin-new-seller"
-              component={AdminDashBoardNewSeller}
+              path="/admin-new-seller/:sellerId"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardNewSeller />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
             />
             <Route
               path="/products/category/:category"
