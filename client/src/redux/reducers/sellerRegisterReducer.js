@@ -38,9 +38,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         sellerNumber:
-          Object.keys(action.payload).length !== 0
-            ? { number: action.payload }
-            : {}
+          typeof action.payload === "number" ? { number: action.payload } : {}
       };
     case INVALID_VERIFICATION_CODE:
       return { ...state, errorVerifying: action.payload };
