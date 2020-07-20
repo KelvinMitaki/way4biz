@@ -40,6 +40,7 @@ import ScreenLoader from "./components/Pages/ScreenLoader";
 import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
 import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
 import AdminDashBoardNewSellers from "./components/Admin/AdminDashBoardNewSellers";
+import AdminDashBoardNewSeller from "./components/Admin/AdminDashBoardNewSeller";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -91,6 +92,10 @@ class App extends React.Component {
                   <Redirect to="/seller/sign-in" />
                 )
               }
+            />
+            <Route
+              path="/admin-new-seller"
+              component={AdminDashBoardNewSeller}
             />
             <Route
               path="/products/category/:category"

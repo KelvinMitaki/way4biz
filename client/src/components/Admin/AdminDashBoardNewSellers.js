@@ -51,7 +51,7 @@ class AdminDashBoardNewSellers extends React.Component {
                   <div className="col-md-3 d-flex align-items-center">
                     <p>
                       <Link
-                        to="/admin-seller"
+                        to="/admin-new-seller"
                         className="admin-seller-view-more"
                       >
                         View More
