@@ -93,7 +93,8 @@ import {
   GET_STOCK_STOP,
   FETCH_VERIFIED_SELLERS,
   FETCH_SELLERS_STOP,
-  FETCH_SELLERS_START
+  FETCH_SELLERS_START,
+  FETCH_VERIFIED_SELLER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1077,5 +1078,23 @@ export const fetchVerifiedSellers = () => async dispatch => {
     }
     dispatch({ type: FETCH_SELLERS_STOP });
     console.log(error.response);
+  }
+};
+
+export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLERS_START });
+    const res = await axios.get(`/api/verified/seller/${sellerId}`);
+    dispatch({ type: FETCH_VERIFIED_SELLER, payload: res.data });
+    dispatch({ type: FETCH_SELLERS_STOP });
+  } catch (error) {
+    if (error.response.data.buyer) {
+      return (window.location.href = "/sign-in");
+    }
+    if (error.response.data.seller) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_SELLERS_STOP });
+    history.push("/");
   }
 };

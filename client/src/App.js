@@ -62,11 +62,35 @@ class App extends React.Component {
               exact
               component={ProductReviewsWrapper}
             />
-            <Route path="/admin-sellers" component={AdminDashBoardSellers} />
-            <Route path="/admin-seller" component={AdminDashBoardSeller} />
+            <Route
+              path="/admin-sellers"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-seller/:sellerId"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardSeller />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
             <Route
               path="/admin-new-sellers"
-              component={AdminDashBoardNewSellers}
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardNewSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
             />
             <Route
               path="/products/category/:category"
@@ -336,16 +360,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);

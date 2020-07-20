@@ -628,7 +628,7 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
   }
 });
 // PROTECT THIS ROUTE LATER
-route.get("/api/root/admin/stock/report", async (req, res) => {
+route.get("/api/root/admin/stock/report", isSeller, async (req, res) => {
   try {
     const stockQuantity = await Product.aggregate([
       { $project: { stockQuantity: 1, _id: 0 } }
@@ -649,10 +649,21 @@ route.get("/api/root/admin/stock/report", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/verified/sellers", async (req, res) => {
+route.get("/api/verified/sellers", isSeller, async (req, res) => {
   try {
     const verifiedSellers = await Seller.find({ verified: true });
     res.send({ verifiedSellers });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/verified/seller/:sellerId", isSeller, async (req, res) => {
+  try {
+    const seller = await Seller.findById(req.params.sellerId);
+    if (!seller || Object.keys(seller).length === 0) {
+      return res.status(404).send({ message: "No seller found" });
+    }
+    res.send(seller);
   } catch (error) {
     res.status(500).send(error);
   }
