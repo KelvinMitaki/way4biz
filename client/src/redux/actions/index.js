@@ -94,7 +94,9 @@ import {
   FETCH_VERIFIED_SELLERS,
   FETCH_SELLERS_STOP,
   FETCH_SELLERS_START,
-  FETCH_VERIFIED_SELLER
+  FETCH_VERIFIED_SELLER,
+  FETCH_NEW_SELLER,
+  FETCH_NEW_SELLERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1096,5 +1098,42 @@ export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
     }
     dispatch({ type: FETCH_SELLERS_STOP });
     history.push("/");
+  }
+};
+
+export const fetchNewSellers = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLERS_START });
+    const res = await axios.get("/api/new/sellers");
+    dispatch({ type: FETCH_NEW_SELLERS, payload: res.data });
+    dispatch({ type: FETCH_SELLERS_STOP });
+  } catch (error) {
+    if (error.response.data.buyer) {
+      return (window.location.href = "/sign-in");
+    }
+    if (error.response.data.seller) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_SELLERS_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchNewSeller = (sellerId, history) => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLERS_START });
+    const res = await axios.get(`/api/new/seller/${sellerId}`);
+
+    dispatch({ type: FETCH_NEW_SELLER, payload: res.data });
+    dispatch({ type: FETCH_SELLERS_STOP });
+  } catch (error) {
+    if (error.response.data.buyer) {
+      return (window.location.href = "/sign-in");
+    }
+    if (error.response.data.seller) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    history.push("/");
+    dispatch({ type: FETCH_SELLERS_STOP });
+    console.log(error.response);
   }
 };
