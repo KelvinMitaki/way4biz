@@ -15,7 +15,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
     keys: [
       {
         parentKey: "Seller",
-        childKeys: [{ name: "Active Sellers", url: "admin-sellers" }],
+        childKeys: [
+          { name: "Active Sellers", url: "/admin-sellers" },
+          { name: "New Sellers", url: "/admin-new-sellers" },
+        ],
       },
     ],
   };
@@ -82,19 +85,22 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine /> <span className="ml-2">Sellers</span>
               <span className="ml-1">
                 {" "}
                 <MdKeyboardArrowDown />
               </span>
-            </NavLink>
+            </a>
+            {/* <NavLink exact to="/" activeClassName="admin-active-lg-link">
+              
+            </NavLink> */}
             <div className="sellers-dropdown">
               <p>
-                <Link to="/admin-sellers">Active Sellers</Link>
+                <NavLink to="/admin-sellers">Active Sellers</NavLink>
               </p>
               <p>
-                <Link to="/admin-new-sellers">New Sellers</Link>
+                <NavLink to="/admin-new-sellers">New Sellers</NavLink>
               </p>
             </div>
           </li>

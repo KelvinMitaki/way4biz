@@ -28,8 +28,8 @@
   top: 60px;
   background-color: white;
   z-index: 9001;
-  max-height: calc(100vh - 80px);
-  min-height: calc(100vh - 140px);
+  /* max-height: calc(100vh - 80px);
+  min-height: calc(100vh - 140px); */
   padding: 20px 10px;
   font-size: 18px;
 }
@@ -99,6 +99,16 @@
 }
 
 .admin-active-lg-link {
+  color: #f76b1a !important;
+}
+
+.admin-menu-dropdown-main {
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.admin-menu-dropdown-main :hover {
   color: #f76b1a !important;
 }
 
