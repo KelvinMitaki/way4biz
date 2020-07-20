@@ -235,6 +235,7 @@ class Product extends React.Component {
                     {this.props.productReviews.length !== 0 ? (
                       <React.Fragment>
                         <Rating
+                          key={this.props.productReviews.length}
                           size={18}
                           clickable={false}
                           value={Math.round(

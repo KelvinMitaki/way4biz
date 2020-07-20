@@ -299,11 +299,11 @@ route.post(
 route.post(
   "/api/new/order",
   auth,
-  check("formValues.paymentMethod")
+  check("formValues.payment")
     .not()
     .isEmpty()
     .withMessage("Please choose a valid payment method"),
-  check("formValues.distanceId")
+  check("distanceId")
     .not()
     .isEmpty()
     .withMessage("Please choose a valid location"),
@@ -313,7 +313,7 @@ route.post(
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const { formValues, cart } = req.body;
+      const { formValues, cart, distanceId } = req.body;
       const { _id } = req.session.user;
       const test = cart.map(item => {
         return {
@@ -334,7 +334,7 @@ route.post(
         paymentMethod: formValues.payment,
         totalPrice: price,
         buyer: _id,
-        distance: formValues.distanceId
+        distance: distanceId
       });
       await order.save();
 

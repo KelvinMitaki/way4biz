@@ -26,6 +26,7 @@ export class ParentProduct extends Component {
 const mapStateToProps = state => {
   return {
     product: state.product.product,
+    relatedProducts: state.product.relatedProducts,
     singleProductLoad: state.product.singleProductLoad
   };
 };
