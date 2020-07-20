@@ -37,17 +37,17 @@ class AdminDashBoardNewSellers extends React.Component {
                   </div>
                 </div>
                 {/* mapping here */}
-                {this.props.newSellers.map(seller => (
-                  <div className="admin-new-seller container">
+                {this.props.newSellers.sellers.map(seller => (
+                  <div className="admin-new-seller container" key={seller._id}>
                     <div className="row box-container">
                       <div className="col-md-6">
                         <div className="admin-seller-details">
                           <p>
-                            <strong className="x mr-2">Name:</strong>
+                            <strong className="mr-2">Name:</strong>
                             {seller.firstName} {seller.lastName}
                           </p>
                           <p>
-                            <strong className="x mr-2">StoreName:</strong>
+                            <strong className="mr-2">StoreName:</strong>
                             {seller.storeName}
                           </p>
                         </div>
