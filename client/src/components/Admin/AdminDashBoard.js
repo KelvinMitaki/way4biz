@@ -40,7 +40,11 @@ class AdminDashBoard extends React.Component {
                 style={{ borderRight: "1px solid #eee", height: "100%" }}
               >
                 <div className="admin-big-number">
-                  <span>10,000</span>
+                  <span>
+                    {this.props.newSellers &&
+                      this.props.newSellers.sellers &&
+                      this.props.newSellers.sellers.length.toLocaleString()}
+                  </span>
                   <h3>
                     <AiOutlineUsergroupAdd />
                   </h3>
@@ -52,7 +56,11 @@ class AdminDashBoard extends React.Component {
                 style={{ borderRight: "1px solid #eee", height: "100%" }}
               >
                 <div className="admin-big-number">
-                  <span>0</span>
+                  <span>
+                    {this.props.stock
+                      .find(s => s.label === "Stock Out")
+                      .value.toLocaleString()}
+                  </span>
                   <h3>
                     <BsArrowRepeat />
                   </h3>
@@ -189,7 +197,8 @@ class AdminDashBoard extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    stock: state.product.stock
+    stock: state.product.stock,
+    newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps, { getStock })(AdminDashBoard);

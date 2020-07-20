@@ -10,6 +10,7 @@ import MenuDropdown from "./MenuDropdown";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { connect } from "react-redux";
 import { fetchNewSellers } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   componentDidMount() {
@@ -35,6 +36,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
     });
   };
   render() {
+    if (!this.props.newSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid admin-secondary-dashboard-header">
         {this.state.open ? (
@@ -96,9 +98,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 <MdKeyboardArrowDown />
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
-                  this.props.newSellers.sellers.length !== 0 && (
+                  this.props.newSellers.sellers.length.toLocaleString() !==
+                    0 && (
                     <span className="badge custom-badge ml-2">
-                      {this.props.newSellers.sellers.length}
+                      {this.props.newSellers.sellers.length.toLocaleString()}
                     </span>
                   )}
               </span>
