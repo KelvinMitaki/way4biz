@@ -6,16 +6,20 @@ import { connect } from "react-redux";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import VerificationField from "./VerificationField";
 import { fetchSellerNumber, verifyCode } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 export class VerifySellerNumber extends Component {
   componentDidMount() {
-    this.props.fetchSellerNumber();
+    this.props.fetchSellerNumber(this.props.history);
   }
   render() {
+    if (
+      this.props.sellerNumber &&
+      Object.keys(this.props.sellerNumber).length === 0
+    ) {
+      return <Redirect to="/seller/register" />;
+    }
     if (this.props.sellerNumber) {
-      if (!this.props.sellerNumber.number) {
-        return <Redirect to="/seller/register" />;
-      }
       return (
         <div style={{ textAlign: "center" }}>
           <AuthHeader />
@@ -75,9 +79,10 @@ export class VerifySellerNumber extends Component {
         </div>
       );
     }
-    return <Redirect to="/seller/register" />;
+    return <ScreenLoader />;
   }
 }
+
 const validate = formValues => {
   const errors = {};
   if (
