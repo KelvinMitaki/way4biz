@@ -28,12 +28,12 @@
   padding-left: 10px;
 }
 
-#seller-menu-items li:hover {
+#seller-menu-items a:hover {
   background-color: #000822;
   width: 100%;
 }
 
-#seller-menu-items li:hover .link {
+#seller-menu-items a:hover li {
   color: #f76b1a !important;
 }
 

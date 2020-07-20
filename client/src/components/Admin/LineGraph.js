@@ -12,42 +12,30 @@ class LineGraph extends React.Component {
     this.adminLineGraph = new Chart(this.canvasRef.current, {
       type: "line",
       options: {
-        // maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: "Daily Sales",
+        },
         scales: {
-          xAxes: [
-            {
-              type: "time",
-              time: {
-                unit: "day",
-                // day: "MMM D",
-              },
-            },
-          ],
           yAxes: [
             {
               ticks: {
                 min: 0,
-                max: 100,
-                stepSize: 50,
+                max: 200,
+                stepSize: 0,
               },
             },
           ],
         },
       },
       data: {
+        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         datasets: [
           {
-            label: "Daily Sales",
-            data: [
-              {
-                x: 0,
-                y: 80,
-              },
-              {
-                x: 10,
-                y: 50,
-              },
-            ],
+            data: [86, 114, 10, 100],
+            label: "Sales",
+            borderColor: "#f76b1a",
+            fill: false,
           },
         ],
       },

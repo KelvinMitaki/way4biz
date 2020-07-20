@@ -16,14 +16,15 @@ class DoughnutChart extends React.Component {
       //   maintainAspectRatio: false,
       // },
       data: {
-        labels: this.props.data.map(d => d.label),
+        labels: ["Stock in", "Stock out"],
+
         datasets: [
           {
-            data: this.props.data.map(d => d.value),
-            backgroundColor: this.props.colors
-          }
-        ]
-      }
+            data: this.props.data.map((d) => d.value),
+            backgroundColor: ["#f76b1a", "#00001e"],
+          },
+        ],
+      },
     });
   }
   render() {

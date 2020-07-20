@@ -2,11 +2,11 @@ import React from "react";
 
 class SellerOrientationGuide extends React.Component {
   componentDidMount() {
-    this.props.checked(false);
+    this.props.proceed(false);
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <p>
           What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
           and typesetting industry. Lorem Ipsum has been the industry's standard

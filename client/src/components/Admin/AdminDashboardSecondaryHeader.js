@@ -88,19 +88,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
             <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine /> <span className="ml-2">Sellers</span>
               <span className="ml-1">
-                {" "}
                 <MdKeyboardArrowDown />
+                <span className="badge custom-badge ml-2">1</span>
               </span>
             </a>
-            {/* <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              
-            </NavLink> */}
+
             <div className="sellers-dropdown">
               <p>
                 <NavLink to="/admin-sellers">Active Sellers</NavLink>
               </p>
               <p>
-                <NavLink to="/admin-new-sellers">New Sellers</NavLink>
+                <NavLink to="/admin-new-sellers">
+                  New Sellers<span className="badge custom-badge ml-2">1</span>
+                </NavLink>
               </p>
             </div>
           </li>
