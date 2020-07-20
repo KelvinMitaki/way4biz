@@ -6,7 +6,6 @@ import { AiOutlineUsergroupAdd, AiFillPushpin } from "react-icons/ai";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { BsArrowRepeat } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
@@ -17,18 +16,18 @@ class AdminDashBoard extends React.Component {
       data: [
         {
           label: "Stock In",
-          value: 100,
+          value: 100
         },
         {
           label: "Stock Out",
-          value: 200,
-        },
+          value: 200
+        }
       ],
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
   render() {
     return (
