@@ -13,9 +13,6 @@ import { fetchNewSellers } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashboardSecondaryHeader extends React.Component {
-  componentDidMount() {
-    this.props.fetchNewSellers();
-  }
   state = {
     open: false,
     keys: [
@@ -151,6 +148,4 @@ const mapStateToProps = state => {
     newSellers: state.sellerRegister.newSellers
   };
 };
-export default connect(mapStateToProps, { fetchNewSellers })(
-  AdminDashboardSecondaryHeader
-);
+export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);
