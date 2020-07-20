@@ -92,9 +92,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 <span className="badge custom-badge ml-2">1</span>
               </span>
             </a>
-            {/* <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              
-            </NavLink> */}
+
             <div className="sellers-dropdown">
               <p>
                 <NavLink to="/admin-sellers">Active Sellers</NavLink>
