@@ -38,6 +38,7 @@ import ParentProduct from "./components/Product/ParentProduct";
 import AddReview from "./components/Account/AddReview";
 import ScreenLoader from "./components/Pages/ScreenLoader";
 import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
+import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -61,6 +62,7 @@ class App extends React.Component {
               component={ProductReviewsWrapper}
             />
             <Route path="/admin-sellers" component={AdminDashBoardSellers} />
+            <Route path="/admin-seller" component={AdminDashBoardSeller} />
             <Route
               path="/products/category/:category"
               exact

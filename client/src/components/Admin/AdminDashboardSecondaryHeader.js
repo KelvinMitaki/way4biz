@@ -3,14 +3,21 @@ import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
 import ProfileImage from "../Header/ProfileImage";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
     open: false,
+    keys: [
+      {
+        parentKey: "Seller",
+        childKeys: [{ name: "Active Sellers", url: "admin-sellers" }],
+      },
+    ],
   };
   handleClick = (e) => {
     this.setState((prevState) => {
@@ -51,8 +58,16 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </div>
           {this.state.open ? (
             <div className="admin-dashboard-sm-menu">
-              <h3>Helloo World Helloo World Helloo World</h3>
-              <MenuDropdown />
+              <p>
+                <Link to="/admin-dashboard">Dashboard</Link>
+              </p>
+              <MenuDropdown data={this.state.keys[0]} />
+              <p>
+                <Link to="/orders">Orders</Link>
+              </p>
+              <p>
+                <Link to="/admin-dashboard">Categories</Link>
+              </p>
             </div>
           ) : null}
         </div>
@@ -69,7 +84,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
               <RiFileUserLine /> <span className="ml-2">Sellers</span>
+              <span className="ml-1">
+                {" "}
+                <MdKeyboardArrowDown />
+              </span>
             </NavLink>
+            <div className="sellers-dropdown">
+              <p>
+                <Link to="/admin-sellers">Active Sellers</Link>
+              </p>
+              <p>
+                <Link to="/admin-new-sellers">New Sellers</Link>
+              </p>
+            </div>
           </li>
           <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
@@ -81,11 +108,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink exact to="/" activeClassName="admin-active-lg-link">
               <RiDashboardLine /> <span className="ml-2">Dashboard</span>
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <ProfileImage />
       </div>
