@@ -9,26 +9,26 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 class SellerProfiling extends React.Component {
   state = {
     open: 0,
-    proceed: false,
+    proceed: false
   };
 
-  handleCheck = (val) => {
+  handleCheck = val => {
     this.setState({
-      proceed: val,
+      proceed: val
     });
   };
 
-  handleIncrement = (e) => {
+  handleIncrement = e => {
     e.preventDefault();
     this.setState({
-      open: this.state.open + 1,
+      open: this.state.open + 1
     });
   };
 
-  handleDecrement = (e) => {
+  handleDecrement = e => {
     e.preventDefault();
     this.setState({
-      open: this.state.open - 1,
+      open: this.state.open - 1
     });
   };
 
@@ -73,7 +73,7 @@ class SellerProfiling extends React.Component {
             {this.setUpData()}
 
             <div className="nav-btns container my-3">
-              {this.state.open == 0 ? (
+              {this.state.open === 0 ? (
                 <div></div>
               ) : (
                 <button className="btn btn-md" onClick={this.handleDecrement}>
@@ -81,7 +81,7 @@ class SellerProfiling extends React.Component {
                 </button>
               )}
 
-              {this.state.open == 4 ? null : nextButton}
+              {this.state.open === 4 ? null : nextButton}
             </div>
           </div>
         </div>

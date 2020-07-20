@@ -8,6 +8,9 @@ import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { connect } from "react-redux";
+import { fetchNewSellers } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
@@ -30,6 +33,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
     });
   };
   render() {
+    if (!this.props.newSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid admin-secondary-dashboard-header">
         {this.state.open ? (
@@ -89,7 +93,14 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <RiFileUserLine /> <span className="ml-2">Sellers</span>
               <span className="ml-1">
                 <MdKeyboardArrowDown />
-                <span className="badge custom-badge ml-2">1</span>
+                {this.props.newSellers &&
+                  this.props.newSellers.sellers &&
+                  this.props.newSellers.sellers.length.toLocaleString() !==
+                    0 && (
+                    <span className="badge custom-badge ml-2">
+                      {this.props.newSellers.sellers.length.toLocaleString()}
+                    </span>
+                  )}
               </span>
             </a>
 
@@ -99,7 +110,14 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </p>
               <p>
                 <NavLink to="/admin-new-sellers">
-                  New Sellers<span className="badge custom-badge ml-2">1</span>
+                  New Sellers
+                  {this.props.newSellers &&
+                    this.props.newSellers.sellers &&
+                    this.props.newSellers.sellers.length !== 0 && (
+                      <span className="badge custom-badge ml-2">
+                        {this.props.newSellers.sellers.length}
+                      </span>
+                    )}
                 </NavLink>
               </p>
             </div>
@@ -125,5 +143,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-
-export default AdminDashboardSecondaryHeader;
+const mapStateToProps = (state) => {
+  return {
+    newSellers: state.sellerRegister.newSellers,
+  };
+};
+export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);

@@ -11,7 +11,9 @@ import {
   FETCH_SELLERS_STOP,
   FETCH_VERIFIED_SELLER,
   FETCH_NEW_SELLER,
-  FETCH_NEW_SELLERS
+  FETCH_NEW_SELLERS,
+  FETCH_NEW_SELLERS_START,
+  FETCH_NEW_SELLERS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,7 +28,8 @@ const INITIAL_STATE = {
   fetchSellersLoading: false,
   verifiedSeller: null,
   newSellers: null,
-  newSeller: null
+  newSeller: null,
+  newSellerLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -64,6 +67,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, newSeller: action.payload };
     case FETCH_NEW_SELLERS:
       return { ...state, newSellers: action.payload };
+    case FETCH_NEW_SELLERS_START:
+      return { ...state, newSellerLoading: true };
+    case FETCH_NEW_SELLERS_STOP:
+      return { ...state, newSellerLoading: false };
     default:
       return state;
   }
