@@ -17,7 +17,7 @@ class AdminDashBoardSeller extends React.Component {
           <div className="box-container">
             <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
               <div className="d-flex align-items-center">
-                <Link to="/admin-sellers">
+                <Link to="/admin-new-sellers">
                   <BsArrowLeft />
                 </Link>
                 {/* <h3 className="ml-3">Seller ID</h3> */}
