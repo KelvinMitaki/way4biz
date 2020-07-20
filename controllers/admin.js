@@ -627,4 +627,17 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/root/admin/stock/report", async (req, res) => {
+  try {
+    const stockQuantity = await Product.aggregate([
+      { $project: { stockQuantity: 1, _id: 0 } }
+    ]);
+    const stockIn = stockQuantity
+      .map(s => s.stockQuantity)
+      .reduce((acc, cur) => acc + cur, 0);
+    res.send({ stockIn });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

@@ -52,7 +52,7 @@ if (cluster.isMaster) {
       store: sessionStore,
       cookie: {
         sameSite: true,
-        maxAge: 1000 * 60 * 60 * 24,
+        maxAge: 1000 * 60,
         secure: process.env.PRODUCTION
       }
     })
