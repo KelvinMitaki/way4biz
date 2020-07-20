@@ -349,13 +349,14 @@ export const sendMessage = (formvalues, history) => async dispatch => {
     console.log(error.response);
   }
 };
-export const fetchSellerNumber = () => async dispatch => {
+export const fetchSellerNumber = history => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/number/verify");
     dispatch({ type: FETCH_SELLER_NUMBER, payload: res.data });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
+    history.push("/seller/register");
     dispatch({ type: LOADING_STOP });
     console.log(error);
   }
