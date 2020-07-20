@@ -87,7 +87,10 @@ import {
   UNPERSIST_IMAGE,
   PAYMENT_DISTANCE_START,
   PAYMENT_DISTANCE_STOP,
-  PAYMENT_DISTANCE
+  PAYMENT_DISTANCE,
+  GET_STOCK,
+  GET_STOCK_START,
+  GET_STOCK_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1031,6 +1034,18 @@ export const paymentPerDistance = details => async dispatch => {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: PAYMENT_DISTANCE_STOP });
+    console.log(error.response);
+  }
+};
+// PROTECT THIS ROUTE LATER
+export const getStock = () => async dispatch => {
+  try {
+    dispatch({ type: GET_STOCK_START });
+    const res = await axios.get("/api/root/admin/stock/report");
+    dispatch({ type: GET_STOCK, payload: res.data });
+    dispatch({ type: GET_STOCK_STOP });
+  } catch (error) {
+    dispatch({ type: GET_STOCK_STOP });
     console.log(error.response);
   }
 };
