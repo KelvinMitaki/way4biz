@@ -11,20 +11,11 @@ import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
 import { getStock } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      data: [
-        {
-          label: "Stock In",
-          value: 100
-        },
-        {
-          label: "Stock Out",
-          value: 200
-        }
-      ],
       title: "test"
     },
     lineData: {
@@ -34,15 +25,9 @@ class AdminDashBoard extends React.Component {
   componentDidMount() {
     this.props.getStock();
   }
-  componentDidUpdate(prevProps) {
-    if (
-      Object.keys(prevProps.stock).length !==
-      Object.keys(this.props.stock).length
-    ) {
-      console.log(this.props.stock);
-    }
-  }
+
   render() {
+    if (this.props.stock.length === 0) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <AdminDashBoardHeader />
@@ -107,7 +92,7 @@ class AdminDashBoard extends React.Component {
                     </div>
                     <div className="mt-5">
                       <DoughnutChart
-                        data={this.state.doughnatData.data}
+                        data={this.props.stock}
                         colors={"#f76b1a"}
                         title={this.state.doughnatData.title}
                       />

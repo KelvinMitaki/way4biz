@@ -57,7 +57,7 @@ const INITIAL_STATE = {
   description: "",
   redirectOnFailLoading: false,
   storeImageLoading: false,
-  stock: {},
+  stock: [],
   stockLoading: false
 };
 
@@ -166,7 +166,13 @@ export default (state = INITIAL_STATE, action) => {
     case GET_STOCK_STOP:
       return { ...state, stockLoading: false };
     case GET_STOCK:
-      return { ...state, stock: action.payload };
+      return {
+        ...state,
+        stock: [
+          { label: "Stock In", value: action.payload.stockIn },
+          { label: "Stock Out", value: action.payload.stockOut }
+        ]
+      };
     default:
       return state;
   }
