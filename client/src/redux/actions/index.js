@@ -167,10 +167,20 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER_STOP });
   } catch (error) {
     dispatch({ type: FETCH_USER_FAILED });
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_USER_STOP });
@@ -207,10 +217,20 @@ export const editUser = (credentials, history) => async (
   } catch (error) {
     console.log(error);
     dispatch({ type: EDIT_USER_FAILED });
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: LOADING_STOP });
@@ -233,10 +253,20 @@ export const checkoutUser = (credentials, history) => async (
   } catch (error) {
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
 
@@ -274,10 +304,20 @@ export const updatePasswordLoggedIn = (
     history.push("/");
   } catch (error) {
     dispatch({ type: UPDATE_PASSWORD_LOGGED_IN_FAILED });
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: LOADING_STOP });
@@ -330,10 +370,20 @@ export const fetchSeller = () => async dispatch => {
     }
     dispatch({ type: FETCH_SELLER, payload: res.data });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     console.log(error);
@@ -422,10 +472,20 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
     dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
@@ -442,10 +502,20 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: LOADING_STOP });
@@ -474,10 +544,20 @@ export const storeImage = image => async dispatch => {
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     console.log(error.response.data);
@@ -504,10 +584,20 @@ export const editProduct = (formvalues, productId, history) => async (
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: LOADING_STOP });
@@ -570,10 +660,20 @@ export const makeOrder = credentials => async (dispatch, getState) => {
     dispatch({ type: MAKE_ORDER });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: LOADING_STOP });
@@ -588,10 +688,20 @@ export const fetchSellerOrders = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_ORDERS, payload: res.data });
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
@@ -613,10 +723,20 @@ export const fetchBuyerOrders = () => async dispatch => {
     dispatch({ type: FETCH_BUYER_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
@@ -645,10 +765,20 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
     dispatch({ type: FETCH_BUYER_ORDER_DETAILS, payload: res.data });
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
@@ -735,10 +865,20 @@ export const fetchPendingReviews = () => async dispatch => {
     dispatch({ type: FETCH_PENDING_REVIEWS, payload: res.data });
     dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
@@ -763,10 +903,20 @@ export const submitReview = (
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     history.push("/pending/reviews");
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
@@ -786,10 +936,20 @@ export const redirectOnFail = (
     }
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
@@ -986,10 +1146,20 @@ export const fetchSellerReviews = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_REVIEWS, payload: res.data });
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
@@ -1014,10 +1184,20 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
     dispatch({ type: DELETE_IMAGE, payload: imageUrl });
     dispatch({ type: DELETE_IMAGE_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: DELETE_IMAGE_STOP });
@@ -1033,10 +1213,20 @@ export const paymentPerDistance = details => async dispatch => {
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: PAYMENT_DISTANCE_STOP });
@@ -1051,10 +1241,20 @@ export const getStock = () => async dispatch => {
     dispatch({ type: GET_STOCK, payload: res.data });
     dispatch({ type: GET_STOCK_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: GET_STOCK_STOP });
@@ -1072,10 +1272,20 @@ export const fetchVerifiedSellers = () => async dispatch => {
     });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLERS_STOP });
@@ -1090,10 +1300,20 @@ export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
     dispatch({ type: FETCH_VERIFIED_SELLER, payload: res.data });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLERS_STOP });
@@ -1108,10 +1328,20 @@ export const fetchNewSellers = () => async dispatch => {
     dispatch({ type: FETCH_NEW_SELLERS, payload: res.data });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_SELLERS_STOP });
@@ -1122,14 +1352,23 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLERS_START });
     const res = await axios.get(`/api/new/seller/${sellerId}`);
-
     dispatch({ type: FETCH_NEW_SELLER, payload: res.data });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (error.response.data.buyer) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
       return (window.location.href = "/sign-in");
     }
-    if (error.response.data.seller) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
       return (window.location.href = "/seller/sign-in");
     }
     history.push("/");
