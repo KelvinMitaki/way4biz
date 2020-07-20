@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
+import { getStock } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class AdminDashBoard extends React.Component {
   state = {
@@ -29,6 +31,17 @@ class AdminDashBoard extends React.Component {
       data: [20, 10]
     }
   };
+  componentDidMount() {
+    this.props.getStock();
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      Object.keys(prevProps.stock).length !==
+      Object.keys(this.props.stock).length
+    ) {
+      console.log(this.props.stock);
+    }
+  }
   render() {
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -189,5 +202,9 @@ class AdminDashBoard extends React.Component {
     );
   }
 }
-
-export default AdminDashBoard;
+const mapStateToProps = state => {
+  return {
+    stock: state.product.stock
+  };
+};
+export default connect(mapStateToProps, { getStock })(AdminDashBoard);
