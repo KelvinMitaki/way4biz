@@ -6,8 +6,17 @@ import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { IconContext } from "react-icons";
 import { FiFilter } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useEffect } from "react";
+import { fetchAllOrders } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
-function AdminDashBoardOrders() {
+function AdminDashBoardOrders(props) {
+  const { fetchAllOrders } = props;
+  useEffect(() => {
+    fetchAllOrders();
+  }, [fetchAllOrders]);
+  if (!props.allAdminOrders) return <ScreenLoader />;
   return (
     <div className="container-fluid p-0">
       <AdminDashBoardHeader />
@@ -67,28 +76,44 @@ function AdminDashBoardOrders() {
           </div>
         </div>
         {/* mapping here */}
-        <div className="admin-dashboard-order-wrapper box-container">
-          <div className="admin-dashboard-order p-3">
-            <div className="row">
-              <div className="col-md-5">
-                <strong>Order ID: </strong>
-                <span>123456</span>{" "}
-              </div>
-              <div className="col-md-5">
-                <strong>Date: </strong>
-                <span>1/1/01</span>
-              </div>
-              <div className="col-md-2">
-                <Link className="admin-order-view-more-link" to="/admin-order">
-                  View More
-                </Link>
+        {props.allAdminOrders &&
+          props.allAdminOrders.length !== 0 &&
+          props.allAdminOrders.map(order => (
+            <div
+              className="admin-dashboard-order-wrapper box-container"
+              key={order._id}
+            >
+              <div className="admin-dashboard-order p-3">
+                <div className="row">
+                  <div className="col-md-5">
+                    <strong>Order ID: </strong>
+                    <span>{order._id}</span>{" "}
+                  </div>
+                  <div className="col-md-5">
+                    <strong>Date: </strong>
+                    <span>{new Date(order.createdAt).toLocaleString()}</span>
+                  </div>
+                  <div className="col-md-2">
+                    <Link
+                      className="admin-order-view-more-link"
+                      to={`/admin-order/${order._id}`}
+                    >
+                      View More
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          ))}
       </div>
     </div>
   );
 }
-
-export default AdminDashBoardOrders;
+const mapStateToProps = state => {
+  return {
+    allAdminOrders: state.product.allAdminOrders
+  };
+};
+export default connect(mapStateToProps, { fetchAllOrders })(
+  AdminDashBoardOrders
+);

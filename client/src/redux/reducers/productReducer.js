@@ -34,7 +34,8 @@ import {
   FETCH_ADMIN_ORDERS,
   FETCH_ADMIN_ORDERS_START,
   FETCH_ADMIN_ORDERS_STOP,
-  FETCH_ADMIN_PENDING_ORDERS
+  FETCH_ADMIN_PENDING_ORDERS,
+  FETCH_ALL_ORDERS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -65,7 +66,9 @@ const INITIAL_STATE = {
   stockLoading: false,
   adminOrders: null,
   adminOrdersLoading: false,
-  adminPendingOrders: null
+  adminPendingOrders: null,
+  allAdminOrders: null,
+  ordersToSkip: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -188,6 +191,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrdersLoading: false };
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
+    case FETCH_ALL_ORDERS:
+      return { ...state, allAdminOrders: action.payload };
     default:
       return state;
   }
