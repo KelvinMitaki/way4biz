@@ -137,7 +137,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-categories"
+              activeClassName="admin-active-lg-link"
+            >
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
