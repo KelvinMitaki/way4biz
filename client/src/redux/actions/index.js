@@ -1445,18 +1445,17 @@ export const fetchAllOrders = filter => async dispatch => {
   try {
     let test = {};
     if (!filter) {
-      test = {};
+      test = null;
     }
-    if (filter && filter.today) {
-      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+
+    if (filter && filter === "today") {
+      test = Date.now() / 1000 - 60 * 60 * 24;
     }
-    if (filter && filter.lastWeek) {
-      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7) };
+    if (filter && filter === "lastWeek") {
+      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
     }
-    if (filter && filter.lastMonth) {
-      test.createdAt = {
-        $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7 * 30)
-      };
+    if (filter && filter === "lastMonth") {
+      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.post("/api/root/admin/all/orders", {
@@ -1503,16 +1502,15 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     if (!filter) {
       test = {};
     }
-    if (filter && filter.today) {
-      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+
+    if (filter && filter === "today") {
+      test = Date.now() / 1000 - 60 * 60 * 24;
     }
-    if (filter && filter.lastWeek) {
-      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7) };
+    if (filter && filter === "lastWeek") {
+      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
     }
-    if (filter && filter.lastMonth) {
-      test.createdAt = {
-        $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7 * 30)
-      };
+    if (filter && filter === "lastMonth") {
+      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const prodCount = getState().product.orderCount;
