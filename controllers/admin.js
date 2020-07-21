@@ -710,5 +710,39 @@ route.get("/api/root/admin/orders", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// FETCH PENDING ORDERS COUNT
+route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
+  try {
+    const pendingOrders = await Order.aggregate([
+      { $match: { delivered: false } },
+      { $count: "pendingOrders" }
+    ]);
+    const todaysPendingOrders = await Order.aggregate([
+      {
+        $match: {
+          delivered: false,
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60
+            )
+          }
+        }
+      },
+      { $count: "todaysPendingOrders" }
+    ]);
+    res.send({
+      pendingOrders: pendingOrders[0]
+        ? pendingOrders[0].pendingOrders
+        : pendingOrders,
+      todaysPendingOrders: todaysPendingOrders[0]
+        ? todaysPendingOrders[0].todaysPendingOrders
+        : todaysPendingOrders
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 // FETCH ALL ORDERS
 module.exports = route;
