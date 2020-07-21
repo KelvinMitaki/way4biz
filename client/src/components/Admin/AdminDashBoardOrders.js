@@ -7,15 +7,36 @@ import { IconContext } from "react-icons";
 import { FiFilter } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useEffect } from "react";
-import { fetchAllOrders } from "../../redux/actions";
+import { fetchAllOrders, hasMoreOrdersFalse } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { useRef } from "react";
+import { useCallback } from "react";
 
 function AdminDashBoardOrders(props) {
   const { fetchAllOrders } = props;
   useEffect(() => {
     fetchAllOrders();
   }, [fetchAllOrders]);
+  const observer = useRef();
+  const lastOrderRef = useCallback(
+    node => {
+      const fetchMoreData = () => {
+        if (props.allAdminOrders.length < props.orderCount) {
+          return;
+        }
+        props.hasMoreOrdersFalse();
+      };
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          fetchMoreData();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [props]
+  );
   if (!props.allAdminOrders) return <ScreenLoader />;
   return (
     <div className="container-fluid p-0">
@@ -78,42 +99,77 @@ function AdminDashBoardOrders(props) {
         {/* mapping here */}
         {props.allAdminOrders &&
           props.allAdminOrders.length !== 0 &&
-          props.allAdminOrders.map(order => (
-            <div
-              className="admin-dashboard-order-wrapper box-container"
-              key={order._id}
-            >
-              <div className="admin-dashboard-order p-3">
-                <div className="row">
-                  <div className="col-md-5">
-                    <strong>Order ID: </strong>
-                    <span>{order._id}</span>{" "}
+          props.allAdminOrders.map((order, index) => {
+            if (props.allAdminOrders.length === index + 1) {
+              return (
+                <div
+                  ref={lastOrderRef}
+                  className="admin-dashboard-order-wrapper box-container"
+                  key={order._id}
+                >
+                  <div className="admin-dashboard-order p-3">
+                    <div className="row">
+                      <div className="col-md-5">
+                        <strong>Order ID: </strong>
+                        <span>{order._id}</span>{" "}
+                      </div>
+                      <div className="col-md-5">
+                        <strong>Date: </strong>
+                        <span>
+                          {new Date(order.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="col-md-2">
+                        <Link
+                          className="admin-order-view-more-link"
+                          to={`/admin-order/${order._id}`}
+                        >
+                          View More
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-5">
-                    <strong>Date: </strong>
-                    <span>{new Date(order.createdAt).toLocaleString()}</span>
-                  </div>
-                  <div className="col-md-2">
-                    <Link
-                      className="admin-order-view-more-link"
-                      to={`/admin-order/${order._id}`}
-                    >
-                      View More
-                    </Link>
+                </div>
+              );
+            }
+            return (
+              <div
+                className="admin-dashboard-order-wrapper box-container"
+                key={order._id}
+              >
+                <div className="admin-dashboard-order p-3">
+                  <div className="row">
+                    <div className="col-md-5">
+                      <strong>Order ID: </strong>
+                      <span>{order._id}</span>{" "}
+                    </div>
+                    <div className="col-md-5">
+                      <strong>Date: </strong>
+                      <span>{new Date(order.createdAt).toLocaleString()}</span>
+                    </div>
+                    <div className="col-md-2">
+                      <Link
+                        className="admin-order-view-more-link"
+                        to={`/admin-order/${order._id}`}
+                      >
+                        View More
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </div>
   );
 }
 const mapStateToProps = state => {
   return {
-    allAdminOrders: state.product.allAdminOrders
+    allAdminOrders: state.product.allAdminOrders,
+    orderCount: state.product.orderCount
   };
 };
-export default connect(mapStateToProps, { fetchAllOrders })(
+export default connect(mapStateToProps, { fetchAllOrders, hasMoreOrdersFalse })(
   AdminDashBoardOrders
 );

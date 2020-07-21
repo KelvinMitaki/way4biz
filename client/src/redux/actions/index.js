@@ -103,7 +103,8 @@ import {
   FETCH_ADMIN_ORDERS_START,
   FETCH_ADMIN_ORDERS_STOP,
   FETCH_ADMIN_PENDING_ORDERS,
-  FETCH_ALL_ORDERS
+  FETCH_ALL_ORDERS,
+  HAS_MORE_ORDERS_FALSE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1464,4 +1465,10 @@ export const fetchAllOrders = () => async dispatch => {
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
+};
+
+export const hasMoreOrdersFalse = () => {
+  return {
+    type: HAS_MORE_ORDERS_FALSE
+  };
 };
