@@ -89,17 +89,23 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </li>
           <li>
             <a href="/" className="admin-menu-dropdown-main">
-              <RiFileUserLine /> <span className="ml-2">Sellers</span>
+              <RiFileUserLine />{" "}
               <span className="ml-1">
-                <MdKeyboardArrowDown />
+                Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
                   this.props.newSellers.sellers.length.toLocaleString() !==
                     0 && (
-                    <span className="badge custom-badge ml-2">
+                    <span
+                      className="badge custom-badge ml-2"
+                      style={{ position: "relative", zIndex: "32" }}
+                    >
                       {this.props.newSellers.sellers.length.toLocaleString()}
                     </span>
                   )}
+              </span>
+              <span className="ml-1">
+                <MdKeyboardArrowDown />
               </span>
             </a>
 
