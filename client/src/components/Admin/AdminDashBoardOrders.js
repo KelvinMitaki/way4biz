@@ -7,17 +7,21 @@ import { IconContext } from "react-icons";
 import { FiFilter } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useEffect } from "react";
-import { fetchAllOrders, hasMoreOrdersFalse } from "../../redux/actions";
+import {
+  fetchAllOrders,
+  hasMoreOrdersFalse,
+  adminRadio
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { useRef } from "react";
 import { useCallback } from "react";
 
 function AdminDashBoardOrders(props) {
-  const { fetchAllOrders } = props;
+  const { fetchAllOrders, ordersDate } = props;
   useEffect(() => {
-    fetchAllOrders();
-  }, [fetchAllOrders]);
+    fetchAllOrders(ordersDate);
+  }, [fetchAllOrders, ordersDate]);
   const observer = useRef();
   const lastOrderRef = useCallback(
     node => {
@@ -37,7 +41,12 @@ function AdminDashBoardOrders(props) {
     },
     [props]
   );
+  const handleRadioButton = event => {
+    const { name, value } = event.target;
+    props.adminRadio({ name, value });
+  };
   if (!props.allAdminOrders) return <ScreenLoader />;
+
   return (
     <div className="container-fluid p-0">
       <AdminDashBoardHeader />
@@ -75,19 +84,40 @@ function AdminDashBoardOrders(props) {
               </div>
               <div className="filter-options">
                 <div className="radio">
-                  <input name="filter-order" type="radio" id="radio_33" />
+                  <input
+                    name="ordersDate"
+                    type="radio"
+                    id="radio_33"
+                    onChange={handleRadioButton}
+                    checked={ordersDate === "today"}
+                    value="today"
+                  />
                   <label htmlFor="radio_33" className="m-0">
                     Today
                   </label>
                 </div>
                 <div className="radio">
-                  <input name="filter-order" type="radio" id="radio_44" />
+                  <input
+                    name="ordersDate"
+                    type="radio"
+                    id="radio_44"
+                    onChange={handleRadioButton}
+                    checked={ordersDate === "lastWeek"}
+                    value="lastWeek"
+                  />
                   <label htmlFor="radio_44" className="m-0">
                     Last Week
                   </label>
                 </div>
                 <div className="radio">
-                  <input name="filter-order" type="radio" id="radio_55" />
+                  <input
+                    name="ordersDate"
+                    type="radio"
+                    id="radio_55"
+                    onChange={handleRadioButton}
+                    checked={ordersDate === "lastMonth"}
+                    value="lastMonth"
+                  />
                   <label htmlFor="radio_55" className="m-0">
                     Last Month
                   </label>
@@ -167,9 +197,12 @@ function AdminDashBoardOrders(props) {
 const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
-    orderCount: state.product.orderCount
+    orderCount: state.product.orderCount,
+    ordersDate: state.product.ordersDate
   };
 };
-export default connect(mapStateToProps, { fetchAllOrders, hasMoreOrdersFalse })(
-  AdminDashBoardOrders
-);
+export default connect(mapStateToProps, {
+  fetchAllOrders,
+  hasMoreOrdersFalse,
+  adminRadio
+})(AdminDashBoardOrders);

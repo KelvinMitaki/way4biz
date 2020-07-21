@@ -104,7 +104,8 @@ import {
   FETCH_ADMIN_ORDERS_STOP,
   FETCH_ADMIN_PENDING_ORDERS,
   FETCH_ALL_ORDERS,
-  HAS_MORE_ORDERS_FALSE
+  HAS_MORE_ORDERS_FALSE,
+  ADMIN_RADIO
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1439,9 +1440,13 @@ export const fetchAdminPendingOrders = () => async dispatch => {
   }
 };
 
-export const fetchAllOrders = () => async dispatch => {
+export const fetchAllOrders = filter => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const test = {};
+    console.log("filter", filter);
+    // if (filter.today) {
+    // }
     const res = await axios.get("/api/root/admin/all/orders");
     dispatch({ type: FETCH_ALL_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
@@ -1464,8 +1469,119 @@ export const fetchAllOrders = () => async dispatch => {
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
+    console.log(error);
   }
 };
+
+export const adminRadio = event => {
+  return {
+    type: ADMIN_RADIO,
+    payload: {
+      event
+    }
+  };
+};
+
+// export const singleCategory = (category, filter, history) => async (
+//   dispatch,
+//   getState
+// ) => {
+//   try {
+//     const test = {};
+//     const sort = {};
+//     if (filter.rating) {
+//       test.rating = { $gte: 4 };
+//     }
+//     if (filter.freeShipping) {
+//       test.freeShipping = true;
+//     }
+
+//     if (filter.priceMin) {
+//       test.price = { $gte: filter.priceMin };
+//     }
+//     if (filter.priceMax) {
+//       test.price = { ...test.price, $lte: filter.priceMax };
+//     }
+//     if (filter.priceMin > filter.priceMax) {
+//       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+//     }
+//     if (filter.price === "highestPrice") {
+//       sort.price = -1;
+//     }
+//     if (filter.price === "lowestPrice") {
+//       sort.price = 1;
+//     }
+//     test.category = category;
+//     if (Object.keys(sort).length === 0) {
+//       sort.price = 1;
+//     }
+//     dispatch({ type: SINGLE_CATEGORY_START });
+//     const res = await axios.post(`/api/products/skip/category`, {
+//       itemsToSkip: 0,
+//       test,
+//       sort
+//     });
+//     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
+//     dispatch({ type: SINGLE_CATEGORY_STOP });
+//     // history.push(`/products/category/${category}`);
+//   } catch (error) {
+//     dispatch({ type: SINGLE_CATEGORY_STOP });
+//     console.log(error.response);
+//     history.push("/categories");
+//   }
+// };
+// export const moreSingleCategoryProducts = (category, filter) => async (
+//   dispatch,
+//   getState
+// ) => {
+//   try {
+//     const test = {};
+//     const sort = {};
+//     if (filter.rating) {
+//       test.rating = { $gte: 4 };
+//     }
+//     if (filter.freeShipping) {
+//       test.freeShipping = true;
+//     }
+//     if (filter.priceMin) {
+//       test.price = { $gte: filter.priceMin };
+//     }
+//     if (filter.priceMax) {
+//       test.price = { ...test.price, $lte: filter.priceMax };
+//     }
+//     if (filter.priceMin > filter.priceMax) {
+//       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+//     }
+
+//     if (filter.price === "highestPrice") {
+//       sort.price = -1;
+//     }
+//     if (filter.price === "lowestPrice") {
+//       sort.price = 1;
+//     }
+//     test.category = category;
+//     if (Object.keys(sort).length === 0) {
+//       sort.price = 1;
+//     }
+//     // const itemsToSkip = getState().product.itemsToSkip;
+//     const prodCount = getState().product.categoryProductCount;
+//     const singleProdLength = getState().product.singleCategoryProducts.length;
+//     if (singleProdLength < prodCount) {
+//       dispatch({ type: FILTERED_PRODUCTS_START });
+//       const res = await axios.post(`/api/products/skip/category`, {
+//         itemsToSkip: singleProdLength,
+//         test,
+//         sort
+//       });
+//       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+//     }
+//     dispatch({ type: FILTERED_PRODUCTS_STOP });
+//   } catch (error) {
+//     dispatch({ type: FILTERED_PRODUCTS_STOP });
+//     console.log(error);
+//     console.log(error.response);
+//   }
+// };
 
 export const hasMoreOrdersFalse = () => {
   return {
