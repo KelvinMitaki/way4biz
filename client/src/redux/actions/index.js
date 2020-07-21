@@ -249,10 +249,7 @@ export const editUser = (credentials, history) => async (
     dispatch({ type: LOADING_STOP });
   }
 };
-export const checkoutUser = (credentials, history) => async (
-  dispatch,
-  getState
-) => {
+export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
@@ -262,7 +259,6 @@ export const checkoutUser = (credentials, history) => async (
     }
     dispatch({ type: CHECKOUT_USER, payload: res.data });
     dispatch({ type: LOADING_STOP });
-    history.push("/checkout");
   } catch (error) {
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
@@ -1218,13 +1214,14 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
   }
 };
 
-export const paymentPerDistance = details => async dispatch => {
+export const paymentPerDistance = (details, history) => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
 
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
+    history.push("/checkout");
   } catch (error) {
     if (
       error &&

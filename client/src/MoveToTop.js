@@ -10,7 +10,11 @@ class MoveToTop extends React.Component {
   };
   render() {
     return (
-      <div id="move-to-top" onClick={this.handleClick}>
+      <div
+        id="move-to-top"
+        style={{ cursor: "pointer" }}
+        onClick={this.handleClick}
+      >
         <IoMdArrowDropup style={{ fontSize: "20px" }} />
       </div>
     );
