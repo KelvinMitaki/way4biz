@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { useRef } from "react";
 import { useCallback } from "react";
+import BottomPageLoader from "../Pages/BottomPageLoader";
 
 function AdminDashBoardOrders(props) {
   const { fetchAllOrders, ordersDate, fetchMoreAllOrders } = props;
@@ -193,6 +194,7 @@ function AdminDashBoardOrders(props) {
             );
           })}
       </div>
+      {props.hasMoreOrders && <BottomPageLoader />}
     </div>
   );
 }
@@ -200,6 +202,7 @@ const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
+    hasMoreOrders: state.product.hasMoreOrders,
     ordersDate: state.product.ordersDate
   };
 };
