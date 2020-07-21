@@ -107,7 +107,8 @@ import {
   HAS_MORE_ORDERS_FALSE,
   ADMIN_RADIO,
   FETCH_MORE_ALL_ORDERS,
-  FETCH_ADMIN_ORDER
+  FETCH_ADMIN_ORDER,
+  FETCH_ORDER_BY_ID
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1586,5 +1587,41 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
+  }
+};
+
+export const fetchOrderById = orderId => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const res = await axios.get(`/api/root/admin/order/${orderId}`);
+    dispatch({ type: FETCH_ORDER_BY_ID, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.stringValue
+    ) {
+      getState.product.orderError = "No Order with that ID";
+    }
+    console.log(error.response);
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   }
 };

@@ -11,7 +11,8 @@ import {
   fetchAllOrders,
   hasMoreOrdersFalse,
   adminRadio,
-  fetchMoreAllOrders
+  fetchMoreAllOrders,
+  fetchOrderById
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -50,11 +51,12 @@ function AdminDashBoardOrders(props) {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
-  const handleSubmit = () => {
-    console.log(orderId);
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.fetchOrderById(orderId.orderId);
   };
   if (!props.allAdminOrders || props.radioLoading) return <ScreenLoader />;
-  console.log(orderId);
+
   return (
     <div className="container-fluid p-0">
       <AdminDashBoardHeader />
@@ -219,5 +221,6 @@ export default connect(mapStateToProps, {
   fetchAllOrders,
   hasMoreOrdersFalse,
   adminRadio,
-  fetchMoreAllOrders
+  fetchMoreAllOrders,
+  fetchOrderById
 })(AdminDashBoardOrders);

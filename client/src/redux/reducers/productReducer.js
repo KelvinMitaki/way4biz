@@ -39,7 +39,8 @@ import {
   HAS_MORE_ORDERS_FALSE,
   ADMIN_RADIO,
   FETCH_MORE_ALL_ORDERS,
-  FETCH_ADMIN_ORDER
+  FETCH_ADMIN_ORDER,
+  FETCH_ORDER_BY_ID
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -77,7 +78,8 @@ const INITIAL_STATE = {
   hasMoreOrders: true,
   ordersDate: null,
   radioLoading: false,
-  adminOrder: null
+  adminOrder: null,
+  orderError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -217,6 +219,14 @@ export default (state = INITIAL_STATE, action) => {
           ...action.payload.orders.filter(order => !orderIds.has(order._id))
         ],
         ordersToSkip: state.ordersToSkip + 5
+      };
+    case FETCH_ORDER_BY_ID:
+      return {
+        ...state,
+        allAdminOrders: [action.payload],
+        hasMoreOrders: false,
+        ordersToSkip: 2,
+        orderCount: 1
       };
     case HAS_MORE_ORDERS_FALSE:
       return { ...state, hasMoreOrders: false };
