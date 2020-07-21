@@ -89,6 +89,15 @@
   border-radius: 40px;
 }
 
+.checkout-button:hover {
+  color: #fff;
+}
+
+.checkout-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
 .shopping-btn {
   height: 50px;
   background-color: #eee;

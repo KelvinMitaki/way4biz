@@ -11,7 +11,7 @@ class MoveToTop extends React.Component {
   render() {
     return (
       <div id="move-to-top" onClick={this.handleClick}>
-        <IoMdArrowDropup />
+        <IoMdArrowDropup style={{ fontSize: "20px" }} />
       </div>
     );
   }
