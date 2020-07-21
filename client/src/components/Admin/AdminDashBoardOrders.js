@@ -71,8 +71,8 @@ function AdminDashBoardOrders(props) {
           <h3>Orders</h3>
         </div>
         <div className="admin-order-search-filter">
-          <div className="form-group input-group search">
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group input-group search">
               <input
                 onChange={e => setOrderId({ orderId: e.target.value })}
                 className="form-control"
@@ -89,8 +89,8 @@ function AdminDashBoardOrders(props) {
                   </IconContext.Provider>
                 </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
           <div className="filter">
             <div className="admin-filter">
               <div className="admin-filter-icon">
