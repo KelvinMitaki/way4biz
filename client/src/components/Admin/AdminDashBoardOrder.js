@@ -4,11 +4,12 @@ import "./AdminDashBoardOrder.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { IconContext } from "react-icons";
-import { BsArrowLeft } from "react-icons/bs";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { fetchAdminOrder } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { BsArrowLeft, BsArrowLeftRight } from "react-icons/bs";
+import { RiArrowUpDownLine } from "react-icons/ri";
 
 class AdminDashBoardOrder extends React.Component {
   componentDidMount() {
@@ -68,6 +69,39 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <strong>Items No: </strong>
                       {this.props.adminOrder.items.length.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+                <div className="row my-3 align-items-center">
+                  <div className="col-md-5 admin-order-buyer">
+                    <div>
+                      <h4>Buyer</h4>
+                      <p>
+                        <strong>Name:</strong>John Doe
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-2 admin-order-arrow my-2">
+                    <div className="y">
+                      <BsArrowLeftRight
+                        style={{
+                          fontSize: "40px",
+                          color: "#f76b1a"
+                        }}
+                      />
+                    </div>
+                    <div className="x">
+                      <RiArrowUpDownLine
+                        style={{ fontSize: "40px", color: "#f76b1a" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-5 admin-order-seller">
+                    <div>
+                      <h4>Seller</h4>
+                      <p>
+                        <strong>Name:</strong>Jane Doe
+                      </p>
                     </div>
                   </div>
                 </div>

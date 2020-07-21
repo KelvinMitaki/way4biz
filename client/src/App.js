@@ -45,21 +45,47 @@ import SellerProfiling from "./components/Seller/SellerProfiling";
 import AdminDashBoardOrders from "./components/Admin/AdminDashBoardOrders";
 import AdminDashBoardOrder from "./components/Admin/AdminDashBoardOrder";
 import AdminDashBoardCategories from "./components/Admin/AdminDashBoardCategories";
-// import ScrollToTop from "./ScrollToTop";
+import AdminDashBoardAddCategory from "./components/Admin/AdminDashBoardAddCategory";
+import MoveToTop from "./MoveToTop";
 
 class App extends React.Component {
+  state = {
+    scrolling: false,
+  };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
     fetchUser();
     fetchProducts();
     fetchCategories();
+    window.addEventListener("scroll", this.handleScroll);
+    this.scrolled = false;
+    this.scrolling = false;
   }
+
+  handleScroll = (e) => {
+    let scrollTopDistance = window.pageYOffset;
+    if (scrollTopDistance > 50) {
+      this.setState((prevState) => {
+        return {
+          scrolling: true,
+        };
+      });
+      this.scrolled = true;
+    } else {
+      this.setState((prevState) => {
+        return {
+          scrolling: false,
+        };
+      });
+      this.scrolled = false;
+    }
+  };
   render() {
     if (this.props.isSignedIn !== null) {
       return (
         <div id="main">
+          {this.scrolled ? <MoveToTop /> : null}
           <MobileLogo />
-          {/* <ScrollToTop> */}
           <div>
             <Route path="/" exact component={Home} />
             <Route
@@ -103,6 +129,16 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <AdminDashBoardCategories />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-category/add"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardAddCategory />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -410,7 +446,6 @@ class App extends React.Component {
               this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
             }
           />
-          {/* </ScrollToTop> */}
         </div>
       );
     }

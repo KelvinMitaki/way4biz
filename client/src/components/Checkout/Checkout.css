@@ -38,3 +38,12 @@ hr {
   width: 100%;
   color: #fff;
 }
+
+.order-btn:hover {
+  color: #fff;
+}
+
+.order-btn:focus {
+  box-shadow: none;
+  outline: none;
+}

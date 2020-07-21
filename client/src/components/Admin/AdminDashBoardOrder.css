@@ -1,0 +1,8 @@
+/* .admin-order-buyer,
+.admin-order-seller,
+.admin-order-arrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
