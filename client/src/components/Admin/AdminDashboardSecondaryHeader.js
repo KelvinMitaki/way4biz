@@ -20,20 +20,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
         parentKey: ["Sellers", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
-          { name: "New Sellers", url: "/admin-new-sellers", num: "100" },
-        ],
-      },
-    ],
+          { name: "New Sellers", url: "/admin-new-sellers", num: "100" }
+        ]
+      }
+    ]
   };
-  handleClick = (e) => {
-    this.setState((prevState) => {
+  handleClick = e => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   };
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid admin-secondary-dashboard-header">
         {this.state.open ? (
@@ -138,9 +137,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    newSellers: state.sellerRegister.newSellers,
+    newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);

@@ -28,6 +28,7 @@ class AdminDashBoard extends React.Component {
   }
 
   render() {
+    if (!this.props.newSellers) return <ScreenLoader />;
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
