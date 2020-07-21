@@ -12,7 +12,8 @@ import LineGraph from "./LineGraph";
 import {
   getStock,
   fetchNewSellers,
-  fetchAdminOrders
+  fetchAdminOrders,
+  fetchAdminPendingOrders
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -30,12 +31,13 @@ class AdminDashBoard extends React.Component {
     this.props.getStock();
     this.props.fetchNewSellers();
     this.props.fetchAdminOrders();
+    this.props.fetchAdminPendingOrders();
   }
 
   render() {
     if (!this.props.newSellers) return <ScreenLoader />;
     if (!this.props.adminOrders) return <ScreenLoader />;
-
+    if (!this.props.adminPendingOrders) return <ScreenLoader />;
     const todayOrders =
       this.props.adminOrders &&
       this.props.adminOrders.todaysOrdersCount.length !== 0 &&
@@ -221,11 +223,13 @@ const mapStateToProps = state => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
+    adminPendingOrders: state.product.adminPendingOrders,
     newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps, {
   getStock,
   fetchNewSellers,
-  fetchAdminOrders
+  fetchAdminOrders,
+  fetchAdminPendingOrders
 })(AdminDashBoard);

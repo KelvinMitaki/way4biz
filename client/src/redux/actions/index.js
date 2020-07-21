@@ -101,7 +101,8 @@ import {
   FETCH_NEW_SELLERS_STOP,
   FETCH_ADMIN_ORDERS,
   FETCH_ADMIN_ORDERS_START,
-  FETCH_ADMIN_ORDERS_STOP
+  FETCH_ADMIN_ORDERS_STOP,
+  FETCH_ADMIN_PENDING_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1405,5 +1406,33 @@ export const fetchAdminOrders = () => async dispatch => {
     ) {
       return (window.location.href = "/seller/sign-in");
     }
+  }
+};
+
+export const fetchAdminPendingOrders = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const res = await axios.get("/api/root/admin/pending/orders");
+    dispatch({ type: FETCH_ADMIN_PENDING_ORDERS, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    console.log(error.response);
   }
 };
