@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const route = require("express").Router();
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { v1: uuidV1 } = require("uuid");
@@ -688,4 +689,26 @@ route.get("/api/new/seller/:sellerId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+// FETCH ALL ORDERS COUNT AND TODAY COUNT
+route.get("/api/root/admin/orders", isSeller, async (req, res) => {
+  try {
+    const totalOrdersCount = await Order.find({}).estimatedDocumentCount();
+    const todaysOrdersCount = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60
+            )
+          }
+        }
+      },
+      { $count: "todaysOrders" }
+    ]);
+    res.send({ totalOrdersCount, todaysOrdersCount });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// FETCH ALL ORDERS
 module.exports = route;

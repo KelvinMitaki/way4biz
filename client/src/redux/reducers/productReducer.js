@@ -30,7 +30,10 @@ import {
   STORE_IMAGE_STOP,
   GET_STOCK_START,
   GET_STOCK_STOP,
-  GET_STOCK
+  GET_STOCK,
+  FETCH_ADMIN_ORDERS,
+  FETCH_ADMIN_ORDERS_START,
+  FETCH_ADMIN_ORDERS_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -58,7 +61,9 @@ const INITIAL_STATE = {
   redirectOnFailLoading: false,
   storeImageLoading: false,
   stock: [],
-  stockLoading: false
+  stockLoading: false,
+  adminOrders: null,
+  adminOrdersLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -173,6 +178,12 @@ export default (state = INITIAL_STATE, action) => {
           { label: "Stock Out", value: action.payload.stockOut }
         ]
       };
+    case FETCH_ADMIN_ORDERS:
+      return { ...state, adminOrders: action.payload };
+    case FETCH_ADMIN_ORDERS_START:
+      return { ...state, adminOrdersLoading: true };
+    case FETCH_ADMIN_ORDERS_STOP:
+      return { ...state, adminOrdersLoading: false };
     default:
       return state;
   }
