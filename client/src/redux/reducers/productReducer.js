@@ -37,7 +37,8 @@ import {
   FETCH_ADMIN_PENDING_ORDERS,
   FETCH_ALL_ORDERS,
   HAS_MORE_ORDERS_FALSE,
-  ADMIN_RADIO
+  ADMIN_RADIO,
+  FETCH_MORE_ALL_ORDERS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -114,7 +115,6 @@ export default (state = INITIAL_STATE, action) => {
       };
     case MORE_SINGLE_CATEGORY_PRODUCTS:
       const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
-
       return {
         ...state,
         singleCategoryProducts: [
@@ -123,6 +123,7 @@ export default (state = INITIAL_STATE, action) => {
         ],
         itemsToSkip: state.itemsToSkip + 6
       };
+
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };
     case FETCH_BUYER_ORDERS:
@@ -197,7 +198,22 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
     case FETCH_ALL_ORDERS:
-      return { ...state, allAdminOrders: action.payload };
+      return {
+        ...state,
+        allAdminOrders: action.payload.orders,
+        orderCount: action.payload.ordersCount,
+        ordersToSkip: state.ordersToSkip + 5
+      };
+    case FETCH_MORE_ALL_ORDERS:
+      const orderIds = new Set(state.allAdminOrders.map(order => order._id));
+      return {
+        ...state,
+        allAdminOrders: [
+          ...state.allAdminOrders,
+          ...action.payload.orders.filter(order => !orderIds.has(order._id))
+        ],
+        ordersToSkip: state.ordersToSkip + 5
+      };
     case HAS_MORE_ORDERS_FALSE:
       return { ...state, hasMoreOrders: false };
     case ADMIN_RADIO:

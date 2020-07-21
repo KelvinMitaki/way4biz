@@ -105,7 +105,8 @@ import {
   FETCH_ADMIN_PENDING_ORDERS,
   FETCH_ALL_ORDERS,
   HAS_MORE_ORDERS_FALSE,
-  ADMIN_RADIO
+  ADMIN_RADIO,
+  FETCH_MORE_ALL_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1442,12 +1443,26 @@ export const fetchAdminPendingOrders = () => async dispatch => {
 
 export const fetchAllOrders = filter => async dispatch => {
   try {
+    let test = {};
+    if (!filter) {
+      test = {};
+    }
+    if (filter && filter.today) {
+      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+    }
+    if (filter && filter.lastWeek) {
+      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7) };
+    }
+    if (filter && filter.lastMonth) {
+      test.createdAt = {
+        $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7 * 30)
+      };
+    }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
-    const test = {};
-    console.log("filter", filter);
-    // if (filter.today) {
-    // }
-    const res = await axios.get("/api/root/admin/all/orders");
+    const res = await axios.post("/api/root/admin/all/orders", {
+      itemsToSkip: 0,
+      test
+    });
     dispatch({ type: FETCH_ALL_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   } catch (error) {
@@ -1482,106 +1497,55 @@ export const adminRadio = event => {
   };
 };
 
-// export const singleCategory = (category, filter, history) => async (
-//   dispatch,
-//   getState
-// ) => {
-//   try {
-//     const test = {};
-//     const sort = {};
-//     if (filter.rating) {
-//       test.rating = { $gte: 4 };
-//     }
-//     if (filter.freeShipping) {
-//       test.freeShipping = true;
-//     }
-
-//     if (filter.priceMin) {
-//       test.price = { $gte: filter.priceMin };
-//     }
-//     if (filter.priceMax) {
-//       test.price = { ...test.price, $lte: filter.priceMax };
-//     }
-//     if (filter.priceMin > filter.priceMax) {
-//       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
-//     }
-//     if (filter.price === "highestPrice") {
-//       sort.price = -1;
-//     }
-//     if (filter.price === "lowestPrice") {
-//       sort.price = 1;
-//     }
-//     test.category = category;
-//     if (Object.keys(sort).length === 0) {
-//       sort.price = 1;
-//     }
-//     dispatch({ type: SINGLE_CATEGORY_START });
-//     const res = await axios.post(`/api/products/skip/category`, {
-//       itemsToSkip: 0,
-//       test,
-//       sort
-//     });
-//     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
-//     dispatch({ type: SINGLE_CATEGORY_STOP });
-//     // history.push(`/products/category/${category}`);
-//   } catch (error) {
-//     dispatch({ type: SINGLE_CATEGORY_STOP });
-//     console.log(error.response);
-//     history.push("/categories");
-//   }
-// };
-// export const moreSingleCategoryProducts = (category, filter) => async (
-//   dispatch,
-//   getState
-// ) => {
-//   try {
-//     const test = {};
-//     const sort = {};
-//     if (filter.rating) {
-//       test.rating = { $gte: 4 };
-//     }
-//     if (filter.freeShipping) {
-//       test.freeShipping = true;
-//     }
-//     if (filter.priceMin) {
-//       test.price = { $gte: filter.priceMin };
-//     }
-//     if (filter.priceMax) {
-//       test.price = { ...test.price, $lte: filter.priceMax };
-//     }
-//     if (filter.priceMin > filter.priceMax) {
-//       test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
-//     }
-
-//     if (filter.price === "highestPrice") {
-//       sort.price = -1;
-//     }
-//     if (filter.price === "lowestPrice") {
-//       sort.price = 1;
-//     }
-//     test.category = category;
-//     if (Object.keys(sort).length === 0) {
-//       sort.price = 1;
-//     }
-//     // const itemsToSkip = getState().product.itemsToSkip;
-//     const prodCount = getState().product.categoryProductCount;
-//     const singleProdLength = getState().product.singleCategoryProducts.length;
-//     if (singleProdLength < prodCount) {
-//       dispatch({ type: FILTERED_PRODUCTS_START });
-//       const res = await axios.post(`/api/products/skip/category`, {
-//         itemsToSkip: singleProdLength,
-//         test,
-//         sort
-//       });
-//       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
-//     }
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//   } catch (error) {
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//     console.log(error);
-//     console.log(error.response);
-//   }
-// };
+export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
+  try {
+    let test = {};
+    if (!filter) {
+      test = {};
+    }
+    if (filter && filter.today) {
+      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+    }
+    if (filter && filter.lastWeek) {
+      test.createdAt = { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7) };
+    }
+    if (filter && filter.lastMonth) {
+      test.createdAt = {
+        $gt: new Date(Date.now() - 24 * 60 * 60 * 1000 * 7 * 30)
+      };
+    }
+    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const prodCount = getState().product.orderCount;
+    const singleProdLength = getState().product.allAdminOrders.length;
+    if (singleProdLength < prodCount) {
+      const res = await axios.post("/api/root/admin/all/orders", {
+        itemsToSkip: singleProdLength,
+        test
+      });
+      dispatch({ type: FETCH_MORE_ALL_ORDERS, payload: res.data });
+    }
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    console.log(error.response);
+  }
+};
 
 export const hasMoreOrdersFalse = () => {
   return {

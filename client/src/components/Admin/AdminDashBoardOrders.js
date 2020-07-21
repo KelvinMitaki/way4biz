@@ -10,7 +10,8 @@ import { useEffect } from "react";
 import {
   fetchAllOrders,
   hasMoreOrdersFalse,
-  adminRadio
+  adminRadio,
+  fetchMoreAllOrders
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -18,7 +19,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 
 function AdminDashBoardOrders(props) {
-  const { fetchAllOrders, ordersDate } = props;
+  const { fetchAllOrders, ordersDate, fetchMoreAllOrders } = props;
   useEffect(() => {
     fetchAllOrders(ordersDate);
   }, [fetchAllOrders, ordersDate]);
@@ -27,7 +28,7 @@ function AdminDashBoardOrders(props) {
     node => {
       const fetchMoreData = () => {
         if (props.allAdminOrders.length < props.orderCount) {
-          return;
+          return props.fetchMoreAllOrders(props.ordersDate);
         }
         props.hasMoreOrdersFalse();
       };
@@ -38,6 +39,7 @@ function AdminDashBoardOrders(props) {
         }
       });
       if (node) observer.current.observe(node);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [props]
   );
@@ -204,5 +206,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   fetchAllOrders,
   hasMoreOrdersFalse,
-  adminRadio
+  adminRadio,
+  fetchMoreAllOrders
 })(AdminDashBoardOrders);
