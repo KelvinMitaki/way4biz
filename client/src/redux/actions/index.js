@@ -108,7 +108,8 @@ import {
   ADMIN_RADIO,
   FETCH_MORE_ALL_ORDERS,
   FETCH_ADMIN_ORDER,
-  FETCH_ORDER_BY_ID
+  FETCH_ORDER_BY_ID,
+  FETCH_ORDER_BY_ID_ERROR
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1619,7 +1620,7 @@ export const fetchOrderById = orderId => async (dispatch, getState) => {
       error.response.data &&
       error.response.data.stringValue
     ) {
-      getState.product.orderError = "No Order with that ID";
+      dispatch({ type: FETCH_ORDER_BY_ID_ERROR });
     }
     console.log(error.response);
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });

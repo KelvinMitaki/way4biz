@@ -54,6 +54,7 @@ function AdminDashBoardOrders(props) {
   const handleSubmit = e => {
     e.preventDefault();
     props.fetchOrderById(orderId.orderId);
+    setOrderId({ orderId: null });
   };
   if (!props.allAdminOrders || props.radioLoading) return <ScreenLoader />;
 
@@ -203,6 +204,7 @@ function AdminDashBoardOrders(props) {
               </div>
             );
           })}
+        <h2>{props.orderError && props.orderError}</h2>
       </div>
       {props.ordersToSkip < props.orderCount && <BottomPageLoader />}
     </div>
@@ -214,7 +216,8 @@ const mapStateToProps = state => {
     orderCount: state.product.orderCount,
     ordersToSkip: state.product.ordersToSkip,
     ordersDate: state.product.ordersDate,
-    radioLoading: state.product.radioLoading
+    radioLoading: state.product.radioLoading,
+    orderError: state.product.orderError
   };
 };
 export default connect(mapStateToProps, {
