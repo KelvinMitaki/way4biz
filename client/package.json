@@ -36,6 +36,7 @@
     "react-responsive-tabs": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-scroll": "^1.8.0",
     "react-spinners": "^0.9.0",
     "react-string-replace": "^0.4.4",
     "redux": "^4.0.5",
