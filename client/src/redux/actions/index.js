@@ -98,7 +98,10 @@ import {
   FETCH_NEW_SELLER,
   FETCH_NEW_SELLERS,
   FETCH_NEW_SELLERS_START,
-  FETCH_NEW_SELLERS_STOP
+  FETCH_NEW_SELLERS_STOP,
+  FETCH_ADMIN_ORDERS,
+  FETCH_ADMIN_ORDERS_START,
+  FETCH_ADMIN_ORDERS_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1376,5 +1379,31 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
     history.push("/");
     dispatch({ type: FETCH_NEW_SELLERS_STOP });
     console.log(error.response);
+  }
+};
+
+export const fetchAdminOrders = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const res = await axios.get("/api/root/admin/orders");
+    dispatch({ type: FETCH_ADMIN_ORDERS, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
   }
 };

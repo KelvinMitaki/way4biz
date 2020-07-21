@@ -693,7 +693,6 @@ route.get("/api/new/seller/:sellerId", isSeller, async (req, res) => {
 route.get("/api/root/admin/orders", isSeller, async (req, res) => {
   try {
     const totalOrdersCount = await Order.find({}).estimatedDocumentCount();
-
     const todaysOrdersCount = await Order.aggregate([
       {
         $match: {
