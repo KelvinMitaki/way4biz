@@ -20,15 +20,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
         parentKey: ["Sellers", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
-          { name: "New Sellers", url: "/admin-new-sellers", num: "100" }
-        ]
-      }
-    ]
+          { name: "New Sellers", url: "/admin-new-sellers", num: "100" },
+        ],
+      },
+    ],
   };
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -69,7 +69,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </p>
               <MenuDropdown data={this.state.keys[0]} />
               <p>
-                <Link to="/orders">Orders</Link>
+                <Link to="/admin-orders">Orders</Link>
               </p>
               <p>
                 <Link to="/admin-dashboard">Categories</Link>
@@ -122,7 +122,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </div>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-orders"
+              activeClassName="admin-active-lg-link"
+            >
               <GoClippy /> <span className="ml-2">Orders</span>
             </NavLink>
           </li>
@@ -137,9 +141,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);
