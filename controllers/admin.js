@@ -745,4 +745,12 @@ route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
 });
 
 // FETCH ALL ORDERS
+route.get("/api/root/admin/all/orders", isSeller, async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    res.send(orders);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
