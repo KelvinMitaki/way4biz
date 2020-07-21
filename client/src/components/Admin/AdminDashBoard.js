@@ -9,7 +9,11 @@ import { Link } from "react-router-dom";
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
-import { getStock, fetchNewSellers } from "../../redux/actions";
+import {
+  getStock,
+  fetchNewSellers,
+  fetchAdminOrders
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -25,10 +29,21 @@ class AdminDashBoard extends React.Component {
   componentDidMount() {
     this.props.getStock();
     this.props.fetchNewSellers();
+    this.props.fetchAdminOrders();
   }
 
   render() {
     if (!this.props.newSellers) return <ScreenLoader />;
+    if (!this.props.adminOrders) return <ScreenLoader />;
+
+    const todayOrders =
+      this.props.adminOrders &&
+      this.props.adminOrders.todaysOrdersCount.length !== 0 &&
+      this.props.adminOrders.todaysOrdersCount[0].todaysOrders;
+
+    const total =
+      this.props.adminOrders && this.props.adminOrders.totalOrdersCount;
+    const calc = Math.round((todayOrders / total) * 100);
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -123,11 +138,14 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Orders</p>
-                                <p>+50,000</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalOrdersCount.toLocaleString()}
+                                </p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {calc}% change today
                                 </p>
                               </div>
                             </Link>
@@ -202,9 +220,12 @@ class AdminDashBoard extends React.Component {
 const mapStateToProps = state => {
   return {
     stock: state.product.stock,
+    adminOrders: state.product.adminOrders,
     newSellers: state.sellerRegister.newSellers
   };
 };
-export default connect(mapStateToProps, { getStock, fetchNewSellers })(
-  AdminDashBoard
-);
+export default connect(mapStateToProps, {
+  getStock,
+  fetchNewSellers,
+  fetchAdminOrders
+})(AdminDashBoard);
