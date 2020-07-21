@@ -6,11 +6,15 @@ import "./MoveToTop.css";
 
 class MoveToTop extends React.Component {
   handleClick = (e) => {
-    scroll.scrollToTop();
+    scroll.scrollToTop({ duration: 1000 });
   };
   render() {
     return (
-      <div id="move-to-top" onClick={this.handleClick}>
+      <div
+        id="move-to-top"
+        style={{ cursor: "pointer" }}
+        onClick={this.handleClick}
+      >
         <IoMdArrowDropup style={{ fontSize: "20px" }} />
       </div>
     );
