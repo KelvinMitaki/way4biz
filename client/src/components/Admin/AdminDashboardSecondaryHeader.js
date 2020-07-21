@@ -20,15 +20,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
         parentKey: ["Sellers", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
-          { name: "New Sellers", url: "/admin-new-sellers", num: "100" }
-        ]
-      }
-    ]
+          { name: "New Sellers", url: "/admin-new-sellers", num: "100" },
+        ],
+      },
+    ],
   };
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -69,7 +69,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </p>
               <MenuDropdown data={this.state.keys[0]} />
               <p>
-                <Link to="/orders">Orders</Link>
+                <Link to="/admin-orders">Orders</Link>
               </p>
               <p>
                 <Link to="/admin-dashboard">Categories</Link>
@@ -89,17 +89,23 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </li>
           <li>
             <a href="/" className="admin-menu-dropdown-main">
-              <RiFileUserLine /> <span className="ml-2">Sellers</span>
+              <RiFileUserLine />{" "}
               <span className="ml-1">
-                <MdKeyboardArrowDown />
+                Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
                   this.props.newSellers.sellers.length.toLocaleString() !==
                     0 && (
-                    <span className="badge custom-badge ml-2">
+                    <span
+                      className="badge custom-badge ml-2"
+                      style={{ position: "relative", zIndex: "32" }}
+                    >
                       {this.props.newSellers.sellers.length.toLocaleString()}
                     </span>
                   )}
+              </span>
+              <span className="ml-1">
+                <MdKeyboardArrowDown />
               </span>
             </a>
 
@@ -122,7 +128,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </div>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-orders"
+              activeClassName="admin-active-lg-link"
+            >
               <GoClippy /> <span className="ml-2">Orders</span>
             </NavLink>
           </li>
@@ -131,20 +141,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              <RiDashboardLine /> <span className="ml-2">Dashboard</span>
-            </NavLink>
-          </li> */}
         </ul>
         <ProfileImage />
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);
