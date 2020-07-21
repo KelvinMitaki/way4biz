@@ -34,7 +34,14 @@ import {
   FETCH_ADMIN_ORDERS,
   FETCH_ADMIN_ORDERS_START,
   FETCH_ADMIN_ORDERS_STOP,
-  FETCH_ADMIN_PENDING_ORDERS
+  FETCH_ADMIN_PENDING_ORDERS,
+  FETCH_ALL_ORDERS,
+  HAS_MORE_ORDERS_FALSE,
+  ADMIN_RADIO,
+  FETCH_MORE_ALL_ORDERS,
+  FETCH_ADMIN_ORDER,
+  FETCH_ORDER_BY_ID,
+  FETCH_ORDER_BY_ID_ERROR
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -65,7 +72,15 @@ const INITIAL_STATE = {
   stockLoading: false,
   adminOrders: null,
   adminOrdersLoading: false,
-  adminPendingOrders: null
+  adminPendingOrders: null,
+  allAdminOrders: null,
+  ordersToSkip: 0,
+  orderCount: null,
+  hasMoreOrders: true,
+  ordersDate: null,
+  radioLoading: false,
+  adminOrder: null,
+  orderError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -106,7 +121,6 @@ export default (state = INITIAL_STATE, action) => {
       };
     case MORE_SINGLE_CATEGORY_PRODUCTS:
       const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
-
       return {
         ...state,
         singleCategoryProducts: [
@@ -115,6 +129,7 @@ export default (state = INITIAL_STATE, action) => {
         ],
         itemsToSkip: state.itemsToSkip + 6
       };
+
     case FETCH_ALL_CATEGORIES:
       return { ...state, categories: action.payload };
     case FETCH_BUYER_ORDERS:
@@ -188,6 +203,54 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrdersLoading: false };
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
+    case FETCH_ALL_ORDERS:
+      return {
+        ...state,
+        allAdminOrders: action.payload.orders,
+        orderCount: action.payload.ordersCount,
+        ordersToSkip: state.ordersToSkip + 5,
+        radioLoading: false,
+        orderError: null
+      };
+    case FETCH_MORE_ALL_ORDERS:
+      const orderIds = new Set(state.allAdminOrders.map(order => order._id));
+      return {
+        ...state,
+        allAdminOrders: [
+          ...state.allAdminOrders,
+          ...action.payload.orders.filter(order => !orderIds.has(order._id))
+        ],
+        ordersToSkip: state.ordersToSkip + 5,
+        orderError: null
+      };
+    case FETCH_ORDER_BY_ID:
+      return {
+        ...state,
+        allAdminOrders: [action.payload],
+        hasMoreOrders: false,
+        ordersToSkip: 2,
+        orderCount: 1,
+        orderError: null
+      };
+    case FETCH_ORDER_BY_ID_ERROR:
+      return {
+        ...state,
+        orderError: "No Order with that ID",
+        hasMoreOrders: false,
+        ordersToSkip: 2,
+        orderCount: 1,
+        allAdminOrders: []
+      };
+    case HAS_MORE_ORDERS_FALSE:
+      return { ...state, hasMoreOrders: false };
+    case ADMIN_RADIO:
+      return {
+        ...state,
+        ordersDate: action.payload.event.value,
+        radioLoading: true
+      };
+    case FETCH_ADMIN_ORDER:
+      return { ...state, adminOrder: action.payload, orderError: null };
     default:
       return state;
   }

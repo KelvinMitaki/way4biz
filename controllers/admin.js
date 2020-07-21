@@ -745,4 +745,58 @@ route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
 });
 
 // FETCH ALL ORDERS
+route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
+  try {
+    const { itemsToSkip, test } = req.body;
+
+    if (!test) {
+      const orders = await Order.aggregate([
+        { $skip: itemsToSkip },
+        { $limit: 5 }
+      ]);
+      if (!orders || orders.length === 0) {
+        return res.status(404).send({ message: "No orders found" });
+      }
+      const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
+      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+    }
+    const orders = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(test)
+          }
+        }
+      },
+      { $skip: itemsToSkip },
+      { $limit: 5 }
+    ]);
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).send({ message: "No orders found" });
+    }
+    const ordersCount = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(test)
+          }
+        }
+      },
+      { $count: "ordersCount" }
+    ]);
+    res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    res.send(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
