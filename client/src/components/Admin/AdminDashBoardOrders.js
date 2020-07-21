@@ -18,9 +18,11 @@ import ScreenLoader from "../Pages/ScreenLoader";
 import { useRef } from "react";
 import { useCallback } from "react";
 import BottomPageLoader from "../Pages/BottomPageLoader";
+import { useState } from "react";
 
 function AdminDashBoardOrders(props) {
-  const { fetchAllOrders, ordersDate, fetchMoreAllOrders } = props;
+  const [orderId, setOrderId] = useState({ orderId: null });
+  const { fetchAllOrders, ordersDate } = props;
   useEffect(() => {
     fetchAllOrders(ordersDate);
   }, [fetchAllOrders, ordersDate]);
@@ -48,8 +50,11 @@ function AdminDashBoardOrders(props) {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
+  const handleSubmit = () => {
+    console.log(orderId);
+  };
   if (!props.allAdminOrders || props.radioLoading) return <ScreenLoader />;
-
+  console.log(orderId);
   return (
     <div className="container-fluid p-0">
       <AdminDashBoardHeader />
@@ -63,21 +68,24 @@ function AdminDashBoardOrders(props) {
         </div>
         <div className="admin-order-search-filter">
           <div className="form-group input-group search">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Search order ID..."
-            />
-            <div className="input-group-append">
-              <button id="order-search-btn">
-                <IconContext.Provider value={{ className: "mr-1 " }}>
-                  <div className="icon-container">
-                    <AiOutlineSearch style={{ fontSize: "20px" }} />
-                    <span>Search</span>
-                  </div>
-                </IconContext.Provider>
-              </button>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <input
+                onChange={e => setOrderId({ orderId: e.target.value })}
+                className="form-control"
+                type="text"
+                placeholder="Search order ID..."
+              />
+              <div className="input-group-append">
+                <button id="order-search-btn" type="submit">
+                  <IconContext.Provider value={{ className: "mr-1 " }}>
+                    <div className="icon-container">
+                      <AiOutlineSearch style={{ fontSize: "20px" }} />
+                      <span>Search</span>
+                    </div>
+                  </IconContext.Provider>
+                </button>
+              </div>
+            </form>
           </div>
           <div className="filter">
             <div className="admin-filter">
