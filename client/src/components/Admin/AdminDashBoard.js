@@ -46,6 +46,19 @@ class AdminDashBoard extends React.Component {
     const total =
       this.props.adminOrders && this.props.adminOrders.totalOrdersCount;
     const calc = Math.round((todayOrders / total) * 100);
+    const {
+      todaysPendingOrders,
+      pendingOrders
+    } = this.props.adminPendingOrders;
+    let calcPending;
+    if (typeof todaysPendingOrders === "number") {
+      calcPending = Math.round((todaysPendingOrders / pendingOrders) * 100);
+    } else {
+      calcPending = 0;
+    }
+    if (typeof pendingOrders === "object") {
+      pendingOrders = 0;
+    }
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -156,11 +169,11 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Pending Orders</p>
-                                <p>+50,000</p>
+                                <p>{pendingOrders.toLocaleString()}</p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {calcPending}% change today
                                 </p>
                               </div>
                             </Link>
