@@ -46,10 +46,7 @@ class AdminDashBoard extends React.Component {
     const total =
       this.props.adminOrders && this.props.adminOrders.totalOrdersCount;
     const calc = Math.round((todayOrders / total) * 100);
-    const {
-      todaysPendingOrders,
-      pendingOrders
-    } = this.props.adminPendingOrders;
+    let { todaysPendingOrders, pendingOrders } = this.props.adminPendingOrders;
     let calcPending;
     if (typeof todaysPendingOrders === "number") {
       calcPending = Math.round((todaysPendingOrders / pendingOrders) * 100);
