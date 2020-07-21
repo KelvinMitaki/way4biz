@@ -745,10 +745,18 @@ route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
 });
 
 // FETCH ALL ORDERS
-route.get("/api/root/admin/all/orders", isSeller, async (req, res) => {
+route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
   try {
-    const orders = await Order.find({});
-    res.send(orders);
+    const { itemsToSkip, test } = req.body;
+    const orders = await Order.find(test).skip(itemsToSkip).limit(5);
+    if (!orders || orders.length === 0) {
+      return res.status(404).send({ message: "Noorders found" });
+    }
+    const ordersCount = await Order.aggregate([
+      { $match: test },
+      { $count: "ordersCount" }
+    ]);
+    res.send({ orders, ordersCount: ordersCount[0].ordersCount });
   } catch (error) {
     res.status(500).send(error);
   }
