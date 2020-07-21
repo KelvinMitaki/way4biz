@@ -790,4 +790,13 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    res.send(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

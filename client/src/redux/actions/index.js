@@ -106,7 +106,8 @@ import {
   FETCH_ALL_ORDERS,
   HAS_MORE_ORDERS_FALSE,
   ADMIN_RADIO,
-  FETCH_MORE_ALL_ORDERS
+  FETCH_MORE_ALL_ORDERS,
+  FETCH_ADMIN_ORDER
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1550,4 +1551,40 @@ export const hasMoreOrdersFalse = () => {
   return {
     type: HAS_MORE_ORDERS_FALSE
   };
+};
+
+export const fetchAdminOrder = (orderId, history) => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    const res = await axios.get(`/api/root/admin/order/${orderId}`);
+    dispatch({ type: FETCH_ADMIN_ORDER, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.stringValue
+    ) {
+      history.push("/");
+    }
+    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    console.log(error.response);
+  }
 };

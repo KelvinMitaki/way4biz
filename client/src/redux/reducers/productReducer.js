@@ -38,7 +38,8 @@ import {
   FETCH_ALL_ORDERS,
   HAS_MORE_ORDERS_FALSE,
   ADMIN_RADIO,
-  FETCH_MORE_ALL_ORDERS
+  FETCH_MORE_ALL_ORDERS,
+  FETCH_ADMIN_ORDER
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -75,7 +76,8 @@ const INITIAL_STATE = {
   orderCount: null,
   hasMoreOrders: true,
   ordersDate: null,
-  radioLoading: false
+  radioLoading: false,
+  adminOrder: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -224,6 +226,8 @@ export default (state = INITIAL_STATE, action) => {
         ordersDate: action.payload.event.value,
         radioLoading: true
       };
+    case FETCH_ADMIN_ORDER:
+      return { ...state, adminOrder: action.payload };
     default:
       return state;
   }
