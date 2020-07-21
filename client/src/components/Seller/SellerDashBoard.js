@@ -39,7 +39,7 @@ class SellerDashBoard extends React.Component {
                           <div className="box-container big-number-wrapper">
                             <h1 className="big-number">0</h1>
                             <h6>Months</h6>
-                            <h6>SELLING ON WAY 4 BIZ</h6>
+                            <h6>SELLING ON WAY4BIZ</h6>
                           </div>
                         </div>
                       </div>
