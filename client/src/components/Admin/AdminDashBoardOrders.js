@@ -194,7 +194,7 @@ function AdminDashBoardOrders(props) {
             );
           })}
       </div>
-      {props.hasMoreOrders && <BottomPageLoader />}
+      {props.ordersToSkip < props.orderCount && <BottomPageLoader />}
     </div>
   );
 }
@@ -202,7 +202,7 @@ const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
-    hasMoreOrders: state.product.hasMoreOrders,
+    ordersToSkip: state.product.ordersToSkip,
     ordersDate: state.product.ordersDate
   };
 };

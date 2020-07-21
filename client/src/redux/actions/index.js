@@ -1483,17 +1483,18 @@ export const fetchAllOrders = filter => async dispatch => {
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
-    console.log(error);
   }
 };
 
-export const adminRadio = event => {
-  return {
+export const adminRadio = event => (dispatch, getState) => {
+  getState().product.ordersToSkip = 0;
+  getState().product.orderCount = 0;
+  dispatch({
     type: ADMIN_RADIO,
     payload: {
       event
     }
-  };
+  });
 };
 
 export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
