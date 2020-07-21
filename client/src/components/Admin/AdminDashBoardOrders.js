@@ -56,7 +56,8 @@ function AdminDashBoardOrders(props) {
     props.fetchOrderById(orderId.orderId);
     setOrderId({ orderId: null });
   };
-  if (!props.allAdminOrders || props.radioLoading) return <ScreenLoader />;
+  if (!props.allAdminOrders || props.radioLoading || props.adminOrdersLoading)
+    return <ScreenLoader />;
 
   return (
     <div className="container-fluid p-0">
@@ -217,7 +218,8 @@ const mapStateToProps = state => {
     ordersToSkip: state.product.ordersToSkip,
     ordersDate: state.product.ordersDate,
     radioLoading: state.product.radioLoading,
-    orderError: state.product.orderError
+    orderError: state.product.orderError,
+    adminOrdersLoading: state.product.adminOrdersLoading
   };
 };
 export default connect(mapStateToProps, {
