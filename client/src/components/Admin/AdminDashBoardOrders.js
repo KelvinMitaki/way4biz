@@ -48,7 +48,7 @@ function AdminDashBoardOrders(props) {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
-  if (!props.allAdminOrders) return <ScreenLoader />;
+  if (!props.allAdminOrders || props.radioLoading) return <ScreenLoader />;
 
   return (
     <div className="container-fluid p-0">
@@ -203,7 +203,8 @@ const mapStateToProps = state => {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
     ordersToSkip: state.product.ordersToSkip,
-    ordersDate: state.product.ordersDate
+    ordersDate: state.product.ordersDate,
+    radioLoading: state.product.radioLoading
   };
 };
 export default connect(mapStateToProps, {

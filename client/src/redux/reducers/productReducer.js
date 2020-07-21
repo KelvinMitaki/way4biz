@@ -74,7 +74,8 @@ const INITIAL_STATE = {
   ordersToSkip: 0,
   orderCount: null,
   hasMoreOrders: true,
-  ordersDate: null
+  ordersDate: null,
+  radioLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -202,7 +203,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         allAdminOrders: action.payload.orders,
         orderCount: action.payload.ordersCount,
-        ordersToSkip: state.ordersToSkip + 5
+        ordersToSkip: state.ordersToSkip + 5,
+        radioLoading: false
       };
     case FETCH_MORE_ALL_ORDERS:
       const orderIds = new Set(state.allAdminOrders.map(order => order._id));
@@ -217,7 +219,11 @@ export default (state = INITIAL_STATE, action) => {
     case HAS_MORE_ORDERS_FALSE:
       return { ...state, hasMoreOrders: false };
     case ADMIN_RADIO:
-      return { ...state, ordersDate: action.payload.event.value };
+      return {
+        ...state,
+        ordersDate: action.payload.event.value,
+        radioLoading: true
+      };
     default:
       return state;
   }
