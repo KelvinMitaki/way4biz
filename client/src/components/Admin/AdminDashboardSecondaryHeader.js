@@ -132,11 +132,6 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              <RiDashboardLine /> <span className="ml-2">Dashboard</span>
-            </NavLink>
-          </li> */}
         </ul>
         <ProfileImage />
       </div>
