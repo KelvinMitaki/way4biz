@@ -14,10 +14,10 @@ class AdminDashBoardOrders extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div
-          className="container py-2 m-0 mx-auto "
+          className="container mt-4 py-2 m-0 mx-auto "
           style={{ backgroundColor: "#fff" }}
         >
-          <div className="my-2" style={{ textAlign: "center" }}>
+          <div className="my-1" style={{ textAlign: "center" }}>
             <h3>Orders</h3>
           </div>
           <div className="admin-order-search-filter">
@@ -41,7 +41,7 @@ class AdminDashBoardOrders extends React.Component {
             <div className="filter">
               <div className="admin-filter">
                 <div className="admin-filter-icon">
-                  Filter:
+                  <span className="y">Filter:</span>
                   <FiFilter style={{ fontSize: "25px" }} />
                 </div>
                 <div className="filter-options">

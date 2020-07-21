@@ -44,6 +44,7 @@ import AdminDashBoardNewSeller from "./components/Admin/AdminDashBoardNewSeller"
 import SellerProfiling from "./components/Seller/SellerProfiling";
 import AdminDashBoardOrders from "./components/Admin/AdminDashBoardOrders";
 import AdminDashBoardOrder from "./components/Admin/AdminDashBoardOrder";
+import AdminDashBoardCategories from "./components/Admin/AdminDashBoardCategories";
 // import ScrollToTop from "./ScrollToTop";
 
 class App extends React.Component {
@@ -92,6 +93,16 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <AdminDashBoardOrder />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin-categories"
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardCategories />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
