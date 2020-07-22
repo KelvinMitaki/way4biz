@@ -705,7 +705,19 @@ route.get("/api/root/admin/orders", isSeller, async (req, res) => {
       },
       { $count: "todaysOrders" }
     ]);
-    res.send({ totalOrdersCount, todaysOrdersCount });
+    // { $unwind: "$items" },
+    // { $project: { quantity: "$items.quantity" } },
+    // { $group: { _id: null, quantity: { $sum: "$quantity" } } },
+    // { $project: { _id: 0, quantity: 1 } }
+    const totalPrice = await Order.aggregate([
+      { $project: { _id: 0, totalPrice: 1 } },
+      { $group: { _id: null, totalPrice: { $sum: "$totalPrice" } } }
+    ]);
+    res.send({
+      totalOrdersCount,
+      todaysOrdersCount,
+      totalPrice: totalPrice[0].totalPrice
+    });
   } catch (error) {
     res.status(500).send(error);
   }

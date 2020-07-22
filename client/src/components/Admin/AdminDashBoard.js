@@ -155,7 +155,7 @@ class AdminDashBoard extends React.Component {
                       <div className="row">
                         <div className="col-lg-5 p-0">
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link to="/admin-orders">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Orders</p>
                                 <p>
