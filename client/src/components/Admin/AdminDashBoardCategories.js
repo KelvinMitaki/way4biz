@@ -17,7 +17,10 @@ class AdminDashBoardCategories extends React.Component {
               Categories
             </h3>
             <div className="container my-2" id="add-category-btn-wrapper">
-              <Link to="/" className="btn btn-md add-category-btn">
+              <Link
+                to="/admin-category/add"
+                className="btn btn-md add-category-btn"
+              >
                 Add Category
               </Link>
             </div>
@@ -37,9 +40,12 @@ class AdminDashBoardCategories extends React.Component {
                 </div>
                 <div style={{ borderTop: "1px solid #d4d4d4" }}>
                   <div>
-                    <button className="btn btn-lg btn-block edit-category-btn">
+                    <Link
+                      to="/admin-category/edit"
+                      className="btn btn-lg btn-block edit-category-btn"
+                    >
                       Edit
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
