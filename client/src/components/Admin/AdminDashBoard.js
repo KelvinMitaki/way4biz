@@ -211,7 +211,12 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {Math.round(
+                                    (this.props.adminOrders.todayTotalPrice /
+                                      this.props.adminOrders.totalPrice) *
+                                      100
+                                  )}
+                                  % change today
                                 </p>
                               </div>
                             </Link>
