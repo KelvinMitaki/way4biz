@@ -16,13 +16,18 @@
 }
 
 .edit-category-btn {
-  background-color: transparent;
+  background-color: #eaecee;
   color: #000;
   border: none;
   border-radius: 0px;
 }
 
 .edit-category-btn:hover {
-  color: #ffffff;
-  background-color: #f76b1a;
+  /* color: #ffffff; */
+  color: #f76b1a;
+}
+
+.edit-category-btn:focus {
+  box-shadow: none;
+  outline: none;
 }

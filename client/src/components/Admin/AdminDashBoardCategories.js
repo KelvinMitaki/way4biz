@@ -44,7 +44,31 @@ class AdminDashBoardCategories extends React.Component {
                       to="/admin-category/edit"
                       className="btn btn-lg btn-block edit-category-btn"
                     >
-                      Edit
+                      Edit Category
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="box-container admin-category-wrapper">
+                <div className="row p-3 align-items-center">
+                  <div
+                    className="col-md-4"
+                    style={{ borderRight: "1px solid #d4d4d4" }}
+                  >
+                    <h4>Women's Clothing</h4>
+                  </div>
+                  <div className="col-md-8">
+                    <p>Dress,Bikers,Shorts,Stockings,Inner Wears :),Blahs,</p>
+                  </div>
+                </div>
+                <div style={{ borderTop: "1px solid #d4d4d4" }}>
+                  <div>
+                    <Link
+                      to="/admin-category/edit"
+                      className="btn btn-lg btn-block edit-category-btn"
+                    >
+                      Edit Category
                     </Link>
                   </div>
                 </div>
