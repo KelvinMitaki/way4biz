@@ -816,7 +816,8 @@ route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
       },
       { $project: { "items.quantity": 1, _id: 0 } },
       { $unwind: "$items" },
-      { $project: { quantity: "$items.quantity" } }
+      { $project: { quantity: "$items.quantity" } },
+      { $group: { _id: null, quantity: { $sum: "$quantity" } } }
     ]);
     res.send(items);
   } catch (error) {
