@@ -804,6 +804,22 @@ route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
 
 route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
   try {
+    // const items = await Order.aggregate([
+    //   {
+    //     $match: {
+    //       _id: {
+    //         $gt: mongoose.Types.ObjectId.createFromTime(
+    //           Date.now() / 1000 - 24 * 60 * 60 * 7
+    //         )
+    //       }
+    //     }
+    //   },
+    //   { $project: { "items.quantity": 1, _id: 0 } },
+    //   { $unwind: "$items" },
+    //   { $project: { quantity: "$items.quantity" } },
+    //   { $group: { _id: null, quantity: { $sum: "$quantity" } } },
+    //   { $project: { _id: 0, quantity: 1 } }
+    // ]);
     const items = await Order.aggregate([
       {
         $match: {
@@ -814,10 +830,7 @@ route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
           }
         }
       },
-      { $project: { "items.quantity": 1, _id: 0 } },
-      { $unwind: "$items" },
-      { $project: { quantity: "$items.quantity" } },
-      { $group: { _id: null, quantity: { $sum: "$quantity" } } }
+      { $project: { "items.quantity": 1, _id: 0, createdAt: 1 } }
     ]);
     res.send(items);
   } catch (error) {
