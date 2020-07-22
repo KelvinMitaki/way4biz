@@ -111,7 +111,10 @@ import {
   FETCH_ORDER_BY_ID,
   FETCH_ORDER_BY_ID_ERROR,
   FETCH_ORDER_BY_ID_START,
-  FETCH_ORDER_BY_ID_STOP
+  FETCH_ORDER_BY_ID_STOP,
+  FETCH_WEEKLY_SALES,
+  FETCH_WEEKLY_SALES_START,
+  FETCH_WEEKLY_SALES_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1623,5 +1626,33 @@ export const fetchOrderById = orderId => async (dispatch, getState) => {
     }
     console.log(error.response);
     dispatch({ type: FETCH_ORDER_BY_ID_STOP });
+  }
+};
+
+export const fetchWeeklySales = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_WEEKLY_SALES_START });
+    const res = await axios.get("/api/fetch/weekly/sales");
+    dispatch({ type: FETCH_WEEKLY_SALES, payload: res.data });
+    dispatch({ type: FETCH_WEEKLY_SALES_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_WEEKLY_SALES_STOP });
+    console.log(error.response);
   }
 };
