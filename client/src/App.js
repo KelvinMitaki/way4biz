@@ -50,6 +50,7 @@ import MoveToTop from "./MoveToTop";
 import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
 import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
 import BuyerInfo from "./components/Admin/BuyerInfo";
+import Store from "./components/Store/Store";
 
 class App extends React.Component {
   state = {
@@ -97,6 +98,7 @@ class App extends React.Component {
               component={ProductReviewsWrapper}
             />
             <Route path="/seller/profiling" exact component={SellerProfiling} />
+            <Route path="/seller/store" exact component={Store} />
             <Route
               path="/admin-sellers"
               render={() =>

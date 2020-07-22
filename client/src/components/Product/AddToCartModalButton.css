@@ -72,3 +72,10 @@
   border-radius: 10px;
   background-color: #f76b1a;
 }
+
+@media screen and (max-width: 1140px) {
+  .continue-btn,
+  .shopping-btn-modal {
+    width: 180px !important;
+  }
+}
