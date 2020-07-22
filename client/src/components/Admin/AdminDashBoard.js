@@ -14,7 +14,8 @@ import {
   fetchNewSellers,
   fetchAdminOrders,
   fetchAdminPendingOrders,
-  fetchWeeklySales
+  fetchWeeklySales,
+  setPendingOrders
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -170,7 +171,10 @@ class AdminDashBoard extends React.Component {
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link
+                              to="/admin-orders"
+                              onClick={() => this.props.setPendingOrders()}
+                            >
                               <div className="admin-individual-performance-upper-text">
                                 <p>Pending Orders</p>
                                 <p>{pendingOrders.toLocaleString()}</p>
@@ -250,5 +254,6 @@ export default connect(mapStateToProps, {
   fetchNewSellers,
   fetchAdminOrders,
   fetchAdminPendingOrders,
-  fetchWeeklySales
+  fetchWeeklySales,
+  setPendingOrders
 })(AdminDashBoard);

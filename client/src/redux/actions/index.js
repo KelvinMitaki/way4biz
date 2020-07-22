@@ -114,7 +114,8 @@ import {
   FETCH_ORDER_BY_ID_STOP,
   FETCH_WEEKLY_SALES,
   FETCH_WEEKLY_SALES_START,
-  FETCH_WEEKLY_SALES_STOP
+  FETCH_WEEKLY_SALES_STOP,
+  SET_PENDING_ORDERS
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1661,4 +1662,10 @@ export const fetchWeeklySales = () => async dispatch => {
     dispatch({ type: FETCH_WEEKLY_SALES_STOP });
     console.log(error.response);
   }
+};
+
+export const setPendingOrders = () => {
+  return {
+    type: SET_PENDING_ORDERS
+  };
 };

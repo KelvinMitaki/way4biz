@@ -44,7 +44,8 @@ import {
   FETCH_ORDER_BY_ID_ERROR,
   FETCH_ORDER_BY_ID_START,
   FETCH_ORDER_BY_ID_STOP,
-  FETCH_WEEKLY_SALES
+  FETCH_WEEKLY_SALES,
+  SET_PENDING_ORDERS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -262,6 +263,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrderLoading: false };
     case FETCH_WEEKLY_SALES:
       return { ...state, weeklySales: action.payload };
+    case SET_PENDING_ORDERS:
+      return { ...state, ordersDate: "pendingOrders" };
     default:
       return state;
   }
