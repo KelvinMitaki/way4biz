@@ -53,7 +53,7 @@ class AdminDashBoardOrderItems extends React.Component {
                       <strong className="x mr-1">Seller:</strong>Jane Doe
                     </p>
                     <p>
-                      <Link to="/">Visit Store</Link>
+                      <Link to="/seller/store">Visit Store</Link>
                     </p>
                   </div>
                 </div>
