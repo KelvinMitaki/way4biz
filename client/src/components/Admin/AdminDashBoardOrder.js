@@ -73,37 +73,46 @@ class AdminDashBoardOrder extends React.Component {
                       {this.props.adminOrder.items.length.toLocaleString()}
                     </div>
                   </div>
-                </div>
-                <div className="row my-3 align-items-center">
-                  <div className="col-md-5 admin-order-buyer">
+                  <div className="row order-imgs">
                     <div>
-                      <h4>Buyer</h4>
+                      <Link to="/">
+                        <img src="/1.jpg" />
+                      </Link>
+                      <p>Great Beer Great Beer Great Beer</p>
                       <p>
-                        <strong>Name:</strong>John Doe
+                        <strong>Ksh.1,500</strong>
+                      </p>
+                      <p>
+                        <strong>Qty:</strong>1
                       </p>
                     </div>
-                  </div>
-                  <div className="col-md-2 admin-order-arrow my-2">
-                    <div className="y">
-                      <BsArrowLeftRight
-                        style={{
-                          fontSize: "40px",
-                          color: "#f76b1a",
-                        }}
-                      />
-                    </div>
-                    <div className="x">
-                      <RiArrowUpDownLine
-                        style={{ fontSize: "40px", color: "#f76b1a" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-5 admin-order-seller">
                     <div>
-                      <h4>Seller</h4>
-                      <p>
-                        <strong>Name:</strong>Jane Doe
-                      </p>
+                      <Link to="/">
+                        <img src="/1.jpg" />
+                      </Link>
+                      <p>Great Beer</p>
+                      <p>Ksh.1,500</p>
+                    </div>
+                    <div>
+                      <Link to="/">
+                        <img src="/1.jpg" />
+                      </Link>
+                      <p>Great Beer</p>
+                      <p>Ksh.1,500</p>
+                    </div>
+                    <div>
+                      <Link to="/">
+                        <img src="/1.jpg" />
+                      </Link>
+                      <p>Great Beer</p>
+                      <p>Ksh.1,500</p>
+                    </div>
+                    <div>
+                      <Link to="/">
+                        <img src="/1.jpg" />
+                      </Link>
+                      <p>Great Beer</p>
+                      <p>Ksh.1,500</p>
                     </div>
                   </div>
                 </div>
