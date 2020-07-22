@@ -115,7 +115,10 @@ import {
   FETCH_WEEKLY_SALES,
   FETCH_WEEKLY_SALES_START,
   FETCH_WEEKLY_SALES_STOP,
-  SET_PENDING_ORDERS
+  SET_PENDING_ORDERS,
+  ADD_NEW_CATEGORY,
+  ADD_NEW_CATEGORY_START,
+  ADD_NEW_CATEGORY_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1668,4 +1671,32 @@ export const setPendingOrders = () => {
   return {
     type: SET_PENDING_ORDERS
   };
+};
+export const addNewCategory = category => async dispatch => {
+  try {
+    dispatch({ type: ADD_NEW_CATEGORY_START });
+    const res = await axios.post("/api/root/admin/add/new/category", category);
+    console.log(res.data);
+    dispatch({ type: ADD_NEW_CATEGORY });
+    dispatch({ type: ADD_NEW_CATEGORY_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: ADD_NEW_CATEGORY_STOP });
+    console.log(error.response);
+  }
 };
