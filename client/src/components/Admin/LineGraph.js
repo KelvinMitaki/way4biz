@@ -140,7 +140,7 @@ class LineGraph extends React.Component {
                   min,
                   max,
                   stepSize:
-                    max % 2 === 0 ? Math.round(max / 2) : Math.round(max / 3)
+                    max % 2 === 0 ? Math.floor(max / 2) : Math.round(max / 3)
                 }
               }
             ]
