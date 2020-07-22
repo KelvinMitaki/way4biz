@@ -49,6 +49,7 @@ import AdminDashBoardAddCategory from "./components/Admin/AdminDashBoardAddCateg
 import MoveToTop from "./MoveToTop";
 import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
 import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
+import BuyerInfo from "./components/Admin/BuyerInfo";
 
 class App extends React.Component {
   state = {
@@ -142,6 +143,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <AdminDashBoardOrderItems />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/buyer-info"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <BuyerInfo />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
