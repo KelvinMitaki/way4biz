@@ -41,7 +41,9 @@ import {
   FETCH_MORE_ALL_ORDERS,
   FETCH_ADMIN_ORDER,
   FETCH_ORDER_BY_ID,
-  FETCH_ORDER_BY_ID_ERROR
+  FETCH_ORDER_BY_ID_ERROR,
+  FETCH_ORDER_BY_ID_START,
+  FETCH_ORDER_BY_ID_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -72,6 +74,7 @@ const INITIAL_STATE = {
   stockLoading: false,
   adminOrders: null,
   adminOrdersLoading: false,
+  adminOrderLoading: false,
   adminPendingOrders: null,
   allAdminOrders: null,
   ordersToSkip: 0,
@@ -251,6 +254,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     case FETCH_ADMIN_ORDER:
       return { ...state, adminOrder: action.payload, orderError: null };
+    case FETCH_ORDER_BY_ID_START:
+      return { ...state, adminOrderLoading: true };
+    case FETCH_ORDER_BY_ID_STOP:
+      return { ...state, adminOrderLoading: false };
     default:
       return state;
   }

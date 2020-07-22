@@ -110,6 +110,8 @@ import {
   FETCH_ADMIN_ORDER,
   FETCH_ORDER_BY_ID,
   FETCH_ORDER_BY_ID_ERROR,
+  FETCH_ORDER_BY_ID_START,
+  FETCH_ORDER_BY_ID_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -122,7 +124,7 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
     }
     dispatch({
       type: LOG_IN,
-      payload: res.data,
+      payload: res.data
     });
     dispatch({ type: LOADING_STOP });
     history.push("/");
@@ -144,7 +146,7 @@ export const sellerLogIn = (credentials, history) => async (
     }
     dispatch({
       type: LOG_IN,
-      payload: res.data,
+      payload: res.data
     });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-dashboard");
@@ -154,7 +156,7 @@ export const sellerLogIn = (credentials, history) => async (
     dispatch({ type: LOG_IN_FAILED });
   }
 };
-export const register = (credentials) => async (dispatch, getState) => {
+export const register = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     await axios.post("/api/register", credentials);
@@ -168,7 +170,7 @@ export const register = (credentials) => async (dispatch, getState) => {
   }
 };
 
-export const fetchUser = () => async (dispatch) => {
+export const fetchUser = () => async dispatch => {
   try {
     dispatch({ type: FETCH_USER_START });
     const res = await axios.get("/api/current_user");
@@ -200,7 +202,7 @@ export const fetchUser = () => async (dispatch) => {
   }
 };
 
-export const passwordReset = (email) => async (dispatch) => {
+export const passwordReset = email => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post("/api/reset", email);
@@ -249,7 +251,7 @@ export const editUser = (credentials, history) => async (
     dispatch({ type: LOADING_STOP });
   }
 };
-export const checkoutUser = (credentials) => async (dispatch, getState) => {
+export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
@@ -283,11 +285,11 @@ export const checkoutUser = (credentials) => async (dispatch, getState) => {
   }
 };
 
-export const fetchProductsSearch = (searchTerm) => async (dispatch) => {
+export const fetchProductsSearch = searchTerm => async dispatch => {
   try {
     if (searchTerm.trim()) {
       const res = await axios.post("/api/product/search", {
-        searchTerm,
+        searchTerm
       });
       dispatch({ type: FETCH_PRODUCTS_SEARCH, payload: res.data });
     }
@@ -297,15 +299,16 @@ export const fetchProductsSearch = (searchTerm) => async (dispatch) => {
   }
 };
 
-export const updatePasswordLoggedIn = (formValues, history) => async (
-  dispatch
-) => {
+export const updatePasswordLoggedIn = (
+  formValues,
+  history
+) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const { currentPassword, newPassword } = formValues;
     const res = await axios.patch("/api/loggedIn/reset/password", {
       currentPassword,
-      newPassword,
+      newPassword
     });
     dispatch({ type: UPDATE_PASSWORD_LOGGED_IN, payload: res.data });
     dispatch({ type: LOADING_STOP });
@@ -333,7 +336,7 @@ export const updatePasswordLoggedIn = (formValues, history) => async (
   }
 };
 
-export const registerSeller = (credentials) => async (dispatch, getState) => {
+export const registerSeller = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
 
@@ -346,7 +349,7 @@ export const registerSeller = (credentials) => async (dispatch, getState) => {
       getState().form.SellerRegister.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
-        payload: error.response.data.email,
+        payload: error.response.data.email
       });
       dispatch({ type: LOADING_STOP });
       return;
@@ -354,7 +357,7 @@ export const registerSeller = (credentials) => async (dispatch, getState) => {
     if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
       dispatch({
         type: REGISTER_SELLER_FAILED,
-        payload: "That phone number already exists",
+        payload: "That phone number already exists"
       });
       dispatch({ type: LOADING_STOP });
       return;
@@ -364,13 +367,13 @@ export const registerSeller = (credentials) => async (dispatch, getState) => {
     ] = "";
     dispatch({
       type: REGISTER_SELLER_FAILED,
-      payload: "That store name already exists",
+      payload: "That store name already exists"
     });
     dispatch({ type: LOADING_STOP });
   }
 };
 
-export const fetchSeller = () => async (dispatch) => {
+export const fetchSeller = () => async dispatch => {
   try {
     const res = await axios.get("/api/current_seller");
     if (res.data.phoneNumber) {
@@ -398,7 +401,7 @@ export const fetchSeller = () => async (dispatch) => {
   }
 };
 
-export const sendMessage = (formvalues, history) => async (dispatch) => {
+export const sendMessage = (formvalues, history) => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio", formvalues);
@@ -409,7 +412,7 @@ export const sendMessage = (formvalues, history) => async (dispatch) => {
     console.log(error.response);
   }
 };
-export const fetchSellerNumber = (history) => async (dispatch) => {
+export const fetchSellerNumber = history => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/number/verify");
@@ -436,12 +439,12 @@ export const verifyCode = (formValues, history) => async (
     getState().form.VerifySellerNumber.values.code = "";
     dispatch({
       type: INVALID_VERIFICATION_CODE,
-      payload: "The Verification code you entered is invalid. Please try again",
+      payload: "The Verification code you entered is invalid. Please try again"
     });
   }
 };
 
-export const resetTokenCheck = () => async (dispatch) => {
+export const resetTokenCheck = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/password/reset/callback");
@@ -531,19 +534,19 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   }
 };
 
-export const storeImage = (image) => async (dispatch) => {
+export const storeImage = image => async dispatch => {
   try {
     dispatch({ type: STORE_IMAGE_START });
     const uploadConfig = await axios.get("/api/image/upload");
     if (uploadConfig.data.url) {
       await axios.put(uploadConfig.data.url, image, {
         headers: {
-          "Content-Type": image.type,
-        },
+          "Content-Type": image.type
+        }
       });
       dispatch({
         type: STORE_IMAGE,
-        payload: uploadConfig.data.key,
+        payload: uploadConfig.data.key
       });
 
       dispatch({ type: STORE_IMAGE_STOP });
@@ -574,7 +577,7 @@ export const storeImage = (image) => async (dispatch) => {
 };
 export const unpersistImage = () => {
   return {
-    type: UNPERSIST_IMAGE,
+    type: UNPERSIST_IMAGE
   };
 };
 
@@ -613,28 +616,28 @@ export const editProduct = (formvalues, productId, history) => async (
   }
 };
 
-export const addToCart = (product) => {
+export const addToCart = product => {
   return {
     type: ADD_TO_CART,
-    payload: product,
+    payload: product
   };
 };
 
-export const removeFromCart = (product) => {
+export const removeFromCart = product => {
   return {
     type: REMOVE_FROM_CART,
-    payload: product,
+    payload: product
   };
 };
 
-export const deleteFromCart = (product) => {
+export const deleteFromCart = product => {
   return {
     type: DELETE_FROM_CART,
-    payload: product,
+    payload: product
   };
 };
 
-export const fetchCategories = () => async (dispatch) => {
+export const fetchCategories = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get("/api/products/find/categories");
@@ -646,7 +649,7 @@ export const fetchCategories = () => async (dispatch) => {
   }
 };
 
-export const fetchAllCategories = () => async (dispatch) => {
+export const fetchAllCategories = () => async dispatch => {
   try {
     dispatch({ type: SINGLE_CATEGORY_START });
     const res = await axios.get("/api/fetch/all/categories");
@@ -658,7 +661,7 @@ export const fetchAllCategories = () => async (dispatch) => {
   }
 };
 
-export const makeOrder = (credentials) => async (dispatch, getState) => {
+export const makeOrder = credentials => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
     const distanceId =
@@ -689,7 +692,7 @@ export const makeOrder = (credentials) => async (dispatch, getState) => {
   }
 };
 
-export const fetchSellerOrders = () => async (dispatch) => {
+export const fetchSellerOrders = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_ORDERS_START });
     const res = await axios.get("/api/seller/orders");
@@ -717,14 +720,14 @@ export const fetchSellerOrders = () => async (dispatch) => {
   }
 };
 
-export const fetchSellerOrderDetails = (orderDetails) => {
+export const fetchSellerOrderDetails = orderDetails => {
   return {
     type: FETCH_SELLER_ORDER_DETAILS,
-    payload: orderDetails,
+    payload: orderDetails
   };
 };
 
-export const fetchBuyerOrders = () => async (dispatch) => {
+export const fetchBuyerOrders = () => async dispatch => {
   try {
     dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get("/api/orders");
@@ -752,21 +755,21 @@ export const fetchBuyerOrders = () => async (dispatch) => {
   }
 };
 
-export const addToWishlist = (product) => {
+export const addToWishlist = product => {
   return {
     type: ADD_TO_WISHLIST,
-    payload: product,
+    payload: product
   };
 };
 
-export const removeFromWishlist = (product) => {
+export const removeFromWishlist = product => {
   return {
     type: REMOVE_FROM_WISHLIST,
-    payload: product,
+    payload: product
   };
 };
 
-export const fetchBuyerOrderDetails = (orderId) => async (dispatch) => {
+export const fetchBuyerOrderDetails = orderId => async dispatch => {
   try {
     dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/buyer/order/details/${orderId}`);
@@ -796,15 +799,15 @@ export const fetchBuyerOrderDetails = (orderId) => async (dispatch) => {
 
 export const hasMoreFalse = () => {
   return {
-    type: HAS_MORE_FALSE,
+    type: HAS_MORE_FALSE
   };
 };
 export const hasMoreCategoryFalse = () => {
   return {
-    type: HAS_MORE_CATEGORY_FALSE,
+    type: HAS_MORE_CATEGORY_FALSE
   };
 };
-export const fetchProducts = () => async (dispatch) => {
+export const fetchProducts = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
@@ -830,17 +833,17 @@ export const fetchMoreProducts = () => async (dispatch, getState) => {
 
 export const signInClick = () => {
   return {
-    type: SIGN_IN_CLICK,
+    type: SIGN_IN_CLICK
   };
 };
 
 export const registerClick = () => {
   return {
-    type: REGISTER_CLICK,
+    type: REGISTER_CLICK
   };
 };
 
-export const fetchSingleProduct = (productId) => async (dispatch) => {
+export const fetchSingleProduct = productId => async dispatch => {
   try {
     dispatch({ type: SINGLE_PRODUCT_START });
     const res = await axios.get(`/api/product/${productId}`);
@@ -852,7 +855,7 @@ export const fetchSingleProduct = (productId) => async (dispatch) => {
   }
 };
 
-export const fetchRelatedProducts = (subcategory) => async (dispatch) => {
+export const fetchRelatedProducts = subcategory => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
     const res = await axios.get(
@@ -866,7 +869,7 @@ export const fetchRelatedProducts = (subcategory) => async (dispatch) => {
   }
 };
 
-export const fetchPendingReviews = () => async (dispatch) => {
+export const fetchPendingReviews = () => async dispatch => {
   try {
     dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_START });
     const res = await axios.get("/api/pending/reviews");
@@ -900,13 +903,13 @@ export const submitReview = (
   productId,
   orderId,
   history
-) => async (dispatch) => {
+) => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_REVIEWS_START });
     await axios.post(`/api/new/review/${productId}/${orderId}`, {
       title: review.title,
       body: review.body,
-      rating,
+      rating
     });
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     history.push("/pending/reviews");
@@ -931,9 +934,11 @@ export const submitReview = (
     console.log(error.response);
   }
 };
-export const redirectOnFail = (productId, orderId, history) => async (
-  dispatch
-) => {
+export const redirectOnFail = (
+  productId,
+  orderId,
+  history
+) => async dispatch => {
   try {
     dispatch({ type: REDIRECT_ON_FAIL_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
@@ -963,7 +968,7 @@ export const redirectOnFail = (productId, orderId, history) => async (
   }
 };
 
-export const fetchProductReviews = (productId) => async (dispatch) => {
+export const fetchProductReviews = productId => async dispatch => {
   try {
     dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/product/reviews/${productId}`);
@@ -1012,7 +1017,7 @@ export const singleCategory = (category, filter, history) => async (
     const res = await axios.post(`/api/products/skip/category`, {
       itemsToSkip: 0,
       test,
-      sort,
+      sort
     });
     dispatch({ type: SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: SINGLE_CATEGORY_STOP });
@@ -1064,7 +1069,7 @@ export const moreSingleCategoryProducts = (category, filter) => async (
       const res = await axios.post(`/api/products/skip/category`, {
         itemsToSkip: singleProdLength,
         test,
-        sort,
+        sort
       });
       dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
     }
@@ -1109,14 +1114,14 @@ export const handleCheckboxAction = (event, category, history) => (
   getState().product.itemsToSkip = 0;
   dispatch(singleCategory(category, filter, history));
 };
-export const handleChangeAction = (event) => (dispatch, getState) => {
+export const handleChangeAction = event => (dispatch, getState) => {
   // getState().product.itemsToSkip = 0;
   // getState().product.singleCategoryProducts = [];
   dispatch({
     type: HANDLE_CHANGE,
     payload: {
-      event,
-    },
+      event
+    }
   });
 };
 
@@ -1125,7 +1130,7 @@ export const revertFilter = (category, filter, history) => (
   getState
 ) => {
   dispatch({
-    type: REVERT_FILTER,
+    type: REVERT_FILTER
   });
   dispatch(singleCategory(category, getState().filter, history));
 };
@@ -1139,13 +1144,13 @@ export const handleRadioButtonAction = (category, event, history) => (
   dispatch({
     type: RADIO_BUTTON,
     payload: {
-      event,
-    },
+      event
+    }
   });
   dispatch(singleCategory(category, getState().filter, history));
 };
 
-export const fetchSellerReviews = () => async (dispatch) => {
+export const fetchSellerReviews = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_REVIEWS_START });
     const res = await axios.get(`/api/seller/reviews`);
@@ -1173,18 +1178,18 @@ export const fetchSellerReviews = () => async (dispatch) => {
   }
 };
 
-export const storeDescription = (description) => {
+export const storeDescription = description => {
   return {
     type: STORE_DESCRIPTION,
-    payload: description,
+    payload: description
   };
 };
 
-export const deleteImage = (imageUrl, productId) => async (dispatch) => {
+export const deleteImage = (imageUrl, productId) => async dispatch => {
   try {
     dispatch({ type: DELETE_IMAGE_START });
     await axios.post(`/api/images/delete/${productId}`, {
-      imageUrl,
+      imageUrl
     });
     await dispatch(fetchSellerProducts());
     dispatch({ type: DELETE_IMAGE, payload: imageUrl });
@@ -1211,7 +1216,7 @@ export const deleteImage = (imageUrl, productId) => async (dispatch) => {
   }
 };
 
-export const paymentPerDistance = (details, history) => async (dispatch) => {
+export const paymentPerDistance = (details, history) => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
@@ -1241,7 +1246,7 @@ export const paymentPerDistance = (details, history) => async (dispatch) => {
   }
 };
 // PROTECT THIS ROUTE LATER
-export const getStock = () => async (dispatch) => {
+export const getStock = () => async dispatch => {
   try {
     dispatch({ type: GET_STOCK_START });
     const res = await axios.get("/api/root/admin/stock/report");
@@ -1269,13 +1274,13 @@ export const getStock = () => async (dispatch) => {
   }
 };
 
-export const fetchVerifiedSellers = () => async (dispatch) => {
+export const fetchVerifiedSellers = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLERS_START });
     const res = await axios.get("/api/verified/sellers");
     dispatch({
       type: FETCH_VERIFIED_SELLERS,
-      payload: res.data.verifiedSellers,
+      payload: res.data.verifiedSellers
     });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
@@ -1300,7 +1305,7 @@ export const fetchVerifiedSellers = () => async (dispatch) => {
   }
 };
 
-export const fetchVerifiedSeller = (sellerId, history) => async (dispatch) => {
+export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLERS_START });
     const res = await axios.get(`/api/verified/seller/${sellerId}`);
@@ -1328,7 +1333,7 @@ export const fetchVerifiedSeller = (sellerId, history) => async (dispatch) => {
   }
 };
 
-export const fetchNewSellers = () => async (dispatch) => {
+export const fetchNewSellers = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLERS_START });
     const res = await axios.get("/api/new/sellers");
@@ -1355,7 +1360,7 @@ export const fetchNewSellers = () => async (dispatch) => {
     console.log(error.response);
   }
 };
-export const fetchNewSeller = (sellerId, history) => async (dispatch) => {
+export const fetchNewSeller = (sellerId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_NEW_SELLERS_START });
     const res = await axios.get(`/api/new/seller/${sellerId}`);
@@ -1384,7 +1389,7 @@ export const fetchNewSeller = (sellerId, history) => async (dispatch) => {
   }
 };
 
-export const fetchAdminOrders = () => async (dispatch) => {
+export const fetchAdminOrders = () => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.get("/api/root/admin/orders");
@@ -1410,7 +1415,7 @@ export const fetchAdminOrders = () => async (dispatch) => {
   }
 };
 
-export const fetchAdminPendingOrders = () => async (dispatch) => {
+export const fetchAdminPendingOrders = () => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.get("/api/root/admin/pending/orders");
@@ -1438,7 +1443,7 @@ export const fetchAdminPendingOrders = () => async (dispatch) => {
   }
 };
 
-export const fetchAllOrders = (filter) => async (dispatch) => {
+export const fetchAllOrders = filter => async dispatch => {
   try {
     let test = {};
     if (!filter) {
@@ -1457,7 +1462,7 @@ export const fetchAllOrders = (filter) => async (dispatch) => {
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.post("/api/root/admin/all/orders", {
       itemsToSkip: 0,
-      test,
+      test
     });
     dispatch({ type: FETCH_ALL_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
@@ -1483,18 +1488,18 @@ export const fetchAllOrders = (filter) => async (dispatch) => {
   }
 };
 
-export const adminRadio = (event) => (dispatch, getState) => {
+export const adminRadio = event => (dispatch, getState) => {
   getState().product.ordersToSkip = 0;
   getState().product.orderCount = 0;
   dispatch({
     type: ADMIN_RADIO,
     payload: {
-      event,
-    },
+      event
+    }
   });
 };
 
-export const fetchMoreAllOrders = (filter) => async (dispatch, getState) => {
+export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
   try {
     let test = {};
     if (!filter) {
@@ -1516,7 +1521,7 @@ export const fetchMoreAllOrders = (filter) => async (dispatch, getState) => {
     if (singleProdLength < prodCount) {
       const res = await axios.post("/api/root/admin/all/orders", {
         itemsToSkip: singleProdLength,
-        test,
+        test
       });
       dispatch({ type: FETCH_MORE_ALL_ORDERS, payload: res.data });
     }
@@ -1545,11 +1550,11 @@ export const fetchMoreAllOrders = (filter) => async (dispatch, getState) => {
 
 export const hasMoreOrdersFalse = () => {
   return {
-    type: HAS_MORE_ORDERS_FALSE,
+    type: HAS_MORE_ORDERS_FALSE
   };
 };
 
-export const fetchAdminOrder = (orderId, history) => async (dispatch) => {
+export const fetchAdminOrder = (orderId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.get(`/api/root/admin/order/${orderId}`);
@@ -1585,12 +1590,12 @@ export const fetchAdminOrder = (orderId, history) => async (dispatch) => {
   }
 };
 
-export const fetchOrderById = (orderId) => async (dispatch, getState) => {
+export const fetchOrderById = orderId => async (dispatch, getState) => {
   try {
-    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    dispatch({ type: FETCH_ORDER_BY_ID_START });
     const res = await axios.get(`/api/root/admin/order/${orderId}`);
     dispatch({ type: FETCH_ORDER_BY_ID, payload: res.data });
-    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    dispatch({ type: FETCH_ORDER_BY_ID_STOP });
   } catch (error) {
     if (
       error &&
@@ -1617,6 +1622,6 @@ export const fetchOrderById = (orderId) => async (dispatch, getState) => {
       dispatch({ type: FETCH_ORDER_BY_ID_ERROR });
     }
     console.log(error.response);
-    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    dispatch({ type: FETCH_ORDER_BY_ID_STOP });
   }
 };
