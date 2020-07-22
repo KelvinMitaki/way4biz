@@ -49,6 +49,7 @@ function AdminDashBoardOrders(props) {
   );
   const handleRadioButton = event => {
     const { name, value } = event.target;
+    console.log(name, value);
     props.adminRadio({ name, value });
   };
   const handleSubmit = e => {
@@ -98,6 +99,19 @@ function AdminDashBoardOrders(props) {
                 <FiFilter style={{ fontSize: "25px" }} />
               </div>
               <div className="filter-options">
+                <div className="radio">
+                  <input
+                    name="ordersDate"
+                    type="radio"
+                    id="radio_55"
+                    onChange={handleRadioButton}
+                    checked={ordersDate === "pendingOrders"}
+                    value="pendingOrders"
+                  />
+                  <label htmlFor="radio_55" className="m-0">
+                    Pending Orders
+                  </label>
+                </div>
                 <div className="radio">
                   <input
                     name="ordersDate"

@@ -761,6 +761,22 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
       return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
     }
+    if (typeof test === "object" && Object.keys(test).length !== 0) {
+      const orders = await Order.aggregate([
+        { $match: test },
+        { $sort: { createdAt: -1 } },
+        { $skip: itemsToSkip },
+        { $limit: 5 }
+      ]);
+      if (!orders || orders.length === 0) {
+        return res.status(404).send({ message: "No orders found" });
+      }
+      const ordersCount = await Order.aggregate([
+        { $match: test },
+        { $count: "ordersCount" }
+      ]);
+      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+    }
     const orders = await Order.aggregate([
       {
         $match: {
@@ -804,22 +820,6 @@ route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
 
 route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
   try {
-    // const items = await Order.aggregate([
-    //   {
-    //     $match: {
-    //       _id: {
-    //         $gt: mongoose.Types.ObjectId.createFromTime(
-    //           Date.now() / 1000 - 24 * 60 * 60 * 7
-    //         )
-    //       }
-    //     }
-    //   },
-    //   { $project: { "items.quantity": 1, _id: 0 } },
-    //   { $unwind: "$items" },
-    //   { $project: { quantity: "$items.quantity" } },
-    //   { $group: { _id: null, quantity: { $sum: "$quantity" } } },
-    //   { $project: { _id: 0, quantity: 1 } }
-    // ]);
     const items = await Order.aggregate([
       {
         $match: {

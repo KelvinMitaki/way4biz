@@ -1462,6 +1462,9 @@ export const fetchAllOrders = filter => async dispatch => {
     if (filter && filter === "lastMonth") {
       test = Date.now() / 1000 - 60 * 60 * 24 * 30;
     }
+    if (filter && filter === "pendingOrders") {
+      test.delivered = false;
+    }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.post("/api/root/admin/all/orders", {
       itemsToSkip: 0,
@@ -1517,6 +1520,9 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     }
     if (filter && filter === "lastMonth") {
       test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+    }
+    if (filter && filter === "pendingOrders") {
+      test.delivered = false;
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const prodCount = getState().product.orderCount;
