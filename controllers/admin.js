@@ -25,6 +25,7 @@ const Seller = require("../models/Seller");
 const User = require("../models/User");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
+const Category = require("../models/Categories");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -865,4 +866,28 @@ route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/root/admin/add/new/category",
+  check("category")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid category"),
+  isSeller,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { category } = req.body;
+      const newCategory = new Category({
+        category
+      });
+      await newCategory.save();
+      res.send(newCategory);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
