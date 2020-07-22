@@ -140,7 +140,7 @@ class LineGraph extends React.Component {
                   min,
                   max,
                   stepSize:
-                    max % 2 === 0 ? Math.floor(max / 2) : Math.round(max / 3)
+                    max % 2 === 0 ? Math.floor(max / 4) : Math.round(max / 3)
                 }
               }
             ]
@@ -163,7 +163,7 @@ class LineGraph extends React.Component {
   render() {
     return (
       <div>
-        <canvas ref={this.canvasRef} />
+        <canvas ref={this.canvasRef} height="250px" />
       </div>
     );
   }
