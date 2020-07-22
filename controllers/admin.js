@@ -751,6 +751,7 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
 
     if (!test) {
       const orders = await Order.aggregate([
+        { $sort: { createdAt: -1 } },
         { $skip: itemsToSkip },
         { $limit: 5 }
       ]);
@@ -768,6 +769,7 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
           }
         }
       },
+      { $sort: { createdAt: -1 } },
       { $skip: itemsToSkip },
       { $limit: 5 }
     ]);

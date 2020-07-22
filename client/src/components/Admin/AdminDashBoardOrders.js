@@ -12,7 +12,7 @@ import {
   hasMoreOrdersFalse,
   adminRadio,
   fetchMoreAllOrders,
-  fetchOrderById,
+  fetchOrderById
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -29,7 +29,7 @@ function AdminDashBoardOrders(props) {
   }, [fetchAllOrders, ordersDate]);
   const observer = useRef();
   const lastOrderRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.allAdminOrders.length < props.orderCount) {
           return props.fetchMoreAllOrders(props.ordersDate);
@@ -37,7 +37,7 @@ function AdminDashBoardOrders(props) {
         props.hasMoreOrdersFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -47,16 +47,16 @@ function AdminDashBoardOrders(props) {
     },
     [props]
   );
-  const handleRadioButton = (event) => {
+  const handleRadioButton = event => {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     props.fetchOrderById(orderId.orderId);
     setOrderId({ orderId: null });
   };
-  if (!props.allAdminOrders || props.radioLoading || props.adminOrdersLoading)
+  if (!props.allAdminOrders || props.radioLoading || props.adminOrderLoading)
     return <ScreenLoader />;
 
   return (
@@ -74,7 +74,7 @@ function AdminDashBoardOrders(props) {
           <form onSubmit={handleSubmit} className="search">
             <div className="form-group input-group">
               <input
-                onChange={(e) => setOrderId({ orderId: e.target.value })}
+                onChange={e => setOrderId({ orderId: e.target.value })}
                 className="form-control"
                 type="text"
                 placeholder="Search order ID..."
@@ -213,7 +213,7 @@ function AdminDashBoardOrders(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
@@ -221,7 +221,7 @@ const mapStateToProps = (state) => {
     ordersDate: state.product.ordersDate,
     radioLoading: state.product.radioLoading,
     orderError: state.product.orderError,
-    adminOrdersLoading: state.product.adminOrdersLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default connect(mapStateToProps, {
@@ -229,5 +229,5 @@ export default connect(mapStateToProps, {
   hasMoreOrdersFalse,
   adminRadio,
   fetchMoreAllOrders,
-  fetchOrderById,
+  fetchOrderById
 })(AdminDashBoardOrders);
