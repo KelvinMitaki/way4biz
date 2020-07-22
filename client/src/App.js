@@ -59,7 +59,7 @@ class App extends React.Component {
     fetchCategories();
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
-    this.scrolling = false;
+    // this.scrolling = false;
   }
 
   handleScroll = (e) => {
@@ -452,16 +452,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

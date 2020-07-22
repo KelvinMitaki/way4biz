@@ -71,8 +71,8 @@ function AdminDashBoardOrders(props) {
           <h3>Orders</h3>
         </div>
         <div className="admin-order-search-filter">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group input-group search">
+          <form onSubmit={handleSubmit} className="search">
+            <div className="form-group input-group">
               <input
                 onChange={(e) => setOrderId({ orderId: e.target.value })}
                 className="form-control"
