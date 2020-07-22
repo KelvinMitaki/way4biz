@@ -13,7 +13,7 @@ class AdminDashBoardSellers extends React.Component {
     this.props.fetchVerifiedSellers();
   }
   render() {
-    if (this.props.fetchSellersLoading) return <ScreenLoader />;
+    if (!this.props.verifiedSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <DashBoardHeader />

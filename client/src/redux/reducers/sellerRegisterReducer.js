@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   resetToken: null,
   sellerProducts: [],
   sellerOrders: [],
-  verifiedSellers: [],
+  verifiedSellers: null,
   fetchSellersLoading: false,
   verifiedSeller: null,
   newSellers: null,

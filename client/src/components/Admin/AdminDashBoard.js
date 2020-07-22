@@ -13,7 +13,8 @@ import {
   getStock,
   fetchNewSellers,
   fetchAdminOrders,
-  fetchAdminPendingOrders
+  fetchAdminPendingOrders,
+  fetchWeeklySales
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -32,12 +33,18 @@ class AdminDashBoard extends React.Component {
     this.props.fetchNewSellers();
     this.props.fetchAdminOrders();
     this.props.fetchAdminPendingOrders();
+    this.props.fetchWeeklySales();
   }
 
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
-    if (!this.props.adminOrders) return <ScreenLoader />;
-    if (!this.props.adminPendingOrders) return <ScreenLoader />;
+    if (
+      !this.props.newSellers ||
+      !this.props.adminOrders ||
+      !this.props.adminPendingOrders ||
+      !this.props.weeklySales
+    )
+      return <ScreenLoader />;
+
     const todayOrders =
       this.props.adminOrders &&
       this.props.adminOrders.todaysOrdersCount.length !== 0 &&
@@ -234,6 +241,7 @@ const mapStateToProps = state => {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
+    weeklySales: state.product.weeklySales,
     newSellers: state.sellerRegister.newSellers
   };
 };
@@ -241,5 +249,6 @@ export default connect(mapStateToProps, {
   getStock,
   fetchNewSellers,
   fetchAdminOrders,
-  fetchAdminPendingOrders
+  fetchAdminPendingOrders,
+  fetchWeeklySales
 })(AdminDashBoard);
