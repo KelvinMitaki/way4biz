@@ -86,7 +86,8 @@ const INITIAL_STATE = {
   radioLoading: false,
   adminOrder: null,
   orderError: null,
-  weeklySales: null
+  weeklySales: null,
+  payments: null
 };
 
 export default (state = INITIAL_STATE, action) => {

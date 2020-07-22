@@ -203,7 +203,11 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
-                                <p>+50,000</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalPrice &&
+                                    this.props.adminOrders.totalPrice.toLocaleString()}
+                                </p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
