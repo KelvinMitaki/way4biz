@@ -801,4 +801,23 @@ route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
+  try {
+    const items = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60 * 7
+            )
+          }
+        }
+      }
+    ]);
+    res.send(items);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
