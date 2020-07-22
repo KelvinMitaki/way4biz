@@ -48,6 +48,7 @@ import AdminDashBoardCategories from "./components/Admin/AdminDashBoardCategorie
 import AdminDashBoardAddCategory from "./components/Admin/AdminDashBoardAddCategory";
 import MoveToTop from "./MoveToTop";
 import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
+import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
 
 class App extends React.Component {
   state = {
@@ -130,6 +131,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <AdminDashBoardCategories />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/root/admin-order/view-items"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <AdminDashBoardOrderItems />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )

@@ -42,16 +42,16 @@ class AdminDashBoardOrder extends React.Component {
                 </IconContext.Provider>
               </div>
               <div className="container">
-                <div className="box-container p-2">
+                <div className="box-container p-3">
                   <div className="row">
                     <div className="col-md-6">
                       <p>
-                        <strong>Order ID: </strong>
+                        <strong className="mr-2">Order ID: </strong>
                         {this.props.adminOrder._id}
                       </p>
                     </div>
                     <div className="col-md-6">
-                      <strong>Date: </strong>
+                      <strong className="mr-2">Date: </strong>
                       {new Date(
                         this.props.adminOrder.createdAt
                       ).toLocaleString()}
@@ -60,7 +60,7 @@ class AdminDashBoardOrder extends React.Component {
                   <div className="row">
                     <div className="col-md-6">
                       <p>
-                        <strong>Status:</strong>
+                        <strong className="mr-2">Status:</strong>
                         {this.props.adminOrder.delivered ? (
                           <span> Delivered</span>
                         ) : (
@@ -69,50 +69,25 @@ class AdminDashBoardOrder extends React.Component {
                       </p>
                     </div>
                     <div className="col-md-6">
-                      <strong>Items No: </strong>
+                      <strong className="mr-2">Items No: </strong>
                       {this.props.adminOrder.items.length.toLocaleString()}
                     </div>
                   </div>
-                  <div className="row order-imgs">
-                    <div>
-                      <Link to="/">
-                        <img src="/1.jpg" />
-                      </Link>
-                      <p>Great Beer Great Beer Great Beer</p>
+                  <div className="row">
+                    <div className="col-md-6">
                       <p>
-                        <strong>Ksh.1,500</strong>
-                      </p>
-                      <p>
-                        <strong>Qty:</strong>1
+                        <strong className="mr-2">Buyer:</strong>Mariah Mitaki
                       </p>
                     </div>
-                    <div>
-                      <Link to="/">
-                        <img src="/1.jpg" />
-                      </Link>
-                      <p>Great Beer</p>
-                      <p>Ksh.1,500</p>
-                    </div>
-                    <div>
-                      <Link to="/">
-                        <img src="/1.jpg" />
-                      </Link>
-                      <p>Great Beer</p>
-                      <p>Ksh.1,500</p>
-                    </div>
-                    <div>
-                      <Link to="/">
-                        <img src="/1.jpg" />
-                      </Link>
-                      <p>Great Beer</p>
-                      <p>Ksh.1,500</p>
-                    </div>
-                    <div>
-                      <Link to="/">
-                        <img src="/1.jpg" />
-                      </Link>
-                      <p>Great Beer</p>
-                      <p>Ksh.1,500</p>
+                    <div className="col-md-6">
+                      <p>
+                        <Link
+                          to="/root/admin-order/view-items"
+                          className="admin-order-items-view"
+                        >
+                          View Items
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </div>
