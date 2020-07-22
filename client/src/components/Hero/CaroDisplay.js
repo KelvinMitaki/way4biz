@@ -9,7 +9,7 @@ class CaroDisplay extends React.Component {
   render() {
     return (
       <div id="caro-display" className="col col-lg-9">
-        <CategoryHoverPopup />
+        {this.props.openCategoryPopup ? <CategoryHoverPopup /> : null}
         {this.props.products.length !== 0 && <Carousel />}
       </div>
     );
