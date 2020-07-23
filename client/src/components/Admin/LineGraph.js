@@ -41,14 +41,23 @@ class LineGraph extends React.Component {
       return acc;
     }, {});
     const duplicates = d.filter(e => lookup[e["0"]]);
-    if (duplicates.length !== 0) {
-      const sumDuplicates = duplicates
-        .map(dup => dup.items)
-        .reduce((acc, cur) => acc + cur, 0);
-      const filteredDup = { 0: duplicates[0]["0"], items: sumDuplicates };
-      const withoutDup = d.filter(items => items["0"] !== filteredDup["0"]);
-      const newArr = [...withoutDup, filteredDup];
-      // console.log("newArr", newArr);
+    const result = [];
+    duplicates.forEach(d => {
+      if (!this[d["0"]]) {
+        this[d["0"]] = { 0: d["0"], items: 0 };
+        result.push(this[d["0"]]);
+      }
+      this[d["0"]].items += d.items;
+    }, Object.create(null));
+    if (result.length !== 0) {
+      let withoutDup = d.filter(
+        (i, index, self) => self.findIndex(t => t["0"] === i["0"]) === index
+      );
+      withoutDup = withoutDup.map(
+        it => result.find(o => o["0"] === it["0"]) || it
+      );
+      // console.log("withoutDup", withoutDup);
+      const newArr = withoutDup;
       let myWeek;
       for (let i = 0; i < possibleWeekArrangements.length; i++) {
         //O(1) best case O(7) worst case
