@@ -14,7 +14,8 @@ import {
   fetchNewSellers,
   fetchAdminOrders,
   fetchAdminPendingOrders,
-  fetchWeeklySales
+  fetchWeeklySales,
+  setPendingOrders
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -154,7 +155,7 @@ class AdminDashBoard extends React.Component {
                       <div className="row">
                         <div className="col-lg-5 p-0">
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link to="/admin-orders">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Orders</p>
                                 <p>
@@ -170,7 +171,10 @@ class AdminDashBoard extends React.Component {
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link
+                              to="/admin-orders"
+                              onClick={() => this.props.setPendingOrders()}
+                            >
                               <div className="admin-individual-performance-upper-text">
                                 <p>Pending Orders</p>
                                 <p>{pendingOrders.toLocaleString()}</p>
@@ -199,11 +203,20 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
-                                <p>+50,000</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalPrice &&
+                                    this.props.adminOrders.totalPrice.toLocaleString()}
+                                </p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {Math.round(
+                                    (this.props.adminOrders.todayTotalPrice /
+                                      this.props.adminOrders.totalPrice) *
+                                      100
+                                  )}
+                                  % change today
                                 </p>
                               </div>
                             </Link>
@@ -250,5 +263,6 @@ export default connect(mapStateToProps, {
   fetchNewSellers,
   fetchAdminOrders,
   fetchAdminPendingOrders,
-  fetchWeeklySales
+  fetchWeeklySales,
+  setPendingOrders
 })(AdminDashBoard);

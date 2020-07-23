@@ -41,19 +41,28 @@ class LineGraph extends React.Component {
       return acc;
     }, {});
     const duplicates = d.filter(e => lookup[e["0"]]);
-    if (duplicates.length !== 0) {
-      const sumDuplicates = duplicates
-        .map(dup => dup.items)
-        .reduce((acc, cur) => acc + cur, 0);
-      const filteredDup = { 0: duplicates[0]["0"], items: sumDuplicates };
-      const withoutDup = d.filter(items => items["0"] !== filteredDup["0"]);
-      const newArr = [...withoutDup, filteredDup];
-      // console.log("newArr", newArr);
+    const result = [];
+    duplicates.forEach(d => {
+      if (!this[d["0"]]) {
+        this[d["0"]] = { 0: d["0"], items: 0 };
+        result.push(this[d["0"]]);
+      }
+      this[d["0"]].items += d.items;
+    }, Object.create(null));
+    if (result.length !== 0) {
+      let withoutDup = d.filter(
+        (i, index, self) => self.findIndex(t => t["0"] === i["0"]) === index
+      );
+      withoutDup = withoutDup.map(
+        it => result.find(o => o["0"] === it["0"]) || it
+      );
+      // console.log("withoutDup", withoutDup);
+      const newArr = withoutDup;
       let myWeek;
       for (let i = 0; i < possibleWeekArrangements.length; i++) {
         //O(1) best case O(7) worst case
-        if (possibleWeekArrangements[i][0] === newArr[0][0]) {
-          myWeek = possibleWeekArrangements[i];
+        if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
+          myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
           break;
         }
       }
@@ -61,7 +70,8 @@ class LineGraph extends React.Component {
       let desiredArray = [];
       for (let i = 0; i < myWeek.length; i++) {
         //O(7) best and worst case
-        if (newArr[0][0] === myWeek[i]) {
+
+        if (newArr[0] && newArr[0][0] === myWeek[i]) {
           let data = [myWeek[i], newArr[0].items];
           newArr.shift();
           desiredArray.push(data);
@@ -93,8 +103,8 @@ class LineGraph extends React.Component {
       let myWeek;
       for (let i = 0; i < possibleWeekArrangements.length; i++) {
         //O(1) best case O(7) worst case
-        if (possibleWeekArrangements[i][0] === noDup[0][0]) {
-          myWeek = possibleWeekArrangements[i];
+        if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
+          myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
           break;
         }
       }
@@ -102,7 +112,8 @@ class LineGraph extends React.Component {
       let desiredArray = [];
       for (let i = 0; i < myWeek.length; i++) {
         //O(7) best and worst case
-        if (noDup[0][0] === myWeek[i]) {
+
+        if (noDup[0] && noDup[0][0] === myWeek[i]) {
           let data = [myWeek[i], noDup[0].items];
           noDup.shift();
           desiredArray.push(data);

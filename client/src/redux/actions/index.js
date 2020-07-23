@@ -114,7 +114,20 @@ import {
   FETCH_ORDER_BY_ID_STOP,
   FETCH_WEEKLY_SALES,
   FETCH_WEEKLY_SALES_START,
-  FETCH_WEEKLY_SALES_STOP
+  FETCH_WEEKLY_SALES_STOP,
+  SET_PENDING_ORDERS,
+  ADD_NEW_CATEGORY,
+  ADD_NEW_CATEGORY_START,
+  ADD_NEW_CATEGORY_STOP,
+  FETCH_ALL_ADMIN_CATEGORIES,
+  FETCH_ALL_ADMIN_CATEGORIES_START,
+  FETCH_ALL_ADMIN_CATEGORIES_STOP,
+  FETCH_SINGLE_CATEGORY,
+  FETCH_SINGLE_CATEGORY_START,
+  FETCH_SINGLE_CATEGORY_STOP,
+  EDIT_CATEGORY,
+  EDIT_CATEGORY_START,
+  EDIT_CATEGORY_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1462,6 +1475,9 @@ export const fetchAllOrders = filter => async dispatch => {
     if (filter && filter === "lastMonth") {
       test = Date.now() / 1000 - 60 * 60 * 24 * 30;
     }
+    if (filter && filter === "pendingOrders") {
+      test.delivered = false;
+    }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const res = await axios.post("/api/root/admin/all/orders", {
       itemsToSkip: 0,
@@ -1517,6 +1533,9 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     }
     if (filter && filter === "lastMonth") {
       test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+    }
+    if (filter && filter === "pendingOrders") {
+      test.delivered = false;
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const prodCount = getState().product.orderCount;
@@ -1653,6 +1672,147 @@ export const fetchWeeklySales = () => async dispatch => {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: FETCH_WEEKLY_SALES_STOP });
+    console.log(error.response);
+  }
+};
+
+export const setPendingOrders = () => {
+  return {
+    type: SET_PENDING_ORDERS
+  };
+};
+export const addNewCategory = (category, history) => async dispatch => {
+  try {
+    dispatch({ type: ADD_NEW_CATEGORY_START });
+    await axios.post("/api/root/admin/add/new/category", {
+      category
+    });
+    dispatch({ type: ADD_NEW_CATEGORY });
+    dispatch({ type: ADD_NEW_CATEGORY_STOP });
+    history.push("/admin-categories");
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: ADD_NEW_CATEGORY_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchAllAdminCategories = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_START });
+    const res = await axios.get("/api/root/admin/fetch/all/categories");
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES, payload: res.data });
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchSingleCategory = (categoryId, history) => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SINGLE_CATEGORY_START });
+    const res = await axios.get(`/api/root/admin/category/${categoryId}`);
+    dispatch({ type: FETCH_SINGLE_CATEGORY, payload: res.data });
+    dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.stringValue
+    ) {
+      history.push("/");
+    }
+    dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
+    console.log(error.response);
+  }
+};
+export const editCategory = (
+  categoryId,
+  history,
+  category
+) => async dispatch => {
+  try {
+    dispatch({ type: EDIT_CATEGORY_START });
+    const res = await axios.patch(
+      `/api/root/admin/edit/category/${categoryId}`,
+      { category }
+    );
+    dispatch({ type: EDIT_CATEGORY });
+    dispatch({ type: EDIT_CATEGORY_STOP });
+    history.push("/admin-categories");
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.stringValue
+    ) {
+      history.push("/");
+    }
+    dispatch({ type: EDIT_CATEGORY_STOP });
     console.log(error.response);
   }
 };

@@ -44,7 +44,10 @@ import {
   FETCH_ORDER_BY_ID_ERROR,
   FETCH_ORDER_BY_ID_START,
   FETCH_ORDER_BY_ID_STOP,
-  FETCH_WEEKLY_SALES
+  FETCH_WEEKLY_SALES,
+  SET_PENDING_ORDERS,
+  FETCH_ALL_ADMIN_CATEGORIES,
+  FETCH_SINGLE_CATEGORY
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -85,7 +88,10 @@ const INITIAL_STATE = {
   radioLoading: false,
   adminOrder: null,
   orderError: null,
-  weeklySales: null
+  weeklySales: null,
+  payments: null,
+  adminCategories: null,
+  singleCategory: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -262,6 +268,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrderLoading: false };
     case FETCH_WEEKLY_SALES:
       return { ...state, weeklySales: action.payload };
+    case SET_PENDING_ORDERS:
+      return { ...state, ordersDate: "pendingOrders" };
+    case FETCH_ALL_ADMIN_CATEGORIES:
+      return { ...state, adminCategories: action.payload };
+    case FETCH_SINGLE_CATEGORY:
+      return { ...state, singleCategory: action.payload };
     default:
       return state;
   }

@@ -172,7 +172,7 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/admin-category/edit"
+              path="/admin-category/edit/:categoryId"
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <AdminDashBoardEditCategory />

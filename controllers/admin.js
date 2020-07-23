@@ -25,6 +25,7 @@ const Seller = require("../models/Seller");
 const User = require("../models/User");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
+const Category = require("../models/Category");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -705,7 +706,35 @@ route.get("/api/root/admin/orders", isSeller, async (req, res) => {
       },
       { $count: "todaysOrders" }
     ]);
-    res.send({ totalOrdersCount, todaysOrdersCount });
+    // { $unwind: "$items" },
+    // { $project: { quantity: "$items.quantity" } },
+    // { $group: { _id: null, quantity: { $sum: "$quantity" } } },
+    // { $project: { _id: 0, quantity: 1 } }
+    const totalPrice = await Order.aggregate([
+      { $project: { _id: 0, totalPrice: 1 } },
+      { $group: { _id: null, totalPrice: { $sum: "$totalPrice" } } }
+    ]);
+    const todayTotalPrice = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60
+            )
+          }
+        }
+      },
+      { $project: { _id: 0, totalPrice: 1 } },
+      { $group: { _id: null, todayTotalPrice: { $sum: "$totalPrice" } } }
+    ]);
+    res.send({
+      totalOrdersCount,
+      todaysOrdersCount,
+      totalPrice: totalPrice[0].totalPrice,
+      todayTotalPrice: todayTotalPrice[0]
+        ? todayTotalPrice[0].todayTotalPrice
+        : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -761,6 +790,22 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
       return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
     }
+    if (typeof test === "object" && Object.keys(test).length !== 0) {
+      const orders = await Order.aggregate([
+        { $match: test },
+        { $sort: { createdAt: -1 } },
+        { $skip: itemsToSkip },
+        { $limit: 5 }
+      ]);
+      if (!orders || orders.length === 0) {
+        return res.status(404).send({ message: "No orders found" });
+      }
+      const ordersCount = await Order.aggregate([
+        { $match: test },
+        { $count: "ordersCount" }
+      ]);
+      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+    }
     const orders = await Order.aggregate([
       {
         $match: {
@@ -804,22 +849,6 @@ route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
 
 route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
   try {
-    // const items = await Order.aggregate([
-    //   {
-    //     $match: {
-    //       _id: {
-    //         $gt: mongoose.Types.ObjectId.createFromTime(
-    //           Date.now() / 1000 - 24 * 60 * 60 * 7
-    //         )
-    //       }
-    //     }
-    //   },
-    //   { $project: { "items.quantity": 1, _id: 0 } },
-    //   { $unwind: "$items" },
-    //   { $project: { quantity: "$items.quantity" } },
-    //   { $group: { _id: null, quantity: { $sum: "$quantity" } } },
-    //   { $project: { _id: 0, quantity: 1 } }
-    // ]);
     const items = await Order.aggregate([
       {
         $match: {
@@ -837,4 +866,87 @@ route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/root/admin/add/new/category",
+  check("category.main")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid main"),
+  check("category.subcategories")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid subcategory"),
+  isSeller,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { category } = req.body;
+      const newCategory = new Category({
+        category
+      });
+      await newCategory.save();
+      res.send(newCategory);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.patch(
+  "/api/root/admin/edit/category/:categoryId",
+  check("category.main")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid main"),
+  check("category.subcategories")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid subcategory"),
+  isSeller,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { category } = req.body;
+      const updatedCategory = await Category.findByIdAndUpdate(
+        req.params.categoryId,
+        { category }
+      );
+      await updatedCategory.save();
+      res.send(updatedCategory);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get(
+  "/api/root/admin/fetch/all/categories",
+  isSeller,
+  async (req, res) => {
+    try {
+      const categories = await Category.find({});
+      res.send(categories);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get(
+  "/api/root/admin/category/:categoryId",
+  isSeller,
+  async (req, res) => {
+    try {
+      const category = await Category.findById(req.params.categoryId);
+      res.send(category);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 module.exports = route;
