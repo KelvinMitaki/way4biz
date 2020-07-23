@@ -2,10 +2,20 @@ import React from "react";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import "./AdminDashBoardOrderItems.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { fetchAdminOrder } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoardOrderItems extends React.Component {
+  componentDidMount() {
+    this.props.fetchAdminOrder(
+      this.props.match.params.orderId,
+      this.props.history
+    );
+  }
   render() {
+    if (!this.props.adminOrder) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
@@ -32,32 +42,49 @@ class AdminDashBoardOrderItems extends React.Component {
               </div>
               <div className="box-container individual-order-item">
                 {/* mapping here */}
-                <div className="row align-items-center">
-                  {/* <div className="col-md-3">
-                    <p>
-                      <strong className="x mr-1">Buyer:</strong>John Doe
-                    </p>
-                    <p>
-                      <Link to="/admin/buyer-info">View Buyer</Link>
-                    </p>
-                  </div> */}
-                  <div className="col-md-3">
-                    <img width={"100px"} src="/1.jpg" />
-                  </div>
-                  <div className="col-md-5">
-                    <p>Great Beer Great Beer Great Beer Great Beer</p>
-                    <p>Ksh.1500</p>
-                    <p>Qty:10</p>
-                  </div>
-                  <div className="col-md-4 p-0">
-                    <p>
-                      <strong className="x mr-1">Seller:</strong>Jane Doe
-                    </p>
-                    <p>
-                      <Link to="/seller/store">Visit Store</Link>
-                    </p>
-                  </div>
-                </div>
+                {this.props.adminOrder["0"].product.length !== 0 &&
+                  this.props.adminOrder["0"].product.map(p => (
+                    <div key={p._id} className="row align-items-center">
+                      <div className="col-md-3">
+                        <img
+                          width={"100px"}
+                          src={
+                            p.imageUrl[0].includes("http")
+                              ? p.imageUrl[0]
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl[0]} `
+                          }
+                        />
+                      </div>
+                      <div className="col-md-5">
+                        <p
+                          className="seller-review-product-title-name"
+                          style={{ cursor: "pointer" }}
+                          onClick={this.props.history.push(`/product/${p._id}`)}
+                        >
+                          {p.name}
+                        </p>
+                        <p>Ksh.{p.price.toLocaleString()} </p>
+                        <p>
+                          Qty:
+                          {
+                            this.props.adminOrder["0"].items.find(
+                              it => it.product === p._id
+                            ).quantity
+                          }
+                        </p>
+                      </div>
+                      <div className="col-md-4 p-0">
+                        <p>
+                          <strong className="x mr-1">Seller:</strong>
+                          {this.props.adminOrder["0"].seller[0].firstName}{" "}
+                          {this.props.adminOrder["0"].seller[0].lastName}
+                        </p>
+                        <p>
+                          <Link to="/seller/store">Visit Store</Link>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -66,5 +93,11 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-
-export default AdminDashBoardOrderItems;
+const mapStateToProps = state => {
+  return {
+    adminOrder: state.product.adminOrder
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { fetchAdminOrder })(AdminDashBoardOrderItems)
+);

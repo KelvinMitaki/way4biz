@@ -142,7 +142,7 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/root/admin-order/view-items"
+              path="/root/admin-order/view-items/:orderId"
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (

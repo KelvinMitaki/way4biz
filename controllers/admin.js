@@ -841,8 +841,30 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
 route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
   try {
     const { orderId } = req.params;
-    const order = await Order.findById(orderId).populate("buyer");
-    res.send(order);
+    const buyer = await Order.findById(orderId)
+      .populate("buyer")
+      .select({ buyer: 1, _id: 0 })
+      .exec();
+    const order = await Order.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(orderId) } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      }
+    ]);
+    res.send({ ...order, buyer: buyer.buyer });
   } catch (error) {
     res.status(500).send(error);
   }

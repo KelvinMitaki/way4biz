@@ -83,7 +83,7 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <Link
-                          to="/root/admin-order/view-items"
+                          to={`/root/admin-order/view-items/${this.props.adminOrder._id}`}
                           className="admin-order-items-view"
                         >
                           View Items
