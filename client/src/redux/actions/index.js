@@ -1681,15 +1681,15 @@ export const setPendingOrders = () => {
     type: SET_PENDING_ORDERS
   };
 };
-export const addNewCategory = category => async dispatch => {
+export const addNewCategory = (category, history) => async dispatch => {
   try {
     dispatch({ type: ADD_NEW_CATEGORY_START });
-    const res = await axios.post("/api/root/admin/add/new/category", {
+    await axios.post("/api/root/admin/add/new/category", {
       category
     });
-    console.log(res.data);
     dispatch({ type: ADD_NEW_CATEGORY });
     dispatch({ type: ADD_NEW_CATEGORY_STOP });
+    history.push("/admin-categories");
   } catch (error) {
     if (
       error &&
@@ -1744,7 +1744,6 @@ export const fetchSingleCategory = (categoryId, history) => async dispatch => {
     const res = await axios.get(`/api/root/admin/category/${categoryId}`);
     dispatch({ type: FETCH_SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
-    history.push("/admin-categories");
   } catch (error) {
     if (
       error &&

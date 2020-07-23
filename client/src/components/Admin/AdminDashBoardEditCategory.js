@@ -3,7 +3,7 @@ import "./AdminDashBoardEditCategory.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { withRouter } from "react-router-dom";
-import { fetchSingleCategory } from "../../redux/actions";
+import { fetchSingleCategory, editCategory } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -29,13 +29,17 @@ class AdminDashBoardEditCategory extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.subcategories.length !== 0) {
-      console.log({
-        main: this.props.singleCategory.category.main,
-        subcategories: [
-          ...this.state.subcategories,
-          ...this.props.singleCategory.category.subcategories
-        ]
-      });
+      this.props.editCategory(
+        this.props.singleCategory._id,
+        this.props.history,
+        {
+          main: this.props.singleCategory.category.main,
+          subcategories: [
+            ...this.state.subcategories,
+            ...this.props.singleCategory.category.subcategories
+          ]
+        }
+      );
     }
   };
   render() {
@@ -141,5 +145,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchSingleCategory })(AdminDashBoardEditCategory)
+  connect(mapStateToProps, { fetchSingleCategory, editCategory })(
+    AdminDashBoardEditCategory
+  )
 );

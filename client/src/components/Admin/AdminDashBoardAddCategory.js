@@ -7,6 +7,7 @@ import { IconContext } from "react-icons/lib";
 import { AiOutlineSearch } from "react-icons/ai";
 import { addNewCategory } from "../../redux/actions";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class AdminDashBoardAddCategory extends React.Component {
   state = {
@@ -28,10 +29,13 @@ class AdminDashBoardAddCategory extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.main !== "" && this.state.subcategories.length !== 0) {
-      this.props.addNewCategory({
-        main: this.state.main,
-        subcategories: this.state.subcategories
-      });
+      this.props.addNewCategory(
+        {
+          main: this.state.main,
+          subcategories: this.state.subcategories
+        },
+        this.props.history
+      );
     }
   };
   render() {
@@ -121,4 +125,6 @@ class AdminDashBoardAddCategory extends React.Component {
   }
 }
 
-export default connect(null, { addNewCategory })(AdminDashBoardAddCategory);
+export default withRouter(
+  connect(null, { addNewCategory })(AdminDashBoardAddCategory)
+);
