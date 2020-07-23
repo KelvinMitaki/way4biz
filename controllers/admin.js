@@ -760,6 +760,7 @@ route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
       },
       { $count: "todaysPendingOrders" }
     ]);
+
     res.send({
       pendingOrders: pendingOrders[0]
         ? pendingOrders[0].pendingOrders

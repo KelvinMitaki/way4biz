@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { addProduct, unpersistImage } from "../../redux/actions";
+import {
+  addProduct,
+  unpersistImage,
+  fetchAllAdminCategories
+} from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDropDown from "./SellerDropDown";
@@ -42,11 +46,35 @@ const subcategory = [
 ];
 
 export class Sell extends Component {
+  componentDidMount() {
+    this.props.fetchAllAdminCategories();
+  }
   componentWillUnmount() {
     this.props.unpersistImage();
   }
   render() {
-    if (this.props.deleteImageLoading) return <ScreenLoader />;
+    if (this.props.deleteImageLoading || !this.props.adminCategories)
+      return <ScreenLoader />;
+    const adminCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.map(cat => ({
+        key: cat.category.main,
+        text: cat.category.main,
+        value: cat.category.main
+      }));
+    const adminSubCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.find(
+        cat => cat.category.main === this.props.category
+      );
+    const subcategories =
+      adminSubCategories &&
+      adminSubCategories.category &&
+      adminSubCategories.category.subcategories.map(sub => ({
+        key: sub,
+        text: sub,
+        value: sub
+      }));
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -102,14 +130,15 @@ export class Sell extends Component {
                     />
                     {/* DROPDOWNS */}
                     <Field
-                      options={category}
+                      options={adminCategories}
                       name="category"
                       label="Product Category"
                       component={SellerDropDown}
                     />
                     <br />
                     <Field
-                      options={subcategory}
+                      disabled={!subcategories}
+                      options={subcategories}
                       name="subcategory"
                       label="Product Subcategory"
                       component={SellerDropDown}
@@ -194,17 +223,27 @@ const validate = formValues => {
 
   return errors;
 };
+const selector = formValueSelector("Sell");
 const mapStateToProps = state => {
+  const category = selector(state, "category");
   return {
     loading: state.auth.loading,
     description: state.product.description,
+    adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
-    deleteImageLoading: state.image.deleteImageLoading
+    deleteImageLoading: state.image.deleteImageLoading,
+    category
   };
 };
 export default withRouter(
   reduxForm({
     validate,
     form: "Sell"
-  })(connect(mapStateToProps, { addProduct, unpersistImage })(Sell))
+  })(
+    connect(mapStateToProps, {
+      addProduct,
+      unpersistImage,
+      fetchAllAdminCategories
+    })(Sell)
+  )
 );
