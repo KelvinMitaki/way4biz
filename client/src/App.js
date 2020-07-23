@@ -71,17 +71,14 @@ class App extends React.Component {
   handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 50) {
-      this.setState((prevState) => {
-        return {
-          scrolling: true,
-        };
+      this.setState({
+        scrolling: true,
       });
+
       this.scrolled = true;
     } else {
-      this.setState((prevState) => {
-        return {
-          scrolling: false,
-        };
+      this.setState({
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -99,6 +96,7 @@ class App extends React.Component {
               exact
               component={ProductReviewsWrapper}
             />
+            <Route path="/404" component={NotFound} />
             <Route path="/seller/profiling" exact component={SellerProfiling} />
             <Route path="/seller/store" exact component={Store} />
             <Route
