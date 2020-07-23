@@ -1,5 +1,5 @@
 import React from "react";
-
+import { reduxForm, Field } from "redux-form";
 import "./AdminDashBoardAddCategory.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
@@ -17,7 +17,18 @@ class AdminDashBoardAddCategory extends React.Component {
             </h3>
             <div className="container">
               <div className="form-group">
-                <label htmlFor="add-category">Category</label>
+                <Field
+                  type="text"
+                  name="firstName"
+                  label="Category"
+                  component={FormField}
+                />
+                <Field
+                  type="text"
+                  name="firstName"
+                  label="Sub Categories"
+                  component={FormField}
+                />
                 <input
                   className="form-control"
                   type="text"
@@ -39,4 +50,6 @@ class AdminDashBoardAddCategory extends React.Component {
   }
 }
 
-export default AdminDashBoardAddCategory;
+export default reduxForm({ validate, form: "AdminDashBoardAddCategory" })(
+  AdminDashBoardAddCategory
+);
