@@ -53,7 +53,7 @@ class SellerDashBoardMenu extends React.Component {
               Reviews
             </li>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             className="link"
             activeClassName="seller-menu-active"
             to="/g"
@@ -62,7 +62,7 @@ class SellerDashBoardMenu extends React.Component {
               <AiOutlineTransaction className="mr-2" />
               Transactions
             </li>
-          </NavLink>
+          </NavLink> */}
         </ul>
         <div id="seller-menu-profile">Profile</div>
       </div>

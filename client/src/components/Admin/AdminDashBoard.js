@@ -15,7 +15,7 @@ import {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -23,11 +23,11 @@ import ScreenLoader from "../Pages/ScreenLoader";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test"
+      title: "test",
     },
     lineData: {
-      data: [20, 10]
-    }
+      data: [20, 10],
+    },
   };
   componentDidMount() {
     this.props.getStock();
@@ -95,7 +95,7 @@ class AdminDashBoard extends React.Component {
                   <div className="admin-big-number">
                     <span>
                       {this.props.stock
-                        .find(s => s.label === "Stock Out")
+                        .find((s) => s.label === "Stock Out")
                         .value.toLocaleString()}
                     </span>
                     <h3>
@@ -235,12 +235,12 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              <div className="row admin-dashboard-bottom">
+              {/* <div className="row admin-dashboard-bottom">
                 <h3>Sales Monitoring</h3>
                 <div className="dummy-content">
                   The quick brown fox jumped over the lazy dog
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -249,13 +249,13 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, {
@@ -264,5 +264,5 @@ export default connect(mapStateToProps, {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
 })(AdminDashBoard);

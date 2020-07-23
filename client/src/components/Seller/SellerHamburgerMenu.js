@@ -118,7 +118,7 @@ class SellerHamburgerMenu extends React.Component {
                     Sell
                   </NavLink>
                 </li>
-                <li className="my-4">
+                {/* <li className="my-4">
                   <NavLink
                     className="link"
                     activeClassName="seller-menu-acive"
@@ -126,7 +126,7 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     Do Something
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="my-4">
                   <Link className="link" to="/api/logout">
                     Logout

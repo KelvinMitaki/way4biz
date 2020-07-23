@@ -27,7 +27,7 @@ class SellerDashBoardHeader extends React.Component {
               Sell
             </NavLink>
           </li>
-          <li className="my-4">
+          {/* <li className="my-4">
             <NavLink
               className="link"
               activeClassName="seller-menu-acive"
@@ -35,7 +35,7 @@ class SellerDashBoardHeader extends React.Component {
             >
               Do Something
             </NavLink>
-          </li>
+          </li> */}
           <li className="my-4">
             <a className="link logout-seller-db-header-link" href="/api/logout">
               Logout
