@@ -1735,7 +1735,7 @@ export const fetchAllAdminCategories = () => async dispatch => {
     console.log(error.response);
   }
 };
-export const fetchSingleCategory = categoryId => async dispatch => {
+export const fetchSingleCategory = (categoryId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_SINGLE_CATEGORY_START });
     const res = await axios.get(`/api/root/admin/category/${categoryId}`);
@@ -1757,6 +1757,14 @@ export const fetchSingleCategory = categoryId => async dispatch => {
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.stringValue
+    ) {
+      history.push("/");
     }
     dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
     console.log(error.response);
