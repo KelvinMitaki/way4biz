@@ -26,6 +26,7 @@ const User = require("../models/User");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
 const Category = require("../models/Category");
+const { editProduct } = require("../client/src/redux/actions");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -914,6 +915,36 @@ route.get(
     try {
       const category = await Category.findById(req.params.categoryId);
       res.send(category);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.patch(
+  "/api/root/admin/add/edit/category/:categoryId",
+  check("category.main")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid main"),
+  check("category.subcategories")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid subcategory"),
+  isSeller,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { category } = req.body;
+      const editedCategory = await Category.findByIdAndUpdate(
+        req.params.categoryId,
+        { category }
+      );
+      await editedCategory.save();
+      res.send(editedCategory);
     } catch (error) {
       res.status(500).send(error);
     }
