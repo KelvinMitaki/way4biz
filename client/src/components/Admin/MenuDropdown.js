@@ -22,14 +22,32 @@ class MenuDropdown extends React.Component {
       });
     }
   }
+
+  showSmMenuItemBadges(name, props) {
+    if (name === "New Sellers") {
+      if (props.newSellers > 0) {
+        return (
+          <span className="bagde custom-badge ml-1">{props.newSellers}</span>
+        );
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  }
   render() {
     const { parentKey, childKeys } = this.props.data;
-    // console.log(childKeys);
     return (
       <div>
         <span className="accordion">
           {parentKey[0]}
-          <span className="badge custom-badge ml-1">{parentKey[1]}</span>
+          {this.props.newSellers > 0 ? (
+            <span className="badge custom-badge ml-1">
+              {this.props.newSellers}
+            </span>
+          ) : null}
+
           <MdKeyboardArrowDown className="ml-1" />
         </span>
         <div className="panel">
@@ -37,11 +55,7 @@ class MenuDropdown extends React.Component {
             <p key={Math.random()}>
               <NavLink to={childKey.url} style={{ width: "100%" }}>
                 {childKey.name}
-                {childKey.num > 0 ? (
-                  <span className="bagde custom-badge ml-1">
-                    {childKey.num}
-                  </span>
-                ) : null}
+                {this.showSmMenuItemBadges(childKey.name, this.props)}
               </NavLink>
             </p>
           ))}

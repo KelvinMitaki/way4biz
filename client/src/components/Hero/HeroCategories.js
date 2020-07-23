@@ -9,6 +9,13 @@ import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
 
 class HeroCategories extends React.Component {
+  // handleMouseOver = e => {
+  //   this.props.handleSubCategoryPopup();
+  // };
+
+  shouldComponentUpdate(nextprops, nextState) {
+    return false;
+  }
   render() {
     return (
       <div id={this.props.id}>
@@ -16,7 +23,7 @@ class HeroCategories extends React.Component {
           <h3>Categories</h3>
         </div>
         <ul className="categories">
-          <li>
+          <li onMouseOver={this.handleMouseOver}>
             <Link
               to="/categories"
               onClick={() => this.props.fetchAllCategories()}
@@ -30,13 +37,13 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() =>
                   this.props.history.push(`/products/category/${category._id}`)
                 }
-                // onMouseEnter={this.handleMouseOver}
+                onMouseOver={this.handleMouseOver}
               >
                 <div>
                   <AiOutlineBars />
@@ -52,10 +59,10 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(

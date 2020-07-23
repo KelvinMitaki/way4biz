@@ -60,9 +60,13 @@
 
 .admin-order-view-more-link {
   color: #f76b1a;
+  padding: 3px;
 }
 
 .admin-order-view-more-link:hover {
   text-decoration: none;
   color: #f76b1a;
+  background-color: rgba(255, 192, 203, 0.5);
+  padding: 3px;
+  border-radius: 5px;
 }

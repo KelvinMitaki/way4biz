@@ -34,7 +34,7 @@ class AdminDashBoardCategories extends React.Component {
             <div className="container">
               {/* mapping here */}
               {this.props.adminCategories.length !== 0 &&
-                this.props.adminCategories.map(cat => (
+                this.props.adminCategories.map((cat) => (
                   <div
                     key={cat._id}
                     className="box-container admin-category-wrapper"
@@ -58,7 +58,7 @@ class AdminDashBoardCategories extends React.Component {
                             }
                             return (
                               <React.Fragment key={i}>
-                                <span>{s}</span>,
+                                <span>{s}</span>,{" "}
                               </React.Fragment>
                             );
                           })}
@@ -84,9 +84,9 @@ class AdminDashBoardCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    adminCategories: state.product.adminCategories
+    adminCategories: state.product.adminCategories,
   };
 };
 export default connect(mapStateToProps, { fetchAllAdminCategories })(

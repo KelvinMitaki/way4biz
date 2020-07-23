@@ -6,7 +6,7 @@ import "./MoveToTop.css";
 
 class MoveToTop extends React.Component {
   handleClick = (e) => {
-    scroll.scrollToTop({ duration: 1000 });
+    scroll.scrollToTop();
   };
   render() {
     return (
