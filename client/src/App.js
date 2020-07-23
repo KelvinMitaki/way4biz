@@ -63,7 +63,9 @@ class App extends React.Component {
     fetchCategories();
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
-    // this.scrolling = false;
+    this.setState({
+      scrolling: false,
+    });
   }
 
   handleScroll = (e) => {
