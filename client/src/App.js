@@ -54,7 +54,7 @@ import Store from "./components/Store/Store";
 
 class App extends React.Component {
   state = {
-    scrolling: false,
+    scrolling: false
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -64,21 +64,21 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false,
+      scrolling: false
     });
   }
 
-  handleScroll = (e) => {
+  handleScroll = e => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 50) {
       this.setState({
-        scrolling: true,
+        scrolling: true
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false,
+        scrolling: false
       });
       this.scrolled = false;
     }
@@ -489,16 +489,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);

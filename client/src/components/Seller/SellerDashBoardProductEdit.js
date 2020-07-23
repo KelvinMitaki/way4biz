@@ -17,22 +17,6 @@ import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
 import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
 import ScreenLoader from "../Pages/ScreenLoader";
-const category = [
-  { key: "phones", text: "Phones", value: "phones" },
-  { key: "clothes", text: "Clothes", value: "clothes" },
-  { key: "gadgets", text: "Gadgets", value: "gadgets" },
-  { key: "electronics", text: "Electronics", value: "electronics" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" }
-];
-const subcategory = [
-  { key: "iphones", text: "iPhones", value: "iphones" },
-  { key: "android", text: "Android", value: "android" },
-  { key: "laptops", text: "Laptops", value: "laptops" },
-  { key: "televisions", text: "Televisions", value: "televisions" },
-  { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" }
-];
 
 export class SellerEdit extends Component {
   componentDidMount() {

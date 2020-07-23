@@ -11,7 +11,7 @@ import { GiCancel } from "react-icons/gi";
 class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
-    typing: "",
+    typing: ""
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
@@ -19,15 +19,15 @@ class AdminDashBoardEditCategory extends React.Component {
       this.props.history
     );
   }
-  handleTypingSubmit = (e) => {
+  handleTypingSubmit = e => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: "",
+        typing: ""
       });
     }
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (this.state.subcategories.length !== 0) {
       this.props.editCategory(
@@ -37,8 +37,8 @@ class AdminDashBoardEditCategory extends React.Component {
           main: this.props.singleCategory.category.main,
           subcategories: [
             ...this.state.subcategories,
-            ...this.props.singleCategory.category.subcategories,
-          ],
+            ...this.props.singleCategory.category.subcategories
+          ]
         }
       );
     }
@@ -80,9 +80,7 @@ class AdminDashBoardEditCategory extends React.Component {
                     <input
                       name="typing"
                       type="text"
-                      onChange={(e) =>
-                        this.setState({ typing: e.target.value })
-                      }
+                      onChange={e => this.setState({ typing: e.target.value })}
                       className="form-control"
                       placeholder="e.g iPhone"
                       value={this.state.typing}
@@ -101,7 +99,7 @@ class AdminDashBoardEditCategory extends React.Component {
                       </button>
                     </div>
                   </div>
-                  <div className="d-flex">
+                  <div className="d-flex flex-wrap">
                     {this.state.subcategories.length !== 0 &&
                       this.state.subcategories.map((sub, index) => (
                         <div key={index} className="p-2">
@@ -115,7 +113,7 @@ class AdminDashBoardEditCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  ),
+                                  )
                                 })
                               }
                             >
@@ -125,7 +123,7 @@ class AdminDashBoardEditCategory extends React.Component {
                         </div>
                       ))}
                   </div>
-                  <div className="d-flex my-3">
+                  <div className="d-flex my-3 flex-wrap">
                     {Object.keys(this.props.singleCategory).length !== 0 &&
                       Object.keys(this.props.singleCategory.category).length !==
                         0 &&
@@ -133,7 +131,10 @@ class AdminDashBoardEditCategory extends React.Component {
                         .length !== 0 &&
                       this.props.singleCategory.category.subcategories.map(
                         (s, i) => (
-                          <p className="sub-category-wrapper2 mx-3" key={i}>
+                          <p
+                            className="sub-category-wrapper2 mx-3 my-2"
+                            key={i}
+                          >
                             {s}
                           </p>
                         )
@@ -144,7 +145,7 @@ class AdminDashBoardEditCategory extends React.Component {
                     className="btn btn-md add-category-btn"
                     disabled={this.state.subcategories.length === 0}
                   >
-                    Add Category
+                    Edit Category
                   </button>
                 </form>
               </div>
@@ -155,9 +156,9 @@ class AdminDashBoardEditCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    singleCategory: state.product.singleCategory,
+    singleCategory: state.product.singleCategory
   };
 };
 export default withRouter(
