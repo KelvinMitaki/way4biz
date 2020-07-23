@@ -894,4 +894,29 @@ route.post(
     }
   }
 );
+
+route.get(
+  "/api/root/admin/fetch/all/categories",
+  isSeller,
+  async (req, res) => {
+    try {
+      const categories = await Category.find({});
+      res.send(categories);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get(
+  "/api/root/admin/category/:categoryId",
+  isSeller,
+  async (req, res) => {
+    try {
+      const category = await Category.findById(req.params.categoryId);
+      res.send(category);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
