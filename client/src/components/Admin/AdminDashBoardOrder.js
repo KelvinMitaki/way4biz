@@ -75,7 +75,9 @@ class AdminDashBoardOrder extends React.Component {
                   <div className="row">
                     <div className="col-md-6">
                       <p>
-                        <strong className="mr-2">Buyer:</strong>Mariah Mitaki
+                        <strong className="mr-2">Buyer:</strong>
+                        {this.props.adminOrder.buyer.firstName}{" "}
+                        {this.props.adminOrder.buyer.lastName}
                       </p>
                     </div>
                     <div className="col-md-6">
@@ -99,9 +101,9 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
+    adminOrder: state.product.adminOrder
   };
 };
 export default withRouter(
