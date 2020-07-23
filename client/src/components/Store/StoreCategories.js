@@ -7,7 +7,16 @@ class StoreCategories extends React.Component {
   render() {
     return (
       <div>
-        <div></div>
+        <div>
+          <h5>Store Categories</h5>
+          <ul>
+            <li>Electronics</li>
+            <li>Electronics</li>
+            <li>Electronics</li>
+            <li>Electronics</li>
+            <li>Electronics</li>
+          </ul>
+        </div>
       </div>
     );
   }

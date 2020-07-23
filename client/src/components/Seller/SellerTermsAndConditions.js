@@ -1,8 +1,10 @@
 import React from "react";
+import { animateScroll as scroll } from "react-scroll";
 
 class SellerTermsAndConditions extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
+    scroll.scrollToTop();
   }
 
   handleCheckbox = (e) => {
