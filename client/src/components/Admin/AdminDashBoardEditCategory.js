@@ -1,10 +1,10 @@
 import React from "react";
-
 import "./AdminDashBoardEditCategory.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 
 class AdminDashBoardEditCategory extends React.Component {
+  componentDidMount() {}
   render() {
     return (
       <div className="container-fluid p-0">

@@ -68,7 +68,7 @@ class AdminDashBoardCategories extends React.Component {
                     <div style={{ borderTop: "1px solid #d4d4d4" }}>
                       <div>
                         <Link
-                          to="/admin-category/edit"
+                          to={`/admin-category/edit/${cat._id}`}
                           className="btn btn-lg btn-block edit-category-btn"
                         >
                           Edit Category
