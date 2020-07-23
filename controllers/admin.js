@@ -841,7 +841,7 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
 route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
   try {
     const { orderId } = req.params;
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate("buyer");
     res.send(order);
   } catch (error) {
     res.status(500).send(error);
