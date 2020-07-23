@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import validator from "validator";
-import { addProduct, unpersistImage } from "../../redux/actions";
+import {
+  addProduct,
+  unpersistImage,
+  fetchAllAdminCategories
+} from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDropDown from "./SellerDropDown";
@@ -14,39 +18,36 @@ import PhotosPage from "./PhotosPage";
 import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
 import ScreenLoader from "../Pages/ScreenLoader";
 
-const category = [
-  { key: "phones", text: "Phones", value: "phones" },
-  { key: "clothes", text: "Clothes", value: "clothes" },
-  { key: "gadgets", text: "Gadgets", value: "gadgets" },
-  { key: "electronics", text: "Electronics", value: "electronics" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" },
-  { key: "jewelry", text: "Jewelry", value: "jewelry" },
-  { key: "bags", text: "Bags", value: "bags" },
-  { key: "gaming", text: "Gaming", value: "gaming" },
-  { key: "watches", text: "Watches", value: "watches" }
-];
-const subcategory = [
-  { key: "iphones", text: "iPhones", value: "iphones" },
-  { key: "android", text: "Android", value: "android" },
-  { key: "laptops", text: "Laptops", value: "laptops" },
-  { key: "televisions", text: "Televisions", value: "televisions" },
-  { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" },
-  { key: "watches", text: "Watches", value: "watches" },
-  { key: "gucci", text: "Gucci", value: "gucci" },
-  { key: "fendi", text: "Fendi", value: "fendi" },
-  { key: "x-box", text: "X-box", value: "x-box" },
-  { key: "toys", text: "Toys", value: "toys" },
-  { key: "utensils", text: "Utensils", value: "utensils" }
-];
-
 export class Sell extends Component {
+  componentDidMount() {
+    this.props.fetchAllAdminCategories();
+  }
   componentWillUnmount() {
     this.props.unpersistImage();
   }
   render() {
-    if (this.props.deleteImageLoading) return <ScreenLoader />;
+    if (this.props.deleteImageLoading || !this.props.adminCategories)
+      return <ScreenLoader />;
+    const adminCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.map(cat => ({
+        key: cat.category.main,
+        text: cat.category.main,
+        value: cat.category.main
+      }));
+    const adminSubCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.find(
+        cat => cat.category.main === this.props.category
+      );
+    const subcategories =
+      adminSubCategories &&
+      adminSubCategories.category &&
+      adminSubCategories.category.subcategories.map(sub => ({
+        key: sub,
+        text: sub,
+        value: sub
+      }));
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -102,14 +103,15 @@ export class Sell extends Component {
                     />
                     {/* DROPDOWNS */}
                     <Field
-                      options={category}
+                      options={adminCategories}
                       name="category"
                       label="Product Category"
                       component={SellerDropDown}
                     />
                     <br />
                     <Field
-                      options={subcategory}
+                      disabled={!subcategories}
+                      options={subcategories}
                       name="subcategory"
                       label="Product Subcategory"
                       component={SellerDropDown}
@@ -194,17 +196,27 @@ const validate = formValues => {
 
   return errors;
 };
+const selector = formValueSelector("Sell");
 const mapStateToProps = state => {
+  const category = selector(state, "category");
   return {
     loading: state.auth.loading,
     description: state.product.description,
+    adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
-    deleteImageLoading: state.image.deleteImageLoading
+    deleteImageLoading: state.image.deleteImageLoading,
+    category
   };
 };
 export default withRouter(
   reduxForm({
     validate,
     form: "Sell"
-  })(connect(mapStateToProps, { addProduct, unpersistImage })(Sell))
+  })(
+    connect(mapStateToProps, {
+      addProduct,
+      unpersistImage,
+      fetchAllAdminCategories
+    })(Sell)
+  )
 );

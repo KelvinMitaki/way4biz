@@ -1,41 +1,51 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 import validator from "validator";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDropDown from "./SellerDropDown";
 import SellerCheckBox from "./SellerCheckBox";
-import { editProduct, fetchSellerProducts } from "../../redux/actions";
+import {
+  editProduct,
+  fetchSellerProducts,
+  fetchAllAdminCategories
+} from "../../redux/actions";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EditorEdit from "./EditorEdit";
 import SellerInputField from "./SellerInputField";
 import PhotosPage from "./PhotosPage";
 import ProductImageUploadsContainer from "./ProductImageUploadsContainer";
 import ScreenLoader from "../Pages/ScreenLoader";
-const category = [
-  { key: "phones", text: "Phones", value: "phones" },
-  { key: "clothes", text: "Clothes", value: "clothes" },
-  { key: "gadgets", text: "Gadgets", value: "gadgets" },
-  { key: "electronics", text: "Electronics", value: "electronics" },
-  { key: "utensils", text: "Utensils", value: "utensils" },
-  { key: "toys", text: "Toys", value: "toys" }
-];
-const subcategory = [
-  { key: "iphones", text: "iPhones", value: "iphones" },
-  { key: "android", text: "Android", value: "android" },
-  { key: "laptops", text: "Laptops", value: "laptops" },
-  { key: "televisions", text: "Televisions", value: "televisions" },
-  { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "shoes", text: "Shoes", value: "shoes" }
-];
 
 export class SellerEdit extends Component {
   componentDidMount() {
     this.props.fetchSellerProducts();
+    this.props.fetchAllAdminCategories();
   }
   render() {
-    if (this.props.deleteImageLoading) return <ScreenLoader />;
+    if (this.props.deleteImageLoading || !this.props.adminCategories)
+      return <ScreenLoader />;
+    const adminCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.map(cat => ({
+        key: cat.category.main,
+        text: cat.category.main,
+        value: cat.category.main
+      }));
+    const adminSubCategories =
+      this.props.adminCategories.length !== 0 &&
+      this.props.adminCategories.find(
+        cat => cat.category.main === this.props.category
+      );
+    const subcategories =
+      adminSubCategories &&
+      adminSubCategories.category &&
+      adminSubCategories.category.subcategories.map(sub => ({
+        key: sub,
+        text: sub,
+        value: sub
+      }));
     if (this.props.initialValues) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -96,14 +106,14 @@ export class SellerEdit extends Component {
                       />
                       {/* DROPDOWNS */}
                       <Field
-                        options={category}
+                        options={adminCategories}
                         name="category"
                         label="Product Category"
                         component={SellerDropDown}
                       />
                       <br />
                       <Field
-                        options={subcategory}
+                        options={subcategories}
                         name="subcategory"
                         label="Product Subcategory"
                         component={SellerDropDown}
@@ -205,7 +215,9 @@ const validate = formValues => {
 
   return errors;
 };
+const selector = formValueSelector("SellerEdit");
 const mapStateToProps = (state, ownProps) => {
+  const category = selector(state, "category");
   let initialValues;
   if (state.sellerRegister.sellerProducts.length !== 0) {
     initialValues = state.sellerRegister.sellerProducts.find(
@@ -217,11 +229,17 @@ const mapStateToProps = (state, ownProps) => {
     deleteImageLoading: state.image.deleteImageLoading,
     initialValues,
     description: state.product.description,
-    imageUrl: state.image.imageUrl
+    adminCategories: state.product.adminCategories,
+    imageUrl: state.image.imageUrl,
+    category
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { editProduct, fetchSellerProducts })(
+  connect(mapStateToProps, {
+    editProduct,
+    fetchSellerProducts,
+    fetchAllAdminCategories
+  })(
     reduxForm({
       validate,
       form: "SellerEdit"
