@@ -65,9 +65,12 @@ class AdminDashBoardOrderItems extends React.Component {
                         >
                           {p.name}
                         </p>
-                        <p>Ksh.{p.price.toLocaleString()} </p>
                         <p>
-                          Qty:
+                          <strong>Ksh.</strong>
+                          {p.price.toLocaleString()}{" "}
+                        </p>
+                        <p>
+                          <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
                               it => it.product === p._id
