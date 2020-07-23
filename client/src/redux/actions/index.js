@@ -118,7 +118,10 @@ import {
   SET_PENDING_ORDERS,
   ADD_NEW_CATEGORY,
   ADD_NEW_CATEGORY_START,
-  ADD_NEW_CATEGORY_STOP
+  ADD_NEW_CATEGORY_STOP,
+  FETCH_ALL_ADMIN_CATEGORIES,
+  FETCH_ALL_ADMIN_CATEGORIES_START,
+  FETCH_ALL_ADMIN_CATEGORIES_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1699,6 +1702,33 @@ export const addNewCategory = category => async dispatch => {
       return (window.location.href = "/seller/sign-in");
     }
     dispatch({ type: ADD_NEW_CATEGORY_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchAllAdminCategories = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_START });
+    const res = await axios.get("/api/root/admin/fetch/all/categories");
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES, payload: res.data });
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
     console.log(error.response);
   }
 };
