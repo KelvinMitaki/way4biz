@@ -21,7 +21,7 @@ class AdminDashBoardOrder extends React.Component {
   }
   render() {
     if (!this.props.adminOrder) return <ScreenLoader />;
-    if (this.props.adminOrder && this.props.adminOrder._id) {
+    if (this.props.adminOrder && this.props.adminOrder["0"]._id) {
       return (
         <div className="container-fluid p-0">
           <AdminDashBoardHeader />
@@ -46,13 +46,13 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Order ID: </strong>
-                        {this.props.adminOrder._id}
+                        {this.props.adminOrder["0"]._id}
                       </p>
                     </div>
                     <div className="col-md-6">
                       <strong className="mr-2">Date: </strong>
                       {new Date(
-                        this.props.adminOrder.createdAt
+                        this.props.adminOrder["0"].createdAt
                       ).toLocaleString()}
                     </div>
                   </div>
@@ -60,7 +60,7 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Status:</strong>
-                        {this.props.adminOrder.delivered ? (
+                        {this.props.adminOrder["0"].delivered ? (
                           <span> Delivered</span>
                         ) : (
                           <span> Pending</span>
@@ -69,7 +69,7 @@ class AdminDashBoardOrder extends React.Component {
                     </div>
                     <div className="col-md-6">
                       <strong className="mr-2">Items No: </strong>
-                      {this.props.adminOrder.items.length.toLocaleString()}
+                      {this.props.adminOrder["0"].items.length.toLocaleString()}
                     </div>
                   </div>
                   <div className="row">
@@ -83,7 +83,7 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <Link
-                          to={`/root/admin-order/view-items/${this.props.adminOrder._id}`}
+                          to={`/root/admin-order/view-items/${this.props.adminOrder["0"]._id}`}
                           className="admin-order-items-view"
                         >
                           View Items

@@ -59,7 +59,9 @@ class AdminDashBoardOrderItems extends React.Component {
                         <p
                           className="seller-review-product-title-name"
                           style={{ cursor: "pointer" }}
-                          onClick={this.props.history.push(`/product/${p._id}`)}
+                          onClick={() =>
+                            this.props.history.push(`/product/${p._id}`)
+                          }
                         >
                           {p.name}
                         </p>
