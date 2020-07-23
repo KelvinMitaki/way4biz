@@ -1675,7 +1675,9 @@ export const setPendingOrders = () => {
 export const addNewCategory = category => async dispatch => {
   try {
     dispatch({ type: ADD_NEW_CATEGORY_START });
-    const res = await axios.post("/api/root/admin/add/new/category", category);
+    const res = await axios.post("/api/root/admin/add/new/category", {
+      category
+    });
     console.log(res.data);
     dispatch({ type: ADD_NEW_CATEGORY });
     dispatch({ type: ADD_NEW_CATEGORY_STOP });

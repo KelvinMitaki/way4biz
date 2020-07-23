@@ -5,6 +5,8 @@ import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { IconContext } from "react-icons/lib";
 import { AiOutlineSearch } from "react-icons/ai";
+import { addNewCategory } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class AdminDashBoardAddCategory extends React.Component {
   state = {
@@ -26,7 +28,7 @@ class AdminDashBoardAddCategory extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.main !== "" && this.state.subcategories.length !== 0) {
-      console.log({
+      this.props.addNewCategory({
         main: this.state.main,
         subcategories: this.state.subcategories
       });
@@ -119,4 +121,4 @@ class AdminDashBoardAddCategory extends React.Component {
   }
 }
 
-export default AdminDashBoardAddCategory;
+export default connect(null, { addNewCategory })(AdminDashBoardAddCategory);

@@ -868,10 +868,14 @@ route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
 });
 route.post(
   "/api/root/admin/add/new/category",
-  check("category")
+  check("category.main")
     .not()
     .isEmpty()
-    .withMessage("Please enter a valid category"),
+    .withMessage("Please enter a valid main"),
+  check("category.subcategories")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid subcategory"),
   isSeller,
   async (req, res) => {
     try {
