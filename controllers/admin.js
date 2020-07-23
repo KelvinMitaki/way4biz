@@ -25,7 +25,7 @@ const Seller = require("../models/Seller");
 const User = require("../models/User");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
-const Category = require("../models/Categories");
+const Category = require("../models/Category");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
