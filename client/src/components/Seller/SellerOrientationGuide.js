@@ -18,6 +18,7 @@ class SellerOrientationGuide extends React.Component {
           Orientation Guide
         </h3>
         <div>
+          Please download a copy of the guide from the link.
           <a
             className="my-2"
             href="/1.jpg"

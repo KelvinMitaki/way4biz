@@ -57,24 +57,7 @@ route.post("/api/products/filter", async (req, res) => {
     // FREE SHIPPING RATING LATEST ON
 
     let products = await Product.find(test);
-    // if (freeShipping === "on") {
-    //   products = products.filter(product => product.freeShipping === true);
-    // }
-    // if (rating === "on") {
-    //   products = products.filter(product => product.rating >= 4);
-    // }
-    // const compare = (a, b) => {
-    //   if (a.createdAt > b.createdAt) {
-    //     return -1;
-    //   }
-    //   if (b.createdAt > a.createdAt) {
-    //     return 1;
-    //   }
-    //   return 0;
-    // };
-    // if (latest === "on") {
-    //   products.sort(compare);
-    // }
+
     res.send(products);
   } catch (error) {
     res.status(500).send(error);

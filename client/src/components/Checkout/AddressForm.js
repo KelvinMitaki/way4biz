@@ -71,13 +71,16 @@ class AddressForm extends React.Component {
                 {/* <hr /> */}
                 <form
                   onSubmit={this.props.handleSubmit(formValues => {
-                    this.props.paymentPerDistance({
-                      origins: ["thika"],
-                      destination: [
-                        `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
-                      ]
-                    });
-                    this.props.checkoutUser(formValues, this.props.history);
+                    this.props.paymentPerDistance(
+                      {
+                        origins: ["thika"],
+                        destination: [
+                          `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
+                        ]
+                      },
+                      this.props.history
+                    );
+                    this.props.checkoutUser(formValues);
                   })}
                 >
                   <Field

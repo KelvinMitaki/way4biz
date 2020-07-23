@@ -25,6 +25,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
       }
     ]
   };
+  componentDidMount() {
+    this.props.fetchNewSellers();
+  }
   handleClick = e => {
     this.setState(prevState => {
       return {
@@ -33,6 +36,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
     });
   };
   render() {
+    if (!this.props.newSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid admin-secondary-dashboard-header">
         {this.state.open ? (
@@ -69,7 +73,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </p>
               <MenuDropdown data={this.state.keys[0]} />
               <p>
-                <Link to="/orders">Orders</Link>
+                <Link to="/admin-orders">Orders</Link>
               </p>
               <p>
                 <Link to="/admin-dashboard">Categories</Link>
@@ -89,17 +93,23 @@ class AdminDashboardSecondaryHeader extends React.Component {
           </li>
           <li>
             <a href="/" className="admin-menu-dropdown-main">
-              <RiFileUserLine /> <span className="ml-2">Sellers</span>
+              <RiFileUserLine />{" "}
               <span className="ml-1">
-                <MdKeyboardArrowDown />
+                Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
                   this.props.newSellers.sellers.length.toLocaleString() !==
                     0 && (
-                    <span className="badge custom-badge ml-2">
+                    <span
+                      className="badge custom-badge ml-2"
+                      style={{ position: "relative", zIndex: "32" }}
+                    >
                       {this.props.newSellers.sellers.length.toLocaleString()}
                     </span>
                   )}
+              </span>
+              <span className="ml-1">
+                <MdKeyboardArrowDown />
               </span>
             </a>
 
@@ -122,20 +132,23 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </div>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-orders"
+              activeClassName="admin-active-lg-link"
+            >
               <GoClippy /> <span className="ml-2">Orders</span>
             </NavLink>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-categories"
+              activeClassName="admin-active-lg-link"
+            >
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink exact to="/" activeClassName="admin-active-lg-link">
-              <RiDashboardLine /> <span className="ml-2">Dashboard</span>
-            </NavLink>
-          </li> */}
         </ul>
         <ProfileImage />
       </div>
@@ -147,4 +160,6 @@ const mapStateToProps = state => {
     newSellers: state.sellerRegister.newSellers
   };
 };
-export default connect(mapStateToProps)(AdminDashboardSecondaryHeader);
+export default connect(mapStateToProps, { fetchNewSellers })(
+  AdminDashboardSecondaryHeader
+);

@@ -9,7 +9,14 @@ import { Link } from "react-router-dom";
 import "./AdminDashBoard.css";
 import DoughnutChart from "./DoughnutChart";
 import LineGraph from "./LineGraph";
-import { getStock, fetchNewSellers } from "../../redux/actions";
+import {
+  getStock,
+  fetchNewSellers,
+  fetchAdminOrders,
+  fetchAdminPendingOrders,
+  fetchWeeklySales,
+  setPendingOrders
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -25,10 +32,38 @@ class AdminDashBoard extends React.Component {
   componentDidMount() {
     this.props.getStock();
     this.props.fetchNewSellers();
+    this.props.fetchAdminOrders();
+    this.props.fetchAdminPendingOrders();
+    this.props.fetchWeeklySales();
   }
 
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
+    if (
+      !this.props.newSellers ||
+      !this.props.adminOrders ||
+      !this.props.adminPendingOrders ||
+      !this.props.weeklySales
+    )
+      return <ScreenLoader />;
+
+    const todayOrders =
+      this.props.adminOrders &&
+      this.props.adminOrders.todaysOrdersCount.length !== 0 &&
+      this.props.adminOrders.todaysOrdersCount[0].todaysOrders;
+
+    const total =
+      this.props.adminOrders && this.props.adminOrders.totalOrdersCount;
+    const calc = Math.round((todayOrders / total) * 100);
+    let { todaysPendingOrders, pendingOrders } = this.props.adminPendingOrders;
+    let calcPending;
+    if (typeof todaysPendingOrders === "number") {
+      calcPending = Math.round((todaysPendingOrders / pendingOrders) * 100);
+    } else {
+      calcPending = 0;
+    }
+    if (typeof pendingOrders === "object") {
+      pendingOrders = 0;
+    }
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -120,27 +155,33 @@ class AdminDashBoard extends React.Component {
                       <div className="row">
                         <div className="col-lg-5 p-0">
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link to="/admin-orders">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Orders</p>
-                                <p>+50,000</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalOrdersCount.toLocaleString()}
+                                </p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {calc}% change today
                                 </p>
                               </div>
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link
+                              to="/admin-orders"
+                              onClick={() => this.props.setPendingOrders()}
+                            >
                               <div className="admin-individual-performance-upper-text">
                                 <p>Pending Orders</p>
-                                <p>+50,000</p>
+                                <p>{pendingOrders.toLocaleString()}</p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {calcPending}% change today
                                 </p>
                               </div>
                             </Link>
@@ -162,11 +203,20 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
-                                <p>+50,000</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalPrice &&
+                                    this.props.adminOrders.totalPrice.toLocaleString()}
+                                </p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {Math.round(
+                                    (this.props.adminOrders.todayTotalPrice /
+                                      this.props.adminOrders.totalPrice) *
+                                      100
+                                  )}
+                                  % change today
                                 </p>
                               </div>
                             </Link>
@@ -202,9 +252,17 @@ class AdminDashBoard extends React.Component {
 const mapStateToProps = state => {
   return {
     stock: state.product.stock,
+    adminOrders: state.product.adminOrders,
+    adminPendingOrders: state.product.adminPendingOrders,
+    weeklySales: state.product.weeklySales,
     newSellers: state.sellerRegister.newSellers
   };
 };
-export default connect(mapStateToProps, { getStock, fetchNewSellers })(
-  AdminDashBoard
-);
+export default connect(mapStateToProps, {
+  getStock,
+  fetchNewSellers,
+  fetchAdminOrders,
+  fetchAdminPendingOrders,
+  fetchWeeklySales,
+  setPendingOrders
+})(AdminDashBoard);

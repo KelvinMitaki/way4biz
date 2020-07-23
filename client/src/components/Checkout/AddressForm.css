@@ -17,6 +17,15 @@
   color: #fff;
 }
 
+.address-btn:hover {
+  color: #fff;
+}
+
+.address-btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
 .address-location-input {
   position: relative;
 }

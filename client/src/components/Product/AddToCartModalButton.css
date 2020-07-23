@@ -52,7 +52,6 @@
 .shopping-btn-modal:hover {
   padding: 10px 15px;
   color: #fff;
-  width: 200px !important;
 }
 
 .continue-btn:focus,
@@ -71,4 +70,11 @@
   border: 1px solid #f76b1a;
   border-radius: 10px;
   background-color: #f76b1a;
+}
+
+@media screen and (max-width: 1140px) {
+  .continue-btn,
+  .shopping-btn-modal {
+    width: 180px !important;
+  }
 }

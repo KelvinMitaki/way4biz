@@ -67,6 +67,10 @@
   text-decoration: none;
 }
 
+/* .categories li:hover .category-hover-popup {
+  display: block;
+} */
+
 .right-arrow {
   font-size: 25px;
 }

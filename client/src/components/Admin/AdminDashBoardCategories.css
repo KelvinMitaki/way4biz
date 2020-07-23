@@ -1,0 +1,33 @@
+#add-category-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.add-category-btn {
+  border: none;
+  background-color: #f76b1a;
+  color: #fff;
+}
+
+.add-category-btn:hover {
+  color: #fff;
+}
+
+.edit-category-btn {
+  background-color: #eaecee;
+  color: #000;
+  border: none;
+  border-radius: 0px;
+}
+
+.edit-category-btn:hover {
+  /* color: #ffffff; */
+  color: #f76b1a;
+}
+
+.edit-category-btn:focus {
+  box-shadow: none;
+  outline: none;
+}

@@ -17,17 +17,17 @@ class DoughnutChart extends React.Component {
 
         datasets: [
           {
-            data: this.props.data.map((d) => d.value),
-            backgroundColor: ["#f76b1a", "#00001e"],
-          },
-        ],
-      },
+            data: this.props.data.map(d => d.value),
+            backgroundColor: ["#f76b1a", "#00001e"]
+          }
+        ]
+      }
     });
   }
   render() {
     return (
       <div>
-        <canvas ref={this.canvasRef} />
+        <canvas ref={this.canvasRef} height="250px" />
       </div>
     );
   }

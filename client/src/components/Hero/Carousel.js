@@ -12,6 +12,11 @@ import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCarousel extends React.Component {
+  shouldComponentUpdate(nextprops, nextState) {
+    if (this.props.products) {
+      return false;
+    }
+  }
   render() {
     if (this.props.products.length === 0) return <ScreenLoader />;
 
@@ -40,7 +45,7 @@ class HeroCarousel extends React.Component {
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&
-                trimmedProducts.map(prod => (
+                trimmedProducts.map((prod) => (
                   <div
                     key={prod._id}
                     style={{ cursor: "pointer" }}
@@ -91,7 +96,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%"
+                    width: "100%",
                   }}
                   className="mt-4"
                 >
@@ -99,7 +104,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -114,7 +119,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -128,7 +133,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -166,10 +171,10 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(
