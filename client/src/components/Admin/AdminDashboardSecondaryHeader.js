@@ -20,18 +20,22 @@ class AdminDashboardSecondaryHeader extends React.Component {
         parentKey: ["Sellers", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
-          { name: "New Sellers", url: "/admin-new-sellers", num: "100" }
-        ]
-      }
-    ]
+          {
+            name: "New Sellers",
+            url: "/admin-new-sellers",
+            num: 100,
+          },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchNewSellers();
   }
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -71,7 +75,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <p>
                 <Link to="/admin-dashboard">Dashboard</Link>
               </p>
-              <MenuDropdown data={this.state.keys[0]} />
+              <MenuDropdown
+                data={this.state.keys[0]}
+                newSellers={this.props.newSellers.sellers.length.toLocaleString()}
+              />
               <p>
                 <Link to="/admin-orders">Orders</Link>
               </p>
@@ -155,9 +162,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers })(
