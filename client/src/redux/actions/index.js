@@ -1784,7 +1784,6 @@ export const editCategory = (
       `/api/root/admin/edit/category/${categoryId}`,
       { category }
     );
-    console.log(res.data);
     dispatch({ type: EDIT_CATEGORY });
     dispatch({ type: EDIT_CATEGORY_STOP });
     history.push("/admin-categories");
