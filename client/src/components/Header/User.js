@@ -65,10 +65,12 @@ class User extends React.Component {
                   <span className="ml-2">My Store</span>
                 </NavLink>
               )}
-
-              <a className="logout-link" href="/api/logout">
+              <div
+                className="logout-link"
+                onClick={() => (window.location.href = "/api/logout")}
+              >
                 Logout
-              </a>
+              </div>
             </div>
           ) : (
             <React.Fragment>

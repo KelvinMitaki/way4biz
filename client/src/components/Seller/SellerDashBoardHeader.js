@@ -36,10 +36,11 @@ class SellerDashBoardHeader extends React.Component {
               Do Something
             </NavLink>
           </li> */}
-          <li className="my-4">
-            <a className="link logout-seller-db-header-link" href="/api/logout">
-              Logout
-            </a>
+          <li
+            className="my-4 link logout-seller-db-header-link"
+            onClick={() => (window.location.href = "/api/logout")}
+          >
+            Logout
           </li>
         </ul>
         <ProfileImage />

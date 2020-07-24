@@ -12,15 +12,15 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   }
@@ -127,10 +127,11 @@ class SellerHamburgerMenu extends React.Component {
                     Do Something
                   </NavLink>
                 </li> */}
-                <li className="my-4">
-                  <Link className="link" to="/api/logout">
-                    Logout
-                  </Link>
+                <li
+                  className="my-4 link"
+                  onClick={() => (window.location.href = "/api/logout")}
+                >
+                  Logout
                 </li>
               </ul>
             </div>
