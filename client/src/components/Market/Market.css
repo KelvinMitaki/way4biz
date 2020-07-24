@@ -46,13 +46,22 @@
 }
 
 .price {
-  margin: 10px 0px;
+  margin: 10px 0px 0px 0px;
   font-weight: 600;
 }
 
 .price-before {
   text-decoration: line-through;
   color: #5d6d7e;
+}
+
+.shipping-heart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 35px !important;
+  padding: 0px !important;
+  margin: 0px !important;
 }
 
 @media screen and (max-width: 960px) {
@@ -75,6 +84,14 @@
   .price {
     font-weight: normal;
     margin: 0;
+  }
+
+  .shipping-heart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px !important;
+    height: 30px !important;
   }
 }
 

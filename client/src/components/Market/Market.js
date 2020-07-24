@@ -11,7 +11,7 @@ import Image from "./Image";
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    node => {
+    (node) => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -19,7 +19,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -66,22 +66,24 @@ function Market(props) {
                       </p>
                     </div>
                   </Link>
-                  <div style={{ height: "10px", padding: "0px 10px" }}>
-                    {product.freeShipping && (
-                      <span className="lead" style={{ fontSize: "smaller" }}>
-                        Free Shipping
-                      </span>
-                    )}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "0px 10px"
-                    }}
-                    className="my-2"
-                  >
-                    <Heart product={product} />
+                  <div className="shipping-heart">
+                    <div style={{ padding: "0px 10px" }}>
+                      {product.freeShipping && (
+                        <span style={{ fontSize: "smaller" }}>
+                          Free Shipping
+                        </span>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "0px 10px",
+                      }}
+                      className="my-2 product-heart"
+                    >
+                      <Heart product={product} />
+                    </div>
                   </div>
                 </div>
               );
@@ -94,7 +96,6 @@ function Market(props) {
                   title={product.name}
                   className="product-link"
                 >
-                  {/* <LazyLoad placeholder={<ProductLazyLoad />} height={300}> */}{" "}
                   <Image
                     image={
                       product.imageUrl[0].includes("http")
@@ -103,7 +104,6 @@ function Market(props) {
                     }
                     alt={product.name}
                   />
-                  {/* </LazyLoad> */}
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
                     <p style={{ fontWeight: "bolder" }} className="price">
@@ -111,22 +111,22 @@ function Market(props) {
                     </p>
                   </div>
                 </Link>
-                <div style={{ height: "10px", padding: "0px 10px" }}>
-                  {product.freeShipping && (
-                    <span className="lead" style={{ fontSize: "smaller" }}>
-                      Free Shipping
-                    </span>
-                  )}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "0px 10px"
-                  }}
-                  className="my-2"
-                >
-                  <Heart product={product} />
+                <div className="shipping-heart">
+                  <div style={{ padding: "0px 10px", margin: "0px" }}>
+                    {product.freeShipping && (
+                      <span style={{ fontSize: "smaller" }}>Free Shipping</span>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      padding: "0px 10px",
+                      margin: "0px",
+                    }}
+                    className="product-heart"
+                  >
+                    <Heart product={product} />
+                  </div>
                 </div>
               </div>
             );
@@ -136,11 +136,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore
+    hasMore: state.product.hasMore,
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
