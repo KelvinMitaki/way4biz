@@ -97,14 +97,17 @@ class MiniMenu extends React.Component {
                       <GoClippy />
                       <span className="ml-2">Orders</span>
                     </NavLink>
-                    <NavLink className="primary-link" to="/wishlist">
+                    <NavLink
+                      className="primary-link d-flex align-items-center"
+                      to="/wishlist"
+                    >
                       <AiOutlineHeart />
                       <span className="ml-2">
-                        Wishlist
-                        <span className="badge custom-badge ml-2">
-                          {this.props.wishlist.length}
-                        </span>{" "}
-                      </span>
+                        <span style={{ marginTop: "5px" }}>Wishlist</span>
+                        <span className="ml-1">
+                          ({this.props.wishlist.length})
+                        </span>
+                      </span>{" "}
                     </NavLink>
                     <NavLink className="primary-link" to="/pending/reviews">
                       <MdRateReview />
