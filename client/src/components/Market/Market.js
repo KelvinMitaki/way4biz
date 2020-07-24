@@ -112,15 +112,19 @@ function Market(props) {
                   </div>
                 </Link>
                 <div className="shipping-heart">
-                  <div style={{ padding: "0px 10px", margin: "0px" }}>
-                    {product.freeShipping && (
-                      <span style={{ fontSize: "smaller" }}>Free Shipping</span>
-                    )}
+                  <div
+                    style={{
+                      padding: "0px 0px 0px 10px",
+                      margin: "0px",
+                      fontSize: "smaller",
+                    }}
+                  >
+                    {product.freeShipping && <span>Free Shipping</span>}
                   </div>
                   <div
                     style={{
                       display: "flex",
-                      padding: "0px 10px",
+                      padding: "0px 10px 0px 0px",
                       margin: "0px",
                     }}
                     className="product-heart"

@@ -237,17 +237,17 @@ function Products(props) {
                             }
                             alt={product.name}
                           />
-                          <div>
+                          <div style={{ padding: "0px" }}>
                             <p
                               className="product-name"
-                              style={{ padding: "0px 10px" }}
+                              style={{ padding: "0px" }}
                             >
                               {product.name}
                             </p>
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px",
+                                padding: "0px",
                               }}
                               className="price"
                             >
@@ -259,7 +259,7 @@ function Products(props) {
                           <div
                             style={{
                               height: "10px",
-                              padding: "0px 10px",
+                              padding: "0px",
                               margin: "0px",
                             }}
                           >
@@ -303,7 +303,7 @@ function Products(props) {
                           }
                           alt={product.name}
                         />
-                        <div>
+                        <div style={{ padding: "0px" }}>
                           <p
                             className="product-name"
                             style={{ padding: "0px 10px" }}
@@ -322,17 +322,19 @@ function Products(props) {
                         </div>
                       </Link>
                       <div className="shipping-heart">
-                        <div style={{ height: "10px", padding: "0px 10px" }}>
-                          {product.freeShipping && (
-                            <p className="lead" style={{ fontSize: "smaller" }}>
-                              Free Shipping
-                            </p>
-                          )}
+                        <div
+                          style={{
+                            padding: "0px 0px 0px 10px",
+                            margin: "0px",
+                            fontSize: "smaller",
+                          }}
+                        >
+                          {product.freeShipping && <p>Free Shipping</p>}
                         </div>
                         <div
                           style={{
                             display: "flex",
-                            padding: "0px 10px",
+                            padding: "0px 10px 0px 0px",
                             margin: "0px",
                           }}
                           className="mb-2"
