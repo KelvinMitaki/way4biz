@@ -14,26 +14,26 @@ class AdminDashBoardAddCategory extends React.Component {
   state = {
     main: "",
     subcategories: [],
-    typing: ""
+    typing: "",
   };
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleTypingSubmit = e => {
+  handleTypingSubmit = (e) => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: ""
+        typing: "",
       });
     }
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.main !== "" && this.state.subcategories.length !== 0) {
       this.props.addNewCategory(
         {
           main: this.state.main,
-          subcategories: this.state.subcategories
+          subcategories: this.state.subcategories,
         },
         this.props.history
       );
@@ -44,7 +44,7 @@ class AdminDashBoardAddCategory extends React.Component {
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
-        <div className="container mt-4">
+        <div className="container mt-4 mb-5">
           <div className="box-container">
             <h3 className="my-2" style={{ textAlign: "center" }}>
               Add Category
@@ -100,7 +100,7 @@ class AdminDashBoardAddCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  )
+                                  ),
                                 })
                               }
                             >

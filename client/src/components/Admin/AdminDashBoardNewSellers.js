@@ -16,7 +16,7 @@ class AdminDashBoardNewSellers extends React.Component {
     if (!this.props.newSellers) return <ScreenLoader />;
     if (this.props.newSellers && this.props.newSellers.length !== 0) {
       return (
-        <div className="container-fluid p-0">
+        <div className="container-fluid p-0 mb-5">
           <DashBoardHeader />
           <SecondaryHeader />
           <div className="container box-container mt-4">
