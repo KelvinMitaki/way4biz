@@ -97,6 +97,8 @@ function Market(props) {
                   className="product-link"
                 >
                   <Image
+                    height="200vh"
+                    width="150vw"
                     image={
                       product.imageUrl[0].includes("http")
                         ? product.imageUrl[0]
