@@ -1,6 +1,19 @@
+.admin-order-items-wrapper {
+  width: 85%;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.order-title {
+  width: 80%;
+  margin: auto;
+}
+
 .individual-order-item {
   border-left: 3px solid #f76b1a;
   padding-left: 10px;
+  width: 80%;
+  margin: auto;
 }
 
 .individual-order-item .row div {
@@ -22,6 +35,26 @@
 .individual-order-item .row div a:hover {
   color: #f76b1a;
   text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .admin-order-items-wrapper {
+    width: 90%;
+    margin: auto;
+    padding: 5px;
+  }
+
+  .order-title {
+    width: 100%;
+    margin: auto;
+  }
+
+  .individual-order-item {
+    border-left: 3px solid #f76b1a;
+    padding-left: 10px;
+    width: 100%;
+    margin: auto;
+  }
 }
 
 @media screen and (max-width: 520px) {

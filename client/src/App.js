@@ -51,6 +51,7 @@ import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCat
 import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
 import BuyerInfo from "./components/Admin/BuyerInfo";
 import Store from "./components/Store/Store";
+import SearchResults from "./components/Header/SearchResults";
 
 class App extends React.Component {
   state = {
@@ -99,6 +100,7 @@ class App extends React.Component {
             <Route path="/404" component={NotFound} />
             <Route path="/seller/profiling" exact component={SellerProfiling} />
             <Route path="/seller/store" exact component={Store} />
+            <Route path="/search/results" component={SearchResults} />
             <Route
               path="/admin-sellers"
               render={() =>
@@ -140,7 +142,7 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/root/admin-order/view-items"
+              path="/root/admin-order/view-items/:orderId"
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (

@@ -1,8 +1,10 @@
 import React from "react";
+import { animateScroll as scroll } from "react-scroll";
 
 class SellerOrientationGuide extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
+    scroll.scrollToTop();
   }
 
   handleClick = (e) => {

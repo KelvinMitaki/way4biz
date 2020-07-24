@@ -15,6 +15,12 @@
   color: #fff;
 }
 
+.add-category-btn:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
 .edit-category-btn {
   background-color: #f76b1a;
   color: #fff;

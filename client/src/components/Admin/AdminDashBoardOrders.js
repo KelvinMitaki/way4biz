@@ -94,7 +94,7 @@ function AdminDashBoardOrders(props) {
           </form>
           <div className="filter">
             <div className="admin-filter">
-              <div className="admin-filter-icon">
+              <div style={{ cursor: "pointer" }} className="admin-filter-icon">
                 <span className="y">Filter:</span>
                 <FiFilter style={{ fontSize: "25px" }} />
               </div>

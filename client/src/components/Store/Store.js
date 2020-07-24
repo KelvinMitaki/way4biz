@@ -8,6 +8,7 @@ import Categories from "../Hero/HeroCategories";
 
 import "./Store.css";
 import Image from "../Market/Image";
+import StoreCategories from "./StoreCategories";
 
 function Store() {
   return (
@@ -17,7 +18,8 @@ function Store() {
       <div className="container-fluid" id="products">
         <div className="row">
           <div className="col-lg-3">
-            <Categories id="products-categories" />
+            {/* <Categories id="products-categories" /> */}
+            <StoreCategories />
           </div>
           <div className="col-lg-9" style={{ padding: "0px" }}>
             <div className="store-header py-2">

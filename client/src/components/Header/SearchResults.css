@@ -1,0 +1,17 @@
+.main-single-search-product {
+  display: flex;
+  background-color: #fff;
+  align-items: center;
+}
+
+.main-search-product-image {
+  flex: 1;
+}
+
+.main-search-product-image img {
+  width: 150px;
+}
+
+.main-search-product-info {
+  flex: 4;
+}
