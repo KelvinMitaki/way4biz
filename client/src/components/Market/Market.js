@@ -50,6 +50,7 @@ function Market(props) {
                     className="product-link"
                   >
                     <Image
+                      scrollPosition={window.pageYOffset}
                       image={
                         product.imageUrl[0].includes("http")
                           ? product.imageUrl[0]
@@ -65,22 +66,24 @@ function Market(props) {
                       </p>
                     </div>
                   </Link>
-                  <div style={{ height: "10px", padding: "0px 10px" }}>
-                    {product.freeShipping && (
-                      <p className="lead" style={{ fontSize: "smaller" }}>
-                        Free Shipping
-                      </p>
-                    )}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "0px 10px"
-                    }}
-                    className="my-2"
-                  >
-                    <Heart product={product} />
+                  <div className="shipping-heart">
+                    <div style={{ padding: "0px 10px" }}>
+                      {product.freeShipping && (
+                        <span style={{ fontSize: "smaller" }}>
+                          Free Shipping
+                        </span>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "0px 10px"
+                      }}
+                      className="my-2 product-heart"
+                    >
+                      <Heart product={product} />
+                    </div>
                   </div>
                 </div>
               );
@@ -93,8 +96,9 @@ function Market(props) {
                   title={product.name}
                   className="product-link"
                 >
-                  {/* <LazyLoad placeholder={<ProductLazyLoad />} height={300}> */}{" "}
                   <Image
+                    height="200vh"
+                    width="150vw"
                     image={
                       product.imageUrl[0].includes("http")
                         ? product.imageUrl[0]
@@ -102,7 +106,6 @@ function Market(props) {
                     }
                     alt={product.name}
                   />
-                  {/* </LazyLoad> */}
                   <div style={{ padding: "0px 10px" }}>
                     <p className="product-name">{product.name}</p>
                     <p style={{ fontWeight: "bolder" }} className="price">
@@ -110,22 +113,22 @@ function Market(props) {
                     </p>
                   </div>
                 </Link>
-                <div style={{ height: "10px", padding: "0px 10px" }}>
-                  {product.freeShipping && (
-                    <p className="lead" style={{ fontSize: "smaller" }}>
-                      Free Shipping
-                    </p>
-                  )}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "0px 10px"
-                  }}
-                  className="my-2"
-                >
-                  <Heart product={product} />
+                <div className="shipping-heart">
+                  <div style={{ padding: "0px 10px", margin: "0px" }}>
+                    {product.freeShipping && (
+                      <span style={{ fontSize: "smaller" }}>Free Shipping</span>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      padding: "0px 10px",
+                      margin: "0px"
+                    }}
+                    className="product-heart"
+                  >
+                    <Heart product={product} />
+                  </div>
                 </div>
               </div>
             );

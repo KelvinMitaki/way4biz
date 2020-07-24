@@ -127,7 +127,9 @@ import {
   FETCH_SINGLE_CATEGORY_STOP,
   EDIT_CATEGORY,
   EDIT_CATEGORY_START,
-  EDIT_CATEGORY_STOP
+  EDIT_CATEGORY_STOP,
+  FETCH_ADMIN_ORDER_START,
+  FETCH_ADMIN_ORDER_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -1578,10 +1580,10 @@ export const hasMoreOrdersFalse = () => {
 
 export const fetchAdminOrder = (orderId, history) => async dispatch => {
   try {
-    dispatch({ type: FETCH_ADMIN_ORDERS_START });
+    dispatch({ type: FETCH_ADMIN_ORDER_START });
     const res = await axios.get(`/api/root/admin/order/${orderId}`);
     dispatch({ type: FETCH_ADMIN_ORDER, payload: res.data });
-    dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
+    dispatch({ type: FETCH_ADMIN_ORDER_STOP });
   } catch (error) {
     if (
       error &&

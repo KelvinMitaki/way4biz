@@ -26,9 +26,7 @@ class MenuDropdown extends React.Component {
   showSmMenuItemBadges(name, props) {
     if (name === "New Sellers") {
       if (props.newSellers > 0) {
-        return (
-          <span className="bagde custom-badge ml-1">{props.newSellers}</span>
-        );
+        return <span className="ml-1">({props.newSellers})</span>;
       } else {
         return;
       }
@@ -43,9 +41,7 @@ class MenuDropdown extends React.Component {
         <span className="accordion">
           {parentKey[0]}
           {this.props.newSellers > 0 ? (
-            <span className="badge custom-badge ml-1">
-              {this.props.newSellers}
-            </span>
+            <span className="ml-1">({this.props.newSellers})</span>
           ) : null}
 
           <MdKeyboardArrowDown className="ml-1" />
@@ -53,7 +49,11 @@ class MenuDropdown extends React.Component {
         <div className="panel">
           {childKeys.map((childKey) => (
             <p key={Math.random()}>
-              <NavLink to={childKey.url} style={{ width: "100%" }}>
+              <NavLink
+                activeClassName="admin-active-lg-link"
+                to={childKey.url}
+                style={{ width: "100%" }}
+              >
                 {childKey.name}
                 {this.showSmMenuItemBadges(childKey.name, this.props)}
               </NavLink>

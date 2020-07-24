@@ -193,7 +193,6 @@ function Products(props) {
                           </label>
                         </div>
                       </div>
-                      {/* <hr style={{ backgroundColor: "green !important" }} /> */}
                       <div className="d-flex ml-3">
                         <div className="radio">
                           <input
@@ -256,22 +255,33 @@ function Products(props) {
                             </p>
                           </div>
                         </Link>
-                        <div style={{ height: "10px", padding: "0px 10px" }}>
-                          {product.freeShipping && (
-                            <p className="lead" style={{ fontSize: "smaller" }}>
-                              Free Shipping
-                            </p>
-                          )}
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            padding: "0px 10px"
-                          }}
-                          className="mb-2"
-                        >
-                          <Heart product={product} />
+                        <div className="shipping-heart">
+                          <div
+                            style={{
+                              height: "10px",
+                              padding: "0px 10px",
+                              margin: "0px"
+                            }}
+                          >
+                            {product.freeShipping && (
+                              <p
+                                className="lead"
+                                style={{ fontSize: "smaller" }}
+                              >
+                                Free Shipping
+                              </p>
+                            )}
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              padding: "0px 10px",
+                              margin: "0px"
+                            }}
+                            className="mb-2"
+                          >
+                            <Heart product={product} />
+                          </div>
                         </div>
                       </div>
                     );
@@ -286,6 +296,8 @@ function Products(props) {
                         className="product-link"
                       >
                         <Image
+                          height="200vh"
+                          width="150vw"
                           image={
                             product.imageUrl[0].includes("http")
                               ? product.imageUrl[0]
@@ -311,22 +323,24 @@ function Products(props) {
                           </p>
                         </div>
                       </Link>
-                      <div style={{ height: "10px", padding: "0px 10px" }}>
-                        {product.freeShipping && (
-                          <p className="lead" style={{ fontSize: "smaller" }}>
-                            Free Shipping
-                          </p>
-                        )}
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          padding: "0px 10px"
-                        }}
-                        className="mb-2"
-                      >
-                        <Heart product={product} />
+                      <div className="shipping-heart">
+                        <div style={{ height: "10px", padding: "0px 10px" }}>
+                          {product.freeShipping && (
+                            <p className="lead" style={{ fontSize: "smaller" }}>
+                              Free Shipping
+                            </p>
+                          )}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            padding: "0px 10px",
+                            margin: "0px"
+                          }}
+                          className="mb-2"
+                        >
+                          <Heart product={product} />
+                        </div>
                       </div>
                     </div>
                   );
