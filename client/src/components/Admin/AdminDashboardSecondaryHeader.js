@@ -73,17 +73,17 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {this.state.open ? (
             <div className="admin-dashboard-sm-menu">
               <p>
-                <Link to="/admin-dashboard">Dashboard</Link>
+                <NavLink to="/admin-dashboard">Dashboard</NavLink>
               </p>
               <MenuDropdown
                 data={this.state.keys[0]}
                 newSellers={this.props.newSellers.sellers.length.toLocaleString()}
               />
               <p>
-                <Link to="/admin-orders">Orders</Link>
+                <NavLink to="/admin-orders">Orders</NavLink>
               </p>
               <p>
-                <Link to="/admin-dashboard">Categories</Link>
+                <NavLink to="/admin-categories">Categories</NavLink>
               </p>
             </div>
           ) : null}
@@ -108,10 +108,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   this.props.newSellers.sellers.length.toLocaleString() !==
                     0 && (
                     <span
-                      className="badge custom-badge ml-2"
+                      className="ml-1"
                       style={{ position: "relative", zIndex: "32" }}
                     >
-                      {this.props.newSellers.sellers.length.toLocaleString()}
+                      ({this.props.newSellers.sellers.length.toLocaleString()})
                     </span>
                   )}
               </span>
@@ -130,8 +130,8 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   {this.props.newSellers &&
                     this.props.newSellers.sellers &&
                     this.props.newSellers.sellers.length !== 0 && (
-                      <span className="badge custom-badge ml-2">
-                        {this.props.newSellers.sellers.length}
+                      <span className="ml-1">
+                        ({this.props.newSellers.sellers.length})
                       </span>
                     )}
                 </NavLink>

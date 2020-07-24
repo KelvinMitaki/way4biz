@@ -10,7 +10,7 @@
 }
 
 .individual-order-item {
-  border-left: 3px solid #f76b1a;
+  /* border-left: 3px solid #f76b1a; */
   padding-left: 10px;
   width: 80%;
   margin: auto;
@@ -35,6 +35,13 @@
 .individual-order-item .row div a:hover {
   color: #f76b1a;
   text-decoration: none;
+}
+
+.admin-order-product p {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 960px) {
