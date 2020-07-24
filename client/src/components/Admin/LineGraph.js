@@ -12,122 +12,127 @@ class LineGraph extends React.Component {
   }
 
   componentDidMount() {
-    const test = this.props.weeklySales.map(sale => ({
-      day: new Date(sale.createdAt).getDay(),
-      items: sale.items
-    }));
-    // console.log(test);
-    const possibleWeekArrangements = [
-      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"],
-      ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"],
-      ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"],
-      ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"],
-      ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
-    ];
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const d = test.map(t => {
-      const te = days.filter((day, index) => index === t.day);
-      return {
-        ...te,
-        items: t.items
-          .map(ite => ite.quantity)
-          .reduce((acc, cur) => acc + cur, 0)
-      };
-    });
-    const lookup = d.reduce((acc, cur) => {
-      acc[cur["0"]] = ++acc[cur["0"]] || 0;
-      return acc;
-    }, {});
-    const duplicates = d.filter(e => lookup[e["0"]]);
-    const result = [];
-    duplicates.forEach(d => {
-      if (!this[d["0"]]) {
-        this[d["0"]] = { 0: d["0"], items: 0 };
-        result.push(this[d["0"]]);
-      }
-      this[d["0"]].items += d.items;
-    }, Object.create(null));
-    if (result.length !== 0) {
-      let withoutDup = d.filter(
-        (i, index, self) => self.findIndex(t => t["0"] === i["0"]) === index
-      );
-      withoutDup = withoutDup.map(
-        it => result.find(o => o["0"] === it["0"]) || it
-      );
-      // console.log("withoutDup", withoutDup);
-      const newArr = withoutDup;
-      let myWeek;
-      for (let i = 0; i < possibleWeekArrangements.length; i++) {
-        //O(1) best case O(7) worst case
-        if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
-          myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
-          break;
-        }
-      }
-      // console.log("my week", myWeek);
-      let desiredArray = [];
-      for (let i = 0; i < myWeek.length; i++) {
-        //O(7) best and worst case
-
-        if (newArr[0] && newArr[0][0] === myWeek[i]) {
-          let data = [myWeek[i], newArr[0].items];
-          newArr.shift();
-          desiredArray.push(data);
-        } else {
-          let data = [myWeek[i], 0];
-          desiredArray.push(data);
-        }
-      }
-      // console.log("desiredArray", desiredArray);
-
-      const desiredData = desiredArray.map(data => ({
-        day: data[0],
-        items: data[1]
+    console.log(typeof this.props.weeklySales);
+    const test =
+      this.props.weeklySales &&
+      typeof this.props.weeklySales !== "string" &&
+      this.props.weeklySales.map(sale => ({
+        day: new Date(sale.createdAt).getDay(),
+        items: sale.items
       }));
-      this.setState({ data: desiredData });
-      // take the desired array to the linegraph.
-      // const daysWithoutOrders = days.filter(day => {
-      //   const dayFound = newArr.find(d => d["0"] === day);
-      //   if (dayFound) {
-      //     return false;
-      //   }
-      //   return true;
-      // });
-      // const daysArrObj = daysWithoutOrders.map(day => ({ 0: day, items: 0 }));
-      // const allDays = [...newArr, ...daysArrObj];
-      // console.log(allDays);
-    } else {
-      const noDup = [...d];
-      let myWeek;
-      for (let i = 0; i < possibleWeekArrangements.length; i++) {
-        //O(1) best case O(7) worst case
-        if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
-          myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
-          break;
+    if (test) {
+      const possibleWeekArrangements = [
+        ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"],
+        ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"],
+        ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"],
+        ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"],
+        ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
+      ];
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const d = test.map(t => {
+        const te = days.filter((day, index) => index === t.day);
+        return {
+          ...te,
+          items: t.items
+            .map(ite => ite.quantity)
+            .reduce((acc, cur) => acc + cur, 0)
+        };
+      });
+      const lookup = d.reduce((acc, cur) => {
+        acc[cur["0"]] = ++acc[cur["0"]] || 0;
+        return acc;
+      }, {});
+      const duplicates = d.filter(e => lookup[e["0"]]);
+      const result = [];
+      duplicates.forEach(d => {
+        if (!this[d["0"]]) {
+          this[d["0"]] = { 0: d["0"], items: 0 };
+          result.push(this[d["0"]]);
         }
-      }
-      // console.log("my week", myWeek);
-      let desiredArray = [];
-      for (let i = 0; i < myWeek.length; i++) {
-        //O(7) best and worst case
-
-        if (noDup[0] && noDup[0][0] === myWeek[i]) {
-          let data = [myWeek[i], noDup[0].items];
-          noDup.shift();
-          desiredArray.push(data);
-        } else {
-          let data = [myWeek[i], 0];
-          desiredArray.push(data);
+        this[d["0"]].items += d.items;
+      }, Object.create(null));
+      if (result.length !== 0) {
+        let withoutDup = d.filter(
+          (i, index, self) => self.findIndex(t => t["0"] === i["0"]) === index
+        );
+        withoutDup = withoutDup.map(
+          it => result.find(o => o["0"] === it["0"]) || it
+        );
+        // console.log("withoutDup", withoutDup);
+        const newArr = withoutDup;
+        let myWeek;
+        for (let i = 0; i < possibleWeekArrangements.length; i++) {
+          //O(1) best case O(7) worst case
+          if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
+            myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
+            break;
+          }
         }
-      }
+        // console.log("my week", myWeek);
+        let desiredArray = [];
+        for (let i = 0; i < myWeek.length; i++) {
+          //O(7) best and worst case
 
-      const desiredData = desiredArray.map(data => ({
-        day: data[0],
-        items: data[1]
-      }));
-      this.setState({ data: desiredData });
+          if (newArr[0] && newArr[0][0] === myWeek[i]) {
+            let data = [myWeek[i], newArr[0].items];
+            newArr.shift();
+            desiredArray.push(data);
+          } else {
+            let data = [myWeek[i], 0];
+            desiredArray.push(data);
+          }
+        }
+        // console.log("desiredArray", desiredArray);
+
+        const desiredData = desiredArray.map(data => ({
+          day: data[0],
+          items: data[1]
+        }));
+        this.setState({ data: desiredData });
+        // take the desired array to the linegraph.
+        // const daysWithoutOrders = days.filter(day => {
+        //   const dayFound = newArr.find(d => d["0"] === day);
+        //   if (dayFound) {
+        //     return false;
+        //   }
+        //   return true;
+        // });
+        // const daysArrObj = daysWithoutOrders.map(day => ({ 0: day, items: 0 }));
+        // const allDays = [...newArr, ...daysArrObj];
+        // console.log(allDays);
+      } else {
+        const noDup = [...d];
+        let myWeek;
+        for (let i = 0; i < possibleWeekArrangements.length; i++) {
+          //O(1) best case O(7) worst case
+          if (possibleWeekArrangements[i][0] === days[new Date().getDay()]) {
+            myWeek = possibleWeekArrangements[i === 6 ? (i = 0) : i + 1];
+            break;
+          }
+        }
+        // console.log("my week", myWeek);
+        let desiredArray = [];
+        for (let i = 0; i < myWeek.length; i++) {
+          //O(7) best and worst case
+
+          if (noDup[0] && noDup[0][0] === myWeek[i]) {
+            let data = [myWeek[i], noDup[0].items];
+            noDup.shift();
+            desiredArray.push(data);
+          } else {
+            let data = [myWeek[i], 0];
+            desiredArray.push(data);
+          }
+        }
+
+        const desiredData = desiredArray.map(data => ({
+          day: data[0],
+          items: data[1]
+        }));
+        this.setState({ data: desiredData });
+      }
     }
   }
   componentDidUpdate(prevProps, prevState) {
