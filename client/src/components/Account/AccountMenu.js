@@ -9,7 +9,7 @@ import { GoClippy } from "react-icons/go";
 export class AccountMenu extends Component {
   render() {
     return (
-      <div className="box-container account-menu-container">
+      <div className="box-container account-menu-container m-0 p-0">
         <div className="account-menu-wrapper">
           <NavLink
             activeClassName="account-active"
@@ -20,7 +20,7 @@ export class AccountMenu extends Component {
             <span className="ml-2">My Account</span>
           </NavLink>
         </div>
-        <br />
+
         <div className="account-menu-wrapper">
           <NavLink
             activeClassName="account-active"
@@ -31,7 +31,7 @@ export class AccountMenu extends Component {
             <span className="ml-2">Orders</span>
           </NavLink>
         </div>
-        <br />
+
         <div className="account-menu-wrapper">
           <NavLink
             activeClassName="account-active"
@@ -42,7 +42,7 @@ export class AccountMenu extends Component {
             <span className="ml-2">Wishlist</span>
           </NavLink>
         </div>
-        <br />
+
         <div className="account-menu-wrapper">
           <NavLink
             activeClassName="account-active"
@@ -53,10 +53,10 @@ export class AccountMenu extends Component {
             <span className="ml-2">Pending Reviews</span>
           </NavLink>
         </div>
-        <br />
+
         <div
           id="account-logout"
-          className="account-menu-wrapper account-logout-wrapper navlink"
+          className="account-menu-wrapper account-logout-wrapper"
           onClick={() => (window.location.href = "/api/logout")}
         >
           Logout

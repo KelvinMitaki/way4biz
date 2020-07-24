@@ -1,26 +1,30 @@
 .account-menu-container {
-  padding-bottom: 1px;
-  margin-bottom: 50px !important;
+  height: 300px;
+  /* padding-bottom: 100px; */
 }
 
 .account-menu-wrapper {
-  height: 40px;
   width: 100%;
 }
 
-.navlink,
+.navlink {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #000;
+}
+
 .navlink:hover {
   text-decoration: none !important;
   color: #000;
-  display: block;
   width: 100% !important;
-  padding: 20px;
-}
-.navlink:hover {
   font-weight: 500;
   background-color: #f8f9f9;
   color: #f76b1a !important;
+  padding: 10px;
 }
+
 .account-active,
 .account-active:hover {
   color: #f76b1a !important;
@@ -29,13 +33,22 @@
   background-color: #ededed;
 }
 
-.account-logout-wrapper {
-  text-align: center;
-}
-
 #account-logout {
   border-top: 1px solid #d4d4d4;
-  background-color: #eee !important;
+  border-bottom: 1px solid #d4d4d4;
+  background-color: #eaecee !important;
+  text-align: center;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: #000;
+  cursor: pointer;
+}
+
+#account-logout:hover {
+  color: #f76b1a !important;
 }
 
 @media screen and (max-width: 960px) {
