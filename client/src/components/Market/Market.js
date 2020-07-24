@@ -11,7 +11,7 @@ import Image from "./Image";
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -19,7 +19,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -66,23 +66,23 @@ function Market(props) {
                       </p>
                     </div>
                   </Link>
-                  {/* <div style={{ height: "10px", padding: "0px 10px" }}>
+                  <div style={{ height: "10px", padding: "0px 10px" }}>
                     {product.freeShipping && (
-                      <p className="lead" style={{ fontSize: "smaller" }}>
+                      <span className="lead" style={{ fontSize: "smaller" }}>
                         Free Shipping
-                      </p>
+                      </span>
                     )}
-                  </div> */}
-                  {/* <div
+                  </div>
+                  <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      padding: "0px 10px",
+                      padding: "0px 10px"
                     }}
                     className="my-2"
                   >
                     <Heart product={product} />
-                  </div> */}
+                  </div>
                 </div>
               );
             }
@@ -111,14 +111,14 @@ function Market(props) {
                     </p>
                   </div>
                 </Link>
-                {/* <div style={{ height: "10px", padding: "0px 10px" }}>
+                <div style={{ height: "10px", padding: "0px 10px" }}>
                   {product.freeShipping && (
-                    <p className="lead" style={{ fontSize: "smaller" }}>
+                    <span className="lead" style={{ fontSize: "smaller" }}>
                       Free Shipping
-                    </p>
+                    </span>
                   )}
-                </div> */}
-                {/* <div
+                </div>
+                <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -127,7 +127,7 @@ function Market(props) {
                   className="my-2"
                 >
                   <Heart product={product} />
-                </div> */}
+                </div>
               </div>
             );
           })}
@@ -136,11 +136,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore,
+    hasMore: state.product.hasMore
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(
