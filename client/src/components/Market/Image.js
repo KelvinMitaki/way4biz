@@ -1,8 +1,20 @@
 import React, { Component } from "react";
-import BottomPageLoader from "../Pages/BottomPageLoader";
 import "react-lazy-load-image-component/src/effects/blur.css";
 export class Image extends Component {
   text = React.createRef();
+  componentDidMount() {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const image = entry.target;
+          image.src = image.dataset.src;
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    imageObserver.observe(this.text.current);
+  }
   componentDidUpdate() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
