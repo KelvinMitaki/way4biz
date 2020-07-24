@@ -144,8 +144,13 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
       type: LOG_IN,
       payload: res.data
     });
-    dispatch({ type: LOADING_STOP });
+    if (res.data.isAdmin) {
+      history.push("/admin-dashboard");
+      dispatch({ type: LOADING_STOP });
+      return;
+    }
     history.push("/");
+    dispatch({ type: LOADING_STOP });
   } catch (error) {
     getState().form.LoginForm.values.password = "";
     dispatch({ type: LOADING_STOP });
