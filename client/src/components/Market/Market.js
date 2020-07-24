@@ -50,6 +50,7 @@ function Market(props) {
                     className="product-link"
                   >
                     <Image
+                      scrollPosition={window.pageYOffset}
                       image={
                         product.imageUrl[0].includes("http")
                           ? product.imageUrl[0]
