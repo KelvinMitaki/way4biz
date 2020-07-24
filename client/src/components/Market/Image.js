@@ -19,29 +19,11 @@ export class Image extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* {!this.state.isLoaded &&
-          <LazyLoadImage
-            effect="blur"
-            alt={this.props.alt}
-            height={234}
-            src={this.props.image}
-            placeholder={<BottomPageLoader />}
-            onLoad={() => this.setState({ isLoaded: true })}
-          />
-          
-          
-          }
-          <img
-            src={this.props.image}
-            alt={this.props.alt}
-            onLoad={() => this.setState({ isLoaded: true })}
-          /> 
-          */}
-
         <img
+          className="loading"
           data-src={this.props.image}
           ref={this.text}
-          src="/1.jpg"
+          src="/load.jpg"
           alt={this.props.alt}
           height="200px"
           width="200px"
