@@ -54,15 +54,12 @@ export class AccountMenu extends Component {
           </NavLink>
         </div>
         <br />
-        <div className="account-menu-wrapper account-logout-wrapper">
-          <a
-            id="account-logout"
-            // className="logout-link"
-            href="/api/logout"
-            className="navlink"
-          >
-            Logout
-          </a>
+        <div
+          id="account-logout"
+          className="account-menu-wrapper account-logout-wrapper navlink"
+          onClick={() => (window.location.href = "/api/logout")}
+        >
+          Logout
         </div>
         <br />
         {/* <br /> */}

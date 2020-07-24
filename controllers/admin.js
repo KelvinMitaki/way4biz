@@ -26,6 +26,8 @@ const User = require("../models/User");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
 const Category = require("../models/Category");
+const isAdmin = require("../middlewares/is-admin");
+const auth = require("../middlewares/is-auth");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -630,7 +632,7 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
   }
 });
 // PROTECT THIS ROUTE LATER
-route.get("/api/root/admin/stock/report", isSeller, async (req, res) => {
+route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {
     const stockQuantity = await Product.aggregate([
       { $project: { stockQuantity: 1, _id: 0 } }
@@ -651,7 +653,7 @@ route.get("/api/root/admin/stock/report", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/verified/sellers", isSeller, async (req, res) => {
+route.get("/api/verified/sellers", auth, isAdmin, async (req, res) => {
   try {
     const verifiedSellers = await Seller.find({ isSeller: true });
     res.send({ verifiedSellers });
@@ -659,7 +661,7 @@ route.get("/api/verified/sellers", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/verified/seller/:sellerId", isSeller, async (req, res) => {
+route.get("/api/verified/seller/:sellerId", auth, isAdmin, async (req, res) => {
   try {
     const seller = await Seller.findById(req.params.sellerId);
     if (!seller || Object.keys(seller).length === 0) {
@@ -670,7 +672,7 @@ route.get("/api/verified/seller/:sellerId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/new/sellers", isSeller, async (req, res) => {
+route.get("/api/new/sellers", auth, isAdmin, async (req, res) => {
   try {
     const sellers = await Seller.find({ isSeller: false });
     res.send({ sellers });
@@ -678,7 +680,7 @@ route.get("/api/new/sellers", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/new/seller/:sellerId", isSeller, async (req, res) => {
+route.get("/api/new/seller/:sellerId", auth, isAdmin, async (req, res) => {
   try {
     const { sellerId } = req.params;
     const seller = await Seller.findById(sellerId);
@@ -691,7 +693,7 @@ route.get("/api/new/seller/:sellerId", isSeller, async (req, res) => {
   }
 });
 // FETCH ALL ORDERS COUNT AND TODAY COUNT
-route.get("/api/root/admin/orders", isSeller, async (req, res) => {
+route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
   try {
     const totalOrdersCount = await Order.find({}).estimatedDocumentCount();
     const todaysOrdersCount = await Order.aggregate([
@@ -741,7 +743,7 @@ route.get("/api/root/admin/orders", isSeller, async (req, res) => {
 });
 
 // FETCH PENDING ORDERS COUNT
-route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
+route.get("/api/root/admin/pending/orders", auth, isAdmin, async (req, res) => {
   try {
     const pendingOrders = await Order.aggregate([
       { $match: { delivered: false } },
@@ -775,7 +777,7 @@ route.get("/api/root/admin/pending/orders", isSeller, async (req, res) => {
 });
 
 // FETCH ALL ORDERS
-route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
+route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
   try {
     const { itemsToSkip, test } = req.body;
 
@@ -838,7 +840,7 @@ route.post("/api/root/admin/all/orders", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
+route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   try {
     const { orderId } = req.params;
     const buyer = await Order.findById(orderId)
@@ -870,7 +872,7 @@ route.get("/api/root/admin/order/:orderId", isSeller, async (req, res) => {
   }
 });
 
-route.get("/api/fetch/weekly/sales", isSeller, async (req, res) => {
+route.get("/api/fetch/weekly/sales", auth, isAdmin, async (req, res) => {
   try {
     const items = await Order.aggregate([
       {
@@ -899,7 +901,8 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid subcategory"),
-  isSeller,
+  auth,
+  isAdmin,
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -927,7 +930,8 @@ route.patch(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid subcategory"),
-  isSeller,
+  auth,
+  isAdmin,
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -947,21 +951,18 @@ route.patch(
   }
 );
 
-route.get(
-  "/api/root/admin/fetch/all/categories",
-  isSeller,
-  async (req, res) => {
-    try {
-      const categories = await Category.find({});
-      res.send(categories);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+route.get("/api/root/admin/fetch/all/categories", async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    res.send(categories);
+  } catch (error) {
+    res.status(500).send(error);
   }
-);
+});
 route.get(
   "/api/root/admin/category/:categoryId",
-  isSeller,
+  auth,
+  isAdmin,
   async (req, res) => {
     try {
       const category = await Category.findById(req.params.categoryId);

@@ -7,5 +7,8 @@ module.exports = (req, res, next) => {
       .status(401)
       .send({ seller: "Please sign in as a seller to continue" });
   }
+  if (req.session.user && req.session.user.isAdmin) {
+    return res.status(401).send({ seller: "You are not a seller" });
+  }
   next();
 };

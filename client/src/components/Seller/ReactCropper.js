@@ -10,7 +10,7 @@ export class ReactCropper extends Component {
     if (typeof this.cropper.current.getCroppedCanvas() === "undefined") {
       return;
     }
-    this.cropper.current.getCroppedCanvas().toBlob((blob) => {
+    this.cropper.current.getCroppedCanvas().toBlob(blob => {
       setImage(blob);
     }, "image/*");
   };
@@ -27,7 +27,7 @@ export class ReactCropper extends Component {
         dragMode="move"
         guides={false}
         scalable={true}
-        cropBoxMovable={true}
+        cropBoxMovable={false}
         cropBoxResizable={true}
         crop={this.cropImage}
       />

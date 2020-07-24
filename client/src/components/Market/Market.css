@@ -59,9 +59,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 35px !important;
+  height: 45px !important;
   padding: 0px !important;
   margin: 0px !important;
+  /* background-color: red; */
 }
 
 @media screen and (max-width: 960px) {
@@ -71,10 +72,6 @@
 
   .product div {
     padding-left: 10px;
-  }
-
-  .product div {
-    margin-top: 20px;
   }
 
   .product:hover {
@@ -91,7 +88,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px !important;
-    height: 30px !important;
+    flex-wrap: nowrap;
+    height: 40px !important;
   }
 }
 
