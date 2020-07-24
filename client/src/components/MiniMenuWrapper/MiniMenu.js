@@ -121,6 +121,7 @@ class MiniMenu extends React.Component {
                     )}
                     <div id="mini-logout-link-wrapper">
                       <div
+                        style={{ cursor: "pointer" }}
                         className="mini-logout-link primary-link"
                         onClick={() => (window.location.href = "/api/logout")}
                       >

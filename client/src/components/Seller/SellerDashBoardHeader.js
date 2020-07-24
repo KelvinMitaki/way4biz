@@ -37,6 +37,7 @@ class SellerDashBoardHeader extends React.Component {
             </NavLink>
           </li> */}
           <li
+            style={{ cursor: "pointer" }}
             className="my-4 link logout-seller-db-header-link"
             onClick={() => (window.location.href = "/api/logout")}
           >
