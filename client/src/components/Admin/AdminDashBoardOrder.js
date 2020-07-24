@@ -20,7 +20,8 @@ class AdminDashBoardOrder extends React.Component {
     );
   }
   render() {
-    if (!this.props.adminOrder) return <ScreenLoader />;
+    if (!this.props.adminOrder || this.props.adminOrdersLoading)
+      return <ScreenLoader />;
     if (this.props.adminOrder && this.props.adminOrder["0"]._id) {
       return (
         <div className="container-fluid p-0">
@@ -103,7 +104,8 @@ class AdminDashBoardOrder extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder
+    adminOrder: state.product.adminOrder,
+    adminOrdersLoading: state.product.adminOrdersLoading
   };
 };
 export default withRouter(
