@@ -10,6 +10,7 @@ import { signInClick, registerClick } from "../../redux/actions";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 
 class HeroCarousel extends React.Component {
   shouldComponentUpdate(nextprops, nextState) {
@@ -23,10 +24,19 @@ class HeroCarousel extends React.Component {
     const randomStop = Math.ceil(Math.random() * this.props.products.length);
     const randomStart = randomStop < 4 ? randomStop + 4 : randomStop - 4;
 
-    const trimmedProducts = this.props.products.slice(
+    let trimmedProducts = this.props.products.slice(
       randomStart > randomStop ? randomStop : randomStart,
       randomStop > randomStart ? randomStop : randomStart
     );
+    if (trimmedProducts.length < 4) {
+      trimmedProducts = [
+        ...trimmedProducts,
+        ...this.props.products.slice(
+          randomStop,
+          randomStop > this.props.products.length ? randomStop - 4 : +1
+        )
+      ];
+    }
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -45,7 +55,7 @@ class HeroCarousel extends React.Component {
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&
-                trimmedProducts.map((prod) => (
+                trimmedProducts.map(prod => (
                   <div
                     key={prod._id}
                     style={{ cursor: "pointer" }}
@@ -53,8 +63,10 @@ class HeroCarousel extends React.Component {
                       this.props.history.push(`/product/${prod._id}`)
                     }
                   >
-                    <img
-                      src={
+                    <Image
+                      height="120vh"
+                      width="120vw"
+                      image={
                         prod.imageUrl[0].includes("http")
                           ? prod.imageUrl[0]
                           : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${prod.imageUrl[0]} `
@@ -96,7 +108,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%",
+                    width: "100%"
                   }}
                   className="mt-4"
                 >
@@ -104,7 +116,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -119,7 +131,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -133,7 +145,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -171,10 +183,10 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default withRouter(

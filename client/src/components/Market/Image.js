@@ -37,8 +37,9 @@ export class Image extends Component {
           ref={this.text}
           src="/load.jpg"
           alt={this.props.alt}
-          height="200vh"
-          width="150wh"
+          height={this.props.height}
+          width={this.props.width}
+          style={{ margin: "auto" }}
         />
       </React.Fragment>
     );
