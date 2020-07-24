@@ -16,7 +16,7 @@ class SearchResults extends React.Component {
               <img src="/1.jpg" />
             </div>
             <div className="main-search-product-info">
-              <h3>Great Beer Great Beer Great Beer Great Beer Great Beer</h3>
+              <h5>Great Beer Great Beer Great Beer Great Beer Great Beer</h5>
               <p>Ksh.10,000</p>
               <Rating size={20} />
               <p>Visit Store</p>
