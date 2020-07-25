@@ -973,4 +973,29 @@ route.get(
   }
 );
 
+route.post(
+  "/api/store/seller/imageUrl",
+  auth,
+  check("imageUrl")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid image url"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { imageUrl } = req.body;
+      const seller = await Seller.findById(_id);
+      seller.imageUrl = [...seller.imageUrl, ...imageUrl];
+      await seller.save();
+      res.status(200).send({ message: "succees" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 module.exports = route;

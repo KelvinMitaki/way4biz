@@ -638,7 +638,6 @@ export const storeImage = image => async dispatch => {
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
-    console.log(error.response.data);
     if (
       error &&
       error.response &&
@@ -2126,7 +2125,7 @@ export const handleCheckAction = bool => {
   };
 };
 
-export const storeSellerImage = image => async dispatch => {
+export const storeSellerImage = image => async (dispatch, getState) => {
   try {
     dispatch({ type: STORE_IMAGE_START });
     const uploadConfig = await axios.get("/api/image/upload");
@@ -2140,14 +2139,13 @@ export const storeSellerImage = image => async dispatch => {
         type: STORE_SELLER_IMAGE,
         payload: uploadConfig.data.key
       });
-
+      const sellerImageUrl = getState().sellerDetails.sellerImageUrl;
       dispatch({ type: STORE_IMAGE_STOP });
       return;
     }
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
-    console.log(error.response.data);
     if (
       error &&
       error.response &&

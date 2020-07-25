@@ -55,6 +55,9 @@ const SellerSchema = new mongoose.Schema(
     verified: {
       type: Boolean,
       default: false
+    },
+    imageUrl: {
+      type: [String]
     }
   },
   {
