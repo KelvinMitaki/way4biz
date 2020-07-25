@@ -22,7 +22,6 @@
   background-color: #fff;
   height: calc(80vh - 50px);
   list-style: none;
-  /* overflow-y: clip; */
   display: flex;
   flex-direction: column;
 }
@@ -70,10 +69,6 @@
   color: #f76b1a !important;
   text-decoration: none;
 }
-
-/* .categories li:hover .category-hover-popup {
-  display: block;
-} */
 
 .right-arrow {
   font-size: 25px;

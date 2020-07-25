@@ -6,5 +6,24 @@
   width: 100%;
   z-index: 1000;
   background-color: #fff;
-  /* display: none; */
+  padding: 20px;
+}
+
+.hovered-sub-categories-section-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.hovered-sub-categories-section ul {
+  list-style: none;
+}
+
+.hovered-sub-categories-section ul li a {
+  color: #000;
+}
+
+.hovered-sub-categories-section ul li a:hover {
+  color: #f76b1a;
+  text-decoration: none;
 }
