@@ -5,7 +5,7 @@ import { animateScroll as scroll } from "react-scroll";
 class SellerDocuments extends React.Component {
   state = {
     idUploaded: false,
-    passportUploaded: false,
+    passportUploaded: false
   };
 
   componentDidMount() {
@@ -13,9 +13,9 @@ class SellerDocuments extends React.Component {
     scroll.scrollToTop();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return false;
+  // }
 
   render() {
     return (

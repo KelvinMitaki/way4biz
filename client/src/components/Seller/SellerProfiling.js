@@ -12,6 +12,7 @@ import {
   handleCheckAction
 } from "../../redux/actions";
 import { connect } from "react-redux";
+import FinishProfiling from "./FinishProfiling";
 
 class SellerProfiling extends React.Component {
   handleCheck = val => {
@@ -38,6 +39,8 @@ class SellerProfiling extends React.Component {
         return <SellerOrientationGuide proceed={this.handleCheck} />;
       case 2:
         return <SellerDocuments proceed={this.handleCheck} />;
+      case 3:
+        return <FinishProfiling />;
       default:
         break;
     }
