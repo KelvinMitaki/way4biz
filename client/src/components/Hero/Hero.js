@@ -17,7 +17,14 @@ class Hero extends React.Component {
   handleSubCategoryPopup = () => {
     this.setState((prevState) => {
       return {
-        showSubCategoryPopup: !prevState.showSubCategoryPopup,
+        showSubCategoryPopup: true,
+      };
+    });
+  };
+  unHandleSubCategoryPopup = () => {
+    this.setState((prevState) => {
+      return {
+        showSubCategoryPopup: false,
       };
     });
   };
@@ -25,7 +32,10 @@ class Hero extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row" id="hero">
-          <SideBar handleSubCategoryPopup={this.handleSubCategoryPopup} />
+          <SideBar
+            handleSubCategoryPopup={this.handleSubCategoryPopup}
+            unHandleSubCategoryPopup={this.unHandleSubCategoryPopup}
+          />
           <CaroDisplay openCategoryPopup={this.state.showSubCategoryPopup} />
         </div>
       </div>

@@ -10,6 +10,7 @@ class SideBar extends React.Component {
       <div id="sidebar" className="col-lg-3">
         <HeroCategories
           handleSubCategoryPopup={this.props.handleSubCategoryPopup}
+          unHandleSubCategoryPopup={this.props.unHandleSubCategoryPopup}
         />
       </div>
     );
