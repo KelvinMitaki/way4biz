@@ -637,6 +637,7 @@ export const storeImage = image => async dispatch => {
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
+    console.log(error.response.data);
     if (
       error &&
       error.response &&
