@@ -83,7 +83,7 @@ class SellerProfiling extends React.Component {
                 </button>
               )}
 
-              {this.props.open === 4 ? null : nextButton}
+              {this.props.open === 3 ? null : nextButton}
             </div>
           </div>
         </div>

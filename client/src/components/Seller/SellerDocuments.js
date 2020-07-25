@@ -1,6 +1,7 @@
 import React from "react";
 import PhotosPage from "./PhotosPage";
 import { animateScroll as scroll } from "react-scroll";
+import { connect } from "react-redux";
 
 class SellerDocuments extends React.Component {
   state = {
@@ -11,8 +12,16 @@ class SellerDocuments extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
     scroll.scrollToTop();
+    if (this.props.imageUrl.length > 1) {
+      this.props.proceed(true);
+    }
   }
 
+  componentDidUpdate() {
+    if (this.props.imageUrl.length > 1) {
+      this.props.proceed(true);
+    }
+  }
   // shouldComponentUpdate(nextProps, nextState) {
   //   return false;
   // }
@@ -29,5 +38,9 @@ class SellerDocuments extends React.Component {
     );
   }
 }
-
-export default SellerDocuments;
+const mapStateToProps = state => {
+  return {
+    imageUrl: state.image.imageUrl
+  };
+};
+export default connect(mapStateToProps)(SellerDocuments);
