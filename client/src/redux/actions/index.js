@@ -129,7 +129,9 @@ import {
   EDIT_CATEGORY_START,
   EDIT_CATEGORY_STOP,
   FETCH_ADMIN_ORDER_START,
-  FETCH_ADMIN_ORDER_STOP
+  FETCH_ADMIN_ORDER_STOP,
+  HANDLE_INCREMENT_ACTION,
+  HANDLE_DECREMENT_ACTION
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2102,4 +2104,16 @@ export const editCategory = (
     dispatch({ type: EDIT_CATEGORY_STOP });
     console.log(error.response);
   }
+};
+export const handleIncrementAction = val => {
+  return {
+    type: HANDLE_INCREMENT_ACTION,
+    payload: val
+  };
+};
+export const handleDecrementAction = val => {
+  return {
+    type: HANDLE_DECREMENT_ACTION,
+    payload: val
+  };
 };
