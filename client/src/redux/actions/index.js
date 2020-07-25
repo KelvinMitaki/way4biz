@@ -132,7 +132,8 @@ import {
   FETCH_ADMIN_ORDER_STOP,
   HANDLE_INCREMENT_ACTION,
   HANDLE_DECREMENT_ACTION,
-  HANDLE_CHECK_ACTION
+  HANDLE_CHECK_ACTION,
+  STORE_SELLER_IMAGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2123,4 +2124,55 @@ export const handleCheckAction = bool => {
     type: HANDLE_CHECK_ACTION,
     payload: bool
   };
+};
+
+export const storeSellerImage = image => async dispatch => {
+  try {
+    dispatch({ type: STORE_IMAGE_START });
+    const uploadConfig = await axios.get("/api/image/upload");
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      dispatch({
+        type: STORE_SELLER_IMAGE,
+        payload: uploadConfig.data.key
+      });
+
+      dispatch({ type: STORE_IMAGE_STOP });
+      return;
+    }
+    dispatch({ type: STORE_IMAGE_STOP });
+    throw new Error("Error getting url");
+  } catch (error) {
+    console.log(error.response.data);
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.admin
+    ) {
+      return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    console.log(error.response.data);
+    dispatch({ type: STORE_IMAGE_STOP });
+  }
 };

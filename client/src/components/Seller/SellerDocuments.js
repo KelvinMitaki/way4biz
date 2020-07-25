@@ -2,6 +2,7 @@ import React from "react";
 import PhotosPage from "./PhotosPage";
 import { animateScroll as scroll } from "react-scroll";
 import { connect } from "react-redux";
+import SellerImage from "./SellerImage";
 
 class SellerDocuments extends React.Component {
   state = {
@@ -31,9 +32,9 @@ class SellerDocuments extends React.Component {
       <div className="container">
         <h3>Please upload valid copies of the following documents.</h3>
         <h4>National ID</h4>
-        <PhotosPage />
+        <SellerImage />
         <h4>PassPort</h4>
-        <PhotosPage />
+        <SellerImage />
       </div>
     );
   }
