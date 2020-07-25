@@ -23,14 +23,10 @@ class HeroCategories extends React.Component {
           <h3>Categories</h3>
         </div>
         <ul className="categories">
-          <li
-            onMouseEnter={this.handleMouseOver}
-            onMouseOut={this.handleMouseOut}
-          >
+          <li>
             <Link
               to="/categories"
               onClick={() => this.props.fetchAllCategories()}
-              style={{ color: "#000" }}
             >
               <AiOutlineBars />
               <span className="ml-2">All Categories</span>
