@@ -10,11 +10,11 @@ import { DiCssTricks } from "react-icons/di";
 class BuyerInfo extends React.Component {
   render() {
     return (
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0 mb-5">
         <AdminDashBoardHeader />
         <div className="container mt-4">
           <div>
-            <div className="row">
+            <div className="row admin-buyer-wrapper">
               <div className="col-md-5">
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <IconContext.Provider

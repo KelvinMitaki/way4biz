@@ -71,7 +71,7 @@ class AdminDashBoard extends React.Component {
           <AdminDashBoardHeader />
           <div className="container-fluid p-0">
             <AdminDashboardSecondaryHeader />
-            <div className="container">
+            <div className="container mb-5">
               <div className="row admin-dashboard-top">
                 <div
                   className="col-lg-3 admin-big-number-wrapper"

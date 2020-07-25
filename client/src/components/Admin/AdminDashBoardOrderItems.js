@@ -17,7 +17,7 @@ class AdminDashBoardOrderItems extends React.Component {
   render() {
     if (!this.props.adminOrder) return <ScreenLoader />;
     return (
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0 mb-5">
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div className="container mt-4">

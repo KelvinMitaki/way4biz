@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
@@ -55,7 +55,7 @@ import SearchResults from "./components/Header/SearchResults";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -65,21 +65,50 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
-  handleScroll = e => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.scrolling !== this.state.scrolling) {
+      this.scrolled = false;
+    }
+    let scrollTopDistance = window.pageYOffset;
+    if (
+      scrollTopDistance > 50 &&
+      prevState.scrolling === false &&
+      prevState.scrolling !== this.state.scrolling
+    ) {
+      this.setState({
+        scrolling: true,
+      });
+
+      this.scrolled = true;
+    }
+
+    if (
+      prevState.scrolling &&
+      prevState.scrolling !== this.state.scrolling &&
+      scrollTopDistance > 50
+    ) {
+      this.setState({
+        scrolling: false,
+      });
+      this.scrolled = false;
+    }
+  }
+
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 50) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -88,7 +117,7 @@ class App extends React.Component {
     if (this.props.isSignedIn !== null) {
       return (
         <div id="main">
-          {this.scrolled ? <MoveToTop /> : null}
+          {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
           <MobileLogo />
           <div>
             <Route path="/" exact component={Home} />
@@ -491,16 +520,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

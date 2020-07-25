@@ -25,10 +25,10 @@ class AdminDashBoardSeller extends React.Component {
         firstName,
         lastName,
         storeName,
-        createdAt
+        createdAt,
       } = this.props.newSeller;
       return (
-        <div className="container-fluid p-0">
+        <div className="container-fluid p-0 mb-5">
           <DashBoardHeader />
           <SecondaryHeader />
           <div className="mt-4 container">
@@ -69,10 +69,10 @@ class AdminDashBoardSeller extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading
+    newSellerLoading: state.sellerRegister.newSellerLoading,
   };
 };
 export default withRouter(
