@@ -2140,6 +2140,9 @@ export const storeSellerImage = image => async (dispatch, getState) => {
         payload: uploadConfig.data.key
       });
       const sellerImageUrl = getState().sellerDetails.sellerImageUrl;
+      await axios.post("/api/store/seller/imageUrl", {
+        imageUrl: sellerImageUrl
+      });
       dispatch({ type: STORE_IMAGE_STOP });
       return;
     }

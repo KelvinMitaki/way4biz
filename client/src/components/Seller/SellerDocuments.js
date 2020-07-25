@@ -13,13 +13,13 @@ class SellerDocuments extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
     scroll.scrollToTop();
-    if (this.props.imageUrl.length > 1) {
+    if (this.props.sellerImageUrl.length > 1) {
       this.props.proceed(true);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.imageUrl.length > 1) {
+    if (this.props.sellerImageUrl.length > 1) {
       this.props.proceed(true);
     }
   }
@@ -41,7 +41,7 @@ class SellerDocuments extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    imageUrl: state.image.imageUrl
+    sellerImageUrl: state.sellerDetails.sellerImageUrl
   };
 };
 export default connect(mapStateToProps)(SellerDocuments);
