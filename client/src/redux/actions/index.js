@@ -131,7 +131,8 @@ import {
   FETCH_ADMIN_ORDER_START,
   FETCH_ADMIN_ORDER_STOP,
   HANDLE_INCREMENT_ACTION,
-  HANDLE_DECREMENT_ACTION
+  HANDLE_DECREMENT_ACTION,
+  HANDLE_CHECK_ACTION
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2105,15 +2106,20 @@ export const editCategory = (
     console.log(error.response);
   }
 };
-export const handleIncrementAction = val => {
+export const handleIncrementAction = () => {
   return {
-    type: HANDLE_INCREMENT_ACTION,
-    payload: val
+    type: HANDLE_INCREMENT_ACTION
   };
 };
-export const handleDecrementAction = val => {
+export const handleDecrementAction = () => {
   return {
-    type: HANDLE_DECREMENT_ACTION,
-    payload: val
+    type: HANDLE_DECREMENT_ACTION
+  };
+};
+
+export const handleCheckAction = bool => {
+  return {
+    type: HANDLE_CHECK_ACTION,
+    payload: bool
   };
 };
