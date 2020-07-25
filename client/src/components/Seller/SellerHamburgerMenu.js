@@ -128,6 +128,7 @@ class SellerHamburgerMenu extends React.Component {
                   </NavLink>
                 </li> */}
                 <li
+                  style={{ cursor: "pointer" }}
                   className="my-4 link"
                   onClick={() => (window.location.href = "/api/logout")}
                 >

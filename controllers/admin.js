@@ -951,19 +951,14 @@ route.patch(
   }
 );
 
-route.get(
-  "/api/root/admin/fetch/all/categories",
-  auth,
-  isAdmin,
-  async (req, res) => {
-    try {
-      const categories = await Category.find({});
-      res.send(categories);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+route.get("/api/root/admin/fetch/all/categories", async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    res.send(categories);
+  } catch (error) {
+    res.status(500).send(error);
   }
-);
+});
 route.get(
   "/api/root/admin/category/:categoryId",
   auth,
