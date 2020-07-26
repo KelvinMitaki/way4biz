@@ -15,6 +15,11 @@
   box-shadow: none;
 }
 
+.img-1,
+.img-2 {
+  flex: 2;
+}
+
 .seller-images img {
   width: 100%;
 }
