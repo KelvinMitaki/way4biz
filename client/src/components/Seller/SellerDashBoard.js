@@ -5,11 +5,11 @@ import "./SellerDashBoard.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
-import { fetchSellerNewOrders } from "../../redux/actions";
+import { fetchSellerNewOrdersCount } from "../../redux/actions";
 
 class SellerDashBoard extends React.Component {
   componentDidMount() {
-    this.props.fetchSellerNewOrders();
+    this.props.fetchSellerNewOrdersCount();
   }
   render() {
     return (
@@ -82,6 +82,6 @@ const mapStateToProps = state => {
     user: state.auth.user
   };
 };
-export default connect(mapStateToProps, { fetchSellerNewOrders })(
+export default connect(mapStateToProps, { fetchSellerNewOrdersCount })(
   SellerDashBoard
 );

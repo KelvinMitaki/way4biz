@@ -134,7 +134,8 @@ import {
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
-  FETCH_SELLER_NEW_ORDERS
+  FETCH_SELLER_NEW_ORDERS,
+  FETCH_SELLER_NEW_ORDERS_COUNT
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2179,12 +2180,11 @@ export const storeSellerImage = image => async (dispatch, getState) => {
   }
 };
 
-export const fetchSellerNewOrders = () => async dispatch => {
+export const fetchSellerNewOrdersCount = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_ORDERS_START });
     const res = await axios.get("/api/seller/new/orders");
-    console.log(res.data);
-    dispatch({ type: FETCH_SELLER_NEW_ORDERS, payload: res.data });
+    dispatch({ type: FETCH_SELLER_NEW_ORDERS_COUNT, payload: res.data });
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });

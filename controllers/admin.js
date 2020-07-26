@@ -759,22 +759,37 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
       },
       { $project: { rating: 1 } }
     ]);
-    const reviewsCount = reviews.length;
-    reviews = reviews
-      .map(review => review.rating)
-      .reduce((acc, cur) => acc + cur, 0);
-    const qualityRating = parseFloat((reviews / reviewsCount).toFixed(2));
+    if (reviews.length !== 0) {
+      const reviewsCount = reviews.length;
+      reviews = reviews
+        .map(review => review.rating)
+        .reduce((acc, cur) => acc + cur, 0);
+      const qualityRating = parseFloat((reviews / reviewsCount).toFixed(2));
+      // MONTHS SELLING
+      const seller = await Seller.findById(_id);
+      let created = new Date(seller.createdAt);
+      created = new Date().getTime() - created.getTime();
+      created = created / (1000 * 60 * 60 * 24 * 30);
+      const monthsSelling = Math.round(created);
+      return res.send({
+        newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
+        successfulSales:
+          successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0,
+        qualityRating,
+        monthsSelling
+      });
+    }
     // MONTHS SELLING
     const seller = await Seller.findById(_id);
     let created = new Date(seller.createdAt);
     created = new Date().getTime() - created.getTime();
     created = created / (1000 * 60 * 60 * 24 * 30);
     const monthsSelling = Math.round(created);
-    res.send({
+    return res.send({
       newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
       successfulSales:
         successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0,
-      qualityRating,
+      qualityRating: 0,
       monthsSelling
     });
   } catch (error) {
