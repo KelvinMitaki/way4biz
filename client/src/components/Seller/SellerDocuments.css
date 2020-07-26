@@ -1,0 +1,32 @@
+.seller-uploads-wrapper {
+  height: 220px;
+  text-align: center;
+}
+.seller-uploads-wrapper div:first-child {
+  height: 100%;
+  margin: 15px 0px;
+}
+
+.seller-uploads-wrapper img {
+  height: 80%;
+}
+
+.seller-uploads-trash-button-wrapper {
+  align-items: center;
+  height: 20%;
+}
+
+.seller-uploads-trash-button {
+  background-color: #f76b1a;
+  color: #fff;
+  /* height: 100%; */
+}
+
+.seller-uploads-trash-button:hover {
+  color: #fff;
+}
+
+.seller-uploads-trash-button:focus {
+  box-shadow: none;
+  outline: none;
+}
