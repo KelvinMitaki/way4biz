@@ -23,17 +23,14 @@ class SellerDocuments extends React.Component {
       this.props.proceed(true);
     }
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return false;
-  // }
 
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{ textAlign: "center" }}>
         <h3>Please upload valid copies of the following documents.</h3>
-        <h4>National ID</h4>
+        <h4 className="my-2">National ID</h4>
         <SellerImage aspectRatio={[3, 2]} />
-        <h4>PassPort</h4>
+        <h4 className="my-2">Profile Photo</h4>
         <SellerImage />
       </div>
     );
