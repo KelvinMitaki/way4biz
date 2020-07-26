@@ -65,6 +65,15 @@ class User extends React.Component {
                   <span className="ml-2">My Store</span>
                 </NavLink>
               )}
+              {this.props.user.isAdmin && (
+                <NavLink
+                  to="/admin-dashboard"
+                  className="primary-link my-account-link"
+                >
+                  <FaStore />
+                  <span className="ml-2">Dashboard</span>
+                </NavLink>
+              )}
               <div
                 className="logout-link"
                 onClick={() => (window.location.href = "/api/logout")}

@@ -12,7 +12,6 @@ class LineGraph extends React.Component {
   }
 
   componentDidMount() {
-    console.log(typeof this.props.weeklySales);
     const test =
       this.props.weeklySales &&
       typeof this.props.weeklySales !== "string" &&

@@ -49,7 +49,8 @@ import {
   FETCH_ALL_ADMIN_CATEGORIES,
   FETCH_SINGLE_CATEGORY,
   FETCH_ADMIN_ORDER_START,
-  FETCH_ADMIN_ORDER_STOP
+  FETCH_ADMIN_ORDER_STOP,
+  FETCH_SELLER_NEW_ORDERS_COUNT
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -93,7 +94,8 @@ const INITIAL_STATE = {
   weeklySales: null,
   payments: null,
   adminCategories: null,
-  singleCategory: null
+  singleCategory: null,
+  dashboard: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -280,6 +282,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminCategories: action.payload };
     case FETCH_SINGLE_CATEGORY:
       return { ...state, singleCategory: action.payload };
+    case FETCH_SELLER_NEW_ORDERS_COUNT:
+      return { ...state, dashboard: action.payload };
     default:
       return state;
   }

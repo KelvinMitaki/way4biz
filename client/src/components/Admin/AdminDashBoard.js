@@ -48,7 +48,7 @@ class AdminDashBoard extends React.Component {
 
     const todayOrders =
       this.props.adminOrders &&
-      this.props.adminOrders.todayOrders &&
+      this.props.adminOrders.todaysOrdersCount &&
       this.props.adminOrders.todaysOrdersCount.length !== 0 &&
       this.props.adminOrders.todaysOrdersCount[0].todaysOrders;
 
@@ -169,7 +169,7 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {calc}% change today
+                                  {todayOrders ? calc : 0}% change today
                                 </p>
                               </div>
                             </Link>

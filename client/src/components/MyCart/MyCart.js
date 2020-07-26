@@ -7,6 +7,7 @@ import { deleteFromCart } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Image from "../Market/Image";
 
 class MyCart extends React.Component {
   render() {
@@ -27,8 +28,10 @@ class MyCart extends React.Component {
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
                         <div className="col-5 col-md-6">
-                          <img
-                            src={
+                          <Image
+                            height="150px"
+                            width="150px"
+                            image={
                               item.imageUrl[0].includes("http")
                                 ? item.imageUrl[0]
                                 : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `

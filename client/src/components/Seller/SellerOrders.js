@@ -15,16 +15,18 @@ class SellerOrders extends React.Component {
     this.props.fetchSellerOrders();
   }
   getTabs() {
+    const newOrders = this.props.sellerOrders.filter(order => !order.delivered);
+    const delivered = this.props.sellerOrders.filter(order => order.delivered);
     let tabs = [
       {
         title: "All",
-        data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />,
+        data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />
       },
-      { title: "New", data: <DashBoardOrder /> },
-      { title: "Shipped", data: <DashBoardOrder /> },
-      { title: "Delivered", data: <DashBoardOrder /> },
-      { title: "Returned", data: <DashBoardOrder /> },
-      { title: "Cancelled", data: <DashBoardOrder /> },
+      { title: "New", data: <DashBoardOrder sellerOrders={newOrders} /> },
+
+      { title: "Delivered", data: <DashBoardOrder sellerOrders={delivered} /> },
+
+      { title: "Cancelled", data: <DashBoardOrder /> }
     ];
 
     return tabs.map((tab, index) => ({
@@ -32,7 +34,7 @@ class SellerOrders extends React.Component {
       getContent: () => tab.data,
       key: index,
       tabClassName: "order-tab",
-      panelClassName: "order-db-panel",
+      panelClassName: "order-db-panel"
     }));
   }
   render() {
@@ -74,10 +76,10 @@ class SellerOrders extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sellerOrders: state.sellerRegister.sellerOrders,
-    sellerOrdersLoading: state.auth.sellerOrdersLoading,
+    sellerOrdersLoading: state.auth.sellerOrdersLoading
   };
 };
 export default connect(mapStateToProps, { fetchSellerOrders })(SellerOrders);

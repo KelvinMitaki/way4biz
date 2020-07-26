@@ -47,6 +47,10 @@ const ProductSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Seller",
       required: true
+    },
+    onSite: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
