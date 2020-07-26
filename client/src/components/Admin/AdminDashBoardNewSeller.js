@@ -26,6 +26,12 @@ class AdminDashBoardSeller extends React.Component {
         lastName,
         storeName,
         createdAt,
+        phoneNumber,
+        description,
+        city,
+        town,
+        address,
+        email
       } = this.props.newSeller;
       return (
         <div className="container-fluid p-0 mb-5">
@@ -46,75 +52,88 @@ class AdminDashBoardSeller extends React.Component {
                 <div className="custom-row">
                   <h5>
                     <strong>Name: </strong>
-                    John Doe
+                    {firstName} {lastName}
                   </h5>
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>StoreName:</strong>
-                    Lenovo Outsource
+                    <strong>StoreName: </strong>
+                    {storeName}
                   </h5>
                 </div>
 
                 <div className="custom-row">
                   <h5>
-                    <strong>Date Joined:</strong>
-                    yesterday
+                    <strong>Date Joined: </strong>
+                    {new Date(createdAt).toLocaleString()}
                   </h5>
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>Phone:</strong>
-                    600
+                    <strong>Phone: </strong>
+                    +254{phoneNumber}
                   </h5>
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>Email:</strong>
-                    mackenzie@yahoo.com
+                    <strong>Email: </strong>
+                    {email}
                   </h5>
                 </div>
-                <div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>City: </strong>
+                    {city}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Town: </strong>
+                    {town}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Address: </strong>
+                    {address}
+                  </h5>
+                </div>
+                <div className="custom-row">
                   <h5 className="mb-2">
                     <strong>Store Description</strong>
                   </h5>
-                  <p>
-                    The quic brown fox jumped over the lazy dog.The quic brown
-                    fox jumped over the lazy dog. The quic brown fox jumped over
-                    the lazy dog. The quic brown fox jumped over the lazy dog.
-                    The quic brown fox jumped over the lazy dog. The quic brown
-                    fox jumped over the lazy dog.The quic brown fox jumped over
-                    the lazy dog.The quic brown fox jumped over the lazy dog.The
-                    quic brown fox jumped over the lazy dog.The quic brown fox
-                    jumped over the lazy dog.The quic brown fox jumped over the
-                    lazy dog.The quic brown fox jumped over the lazy dog.The
-                    quic brown fox jumped over the lazy dog.The quic brown fox
-                    jumped over the lazy dog.
-                  </p>
+                  <p>{description}</p>
                 </div>
+
                 <div>
-                  <h5 className="mb-2">
-                    <strong>Seller Documents</strong>
-                  </h5>
-                  <div className="seller-images">
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                  </div>
+                  {this.props.newSeller.imageUrl.length === 0 ? (
+                    <h5 style={{ textAlign: "center" }} className="mb-2">
+                      <strong>No Documents Uploaded Yet</strong>
+                    </h5>
+                  ) : (
+                    <React.Fragment>
+                      <strong>Seller Documents</strong>
+
+                      <div className="seller-images">
+                        {this.props.newSeller.imageUrl.map((url, i) => (
+                          <div key={i}>
+                            <img
+                              src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                              alt={url}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </React.Fragment>
+                  )}
                 </div>
               </div>
 
               <div className="accept-sell-request">
-                <button className="btn btn-block accept-sell-request-btn">
+                <button
+                  disabled={this.props.newSeller.imageUrl.length === 0}
+                  className="btn btn-block accept-sell-request-btn"
+                >
                   Accept Seller Request
                 </button>
               </div>
@@ -126,10 +145,10 @@ class AdminDashBoardSeller extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading,
+    newSellerLoading: state.sellerRegister.newSellerLoading
   };
 };
 export default withRouter(
