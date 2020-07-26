@@ -5,8 +5,12 @@ import "./SellerDashBoard.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
+import { fetchSellerNewOrders } from "../../redux/actions";
 
 class SellerDashBoard extends React.Component {
+  componentDidMount() {
+    this.props.fetchSellerNewOrders();
+  }
   render() {
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -73,9 +77,11 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
-export default connect(mapStateToProps)(SellerDashBoard);
+export default connect(mapStateToProps, { fetchSellerNewOrders })(
+  SellerDashBoard
+);

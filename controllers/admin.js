@@ -631,7 +631,77 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-// PROTECT THIS ROUTE LATER
+
+route.post(
+  "/api/store/seller/imageUrl",
+  auth,
+  check("imageUrl")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid image url"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { imageUrl } = req.body;
+      const seller = await Seller.findById(_id);
+      seller.imageUrl = [...seller.imageUrl, ...imageUrl];
+      await seller.save();
+      res.status(200).send({ message: "succees" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    // NEW ORDERS
+    let newOrders = await Order.aggregate([
+      { $match: { delivered: false } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      {
+        $project: {
+          products: 1,
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1
+        }
+      },
+      { $match: { "products.seller": _id } },
+      {
+        $project: {
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1,
+          products: {
+            $filter: {
+              input: "$products",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      }
+    ]);
+    // SUCCESSFUL SALES
+    res.send({ newOrders });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// SECURE THIS ROUTE LATER
 route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {
     const stockQuantity = await Product.aggregate([
@@ -967,31 +1037,6 @@ route.get(
     try {
       const category = await Category.findById(req.params.categoryId);
       res.send(category);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }
-);
-
-route.post(
-  "/api/store/seller/imageUrl",
-  auth,
-  check("imageUrl")
-    .not()
-    .isEmpty()
-    .withMessage("Please choose a valid image url"),
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(401).send({ message: errors.array()[0].msg });
-      }
-      const { _id } = req.session.user;
-      const { imageUrl } = req.body;
-      const seller = await Seller.findById(_id);
-      seller.imageUrl = [...seller.imageUrl, ...imageUrl];
-      await seller.save();
-      res.status(200).send({ message: "succees" });
     } catch (error) {
       res.status(500).send(error);
     }
