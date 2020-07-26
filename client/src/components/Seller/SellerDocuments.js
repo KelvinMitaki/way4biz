@@ -7,7 +7,7 @@ import SellerImage from "./SellerImage";
 class SellerDocuments extends React.Component {
   state = {
     idUploaded: false,
-    passportUploaded: false
+    passportUploaded: false,
   };
 
   componentDidMount() {
@@ -32,16 +32,16 @@ class SellerDocuments extends React.Component {
       <div className="container">
         <h3>Please upload valid copies of the following documents.</h3>
         <h4>National ID</h4>
-        <SellerImage />
+        <SellerImage aspectRatio={[3, 2]} />
         <h4>PassPort</h4>
         <SellerImage />
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerImageUrl: state.sellerDetails.sellerImageUrl
+    sellerImageUrl: state.sellerDetails.sellerImageUrl,
   };
 };
 export default connect(mapStateToProps)(SellerDocuments);

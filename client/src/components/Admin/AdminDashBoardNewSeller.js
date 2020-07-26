@@ -56,6 +56,10 @@ class AdminDashBoardSeller extends React.Component {
                   {new Date(createdAt).toLocaleString()}
                 </h6>
               </div>
+              <div className="seller-images">
+                <img src="/1.jpg" />
+                <img src="/1.jpg" />
+              </div>
               <div className="accept-sell-request">
                 <button className="btn btn-block accept-sell-request-btn">
                   Accept Seller Request
