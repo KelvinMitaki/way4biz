@@ -6,7 +6,7 @@ import {
   AiOutlineHome,
   AiOutlineBars,
   AiOutlineUser,
-  AiOutlineHeart
+  AiOutlineHeart,
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
@@ -56,7 +56,7 @@ class MiniMenu extends React.Component {
                     <FaOpencart />
                     <span className="badge ml-1">
                       {this.props.cart
-                        .map(item => item.quantity)
+                        .map((item) => item.quantity)
                         .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -104,8 +104,11 @@ class MiniMenu extends React.Component {
                       <AiOutlineHeart />
                       <span className="ml-2">
                         <span style={{ marginTop: "5px" }}>Wishlist</span>
-                        <span className="ml-1">
-                          ({this.props.wishlist.length})
+                        <span
+                          className="ml-1 badge"
+                          style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                        >
+                          {this.props.wishlist.length}
                         </span>
                       </span>{" "}
                     </NavLink>
@@ -151,11 +154,11 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
