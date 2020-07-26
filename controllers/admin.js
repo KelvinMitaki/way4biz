@@ -806,6 +806,7 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 // SECURE THIS ROUTE LATER
 route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {

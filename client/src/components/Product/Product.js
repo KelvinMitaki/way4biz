@@ -49,7 +49,8 @@ class Product extends React.Component {
   }
   shouldComponentUpdate(prevProps, prevState) {
     if (
-      prevProps.relatedProducts.length !== this.props.relatedProducts.length
+      prevProps.relatedProducts.length !== this.props.relatedProducts.length ||
+      prevProps.productReviews.length !== this.props.productReviews.length
     ) {
       return true;
     }
