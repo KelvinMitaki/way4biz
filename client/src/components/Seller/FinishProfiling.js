@@ -10,12 +10,13 @@ const FinishProfiling = () => {
         alignItems: "center",
         justifyContent: "center",
       }}
+      className="container"
     >
-      <div className="box-container">
-        <h6>
+      <div className="box-container p-4">
+        <h3>
           You have successfully completed the seller profiling! Please wait for
           the admin to approve your request.
-        </h6>
+        </h3>
       </div>
     </div>
   );
