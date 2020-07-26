@@ -15,11 +15,19 @@
   box-shadow: none;
 }
 
-.img-1,
-.img-2 {
-  flex: 2;
+.seller-images {
+  display: grid;
+  grid-gap: 20;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .seller-images img {
-  width: 100%;
+  height: 300px;
+}
+
+@media screen and (max-width: 960px) {
+  .seller-images img {
+    height: auto;
+    width: 100%;
+  }
 }

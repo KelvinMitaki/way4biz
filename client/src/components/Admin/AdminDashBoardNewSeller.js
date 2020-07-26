@@ -56,21 +56,17 @@ class AdminDashBoardSeller extends React.Component {
                 </h6>
               </div>
               <div className="seller-images">
-                <div className="d-flex align-items-center flex-wrap">
-                  <div className="img-1">
-                    <img src="/1.jpg" />
-                  </div>
-                  <div
-                    style={{
-                      height: "200px",
-                      borderLeft: "2px solid #f76b1a",
-                      // flex: "1",
-                    }}
-                    className="y"
-                  ></div>
-                  <div className="img-2">
-                    <img src="/1.jpg" />
-                  </div>
+                <div>
+                  <img src="/1.jpg" />
+                </div>
+                <div>
+                  <img src="/1.jpg" />
+                </div>
+                <div>
+                  <img src="/1.jpg" />
+                </div>
+                <div>
+                  <img src="/1.jpg" />
                 </div>
               </div>
               <div className="accept-sell-request">

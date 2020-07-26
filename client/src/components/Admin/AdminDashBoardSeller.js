@@ -36,6 +36,7 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
+                <div className="col-lg"></div>
                 <h6>
                   <strong>Name: </strong>
                   {this.props.verifiedSeller.firstName}{" "}
