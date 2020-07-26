@@ -231,6 +231,14 @@ export const fetchUser = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -289,6 +297,14 @@ export const editUser = (credentials, history) => async (
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -324,6 +340,14 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -383,6 +407,14 @@ export const updatePasswordLoggedIn = (
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -457,6 +489,14 @@ export const fetchSeller = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -572,6 +612,14 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -605,6 +653,14 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -660,6 +716,14 @@ export const storeImage = image => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -703,6 +767,14 @@ export const editProduct = (formvalues, productId, history) => async (
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -792,6 +864,14 @@ export const makeOrder = credentials => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -823,6 +903,14 @@ export const fetchSellerOrders = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -866,6 +954,14 @@ export const fetchBuyerOrders = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -916,6 +1012,14 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1029,6 +1133,14 @@ export const fetchPendingReviews = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1075,6 +1187,14 @@ export const submitReview = (
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1111,6 +1231,14 @@ export const redirectOnFail = (
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1334,6 +1462,14 @@ export const fetchSellerReviews = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1380,6 +1516,14 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1418,6 +1562,14 @@ export const paymentPerDistance = (details, history) => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1449,6 +1601,14 @@ export const getStock = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1493,6 +1653,14 @@ export const fetchVerifiedSellers = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1524,6 +1692,14 @@ export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1565,6 +1741,14 @@ export const fetchNewSellers = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1595,6 +1779,14 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1637,6 +1829,14 @@ export const fetchAdminOrders = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1666,6 +1866,14 @@ export const fetchAdminPendingOrders = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1722,6 +1930,14 @@ export const fetchAllOrders = filter => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1798,6 +2014,14 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1835,6 +2059,14 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1884,6 +2116,14 @@ export const fetchOrderById = orderId => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -1923,6 +2163,14 @@ export const fetchWeeklySales = () => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -1972,6 +2220,14 @@ export const addNewCategory = (category, history) => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -2007,6 +2263,14 @@ export const fetchAllAdminCategories = () => async dispatch => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -2015,6 +2279,50 @@ export const fetchAllAdminCategories = () => async dispatch => {
     console.log(error.response);
   }
 };
+export const fetchAllSellerCategories = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_START });
+    const res = await axios.get("/api/seller/all/categories");
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES, payload: res.data });
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.admin
+    ) {
+      return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
+    console.log(error.response);
+  }
+};
+
 export const fetchSingleCategory = (categoryId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_SINGLE_CATEGORY_START });
@@ -2037,6 +2345,14 @@ export const fetchSingleCategory = (categoryId, history) => async dispatch => {
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -2088,6 +2404,14 @@ export const editCategory = (
       error.response.data.admin
     ) {
       return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
     }
     if (
       error &&
@@ -2171,6 +2495,14 @@ export const storeSellerImage = image => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
       error.response.data.seller
     ) {
       return (window.location.href = "/seller/sign-in");
@@ -2187,6 +2519,38 @@ export const fetchSellerNewOrdersCount = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_NEW_ORDERS_COUNT, payload: res.data });
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.admin
+    ) {
+      return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   }
 };

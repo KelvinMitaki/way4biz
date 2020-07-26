@@ -6,7 +6,8 @@ import validator from "validator";
 import {
   addProduct,
   unpersistImage,
-  fetchAllAdminCategories
+  fetchAllAdminCategories,
+  fetchAllSellerCategories
 } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
@@ -21,6 +22,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 export class Sell extends Component {
   componentDidMount() {
     this.props.fetchAllAdminCategories();
+    this.props.fetchAllSellerCategories();
   }
   componentWillUnmount() {
     this.props.unpersistImage();
@@ -216,7 +218,8 @@ export default withRouter(
     connect(mapStateToProps, {
       addProduct,
       unpersistImage,
-      fetchAllAdminCategories
+      fetchAllAdminCategories,
+      fetchAllSellerCategories
     })(Sell)
   )
 );
