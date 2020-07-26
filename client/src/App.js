@@ -127,7 +127,19 @@ class App extends React.Component {
               component={ProductReviewsWrapper}
             />
             <Route path="/404" component={NotFound} />
-            <Route path="/seller/profiling" exact component={SellerProfiling} />
+            <Route
+              path="/seller/profiling"
+              exact
+              render={() =>
+                this.props.user &&
+                this.props.user.verifiedPhoneNumber &&
+                !this.props.user.isSeller ? (
+                  <SellerProfiling />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
             <Route path="/seller/store" exact component={Store} />
             <Route path="/search/results" component={SearchResults} />
             <Route
