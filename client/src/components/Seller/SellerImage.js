@@ -7,12 +7,12 @@ import "./PhotosPage.css";
 import { storeSellerImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
+const SellerImage = ({ storeSellerImage, storeImageLoading, aspectRatio }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -32,7 +32,7 @@ const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
       className="container-v p-0 box-container"
       style={{
         width: "90%",
-        margin: "0px auto 10px auto"
+        margin: "0px auto 10px auto",
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
@@ -47,7 +47,11 @@ const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
         </div>
         <div className="col-xl-4">
           {files.length > 0 && (
-            <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
+            <ReactCropper
+              setImage={setImage}
+              imagePreview={files[0].preview}
+              aspectRatio={aspectRatio}
+            />
           )}
         </div>
         <div className="col-xl-4">
@@ -57,10 +61,8 @@ const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
                 className="img-preview"
                 style={{
                   minHeight: "200px",
-                  // height: "100%",
                   width: "1200px",
-                  overflow: "hidden"
-                  // flex: "2",
+                  overflow: "hidden",
                 }}
               />
               <div
@@ -90,9 +92,9 @@ const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    storeImageLoading: state.product.storeImageLoading
+    storeImageLoading: state.product.storeImageLoading,
   };
 };
 export default connect(mapStateToProps, { storeSellerImage })(SellerImage);

@@ -169,7 +169,6 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {console.log(todayOrders)}
                                   {todayOrders ? calc : 0}% change today
                                 </p>
                               </div>

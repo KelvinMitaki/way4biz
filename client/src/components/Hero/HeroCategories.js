@@ -7,15 +7,9 @@ import { singleCategory, fetchAllCategories } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
+import CategoryHoverPopup from "./CategoryHoverPopup";
 
 class HeroCategories extends React.Component {
-  handleMouseOver = e => {
-    setTimeout(() => this.props.handleSubCategoryPopup(), 1000);
-  };
-  handleMouseOut = e => {
-    this.props.unHandleSubCategoryPopup();
-  };
-
   render() {
     return (
       <div id={this.props.id}>
@@ -42,8 +36,6 @@ class HeroCategories extends React.Component {
                 onClick={() =>
                   this.props.history.push(`/products/category/${category._id}`)
                 }
-                onMouseEnter={this.handleMouseOver}
-                onMouseLeave={this.handleMouseOut}
               >
                 <div>
                   <AiOutlineBars />

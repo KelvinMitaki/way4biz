@@ -108,10 +108,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   this.props.newSellers.sellers.length.toLocaleString() !==
                     0 && (
                     <span
-                      className="ml-1"
-                      style={{ position: "relative", zIndex: "32" }}
+                      className="ml-1 badge"
+                      style={{
+                        position: "relative",
+                        zIndex: "32",
+                        backgroundColor: "#f76b1a",
+                        color: "#fff",
+                      }}
                     >
-                      ({this.props.newSellers.sellers.length.toLocaleString()})
+                      {this.props.newSellers.sellers.length.toLocaleString()}
                     </span>
                   )}
               </span>
@@ -130,8 +135,16 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   {this.props.newSellers &&
                     this.props.newSellers.sellers &&
                     this.props.newSellers.sellers.length !== 0 && (
-                      <span className="ml-1">
-                        ({this.props.newSellers.sellers.length})
+                      <span
+                        className="ml-1 badge"
+                        style={{
+                          position: "relative",
+                          zIndex: "32",
+                          backgroundColor: "#f76b1a",
+                          color: "#fff",
+                        }}
+                      >
+                        {this.props.newSellers.sellers.length}
                       </span>
                     )}
                 </NavLink>

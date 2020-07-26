@@ -1,6 +1,5 @@
 .category-head {
   background-color: #f2f4f4;
-  padding: 0px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -22,9 +21,10 @@
   background-color: #fff;
   height: calc(80vh - 50px);
   list-style: none;
-  /* overflow-y: clip; */
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1001;
 }
 
 .categories li a:first-child {
@@ -42,6 +42,10 @@
   font-size: medium;
   font-weight: 400;
   justify-content: space-between;
+}
+
+.categories li:hover ~ .category-hover-popup {
+  display: block;
 }
 
 .right-arrow {
@@ -70,10 +74,6 @@
   color: #f76b1a !important;
   text-decoration: none;
 }
-
-/* .categories li:hover .category-hover-popup {
-  display: block;
-} */
 
 .right-arrow {
   font-size: 25px;

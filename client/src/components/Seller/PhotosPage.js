@@ -7,7 +7,7 @@ import "./PhotosPage.css";
 import { storeImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const PhotosPage = ({ storeImage, storeImageLoading }) => {
+const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
@@ -57,10 +57,8 @@ const PhotosPage = ({ storeImage, storeImageLoading }) => {
                 className="img-preview"
                 style={{
                   minHeight: "200px",
-                  // height: "100%",
                   width: "1200px",
                   overflow: "hidden",
-                  // flex: "2",
                 }}
               />
               <div

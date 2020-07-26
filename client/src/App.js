@@ -75,7 +75,7 @@ class App extends React.Component {
     }
     let scrollTopDistance = window.pageYOffset;
     if (
-      scrollTopDistance > 50 &&
+      scrollTopDistance > 700 &&
       prevState.scrolling === false &&
       prevState.scrolling !== this.state.scrolling
     ) {
@@ -89,7 +89,7 @@ class App extends React.Component {
     if (
       prevState.scrolling &&
       prevState.scrolling !== this.state.scrolling &&
-      scrollTopDistance > 50
+      scrollTopDistance > 700
     ) {
       this.setState({
         scrolling: false,
@@ -100,7 +100,7 @@ class App extends React.Component {
 
   handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
-    if (scrollTopDistance > 50) {
+    if (scrollTopDistance > 700) {
       this.setState({
         scrolling: true,
       });
