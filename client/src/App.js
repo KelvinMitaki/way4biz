@@ -55,7 +55,7 @@ import SearchResults from "./components/Header/SearchResults";
 
 class App extends React.Component {
   state = {
-    scrolling: false,
+    scrolling: false
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -65,7 +65,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false,
+      scrolling: false
     });
   }
 
@@ -80,7 +80,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true,
+        scrolling: true
       });
 
       this.scrolled = true;
@@ -92,23 +92,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false,
+        scrolling: false
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = (e) => {
+  handleScroll = e => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true,
+        scrolling: true
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false,
+        scrolling: false
       });
       this.scrolled = false;
     }
@@ -133,7 +133,7 @@ class App extends React.Component {
             <Route
               path="/admin-sellers"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardSellers />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -143,7 +143,7 @@ class App extends React.Component {
             <Route
               path="/admin-orders"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardOrders />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -153,7 +153,7 @@ class App extends React.Component {
             <Route
               path="/admin-order/:orderId"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardOrder />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -163,7 +163,7 @@ class App extends React.Component {
             <Route
               path="/admin-categories"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardCategories />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -174,7 +174,7 @@ class App extends React.Component {
               path="/root/admin-order/view-items/:orderId"
               exact
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardOrderItems />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -185,7 +185,7 @@ class App extends React.Component {
               path="/admin/buyer-info"
               exact
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <BuyerInfo />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -195,7 +195,7 @@ class App extends React.Component {
             <Route
               path="/admin-category/add"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardAddCategory />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -205,7 +205,7 @@ class App extends React.Component {
             <Route
               path="/admin-category/edit/:categoryId"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardEditCategory />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -215,7 +215,7 @@ class App extends React.Component {
             <Route
               path="/admin-seller/:sellerId"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardSeller />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -225,7 +225,7 @@ class App extends React.Component {
             <Route
               path="/admin-new-sellers"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardNewSellers />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -235,7 +235,7 @@ class App extends React.Component {
             <Route
               path="/admin-new-seller/:sellerId"
               render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardNewSeller />
                 ) : (
                   <Redirect to="/seller/sign-in" />
@@ -334,7 +334,17 @@ class App extends React.Component {
                 )
               }
             />
-            <Route path="/admin-dashboard" exact component={AdminDashBoard} />
+            <Route
+              path="/admin-dashboard"
+              exact
+              render={() =>
+                this.props.user.isAdmin ? (
+                  <AdminDashBoard />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
             <Route
               render={() => (
                 <Switch>
@@ -520,16 +530,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories,
+  fetchCategories
 })(App);
