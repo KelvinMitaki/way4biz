@@ -444,7 +444,15 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
       return res.status(401).send({ message: "Not authorized" });
     }
     const test = await Order.aggregate([
-      { $project: { items: 1, paymentMethod: 1, buyer: 1, createdAt: 1 } },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          createdAt: 1,
+          delivered: 1
+        }
+      },
       { $unwind: "$items" },
       {
         $lookup: {
@@ -478,6 +486,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           createdAt: 1,
           buyerUser: 1,
           buyerSeller: 1,
+          delivered: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -497,6 +506,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           paymentMethod: {
             $first: "$paymentMethod"
           },
+          delivered: { $first: "$delivered" },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
