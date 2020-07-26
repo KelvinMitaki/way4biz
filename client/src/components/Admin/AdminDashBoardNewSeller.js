@@ -40,7 +40,6 @@ class AdminDashBoardSeller extends React.Component {
                   <Link to="/admin-new-sellers">
                     <BsArrowLeft />
                   </Link>
-                  {/* <h3 className="ml-3">Seller ID</h3> */}
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
@@ -57,8 +56,14 @@ class AdminDashBoardSeller extends React.Component {
                 </h6>
               </div>
               <div className="seller-images">
-                <img src="/1.jpg" />
-                <img src="/1.jpg" />
+                <div className="row">
+                  <div className="col-lg-6">
+                    <img src="/1.jpg" />
+                  </div>
+                  <div className="col-lg-6">
+                    <img src="/1.jpg" />
+                  </div>
+                </div>
               </div>
               <div className="accept-sell-request">
                 <button className="btn btn-block accept-sell-request-btn">
