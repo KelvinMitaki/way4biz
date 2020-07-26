@@ -557,6 +557,22 @@ route.get("/api/image/upload", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/image/upload/seller/details", auth, async (req, res) => {
+  try {
+    const key = `${req.session.user._id}/${uuidV1()}.jpeg`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: "e-commerce-gig",
+        ContentType: "image/jpeg",
+        Key: key
+      },
+      (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
+    );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
   try {
     const reviews = await Review.aggregate([

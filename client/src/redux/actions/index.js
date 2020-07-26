@@ -2454,7 +2454,7 @@ export const handleCheckAction = bool => {
 export const storeSellerImage = image => async (dispatch, getState) => {
   try {
     dispatch({ type: STORE_IMAGE_START });
-    const uploadConfig = await axios.get("/api/image/upload");
+    const uploadConfig = await axios.get("/api/image/upload/seller/details");
     if (uploadConfig.data.url) {
       await axios.put(uploadConfig.data.url, image, {
         headers: {
