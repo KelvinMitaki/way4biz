@@ -6,42 +6,41 @@ import SellerOrientationGuide from "./SellerOrientationGuide";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDocuments from "./SellerDocuments";
+import {
+  handleIncrementAction,
+  handleDecrementAction,
+  handleCheckAction
+} from "../../redux/actions";
+import { connect } from "react-redux";
+import FinishProfiling from "./FinishProfiling";
 
 class SellerProfiling extends React.Component {
-  state = {
-    open: 0,
-    proceed: false,
+  handleCheck = val => {
+    this.props.handleCheckAction(val);
   };
 
-  handleCheck = (val) => {
-    this.setState({
-      proceed: val,
-    });
-  };
-
-  handleIncrement = (e) => {
+  handleIncrement = e => {
     e.preventDefault();
-    this.setState({
-      open: this.state.open + 1,
-    });
+
+    this.props.handleIncrementAction();
   };
 
-  handleDecrement = (e) => {
+  handleDecrement = e => {
     e.preventDefault();
-    this.setState({
-      open: this.state.open - 1,
-    });
+
+    this.props.handleDecrementAction();
   };
 
   setUpData() {
-    console.log(this.state.open);
-    switch (this.state.open) {
+    switch (this.props.open) {
       case 0:
         return <SellerTermsAndConditions proceed={this.handleCheck} />;
       case 1:
         return <SellerOrientationGuide proceed={this.handleCheck} />;
       case 2:
         return <SellerDocuments proceed={this.handleCheck} />;
+      case 3:
+        return <FinishProfiling />;
       default:
         break;
     }
@@ -49,7 +48,7 @@ class SellerProfiling extends React.Component {
 
   render() {
     let nextButton;
-    if (this.state.proceed) {
+    if (this.props.proceed) {
       nextButton = (
         <button className="btn btn-md" onClick={this.handleIncrement}>
           Next
@@ -76,7 +75,7 @@ class SellerProfiling extends React.Component {
             {this.setUpData()}
 
             <div className="nav-btns container my-3">
-              {this.state.open === 0 ? (
+              {this.props.open === 0 || 3 ? (
                 <div></div>
               ) : (
                 <button className="btn btn-md" onClick={this.handleDecrement}>
@@ -84,7 +83,7 @@ class SellerProfiling extends React.Component {
                 </button>
               )}
 
-              {this.state.open === 4 ? null : nextButton}
+              {this.props.open === 3 ? null : nextButton}
             </div>
           </div>
         </div>
@@ -92,5 +91,14 @@ class SellerProfiling extends React.Component {
     );
   }
 }
-
-export default SellerProfiling;
+const mapStateToProps = state => {
+  return {
+    open: state.sellerDetails.open,
+    proceed: state.sellerDetails.proceed
+  };
+};
+export default connect(mapStateToProps, {
+  handleIncrementAction,
+  handleDecrementAction,
+  handleCheckAction
+})(SellerProfiling);

@@ -118,15 +118,7 @@ class SellerHamburgerMenu extends React.Component {
                     Sell
                   </NavLink>
                 </li>
-                {/* <li className="my-4">
-                  <NavLink
-                    className="link"
-                    activeClassName="seller-menu-acive"
-                    to="/seller/do/something"
-                  >
-                    Do Something
-                  </NavLink>
-                </li> */}
+
                 <li
                   style={{ cursor: "pointer" }}
                   className="my-4 link"

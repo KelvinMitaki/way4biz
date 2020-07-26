@@ -9,11 +9,18 @@ import cartReducer from "./cartReducer";
 import OrderDetailsPersist from "./OrderDetailsPersist";
 import filterReducer from "./filterReducer";
 import imageReducer from "./imageReducer";
+import sellerDetailsReducer from "./sellerDetailsReducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cartReducer", "detailsPersist", "filter", "image"]
+  whitelist: [
+    "cartReducer",
+    "detailsPersist",
+    "filter",
+    "image",
+    "sellerDetails"
+  ]
 };
 
 const reducers = combineReducers({
@@ -24,6 +31,7 @@ const reducers = combineReducers({
   cartReducer: cartReducer,
   detailsPersist: OrderDetailsPersist,
   filter: filterReducer,
-  image: imageReducer
+  image: imageReducer,
+  sellerDetails: sellerDetailsReducer
 });
 export default persistReducer(persistConfig, reducers);

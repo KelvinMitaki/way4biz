@@ -129,7 +129,11 @@ import {
   EDIT_CATEGORY_START,
   EDIT_CATEGORY_STOP,
   FETCH_ADMIN_ORDER_START,
-  FETCH_ADMIN_ORDER_STOP
+  FETCH_ADMIN_ORDER_STOP,
+  HANDLE_INCREMENT_ACTION,
+  HANDLE_DECREMENT_ACTION,
+  HANDLE_CHECK_ACTION,
+  STORE_SELLER_IMAGE
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2101,5 +2105,75 @@ export const editCategory = (
     }
     dispatch({ type: EDIT_CATEGORY_STOP });
     console.log(error.response);
+  }
+};
+export const handleIncrementAction = () => {
+  return {
+    type: HANDLE_INCREMENT_ACTION
+  };
+};
+export const handleDecrementAction = () => {
+  return {
+    type: HANDLE_DECREMENT_ACTION
+  };
+};
+
+export const handleCheckAction = bool => {
+  return {
+    type: HANDLE_CHECK_ACTION,
+    payload: bool
+  };
+};
+
+export const storeSellerImage = image => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STORE_IMAGE_START });
+    const uploadConfig = await axios.get("/api/image/upload");
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      dispatch({
+        type: STORE_SELLER_IMAGE,
+        payload: uploadConfig.data.key
+      });
+      const sellerImageUrl = getState().sellerDetails.sellerImageUrl;
+      await axios.post("/api/store/seller/imageUrl", {
+        imageUrl: sellerImageUrl
+      });
+      dispatch({ type: STORE_IMAGE_STOP });
+      return;
+    }
+    dispatch({ type: STORE_IMAGE_STOP });
+    throw new Error("Error getting url");
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.admin
+    ) {
+      return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    console.log(error.response.data);
+    dispatch({ type: STORE_IMAGE_STOP });
   }
 };
