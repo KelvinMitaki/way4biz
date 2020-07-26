@@ -50,7 +50,8 @@ class Product extends React.Component {
   shouldComponentUpdate(prevProps, prevState) {
     if (
       prevProps.relatedProducts.length !== this.props.relatedProducts.length ||
-      prevProps.productReviews.length !== this.props.productReviews.length
+      prevProps.productReviews.length !== this.props.productReviews.length ||
+      prevState.modalShow !== this.state.modalShow
     ) {
       return true;
     }
@@ -104,10 +105,10 @@ class Product extends React.Component {
       item => item._id === this.props.product && this.props.product._id
     );
     let itemInCart = false;
-    itemInCart = this.props.cart.find(
-      item => item._id === this.props.product && this.props.product._id
-    );
-
+    itemInCart =
+      this.props.product &&
+      this.props.product._id &&
+      this.props.cart.find(item => item._id === this.props.product._id);
     if (!this.props.product) return <ScreenLoader />;
     return (
       <div className="main">
@@ -297,7 +298,7 @@ class Product extends React.Component {
                       disabled={
                         this.props.product.stockQuantity === 0 ||
                         (itemInCart &&
-                          itemInCart.quantity ===
+                          itemInCart.quantity >=
                             this.props.product.stockQuantity)
                       }
                     >
