@@ -140,10 +140,8 @@ class Product extends React.Component {
                       controls={true}
                     >
                       <div>
-                        <Image
-                          height="60px"
-                          width="60px"
-                          image={
+                        <img
+                          src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
@@ -152,10 +150,8 @@ class Product extends React.Component {
                         />
                       </div>
                       <div>
-                        <Image
-                          height="60px"
-                          width="60px"
-                          image={
+                        <img
+                          src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
@@ -164,10 +160,8 @@ class Product extends React.Component {
                         />
                       </div>
                       <div>
-                        <Image
-                          height="60px"
-                          width="60px"
-                          image={
+                        <img
+                          src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
@@ -176,10 +170,8 @@ class Product extends React.Component {
                         />
                       </div>
                       <div>
-                        <Image
-                          height="60px"
-                          width="60px"
-                          image={
+                        <img
+                          src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
@@ -188,10 +180,8 @@ class Product extends React.Component {
                         />
                       </div>
                       <div>
-                        <Image
-                          height="60px"
-                          width="60px"
-                          image={
+                        <img
+                          src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `

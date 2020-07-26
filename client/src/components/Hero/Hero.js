@@ -12,7 +12,7 @@ class Hero extends React.Component {
       <div className="container-fluid">
         <div className="row" id="hero">
           <SideBar />
-          <CategoryHoverPopup />
+          {/* <CategoryHoverPopup /> */}
           <CaroDisplay />
         </div>
       </div>
