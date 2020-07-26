@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SellerImage from "./SellerImage";
 import "./SellerDocuments.css";
 import { FaTrashAlt } from "react-icons/fa";
+import { deleteSellerImage } from "../../redux/actions";
 
 class SellerDocuments extends React.Component {
   state = {
@@ -44,7 +45,10 @@ class SellerDocuments extends React.Component {
                 <img
                   src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
                 />
-                <div className="seller-uploads-trash-button-wrapper">
+                <div
+                  className="seller-uploads-trash-button-wrapper"
+                  onClick={() => this.props.deleteSellerImage(url)}
+                >
                   <button className="btn seller-uploads-trash-button">
                     <FaTrashAlt />
                     <span className="ml-1">Delete</span>
@@ -62,4 +66,4 @@ const mapStateToProps = state => {
     sellerImageUrl: state.sellerDetails.sellerImageUrl
   };
 };
-export default connect(mapStateToProps)(SellerDocuments);
+export default connect(mapStateToProps, { deleteSellerImage })(SellerDocuments);

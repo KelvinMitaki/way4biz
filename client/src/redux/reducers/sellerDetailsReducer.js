@@ -2,7 +2,8 @@ import {
   HANDLE_INCREMENT_ACTION,
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
-  STORE_SELLER_IMAGE
+  STORE_SELLER_IMAGE,
+  DELETE_SELLER_IMAGE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -23,6 +24,13 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         sellerImageUrl: [...state.sellerImageUrl, action.payload]
+      };
+    case DELETE_SELLER_IMAGE:
+      return {
+        ...state,
+        sellerImageUrl: state.sellerImageUrl.filter(
+          image => image !== action.payload
+        )
       };
     default:
       return state;

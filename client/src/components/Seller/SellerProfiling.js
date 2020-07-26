@@ -75,7 +75,7 @@ class SellerProfiling extends React.Component {
             {this.setUpData()}
 
             <div className="nav-btns container my-3">
-              {this.props.open === 0 || 3 ? (
+              {this.props.open === 0 || this.props.open === 3 ? (
                 <div></div>
               ) : (
                 <button className="btn btn-md" onClick={this.handleDecrement}>

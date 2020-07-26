@@ -624,6 +624,7 @@ route.get(`/api/seller/reviews`, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 // DELETE IMAGES FROM S3 AND DB
 route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
   try {
@@ -653,6 +654,26 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
       $pull: { imageUrl }
     });
     res.send(modifiedProduct);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// DELETE IMAGES FROM S3 AND DB
+route.post("/api/seller/images/delete", auth, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const { imageUrl } = req.body;
+    s3.deleteObject(
+      {
+        Bucket: "e-commerce-gig",
+        Key: imageUrl
+      },
+      (err, data) => (err ? res.status(400).send(err) : console.log(data))
+    );
+    const modifiedSeller = await Seller.findByIdAndUpdate(_id, {
+      $pull: { imageUrl }
+    });
+    res.send(modifiedSeller);
   } catch (error) {
     res.status(500).send(error);
   }
