@@ -661,7 +661,7 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
   try {
     const { _id } = req.session.user;
     // NEW ORDERS
-    let newOrders = await Order.aggregate([
+    const newOrders = await Order.aggregate([
       { $match: { delivered: false } },
       {
         $lookup: {
@@ -693,10 +693,48 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
             }
           }
         }
-      }
+      },
+      { $count: "newOrders" }
     ]);
     // SUCCESSFUL SALES
-    res.send({ newOrders });
+    const successfulSales = await Order.aggregate([
+      { $match: { delivered: true } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      {
+        $project: {
+          products: 1,
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1
+        }
+      },
+      { $match: { "products.seller": _id } },
+      {
+        $project: {
+          products: {
+            $filter: {
+              input: "$products",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      },
+      { $unwind: "$products" },
+      { $group: { _id: null, successfulSales: { $sum: 1 } } }
+    ]);
+    res.send({
+      newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
+      successfulSales:
+        successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
