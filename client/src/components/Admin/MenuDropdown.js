@@ -26,7 +26,14 @@ class MenuDropdown extends React.Component {
   showSmMenuItemBadges(name, props) {
     if (name === "New Sellers") {
       if (props.newSellers > 0) {
-        return <span className="ml-1">({props.newSellers})</span>;
+        return (
+          <span
+            className="ml-1 badge"
+            style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+          >
+            {props.newSellers}
+          </span>
+        );
       } else {
         return;
       }
@@ -41,7 +48,12 @@ class MenuDropdown extends React.Component {
         <span className="accordion">
           {parentKey[0]}
           {this.props.newSellers > 0 ? (
-            <span className="ml-1">({this.props.newSellers})</span>
+            <span
+              className="ml-1 badge"
+              style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+            >
+              {this.props.newSellers}
+            </span>
           ) : null}
 
           <MdKeyboardArrowDown className="ml-1" />
@@ -55,7 +67,9 @@ class MenuDropdown extends React.Component {
                 style={{ width: "100%" }}
               >
                 {childKey.name}
-                {this.showSmMenuItemBadges(childKey.name, this.props)}
+                <span>
+                  {this.showSmMenuItemBadges(childKey.name, this.props)}
+                </span>
               </NavLink>
             </p>
           ))}

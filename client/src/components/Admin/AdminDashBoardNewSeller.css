@@ -1,7 +1,3 @@
-/* .accept-sell-request {
-  border-top: 1px solid #d4d4d4;
-} */
-
 .accept-sell-request-btn {
   background-color: #f76b1a;
   color: #fff;
@@ -17,4 +13,8 @@
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+.seller-images img {
+  width: 100%;
 }
