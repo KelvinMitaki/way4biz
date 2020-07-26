@@ -18,8 +18,8 @@ const persistConfig = {
     "cartReducer",
     "detailsPersist",
     "filter",
-    "image"
-    // "sellerDetails"
+    "image",
+    "sellerDetails"
   ]
 };
 
