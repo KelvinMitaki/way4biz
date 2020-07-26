@@ -17,12 +17,14 @@
 
 .seller-images {
   display: grid;
-  grid-gap: 20;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 10px;
+  background-color: #eaecee;
 }
 
 .seller-images img {
-  height: 300px;
+  width: 100%;
 }
 
 @media screen and (max-width: 960px) {
