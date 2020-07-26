@@ -137,7 +137,6 @@ class MiniMenu extends React.Component {
             ) : (
               <NavLink to="/sign-in" className="primary-link col-3">
                 <div className="mini-menu-item">
-                  {/* <div className="flaticon-user mini-menu-icon"></div> */}
                   <IconContext.Provider value={{ className: "mini-menu-icon" }}>
                     <div className="icon-container">
                       <AiOutlineUser />
