@@ -43,36 +43,76 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
-                <h6>
-                  <strong>Name: </strong>
-                  {firstName} {lastName}
-                </h6>
-                <h6>
-                  <strong>StoreName:</strong> {storeName}
-                </h6>
-                <h6>
-                  <strong>Date Joined:</strong>{" "}
-                  {new Date(createdAt).toLocaleString()}
-                </h6>
-              </div>
-              <div className="seller-images">
-                <div className="d-flex align-items-center flex-wrap">
-                  <div className="img-1">
-                    <img src="/1.jpg" />
-                  </div>
-                  <div
-                    style={{
-                      height: "200px",
-                      borderLeft: "2px solid #f76b1a",
-                      // flex: "1",
-                    }}
-                    className="y"
-                  ></div>
-                  <div className="img-2">
-                    <img src="/1.jpg" />
+                <div className="custom-row">
+                  <h5>
+                    <strong>Name: </strong>
+                    John Doe
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>StoreName:</strong>
+                    Lenovo Outsource
+                  </h5>
+                </div>
+
+                <div className="custom-row">
+                  <h5>
+                    <strong>Date Joined:</strong>
+                    yesterday
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Phone:</strong>
+                    600
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Email:</strong>
+                    mackenzie@yahoo.com
+                  </h5>
+                </div>
+                <div>
+                  <h5 className="mb-2">
+                    <strong>Store Description</strong>
+                  </h5>
+                  <p>
+                    The quic brown fox jumped over the lazy dog.The quic brown
+                    fox jumped over the lazy dog. The quic brown fox jumped over
+                    the lazy dog. The quic brown fox jumped over the lazy dog.
+                    The quic brown fox jumped over the lazy dog. The quic brown
+                    fox jumped over the lazy dog.The quic brown fox jumped over
+                    the lazy dog.The quic brown fox jumped over the lazy dog.The
+                    quic brown fox jumped over the lazy dog.The quic brown fox
+                    jumped over the lazy dog.The quic brown fox jumped over the
+                    lazy dog.The quic brown fox jumped over the lazy dog.The
+                    quic brown fox jumped over the lazy dog.The quic brown fox
+                    jumped over the lazy dog.
+                  </p>
+                </div>
+                <div>
+                  <h5 className="mb-2">
+                    <strong>Seller Documents</strong>
+                  </h5>
+                  <div className="seller-images">
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
                   </div>
                 </div>
               </div>
+
               <div className="accept-sell-request">
                 <button className="btn btn-block accept-sell-request-btn">
                   Accept Seller Request

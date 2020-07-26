@@ -7,7 +7,7 @@ import "./PhotosPage.css";
 import { storeSellerImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const SellerImage = ({ storeSellerImage, storeImageLoading, aspectRatio }) => {
+const SellerImage = ({ storeSellerImage, storeImageLoading }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
@@ -47,11 +47,7 @@ const SellerImage = ({ storeSellerImage, storeImageLoading, aspectRatio }) => {
         </div>
         <div className="col-xl-4">
           {files.length > 0 && (
-            <ReactCropper
-              setImage={setImage}
-              imagePreview={files[0].preview}
-              aspectRatio={aspectRatio}
-            />
+            <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
           )}
         </div>
         <div className="col-xl-4">
