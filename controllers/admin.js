@@ -730,10 +730,45 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
       { $unwind: "$products" },
       { $group: { _id: null, successfulSales: { $sum: 1 } } }
     ]);
+    // QUALITY RATING
+    let reviews = await Review.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $match: {
+          "product.seller": _id
+        }
+      },
+      {
+        $project: {
+          rating: 1,
+          product: {
+            $filter: {
+              input: "$product",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      },
+      { $project: { rating: 1 } }
+    ]);
+    const reviewsCount = reviews.length;
+    reviews = reviews
+      .map(review => review.rating)
+      .reduce((acc, cur) => acc + cur, 0);
+    const qualityRating = parseFloat((reviews / reviewsCount).toFixed(2));
     res.send({
       newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
       successfulSales:
-        successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0
+        successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0,
+      qualityRating
     });
   } catch (error) {
     res.status(500).send(error);
