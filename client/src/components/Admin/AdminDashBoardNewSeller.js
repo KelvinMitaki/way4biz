@@ -6,7 +6,7 @@ import SecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link, withRouter, Redirect } from "react-router-dom";
-import { fetchNewSeller } from "../../redux/actions";
+import { fetchNewSeller, acceptSellerRequest } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -133,8 +133,25 @@ class AdminDashBoardSeller extends React.Component {
                 <button
                   disabled={this.props.newSeller.imageUrl.length === 0}
                   className="btn btn-block accept-sell-request-btn"
+                  onClick={() =>
+                    this.props.acceptSellerRequest(
+                      this.props.history,
+                      this.props.match.params.sellerId
+                    )
+                  }
                 >
-                  Accept Seller Request
+                  {this.props.sellerRequestLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.sellerRequestLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Accept Seller Request</span>
+                  )}
                 </button>
               </div>
             </div>
@@ -148,9 +165,12 @@ class AdminDashBoardSeller extends React.Component {
 const mapStateToProps = state => {
   return {
     newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading
+    newSellerLoading: state.sellerRegister.newSellerLoading,
+    sellerRequestLoading: state.sellerRegister.sellerRequestLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchNewSeller })(AdminDashBoardSeller)
+  connect(mapStateToProps, { fetchNewSeller, acceptSellerRequest })(
+    AdminDashBoardSeller
+  )
 );

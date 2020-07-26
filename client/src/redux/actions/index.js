@@ -136,7 +136,10 @@ import {
   STORE_SELLER_IMAGE,
   FETCH_SELLER_NEW_ORDERS,
   FETCH_SELLER_NEW_ORDERS_COUNT,
-  DELETE_SELLER_IMAGE
+  DELETE_SELLER_IMAGE,
+  ACCEPT_SELLER_REQUEST,
+  ACCEPT_SELLER_REQUEST_START,
+  ACCEPT_SELLER_REQUEST_STOP
 } from "./types";
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
@@ -2599,5 +2602,50 @@ export const deleteSellerImage = imageUrl => async dispatch => {
     }
     dispatch({ type: DELETE_IMAGE_STOP });
     console.log(error.response.data);
+  }
+};
+
+export const acceptSellerRequest = (history, sellerId) => async dispatch => {
+  try {
+    dispatch({ type: ACCEPT_SELLER_REQUEST_START });
+    await axios.post(`/api/accept/seller/request/${sellerId}`);
+    dispatch({ type: ACCEPT_SELLER_REQUEST });
+    dispatch({ type: ACCEPT_SELLER_REQUEST_STOP });
+    history.push("/admin-new-sellers");
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.buyer
+    ) {
+      return (window.location.href = "/sign-in");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.admin
+    ) {
+      return (window.location.href = "/");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.profiling
+    ) {
+      return (window.location.href = "/seller/profiling");
+    }
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.seller
+    ) {
+      return (window.location.href = "/seller/sign-in");
+    }
+    dispatch({ type: ACCEPT_SELLER_REQUEST_STOP });
+    console.log(error.response);
   }
 };

@@ -1194,4 +1194,20 @@ route.get(
   }
 );
 
+route.post(
+  "/api/accept/seller/request/:sellerId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { sellerId } = req.params;
+      const seller = await Seller.findByIdAndUpdate(sellerId, {
+        isSeller: true
+      });
+      res.send(seller);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
