@@ -36,23 +36,78 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
-                <h6>
-                  <strong>Name: </strong>
-                  {this.props.verifiedSeller.firstName}{" "}
-                  {this.props.verifiedSeller.lastName}
-                </h6>
-                <h6>
-                  <strong>StoreName:</strong>
-                  {this.props.verifiedSeller.storeName}
-                </h6>
-                <h6>
-                  <strong>Date Joined:</strong>
-                  {new Date(
-                    this.props.verifiedSeller.createdAt
-                  ).toLocaleString()}
-                </h6>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Name: </strong>
+                    {this.props.verifiedSeller.firstName}{" "}
+                    {this.props.verifiedSeller.lastName}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>StoreName:</strong>
+                    {this.props.verifiedSeller.storeName}
+                  </h5>
+                </div>
+
+                <div className="custom-row">
+                  <h5>
+                    <strong>Date Joined:</strong>
+                    {new Date(
+                      this.props.verifiedSeller.createdAt
+                    ).toLocaleString()}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Phone:</strong>
+                    {this.props.verifiedSeller.storeName}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Email:</strong>
+                    {this.props.verifiedSeller.storeName}
+                  </h5>
+                </div>
+                <div>
+                  <h5 className="mb-2">
+                    <strong>Store Description</strong>
+                  </h5>
+                  <p>
+                    The quic brown fox jumped over the lazy dog.The quic brown
+                    fox jumped over the lazy dog. The quic brown fox jumped over
+                    the lazy dog. The quic brown fox jumped over the lazy dog.
+                    The quic brown fox jumped over the lazy dog. The quic brown
+                    fox jumped over the lazy dog.The quic brown fox jumped over
+                    the lazy dog.The quic brown fox jumped over the lazy dog.The
+                    quic brown fox jumped over the lazy dog.The quic brown fox
+                    jumped over the lazy dog.The quic brown fox jumped over the
+                    lazy dog.The quic brown fox jumped over the lazy dog.The
+                    quic brown fox jumped over the lazy dog.The quic brown fox
+                    jumped over the lazy dog.
+                  </p>
+                </div>
+                <div>
+                  <h5 className="mb-2">
+                    <strong>Seller Documents</strong>
+                  </h5>
+                  <div className="seller-images">
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                    <div>
+                      <img src="/1.jpg" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              {/* <div className=""></div> */}
             </div>
           </div>
         </div>

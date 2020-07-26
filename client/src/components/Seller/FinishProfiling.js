@@ -2,8 +2,21 @@ import React from "react";
 
 const FinishProfiling = () => {
   return (
-    <div>
-      <h3>Please wait for the admins to approve your request</h3>
+    <div
+      style={{
+        height: "50vh",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div className="box-container">
+        <h6>
+          You have successfully completed the seller profiling! Please wait for
+          the admin to approve your request.
+        </h6>
+      </div>
     </div>
   );
 };

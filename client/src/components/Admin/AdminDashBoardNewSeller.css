@@ -15,11 +15,21 @@
   box-shadow: none;
 }
 
-.img-1,
-.img-2 {
-  flex: 2;
+.seller-images {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 10px;
+  background-color: #eaecee;
 }
 
 .seller-images img {
   width: 100%;
+}
+
+@media screen and (max-width: 960px) {
+  .seller-images img {
+    height: auto;
+    width: 100%;
+  }
 }
