@@ -10,7 +10,7 @@ export class ReactCropper extends Component {
     if (typeof this.cropper.current.getCroppedCanvas() === "undefined") {
       return;
     }
-    this.cropper.current.getCroppedCanvas().toBlob(blob => {
+    this.cropper.current.getCroppedCanvas().toBlob((blob) => {
       setImage(blob);
     }, "image/*");
   };
@@ -22,7 +22,11 @@ export class ReactCropper extends Component {
         src={imagePreview}
         style={{ height: "250px", width: "100%" }}
         preview=".img-preview"
-        aspectRatio={1}
+        aspectRatio={
+          this.props.aspectRatio
+            ? this.props.aspectRatio[0] / this.props.aspectRatio[1]
+            : 1
+        }
         viewMode={1}
         dragMode="move"
         guides={false}

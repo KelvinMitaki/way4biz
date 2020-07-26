@@ -5,9 +5,15 @@ import "./SellerDashBoard.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
+import { fetchSellerNewOrdersCount } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerDashBoard extends React.Component {
+  componentDidMount() {
+    this.props.fetchSellerNewOrdersCount();
+  }
   render() {
+    if (!this.props.dashboard) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         {this.props.user && (
@@ -31,13 +37,21 @@ class SellerDashBoard extends React.Component {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">0</h1>
+                            <h1 className="big-number">
+                              {this.props.dashboard &&
+                                this.props.dashboard.newOrders &&
+                                this.props.dashboard.newOrders.toLocaleString()}
+                            </h1>
                             <h6>NEW ORDERS</h6>
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">0</h1>
+                            <h1 className="big-number">
+                              {this.props.dashboard &&
+                                this.props.dashboard.monthsSelling &&
+                                this.props.dashboard.monthsSelling.toLocaleString()}
+                            </h1>
                             <h6>Months</h6>
                             <h6>SELLING ON WAY4BIZ</h6>
                           </div>
@@ -51,13 +65,21 @@ class SellerDashBoard extends React.Component {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">0</h1>
+                            <h1 className="big-number">
+                              {this.props.dashboard &&
+                                this.props.dashboard.successfulSales &&
+                                this.props.dashboard.successfulSales.toLocaleString()}
+                            </h1>
                             <h6>SUCCESSFUL SALES</h6>
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">0</h1>
+                            <h1 className="big-number">
+                              {this.props.dashboard &&
+                                this.props.dashboard.qualityRating &&
+                                this.props.dashboard.qualityRating.toLocaleString()}
+                            </h1>
                             <h6>QUALITY RATING</h6>
                           </div>
                         </div>
@@ -73,9 +95,12 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    dashboard: state.product.dashboard
   };
 };
-export default connect(mapStateToProps)(SellerDashBoard);
+export default connect(mapStateToProps, { fetchSellerNewOrdersCount })(
+  SellerDashBoard
+);

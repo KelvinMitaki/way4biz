@@ -1,10 +1,37 @@
 .category-hover-popup {
   position: absolute;
+  z-index: 1000;
   top: 0px;
   left: 0px;
-  height: 100%;
-  width: 100%;
-  z-index: 1000;
+  bottom: 0px;
+  right: 0px;
+  padding: 0px 40px;
+  /* display: none; */
+}
+
+.sidebar-overlay {
+  z-index: -1 !important;
+  background-color: transparent;
+}
+
+.hovered-sub-categories-section-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  z-index: inherit;
   background-color: #fff;
-  display: none;
+  padding: 20px;
+}
+
+.hovered-sub-categories-section ul {
+  list-style: none;
+}
+
+.hovered-sub-categories-section ul li a {
+  color: #000;
+}
+
+.hovered-sub-categories-section ul li a:hover {
+  color: #f76b1a;
+  text-decoration: none;
 }

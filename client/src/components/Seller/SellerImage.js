@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import ReactDropzone from "./ReactDropzone";
 import ReactCropper from "./ReactCropper";
 import "./PhotosPage.css";
-import { storeImage } from "../../redux/actions";
+import { storeSellerImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
+const SellerImage = ({ storeSellerImage, storeImageLoading, aspectRatio }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
@@ -17,7 +17,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
   }, [files]);
   const handleUploadImage = async () => {
     try {
-      await storeImage(image);
+      await storeSellerImage(image);
       handleCancelCrop();
     } catch (error) {
       console.log("error", error);
@@ -47,7 +47,11 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
         </div>
         <div className="col-xl-4">
           {files.length > 0 && (
-            <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
+            <ReactCropper
+              setImage={setImage}
+              imagePreview={files[0].preview}
+              aspectRatio={aspectRatio}
+            />
           )}
         </div>
         <div className="col-xl-4">
@@ -93,4 +97,4 @@ const mapStateToProps = (state) => {
     storeImageLoading: state.product.storeImageLoading,
   };
 };
-export default connect(mapStateToProps, { storeImage })(PhotosPage);
+export default connect(mapStateToProps, { storeSellerImage })(SellerImage);

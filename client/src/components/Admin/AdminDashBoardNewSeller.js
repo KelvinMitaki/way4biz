@@ -25,10 +25,10 @@ class AdminDashBoardSeller extends React.Component {
         firstName,
         lastName,
         storeName,
-        createdAt
+        createdAt,
       } = this.props.newSeller;
       return (
-        <div className="container-fluid p-0">
+        <div className="container-fluid p-0 mb-5">
           <DashBoardHeader />
           <SecondaryHeader />
           <div className="mt-4 container">
@@ -40,7 +40,6 @@ class AdminDashBoardSeller extends React.Component {
                   <Link to="/admin-new-sellers">
                     <BsArrowLeft />
                   </Link>
-                  {/* <h3 className="ml-3">Seller ID</h3> */}
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
@@ -56,6 +55,24 @@ class AdminDashBoardSeller extends React.Component {
                   {new Date(createdAt).toLocaleString()}
                 </h6>
               </div>
+              <div className="seller-images">
+                <div className="d-flex align-items-center flex-wrap">
+                  <div className="img-1">
+                    <img src="/1.jpg" />
+                  </div>
+                  <div
+                    style={{
+                      height: "200px",
+                      borderLeft: "2px solid #f76b1a",
+                      // flex: "1",
+                    }}
+                    className="y"
+                  ></div>
+                  <div className="img-2">
+                    <img src="/1.jpg" />
+                  </div>
+                </div>
+              </div>
               <div className="accept-sell-request">
                 <button className="btn btn-block accept-sell-request-btn">
                   Accept Seller Request
@@ -69,10 +86,10 @@ class AdminDashBoardSeller extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading
+    newSellerLoading: state.sellerRegister.newSellerLoading,
   };
 };
 export default withRouter(

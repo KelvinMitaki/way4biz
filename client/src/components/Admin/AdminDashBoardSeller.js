@@ -20,7 +20,7 @@ class AdminDashBoardSeller extends React.Component {
     if (!this.props.verifiedSeller) return <ScreenLoader />;
     if (this.props.verifiedSeller) {
       return (
-        <div className="container-fluid p-0">
+        <div className="container-fluid p-0 mb-5">
           <DashBoardHeader />
           <SecondaryHeader />
           <div className="mt-4 container">
@@ -61,10 +61,10 @@ class AdminDashBoardSeller extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verifiedSeller: state.sellerRegister.verifiedSeller,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading,
   };
 };
 export default withRouter(

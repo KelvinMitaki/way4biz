@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineSearch } from "react-icons/ai";
 import reactSringReplace from "react-string-replace";
+import Image from "../Market/Image";
 
 class Search extends React.Component {
   constructor(props) {
@@ -67,8 +68,10 @@ class Search extends React.Component {
                       }
                     >
                       <div className="search-product-image mr-4">
-                        <img
-                          src={
+                        <Image
+                          height="80px"
+                          width="80px"
+                          image={
                             product.imageUrl[0].includes("http")
                               ? product.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `

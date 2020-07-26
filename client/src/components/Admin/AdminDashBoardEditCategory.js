@@ -11,7 +11,7 @@ import { GiCancel } from "react-icons/gi";
 class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
-    typing: ""
+    typing: "",
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
@@ -19,15 +19,15 @@ class AdminDashBoardEditCategory extends React.Component {
       this.props.history
     );
   }
-  handleTypingSubmit = e => {
+  handleTypingSubmit = (e) => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: ""
+        typing: "",
       });
     }
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.subcategories.length !== 0) {
       this.props.editCategory(
@@ -37,8 +37,8 @@ class AdminDashBoardEditCategory extends React.Component {
           main: this.props.singleCategory.category.main,
           subcategories: [
             ...this.state.subcategories,
-            ...this.props.singleCategory.category.subcategories
-          ]
+            ...this.props.singleCategory.category.subcategories,
+          ],
         }
       );
     }
@@ -49,7 +49,7 @@ class AdminDashBoardEditCategory extends React.Component {
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
-        <div className="container mt-4">
+        <div className="container mt-4 mb-5">
           <div className="box-container">
             <h3 className="my-2" style={{ textAlign: "center" }}>
               Edit Category
@@ -80,7 +80,9 @@ class AdminDashBoardEditCategory extends React.Component {
                     <input
                       name="typing"
                       type="text"
-                      onChange={e => this.setState({ typing: e.target.value })}
+                      onChange={(e) =>
+                        this.setState({ typing: e.target.value })
+                      }
                       className="form-control"
                       placeholder="e.g iPhone"
                       value={this.state.typing}
@@ -113,7 +115,7 @@ class AdminDashBoardEditCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  )
+                                  ),
                                 })
                               }
                             >
@@ -156,9 +158,9 @@ class AdminDashBoardEditCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    singleCategory: state.product.singleCategory
+    singleCategory: state.product.singleCategory,
   };
 };
 export default withRouter(

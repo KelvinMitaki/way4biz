@@ -18,7 +18,7 @@ class AdminDashBoardCategories extends React.Component {
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
-        <div className="container mt-4">
+        <div className="container mt-4 mb-5">
           <div className="box-container">
             <h3 className="my-2" style={{ textAlign: "center" }}>
               Categories

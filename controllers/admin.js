@@ -444,7 +444,15 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
       return res.status(401).send({ message: "Not authorized" });
     }
     const test = await Order.aggregate([
-      { $project: { items: 1, paymentMethod: 1, buyer: 1, createdAt: 1 } },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          createdAt: 1,
+          delivered: 1
+        }
+      },
       { $unwind: "$items" },
       {
         $lookup: {
@@ -478,6 +486,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           createdAt: 1,
           buyerUser: 1,
           buyerSeller: 1,
+          delivered: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -497,6 +506,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           paymentMethod: {
             $first: "$paymentMethod"
           },
+          delivered: { $first: "$delivered" },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
@@ -631,7 +641,173 @@ route.post("/api/images/delete/:productId", isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
-// PROTECT THIS ROUTE LATER
+
+route.post(
+  "/api/store/seller/imageUrl",
+  auth,
+  check("imageUrl")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid image url"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { imageUrl } = req.body;
+      const seller = await Seller.findById(_id);
+      seller.imageUrl = [...seller.imageUrl, ...imageUrl];
+      await seller.save();
+      res.status(200).send({ message: "succees" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    // NEW ORDERS
+    const newOrders = await Order.aggregate([
+      { $match: { delivered: false } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      {
+        $project: {
+          products: 1,
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1
+        }
+      },
+      { $match: { "products.seller": _id } },
+      {
+        $project: {
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1,
+          products: {
+            $filter: {
+              input: "$products",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      },
+      { $count: "newOrders" }
+    ]);
+    // SUCCESSFUL SALES
+    const successfulSales = await Order.aggregate([
+      { $match: { delivered: true } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      {
+        $project: {
+          products: 1,
+          totalPrice: 1,
+          buyer: 1,
+          createdAt: 1
+        }
+      },
+      { $match: { "products.seller": _id } },
+      {
+        $project: {
+          products: {
+            $filter: {
+              input: "$products",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      },
+      { $unwind: "$products" },
+      { $group: { _id: null, successfulSales: { $sum: 1 } } }
+    ]);
+    // QUALITY RATING
+    let reviews = await Review.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $match: {
+          "product.seller": _id
+        }
+      },
+      {
+        $project: {
+          rating: 1,
+          product: {
+            $filter: {
+              input: "$product",
+              as: "p",
+              cond: { $eq: ["$$p.seller", _id] }
+            }
+          }
+        }
+      },
+      { $project: { rating: 1 } }
+    ]);
+    if (reviews.length !== 0) {
+      const reviewsCount = reviews.length;
+      reviews = reviews
+        .map(review => review.rating)
+        .reduce((acc, cur) => acc + cur, 0);
+      const qualityRating = parseFloat((reviews / reviewsCount).toFixed(2));
+      // MONTHS SELLING
+      const seller = await Seller.findById(_id);
+      let created = new Date(seller.createdAt);
+      created = new Date().getTime() - created.getTime();
+      created = created / (1000 * 60 * 60 * 24 * 30);
+      const monthsSelling = Math.round(created);
+      return res.send({
+        newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
+        successfulSales:
+          successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0,
+        qualityRating,
+        monthsSelling
+      });
+    }
+    // MONTHS SELLING
+    const seller = await Seller.findById(_id);
+    let created = new Date(seller.createdAt);
+    created = new Date().getTime() - created.getTime();
+    created = created / (1000 * 60 * 60 * 24 * 30);
+    const monthsSelling = Math.round(created);
+    return res.send({
+      newOrders: newOrders.length !== 0 ? newOrders[0].newOrders : 0,
+      successfulSales:
+        successfulSales.length !== 0 ? successfulSales[0].successfulSales : 0,
+      qualityRating: 0,
+      monthsSelling
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// SECURE THIS ROUTE LATER
 route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {
     const stockQuantity = await Product.aggregate([
@@ -951,7 +1127,15 @@ route.patch(
   }
 );
 
-route.get("/api/root/admin/fetch/all/categories", async (req, res) => {
+route.get("/api/root/admin/fetch/all/categories", auth, async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    res.send(categories);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/seller/all/categories", auth, isSeller, async (req, res) => {
   try {
     const categories = await Category.find({});
     res.send(categories);

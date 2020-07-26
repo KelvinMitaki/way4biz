@@ -329,6 +329,7 @@ route.post(
 );
 
 // CREATE PRODUCT INDEX
+// FIX THIS
 route.get("/api/products/find/categories", async (req, res) => {
   try {
     // await Product.find().distinct("category", (err, uniqueCategories) => {

@@ -15,7 +15,7 @@ class AdminDashBoardSellers extends React.Component {
   render() {
     if (!this.props.verifiedSellers) return <ScreenLoader />;
     return (
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0 mb-5">
         <DashBoardHeader />
         <SecondaryHeader />
         <div className="container box-container mt-4">
@@ -37,7 +37,7 @@ class AdminDashBoardSellers extends React.Component {
               </div>
               {/* mapping here */}
               {this.props.verifiedSellers.length !== 0 &&
-                this.props.verifiedSellers.map(seller => (
+                this.props.verifiedSellers.map((seller) => (
                   <div key={seller._id} className="admin-seller container">
                     <div className="row box-container">
                       <div className="col-md-6">
@@ -78,10 +78,10 @@ class AdminDashBoardSellers extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verifiedSellers: state.sellerRegister.verifiedSellers,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading,
   };
 };
 export default connect(mapStateToProps, { fetchVerifiedSellers })(

@@ -15,7 +15,7 @@ class QuantityCounter extends React.Component {
         </button>
         <p>{this.props.quantity}</p>
         <button
-          disabled={this.props.quantity === this.props.item.stockQuantity}
+          disabled={this.props.quantity >= this.props.item.stockQuantity}
           className="ml-3"
           onClick={() => this.props.addToCart(this.props.item)}
         >

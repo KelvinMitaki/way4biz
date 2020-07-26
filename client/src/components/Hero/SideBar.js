@@ -8,9 +8,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <div id="sidebar" className="col-lg-3">
-        <HeroCategories
-          handleSubCategoryPopup={this.props.handleSubCategoryPopup}
-        />
+        <HeroCategories />
       </div>
     );
   }
