@@ -8,7 +8,7 @@ import { FaTrashAlt } from "react-icons/fa";
 class SellerDocuments extends React.Component {
   state = {
     idUploaded: false,
-    passportUploaded: false,
+    passportUploaded: false
   };
 
   componentDidMount() {
@@ -38,60 +38,28 @@ class SellerDocuments extends React.Component {
         <br />
         <h4>Uploads</h4>
         <div className="seller-uploads-wrapper">
-          <div>
-            <img src="/1.jpg" />
-            <div className="seller-uploads-trash-button-wrapper">
-              <button className="btn seller-uploads-trash-button">
-                <FaTrashAlt />
-                <span className="ml-1">Delete</span>
-              </button>
-            </div>
-          </div>
-          <div>
-            <img src="/1.jpg" />
-            <div className="seller-uploads-trash-button-wrapper">
-              <button className="btn seller-uploads-trash-button">
-                <FaTrashAlt />
-                <span className="ml-1">Delete</span>
-              </button>
-            </div>
-          </div>
-          <div>
-            <img src="/1.jpg" />
-            <div className="seller-uploads-trash-button-wrapper">
-              <button className="btn seller-uploads-trash-button">
-                <FaTrashAlt />
-                <span className="ml-1">Delete</span>
-              </button>
-            </div>
-          </div>
-          <div>
-            <img src="/1.jpg" />
-            <div className="seller-uploads-trash-button-wrapper">
-              <button className="btn seller-uploads-trash-button">
-                <FaTrashAlt />
-                <span className="ml-1">Delete</span>
-              </button>
-            </div>
-          </div>
-          <div>
-            <img src="/1.jpg" />
-            <div className="seller-uploads-trash-button-wrapper">
-              <button className="btn seller-uploads-trash-button">
-                <FaTrashAlt />
-                <span className="ml-1">Delete</span>
-              </button>
-            </div>
-          </div>
+          {this.props.sellerImageUrl.length !== 0 &&
+            this.props.sellerImageUrl.map((url, i) => (
+              <div key={i}>
+                <img
+                  src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                />
+                <div className="seller-uploads-trash-button-wrapper">
+                  <button className="btn seller-uploads-trash-button">
+                    <FaTrashAlt />
+                    <span className="ml-1">Delete</span>
+                  </button>
+                </div>
+              </div>
+            ))}
         </div>
-        <h3>Helloo World</h3>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerImageUrl: state.sellerDetails.sellerImageUrl,
+    sellerImageUrl: state.sellerDetails.sellerImageUrl
   };
 };
 export default connect(mapStateToProps)(SellerDocuments);
