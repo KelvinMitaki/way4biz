@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  open: 0,
+  open: 2,
   proceed: false,
   sellerImageUrl: []
 };
