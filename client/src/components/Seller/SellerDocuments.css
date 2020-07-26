@@ -1,24 +1,30 @@
 .seller-uploads-wrapper {
-  height: 220px;
   text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px;
+  padding: 10px;
+  background-color: #eaecee;
 }
-.seller-uploads-wrapper div:first-child {
-  height: 100%;
-  margin: 15px 0px;
+
+.seller-uploads-wrapper div {
+  background-color: #fff;
 }
 
 .seller-uploads-wrapper img {
-  height: 80%;
+  width: 100%;
 }
 
 .seller-uploads-trash-button-wrapper {
   align-items: center;
-  height: 20%;
+  height: 30px;
+  margin: 10px;
 }
 
 .seller-uploads-trash-button {
   background-color: #f76b1a;
   color: #fff;
+  width: 100%;
 }
 
 .seller-uploads-trash-button:hover {
