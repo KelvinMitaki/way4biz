@@ -62,7 +62,7 @@ class SellerOrders extends React.Component {
                 <div className="col p-0">
                   <Tabs
                     items={this.getTabs()}
-                    transformWidth={960}
+                    transformWidth={720}
                     transform={true}
                     showMoreLabel={"More..."}
                     showInkBar={true}
