@@ -54,6 +54,7 @@ import SearchResults from "./components/Header/SearchResults";
 import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProducts";
 import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
 import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
+import SellerSettings from "./components/Seller/SellerSettings";
 
 class App extends React.Component {
   state = {
@@ -319,7 +320,11 @@ class App extends React.Component {
               path="/seller/settings"
               exact
               render={() =>
-                this.props.user ? <Seller /> : <Redirect to="/seller/sign-in" />
+                this.props.user ? (
+                  <SellerSettings />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
               }
             />
             <Route
