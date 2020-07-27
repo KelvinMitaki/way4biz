@@ -1238,5 +1238,39 @@ route.get(
 // CHANGE UNDERREVIEW TO FALSE
 // CHANGE REJECTED TO TRUE OR FALSE
 // MODIFY PRODUCTS ON SITE
+route.post(
+  "/api/root/admin/accept/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const product = await Product.findByIdAndUpdate(productId, {
+        underReview: false,
+        onSite: true
+      });
+      res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/root/admin/reject/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const product = await Product.findByIdAndUpdate(productId, {
+        underReview: false,
+        rejected: true
+      });
+      res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 module.exports = route;

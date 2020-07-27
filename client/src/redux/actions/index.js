@@ -143,7 +143,10 @@ import {
   FETCH_UNDER_REVIEW_START,
   FETCH_UNDER_REVIEW_STOP,
   FETCH_UNDER_REVIEW,
-  FETCH_REVIEW_PRODUCT
+  FETCH_REVIEW_PRODUCT,
+  ACCEPT_PRODUCT_START,
+  ACCEPT_PRODUCT,
+  ACCEPT_PRODUCT_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1471,6 +1474,20 @@ export const fetchReviewProduct = productId => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+    console.log(error.response);
+  }
+};
+
+export const acceptProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: ACCEPT_PRODUCT_START });
+    axios.post(`/api/root/admin/accept/product/${productId}`);
+    dispatch({ type: ACCEPT_PRODUCT });
+    dispatch({ type: ACCEPT_PRODUCT_STOP });
+    history.push("/admin/new-product");
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: ACCEPT_PRODUCT_STOP });
     console.log(error.response);
   }
 };

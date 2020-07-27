@@ -1,9 +1,10 @@
 .seller-dashboard-no-reviews {
-  height: 50vw;
+  height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
+  flex-direction: column;
 }
 
 .seller-no-reviews {
