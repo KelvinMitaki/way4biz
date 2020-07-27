@@ -15,7 +15,7 @@ import {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -23,11 +23,11 @@ import ScreenLoader from "../Pages/ScreenLoader";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test"
+      title: "test",
     },
     lineData: {
-      data: [20, 10]
-    }
+      data: [20, 10],
+    },
   };
   componentDidMount() {
     this.props.getStock();
@@ -95,10 +95,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find(s => s.label === "Stock Out")
+                      {this.props.stock.find((s) => s.label === "Stock Out")
                         .value &&
                         this.props.stock
-                          .find(s => s.label === "Stock Out")
+                          .find((s) => s.label === "Stock Out")
                           .value.toLocaleString()}
                     </span>
                     <h3>
@@ -194,9 +194,20 @@ class AdminDashBoard extends React.Component {
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link to="/admin/new-products">
                               <div className="admin-individual-performance-upper-text">
-                                <p>Transactions</p>
+                                <p>
+                                  New Products{" "}
+                                  <span
+                                    className="badge"
+                                    style={{
+                                      color: "#fff",
+                                      backgroundColor: "#f76b1a",
+                                    }}
+                                  >
+                                    10
+                                  </span>
+                                </p>
                                 <p>+50,000</p>
                               </div>
                               <div>
@@ -256,13 +267,13 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, {
@@ -271,5 +282,5 @@ export default connect(mapStateToProps, {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
 })(AdminDashBoard);

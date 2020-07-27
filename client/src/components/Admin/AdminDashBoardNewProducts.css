@@ -1,0 +1,19 @@
+.admin-new-product {
+  border-left: 3px solid #f76b1a;
+}
+
+.admin-new-product div {
+  display: flex;
+}
+
+.review-new-product {
+  color: #f76b1a;
+  padding: 3px;
+}
+
+.review-new-product:hover {
+  color: #f76b1a;
+  text-decoration: none;
+  background-color: rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+}
