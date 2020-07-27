@@ -28,6 +28,7 @@ const Review = require("../models/Reviews");
 const Category = require("../models/Category");
 const isAdmin = require("../middlewares/is-admin");
 const auth = require("../middlewares/is-auth");
+const Reject = require("../models/Reject");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -1267,6 +1268,31 @@ route.post(
       product.rejected = true;
       await product.save();
       res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.post(
+  "/api/root/reject/message",
+  auth,
+  isAdmin,
+  check("productId").not().isEmpty().withMessage("please enter a valid ID"),
+  check("message").not().isEmpty().withMessage("body must not be empty"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, message } = req.body;
+      const reject = new Reject({
+        product: productId,
+        body: message
+      });
+      await reject.save();
+      res.send(reject);
     } catch (error) {
       res.status(500).send(error);
     }
