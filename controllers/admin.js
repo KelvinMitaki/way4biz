@@ -1245,10 +1245,10 @@ route.post(
   async (req, res) => {
     try {
       const { productId } = req.params;
-      const product = await Product.findByIdAndUpdate(productId, {
-        underReview: false,
-        onSite: true
-      });
+      const product = await Product.findById(productId);
+      product.underReview = false;
+      product.onSite = true;
+      await product.save();
       res.send(product);
     } catch (error) {
       res.status(500).send(error);
@@ -1262,10 +1262,10 @@ route.post(
   async (req, res) => {
     try {
       const { productId } = req.params;
-      const product = await Product.findByIdAndUpdate(productId, {
-        underReview: false,
-        rejected: true
-      });
+      const product = await Product.findById(productId);
+      product.underReview = false;
+      product.onSite = true;
+      await product.save();
       res.send(product);
     } catch (error) {
       res.status(500).send(error);

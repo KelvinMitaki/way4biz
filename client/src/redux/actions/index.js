@@ -1487,7 +1487,7 @@ export const acceptProduct = (productId, history) => async dispatch => {
     axios.post(`/api/root/admin/accept/product/${productId}`);
     dispatch({ type: ACCEPT_PRODUCT });
     dispatch({ type: ACCEPT_PRODUCT_STOP });
-    history.push("/admin/new-product");
+    history.push("/admin/new-products");
   } catch (error) {
     authCheck(error);
     dispatch({ type: ACCEPT_PRODUCT_STOP });

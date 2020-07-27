@@ -91,7 +91,18 @@ class AdminDashBoardNewProduct extends React.Component {
               }
               className="btn btn-lg accept-product-btn"
             >
-              Accept Product
+              {this.props.acceptProductLoading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.acceptProductLoading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>Accept Product</span>
+              )}
             </div>
             <div id="dummy-space" className="y"></div>
             <div
@@ -103,7 +114,18 @@ class AdminDashBoardNewProduct extends React.Component {
               }
               className="btn btn-lg reject-product-btn"
             >
-              Reject Product
+              {this.props.rejectProductLoading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.rejectProductLoading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>Reject Product</span>
+              )}
             </div>
           </div>
         </div>
@@ -113,7 +135,9 @@ class AdminDashBoardNewProduct extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    reviewProduct: state.product.reviewProduct
+    reviewProduct: state.product.reviewProduct,
+    acceptProductLoading: state.product.acceptProductLoading,
+    rejectProductLoading: state.product.rejectProductLoading
   };
 };
 export default withRouter(

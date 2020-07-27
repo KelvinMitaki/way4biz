@@ -52,7 +52,11 @@ import {
   FETCH_ADMIN_ORDER_STOP,
   FETCH_SELLER_NEW_ORDERS_COUNT,
   FETCH_UNDER_REVIEW,
-  FETCH_REVIEW_PRODUCT
+  FETCH_REVIEW_PRODUCT,
+  ACCEPT_PRODUCT_START,
+  ACCEPT_PRODUCT_STOP,
+  REJECT_PRODUCT_START,
+  REJECT_PRODUCT_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -99,7 +103,9 @@ const INITIAL_STATE = {
   singleCategory: null,
   dashboard: null,
   underReview: null,
-  reviewProduct: null
+  reviewProduct: null,
+  acceptProductLoading: false,
+  rejectProductLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -292,6 +298,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, underReview: action.payload };
     case FETCH_REVIEW_PRODUCT:
       return { ...state, reviewProduct: action.payload };
+    case ACCEPT_PRODUCT_START:
+      return { ...state, acceptProductLoading: true };
+    case ACCEPT_PRODUCT_STOP:
+      return { ...state, acceptProductLoading: false };
+    case REJECT_PRODUCT_START:
+      return { ...state, rejectProductLoading: true };
+    case REJECT_PRODUCT_STOP:
+      return { ...state, rejectProductLoading: false };
     default:
       return state;
   }
