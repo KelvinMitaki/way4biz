@@ -5,3 +5,8 @@
   justify-content: center;
   padding: 10px;
 }
+
+.seller-no-reviews {
+  font-size: 150px;
+  color: #f76b1a;
+}
