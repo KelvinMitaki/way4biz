@@ -7,6 +7,7 @@ import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
 
 import "./SellerDashBoardMenu.css";
+import ProfileImage from "../Header/ProfileImage";
 
 class SellerDashBoardMenu extends React.Component {
   render() {
@@ -80,7 +81,10 @@ class SellerDashBoardMenu extends React.Component {
             </li>
           </NavLink>
         </ul>
-        <div id="seller-menu-profile">Profile</div>
+        <div id="seller-menu-profile">
+          <ProfileImage id="seller-menu-user-icon" size={"70px"} />
+          <h6 className="ml-2">Hi Mbuthia</h6>
+        </div>
       </div>
     );
   }

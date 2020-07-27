@@ -109,6 +109,12 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     <GiCancel className="mr-2" />
                     Rejects
+                    <span
+                      className="badge ml-2"
+                      style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                    >
+                      1
+                    </span>
                   </NavLink>
                 </li>
                 <li className="my-4">
