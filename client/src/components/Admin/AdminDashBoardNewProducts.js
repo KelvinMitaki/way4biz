@@ -54,8 +54,7 @@ class AdminDashBoardNewProducts extends React.Component {
                   <div className="col-lg-3">
                     <strong className="x mr-1">Owner:</strong>
                     <p>
-                      John Doe John Doe John Doe John Doe John Doe John DoevJohn
-                      Doe
+                      {pro.seller.firstName} {pro.seller.lastName}
                     </p>
                   </div>
                   <div className="col-lg-3">

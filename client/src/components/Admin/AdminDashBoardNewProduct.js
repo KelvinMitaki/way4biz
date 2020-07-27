@@ -32,39 +32,49 @@ class AdminDashBoardNewProduct extends React.Component {
           <div className="admin-new-product-details mt-3">
             <div className="custom-row">
               <h6>
-                <strong>Owner: </strong>Kijeketile Ngware
+                <strong>Owner: </strong>
+                {this.props.reviewProduct.seller.firstName}{" "}
+                {this.props.reviewProduct.seller.lastName}
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Contact: </strong>9999
+                <strong>Contact: </strong>+245
+                {this.props.reviewProduct.seller.phoneNumber}
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Email: </strong>9999
+                <strong>Email: </strong>
+                {this.props.reviewProduct.seller.email}
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Store Name: </strong>9999
+                <strong>Store Name: </strong>
+                {this.props.reviewProduct.seller.storeName}
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Product Name: </strong>Great Beer Of Congo
+                <strong>Product Name: </strong>
+                {this.props.reviewProduct.name}
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Quantity</strong>10
+                <strong>Quantity: </strong>
+                {this.props.reviewProduct.stockQuantity}
               </h6>
             </div>
             <div className="admin-new-product-images">
-              <img src="/1.jpg" />
-              <img src="/1.jpg" />
-              <img src="/1.jpg" />
-              <img src="/1.jpg" />
+              {this.props.reviewProduct.imageUrl.map((url, i) => (
+                <img
+                  src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                  key={i}
+                  alt={url}
+                />
+              ))}
             </div>
           </div>
           <div className="admin-new-product-buttons my-2">
