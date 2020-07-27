@@ -19,7 +19,7 @@
   overflow: hidden;
 }
 
-.seller-review-product-title-name:hover {
+.seller-review-product-title-name span:hover {
   text-decoration: underline;
   color: #f76b1a;
 }
