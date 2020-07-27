@@ -5,7 +5,6 @@ const distance = require("google-distance-matrix");
 const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
-const delivery = require("../middlewares/delivery");
 const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
 
@@ -34,7 +33,7 @@ route.post("/api/products/skip/category", async (req, res) => {
   try {
     const { itemsToSkip, test, sort } = req.body;
 
-    const products = await Product.find(test)
+    const products = await Product.find({ ...test, onSite: true })
       .sort(sort)
       .skip(itemsToSkip)
       .limit(6);
@@ -44,7 +43,7 @@ route.post("/api/products/skip/category", async (req, res) => {
 
     const productCount = await Product.aggregate([
       {
-        $match: test
+        $match: { ...test, onSite: true }
       },
       { $count: test.category }
     ]);
@@ -63,7 +62,7 @@ route.post("/api/products/filter", async (req, res) => {
     // **TODO** FIX FILTERING
     // FREE SHIPPING RATING LATEST ON
 
-    let products = await Product.find(test);
+    let products = await Product.find({ ...test, onSite: true });
 
     res.send(products);
   } catch (error) {
@@ -75,7 +74,7 @@ route.get(
   async (req, res) => {
     try {
       const { subcategory } = req.params;
-      const products = await Product.find({ subcategory });
+      const products = await Product.find({ subcategory, onSite: true });
       if (!products || products.length === 0) {
         return res
           .status(404)
@@ -96,25 +95,30 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
     if (min) {
       const products = await Product.find({
         subcategory,
-        price: { $gte: min }
+        price: { $gte: min },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
     if (max) {
       const products = await Product.find({
         subcategory,
-        price: { $lte: max }
+        price: { $lte: max },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
     if (min && max) {
       const products = await Product.find({
         subcategory,
-        price: { $gte: min, $lte: max }
+        price: { $gte: min, $lte: max },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
-    const products = await Product.find({ subcategory }).sort(sortBy);
+    const products = await Product.find({ subcategory, onSite: true }).sort(
+      sortBy
+    );
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
@@ -141,6 +145,9 @@ route.post("/api/product/search", async (req, res) => {
             tokenOrder: "sequential"
           }
         }
+      },
+      {
+        $match: { onSite: true }
       },
       {
         $limit: 5
