@@ -81,7 +81,7 @@ class AdminDashBoardNewProduct extends React.Component {
             <Link to="/" className="btn btn-lg accept-product-btn">
               Accept Product
             </Link>
-            <div id="dummy-space"></div>
+            <div id="dummy-space" className="y"></div>
             <Link
               to="/admin/root/new-product/why-reject"
               className="btn btn-lg reject-product-btn"

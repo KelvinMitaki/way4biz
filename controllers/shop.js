@@ -168,10 +168,10 @@ route.post("/api/product/search", async (req, res) => {
 route.get("/api/product/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
-    const product = await Product.findById(productId).populate(
-      "seller",
-      "storeName"
-    );
+    const product = await Product.findOne({
+      _id: productId,
+      onSite: true
+    }).populate("seller", "storeName");
 
     res.send(product);
   } catch (error) {

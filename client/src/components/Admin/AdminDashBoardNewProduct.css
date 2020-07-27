@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 #dummy-space {
@@ -40,4 +41,17 @@
 .accept-product-btn:hover,
 .reject-product-btn:hover {
   color: #fff;
+}
+
+@media screen and (max-width: 960px) {
+  .accept-product-btn,
+  .reject-product-btn {
+    color: #fff;
+    border: none;
+    width: 100%;
+    flex: none;
+  }
+  .accept-product-btn {
+    margin-bottom: 10px;
+  }
 }

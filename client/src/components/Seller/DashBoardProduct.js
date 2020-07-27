@@ -109,8 +109,10 @@ class DashBoardProduct extends React.Component {
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
                 <div className="col-md-12 col-lg-5 dashboard-product-image">
-                  <img
-                    src={
+                  <Image
+                    height="120vh"
+                    width="120vw"
+                    image={
                       product.imageUrl[0].includes("http")
                         ? product.imageUrl[0]
                         : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `
