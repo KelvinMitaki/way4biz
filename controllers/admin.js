@@ -1212,12 +1212,29 @@ route.post(
 
 route.get("/api/root/admin/new/products", auth, isAdmin, async (req, res) => {
   try {
-    const products = await Product.find({ underReview: true });
+    const products = await Product.find({ underReview: true })
+      .populate("seller")
+      .exec();
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
   }
 });
+route.get(
+  "/api/root/admin/review/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.productId)
+        .populate("seller")
+        .exec();
+      res.send(product);
+    } catch (error) {
+      res.status(error).send(error);
+    }
+  }
+);
 // CHANGE UNDERREVIEW TO FALSE
 // CHANGE REJECTED TO TRUE OR FALSE
 // MODIFY PRODUCTS ON SITE

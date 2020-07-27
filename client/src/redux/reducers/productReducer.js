@@ -51,7 +51,8 @@ import {
   FETCH_ADMIN_ORDER_START,
   FETCH_ADMIN_ORDER_STOP,
   FETCH_SELLER_NEW_ORDERS_COUNT,
-  FETCH_UNDER_REVIEW
+  FETCH_UNDER_REVIEW,
+  FETCH_REVIEW_PRODUCT
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -97,7 +98,8 @@ const INITIAL_STATE = {
   adminCategories: null,
   singleCategory: null,
   dashboard: null,
-  underReview: null
+  underReview: null,
+  reviewProduct: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -288,6 +290,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, dashboard: action.payload };
     case FETCH_UNDER_REVIEW:
       return { ...state, underReview: action.payload };
+    case FETCH_REVIEW_PRODUCT:
+      return { ...state, reviewProduct: action.payload };
     default:
       return state;
   }

@@ -3,12 +3,19 @@ import React from "react";
 import "./AdminDashBoardNewProduct.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
+import { fetchReviewProduct } from "../../redux/actions";
 
 class AdminDashBoardNewProduct extends React.Component {
+  componentDidMount() {
+    this.props.fetchReviewProduct(this.props.match.params.productId);
+  }
   render() {
+    if (!this.props.reviewProduct) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
@@ -25,17 +32,27 @@ class AdminDashBoardNewProduct extends React.Component {
           <div className="admin-new-product-details mt-3">
             <div className="custom-row">
               <h6>
-                <strong>Owner:</strong>Kijeketile Ngware
+                <strong>Owner: </strong>Kijeketile Ngware
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Contact:</strong>9999
+                <strong>Contact: </strong>9999
               </h6>
             </div>
             <div className="custom-row">
               <h6>
-                <strong>Product Name:</strong>Great Beer Of Congo
+                <strong>Email: </strong>9999
+              </h6>
+            </div>
+            <div className="custom-row">
+              <h6>
+                <strong>Store Name: </strong>9999
+              </h6>
+            </div>
+            <div className="custom-row">
+              <h6>
+                <strong>Product Name: </strong>Great Beer Of Congo
               </h6>
             </div>
             <div className="custom-row">
@@ -56,7 +73,7 @@ class AdminDashBoardNewProduct extends React.Component {
             </Link>
             <div id="dummy-space"></div>
             <Link
-              to="/admin/new-product/why-reject"
+              to="/admin/root/new-product/why-reject"
               className="btn btn-lg reject-product-btn"
             >
               Reject Product
@@ -67,5 +84,11 @@ class AdminDashBoardNewProduct extends React.Component {
     );
   }
 }
-
-export default AdminDashBoardNewProduct;
+const mapStateToProps = state => {
+  return {
+    reviewProduct: state.product.reviewProduct
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { fetchReviewProduct })(AdminDashBoardNewProduct)
+);

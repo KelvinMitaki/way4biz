@@ -142,7 +142,8 @@ import {
   ACCEPT_SELLER_REQUEST_STOP,
   FETCH_UNDER_REVIEW_START,
   FETCH_UNDER_REVIEW_STOP,
-  FETCH_UNDER_REVIEW
+  FETCH_UNDER_REVIEW,
+  FETCH_REVIEW_PRODUCT
 } from "./types";
 
 const authCheck = error => {
@@ -1453,6 +1454,19 @@ export const fetchUnderReview = () => async dispatch => {
     dispatch({ type: FETCH_UNDER_REVIEW_START });
     const res = await axios.get("/api/root/admin/new/products");
     dispatch({ type: FETCH_UNDER_REVIEW, payload: res.data });
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchReviewProduct = productId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_UNDER_REVIEW_START });
+    const res = await axios.get(`/api/root/admin/review/product/${productId}`);
+    dispatch({ type: FETCH_REVIEW_PRODUCT, payload: res.data });
     dispatch({ type: FETCH_UNDER_REVIEW_STOP });
   } catch (error) {
     authCheck(error);

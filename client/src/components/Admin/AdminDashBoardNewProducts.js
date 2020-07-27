@@ -60,15 +60,15 @@ class AdminDashBoardNewProducts extends React.Component {
                   </div>
                   <div className="col-lg-3">
                     <strong className="x mr-1">Name:</strong>
-                    <p>Great Beer</p>
+                    <p>{pro.name}</p>
                   </div>
                   <div className="col-lg-3">
                     <strong className="x mr-1">Date Added:</strong>
-                    <p>1/1/1</p>
+                    <p>{new Date(pro.createdAt).toLocaleString()}</p>
                   </div>
                   <div className="col-lg-3">
                     <Link
-                      to="/admin/new-product"
+                      to={`/admin/new-product/${pro._id}`}
                       className="review-new-product"
                     >
                       Review
