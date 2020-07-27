@@ -55,10 +55,12 @@ import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProdu
 import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
 import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
 import SellerSettings from "./components/Seller/SellerSettings";
+import SellerRejects from "./components/Seller/SellerRejects";
+import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -68,7 +70,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -83,7 +85,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -95,23 +97,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -150,6 +152,16 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/complaints"
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardComplaints />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -333,6 +345,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerDashBoardNewProduct />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller/products/rejected"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerRejects />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -567,16 +590,16 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
 })(App);

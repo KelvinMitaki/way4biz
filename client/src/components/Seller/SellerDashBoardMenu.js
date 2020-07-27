@@ -4,8 +4,10 @@ import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
 import { GoClippy, GoSettings } from "react-icons/go";
+import { GiCancel } from "react-icons/gi";
 
 import "./SellerDashBoardMenu.css";
+import ProfileImage from "../Header/ProfileImage";
 
 class SellerDashBoardMenu extends React.Component {
   render() {
@@ -55,6 +57,22 @@ class SellerDashBoardMenu extends React.Component {
           <NavLink
             className="link"
             activeClassName="seller-menu-active"
+            to="/seller/products/rejected"
+          >
+            <li>
+              <GiCancel className="mr-2" />
+              Rejects
+              <span
+                className="badge ml-2"
+                style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+              >
+                1
+              </span>
+            </li>
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
             to="/seller/settings"
           >
             <li>
@@ -63,7 +81,10 @@ class SellerDashBoardMenu extends React.Component {
             </li>
           </NavLink>
         </ul>
-        <div id="seller-menu-profile">Profile</div>
+        <div id="seller-menu-profile">
+          <ProfileImage id="seller-menu-user-icon" size={"70px"} />
+          <h6 className="ml-2">Hi Mbuthia</h6>
+        </div>
       </div>
     );
   }
