@@ -152,7 +152,10 @@ import {
   REJECT_PRODUCT_STOP,
   REJECT_MESSAGE,
   REJECT_MESSAGE_START,
-  REJECT_MESSAGE_STOP
+  REJECT_MESSAGE_STOP,
+  FETCH_REJECTS,
+  FETCH_REJECTS_START,
+  FETCH_REJECTS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1526,6 +1529,19 @@ export const rejectMessage = (
   } catch (error) {
     authCheck(error);
     dispatch({ type: REJECT_MESSAGE_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRejects = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_REJECTS_START });
+    const res = await axios.get("/api/seller/product/rejects");
+    dispatch({ type: FETCH_REJECTS, payload: res.data });
+    dispatch({ type: FETCH_REJECTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_REJECTS_STOP });
     console.log(error.response);
   }
 };
