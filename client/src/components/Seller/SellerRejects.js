@@ -4,9 +4,16 @@ import "./SellerRejects.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { Link } from "react-router-dom";
+import { fetchRejects } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerRejects extends React.Component {
+  componentDidMount() {
+    this.props.fetchRejects();
+  }
   render() {
+    if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -20,42 +27,30 @@ class SellerRejects extends React.Component {
               <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
                 Rejected Products
               </h3>
-              {/* fucking mapping here */}
-              <div className="box-container reject-info p-2">
-                <h3 className="my-2">Great Useless Beer</h3>
-                <p>
-                  The quick brown fox jumped over the lazy dog The quick brown
-                  fox jumped over the lazy dogThe quick brown fox jumped over
-                  the lazy dogThe quick brown fox jumped over the lazy dogThe
-                  quick brown fox jumped over the lazy dog.
-                </p>
-                <div className="reject-links mt-2 pt-2">
-                  <Link to="/" className="reject-link">
-                    Edit Product
-                  </Link>
-                  <Link to="/" className="reject-link">
-                    Delete Product
-                  </Link>
-                </div>
-              </div>
-
-              <div className="box-container reject-info p-2">
-                <h3 className="my-2">Great Useless Beer</h3>
-                <p>
-                  The quick brown fox jumped over the lazy dog The quick brown
-                  fox jumped over the lazy dogThe quick brown fox jumped over
-                  the lazy dogThe quick brown fox jumped over the lazy dogThe
-                  quick brown fox jumped over the lazy dog.
-                </p>
-                <div className="reject-links mt-2 pt-2">
-                  <Link to="/" className="reject-link">
-                    Edit Product
-                  </Link>
-                  <Link to="/" className="reject-link">
-                    Delete Product
-                  </Link>
-                </div>
-              </div>
+              {/* mapping here */}
+              {this.props.sellerRejects.length !== 0 &&
+                this.props.sellerRejects.map(rej => (
+                  <div key={rej._id} className="box-container reject-info p-2">
+                    <h5 className="my-2">{rej.name}</h5>
+                    <p>
+                      {rej.body} -{" "}
+                      <strong>
+                        {new Date(rej.createdAt).toLocaleString()}
+                      </strong>
+                    </p>
+                    <div className="reject-links mt-2 pt-2">
+                      <Link
+                        to={`/seller/edit/${rej.productId}`}
+                        className="reject-link"
+                      >
+                        Edit Product
+                      </Link>
+                      <Link to="/" className="reject-link">
+                        Delete Product
+                      </Link>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -63,5 +58,9 @@ class SellerRejects extends React.Component {
     );
   }
 }
-
-export default SellerRejects;
+const mapStateToProps = state => {
+  return {
+    sellerRejects: state.product.sellerRejects
+  };
+};
+export default connect(mapStateToProps, { fetchRejects })(SellerRejects);
