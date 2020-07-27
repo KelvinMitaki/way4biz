@@ -53,6 +53,7 @@ import Store from "./components/Store/Store";
 import SearchResults from "./components/Header/SearchResults";
 import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProducts";
 import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
+import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
 
 class App extends React.Component {
   state = {
@@ -211,6 +212,17 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardNewProduct />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/new-product/why-reject"
+              exact
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardNewProductReject />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
