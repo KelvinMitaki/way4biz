@@ -11,12 +11,14 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerProducts extends React.Component {
-  state = {};
   componentDidMount() {
     this.props.fetchSellerProducts();
   }
 
   getTabs() {
+    const soldOut =
+      this.props.sellerProducts.length !== 0 &&
+      this.props.sellerProducts.filter(pro => pro.stockQuantity < 1);
     let tabs = [
       {
         title: "Total Products",
@@ -30,7 +32,10 @@ class SellerProducts extends React.Component {
       { title: "Live On Site", data: <DashBoardProduct category="live" /> },
       { title: "Under Review", data: <DashBoardProduct category="review" /> },
       { title: "Rejected", data: <DashBoardProduct category="rejected" /> },
-      { title: "Sold Out", data: <DashBoardProduct category="sold-out" /> }
+      {
+        title: "Sold Out",
+        data: <DashBoardProduct products={soldOut} category="sold-out" />
+      }
     ];
 
     return tabs.map((tab, index) => ({

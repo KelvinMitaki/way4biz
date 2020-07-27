@@ -51,6 +51,14 @@ const ProductSchema = new mongoose.Schema(
     onSite: {
       type: Boolean,
       default: false
+    },
+    underReview: {
+      type: Boolean,
+      default: true
+    },
+    rejected: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

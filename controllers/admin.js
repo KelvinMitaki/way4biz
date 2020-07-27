@@ -1193,7 +1193,6 @@ route.get(
     }
   }
 );
-
 route.post(
   "/api/accept/seller/request/:sellerId",
   auth,
@@ -1210,4 +1209,7 @@ route.post(
     }
   }
 );
+// CHANGE UNDERREVIEW TO FALSE
+// CHANGE REJECTED TO TRUE OR FALSE
+// MODIFY PRODUCTS ON SITE
 module.exports = route;
