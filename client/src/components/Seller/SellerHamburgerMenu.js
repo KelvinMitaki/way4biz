@@ -8,24 +8,30 @@ import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
 
 import "./SellerHamburgerMenu.css";
+import { fetchRejects } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
-
+  componentDidMount() {
+    this.props.fetchRejects();
+  }
   handleClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   }
   render() {
+    if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div id="hamburger-menu-wrapper">
         {this.state.open ? (
@@ -109,12 +115,14 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     <GiCancel className="mr-2" />
                     Rejects
-                    <span
-                      className="badge ml-2"
-                      style={{ backgroundColor: "#f76b1a", color: "#fff" }}
-                    >
-                      1
-                    </span>
+                    {this.props.sellerRejects.length !== 0 && (
+                      <span
+                        className="badge ml-2"
+                        style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                      >
+                        {this.props.sellerRejects.length}
+                      </span>
+                    )}
                   </NavLink>
                 </li>
                 <li className="my-4">
@@ -162,5 +170,9 @@ class SellerHamburgerMenu extends React.Component {
     );
   }
 }
-
-export default SellerHamburgerMenu;
+const mapStateToProps = state => {
+  return {
+    sellerRejects: state.product.sellerRejects
+  };
+};
+export default connect(mapStateToProps, { fetchRejects })(SellerHamburgerMenu);
