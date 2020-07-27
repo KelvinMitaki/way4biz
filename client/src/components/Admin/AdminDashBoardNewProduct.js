@@ -13,13 +13,15 @@ import {
   acceptProduct,
   rejectProduct
 } from "../../redux/actions";
+import Image from "../Market/Image";
 
 class AdminDashBoardNewProduct extends React.Component {
   componentDidMount() {
     this.props.fetchReviewProduct(this.props.match.params.productId);
   }
   render() {
-    if (!this.props.reviewProduct) return <ScreenLoader />;
+    if (!this.props.reviewProduct || this.props.fetchReviewProductLoading)
+      return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
@@ -73,8 +75,10 @@ class AdminDashBoardNewProduct extends React.Component {
             </div>
             <div className="admin-new-product-images">
               {this.props.reviewProduct.imageUrl.map((url, i) => (
-                <img
-                  src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                <Image
+                  width="500vw"
+                  height="350vh"
+                  image={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
                   key={i}
                   alt={url}
                 />
@@ -137,7 +141,8 @@ const mapStateToProps = state => {
   return {
     reviewProduct: state.product.reviewProduct,
     acceptProductLoading: state.product.acceptProductLoading,
-    rejectProductLoading: state.product.rejectProductLoading
+    rejectProductLoading: state.product.rejectProductLoading,
+    fetchReviewProductLoading: state.product.fetchReviewProductLoading
   };
 };
 export default withRouter(

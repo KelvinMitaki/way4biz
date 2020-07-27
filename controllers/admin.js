@@ -1264,7 +1264,7 @@ route.post(
       const { productId } = req.params;
       const product = await Product.findById(productId);
       product.underReview = false;
-      product.onSite = true;
+      product.rejected = true;
       await product.save();
       res.send(product);
     } catch (error) {
