@@ -6,7 +6,7 @@ class SellerDashBoardNoReviews extends React.Component {
   render() {
     return (
       <div className="container seller-dashboard-no-reviews">
-        <p>Your products have no reviews yet.</p>
+        <h4>Your products have no reviews yet.</h4>
       </div>
     );
   }

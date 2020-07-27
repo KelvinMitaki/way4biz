@@ -37,6 +37,19 @@ class MenuDropdown extends React.Component {
       } else {
         return;
       }
+    } else if (name === "Products") {
+      if (props.newProducts > 0) {
+        return (
+          <span
+            className="ml-1 badge"
+            style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+          >
+            {props.newProducts}
+          </span>
+        );
+      } else {
+        return;
+      }
     } else {
       return;
     }
