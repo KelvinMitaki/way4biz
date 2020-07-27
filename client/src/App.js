@@ -315,17 +315,13 @@ class App extends React.Component {
                 )
               }
             />
-            {/* <Route
-              path="/seller/profiling"
+            <Route
+              path="/seller/settings"
               exact
               render={() =>
-                this.props.user ? (
-                  <SellerProfiling />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
+                this.props.user ? <Seller /> : <Redirect to="/seller/sign-in" />
               }
-            /> */}
+            />
             <Route
               path="/seller/sell"
               exact

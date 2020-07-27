@@ -3,8 +3,7 @@ import { NavLink } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
-import { GoClippy } from "react-icons/go";
-import { AiOutlineTransaction } from "react-icons/ai";
+import { GoClippy, GoSettings } from "react-icons/go";
 
 import "./SellerDashBoardMenu.css";
 
@@ -53,16 +52,16 @@ class SellerDashBoardMenu extends React.Component {
               Reviews
             </li>
           </NavLink>
-          {/* <NavLink
+          <NavLink
             className="link"
             activeClassName="seller-menu-active"
-            to="/g"
+            to="/seller/settings"
           >
             <li>
-              <AiOutlineTransaction className="mr-2" />
-              Transactions
+              <GoSettings className="mr-2" />
+              Settings
             </li>
-          </NavLink> */}
+          </NavLink>
         </ul>
         <div id="seller-menu-profile">Profile</div>
       </div>
