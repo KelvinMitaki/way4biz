@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   z-index: 2000;
+  justify-content: space-between;
 }
 .admin-hamburger-menu-wrapper {
   position: relative;
@@ -112,6 +113,14 @@
   color: #f76b1a !important;
 }
 
+#admin-secondary-header-profile-image {
+  display: none;
+}
+
+.admin-secondary-header-dropdown-icon {
+  display: none;
+}
+
 @media screen and (min-width: 961px) {
   .admin-hamburger-menu-wrapper {
     display: none;
@@ -121,5 +130,14 @@
 @media screen and (max-width: 960px) {
   .admin-dashboard-menu-lg-items {
     display: none;
+  }
+  #admin-secondary-header-profile-image {
+    display: block;
+  }
+
+  .admin-secondary-header-dropdown-icon {
+    display: block;
+    color: #f76b1a;
+    font-size: 25px;
   }
 }
