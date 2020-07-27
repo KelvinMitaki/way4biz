@@ -3,8 +3,8 @@ import React from "react";
 import "./SellerRejects.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
-import { Link } from "react-router-dom";
-import { fetchRejects } from "../../redux/actions";
+import { Link, withRouter } from "react-router-dom";
+import { fetchRejects, deleteSellerProduct } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -46,7 +46,13 @@ class SellerRejects extends React.Component {
                         Edit Product
                       </Link>
                       <div
-                        onClick={() => <ScreenLoader />}
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          this.props.deleteSellerProduct(
+                            rej.productId,
+                            this.props.history
+                          )
+                        }
                         className="reject-link"
                       >
                         Delete Product
@@ -66,4 +72,6 @@ const mapStateToProps = state => {
     sellerRejects: state.product.sellerRejects
   };
 };
-export default connect(mapStateToProps, { fetchRejects })(SellerRejects);
+export default withRouter(
+  connect(mapStateToProps, { fetchRejects, deleteSellerProduct })(SellerRejects)
+);

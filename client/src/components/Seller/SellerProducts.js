@@ -17,15 +17,19 @@ class SellerProducts extends React.Component {
 
   getTabs() {
     const soldOut =
+      this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
       this.props.sellerProducts.filter(pro => pro.stockQuantity < 1);
     const onSite =
+      this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
       this.props.sellerProducts.filter(pro => pro.onSite);
     const underReview =
+      this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
       this.props.sellerProducts.filter(pro => pro.underReview);
     const rejected =
+      this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
       this.props.sellerProducts.filter(pro => pro.rejected);
     let tabs = [

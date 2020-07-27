@@ -1559,6 +1559,7 @@ export const deleteSellerProduct = (productId, history) => async dispatch => {
     dispatch({ type: DELETE_SELLER_PRODUCT_STOP });
   } catch (error) {
     authCheck(error);
+    history.push("/seller-products");
     dispatch({ type: DELETE_SELLER_PRODUCT_STOP });
     console.log(error.response);
   }
