@@ -45,9 +45,12 @@ class SellerRejects extends React.Component {
                       >
                         Edit Product
                       </Link>
-                      <Link to="/" className="reject-link">
+                      <div
+                        onClick={() => <ScreenLoader />}
+                        className="reject-link"
+                      >
                         Delete Product
-                      </Link>
+                      </div>
                     </div>
                   </div>
                 ))}
