@@ -1209,7 +1209,17 @@ route.post(
     }
   }
 );
+
+route.get("/root/admin/new/products", auth, isAdmin, async (req, res) => {
+  try {
+    const products = await Product.find({ underReview: true });
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 // CHANGE UNDERREVIEW TO FALSE
 // CHANGE REJECTED TO TRUE OR FALSE
 // MODIFY PRODUCTS ON SITE
+
 module.exports = route;
