@@ -4,7 +4,8 @@ import { NavLink, Link } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
-import { GoClippy } from "react-icons/go";
+import { GoClippy, GoSettings } from "react-icons/go";
+import { GiCancel } from "react-icons/gi";
 
 import "./SellerHamburgerMenu.css";
 
@@ -12,15 +13,15 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   }
@@ -98,6 +99,26 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     <MdRateReview className="mr-2" />
                     Reviews
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller/products/rejected"
+                  >
+                    <GiCancel className="mr-2" />
+                    Rejects
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller/settings"
+                  >
+                    <GoSettings className="mr-2" />
+                    Settings
                   </NavLink>
                 </li>
               </ul>

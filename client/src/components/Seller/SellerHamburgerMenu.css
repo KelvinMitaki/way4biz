@@ -82,6 +82,9 @@
   padding-left: 10px;
 }
 
+/* #seller-account-links,
+#seller-others-links */
+
 @media screen and (min-width: 961px) {
   #hamburger-menu-wrapper {
     display: none;
