@@ -8,7 +8,11 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { fetchReviewProduct } from "../../redux/actions";
+import {
+  fetchReviewProduct,
+  acceptProduct,
+  rejectProduct
+} from "../../redux/actions";
 
 class AdminDashBoardNewProduct extends React.Component {
   componentDidMount() {
@@ -78,16 +82,29 @@ class AdminDashBoardNewProduct extends React.Component {
             </div>
           </div>
           <div className="admin-new-product-buttons my-2">
-            <Link to="/" className="btn btn-lg accept-product-btn">
+            <div
+              onClick={() =>
+                this.props.acceptProduct(
+                  this.props.reviewProduct._id,
+                  this.props.history
+                )
+              }
+              className="btn btn-lg accept-product-btn"
+            >
               Accept Product
-            </Link>
+            </div>
             <div id="dummy-space" className="y"></div>
-            <Link
-              to="/admin/root/new-product/why-reject"
+            <div
+              onClick={() =>
+                this.props.rejectProduct(
+                  this.props.reviewProduct._id,
+                  this.props.history
+                )
+              }
               className="btn btn-lg reject-product-btn"
             >
               Reject Product
-            </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -100,5 +117,9 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchReviewProduct })(AdminDashBoardNewProduct)
+  connect(mapStateToProps, {
+    fetchReviewProduct,
+    acceptProduct,
+    rejectProduct
+  })(AdminDashBoardNewProduct)
 );

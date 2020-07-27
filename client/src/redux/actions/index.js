@@ -146,7 +146,10 @@ import {
   FETCH_REVIEW_PRODUCT,
   ACCEPT_PRODUCT_START,
   ACCEPT_PRODUCT,
-  ACCEPT_PRODUCT_STOP
+  ACCEPT_PRODUCT_STOP,
+  REJECT_PRODUCT_START,
+  REJECT_PRODUCT,
+  REJECT_PRODUCT_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1488,6 +1491,19 @@ export const acceptProduct = (productId, history) => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: ACCEPT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+export const rejectProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_PRODUCT_START });
+    axios.post(`/api/root/admin/reject/product/${productId}`);
+    dispatch({ type: REJECT_PRODUCT });
+    dispatch({ type: REJECT_PRODUCT_STOP });
+    history.push(`/admin/root/new-product/why-reject/${productId}`);
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_PRODUCT_STOP });
     console.log(error.response);
   }
 };
