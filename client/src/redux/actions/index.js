@@ -1484,10 +1484,11 @@ export const fetchReviewProduct = productId => async dispatch => {
 export const acceptProduct = (productId, history) => async dispatch => {
   try {
     dispatch({ type: ACCEPT_PRODUCT_START });
-    axios.post(`/api/root/admin/accept/product/${productId}`);
+    await axios.post(`/api/root/admin/accept/product/${productId}`);
     dispatch({ type: ACCEPT_PRODUCT });
-    dispatch({ type: ACCEPT_PRODUCT_STOP });
+    await dispatch(fetchUnderReview());
     history.push("/admin/new-products");
+    dispatch({ type: ACCEPT_PRODUCT_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: ACCEPT_PRODUCT_STOP });
@@ -1497,10 +1498,10 @@ export const acceptProduct = (productId, history) => async dispatch => {
 export const rejectProduct = (productId, history) => async dispatch => {
   try {
     dispatch({ type: REJECT_PRODUCT_START });
-    axios.post(`/api/root/admin/reject/product/${productId}`);
+    await axios.post(`/api/root/admin/reject/product/${productId}`);
     dispatch({ type: REJECT_PRODUCT });
-    dispatch({ type: REJECT_PRODUCT_STOP });
     history.push(`/admin/root/new-product/why-reject/${productId}`);
+    dispatch({ type: REJECT_PRODUCT_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: REJECT_PRODUCT_STOP });
