@@ -6,6 +6,13 @@
   display: flex;
 }
 
+.admin-new-product div p {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .review-new-product {
   color: #f76b1a;
   padding: 3px;
