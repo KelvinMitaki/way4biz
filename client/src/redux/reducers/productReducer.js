@@ -58,7 +58,9 @@ import {
   REJECT_PRODUCT_START,
   REJECT_PRODUCT_STOP,
   FETCH_UNDER_REVIEW_START,
-  FETCH_UNDER_REVIEW_STOP
+  FETCH_UNDER_REVIEW_STOP,
+  REJECT_MESSAGE_START,
+  REJECT_MESSAGE_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -108,7 +110,8 @@ const INITIAL_STATE = {
   reviewProduct: null,
   acceptProductLoading: false,
   rejectProductLoading: false,
-  fetchReviewProductLoading: false
+  fetchReviewProductLoading: false,
+  rejectReasonLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -313,6 +316,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchReviewProductLoading: true };
     case FETCH_UNDER_REVIEW_STOP:
       return { ...state, fetchReviewProductLoading: false };
+    case REJECT_MESSAGE_START:
+      return { ...state, rejectReasonLoading: true };
+    case REJECT_MESSAGE_STOP:
+      return { ...state, rejectReasonLoading: false };
     default:
       return state;
   }

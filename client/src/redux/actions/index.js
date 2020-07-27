@@ -149,7 +149,10 @@ import {
   ACCEPT_PRODUCT_STOP,
   REJECT_PRODUCT_START,
   REJECT_PRODUCT,
-  REJECT_PRODUCT_STOP
+  REJECT_PRODUCT_STOP,
+  REJECT_MESSAGE,
+  REJECT_MESSAGE_START,
+  REJECT_MESSAGE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1505,6 +1508,24 @@ export const rejectProduct = (productId, history) => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: REJECT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const rejectMessage = (
+  productId,
+  message,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_MESSAGE_START });
+    await axios.post("/api/root/reject/message", { message, productId });
+    dispatch({ type: REJECT_MESSAGE });
+    history.push("/admin/new-products");
+    dispatch({ type: REJECT_MESSAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_MESSAGE_STOP });
     console.log(error.response);
   }
 };
