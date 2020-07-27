@@ -50,7 +50,7 @@ class AdminDashBoardNewProducts extends React.Component {
                 <p>1/1/1</p>
               </div>
               <div className="col-lg-3">
-                <Link to="/" className="review-new-product">
+                <Link to="/admin/new-product" className="review-new-product">
                   Review
                 </Link>
               </div>

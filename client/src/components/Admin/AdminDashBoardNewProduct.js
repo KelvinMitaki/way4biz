@@ -4,6 +4,8 @@ import "./AdminDashBoardNewProduct.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { Link } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { BsArrowLeft } from "react-icons/bs";
 
 class AdminDashBoardNewProduct extends React.Component {
   render() {
@@ -12,47 +14,50 @@ class AdminDashBoardNewProduct extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div className="container box-container mt-4">
-          <h3 className="my-2" style={{ textAlign: "center" }}>
-            New Products
-          </h3>
-          <div className="container my-1">
-            <div className="row y">
-              <div className="col-lg-3">
-                <h6>Owner</h6>
-              </div>
-              <div className="col-lg-3">
-                <h6>Name</h6>
-              </div>
-              <div className="col-lg-3">
-                <h6>Date Added</h6>
-              </div>
-              <div className="col-lg-3">
-                <h6>Review</h6>
-              </div>
+          <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+            <div className="d-flex align-items-center">
+              <Link to="/admin/new-products">
+                <BsArrowLeft />
+              </Link>
+              <h3 className="ml-1">Product Details</h3>
+            </div>
+          </IconContext.Provider>
+          <div className="admin-new-product-details mt-3">
+            <div className="custom-row">
+              <h6>
+                <strong>Owner:</strong>Kijeketile Ngware
+              </h6>
+            </div>
+            <div className="custom-row">
+              <h6>
+                <strong>Contact:</strong>9999
+              </h6>
+            </div>
+            <div className="custom-row">
+              <h6>
+                <strong>Product Name:</strong>Great Beer Of Congo
+              </h6>
+            </div>
+            <div className="custom-row">
+              <h6>
+                <strong>Quantity</strong>10
+              </h6>
+            </div>
+            <div className="admin-new-product-images">
+              <img src="/1.jpg" />
+              <img src="/1.jpg" />
+              <img src="/1.jpg" />
+              <img src="/1.jpg" />
             </div>
           </div>
-
-          <div className="container">
-            {/* mapping here */}
-            <div className="row admin-new-product box-container py-2">
-              <div className="col-lg-3">
-                <strong className="x mr-1">Owner:</strong>
-                John Doe
-              </div>
-              <div className="col-lg-3">
-                <strong className="x mr-1">Name:</strong>
-                Great Beer
-              </div>
-              <div className="col-lg-3">
-                <strong className="x mr-1">Date Added:</strong>
-                1/1/1
-              </div>
-              <div className="col-lg-3">
-                <Link to="/" className="review-new-product">
-                  Review
-                </Link>
-              </div>
-            </div>
+          <div className="admin-new-product-buttons my-2">
+            <Link to="/" className="btn btn-lg accept-product-btn">
+              Accept Product
+            </Link>
+            <div id="dummy-space"></div>
+            <Link to="/" className="btn btn-lg reject-product-btn">
+              Reject Product
+            </Link>
           </div>
         </div>
       </div>

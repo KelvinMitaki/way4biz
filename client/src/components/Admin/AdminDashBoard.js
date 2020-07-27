@@ -180,7 +180,20 @@ class AdminDashBoard extends React.Component {
                               onClick={() => this.props.setPendingOrders()}
                             >
                               <div className="admin-individual-performance-upper-text">
-                                <p>Pending Orders</p>
+                                <p>
+                                  Pending Orders{" "}
+                                  {todaysPendingOrders && (
+                                    <span
+                                      className="badge"
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#f76b1a",
+                                      }}
+                                    >
+                                      {todaysPendingOrders}
+                                    </span>
+                                  )}
+                                </p>
                                 <p>
                                   {pendingOrders &&
                                     pendingOrders.toLocaleString()}
@@ -221,6 +234,28 @@ class AdminDashBoard extends React.Component {
                             <Link to="/">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
+                                <p>
+                                  {this.props.adminOrders &&
+                                    this.props.adminOrders.totalPrice &&
+                                    this.props.adminOrders.totalPrice.toLocaleString()}
+                                </p>
+                              </div>
+                              <div>
+                                <p style={{ fontSize: "12px" }}>
+                                  {Math.round(
+                                    (this.props.adminOrders.todayTotalPrice /
+                                      this.props.adminOrders.totalPrice) *
+                                      100
+                                  )}
+                                  % change today
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
+                          <div className="admin-inividual-performance-wrapper">
+                            <Link to="/">
+                              <div className="admin-individual-performance-upper-text">
+                                <p>Complaints</p>
                                 <p>
                                   {this.props.adminOrders &&
                                     this.props.adminOrders.totalPrice &&
