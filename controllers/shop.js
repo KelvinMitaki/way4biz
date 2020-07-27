@@ -12,13 +12,20 @@ const Distance = require("../models/Distance");
 route.post("/api/products", async (req, res) => {
   try {
     const { itemsToSkip } = req.body;
-    const products = await Product.find()
+    const products = await Product.find({ onSite: true })
       .skip(itemsToSkip)
       .limit(6)
       .populate("seller", "storeName")
       .exec();
-    const productCount = await Product.estimatedDocumentCount();
-    res.send({ products, productCount });
+
+    const productCount = await Product.aggregate([
+      { $match: { onSite: true } },
+      { $count: "productCount" }
+    ]);
+    res.send({
+      products,
+      productCount: productCount.length !== 0 ? productCount[0].productCount : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
