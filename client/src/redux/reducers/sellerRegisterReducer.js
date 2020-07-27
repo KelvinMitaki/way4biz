@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   sellerRegisterError: null,
   errorVerifying: null,
   resetToken: null,
-  sellerProducts: [],
+  sellerProducts: null,
   sellerOrders: [],
   verifiedSellers: null,
   fetchSellersLoading: false,
