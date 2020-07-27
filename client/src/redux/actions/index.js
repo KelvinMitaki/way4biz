@@ -139,7 +139,10 @@ import {
   DELETE_SELLER_IMAGE,
   ACCEPT_SELLER_REQUEST,
   ACCEPT_SELLER_REQUEST_START,
-  ACCEPT_SELLER_REQUEST_STOP
+  ACCEPT_SELLER_REQUEST_STOP,
+  FETCH_UNDER_REVIEW_START,
+  FETCH_UNDER_REVIEW_STOP,
+  FETCH_UNDER_REVIEW
 } from "./types";
 
 const authCheck = error => {
@@ -1447,8 +1450,13 @@ export const acceptSellerRequest = (history, sellerId) => async dispatch => {
 
 export const fetchUnderReview = () => async dispatch => {
   try {
+    dispatch({ type: FETCH_UNDER_REVIEW_START });
+    const res = await axios.get("/api/root/admin/new/products");
+    dispatch({ type: FETCH_UNDER_REVIEW, payload: res.data });
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
     console.log(error.response);
   }
 };

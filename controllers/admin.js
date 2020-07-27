@@ -1210,7 +1210,7 @@ route.post(
   }
 );
 
-route.get("/root/admin/new/products", auth, isAdmin, async (req, res) => {
+route.get("/api/root/admin/new/products", auth, isAdmin, async (req, res) => {
   try {
     const products = await Product.find({ underReview: true });
     res.send(products);
