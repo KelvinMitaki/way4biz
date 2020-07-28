@@ -43,6 +43,30 @@
   text-align: center;
 }
 
+.rejected {
+  background-color: red;
+  border-radius: 3px;
+  color: #fff;
+  width: 100px;
+  text-align: center;
+}
+
+.sold-out {
+  background-color: gray;
+  border-radius: 3px;
+  color: #fff;
+  width: 100px;
+  text-align: center;
+}
+
+.under-review {
+  background-color: blue;
+  border-radius: 3px;
+  color: #fff;
+  width: 100px;
+  text-align: center;
+}
+
 .x {
   display: none;
 }

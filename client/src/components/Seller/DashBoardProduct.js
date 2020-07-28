@@ -6,16 +6,17 @@ import Image from "../Market/Image";
 
 class DashBoardProduct extends React.Component {
   state = {
-    search: null
+    search: null,
   };
-  onSearchChange = event => {
+  onSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
   render() {
     const test =
       this.props.products &&
       this.props.products.length !== 0 &&
-      this.props.products.filter(product => {
+      this.props.products.filter((product) => {
         return product.name
           .toLowerCase()
           .includes(this.state.search && this.state.search.toLowerCase());
@@ -50,7 +51,7 @@ class DashBoardProduct extends React.Component {
           {this.props.products &&
             !this.state.search &&
             this.props.products.length !== 0 &&
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -88,12 +89,23 @@ class DashBoardProduct extends React.Component {
                   <p className="x mr-2">
                     <strong>Status:</strong>
                   </p>
-                  <p className="live">
+
+                  {(product.stockQuantity < 1 && (
+                    <p className="sold-out">Sold Out</p>
+                  )) ||
+                    (product.onSite && <p className="live">Live</p>) ||
+                    (product.rejected && (
+                      <p className="rejected">Rejected</p>
+                    )) ||
+                    (product.underReview && (
+                      <p className="under-review">Under Review</p>
+                    ))}
+                  {/* <p className="live">
                     {(product.stockQuantity < 1 && "Sold Out") ||
                       (product.onSite && "live") ||
                       (product.rejected && "rejected") ||
                       (product.underReview && "Under Review")}
-                  </p>
+                  </p> */}
                 </div>
                 <div className="col-md-6 col-lg-1">
                   <Link
@@ -107,7 +119,7 @@ class DashBoardProduct extends React.Component {
             ))}
           {test &&
             test.length !== 0 &&
-            test.map(product => (
+            test.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
