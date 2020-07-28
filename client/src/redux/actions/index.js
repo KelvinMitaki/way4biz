@@ -1251,7 +1251,7 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
 export const fetchOrderById = orderId => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_ORDER_BY_ID_START });
-    const res = await axios.get(`/api/root/admin/order/${orderId}`);
+    const res = await axios.get(`/api/admin/fetch/order/by/id/${orderId}`);
     dispatch({ type: FETCH_ORDER_BY_ID, payload: res.data });
     dispatch({ type: FETCH_ORDER_BY_ID_STOP });
   } catch (error) {
