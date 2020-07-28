@@ -54,7 +54,7 @@ function AdminDashBoardOrders(props) {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    props.fetchOrderById(orderId.orderId);
+    props.fetchOrderById(orderId.orderId.trim());
     setOrderId({ orderId: null });
   };
   if (!props.allAdminOrders || props.radioLoading || props.adminOrderLoading)
