@@ -197,6 +197,13 @@ const authCheck = error => {
   ) {
     return (window.location.href = "/seller/sign-in");
   }
+  if (
+    error &&
+    error.response &&
+    Object.keys(error.response.data).length === 0
+  ) {
+    return (window.location.href = "/");
+  }
 };
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
