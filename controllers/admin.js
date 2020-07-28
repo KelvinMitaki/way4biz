@@ -1146,6 +1146,39 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   }
 });
 
+route.get(
+  "/api/admin/fetch/order/by/id/:orderId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { orderId } = req.params;
+      const order = await Order.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(orderId) } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "items.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "product.seller",
+            foreignField: "_id",
+            as: "seller"
+          }
+        }
+      ]);
+      res.send(order.length !== 0 ? order[0] : order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 route.get("/api/fetch/weekly/sales", auth, isAdmin, async (req, res) => {
   try {
     const items = await Order.aggregate([

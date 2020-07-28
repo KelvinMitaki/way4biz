@@ -20,7 +20,6 @@ class DashBoardProduct extends React.Component {
           .toLowerCase()
           .includes(this.state.search && this.state.search.toLowerCase());
       });
-
     return (
       <div
         className="container"
@@ -89,7 +88,12 @@ class DashBoardProduct extends React.Component {
                   <p className="x mr-2">
                     <strong>Status:</strong>
                   </p>
-                  <p className="live">Live</p>
+                  <p className="live">
+                    {(product.stockQuantity < 1 && "Sold Out") ||
+                      (product.onSite && "live") ||
+                      (product.rejected && "rejected") ||
+                      (product.underReview && "Under Review")}
+                  </p>
                 </div>
                 <div className="col-md-6 col-lg-1">
                   <Link

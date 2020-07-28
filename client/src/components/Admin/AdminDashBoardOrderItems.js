@@ -32,9 +32,12 @@ class AdminDashBoardOrderItems extends React.Component {
                 value={{ className: "arrow-icon ml-3 my-2" }}
               >
                 <div>
-                  <Link to="/">
+                  <div
+                    onClick={() => this.props.history.goBack()}
+                    style={{ cursor: "pointer" }}
+                  >
                     <BsArrowLeft />
-                  </Link>
+                  </div>
                 </div>
               </IconContext.Provider>
               <h3 className="ml-2">Ordered Items</h3>
@@ -55,7 +58,7 @@ class AdminDashBoardOrderItems extends React.Component {
               <div className="individual-order-item">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
-                  this.props.adminOrder["0"].product.map((p) => (
+                  this.props.adminOrder["0"].product.map(p => (
                     <div
                       key={p._id}
                       className="box-container row align-items-center"
@@ -88,7 +91,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
-                              (it) => it.product === p._id
+                              it => it.product === p._id
                             ).quantity
                           }
                         </p>
@@ -100,7 +103,11 @@ class AdminDashBoardOrderItems extends React.Component {
                           {this.props.adminOrder["0"].seller[0].lastName}
                         </p>
                         <p>
-                          <Link to="/seller/store">Visit Store</Link>
+                          <Link
+                            to={`/seller/store/${this.props.adminOrder["0"].seller[0]._id}`}
+                          >
+                            Visit Store
+                          </Link>
                         </p>
                       </div>
                     </div>
@@ -113,9 +120,9 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
+    adminOrder: state.product.adminOrder
   };
 };
 export default withRouter(

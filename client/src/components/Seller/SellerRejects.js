@@ -31,7 +31,7 @@ class SellerRejects extends React.Component {
                     Rejected Products
                   </h3>
                   {this.props.sellerRejects.length !== 0 &&
-                    this.props.sellerRejects.map((rej) => (
+                    this.props.sellerRejects.map(rej => (
                       <div
                         key={rej._id}
                         className="box-container reject-info p-2"
@@ -81,9 +81,9 @@ class SellerRejects extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    sellerRejects: state.product.sellerRejects,
+    sellerRejects: state.product.sellerRejects
   };
 };
 export default withRouter(

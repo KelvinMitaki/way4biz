@@ -36,6 +36,10 @@ const OrderSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    cancelled: {
+      type: Boolean,
+      default: false
+    },
     paymentMethod: {
       type: String,
       required: true

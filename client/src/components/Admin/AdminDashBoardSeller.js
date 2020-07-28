@@ -61,13 +61,13 @@ class AdminDashBoardSeller extends React.Component {
                 <div className="custom-row">
                   <h5>
                     <strong>Phone: </strong>
-                    {this.props.verifiedSeller.storeName}
+                    {this.props.verifiedSeller.phoneNumber}
                   </h5>
                 </div>
                 <div className="custom-row">
                   <h5>
                     <strong>Email: </strong>
-                    {this.props.verifiedSeller.storeName}
+                    {this.props.verifiedSeller.email}
                   </h5>
                 </div>
                 <div className="custom-row">
