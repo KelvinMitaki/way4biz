@@ -105,9 +105,10 @@ class AdminDashBoard extends React.Component {
                     <span>
                       {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
-                        this.props.stock
-                          .find(s => s.label === "Stock Out")
-                          .value.toLocaleString()}
+                        kFormatter(
+                          this.props.stock.find(s => s.label === "Stock Out")
+                            .value
+                        ).toLocaleString()}
                     </span>
                     <h3>
                       <BsArrowRepeat />
