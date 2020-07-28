@@ -32,7 +32,7 @@ class AdminDashBoardSeller extends React.Component {
                   <Link to="/admin-sellers">
                     <BsArrowLeft />
                   </Link>
-                  <h3 className="ml-3">Seller ID</h3>
+                  <h3 className="ml-3">Seller Details</h3>
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
@@ -118,10 +118,10 @@ class AdminDashBoardSeller extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verifiedSeller: state.sellerRegister.verifiedSeller,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading,
   };
 };
 export default withRouter(
