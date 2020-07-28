@@ -12,12 +12,20 @@ const Distance = require("../models/Distance");
 route.post("/api/products", async (req, res) => {
   try {
     const { itemsToSkip } = req.body;
-    const products = await Product.find({ onSite: true })
-      .skip(itemsToSkip)
-      .limit(6)
-      .populate("seller", "storeName")
-      .exec();
-
+    const products = await Product.aggregate([
+      { $match: { onSite: true } },
+      {
+        $project: {
+          price: 1,
+          name: 1,
+          price: 1,
+          freeShipping: 1,
+          imageUrl: 1
+        }
+      },
+      { $skip: itemsToSkip },
+      { $limit: 6 }
+    ]);
     const productCount = await Product.aggregate([
       { $match: { onSite: true } },
       { $count: "productCount" }
