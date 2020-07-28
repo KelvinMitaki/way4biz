@@ -30,12 +30,15 @@ class Store extends Component {
             </div>
             <div className="col-lg-9" style={{ padding: "0px" }}>
               <div className="store-header py-2">
-                <h2 style={{ textAlign: "center" }}>Bata Stores</h2>
+                <h2 style={{ textAlign: "center" }}>
+                  {this.props.storeProducts.length !== 0 &&
+                    this.props.storeProducts[0].storeName}
+                </h2>
               </div>
               <div className="products-section">
                 {this.props.storeProducts.length !== 0 &&
                   this.props.storeProducts.map(pro => (
-                    <div className="product">
+                    <div key={pro._id} className="product">
                       <Link
                         to={`/product/${pro._id}`}
                         title="Helloo World"

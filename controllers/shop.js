@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
@@ -567,6 +568,39 @@ route.post(
     });
   }
 );
+route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $match: {
+          seller: mongoose.Types.ObjectId(req.params.sellerId),
+          onSite: true
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          name: 1,
+          price: 1,
+          imageUrl: 1,
+          storeName: "$seller.storeName",
+          freeShipping: 1
+        }
+      }
+    ]);
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
