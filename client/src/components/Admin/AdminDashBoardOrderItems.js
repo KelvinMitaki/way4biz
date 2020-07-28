@@ -103,7 +103,11 @@ class AdminDashBoardOrderItems extends React.Component {
                           {this.props.adminOrder["0"].seller[0].lastName}
                         </p>
                         <p>
-                          <Link to="/seller/store">Visit Store</Link>
+                          <Link
+                            to={`/seller/store/${this.props.adminOrder["0"].seller[0]._id}`}
+                          >
+                            Visit Store
+                          </Link>
                         </p>
                       </div>
                     </div>

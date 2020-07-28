@@ -9,6 +9,7 @@ import Categories from "../Hero/HeroCategories";
 import "./Store.css";
 import Image from "../Market/Image";
 import StoreCategories from "./StoreCategories";
+import HeroCategories from "../Hero/HeroCategories";
 
 function Store() {
   return (
@@ -19,7 +20,7 @@ function Store() {
         <div className="row">
           <div className="col-lg-3">
             {/* <Categories id="products-categories" /> */}
-            <StoreCategories />
+            <HeroCategories />
           </div>
           <div className="col-lg-9" style={{ padding: "0px" }}>
             <div className="store-header py-2">
@@ -36,7 +37,7 @@ function Store() {
                     <p
                       style={{
                         fontWeight: "bolder",
-                        padding: "0px 10px",
+                        padding: "0px 10px"
                       }}
                       className="price"
                     >
@@ -53,7 +54,7 @@ function Store() {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    padding: "0px 10px",
+                    padding: "0px 10px"
                   }}
                   className="mb-2"
                 >
