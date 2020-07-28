@@ -2,8 +2,9 @@ import React from "react";
 
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashBoardSecondaryHeader from "./AdminDashboardSecondaryHeader";
-
+import Complaints from "./Complaints";
 import "./AdminDashBoardComplaints.css";
+import { Link } from "react-router-dom";
 
 class AdminDashBoardComplaints extends React.Component {
   render() {
@@ -12,19 +13,10 @@ class AdminDashBoardComplaints extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashBoardSecondaryHeader />
         <div className="container box-container mt-4">
-          <h3 className="mt-3 mb-2" style={{ textAlign: "center" }}>
+          <h3 className="my-2" style={{ textAlign: "center" }}>
             Complaints
           </h3>
-          {/* mapping here */}
-          <div className="box-container p-2 admin-complain">
-            {/* <h4>
-              <strong className="mr-1">Buyer:</strong>Helloo World
-            </h4>
-            <p>
-              For fucks sake,I received an empty box. Help me recover my
-              money...
-            </p> */}
-          </div>
+          <Complaints />
         </div>
       </div>
     );
