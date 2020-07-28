@@ -1003,13 +1003,35 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       { $project: { _id: 0, totalPrice: 1 } },
       { $group: { _id: null, todayTotalPrice: { $sum: "$totalPrice" } } }
     ]);
+    const monthlyPrice = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60 * 30
+            )
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          totalPrice: 1
+        }
+      },
+      { $group: { _id: null, monthlyPrice: { $sum: "$totalPrice" } } }
+    ]);
     res.send({
       totalOrdersCount,
       todaysOrdersCount,
       totalPrice: totalPrice[0].totalPrice,
       todayTotalPrice: todayTotalPrice[0]
         ? todayTotalPrice[0].todayTotalPrice
-        : 0
+        : 0,
+      monthlyPrice:
+        monthlyPrice[0] && monthlyPrice[0].monthlyPrice
+          ? monthlyPrice[0].monthlyPrice
+          : 0
     });
   } catch (error) {
     res.status(500).send(error);

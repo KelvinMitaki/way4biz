@@ -8,9 +8,11 @@ import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import CategoryHoverPopup from "./CategoryHoverPopup";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCategories extends React.Component {
   render() {
+    if (!this.props.categories) return <ScreenLoader />;
     return (
       <div id={this.props.id}>
         <div className="category-head">

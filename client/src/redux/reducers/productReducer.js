@@ -68,7 +68,7 @@ const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
   products: [],
-  categories: [],
+  categories: null,
   singleCategoryProducts: [],
   buyerOrders: [],
   buyerOrderDetails: null,

@@ -22,8 +22,10 @@ class Store extends Component {
         <Header />
         <div className="container-fluid" id="products">
           <div className="row">
-            <div className="col-lg-3" id="store-categories">
-              <HeroCategories />
+            <div className="col-lg-3">
+              <div className="sticky-store-category">
+                <HeroCategories />
+              </div>
             </div>
             <div className="col-lg-9" style={{ padding: "0px" }}>
               <div className="store-header py-2">
