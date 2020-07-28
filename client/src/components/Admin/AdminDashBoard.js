@@ -294,6 +294,7 @@ class AdminDashBoard extends React.Component {
               </div>
 
               <div className="row admin-dashboard-bottom">
+                <Link to="/admin/rejects">Rejects</Link>
                 <h3>Sales Monitoring</h3>
                 <div className="dummy-content">
                   The quick brown fox jumped over the lazy dog

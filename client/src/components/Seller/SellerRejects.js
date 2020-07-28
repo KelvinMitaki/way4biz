@@ -4,6 +4,8 @@ import "./SellerRejects.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { Link } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { BsArrowLeft } from "react-icons/bs";
 
 class SellerRejects extends React.Component {
   render() {
@@ -17,9 +19,21 @@ class SellerRejects extends React.Component {
           </div>
           <div className="col-lg-9 py-3">
             <div className="container box-container">
-              <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
-                Rejected Products
-              </h3>
+              <div className="container">
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div>
+                    <Link to="/">
+                      <BsArrowLeft />
+                    </Link>
+                  </div>
+                </IconContext.Provider>
+                <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
+                  Rejected Products
+                </h3>
+              </div>
+
               {/* fucking mapping here */}
               <div className="box-container reject-info p-2">
                 <h3 className="my-2">Great Useless Beer</h3>

@@ -18,25 +18,8 @@ class SellerOrderDetails extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9">
-            {/* <div className="container">
-              <div className="row">
-                <div>
-                  <IconContext.Provider
-                    value={{ className: "arrow-icon ml-3 my-2" }}
-                  >
-                    <div>
-                      <Link to="/seller-orders">
-                        <BsArrowLeft />
-                      </Link>
-                    </div>
-                  </IconContext.Provider>
-                </div>
-              </div>
-            </div> */}
-
             <div className="container-fluid seller-db-order-details-wrapper">
               <div className="row align-items-center">
-                {/* <div className="col"> */}
                 <IconContext.Provider
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
@@ -47,7 +30,6 @@ class SellerOrderDetails extends React.Component {
                   </div>
                 </IconContext.Provider>
                 <h3 className="ml-2">Ordered Items</h3>
-                {/* </div> */}
               </div>
               <div className="row y my-2">
                 <h6 className="col-lg-5">Item</h6>
