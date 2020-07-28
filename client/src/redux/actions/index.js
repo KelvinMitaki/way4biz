@@ -808,13 +808,13 @@ export const redirectOnFail = (
     dispatch({ type: REDIRECT_ON_FAIL_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
     if (!res.data.order) {
-      history.push("/pending/reviews");
+      history.push("/");
     }
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
-    history.push("/pending/reviews");
+    history.push("/");
   }
 };
 
