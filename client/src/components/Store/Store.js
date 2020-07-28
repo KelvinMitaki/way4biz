@@ -3,8 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import Categories from "../Hero/HeroCategories";
-// import Heart from "../Products/Heart";
 import "./Store.css";
 import Image from "../Market/Image";
 import HeroCategories from "../Hero/HeroCategories";
@@ -24,8 +22,7 @@ class Store extends Component {
         <Header />
         <div className="container-fluid" id="products">
           <div className="row">
-            <div className="col-lg-3">
-              {/* <Categories id="products-categories" /> */}
+            <div className="col-lg-3" id="store-categories">
               <HeroCategories />
             </div>
             <div className="col-lg-9" style={{ padding: "0px" }}>
@@ -37,7 +34,7 @@ class Store extends Component {
               </div>
               <div className="products-section">
                 {this.props.storeProducts.length !== 0 &&
-                  this.props.storeProducts.map(pro => (
+                  this.props.storeProducts.map((pro) => (
                     <div key={pro._id} className="product">
                       <Link
                         to={`/product/${pro._id}`}
@@ -64,7 +61,7 @@ class Store extends Component {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px"
+                              padding: "0px 10px",
                             }}
                             className="price"
                           >
@@ -83,7 +80,7 @@ class Store extends Component {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          padding: "0px 10px"
+                          padding: "0px 10px",
                         }}
                         className="mb-2"
                       >
@@ -101,9 +98,9 @@ class Store extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    storeProducts: state.product.storeProducts
+    storeProducts: state.product.storeProducts,
   };
 };
 export default withRouter(

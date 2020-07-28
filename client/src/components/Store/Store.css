@@ -1,0 +1,9 @@
+/* #store-categories {
+  display: block;
+} */
+
+@media screen and (max-width: 960px) {
+  #store-categories {
+    display: none;
+  }
+}
