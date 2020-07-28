@@ -7,6 +7,8 @@ import { Link, withRouter } from "react-router-dom";
 import { fetchRejects, deleteSellerProduct } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { IconContext } from "react-icons";
+import { BsArrowLeft } from "react-icons/bs";
 
 class SellerRejects extends React.Component {
   componentDidMount() {
@@ -60,6 +62,57 @@ class SellerRejects extends React.Component {
                     </div>
                   </div>
                 ))}
+              <div className="container">
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div>
+                    <Link to="/">
+                      <BsArrowLeft />
+                    </Link>
+                  </div>
+                </IconContext.Provider>
+                <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
+                  Rejected Products
+                </h3>
+              </div>
+
+              {/* fucking mapping here */}
+              <div className="box-container reject-info p-2">
+                <h3 className="my-2">Great Useless Beer</h3>
+                <p>
+                  The quick brown fox jumped over the lazy dog The quick brown
+                  fox jumped over the lazy dogThe quick brown fox jumped over
+                  the lazy dogThe quick brown fox jumped over the lazy dogThe
+                  quick brown fox jumped over the lazy dog.
+                </p>
+                <div className="reject-links mt-2 pt-2">
+                  <Link to="/" className="reject-link">
+                    Edit Product
+                  </Link>
+                  <Link to="/" className="reject-link">
+                    Delete Product
+                  </Link>
+                </div>
+              </div>
+
+              <div className="box-container reject-info p-2">
+                <h3 className="my-2">Great Useless Beer</h3>
+                <p>
+                  The quick brown fox jumped over the lazy dog The quick brown
+                  fox jumped over the lazy dogThe quick brown fox jumped over
+                  the lazy dogThe quick brown fox jumped over the lazy dogThe
+                  quick brown fox jumped over the lazy dog.
+                </p>
+                <div className="reject-links mt-2 pt-2">
+                  <Link to="/" className="reject-link">
+                    Edit Product
+                  </Link>
+                  <Link to="/" className="reject-link">
+                    Delete Product
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

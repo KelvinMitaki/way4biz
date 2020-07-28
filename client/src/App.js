@@ -57,6 +57,7 @@ import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNew
 import SellerSettings from "./components/Seller/SellerSettings";
 import SellerRejects from "./components/Seller/SellerRejects";
 import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
+import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
 
 class App extends React.Component {
   state = {
@@ -162,6 +163,16 @@ class App extends React.Component {
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardComplaints />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/rejects"
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardRejects />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
