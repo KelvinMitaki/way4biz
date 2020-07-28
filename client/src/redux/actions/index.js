@@ -158,7 +158,10 @@ import {
   FETCH_REJECTS_STOP,
   DELETE_SELLER_PRODUCT,
   DELETE_SELLER_PRODUCT_START,
-  DELETE_SELLER_PRODUCT_STOP
+  DELETE_SELLER_PRODUCT_STOP,
+  FETCH_STORE_PRODUCTS_START,
+  FETCH_STORE_PRODUCTS_STOP,
+  FETCH_STORE_PRODUCTS
 } from "./types";
 
 const authCheck = error => {
@@ -1561,6 +1564,18 @@ export const deleteSellerProduct = (productId, history) => async dispatch => {
     authCheck(error);
     history.push("/seller-products");
     dispatch({ type: DELETE_SELLER_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchStoreProducts = sellerId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_STORE_PRODUCTS_START });
+    const res = await axios.get(`/api/fetch/store/products/${sellerId}`);
+    dispatch({ type: FETCH_STORE_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_STORE_PRODUCTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_STORE_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
