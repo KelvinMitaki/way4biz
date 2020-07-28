@@ -293,12 +293,12 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              {/* <div className="row admin-dashboard-bottom">
+              <div className="row admin-dashboard-bottom">
                 <h3>Sales Monitoring</h3>
                 <div className="dummy-content">
                   The quick brown fox jumped over the lazy dog
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
