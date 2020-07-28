@@ -32,9 +32,12 @@ class AdminDashBoardOrderItems extends React.Component {
                 value={{ className: "arrow-icon ml-3 my-2" }}
               >
                 <div>
-                  <Link to="/">
+                  <div
+                    onClick={() => this.props.history.goBack()}
+                    style={{ cursor: "pointer" }}
+                  >
                     <BsArrowLeft />
-                  </Link>
+                  </div>
                 </div>
               </IconContext.Provider>
               <h3 className="ml-2">Ordered Items</h3>
