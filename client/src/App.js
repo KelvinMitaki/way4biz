@@ -59,6 +59,7 @@ import SellerRejects from "./components/Seller/SellerRejects";
 import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
 import AdminDashBoardComplaint from "./components/Admin/AdminDashBoardComplaint";
 import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
+import FileComplain from "./components/Account/FileComplain";
 
 class App extends React.Component {
   state = {
@@ -511,6 +512,17 @@ class App extends React.Component {
                         <Redirect to="/sign-in" />
                       ) : (
                         <AddressForm />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/buyer/file-complain"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <FileComplain />
                       )
                     }
                   />

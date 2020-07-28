@@ -1,11 +1,14 @@
-.buy-again-link {
+.buy-again-link,
+.file-complain-link {
   color: #f76b1a;
+  padding: 3px;
 }
 
-.buy-again-link:hover {
+.buy-again-link:hover,
+.file-complain-link:hover {
   text-decoration: none;
   color: #f76b1a;
-  padding: 3px 5px;
+  /* padding: 3px 5px; */
   background-color: rgba(255, 192, 203, 0.5);
 }
 
