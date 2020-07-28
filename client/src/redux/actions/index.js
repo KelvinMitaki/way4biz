@@ -161,7 +161,8 @@ import {
   DELETE_SELLER_PRODUCT_STOP,
   FETCH_STORE_PRODUCTS_START,
   FETCH_STORE_PRODUCTS_STOP,
-  FETCH_STORE_PRODUCTS
+  FETCH_STORE_PRODUCTS,
+  HANDLE_SEARCH_TERM
 } from "./types";
 
 const authCheck = error => {
@@ -929,6 +930,114 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     console.log(error);
     console.log(error.response);
   }
+};
+export const searchTermProducts = (
+  filter,
+  history,
+  searchTerm
+) => async dispatch => {
+  try {
+    const test = {};
+    const sort = {};
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
+    dispatch({ type: SINGLE_CATEGORY_START });
+    const res = await axios.post(`/api/products/search/term`, {
+      itemsToSkip: 0,
+      searchTerm,
+      test,
+      sort
+    });
+    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
+    dispatch({ type: SINGLE_CATEGORY_STOP });
+    // history.push(`/products/category/${category}`);
+  } catch (error) {
+    dispatch({ type: SINGLE_CATEGORY_STOP });
+    console.log(error.response);
+    history.push("/");
+  }
+};
+export const moreSearchTermProducts = (filter, searchTerm) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const test = {};
+    const sort = {};
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
+
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
+    // const itemsToSkip = getState().product.itemsToSkip;
+    const prodCount = getState().product.categoryProductCount;
+    const singleProdLength = getState().product.singleCategoryProducts.length;
+    if (singleProdLength < prodCount) {
+      dispatch({ type: FILTERED_PRODUCTS_START });
+      const res = await axios.post(`/api/products/search/term`, {
+        itemsToSkip: singleProdLength,
+        test,
+        searchTerm,
+        sort
+      });
+      dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+    }
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
+  } catch (error) {
+    dispatch({ type: FILTERED_PRODUCTS_STOP });
+    console.log(error);
+    console.log(error.response);
+  }
+};
+export const handleSearchTerm = term => {
+  return {
+    type: HANDLE_SEARCH_TERM,
+    payload: term
+  };
 };
 // export const fetchFilteredProducts = (filter, category) => async dispatch => {
 //   try {

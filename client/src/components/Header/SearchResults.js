@@ -7,12 +7,12 @@ import Categories from "../Hero/HeroCategories";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
 import {
-  singleCategory,
-  moreSingleCategoryProducts,
+  searchTermProducts,
+  moreSearchTermProducts,
   hasMoreCategoryFalse,
   handleChangeAction,
   handleRadioButtonAction,
-  handleCheckboxAction,
+  handleCheckboxAction
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -27,18 +27,15 @@ import Image from "../Market/Image";
 
 function SearchResults(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback((node) => {
+  const lastItemElementRef = useCallback(node => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
-        return props.moreSingleCSearchResults(
-          props.match.params.category,
-          props.filter
-        );
+        return props.moreSearchTermProducts(props.filter, props.typing);
       }
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
+    observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -46,7 +43,7 @@ function SearchResults(props) {
     if (node) observer.current.observe(node);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleCheckbox = (event) => {
+  const handleCheckbox = event => {
     const { checked, name } = event.target;
 
     props.handleCheckboxAction(
@@ -55,12 +52,12 @@ function SearchResults(props) {
       props.history
     );
   };
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target;
 
     props.handleChangeAction({ name, value });
   };
-  const handleRadioButton = (event) => {
+  const handleRadioButton = event => {
     const { name, value } = event.target;
     props.handleRadioButtonAction(
       props.match.params.category,
@@ -124,13 +121,13 @@ function SearchResults(props) {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              fontSize: "12px",
+                              fontSize: "12px"
                             }}
                             onClick={() =>
-                              props.singleCategory(
-                                props.match.params.category,
+                              props.searchTermProducts(
                                 props.filter,
-                                props.history
+                                props.history,
+                                props.typing
                               )
                             }
                           >
@@ -247,7 +244,7 @@ function SearchResults(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px",
+                                padding: "0px"
                               }}
                               className="price"
                             >
@@ -260,7 +257,7 @@ function SearchResults(props) {
                             style={{
                               height: "10px",
                               padding: "0px",
-                              margin: "0px",
+                              margin: "0px"
                             }}
                           >
                             {product.freeShipping && (
@@ -276,7 +273,7 @@ function SearchResults(props) {
                             style={{
                               display: "flex",
                               padding: "0px 10px",
-                              margin: "0px",
+                              margin: "0px"
                             }}
                             className="mb-2"
                           >
@@ -315,7 +312,7 @@ function SearchResults(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px",
+                              padding: "0px 10px"
                             }}
                             className="price"
                           >
@@ -328,7 +325,7 @@ function SearchResults(props) {
                           style={{
                             padding: "0px 0px 0px 10px",
                             margin: "0px",
-                            fontSize: "smaller",
+                            fontSize: "smaller"
                           }}
                         >
                           {product.freeShipping && <p>Free Shipping</p>}
@@ -337,7 +334,7 @@ function SearchResults(props) {
                           style={{
                             display: "flex",
                             padding: "0px 10px 0px 0px",
-                            margin: "0px",
+                            margin: "0px"
                           }}
                           className="mb-2"
                         >
@@ -357,24 +354,25 @@ function SearchResults(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
     filter: state.filter,
     hasMoreCategoryProducts: state.product.hasMoreCategoryProducts,
+    typing: state.cartReducer.typing
   };
 };
 
 export default withRouter(
   reduxForm({ form: "Products" })(
     connect(mapStateToProps, {
-      singleCategory,
+      searchTermProducts,
       hasMoreCategoryFalse,
-      moreSingleCategoryProducts,
+      moreSearchTermProducts,
       handleRadioButtonAction,
       handleCheckboxAction,
-      handleChangeAction,
+      handleChangeAction
     })(SearchResults)
   )
 );

@@ -1,8 +1,13 @@
 import React from "react";
 import "./Search.css";
-import { fetchProductsSearch, fetchProductReviews } from "../../redux/actions";
+import {
+  fetchProductsSearch,
+  fetchProductReviews,
+  handleSearchTerm,
+  searchTermProducts
+} from "../../redux/actions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineSearch } from "react-icons/ai";
 import reactSringReplace from "react-string-replace";
@@ -20,7 +25,7 @@ class Search extends React.Component {
     this.setState({
       typing: e.target.value
     });
-
+    this.props.handleSearchTerm(e.target.value);
     this.props.fetchProductsSearch(e.target.value);
   }
   render() {
@@ -41,7 +46,19 @@ class Search extends React.Component {
             value={this.state.typing}
           />
           <div className="input-group-append">
-            <button id="header-search-btn">
+            <button
+              id="header-search-btn"
+              onClick={() => {
+                this.props.searchTermProducts(
+                  this.props.filter,
+                  this.props.history,
+                  this.props.typing
+                );
+                this.props.history.push(
+                  `/products/search/${this.props.typing}`
+                );
+              }}
+            >
               <IconContext.Provider value={{ className: "icon mr-1 " }}>
                 <div className="icon-container">
                   <AiOutlineSearch />
@@ -111,12 +128,19 @@ class Search extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    searchedProducts: state.product.searchedProducts
+    searchedProducts: state.product.searchedProducts,
+    typing: state.cartReducer.typing,
+    filter: state.filter
   };
 };
-export default connect(mapStateToProps, {
-  fetchProductsSearch,
-  fetchProductReviews
-})(Search);
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchProductsSearch,
+    searchTermProducts,
+    fetchProductReviews,
+    handleSearchTerm
+  })(Search)
+);

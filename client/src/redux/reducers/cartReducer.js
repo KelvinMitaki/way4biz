@@ -4,12 +4,14 @@ import {
   DELETE_FROM_CART,
   MAKE_ORDER,
   ADD_TO_WISHLIST,
-  REMOVE_FROM_WISHLIST
+  REMOVE_FROM_WISHLIST,
+  HANDLE_SEARCH_TERM
 } from "../actions/types";
 
 const INITIAL_STATE = {
   cart: [],
-  wishlist: []
+  wishlist: [],
+  typing: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -68,6 +70,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         wishlist: state.wishlist.filter(item => item._id !== action.payload._id)
       };
+    case HANDLE_SEARCH_TERM:
+      return { ...state, typing: action.payload };
     default:
       return state;
   }

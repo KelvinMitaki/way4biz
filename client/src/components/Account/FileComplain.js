@@ -9,6 +9,7 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { redirectOnFail } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class FileComplain extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class FileComplain extends React.Component {
     );
   }
   render() {
+    if (this.props.redirectOnFailLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -71,5 +73,11 @@ class FileComplain extends React.Component {
     );
   }
 }
-
-export default withRouter(connect(null, { redirectOnFail })(FileComplain));
+const mapStateToProps = state => {
+  return {
+    redirectOnFailLoading: state.product.redirectOnFailLoading
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { redirectOnFail })(FileComplain)
+);

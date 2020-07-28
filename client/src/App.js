@@ -549,6 +549,11 @@ class App extends React.Component {
                     }
                   />
                   <Route
+                    path="/products/search/:searchTerm"
+                    exact
+                    component={SearchResults}
+                  />
+                  <Route
                     path="/checkout"
                     exact
                     render={() =>
