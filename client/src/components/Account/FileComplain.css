@@ -1,0 +1,15 @@
+.submit-complain {
+  background-color: #f76b1a;
+  color: #fff;
+  border: none;
+  width: 100%;
+}
+
+.submit-complain:hover {
+  color: #fff;
+}
+
+.submit-complain:focus {
+  box-shadow: none;
+  outline: none;
+}

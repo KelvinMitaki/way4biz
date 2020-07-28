@@ -128,7 +128,7 @@ class BuyerOrderDetails extends Component {
                             </div>
                             <div
                               style={{ borderTop: "1px solid #eee" }}
-                              className="d-flex justify-content-end p-3"
+                              className="d-flex justify-content-between p-3"
                             >
                               <p>
                                 <Link
@@ -139,6 +139,15 @@ class BuyerOrderDetails extends Component {
                                   }
                                 >
                                   Buy Again
+                                </Link>
+                              </p>
+
+                              <p>
+                                <Link
+                                  className="file-complain-link"
+                                  to="/buyer/file-complain"
+                                >
+                                  File Complain
                                 </Link>
                               </p>
                             </div>
