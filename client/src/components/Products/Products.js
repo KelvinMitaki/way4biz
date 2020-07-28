@@ -12,7 +12,7 @@ import {
   hasMoreCategoryFalse,
   handleChangeAction,
   handleRadioButtonAction,
-  handleCheckboxAction
+  handleCheckboxAction,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -27,7 +27,7 @@ import Image from "../Market/Image";
 
 function Products(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback(node => {
+  const lastItemElementRef = useCallback((node) => {
     const fetchMoreData = () => {
       if (props.length < props.categoryProductCount) {
         return props.moreSingleCategoryProducts(
@@ -38,7 +38,7 @@ function Products(props) {
       props.hasMoreCategoryFalse();
     };
     if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
+    observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         fetchMoreData();
       }
@@ -46,7 +46,7 @@ function Products(props) {
     if (node) observer.current.observe(node);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleCheckbox = event => {
+  const handleCheckbox = (event) => {
     const { checked, name } = event.target;
 
     props.handleCheckboxAction(
@@ -55,12 +55,12 @@ function Products(props) {
       props.history
     );
   };
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     props.handleChangeAction({ name, value });
   };
-  const handleRadioButton = event => {
+  const handleRadioButton = (event) => {
     const { name, value } = event.target;
     props.handleRadioButtonAction(
       props.match.params.category,
@@ -124,7 +124,7 @@ function Products(props) {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              fontSize: "12px"
+                              fontSize: "12px",
                             }}
                             onClick={() =>
                               props.singleCategory(
@@ -240,14 +240,14 @@ function Products(props) {
                           <div style={{ padding: "0px" }}>
                             <p
                               className="product-name"
-                              style={{ padding: "0px" }}
+                              style={{ padding: "0px 10px" }}
                             >
                               {product.name}
                             </p>
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px"
+                                padding: "0px 10px",
                               }}
                               className="price"
                             >
@@ -258,9 +258,9 @@ function Products(props) {
                         <div className="shipping-heart">
                           <div
                             style={{
-                              height: "10px",
-                              padding: "0px",
-                              margin: "0px"
+                              padding: "0px 0px 0px 10px",
+                              margin: "0px",
+                              fontSize: "smaller",
                             }}
                           >
                             {product.freeShipping && (
@@ -275,8 +275,8 @@ function Products(props) {
                           <div
                             style={{
                               display: "flex",
-                              padding: "0px 10px",
-                              margin: "0px"
+                              padding: "0px 10px 0px 0px",
+                              margin: "0px",
                             }}
                             className="mb-2"
                           >
@@ -313,7 +313,7 @@ function Products(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px"
+                              padding: "0px 10px",
                             }}
                             className="price"
                           >
@@ -326,7 +326,7 @@ function Products(props) {
                           style={{
                             padding: "0px 0px 0px 10px",
                             margin: "0px",
-                            fontSize: "smaller"
+                            fontSize: "smaller",
                           }}
                         >
                           {product.freeShipping && <p>Free Shipping</p>}
@@ -335,7 +335,7 @@ function Products(props) {
                           style={{
                             display: "flex",
                             padding: "0px 10px 0px 0px",
-                            margin: "0px"
+                            margin: "0px",
                           }}
                           className="mb-2"
                         >
@@ -355,12 +355,12 @@ function Products(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     singleCategoryProducts: state.product.singleCategoryProducts,
     categoryProductCount: state.product.categoryProductCount,
     filter: state.filter,
-    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts
+    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts,
   };
 };
 
@@ -372,7 +372,7 @@ export default withRouter(
       moreSingleCategoryProducts,
       handleRadioButtonAction,
       handleCheckboxAction,
-      handleChangeAction
+      handleChangeAction,
     })(Products)
   )
 );
