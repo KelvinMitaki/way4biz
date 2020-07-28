@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import Categories from "../Hero/HeroCategories";
 // import Heart from "../Products/Heart";
 import "./Store.css";
 import Image from "../Market/Image";
@@ -25,8 +24,9 @@ class Store extends Component {
         <div className="container-fluid" id="products">
           <div className="row">
             <div className="col-lg-3">
-              {/* <Categories id="products-categories" /> */}
-              <HeroCategories />
+              <div className="sticky-store-category">
+                <HeroCategories />
+              </div>
             </div>
             <div className="col-lg-9" style={{ padding: "0px" }}>
               <div className="store-header py-2">
