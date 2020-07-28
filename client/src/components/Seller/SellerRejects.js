@@ -3,8 +3,6 @@ import React from "react";
 import "./SellerRejects.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
-import { IconContext } from "react-icons";
-import { BsArrowLeft } from "react-icons/bs";
 import { Link, withRouter } from "react-router-dom";
 import { fetchRejects, deleteSellerProduct } from "../../redux/actions";
 import { connect } from "react-redux";
