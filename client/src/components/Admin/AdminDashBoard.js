@@ -115,7 +115,13 @@ class AdminDashBoard extends React.Component {
                   style={{ borderRight: "1px solid #eee", height: "100%" }}
                 >
                   <div className="admin-big-number">
-                    <span>0</span>
+                    <span>
+                      {(
+                        this.props.adminOrders &&
+                        this.props.adminOrders.monthlyPrice &&
+                        this.props.adminOrders.monthlyPrice * 0.1
+                      ).toLocaleString() || 0}
+                    </span>
                     <h3>
                       <FaMoneyBillAlt />
                     </h3>
