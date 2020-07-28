@@ -8,14 +8,20 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { fetchReviewProduct } from "../../redux/actions";
+import {
+  fetchReviewProduct,
+  acceptProduct,
+  rejectProduct
+} from "../../redux/actions";
+import Image from "../Market/Image";
 
 class AdminDashBoardNewProduct extends React.Component {
   componentDidMount() {
     this.props.fetchReviewProduct(this.props.match.params.productId);
   }
   render() {
-    if (!this.props.reviewProduct) return <ScreenLoader />;
+    if (!this.props.reviewProduct || this.props.fetchReviewProductLoading)
+      return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
@@ -69,8 +75,10 @@ class AdminDashBoardNewProduct extends React.Component {
             </div>
             <div className="admin-new-product-images">
               {this.props.reviewProduct.imageUrl.map((url, i) => (
-                <img
-                  src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                <Image
+                  width="500vw"
+                  height="350vh"
+                  image={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
                   key={i}
                   alt={url}
                 />
@@ -78,16 +86,51 @@ class AdminDashBoardNewProduct extends React.Component {
             </div>
           </div>
           <div className="admin-new-product-buttons my-2">
-            <Link to="/" className="btn btn-lg accept-product-btn">
-              Accept Product
-            </Link>
+            <div
+              onClick={() =>
+                this.props.acceptProduct(
+                  this.props.reviewProduct._id,
+                  this.props.history
+                )
+              }
+              className="btn btn-lg accept-product-btn"
+            >
+              {this.props.acceptProductLoading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.acceptProductLoading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>Accept Product</span>
+              )}
+            </div>
             <div id="dummy-space" className="y"></div>
-            <Link
-              to="/admin/root/new-product/why-reject"
+            <div
+              onClick={() =>
+                this.props.rejectProduct(
+                  this.props.reviewProduct._id,
+                  this.props.history
+                )
+              }
               className="btn btn-lg reject-product-btn"
             >
-              Reject Product
-            </Link>
+              {this.props.rejectProductLoading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.rejectProductLoading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>Reject Product</span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -96,9 +139,16 @@ class AdminDashBoardNewProduct extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    reviewProduct: state.product.reviewProduct
+    reviewProduct: state.product.reviewProduct,
+    acceptProductLoading: state.product.acceptProductLoading,
+    rejectProductLoading: state.product.rejectProductLoading,
+    fetchReviewProductLoading: state.product.fetchReviewProductLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchReviewProduct })(AdminDashBoardNewProduct)
+  connect(mapStateToProps, {
+    fetchReviewProduct,
+    acceptProduct,
+    rejectProduct
+  })(AdminDashBoardNewProduct)
 );

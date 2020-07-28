@@ -231,7 +231,7 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/admin/root/new-product/why-reject"
+              path="/admin/root/new-product/why-reject/:productId"
               exact
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (

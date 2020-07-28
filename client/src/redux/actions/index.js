@@ -146,7 +146,13 @@ import {
   FETCH_REVIEW_PRODUCT,
   ACCEPT_PRODUCT_START,
   ACCEPT_PRODUCT,
-  ACCEPT_PRODUCT_STOP
+  ACCEPT_PRODUCT_STOP,
+  REJECT_PRODUCT_START,
+  REJECT_PRODUCT,
+  REJECT_PRODUCT_STOP,
+  REJECT_MESSAGE,
+  REJECT_MESSAGE_START,
+  REJECT_MESSAGE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1481,13 +1487,45 @@ export const fetchReviewProduct = productId => async dispatch => {
 export const acceptProduct = (productId, history) => async dispatch => {
   try {
     dispatch({ type: ACCEPT_PRODUCT_START });
-    axios.post(`/api/root/admin/accept/product/${productId}`);
+    await axios.post(`/api/root/admin/accept/product/${productId}`);
     dispatch({ type: ACCEPT_PRODUCT });
+    await dispatch(fetchUnderReview());
+    history.push("/admin/new-products");
     dispatch({ type: ACCEPT_PRODUCT_STOP });
-    history.push("/admin/new-product");
   } catch (error) {
     authCheck(error);
     dispatch({ type: ACCEPT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+export const rejectProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_PRODUCT_START });
+    await axios.post(`/api/root/admin/reject/product/${productId}`);
+    dispatch({ type: REJECT_PRODUCT });
+    history.push(`/admin/root/new-product/why-reject/${productId}`);
+    dispatch({ type: REJECT_PRODUCT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const rejectMessage = (
+  productId,
+  message,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_MESSAGE_START });
+    await axios.post("/api/root/reject/message", { message, productId });
+    dispatch({ type: REJECT_MESSAGE });
+    history.push("/admin/new-products");
+    dispatch({ type: REJECT_MESSAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_MESSAGE_STOP });
     console.log(error.response);
   }
 };
