@@ -8,9 +8,16 @@ import { GiCancel } from "react-icons/gi";
 
 import "./SellerDashBoardMenu.css";
 import ProfileImage from "../Header/ProfileImage";
+import { fetchRejects } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
+import { connect } from "react-redux";
 
 class SellerDashBoardMenu extends React.Component {
+  componentDidMount() {
+    this.props.fetchRejects();
+  }
   render() {
+    if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
@@ -62,12 +69,14 @@ class SellerDashBoardMenu extends React.Component {
             <li>
               <GiCancel className="mr-2" />
               Rejects
-              <span
-                className="badge ml-2"
-                style={{ color: "#fff", backgroundColor: "#f76b1a" }}
-              >
-                1
-              </span>
+              {this.props.sellerRejects.length !== 0 && (
+                <span
+                  className="badge ml-2"
+                  style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                >
+                  {this.props.sellerRejects.length}
+                </span>
+              )}
             </li>
           </NavLink>
           <NavLink
@@ -83,11 +92,16 @@ class SellerDashBoardMenu extends React.Component {
         </ul>
         <div id="seller-menu-profile">
           <ProfileImage id="seller-menu-user-icon" size={"70px"} />
-          <h6 className="ml-2">Hi Mbuthia</h6>
+          <h6 className="ml-2">Hi {this.props.user.firstName}</h6>
         </div>
       </div>
     );
   }
 }
-
-export default SellerDashBoardMenu;
+const mapStateToProps = state => {
+  return {
+    sellerRejects: state.product.sellerRejects,
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps, { fetchRejects })(SellerDashBoardMenu);

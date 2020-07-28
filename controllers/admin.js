@@ -844,7 +844,67 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/seller/product/rejects", auth, isSeller, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const rejects = await Reject.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      {
+        $unwind: "$seller"
+      },
+      {
+        $match: {
+          "seller._id": _id
+        }
+      },
+      {
+        $project: {
+          body: 1,
+          createdAt: 1,
+          name: "$product.name",
+          productId: "$product._id"
+        }
+      }
+    ]);
+    res.send(rejects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
+route.delete(
+  "/api/seller/product/delete/:productId",
+  auth,
+  isSeller,
+  async (req, res) => {
+    try {
+      const { _id } = req.session.user;
+      await Product.findOneAndDelete({
+        _id: req.params.productId,
+        seller: _id
+      });
+      res.send({ message: "Success :)" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 // SECURE THIS ROUTE LATER
 route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {

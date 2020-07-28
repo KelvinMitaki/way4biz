@@ -60,7 +60,8 @@ import {
   FETCH_UNDER_REVIEW_START,
   FETCH_UNDER_REVIEW_STOP,
   REJECT_MESSAGE_START,
-  REJECT_MESSAGE_STOP
+  REJECT_MESSAGE_STOP,
+  FETCH_REJECTS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -111,7 +112,8 @@ const INITIAL_STATE = {
   acceptProductLoading: false,
   rejectProductLoading: false,
   fetchReviewProductLoading: false,
-  rejectReasonLoading: false
+  rejectReasonLoading: false,
+  sellerRejects: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -320,6 +322,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, rejectReasonLoading: true };
     case REJECT_MESSAGE_STOP:
       return { ...state, rejectReasonLoading: false };
+    case FETCH_REJECTS:
+      return { ...state, sellerRejects: action.payload };
     default:
       return state;
   }

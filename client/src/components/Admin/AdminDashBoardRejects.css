@@ -2,7 +2,7 @@
   border-left: 3px solid #f76b1a;
 }
 
-.why-reject {
+/* .why-reject {
   width: 100%;
   margin: auto;
   word-wrap: break-word;
@@ -11,7 +11,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-}
+} */
 
 .admin-rejected-product-view-more {
   color: #f76b1a;
@@ -22,8 +22,8 @@
   text-decoration: none;
 }
 
-@media screen and (max-width: 960px) {
+/* @media screen and (max-width: 960px) {
   .why-reject {
     -webkit-line-clamp: 4;
   }
-}
+} */

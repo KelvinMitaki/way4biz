@@ -24,7 +24,11 @@ export class SellerEdit extends Component {
     this.props.fetchAllAdminCategories();
   }
   render() {
-    if (this.props.deleteImageLoading || !this.props.adminCategories)
+    if (
+      this.props.deleteImageLoading ||
+      !this.props.adminCategories ||
+      !this.props.productFound
+    )
       return <ScreenLoader />;
     const adminCategories =
       this.props.adminCategories.length !== 0 &&
@@ -219,10 +223,15 @@ const selector = formValueSelector("SellerEdit");
 const mapStateToProps = (state, ownProps) => {
   const category = selector(state, "category");
   let initialValues;
-  if (state.sellerRegister.sellerProducts.length !== 0) {
-    initialValues = state.sellerRegister.sellerProducts.find(
-      p => p._id.toString() === ownProps.match.params.productId.toString()
-    );
+  if (
+    state.sellerRegister.sellerProducts &&
+    state.sellerRegister.sellerProducts.length !== 0
+  ) {
+    initialValues =
+      state.sellerRegister.sellerProducts &&
+      state.sellerRegister.sellerProducts.find(
+        p => p._id.toString() === ownProps.match.params.productId.toString()
+      );
   }
   return {
     loading: state.auth.loading,
@@ -231,7 +240,8 @@ const mapStateToProps = (state, ownProps) => {
     description: state.product.description,
     adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
-    category
+    category,
+    productFound: state.sellerRegister.sellerProducts
   };
 };
 export default withRouter(

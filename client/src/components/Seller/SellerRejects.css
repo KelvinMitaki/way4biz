@@ -17,3 +17,11 @@
   text-decoration: none;
   color: #f76b1a;
 }
+
+.no-seller-products-rejects {
+  display: flex;
+  height: 40vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
