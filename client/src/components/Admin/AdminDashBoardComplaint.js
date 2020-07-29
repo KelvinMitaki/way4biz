@@ -10,13 +10,15 @@ import { IconContext } from "react-icons";
 import { connect } from "react-redux";
 import { fetchComplaint } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 
 class AdminDashBoardComplaints extends React.Component {
   componentDidMount() {
     this.props.fetchComplaint(this.props.match.params.complaintId);
   }
   render() {
-    if (!this.props.complaint) return <ScreenLoader />;
+    if (!this.props.complaint || this.props.complaintLoading)
+      return <ScreenLoader />;
     if (Object.keys(this.props.complaint).length !== 0) {
       const {
         buyerFirstName,
@@ -95,7 +97,10 @@ class AdminDashBoardComplaints extends React.Component {
                     {sellerEmail}
                   </h6>
                   <h6>
-                    <Link to="/" style={{ color: "#f76b1a" }}>
+                    <Link
+                      to={`/seller/store/${sellerId}`}
+                      style={{ color: "#f76b1a" }}
+                    >
                       View Store
                     </Link>
                   </h6>
@@ -130,12 +135,13 @@ class AdminDashBoardComplaints extends React.Component {
                     <div className="complain-product-images mt-3">
                       {imageUrl.map((url, index) => (
                         <div key={index}>
-                          <img
-                            src={
+                          <Image
+                            image={
                               url.includes("http")
                                 ? url
                                 : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url} `
                             }
+                            alt={url}
                           />
                         </div>
                       ))}
@@ -159,7 +165,8 @@ class AdminDashBoardComplaints extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    complaint: state.product.complaint
+    complaint: state.product.complaint,
+    complaintLoading: state.product.complaintLoading
   };
 };
 export default withRouter(

@@ -179,7 +179,9 @@ import {
   COUNT_COMPLAINTS_START,
   COUNT_COMPLAINTS_STOP,
   FETCH_ALL_COMPLAINTS,
-  FETCH_COMPLAINT
+  FETCH_COMPLAINT,
+  FETCH_COMPLAINT_STOP,
+  FETCH_COMPLAINT_START
 } from "./types";
 
 const authCheck = error => {
@@ -1829,10 +1831,13 @@ export const fetchAllComplaints = () => async dispatch => {
 
 export const fetchComplaint = complaintId => async dispatch => {
   try {
+    dispatch({ type: FETCH_COMPLAINT_START });
     const res = await axios.get(`/api/root/admin/complaint/${complaintId}`);
     dispatch({ type: FETCH_COMPLAINT, payload: res.data.complaint });
+    dispatch({ type: FETCH_COMPLAINT_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_COMPLAINT_STOP });
     console.log(error.response);
   }
 };
