@@ -16,20 +16,25 @@ class AdminDashBoardComplaints extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashBoardSecondaryHeader />
         <div className="container box-container mt-4">
-          {/* <h3 className="mt-3 mb-2" style={{ textAlign: "center" }}>
-            Complaints
-          </h3> */}
-          <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
-            <div className="d-flex align-items-center">
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() => this.props.history.goBack()}
+          <div className="d-flex align-items-center">
+            <div style={{ flex: "1" }}>
+              <IconContext.Provider
+                value={{ className: "arrow-icon ml-3 my-2" }}
               >
-                <BsArrowLeft />
-              </div>
-              <h3 className="ml-3">Complaints</h3>
+                <div className="d-flex align-items-center">
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.props.history.goBack()}
+                  >
+                    <BsArrowLeft />
+                  </div>
+                </div>
+              </IconContext.Provider>
             </div>
-          </IconContext.Provider>
+            <h3 className="mt-3 mb-2" style={{ flex: "1" }}>
+              Complaints
+            </h3>
+          </div>
           <div className="box-container p-2 admin-complain">
             <div className="container">
               <h4 className="my-1">Buyer</h4>

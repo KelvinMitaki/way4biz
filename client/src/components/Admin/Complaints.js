@@ -34,25 +34,30 @@ class Complaints extends React.Component {
                 <p>
                   <strong className="x mr-1">Buyer:</strong>
                   <span>
-                    Tech Lead Tech Lead Tech Lead Tech Lead Tech Lead Tech Lead
+                    {comp.buyerFirstName} {comp.buyerLastName}
                   </span>
                 </p>
               </div>
               <div className="col-md-3">
                 <p>
                   <strong className="x mr-1">Seller:</strong>
-                  <span>Clement</span>
+                  <span>
+                    {comp.sellerFirstName} {comp.sellerLastName}
+                  </span>
                 </p>
               </div>
               <div className="col-md-3">
                 <p>
                   <strong className="x mr-1">Product:</strong>
-                  <span>Great Beer</span>
+                  <span>{comp.productName}</span>
                 </p>
               </div>
               <div className="col-md-2">
                 <p>
-                  <Link to="/admin/complaint" className="complaint-view-more">
+                  <Link
+                    to={`/admin/complaint/${comp._id}`}
+                    className="complaint-view-more"
+                  >
                     View More
                   </Link>
                 </p>

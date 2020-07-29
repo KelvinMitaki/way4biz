@@ -171,7 +171,7 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/admin/complaint"
+              path="/admin/complaint/:complaintId"
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardComplaint />
