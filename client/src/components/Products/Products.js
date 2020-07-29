@@ -12,7 +12,8 @@ import {
   hasMoreCategoryFalse,
   handleChangeAction,
   handleRadioButtonAction,
-  handleCheckboxAction
+  handleCheckboxAction,
+  handleOkayButton
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -126,13 +127,13 @@ function Products(props) {
                               justifyContent: "center",
                               fontSize: "12px"
                             }}
-                            onClick={() =>
-                              props.singleCategory(
+                            onClick={() => {
+                              console.log("products");
+                              props.handleOkayButton(
                                 props.match.params.category,
-                                props.filter,
                                 props.history
-                              )
-                            }
+                              );
+                            }}
                           >
                             OK
                           </button>
@@ -372,7 +373,8 @@ export default withRouter(
       moreSingleCategoryProducts,
       handleRadioButtonAction,
       handleCheckboxAction,
-      handleChangeAction
+      handleChangeAction,
+      handleOkayButton
     })(Products)
   )
 );

@@ -851,6 +851,7 @@ export const singleCategory = (category, filter, history) => async (
   try {
     const test = {};
     const sort = {};
+
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
@@ -1029,7 +1030,7 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
     // const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().search.searchProductCount;
     const singleProdLength = getState().search.searchProducts.length;
-    console.log("reached");
+
     if (singleProdLength < prodCount) {
       dispatch({ type: MORE_SEARCH_PRODUCTS_START });
       const res = await axios.post(`/api/products/search/term`, {
@@ -1082,10 +1083,16 @@ export const handleCheckboxAction = (event, category, history) => (
 ) => {
   dispatch({ type: HANDLE_CHECKBOX, payload: { event } });
   const filter = getState().filter;
-
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
-  dispatch(singleCategory(category, filter, history));
+  const searchTerm = getState().cartReducer.typing;
+
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
 };
 export const handleChangeAction = event => (dispatch, getState) => {
   // getState().product.itemsToSkip = 0;
@@ -1120,9 +1127,27 @@ export const handleRadioButtonAction = (category, event, history) => (
       event
     }
   });
-  dispatch(singleCategory(category, getState().filter, history));
-};
+  const filter = getState().filter;
+  const searchTerm = getState().cartReducer.typing;
 
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
+};
+export const handleOkayButton = (category, history) => (dispatch, getState) => {
+  const filter = getState().filter;
+  const searchTerm = getState().cartReducer.typing;
+
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
+};
 export const fetchSellerReviews = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_REVIEWS_START });

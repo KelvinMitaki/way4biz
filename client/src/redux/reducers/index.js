@@ -18,7 +18,7 @@ const persistConfig = {
   whitelist: [
     "cartReducer",
     "detailsPersist",
-    "filter",
+    // "filter",
     "image",
     "sellerDetails"
   ]

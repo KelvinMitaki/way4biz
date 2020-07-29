@@ -69,7 +69,6 @@ function SearchResults(props) {
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
-  console.log(props.searchProducts);
   return (
     <div>
       <Header />
