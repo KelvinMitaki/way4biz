@@ -69,7 +69,7 @@ function SearchResults(props) {
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
-
+  console.log(props.searchProducts);
   return (
     <div>
       <Header />
@@ -215,7 +215,8 @@ function SearchResults(props) {
               </div>
             </div>
             <div className="products-section">
-              {props.searchProducts.length !== 0 &&
+              {props.searchProducts &&
+                props.searchProducts.length !== 0 &&
                 props.searchProducts.map((product, index) => {
                   if (props.searchProducts.length === index + 1) {
                     return (

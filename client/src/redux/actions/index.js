@@ -1029,6 +1029,7 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
     // const itemsToSkip = getState().product.itemsToSkip;
     const prodCount = getState().search.searchProductCount;
     const singleProdLength = getState().search.searchProducts.length;
+    console.log("reached");
     if (singleProdLength < prodCount) {
       dispatch({ type: MORE_SEARCH_PRODUCTS_START });
       const res = await axios.post(`/api/products/search/term`, {

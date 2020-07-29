@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
         searchItemsToSkip: state.searchItemsToSkip + 6
       };
     case MORE_SEARCH_PRODUCTS:
-      const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
+      const prodIds = new Set(state.searchProducts.map(pro => pro._id));
       return {
         ...state,
         searchProducts: [
