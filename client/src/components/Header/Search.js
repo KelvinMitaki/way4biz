@@ -32,7 +32,7 @@ class Search extends React.Component {
   render() {
     return (
       <div id={this.props.id} className="col">
-        {this.props.typing !== "" ? (
+        {this.props.searchedProducts.length !== 0 ? (
           <div
             onClick={() => this.setState({ typing: "" })}
             className="light-shed"
