@@ -1830,7 +1830,7 @@ export const fetchAllComplaints = () => async dispatch => {
 export const fetchComplaint = complaintId => async dispatch => {
   try {
     const res = await axios.get(`/api/root/admin/complaint/${complaintId}`);
-    dispatch({ type: FETCH_COMPLAINT, payload: res.data });
+    dispatch({ type: FETCH_COMPLAINT, payload: res.data.complaint });
   } catch (error) {
     authCheck(error);
     console.log(error.response);

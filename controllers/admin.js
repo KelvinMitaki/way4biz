@@ -1517,7 +1517,7 @@ route.get("/api/root/admin/complaints", auth, isAdmin, async (req, res) => {
           sellerId: "$seller._id",
           productName: "$product.name",
           productPrice: "$product.price",
-          quantityOrdered: "$items.quanity",
+          quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl"
         }
       },
@@ -1607,8 +1607,9 @@ route.get(
             sellerId: "$seller._id",
             productName: "$product.name",
             productPrice: "$product.price",
-            quantityOrdered: "$items.quanity",
-            imageUrl: "$product.imageUrl"
+            quantityOrdered: "$items.quantity",
+            imageUrl: "$product.imageUrl",
+            body: 1
           }
         },
         { $sort: { createdAt: -1 } }
