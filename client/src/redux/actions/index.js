@@ -836,6 +836,26 @@ export const redirectOnFail = (
     history.push("/");
   }
 };
+export const redirectOnNotDelivered = (
+  productId,
+  orderId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: REDIRECT_ON_FAIL_START });
+    const res = await axios.get(
+      `/api/redirect/on/not/delivered/${productId}/${orderId}`
+    );
+    if (!res.data.order) {
+      history.push("/");
+    }
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
+    history.push("/");
+  }
+};
 
 export const fetchProductReviews = productId => async dispatch => {
   try {
@@ -1758,11 +1778,12 @@ export const fetchStoreProducts = sellerId => async dispatch => {
   }
 };
 
-export const newComplaint = (body, productId) => async dispatch => {
+export const newComplaint = (body, productId, history) => async dispatch => {
   try {
     dispatch({ type: NEW_COMPLAINT_START });
     await axios.post(`/api/buyer/new/complaint/${productId}`, { body });
     dispatch({ type: NEW_COMPLAINT });
+    history.push("/orders");
     dispatch({ type: NEW_COMPLAINT_STOP });
   } catch (error) {
     authCheck(error);

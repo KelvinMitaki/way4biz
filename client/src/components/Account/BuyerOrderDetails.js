@@ -141,15 +141,16 @@ class BuyerOrderDetails extends Component {
                                   Buy Again
                                 </Link>
                               </p>
-
-                              <p>
-                                <Link
-                                  className="file-complain-link"
-                                  to={`/buyer/file-complain/${buyerOrderDetails._id}/${item.product._id}`}
-                                >
-                                  File Complaint
-                                </Link>
-                              </p>
+                              {this.props.buyerOrderDetails.delivered && (
+                                <p>
+                                  <Link
+                                    className="file-complain-link"
+                                    to={`/buyer/file-complain/${buyerOrderDetails._id}/${item.product._id}`}
+                                  >
+                                    File Complaint
+                                  </Link>
+                                </p>
+                              )}
                             </div>
                           </div>
                         );

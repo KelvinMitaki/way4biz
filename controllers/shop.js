@@ -705,6 +705,23 @@ route.post(
     }
   }
 );
+route.get(
+  "/api/redirect/on/not/delivered/:productId/:orderId",
+  auth,
+  async (req, res) => {
+    try {
+      const { productId, orderId } = req.params;
+      const order = await Order.findOne({
+        _id: orderId,
+        buyer: req.session.user._id,
+        items: { $elemMatch: { delivered: true, product: productId } }
+      });
+      res.send({ order });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

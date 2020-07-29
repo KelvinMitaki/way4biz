@@ -7,18 +7,35 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import { redirectOnFail } from "../../redux/actions";
+import {
+  redirectOnFail,
+  newComplaint,
+  redirectOnNotDelivered
+} from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class FileComplain extends React.Component {
+  state = {
+    complaint: ""
+  };
   componentDidMount() {
-    this.props.redirectOnFail(
+    this.props.redirectOnNotDelivered(
       this.props.match.params.productId,
       this.props.match.params.orderId,
       this.props.history
     );
   }
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.state.complaint.trim().length !== 0 &&
+      this.props.newComplaint(
+        this.state.complaint,
+        this.props.match.params.productId,
+        this.props.history
+      );
+  };
   render() {
     if (this.props.redirectOnFailLoading) return <ScreenLoader />;
     return (
@@ -47,19 +64,36 @@ class FileComplain extends React.Component {
                   </IconContext.Provider>
                 </div>
                 <div className="container">
-                  <form className="form-group complain-form">
+                  <form
+                    className="form-group complain-form"
+                    onSubmit={this.handleSubmit}
+                  >
                     <div style={{ textAlign: "center" }}>
                       <label htmlFor="complain-input-field">
                         <strong>What is wrong?</strong>
                       </label>
                     </div>
                     <textarea
+                      onChange={e =>
+                        this.setState({ complaint: e.target.value })
+                      }
                       rows="5"
                       id="complain-input-field"
                       className="form-control"
                     ></textarea>
                     <button className="btn submit-complain mt-3">
-                      Submit Complaint
+                      {this.props.complaintLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
+                      {this.props.complaintLoading ? (
+                        <span> {"  "}Loading...</span>
+                      ) : (
+                        <span>Submit Complaint</span>
+                      )}
                     </button>
                   </form>
                 </div>
@@ -75,9 +109,12 @@ class FileComplain extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    redirectOnFailLoading: state.product.redirectOnFailLoading
+    redirectOnFailLoading: state.product.redirectOnFailLoading,
+    complaintLoading: state.product.complaintLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { redirectOnFail })(FileComplain)
+  connect(mapStateToProps, { redirectOnNotDelivered, newComplaint })(
+    FileComplain
+  )
 );
