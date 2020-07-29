@@ -65,7 +65,11 @@ export class Orders extends Component {
                                 </p>
                               </div>
                               <div className="col-6 col-lg-2">
-                                <p>Delivered</p>
+                                <p>
+                                  {(order.delivered && "Delivered") ||
+                                    (order.cancelled && "Cancelled") ||
+                                    (!order.delivered && "Pending")}
+                                </p>
                               </div>
                               <div className="col-6 col-lg-2">
                                 <p>
