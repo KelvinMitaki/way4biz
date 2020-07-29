@@ -4,7 +4,8 @@ import {
   fetchProductsSearch,
   fetchProductReviews,
   handleSearchTerm,
-  searchTermProducts
+  searchTermProducts,
+  clearSearchTerm
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -58,6 +59,7 @@ class Search extends React.Component {
                 this.props.history.push(
                   `/products/search/${this.props.typing}`
                 );
+                this.props.clearSearchTerm();
               }}
             >
               <IconContext.Provider value={{ className: "icon mr-1 " }}>
@@ -69,7 +71,7 @@ class Search extends React.Component {
             </button>
           </div>
         </div>
-        {this.state.typing !== "" ? (
+        {this.props.typing !== "" ? (
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
               this.props.searchedProducts.map(product => (
@@ -100,7 +102,7 @@ class Search extends React.Component {
                       <p className="search-product-name">
                         {reactSringReplace(
                           product.name,
-                          this.state.typing,
+                          this.props.typing,
                           (match, i) => {
                             return (
                               <span
@@ -142,6 +144,7 @@ export default withRouter(
     fetchProductsSearch,
     searchTermProducts,
     fetchProductReviews,
-    handleSearchTerm
+    handleSearchTerm,
+    clearSearchTerm
   })(Search)
 );

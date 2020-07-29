@@ -6,7 +6,8 @@ import {
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
   HANDLE_SEARCH_TERM,
-  HANDLE_URL_SEARCH_TERM
+  HANDLE_URL_SEARCH_TERM,
+  CLEAR_SEARCH_TERM
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -75,6 +76,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, typing: action.payload };
     case HANDLE_URL_SEARCH_TERM:
       return { ...state, typing: action.payload };
+    case CLEAR_SEARCH_TERM:
+      return { ...state, typing: "" };
     default:
       return state;
   }
