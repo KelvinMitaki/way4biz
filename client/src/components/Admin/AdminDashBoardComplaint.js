@@ -77,7 +77,7 @@ class AdminDashBoardComplaints extends React.Component {
                   </div>
                 </div>
                 <div>
-                  <h4 className="mt-3 mb-1">Complain</h4>
+                  <h4 className="mt-3 mb-1">Complaint</h4>
                   <div className="box-container p-2">
                     <p style={{ fontSize: "17px" }}>{body}</p>
                   </div>

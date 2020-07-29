@@ -10,6 +10,7 @@ import AccountHeader from "../Header/AccountHeader";
 import { connect } from "react-redux";
 import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -102,8 +103,8 @@ class BuyerOrderDetails extends Component {
 
                             <div className="row">
                               <div className="col-lg-6 d-flex align-items-center">
-                                <img
-                                  src={
+                                <Image
+                                  image={
                                     item.product.imageUrl[0].includes("http")
                                       ? item.product.imageUrl[0]
                                       : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl[0]} `
