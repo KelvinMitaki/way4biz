@@ -277,11 +277,11 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {Math.round(
+                                  {(
                                     (this.props.adminOrders.todayTotalPrice /
                                       this.props.adminOrders.totalPrice) *
-                                      100
-                                  )}
+                                    100
+                                  ).toFixed(2)}
                                   % change in the past 24 hours
                                 </p>
                               </div>
@@ -295,8 +295,8 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {complaintsPercentage}% change in the past 24
-                                  hours
+                                  {complaintsPercentage.toFixed(2)}% change in
+                                  the past 24 hours
                                 </p>
                               </div>
                             </Link>
