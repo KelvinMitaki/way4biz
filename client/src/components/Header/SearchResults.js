@@ -25,6 +25,7 @@ import { reduxForm } from "redux-form";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "../Products/ProductsInput";
 import Image from "../Market/Image";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 function SearchResults(props) {
   const observer = useRef();
@@ -84,6 +85,7 @@ function SearchResults(props) {
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
+  if (props.searchProductsLoading) return <ScreenLoader />;
   return (
     <div>
       <Header />
@@ -377,6 +379,7 @@ const mapStateToProps = state => {
   return {
     searchProducts: state.search.searchProducts,
     searchProductCount: state.search.searchProductCount,
+    searchProductsLoading: state.search.searchProductsLoading,
     filter: state.filter,
     hasMoreSearchProducts: state.search.hasMoreSearchProducts,
     typing: state.cartReducer.typing
