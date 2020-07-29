@@ -7,6 +7,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { fetchProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "./ScreenLoader";
+import "./Home.css";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Home extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
+          <div id="top-border"></div>
           <Hero />
           <Market />
         </div>

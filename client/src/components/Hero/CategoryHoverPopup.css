@@ -5,18 +5,17 @@
   left: 0px;
   bottom: 0px;
   right: 0px;
-  padding: 0px 40px;
+  width: 102%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  margin-left: -15px;
   display: none;
-}
-
-.sidebar-overlay {
-  z-index: -1 !important;
-  background-color: transparent;
 }
 
 .hovered-sub-categories-section-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: 20px;
   z-index: inherit;
   background-color: #fff;
@@ -34,4 +33,10 @@
 .hovered-sub-categories-section ul li a:hover {
   color: #f76b1a;
   text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .category-hover-popup {
+    display: none;
+  }
 }
