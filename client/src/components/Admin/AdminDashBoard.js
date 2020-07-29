@@ -298,7 +298,20 @@ class AdminDashBoard extends React.Component {
                           <div className="admin-inividual-performance-wrapper">
                             <Link to="/admin/complaints">
                               <div className="admin-individual-performance-upper-text">
-                                <p>Complaints</p>
+                                <p>
+                                  Complaints{" "}
+                                  {todaysComplaints && todaysComplaints !== 0 && (
+                                    <span
+                                      className="badge"
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#f76b1a"
+                                      }}
+                                    >
+                                      {todaysComplaints}
+                                    </span>
+                                  )}
+                                </p>
                                 <p>{totalComplaints}</p>
                               </div>
                               <div>
