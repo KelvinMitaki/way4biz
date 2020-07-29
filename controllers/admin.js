@@ -1620,4 +1620,47 @@ route.get(
     }
   }
 );
+route.get(
+  "/api/root/admin/fetch/rejected/products",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const rejectedProducts = await Reject.aggregate([
+        { $project: { product: 1, body: 1, createdAt: 1 } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        { $unwind: "$product" },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "product.seller",
+            foreignField: "_id",
+            as: "seller"
+          }
+        },
+        { $unwind: "$seller" },
+        {
+          $project: {
+            body: 1,
+            createdAt: 1,
+            imageUrl: "$product.imageUrl",
+            productName: "$product.name",
+            sellerFirstName: "$seller.firstName",
+            sellerLastName: "$seller.lastName"
+          }
+        }
+      ]);
+      res.send(rejectedProducts);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;

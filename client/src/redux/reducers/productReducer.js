@@ -74,7 +74,8 @@ import {
   FETCH_BUYER_COMPLAINTS,
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_START,
-  FETCH_BUYER_COMPLAINT_STOP
+  FETCH_BUYER_COMPLAINT_STOP,
+  FETCH_REJECTED_PRODUCTS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -135,7 +136,8 @@ const INITIAL_STATE = {
   fetchComplaintLoading: false,
   buyerComplaint: null,
   buyerComplaints: null,
-  buyerComplaintLoading: false
+  buyerComplaintLoading: false,
+  rejectedProducts: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -370,6 +372,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, buyerComplaintLoading: true };
     case FETCH_BUYER_COMPLAINT_STOP:
       return { ...state, buyerComplaintLoading: false };
+    case FETCH_REJECTED_PRODUCTS:
+      return { ...state, rejectedProducts: action.payload };
     default:
       return state;
   }
