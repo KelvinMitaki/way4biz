@@ -185,7 +185,8 @@ import {
   FETCH_BUYER_COMPLAINTS,
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT,
-  FETCH_BUYER_COMPLAINT_STOP
+  FETCH_BUYER_COMPLAINT_STOP,
+  FETCH_REJECTED_PRODUCTS
 } from "./types";
 
 const authCheck = error => {
@@ -1865,6 +1866,16 @@ export const fetchBuyerComplaint = complaintId => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRejectedProducts = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/root/admin/fetch/rejected/products");
+    dispatch({ type: FETCH_REJECTED_PRODUCTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };
