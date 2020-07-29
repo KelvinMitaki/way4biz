@@ -70,7 +70,11 @@ import {
   FETCH_ALL_COMPLAINTS,
   FETCH_COMPLAINT,
   FETCH_COMPLAINT_START,
-  FETCH_COMPLAINT_STOP
+  FETCH_COMPLAINT_STOP,
+  FETCH_BUYER_COMPLAINTS,
+  FETCH_BUYER_COMPLAINT,
+  FETCH_BUYER_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINT_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -128,7 +132,10 @@ const INITIAL_STATE = {
   complaintsCount: null,
   complaints: null,
   complaint: null,
-  fetchComplaintLoading: false
+  fetchComplaintLoading: false,
+  buyerComplaint: null,
+  buyerComplaints: null,
+  buyerComplaintLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -355,6 +362,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, complaintLoading: true };
     case FETCH_COMPLAINT_STOP:
       return { ...state, complaintLoading: false };
+    case FETCH_BUYER_COMPLAINTS:
+      return { ...state, buyerComplaints: action.payload };
+    case FETCH_BUYER_COMPLAINT:
+      return { ...state, buyerComplaint: action.payload };
+    case FETCH_BUYER_COMPLAINT_START:
+      return { ...state, buyerComplaintLoading: true };
+    case FETCH_BUYER_COMPLAINT_STOP:
+      return { ...state, buyerComplaintLoading: false };
     default:
       return state;
   }
