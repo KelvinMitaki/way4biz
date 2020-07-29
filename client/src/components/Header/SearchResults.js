@@ -9,7 +9,7 @@ import Heart from "../Products/Heart";
 import {
   searchTermProducts,
   moreSearchTermProducts,
-  hasMoreCategoryFalse,
+  hasMoreSearchFalse,
   handleChangeAction,
   handleRadioButtonAction,
   handleCheckboxAction
@@ -27,22 +27,25 @@ import Image from "../Market/Image";
 
 function SearchResults(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback(node => {
-    const fetchMoreData = () => {
-      if (props.length < props.categoryProductCount) {
-        return props.moreSearchTermProducts(props.filter, props.typing);
-      }
-      props.hasMoreCategoryFalse();
-    };
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        fetchMoreData();
-      }
-    });
-    if (node) observer.current.observe(node);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const lastItemElementRef = useCallback(
+    node => {
+      const fetchMoreData = () => {
+        if (props.searchProducts.length < props.searchProductCount) {
+          return props.moreSearchTermProducts(props.filter, props.typing);
+        }
+        props.hasMoreSearchFalse();
+      };
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          fetchMoreData();
+        }
+      });
+      if (node) observer.current.observe(node);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [props]
+  );
   const handleCheckbox = event => {
     const { checked, name } = event.target;
 
@@ -66,6 +69,7 @@ function SearchResults(props) {
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
+
   return (
     <div>
       <Header />
@@ -211,9 +215,9 @@ function SearchResults(props) {
               </div>
             </div>
             <div className="products-section">
-              {props.singleCategoryProducts.length !== 0 &&
-                props.singleCategoryProducts.map((product, index) => {
-                  if (props.singleCategoryProducts.length === index + 1) {
+              {props.searchProducts.length !== 0 &&
+                props.searchProducts.map((product, index) => {
+                  if (props.searchProducts.length === index + 1) {
                     return (
                       <div
                         key={product._id}
@@ -345,7 +349,7 @@ function SearchResults(props) {
                   );
                 })}
             </div>
-            {props.hasMoreCategoryProducts && <BottomPageLoader />}
+            {props.hasMoreSearchProducts && <BottomPageLoader />}
           </div>
         </div>
       </div>
@@ -356,10 +360,10 @@ function SearchResults(props) {
 }
 const mapStateToProps = state => {
   return {
-    singleCategoryProducts: state.product.singleCategoryProducts,
-    categoryProductCount: state.product.categoryProductCount,
+    searchProducts: state.search.searchProducts,
+    searchProductCount: state.search.searchProductCount,
     filter: state.filter,
-    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts,
+    hasMoreSearchProducts: state.search.hasMoreSearchProducts,
     typing: state.cartReducer.typing
   };
 };
@@ -368,7 +372,7 @@ export default withRouter(
   reduxForm({ form: "Products" })(
     connect(mapStateToProps, {
       searchTermProducts,
-      hasMoreCategoryFalse,
+      hasMoreSearchFalse,
       moreSearchTermProducts,
       handleRadioButtonAction,
       handleCheckboxAction,

@@ -75,6 +75,7 @@ route.post("/api/products/skip/category", async (req, res) => {
 route.post("/api/products/search/term", async (req, res) => {
   try {
     const { itemsToSkip, test, sort, searchTerm } = req.body;
+    console.log(itemsToSkip);
     const products = await Product.aggregate([
       {
         $search: {
@@ -102,6 +103,7 @@ route.post("/api/products/search/term", async (req, res) => {
       { $skip: itemsToSkip },
       { $limit: 6 }
     ]);
+    console.log(products);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }

@@ -162,7 +162,14 @@ import {
   FETCH_STORE_PRODUCTS_START,
   FETCH_STORE_PRODUCTS_STOP,
   FETCH_STORE_PRODUCTS,
-  HANDLE_SEARCH_TERM
+  HANDLE_SEARCH_TERM,
+  SEARCH_PRODUCTS,
+  SEARCH_PRODUCTS_START,
+  SEARCH_PRODUCTS_STOP,
+  MORE_SEARCH_PRODUCTS,
+  MORE_SEARCH_PRODUCTS_START,
+  MORE_SEARCH_PRODUCTS_STOP,
+  HAS_MORE_SEARCH_FALSE
 } from "./types";
 
 const authCheck = error => {
@@ -703,6 +710,12 @@ export const hasMoreCategoryFalse = () => {
     type: HAS_MORE_CATEGORY_FALSE
   };
 };
+
+export const hasMoreSearchFalse = () => {
+  return {
+    type: HAS_MORE_SEARCH_FALSE
+  };
+};
 export const fetchProducts = () => async dispatch => {
   try {
     dispatch({ type: LOADING_START });
@@ -964,18 +977,18 @@ export const searchTermProducts = (
     if (Object.keys(sort).length === 0) {
       sort.price = 1;
     }
-    dispatch({ type: SINGLE_CATEGORY_START });
+    dispatch({ type: SEARCH_PRODUCTS_START });
     const res = await axios.post(`/api/products/search/term`, {
       itemsToSkip: 0,
       searchTerm,
       test,
       sort
     });
-    dispatch({ type: SINGLE_CATEGORY, payload: res.data });
-    dispatch({ type: SINGLE_CATEGORY_STOP });
+    dispatch({ type: SEARCH_PRODUCTS, payload: res.data });
+    dispatch({ type: SEARCH_PRODUCTS_STOP });
     // history.push(`/products/category/${category}`);
   } catch (error) {
-    dispatch({ type: SINGLE_CATEGORY_STOP });
+    dispatch({ type: SEARCH_PRODUCTS_STOP });
     console.log(error.response);
     history.push("/");
   }
@@ -1014,21 +1027,21 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
       sort.price = 1;
     }
     // const itemsToSkip = getState().product.itemsToSkip;
-    const prodCount = getState().product.categoryProductCount;
-    const singleProdLength = getState().product.singleCategoryProducts.length;
+    const prodCount = getState().search.searchProductCount;
+    const singleProdLength = getState().search.searchProducts.length;
     if (singleProdLength < prodCount) {
-      dispatch({ type: FILTERED_PRODUCTS_START });
+      dispatch({ type: MORE_SEARCH_PRODUCTS_START });
       const res = await axios.post(`/api/products/search/term`, {
         itemsToSkip: singleProdLength,
         test,
         searchTerm,
         sort
       });
-      dispatch({ type: MORE_SINGLE_CATEGORY_PRODUCTS, payload: res.data });
+      dispatch({ type: MORE_SEARCH_PRODUCTS, payload: res.data });
     }
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
+    dispatch({ type: MORE_SEARCH_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: FILTERED_PRODUCTS_STOP });
+    dispatch({ type: MORE_SEARCH_PRODUCTS_STOP });
     console.log(error);
     console.log(error.response);
   }
