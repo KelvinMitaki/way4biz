@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.searchProducts,
           ...action.payload.products.filter(prod => !prodIds.has(prod._id))
         ],
-        searchItemsToSkip: state.searchItemsToSkip + 6
+        searchItemsToSkip: state.searchProducts.length
       };
     case SEARCH_PRODUCTS_START:
       return { ...state, searchProductsLoading: true };

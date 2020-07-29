@@ -1065,10 +1065,11 @@ export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
   });
 };
 
-export const clearSearchTerm = () => {
-  return {
+export const clearSearchTerm = () => (dispatch, getState) => {
+  getState().search.searchItemsToSkip = 0;
+  dispatch({
     type: CLEAR_SEARCH_TERM
-  };
+  });
 };
 // export const fetchFilteredProducts = (filter, category) => async dispatch => {
 //   try {

@@ -43,7 +43,10 @@ function SearchResults(props) {
     node => {
       const fetchMoreData = () => {
         if (props.searchProducts.length < props.searchProductCount) {
-          return props.moreSearchTermProducts(props.filter, props.typing);
+          return props.moreSearchTermProducts(
+            props.filter,
+            props.match.params.searchTerm
+          );
         }
         props.hasMoreSearchFalse();
       };
