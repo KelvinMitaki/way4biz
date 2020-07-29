@@ -76,6 +76,14 @@ class AdminDashBoard extends React.Component {
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
         : Math.sign(num) * Math.abs(num);
     }
+    const todaysComplaints =
+      this.props.complaintsCount && this.props.complaintsCount.todaysComplaints;
+    const totalComplaints =
+      this.props.complaintsCount && this.props.complaintsCount.totalComplaints;
+    const complaintsPercentage =
+      totalComplaints && todaysComplaints
+        ? (todaysComplaints / totalComplaints) * 100
+        : 0;
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -283,20 +291,12 @@ class AdminDashBoard extends React.Component {
                             <Link to="/admin/complaints">
                               <div className="admin-individual-performance-upper-text">
                                 <p>Complaints</p>
-                                <p>
-                                  {this.props.adminOrders &&
-                                    this.props.adminOrders.totalPrice &&
-                                    this.props.adminOrders.totalPrice.toLocaleString()}
-                                </p>
+                                <p>{totalComplaints}</p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {Math.round(
-                                    (this.props.adminOrders.todayTotalPrice /
-                                      this.props.adminOrders.totalPrice) *
-                                      100
-                                  )}
-                                  % change in the past 24 hours
+                                  {complaintsPercentage}% change in the past 24
+                                  hours
                                 </p>
                               </div>
                             </Link>
