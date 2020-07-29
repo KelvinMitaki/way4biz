@@ -41,11 +41,6 @@ route.post("/api/products", async (req, res) => {
 route.post("/api/products/skip/category", async (req, res) => {
   try {
     const { itemsToSkip, test, sort } = req.body;
-
-    // const products = await Product.find({ ...test, onSite: true })
-    //   .sort(sort)
-    //   .skip(itemsToSkip)
-    //   .limit(6);
     const products = await Product.aggregate([
       { $match: { ...test, onSite: true } },
       {
@@ -73,6 +68,62 @@ route.post("/api/products/skip/category", async (req, res) => {
     ]);
 
     res.send({ products, productCount: productCount[0][test.category] });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post("/api/products/search/term", async (req, res) => {
+  try {
+    const { itemsToSkip, test, sort, searchTerm } = req.body;
+    const products = await Product.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            path: "name",
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            },
+            tokenOrder: "sequential"
+          }
+        }
+      },
+      { $match: { ...test, onSite: true } },
+      {
+        $project: {
+          price: 1,
+          name: 1,
+          price: 1,
+          freeShipping: 1,
+          imageUrl: 1
+        }
+      },
+      { $sort: sort },
+      { $skip: itemsToSkip },
+      { $limit: 6 }
+    ]);
+    if (!products || products.length === 0) {
+      return res.status(404).send({ message: "No products in that category" });
+    }
+
+    const productCount = await Product.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            path: "name",
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            },
+            tokenOrder: "sequential"
+          }
+        }
+      },
+      { $match: { ...test, onSite: true } },
+      { $count: "products" }
+    ]);
+
+    res.send({ products, productCount: productCount[0].products });
   } catch (error) {
     res.status(500).send(error);
   }

@@ -1,15 +1,26 @@
 import React from "react";
 import "./FileComplain.css";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import AccountMenu from "./AccountMenu";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import { redirectOnFail } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class FileComplain extends React.Component {
+  componentDidMount() {
+    this.props.redirectOnFail(
+      this.props.match.params.productId,
+      this.props.match.params.orderId,
+      this.props.history
+    );
+  }
   render() {
+    if (this.props.redirectOnFailLoading) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -25,9 +36,12 @@ class FileComplain extends React.Component {
                     value={{ className: "arrow-icon ml-3 my-2" }}
                   >
                     <div className="d-flex align-items-center">
-                      <Link to="/buyer/order/details">
+                      <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => this.props.history.goBack()}
+                      >
                         <BsArrowLeft />
-                      </Link>
+                      </div>
                       <h3 className="ml-3">File Complaint</h3>
                     </div>
                   </IconContext.Provider>
@@ -40,6 +54,7 @@ class FileComplain extends React.Component {
                       </label>
                     </div>
                     <textarea
+                      rows="5"
                       id="complain-input-field"
                       className="form-control"
                     ></textarea>
@@ -58,5 +73,11 @@ class FileComplain extends React.Component {
     );
   }
 }
-
-export default FileComplain;
+const mapStateToProps = state => {
+  return {
+    redirectOnFailLoading: state.product.redirectOnFailLoading
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, { redirectOnFail })(FileComplain)
+);

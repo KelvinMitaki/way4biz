@@ -10,6 +10,7 @@ import OrderDetailsPersist from "./OrderDetailsPersist";
 import filterReducer from "./filterReducer";
 import imageReducer from "./imageReducer";
 import sellerDetailsReducer from "./sellerDetailsReducer";
+import searchReducer from "./searchReducer";
 
 const persistConfig = {
   key: "root",
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   detailsPersist: OrderDetailsPersist,
   filter: filterReducer,
   image: imageReducer,
-  sellerDetails: sellerDetailsReducer
+  sellerDetails: sellerDetailsReducer,
+  search: searchReducer
 });
 export default persistReducer(persistConfig, reducers);

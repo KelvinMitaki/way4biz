@@ -68,6 +68,11 @@ class AdminDashBoard extends React.Component {
     if (typeof pendingOrders === "object") {
       pendingOrders = 0;
     }
+    function kFormatter(num) {
+      return Math.abs(num) > 999
+        ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+        : Math.sign(num) * Math.abs(num);
+    }
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -100,9 +105,10 @@ class AdminDashBoard extends React.Component {
                     <span>
                       {this.props.stock.find((s) => s.label === "Stock Out")
                         .value &&
-                        this.props.stock
-                          .find((s) => s.label === "Stock Out")
-                          .value.toLocaleString()}
+                        kFormatter(
+                          this.props.stock.find((s) => s.label === "Stock Out")
+                            .value
+                        ).toLocaleString()}
                     </span>
                     <h3>
                       <BsArrowRepeat />
@@ -119,7 +125,7 @@ class AdminDashBoard extends React.Component {
                       {(
                         this.props.adminOrders &&
                         this.props.adminOrders.monthlyPrice &&
-                        this.props.adminOrders.monthlyPrice * 0.1
+                        kFormatter(this.props.adminOrders.monthlyPrice * 0.1)
                       ).toLocaleString() || 0}
                     </span>
                     <h3>
@@ -134,7 +140,7 @@ class AdminDashBoard extends React.Component {
                       {(
                         this.props.adminOrders &&
                         this.props.adminOrders.totalPrice &&
-                        this.props.adminOrders.totalPrice * 0.1
+                        kFormatter(this.props.adminOrders.totalPrice * 0.1)
                       ).toLocaleString() || 0}
                     </span>
                     <h3>
@@ -249,7 +255,7 @@ class AdminDashBoard extends React.Component {
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <div style={{ cursor: "hover" }}>
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
                                 <p>
@@ -268,7 +274,7 @@ class AdminDashBoard extends React.Component {
                                   % change in the past 24 hours
                                 </p>
                               </div>
-                            </Link>
+                            </div>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
                             <Link to="/admin/complaints">

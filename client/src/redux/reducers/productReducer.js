@@ -62,7 +62,8 @@ import {
   REJECT_MESSAGE_START,
   REJECT_MESSAGE_STOP,
   FETCH_REJECTS,
-  FETCH_STORE_PRODUCTS
+  FETCH_STORE_PRODUCTS,
+  HANDLE_SEARCH_TERM
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -328,6 +329,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerRejects: action.payload };
     case FETCH_STORE_PRODUCTS:
       return { ...state, storeProducts: action.payload };
+
     default:
       return state;
   }

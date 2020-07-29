@@ -5,32 +5,35 @@ import {
   handleCheckboxAction,
   singleCategory,
   handleRadioButtonAction,
+  handleOkayButton
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./ProductsInput.css";
 
 class ProductsInput extends Component {
-  handleCheckbox = (event) => {
+  handleCheckbox = event => {
     const { checked, name } = event.target;
 
     this.props.handleCheckboxAction(
       { checked, name },
       this.props.match.params.category,
-      this.props.history
+      this.props.history,
+      this.props.match.params.searchTerm
     );
   };
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
 
     this.props.handleChangeAction({ name, value });
   };
-  handleRadioButton = (event) => {
+  handleRadioButton = event => {
     const { name, value } = event.target;
     this.props.handleRadioButtonAction(
       this.props.match.params.category,
       { name, value },
-      this.props.history
+      this.props.history,
+      this.props.match.params.searchTerm
     );
   };
   render() {
@@ -39,7 +42,7 @@ class ProductsInput extends Component {
       priceMin,
       rating,
       freeShipping,
-      price,
+      price
     } = this.props.filter;
     return (
       <div>
@@ -67,9 +70,8 @@ class ProductsInput extends Component {
                 style={{ backgroundColor: "#f76b1a", color: "#fff" }}
                 disabled={!priceMin || !priceMax}
                 onClick={() =>
-                  this.props.singleCategory(
+                  this.props.handleOkayButton(
                     this.props.match.params.category,
-                    this.props.filter,
                     this.props.history
                   )
                 }
@@ -148,9 +150,9 @@ class ProductsInput extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(
@@ -159,5 +161,6 @@ export default withRouter(
     handleCheckboxAction,
     singleCategory,
     handleRadioButtonAction,
+    handleOkayButton
   })(ProductsInput)
 );
