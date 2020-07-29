@@ -31,7 +31,7 @@ class Search extends React.Component {
   render() {
     return (
       <div id={this.props.id} className="col">
-        {this.state.typing !== "" ? (
+        {this.props.typing !== "" ? (
           <div
             onClick={() => this.setState({ typing: "" })}
             className="light-shed"
@@ -43,10 +43,11 @@ class Search extends React.Component {
             onChange={this.handleChange}
             className="form-control header-input-search"
             placeholder="Apple iPhone"
-            value={this.state.typing}
+            value={this.props.typing}
           />
           <div className="input-group-append">
             <button
+              disabled={this.props.typing.trim() === ""}
               id="header-search-btn"
               onClick={() => {
                 this.props.searchTermProducts(
