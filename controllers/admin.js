@@ -1208,7 +1208,7 @@ route.get("/api/fetch/weekly/sales", auth, isAdmin, async (req, res) => {
         $match: {
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
-              Date.now() / 1000 - 24 * 60 * 60 * 7
+              Date.now() / 1000 - 24 * 60 * 60 * 6
             )
           }
         }
