@@ -13,7 +13,8 @@ import {
   handleChangeAction,
   handleRadioButtonAction,
   handleCheckboxAction,
-  handleUrlSearchTerm
+  handleUrlSearchTerm,
+  revertFilter
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -29,16 +30,16 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 function SearchResults(props) {
   const observer = useRef();
-  const { handleUrlSearchTerm } = props;
+  const { handleUrlSearchTerm, revertFilter } = props;
   useEffect(() => {
     handleUrlSearchTerm(
       props.filter,
       props.history,
       props.match.params.searchTerm
     );
-    // return () => {
-    //   cleanup
-    // }
+    return () => {
+      revertFilter(null, null, null);
+    };
   }, []);
   const lastItemElementRef = useCallback(
     node => {
@@ -397,7 +398,8 @@ export default withRouter(
       handleRadioButtonAction,
       handleCheckboxAction,
       handleChangeAction,
-      handleUrlSearchTerm
+      handleUrlSearchTerm,
+      revertFilter
     })(SearchResults)
   )
 );

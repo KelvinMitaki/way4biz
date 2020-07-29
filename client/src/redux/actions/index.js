@@ -1067,6 +1067,7 @@ export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
 
 export const clearSearchTerm = () => (dispatch, getState) => {
   getState().search.searchItemsToSkip = 0;
+  getState().product.searchedProducts = [];
   dispatch({
     type: CLEAR_SEARCH_TERM
   });
@@ -1128,7 +1129,9 @@ export const revertFilter = (category, filter, history) => (
   dispatch({
     type: REVERT_FILTER
   });
-  dispatch(singleCategory(category, getState().filter, history));
+  if (category) {
+    dispatch(singleCategory(category, getState().filter, history));
+  }
 };
 export const handleRadioButtonAction = (
   category,
