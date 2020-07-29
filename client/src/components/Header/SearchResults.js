@@ -15,7 +15,7 @@ import {
   handleCheckboxAction,
   handleUrlSearchTerm,
   revertFilter,
-  clearSearchTerm
+  clearSearchTerm,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -28,6 +28,7 @@ import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "../Products/ProductsInput";
 import Image from "../Market/Image";
 import ScreenLoader from "../Pages/ScreenLoader";
+import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 
 function SearchResults(props) {
   const observer = useRef();
@@ -44,7 +45,7 @@ function SearchResults(props) {
     };
   }, []);
   const lastItemElementRef = useCallback(
-    node => {
+    (node) => {
       const fetchMoreData = () => {
         if (props.searchProducts.length < props.searchProductCount) {
           return props.moreSearchTermProducts(
@@ -55,7 +56,7 @@ function SearchResults(props) {
         props.hasMoreSearchFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -65,7 +66,7 @@ function SearchResults(props) {
     },
     [props]
   );
-  const handleCheckbox = event => {
+  const handleCheckbox = (event) => {
     const { checked, name } = event.target;
     props.handleCheckboxAction(
       { checked, name },
@@ -74,12 +75,12 @@ function SearchResults(props) {
       props.match.params.searchTerm
     );
   };
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     props.handleChangeAction({ name, value });
   };
-  const handleRadioButton = event => {
+  const handleRadioButton = (event) => {
     const { name, value } = event.target;
     props.handleRadioButtonAction(
       props.match.params.category,
@@ -98,7 +99,18 @@ function SearchResults(props) {
           <div className="col-lg-3">
             <Categories id="products-categories" />
           </div>
-          <div className="col-lg-9" style={{ padding: "0px" }}>
+          <div
+            className="col-lg-9"
+            style={{ padding: "0px", position: "relative" }}
+          >
+            <div className="category-hover-popup-wrapper">
+              <CategoryHoverPopup
+                width={"50%"}
+                height={"80vh"}
+                position={"sticky"}
+                top={"110px"}
+              />
+            </div>
             <div className="products-top">
               <div className="container products-lg-top">
                 <ProductsInput />
@@ -145,7 +157,7 @@ function SearchResults(props) {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              fontSize: "12px"
+                              fontSize: "12px",
                             }}
                             onClick={() =>
                               props.searchTermProducts(
@@ -269,7 +281,7 @@ function SearchResults(props) {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px"
+                                padding: "0px",
                               }}
                               className="price"
                             >
@@ -282,7 +294,7 @@ function SearchResults(props) {
                             style={{
                               height: "10px",
                               padding: "0px",
-                              margin: "0px"
+                              margin: "0px",
                             }}
                           >
                             {product.freeShipping && (
@@ -298,7 +310,7 @@ function SearchResults(props) {
                             style={{
                               display: "flex",
                               padding: "0px 10px",
-                              margin: "0px"
+                              margin: "0px",
                             }}
                             className="mb-2"
                           >
@@ -337,7 +349,7 @@ function SearchResults(props) {
                           <p
                             style={{
                               fontWeight: "bolder",
-                              padding: "0px 10px"
+                              padding: "0px 10px",
                             }}
                             className="price"
                           >
@@ -350,7 +362,7 @@ function SearchResults(props) {
                           style={{
                             padding: "0px 0px 0px 10px",
                             margin: "0px",
-                            fontSize: "smaller"
+                            fontSize: "smaller",
                           }}
                         >
                           {product.freeShipping && <p>Free Shipping</p>}
@@ -359,7 +371,7 @@ function SearchResults(props) {
                           style={{
                             display: "flex",
                             padding: "0px 10px 0px 0px",
-                            margin: "0px"
+                            margin: "0px",
                           }}
                           className="mb-2"
                         >
@@ -379,14 +391,14 @@ function SearchResults(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     searchProducts: state.search.searchProducts,
     searchProductCount: state.search.searchProductCount,
     searchProductsLoading: state.search.searchProductsLoading,
     filter: state.filter,
     hasMoreSearchProducts: state.search.hasMoreSearchProducts,
-    typing: state.cartReducer.typing
+    typing: state.cartReducer.typing,
   };
 };
 
@@ -401,7 +413,7 @@ export default withRouter(
       handleChangeAction,
       handleUrlSearchTerm,
       revertFilter,
-      clearSearchTerm
+      clearSearchTerm,
     })(SearchResults)
   )
 );

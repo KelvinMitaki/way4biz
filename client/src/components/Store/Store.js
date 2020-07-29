@@ -9,6 +9,7 @@ import HeroCategories from "../Hero/HeroCategories";
 import { fetchStoreProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 
 class Store extends Component {
   componentDidMount() {
@@ -27,7 +28,18 @@ class Store extends Component {
                 <HeroCategories />
               </div>
             </div>
-            <div className="col-lg-9" style={{ padding: "0px" }}>
+            <div
+              className="col-lg-9"
+              style={{ padding: "0px", position: "relative" }}
+            >
+              <div className="category-hover-popup-wrapper">
+                <CategoryHoverPopup
+                  width={"50%"}
+                  height={"80vh"}
+                  position={"sticky"}
+                  top={"110px"}
+                />
+              </div>
               <div className="store-header py-2">
                 <h2 style={{ textAlign: "center" }}>
                   {this.props.storeProducts.length !== 0 &&

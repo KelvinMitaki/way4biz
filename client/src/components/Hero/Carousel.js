@@ -48,7 +48,7 @@ class HeroCarousel extends React.Component {
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
           {/* if subcategories array length>1 */}
-          <CategoryHoverPopup />
+          <CategoryHoverPopup width={"102%"} height={"100%"} />
           {/* else null */}
           <div className="hero-carousel-wrapper">
             <div className="hero-carousel">
