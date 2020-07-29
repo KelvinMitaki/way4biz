@@ -713,8 +713,9 @@ route.get(
       const { productId, orderId } = req.params;
       const order = await Order.findOne({
         _id: orderId,
+        delivered: true,
         buyer: req.session.user._id,
-        items: { $elemMatch: { delivered: true, product: productId } }
+        items: { $elemMatch: { product: productId } }
       });
       res.send({ order });
     } catch (error) {

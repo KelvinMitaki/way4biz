@@ -28,7 +28,6 @@ class FileComplain extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-
     this.state.complaint.trim().length !== 0 &&
       this.props.newComplaint(
         this.state.complaint,
