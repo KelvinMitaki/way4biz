@@ -1022,6 +1022,7 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       },
       { $group: { _id: null, monthlyPrice: { $sum: "$totalPrice" } } }
     ]);
+    const totalProducts = await Product.find({}).estimatedDocumentCount();
     res.send({
       totalOrdersCount,
       todaysOrdersCount,
@@ -1032,7 +1033,8 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       monthlyPrice:
         monthlyPrice[0] && monthlyPrice[0].monthlyPrice
           ? monthlyPrice[0].monthlyPrice
-          : 0
+          : 0,
+      totalProducts
     });
   } catch (error) {
     res.status(500).send(error);

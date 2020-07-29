@@ -256,11 +256,19 @@ class AdminDashBoard extends React.Component {
                                     </span>
                                   )}
                                 </p>
-                                <p>+50,000</p>
+                                <p>{this.props.adminOrders.totalProducts}</p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change in the past 24 hours
+                                  {this.props.adminOrders.totalProducts !== 0
+                                    ? (
+                                        (this.props.underReview.length /
+                                          this.props.adminOrders
+                                            .totalProducts) *
+                                        100
+                                      ).toFixed(2)
+                                    : 0}
+                                  % change in the past 24 hours
                                 </p>
                               </div>
                             </Link>
@@ -295,8 +303,10 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {complaintsPercentage.toFixed(2)}% change in
-                                  the past 24 hours
+                                  {complaintsPercentage === 100
+                                    ? complaintsPercentage
+                                    : complaintsPercentage.toFixed(2)}
+                                  % change in the past 24 hours
                                 </p>
                               </div>
                             </Link>
