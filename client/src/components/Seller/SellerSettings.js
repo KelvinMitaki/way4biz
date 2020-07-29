@@ -42,7 +42,6 @@ class SellerSettings extends React.Component {
                   className="form-control"
                   id="store-description"
                   type="text"
-                  col
                 ></textarea>
               </form>
               <button className="btn store-settings-btn mt-3">Update</button>

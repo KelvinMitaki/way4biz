@@ -8,6 +8,7 @@ const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
 const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
+const Complaint = require("../models/Complaint");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -675,6 +676,35 @@ route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/buyer/new/complaint/:productId",
+  auth,
+  check("body")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid complaint"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { body } = req.body;
+      const { productId } = req.params;
+      const complaint = new Complaint({
+        buyer: _id,
+        body,
+        product: productId
+      });
+      await complaint.save();
+      res.send(complaint);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
