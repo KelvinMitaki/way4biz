@@ -1441,4 +1441,12 @@ route.get("/api/complaints/count", auth, isAdmin, async (req, res) => {
   }
 });
 // ACTUAL COMPLAINTS
+route.get("/api/root/admin/complaints", auth, isAdmin, async (req, res) => {
+  try {
+    const complaints = await Complaint.find({}).sort({ createdAt: -1 });
+    res.send(complaints);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
