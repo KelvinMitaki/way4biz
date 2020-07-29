@@ -10,7 +10,7 @@
   overflow-y: auto;
   background-color: #fff;
   margin-left: -15px;
-  /* display: none; */
+  display: none;
 }
 
 .hovered-sub-categories-section-wrapper {

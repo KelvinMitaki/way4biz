@@ -5,11 +5,12 @@ import "./AccountMenu.css";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
+import { BsQuestionCircle } from "react-icons/bs";
 
 export class AccountMenu extends Component {
   render() {
     return (
-      <div className="box-container account-menu-container m-0 p-0">
+      <div className="box-container account-menu-container mb-3 p-0">
         <div className="account-menu-wrapper">
           <NavLink
             activeClassName="account-active"
@@ -51,6 +52,17 @@ export class AccountMenu extends Component {
           >
             <MdRateReview />
             <span className="ml-2">Pending Reviews</span>
+          </NavLink>
+        </div>
+
+        <div className="account-menu-wrapper">
+          <NavLink
+            activeClassName="account-active"
+            to="/complaints"
+            className="navlink"
+          >
+            <BsQuestionCircle />
+            <span className="ml-2">Complaints</span>
           </NavLink>
         </div>
 
