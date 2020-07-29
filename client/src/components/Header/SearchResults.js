@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -12,7 +12,8 @@ import {
   hasMoreSearchFalse,
   handleChangeAction,
   handleRadioButtonAction,
-  handleCheckboxAction
+  handleCheckboxAction,
+  handleUrlSearchTerm
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -27,6 +28,17 @@ import Image from "../Market/Image";
 
 function SearchResults(props) {
   const observer = useRef();
+  const { handleUrlSearchTerm } = props;
+  useEffect(() => {
+    handleUrlSearchTerm(
+      props.filter,
+      props.history,
+      props.match.params.searchTerm
+    );
+    // return () => {
+    //   cleanup
+    // }
+  }, []);
   const lastItemElementRef = useCallback(
     node => {
       const fetchMoreData = () => {
@@ -376,7 +388,8 @@ export default withRouter(
       moreSearchTermProducts,
       handleRadioButtonAction,
       handleCheckboxAction,
-      handleChangeAction
+      handleChangeAction,
+      handleUrlSearchTerm
     })(SearchResults)
   )
 );

@@ -169,7 +169,8 @@ import {
   MORE_SEARCH_PRODUCTS,
   MORE_SEARCH_PRODUCTS_START,
   MORE_SEARCH_PRODUCTS_STOP,
-  HAS_MORE_SEARCH_FALSE
+  HAS_MORE_SEARCH_FALSE,
+  HANDLE_URL_SEARCH_TERM
 } from "./types";
 
 const authCheck = error => {
@@ -1053,6 +1054,14 @@ export const handleSearchTerm = term => {
     type: HANDLE_SEARCH_TERM,
     payload: term
   };
+};
+
+export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
+  dispatch(searchTermProducts(filter, history, term));
+  dispatch({
+    type: HANDLE_URL_SEARCH_TERM,
+    payload: term
+  });
 };
 // export const fetchFilteredProducts = (filter, category) => async dispatch => {
 //   try {

@@ -5,7 +5,8 @@ import {
   MAKE_ORDER,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  HANDLE_SEARCH_TERM
+  HANDLE_SEARCH_TERM,
+  HANDLE_URL_SEARCH_TERM
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -71,6 +72,8 @@ export default (state = INITIAL_STATE, action) => {
         wishlist: state.wishlist.filter(item => item._id !== action.payload._id)
       };
     case HANDLE_SEARCH_TERM:
+      return { ...state, typing: action.payload };
+    case HANDLE_URL_SEARCH_TERM:
       return { ...state, typing: action.payload };
     default:
       return state;
