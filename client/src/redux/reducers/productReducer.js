@@ -63,7 +63,9 @@ import {
   REJECT_MESSAGE_STOP,
   FETCH_REJECTS,
   FETCH_STORE_PRODUCTS,
-  HANDLE_SEARCH_TERM
+  HANDLE_SEARCH_TERM,
+  NEW_COMPLAINT_START,
+  NEW_COMPLAINT_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -116,7 +118,8 @@ const INITIAL_STATE = {
   fetchReviewProductLoading: false,
   rejectReasonLoading: false,
   sellerRejects: null,
-  storeProducts: null
+  storeProducts: null,
+  complaintLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -329,7 +332,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerRejects: action.payload };
     case FETCH_STORE_PRODUCTS:
       return { ...state, storeProducts: action.payload };
-
+    case NEW_COMPLAINT_START:
+      return { ...state, complaintLoading: true };
+    case NEW_COMPLAINT_STOP:
+      return { ...state, complaintLoading: false };
     default:
       return state;
   }

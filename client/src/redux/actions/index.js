@@ -171,7 +171,10 @@ import {
   MORE_SEARCH_PRODUCTS_STOP,
   HAS_MORE_SEARCH_FALSE,
   HANDLE_URL_SEARCH_TERM,
-  CLEAR_SEARCH_TERM
+  CLEAR_SEARCH_TERM,
+  NEW_COMPLAINT,
+  NEW_COMPLAINT_START,
+  NEW_COMPLAINT_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1751,6 +1754,19 @@ export const fetchStoreProducts = sellerId => async dispatch => {
     ) {
       return (window.location.href = "/");
     }
+    console.log(error.response);
+  }
+};
+
+export const newComplaint = (body, productId) => async dispatch => {
+  try {
+    dispatch({ type: NEW_COMPLAINT_START });
+    await axios.post(`/api/buyer/new/complaint/${productId}`, { body });
+    dispatch({ type: NEW_COMPLAINT });
+    dispatch({ type: NEW_COMPLAINT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: NEW_COMPLAINT_STOP });
     console.log(error.response);
   }
 };
