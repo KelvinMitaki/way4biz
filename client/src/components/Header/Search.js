@@ -34,7 +34,7 @@ class Search extends React.Component {
       <div id={this.props.id} className="col">
         {this.props.searchedProducts.length !== 0 ? (
           <div
-            onClick={() => this.setState({ typing: "" })}
+            onClick={() => this.props.clearSearchTerm()}
             className="light-shed"
           ></div>
         ) : null}
