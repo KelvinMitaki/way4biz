@@ -268,7 +268,7 @@ class AdminDashBoard extends React.Component {
                                         100
                                       ).toFixed(2)
                                     : 0}
-                                  % change in the past 24 hours
+                                  % change
                                 </p>
                               </div>
                             </Link>

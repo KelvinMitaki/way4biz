@@ -6,11 +6,17 @@ const ComplaintSchema = new mongoose.Schema({
     required: true,
     ref: "User"
   },
-  buyer: {
+  buyerSeller: {
     type: mongoose.Types.ObjectId,
     required: true,
     ref: "Seller"
   },
+  order: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "Order"
+  },
+
   product: {
     type: mongoose.Types.ObjectId,
     required: true,

@@ -1445,7 +1445,85 @@ route.get("/api/complaints/count", auth, isAdmin, async (req, res) => {
 // ACTUAL COMPLAINTS
 route.get("/api/root/admin/complaints", auth, isAdmin, async (req, res) => {
   try {
-    const complaints = await Complaint.find({}).sort({ createdAt: -1 });
+    // const complaints = await Complaint.find({}).sort({ createdAt: -1 });
+    const complaints = await Complaint.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quanity",
+          imageUrl: "$product.imageUrl"
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
     res.send(complaints);
   } catch (error) {
     res.status(500).send(error);

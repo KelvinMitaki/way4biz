@@ -31,6 +31,7 @@ class FileComplain extends React.Component {
     this.state.complaint.trim().length !== 0 &&
       this.props.newComplaint(
         this.state.complaint,
+        this.props.match.params.orderId,
         this.props.match.params.productId,
         this.props.history
       );

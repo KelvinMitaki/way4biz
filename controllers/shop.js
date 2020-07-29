@@ -677,7 +677,7 @@ route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
   }
 });
 route.post(
-  "/api/buyer/new/complaint/:productId",
+  "/api/buyer/new/complaint/:orderId/:productId",
   auth,
   check("body")
     .trim()
@@ -692,10 +692,12 @@ route.post(
       }
       const { _id } = req.session.user;
       const { body } = req.body;
-      const { productId } = req.params;
+      const { orderId, productId } = req.params;
       const complaint = new Complaint({
         buyer: _id,
+        buyerSeller: _id,
         body,
+        order: orderId,
         product: productId
       });
       await complaint.save();
