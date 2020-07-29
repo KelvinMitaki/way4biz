@@ -174,7 +174,10 @@ import {
   CLEAR_SEARCH_TERM,
   NEW_COMPLAINT,
   NEW_COMPLAINT_START,
-  NEW_COMPLAINT_STOP
+  NEW_COMPLAINT_STOP,
+  COUNT_COMPLAINTS,
+  COUNT_COMPLAINTS_START,
+  COUNT_COMPLAINTS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1788,6 +1791,19 @@ export const newComplaint = (body, productId, history) => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: NEW_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const countComplaints = () => async dispatch => {
+  try {
+    dispatch({ type: COUNT_COMPLAINTS_START });
+    const res = await axios.get("/api/complaints/count");
+    dispatch({ type: COUNT_COMPLAINTS, payload: res.data });
+    dispatch({ type: COUNT_COMPLAINTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: COUNT_COMPLAINTS_STOP });
     console.log(error.response);
   }
 };

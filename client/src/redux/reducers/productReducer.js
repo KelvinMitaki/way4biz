@@ -65,7 +65,8 @@ import {
   FETCH_STORE_PRODUCTS,
   HANDLE_SEARCH_TERM,
   NEW_COMPLAINT_START,
-  NEW_COMPLAINT_STOP
+  NEW_COMPLAINT_STOP,
+  COUNT_COMPLAINTS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -119,7 +120,8 @@ const INITIAL_STATE = {
   rejectReasonLoading: false,
   sellerRejects: null,
   storeProducts: null,
-  complaintLoading: false
+  complaintLoading: false,
+  complaintsCount: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -336,6 +338,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, complaintLoading: true };
     case NEW_COMPLAINT_STOP:
       return { ...state, complaintLoading: false };
+    case COUNT_COMPLAINTS:
+      return { ...state, complaintsCount: action.payload };
     default:
       return state;
   }

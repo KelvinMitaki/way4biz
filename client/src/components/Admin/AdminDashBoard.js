@@ -17,6 +17,7 @@ import {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
+  countComplaints
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -24,11 +25,11 @@ import ScreenLoader from "../Pages/ScreenLoader";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
   componentDidMount() {
     this.props.getStock();
@@ -37,6 +38,7 @@ class AdminDashBoard extends React.Component {
     this.props.fetchAdminPendingOrders();
     this.props.fetchWeeklySales();
     this.props.fetchUnderReview();
+    this.props.countComplaints();
   }
 
   render() {
@@ -45,7 +47,8 @@ class AdminDashBoard extends React.Component {
       !this.props.adminOrders ||
       !this.props.adminPendingOrders ||
       !this.props.weeklySales ||
-      !this.props.underReview
+      !this.props.underReview ||
+      !this.props.complaintsCount
     )
       return <ScreenLoader />;
 
@@ -103,10 +106,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find((s) => s.label === "Stock Out")
+                      {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find((s) => s.label === "Stock Out")
+                          this.props.stock.find(s => s.label === "Stock Out")
                             .value
                         ).toLocaleString()}
                     </span>
@@ -209,7 +212,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -238,7 +241,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -366,14 +369,15 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
+    complaintsCount: state.product.complaintsCount,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers,
+    newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps, {
@@ -384,4 +388,5 @@ export default connect(mapStateToProps, {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
+  countComplaints
 })(AdminDashBoard);
