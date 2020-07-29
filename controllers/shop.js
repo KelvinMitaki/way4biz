@@ -900,7 +900,7 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
       },
       { $sort: { createdAt: -1 } }
     ]);
-    res.send({ complaint: complaint[0] ? complaint[0] : {} });
+    res.send({ complaint: complaint[0] && complaint[0] ? complaint[0] : {} });
   } catch (error) {
     res.status(500).send(error);
   }
