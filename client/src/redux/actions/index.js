@@ -1094,7 +1094,7 @@ export const clearSearchTerm = () => (dispatch, getState) => {
 //   }
 // };
 
-export const handleCheckboxAction = (event, category, history) => (
+export const handleCheckboxAction = (event, category, history, searchTerm) => (
   dispatch,
   getState
 ) => {
@@ -1102,7 +1102,6 @@ export const handleCheckboxAction = (event, category, history) => (
   const filter = getState().filter;
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
-  const searchTerm = getState().cartReducer.typing;
 
   if (category) {
     return dispatch(singleCategory(category, filter, history));
@@ -1131,10 +1130,12 @@ export const revertFilter = (category, filter, history) => (
   });
   dispatch(singleCategory(category, getState().filter, history));
 };
-export const handleRadioButtonAction = (category, event, history) => (
-  dispatch,
-  getState
-) => {
+export const handleRadioButtonAction = (
+  category,
+  event,
+  history,
+  searchTerm
+) => (dispatch, getState) => {
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
 
@@ -1145,7 +1146,6 @@ export const handleRadioButtonAction = (category, event, history) => (
     }
   });
   const filter = getState().filter;
-  const searchTerm = getState().cartReducer.typing;
 
   if (category) {
     return dispatch(singleCategory(category, filter, history));
