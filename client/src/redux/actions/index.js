@@ -181,7 +181,11 @@ import {
   FETCH_ALL_COMPLAINTS,
   FETCH_COMPLAINT,
   FETCH_COMPLAINT_STOP,
-  FETCH_COMPLAINT_START
+  FETCH_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINTS,
+  FETCH_BUYER_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINT,
+  FETCH_BUYER_COMPLAINT_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1838,6 +1842,29 @@ export const fetchComplaint = complaintId => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchBuyerComplaints = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/buyer/complaints");
+    dispatch({ type: FETCH_BUYER_COMPLAINTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchBuyerComplaint = complaintId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_BUYER_COMPLAINT_START });
+    const res = await axios.get(`/api/fetch/buyer/complaint/${complaintId}`);
+    dispatch({ type: FETCH_BUYER_COMPLAINT, payload: res.data });
+    dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
     console.log(error.response);
   }
 };

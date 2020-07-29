@@ -6,6 +6,8 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // import ScreenLoader from "../Pages/ScreenLoader";
 
 class AccountComplaint extends React.Component {
@@ -20,7 +22,10 @@ class AccountComplaint extends React.Component {
                 <AccountMenu />
               </div>
               <div className="col-lg-8  box-container">
-                <div className="container">
+                <div
+                  onClick={() => this.props.history.goBack()}
+                  className="container"
+                >
                   <IconContext.Provider
                     value={{ className: "arrow-icon ml-3 my-2" }}
                   >
@@ -59,5 +64,7 @@ class AccountComplaint extends React.Component {
     );
   }
 }
-
-export default AccountComplaint;
+const mapStateToProps = state => {
+  return {};
+};
+export default withRouter(connect(mapStateToProps)(AccountComplaint));
