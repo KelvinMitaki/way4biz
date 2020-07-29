@@ -1445,7 +1445,6 @@ route.get("/api/complaints/count", auth, isAdmin, async (req, res) => {
 // ACTUAL COMPLAINTS
 route.get("/api/root/admin/complaints", auth, isAdmin, async (req, res) => {
   try {
-    // const complaints = await Complaint.find({}).sort({ createdAt: -1 });
     const complaints = await Complaint.aggregate([
       {
         $lookup: {

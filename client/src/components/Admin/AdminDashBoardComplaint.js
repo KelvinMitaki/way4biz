@@ -4,7 +4,10 @@ import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashBoardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 
 import "./AdminDashBoardComplaint.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { BsArrowLeft } from "react-icons/bs";
+import { IconContext } from "react-icons";
+import { connect } from "react-redux";
 
 class AdminDashBoardComplaints extends React.Component {
   render() {
@@ -13,10 +16,20 @@ class AdminDashBoardComplaints extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashBoardSecondaryHeader />
         <div className="container box-container mt-4">
-          <h3 className="mt-3 mb-2" style={{ textAlign: "center" }}>
+          {/* <h3 className="mt-3 mb-2" style={{ textAlign: "center" }}>
             Complaints
-          </h3>
-          {/* mapping here */}
+          </h3> */}
+          <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+            <div className="d-flex align-items-center">
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => this.props.history.goBack()}
+              >
+                <BsArrowLeft />
+              </div>
+              <h3 className="ml-3">Complaints</h3>
+            </div>
+          </IconContext.Provider>
           <div className="box-container p-2 admin-complain">
             <div className="container">
               <h4 className="my-1">Buyer</h4>
@@ -105,5 +118,7 @@ class AdminDashBoardComplaints extends React.Component {
     );
   }
 }
-
-export default AdminDashBoardComplaints;
+const mapStateToProps = state => {
+  return {};
+};
+export default withRouter(connect(mapStateToProps)(AdminDashBoardComplaints));
