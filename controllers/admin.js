@@ -29,6 +29,7 @@ const Category = require("../models/Category");
 const isAdmin = require("../middlewares/is-admin");
 const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
+const Complaint = require("../models/Complaint");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -1413,5 +1414,31 @@ route.post(
     }
   }
 );
-
+// COMPLAINTS COUNT
+route.get("/api/complaints/count", auth, isAdmin, async (req, res) => {
+  try {
+    const todaysComplaints = await Complaint.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60
+            )
+          }
+        }
+      },
+      { $count: "todaysComplaints" }
+    ]);
+    const totalComplaints = await Complaint.find({}).estimatedDocumentCount();
+    res.send({
+      todaysComplaints: todaysComplaints[0]
+        ? todaysComplaints[0].todaysComplaints
+        : 0,
+      totalComplaints
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// ACTUAL COMPLAINTS
 module.exports = route;

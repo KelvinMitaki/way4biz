@@ -80,7 +80,10 @@ class FileComplain extends React.Component {
                       id="complain-input-field"
                       className="form-control"
                     ></textarea>
-                    <button className="btn submit-complain mt-3">
+                    <button
+                      disabled={this.state.complaint.trim() === ""}
+                      className="btn submit-complain mt-3"
+                    >
                       {this.props.complaintLoading && (
                         <span
                           className="spinner-grow spinner-grow-sm"
