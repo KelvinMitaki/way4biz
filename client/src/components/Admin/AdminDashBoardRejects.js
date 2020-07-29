@@ -39,7 +39,7 @@ class AdminDashBoardRejects extends React.Component {
                 </h5>
                 <h5 className="my-1">
                   <strong>Owner:</strong>
-                  <Link to="/" title="visit store">
+                  <Link to="/" className="reject-to-store" title="visit store">
                     Dawida Wa Nzomo
                   </Link>
                 </h5>

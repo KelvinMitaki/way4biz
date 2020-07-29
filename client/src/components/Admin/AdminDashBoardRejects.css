@@ -22,6 +22,15 @@
   text-decoration: none;
 }
 
+.reject-to-store {
+  color: #f76b1a;
+}
+
+.reject-to-store:hover {
+  color: #f76b1a;
+  text-decoration: underline;
+}
+
 /* @media screen and (max-width: 960px) {
   .why-reject {
     -webkit-line-clamp: 4;
