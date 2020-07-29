@@ -1653,7 +1653,8 @@ route.get(
             imageUrl: "$product.imageUrl",
             productName: "$product.name",
             sellerFirstName: "$seller.firstName",
-            sellerLastName: "$seller.lastName"
+            sellerLastName: "$seller.lastName",
+            sellerId: "$seller._id"
           }
         }
       ]);

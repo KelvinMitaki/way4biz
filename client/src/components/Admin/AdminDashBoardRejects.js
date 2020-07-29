@@ -5,12 +5,20 @@ import AdminDashBoardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 
 import "./AdminDashBoardRejects.css";
 import { Link } from "react-router-dom";
+import { fetchRejectedProducts } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 // import { Link } from "react-router-dom";
 // import { IconContext } from "react-icons";
 // import { BsArrowLeft } from "react-icons/bs";
 
 class AdminDashBoardRejects extends React.Component {
+  componentDidMount() {
+    this.props.fetchRejectedProducts();
+  }
   render() {
+    if (!this.props.rejectedProducts) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0 mb-5">
         <AdminDashBoardHeader />
@@ -28,43 +36,60 @@ class AdminDashBoardRejects extends React.Component {
               Rejected Products
             </h3>
           </div>
-          <div className="box-container admin-rejected-product">
-            <div className="row align-items-center">
-              <div className="col-md-3">
-                <img width="80%" style={{ margin: "auto" }} src="/1.jpg" />
-              </div>
-              <div className="col-md-9">
-                <h5 className="my-1">
-                  <strong>Name:</strong>Great Beer of Congo
-                </h5>
-                <h5 className="my-1">
-                  <strong>Owner:</strong>
-                  <Link to="/" className="reject-to-store" title="visit store">
-                    Dawida Wa Nzomo
-                  </Link>
-                </h5>
-                <h6 className="why-reject">
-                  The quick brown fox jumped over the lazy dog The quick brown
-                  fox jumped over the lazy dog The quick brown fox jumped over
-                  the lazy dog The quick brown fox jumped over the lazy dog The
-                  quick brown fox jumped over the lazy dog The quick brown fox
-                  jumped over the lazy dog The quick brown fox jumped over the
-                  lazy dog The quick brown fox jumped over the lazy dog The
-                  quick brown fox jumped over the lazy dog The quick brown fox
-                  jumped over the lazy dog
-                </h6>
-                <span>
-                  {/* <Link className="admin-rejected-product-view-more" to="/">
+          {this.props.rejectedProducts.length !== 0 &&
+            this.props.rejectedProducts.map(pro => (
+              <div
+                key={pro._id}
+                className="box-container admin-rejected-product"
+              >
+                <div className="row align-items-center">
+                  <div className="col-md-3">
+                    <Image
+                      width="80%"
+                      style={{ margin: "auto" }}
+                      image={
+                        pro.imageUrl.includes("http")
+                          ? pro.imageUrl
+                          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${pro.imageUrl} `
+                      }
+                      alt={pro.imageUrl}
+                    />
+                  </div>
+                  <div className="col-md-9">
+                    <h5 className="my-1">
+                      <strong>Name: </strong>
+                      {pro.productName}
+                    </h5>
+                    <h5 className="my-1">
+                      <strong>Owner: </strong>
+                      <Link
+                        to={`/seller/store/${pro.sellerId}`}
+                        className="reject-to-store"
+                        title="visit store"
+                      >
+                        {pro.sellerFirstName} {pro.sellerLastName}
+                      </Link>
+                    </h5>
+                    <h6 className="why-reject">{pro.body}</h6>
+                    <span>
+                      {/* <Link className="admin-rejected-product-view-more" to="/">
                     View More
                   </Link> */}
-                </span>
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ))}
         </div>
       </div>
     );
   }
 }
-
-export default AdminDashBoardRejects;
+const mapStateToprops = state => {
+  return {
+    rejectedProducts: state.product.rejectedProducts
+  };
+};
+export default connect(mapStateToprops, { fetchRejectedProducts })(
+  AdminDashBoardRejects
+);
