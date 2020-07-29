@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import "./Image.css";
 export class Image extends Component {
   text = React.createRef();
   componentDidMount() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;
@@ -17,7 +18,7 @@ export class Image extends Component {
   }
   componentDidUpdate() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;
@@ -32,7 +33,7 @@ export class Image extends Component {
     return (
       <React.Fragment>
         <img
-          className="loading"
+          className="loading image-overlay"
           data-src={this.props.image}
           ref={this.text}
           src="/load.jpg"

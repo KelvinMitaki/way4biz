@@ -50,13 +50,38 @@ import {
   FETCH_SINGLE_CATEGORY,
   FETCH_ADMIN_ORDER_START,
   FETCH_ADMIN_ORDER_STOP,
-  FETCH_SELLER_NEW_ORDERS_COUNT
+  FETCH_SELLER_NEW_ORDERS_COUNT,
+  FETCH_UNDER_REVIEW,
+  FETCH_REVIEW_PRODUCT,
+  ACCEPT_PRODUCT_START,
+  ACCEPT_PRODUCT_STOP,
+  REJECT_PRODUCT_START,
+  REJECT_PRODUCT_STOP,
+  FETCH_UNDER_REVIEW_START,
+  FETCH_UNDER_REVIEW_STOP,
+  REJECT_MESSAGE_START,
+  REJECT_MESSAGE_STOP,
+  FETCH_REJECTS,
+  FETCH_STORE_PRODUCTS,
+  HANDLE_SEARCH_TERM,
+  NEW_COMPLAINT_START,
+  NEW_COMPLAINT_STOP,
+  COUNT_COMPLAINTS,
+  FETCH_ALL_COMPLAINTS,
+  FETCH_COMPLAINT,
+  FETCH_COMPLAINT_START,
+  FETCH_COMPLAINT_STOP,
+  FETCH_BUYER_COMPLAINTS,
+  FETCH_BUYER_COMPLAINT,
+  FETCH_BUYER_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINT_STOP,
+  FETCH_REJECTED_PRODUCTS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
   products: [],
-  categories: [],
+  categories: null,
   singleCategoryProducts: [],
   buyerOrders: [],
   buyerOrderDetails: null,
@@ -95,7 +120,24 @@ const INITIAL_STATE = {
   payments: null,
   adminCategories: null,
   singleCategory: null,
-  dashboard: null
+  dashboard: null,
+  underReview: null,
+  reviewProduct: null,
+  acceptProductLoading: false,
+  rejectProductLoading: false,
+  fetchReviewProductLoading: false,
+  rejectReasonLoading: false,
+  sellerRejects: null,
+  storeProducts: null,
+  complaintLoading: false,
+  complaintsCount: null,
+  complaints: null,
+  complaint: null,
+  fetchComplaintLoading: false,
+  buyerComplaint: null,
+  buyerComplaints: null,
+  buyerComplaintLoading: false,
+  rejectedProducts: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -284,6 +326,54 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, singleCategory: action.payload };
     case FETCH_SELLER_NEW_ORDERS_COUNT:
       return { ...state, dashboard: action.payload };
+    case FETCH_UNDER_REVIEW:
+      return { ...state, underReview: action.payload };
+    case FETCH_REVIEW_PRODUCT:
+      return { ...state, reviewProduct: action.payload };
+    case ACCEPT_PRODUCT_START:
+      return { ...state, acceptProductLoading: true };
+    case ACCEPT_PRODUCT_STOP:
+      return { ...state, acceptProductLoading: false };
+    case REJECT_PRODUCT_START:
+      return { ...state, rejectProductLoading: true };
+    case REJECT_PRODUCT_STOP:
+      return { ...state, rejectProductLoading: false };
+    case FETCH_UNDER_REVIEW_START:
+      return { ...state, fetchReviewProductLoading: true };
+    case FETCH_UNDER_REVIEW_STOP:
+      return { ...state, fetchReviewProductLoading: false };
+    case REJECT_MESSAGE_START:
+      return { ...state, rejectReasonLoading: true };
+    case REJECT_MESSAGE_STOP:
+      return { ...state, rejectReasonLoading: false };
+    case FETCH_REJECTS:
+      return { ...state, sellerRejects: action.payload };
+    case FETCH_STORE_PRODUCTS:
+      return { ...state, storeProducts: action.payload };
+    case NEW_COMPLAINT_START:
+      return { ...state, complaintLoading: true };
+    case NEW_COMPLAINT_STOP:
+      return { ...state, complaintLoading: false };
+    case COUNT_COMPLAINTS:
+      return { ...state, complaintsCount: action.payload };
+    case FETCH_ALL_COMPLAINTS:
+      return { ...state, complaints: action.payload };
+    case FETCH_COMPLAINT:
+      return { ...state, complaint: action.payload };
+    case FETCH_COMPLAINT_START:
+      return { ...state, complaintLoading: true };
+    case FETCH_COMPLAINT_STOP:
+      return { ...state, complaintLoading: false };
+    case FETCH_BUYER_COMPLAINTS:
+      return { ...state, buyerComplaints: action.payload };
+    case FETCH_BUYER_COMPLAINT:
+      return { ...state, buyerComplaint: action.payload };
+    case FETCH_BUYER_COMPLAINT_START:
+      return { ...state, buyerComplaintLoading: true };
+    case FETCH_BUYER_COMPLAINT_STOP:
+      return { ...state, buyerComplaintLoading: false };
+    case FETCH_REJECTED_PRODUCTS:
+      return { ...state, rejectedProducts: action.payload };
     default:
       return state;
   }

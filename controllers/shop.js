@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
@@ -5,20 +6,35 @@ const distance = require("google-distance-matrix");
 const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
 const Order = require("../models/Order");
-const delivery = require("../middlewares/delivery");
 const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
+const Complaint = require("../models/Complaint");
 
 route.post("/api/products", async (req, res) => {
   try {
     const { itemsToSkip } = req.body;
-    const products = await Product.find()
-      .skip(itemsToSkip)
-      .limit(6)
-      .populate("seller", "storeName")
-      .exec();
-    const productCount = await Product.estimatedDocumentCount();
-    res.send({ products, productCount });
+    const products = await Product.aggregate([
+      { $match: { onSite: true } },
+      {
+        $project: {
+          price: 1,
+          name: 1,
+          price: 1,
+          freeShipping: 1,
+          imageUrl: 1
+        }
+      },
+      { $skip: itemsToSkip },
+      { $limit: 6 }
+    ]);
+    const productCount = await Product.aggregate([
+      { $match: { onSite: true } },
+      { $count: "productCount" }
+    ]);
+    res.send({
+      products,
+      productCount: productCount.length !== 0 ? productCount[0].productCount : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -26,23 +42,89 @@ route.post("/api/products", async (req, res) => {
 route.post("/api/products/skip/category", async (req, res) => {
   try {
     const { itemsToSkip, test, sort } = req.body;
-
-    const products = await Product.find(test)
-      .sort(sort)
-      .skip(itemsToSkip)
-      .limit(6);
+    const products = await Product.aggregate([
+      { $match: { ...test, onSite: true } },
+      {
+        $project: {
+          price: 1,
+          name: 1,
+          price: 1,
+          freeShipping: 1,
+          imageUrl: 1
+        }
+      },
+      { $sort: sort },
+      { $skip: itemsToSkip },
+      { $limit: 6 }
+    ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
     }
 
     const productCount = await Product.aggregate([
       {
-        $match: test
+        $match: { ...test, onSite: true }
       },
       { $count: test.category }
     ]);
 
     res.send({ products, productCount: productCount[0][test.category] });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post("/api/products/search/term", async (req, res) => {
+  try {
+    const { itemsToSkip, test, sort, searchTerm } = req.body;
+    const products = await Product.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            path: "name",
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            },
+            tokenOrder: "sequential"
+          }
+        }
+      },
+      { $match: { ...test, onSite: true } },
+      {
+        $project: {
+          price: 1,
+          name: 1,
+          price: 1,
+          freeShipping: 1,
+          imageUrl: 1
+        }
+      },
+      { $sort: sort },
+      { $skip: itemsToSkip },
+      { $limit: 6 }
+    ]);
+    if (!products || products.length === 0) {
+      return res.status(404).send({ message: "No products in that category" });
+    }
+
+    const productCount = await Product.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            path: "name",
+            query: searchTerm,
+            fuzzy: {
+              maxEdits: 1
+            },
+            tokenOrder: "sequential"
+          }
+        }
+      },
+      { $match: { ...test, onSite: true } },
+      { $count: "products" }
+    ]);
+
+    res.send({ products, productCount: productCount[0].products });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -56,7 +138,7 @@ route.post("/api/products/filter", async (req, res) => {
     // **TODO** FIX FILTERING
     // FREE SHIPPING RATING LATEST ON
 
-    let products = await Product.find(test);
+    let products = await Product.find({ ...test, onSite: true });
 
     res.send(products);
   } catch (error) {
@@ -68,7 +150,7 @@ route.get(
   async (req, res) => {
     try {
       const { subcategory } = req.params;
-      const products = await Product.find({ subcategory });
+      const products = await Product.find({ subcategory, onSite: true });
       if (!products || products.length === 0) {
         return res
           .status(404)
@@ -89,25 +171,30 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
     if (min) {
       const products = await Product.find({
         subcategory,
-        price: { $gte: min }
+        price: { $gte: min },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
     if (max) {
       const products = await Product.find({
         subcategory,
-        price: { $lte: max }
+        price: { $lte: max },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
     if (min && max) {
       const products = await Product.find({
         subcategory,
-        price: { $gte: min, $lte: max }
+        price: { $gte: min, $lte: max },
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
-    const products = await Product.find({ subcategory }).sort(sortBy);
+    const products = await Product.find({ subcategory, onSite: true }).sort(
+      sortBy
+    );
     res.send(products);
   } catch (error) {
     res.status(500).send(error);
@@ -136,6 +223,9 @@ route.post("/api/product/search", async (req, res) => {
         }
       },
       {
+        $match: { onSite: true }
+      },
+      {
         $limit: 5
       },
       {
@@ -154,10 +244,10 @@ route.post("/api/product/search", async (req, res) => {
 route.get("/api/product/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
-    const product = await Product.findById(productId).populate(
-      "seller",
-      "storeName"
-    );
+    const product = await Product.findOne({
+      _id: productId,
+      onSite: true
+    }).populate("seller", "storeName");
 
     res.send(product);
   } catch (error) {
@@ -553,6 +643,269 @@ route.post(
     });
   }
 );
+route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $match: {
+          seller: mongoose.Types.ObjectId(req.params.sellerId),
+          onSite: true
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          name: 1,
+          price: 1,
+          imageUrl: 1,
+          storeName: "$seller.storeName",
+          freeShipping: 1
+        }
+      }
+    ]);
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post(
+  "/api/buyer/new/complaint/:orderId/:productId",
+  auth,
+  check("body")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid complaint"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { body } = req.body;
+      const { orderId, productId } = req.params;
+      const complaint = new Complaint({
+        buyer: _id,
+        buyerSeller: _id,
+        body,
+        order: orderId,
+        product: productId
+      });
+      await complaint.save();
+      res.send(complaint);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get(
+  "/api/redirect/on/not/delivered/:productId/:orderId",
+  auth,
+  async (req, res) => {
+    try {
+      const { productId, orderId } = req.params;
+      const order = await Order.findOne({
+        _id: orderId,
+        delivered: true,
+        buyer: req.session.user._id,
+        items: { $elemMatch: { product: productId } }
+      });
+      res.send({ order });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
+  try {
+    const complaints = await Complaint.aggregate([
+      { $match: { buyer: mongoose.Types.ObjectId(req.session.user._id) } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quantity",
+          imageUrl: "$product.imageUrl",
+          body: 1
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
+    res.send(complaints);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
+  try {
+    const complaint = await Complaint.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.complaintId),
+          buyer: mongoose.Types.ObjectId(req.session.user._id)
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quantity",
+          imageUrl: "$product.imageUrl",
+          body: 1
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
+    res.send({ complaint: complaint[0] && complaint[0] ? complaint[0] : {} });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

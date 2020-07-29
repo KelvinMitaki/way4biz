@@ -60,7 +60,7 @@ class LineGraph extends React.Component {
           it => result.find(o => o["0"] === it["0"]) || it
         );
         // console.log("withoutDup", withoutDup);
-        const newArr = withoutDup;
+        const newArr = [...withoutDup];
         let myWeek;
         for (let i = 0; i < possibleWeekArrangements.length; i++) {
           //O(1) best case O(7) worst case

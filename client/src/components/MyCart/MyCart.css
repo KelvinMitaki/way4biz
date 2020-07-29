@@ -86,7 +86,7 @@
   background-color: #f76b1a;
   border: none;
   color: #fff;
-  border-radius: 40px;
+  /* border-radius: 40px; */
 }
 
 .checkout-button:hover {
@@ -102,7 +102,7 @@
   height: 50px;
   background-color: #eee;
   color: black;
-  border-radius: 40px;
+  /* border-radius: 40px; */
 }
 
 .shopping-btn:focus {

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -7,12 +7,15 @@ import Categories from "../Hero/HeroCategories";
 import { connect } from "react-redux";
 import Heart from "../Products/Heart";
 import {
-  singleCategory,
-  moreSingleCategoryProducts,
-  hasMoreCategoryFalse,
+  searchTermProducts,
+  moreSearchTermProducts,
+  hasMoreSearchFalse,
   handleChangeAction,
   handleRadioButtonAction,
   handleCheckboxAction,
+  handleUrlSearchTerm,
+  revertFilter,
+  clearSearchTerm,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -24,35 +27,52 @@ import { reduxForm } from "redux-form";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "../Products/ProductsInput";
 import Image from "../Market/Image";
+import ScreenLoader from "../Pages/ScreenLoader";
+import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 
 function SearchResults(props) {
   const observer = useRef();
-  const lastItemElementRef = useCallback((node) => {
-    const fetchMoreData = () => {
-      if (props.length < props.categoryProductCount) {
-        return props.moreSingleCSearchResults(
-          props.match.params.category,
-          props.filter
-        );
-      }
-      props.hasMoreCategoryFalse();
+  const { handleUrlSearchTerm, revertFilter, clearSearchTerm } = props;
+  useEffect(() => {
+    handleUrlSearchTerm(
+      props.filter,
+      props.history,
+      props.match.params.searchTerm
+    );
+    return () => {
+      revertFilter(null, null, null);
+      clearSearchTerm();
     };
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        fetchMoreData();
-      }
-    });
-    if (node) observer.current.observe(node);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const lastItemElementRef = useCallback(
+    (node) => {
+      const fetchMoreData = () => {
+        if (props.searchProducts.length < props.searchProductCount) {
+          return props.moreSearchTermProducts(
+            props.filter,
+            props.match.params.searchTerm
+          );
+        }
+        props.hasMoreSearchFalse();
+      };
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          fetchMoreData();
+        }
+      });
+      if (node) observer.current.observe(node);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [props]
+  );
   const handleCheckbox = (event) => {
     const { checked, name } = event.target;
-
     props.handleCheckboxAction(
       { checked, name },
       props.match.params.category,
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const handleChange = (event) => {
@@ -65,10 +85,12 @@ function SearchResults(props) {
     props.handleRadioButtonAction(
       props.match.params.category,
       { name, value },
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
+  if (props.searchProductsLoading) return <ScreenLoader />;
   return (
     <div>
       <Header />
@@ -77,7 +99,18 @@ function SearchResults(props) {
           <div className="col-lg-3">
             <Categories id="products-categories" />
           </div>
-          <div className="col-lg-9" style={{ padding: "0px" }}>
+          <div
+            className="col-lg-9"
+            style={{ padding: "0px", position: "relative" }}
+          >
+            <div className="category-hover-popup-wrapper">
+              <CategoryHoverPopup
+                width={"50%"}
+                height={"80vh"}
+                position={"sticky"}
+                top={"110px"}
+              />
+            </div>
             <div className="products-top">
               <div className="container products-lg-top">
                 <ProductsInput />
@@ -127,10 +160,10 @@ function SearchResults(props) {
                               fontSize: "12px",
                             }}
                             onClick={() =>
-                              props.singleCategory(
-                                props.match.params.category,
+                              props.searchTermProducts(
                                 props.filter,
-                                props.history
+                                props.history,
+                                props.typing
                               )
                             }
                           >
@@ -214,9 +247,10 @@ function SearchResults(props) {
               </div>
             </div>
             <div className="products-section">
-              {props.singleCategoryProducts.length !== 0 &&
-                props.singleCategoryProducts.map((product, index) => {
-                  if (props.singleCategoryProducts.length === index + 1) {
+              {props.searchProducts &&
+                props.searchProducts.length !== 0 &&
+                props.searchProducts.map((product, index) => {
+                  if (props.searchProducts.length === index + 1) {
                     return (
                       <div
                         key={product._id}
@@ -348,7 +382,7 @@ function SearchResults(props) {
                   );
                 })}
             </div>
-            {props.hasMoreCategoryProducts && <BottomPageLoader />}
+            {props.hasMoreSearchProducts && <BottomPageLoader />}
           </div>
         </div>
       </div>
@@ -359,22 +393,27 @@ function SearchResults(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    singleCategoryProducts: state.product.singleCategoryProducts,
-    categoryProductCount: state.product.categoryProductCount,
+    searchProducts: state.search.searchProducts,
+    searchProductCount: state.search.searchProductCount,
+    searchProductsLoading: state.search.searchProductsLoading,
     filter: state.filter,
-    hasMoreCategoryProducts: state.product.hasMoreCategoryProducts,
+    hasMoreSearchProducts: state.search.hasMoreSearchProducts,
+    typing: state.cartReducer.typing,
   };
 };
 
 export default withRouter(
   reduxForm({ form: "Products" })(
     connect(mapStateToProps, {
-      singleCategory,
-      hasMoreCategoryFalse,
-      moreSingleCategoryProducts,
+      searchTermProducts,
+      hasMoreSearchFalse,
+      moreSearchTermProducts,
       handleRadioButtonAction,
       handleCheckboxAction,
       handleChangeAction,
+      handleUrlSearchTerm,
+      revertFilter,
+      clearSearchTerm,
     })(SearchResults)
   )
 );

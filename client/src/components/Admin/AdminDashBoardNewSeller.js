@@ -131,7 +131,7 @@ class AdminDashBoardSeller extends React.Component {
 
               <div className="accept-sell-request">
                 <button
-                  disabled={this.props.newSeller.imageUrl.length === 0}
+                  disabled={this.props.newSeller.imageUrl.length < 2}
                   className="btn btn-block accept-sell-request-btn"
                   onClick={() =>
                     this.props.acceptSellerRequest(

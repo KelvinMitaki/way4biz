@@ -43,10 +43,10 @@
   font-weight: 400;
   justify-content: space-between;
 }
-
-.categories li:hover ~ .category-hover-popup {
+/* 
+.categories li:hover .category-hover-popup {
   display: block;
-}
+} */
 
 .right-arrow {
   font-size: 28px;

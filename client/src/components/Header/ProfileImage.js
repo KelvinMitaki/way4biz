@@ -1,12 +1,13 @@
 import React from "react";
+import { FaUserCircle } from "react-icons/fa";
 
 import "./ProfileImage.css";
 
 class ProfileImage extends React.Component {
   render() {
     return (
-      <div id="header-profile-image">
-        <p className="secondary-text">Profile</p>
+      <div id={this.props.id}>
+        <FaUserCircle style={{ fontSize: this.props.size, color: "#f76b1a" }} />
       </div>
     );
   }

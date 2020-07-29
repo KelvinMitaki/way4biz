@@ -49,9 +49,19 @@ import AdminDashBoardAddCategory from "./components/Admin/AdminDashBoardAddCateg
 import MoveToTop from "./MoveToTop";
 import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
 import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
-import BuyerInfo from "./components/Admin/BuyerInfo";
 import Store from "./components/Store/Store";
 import SearchResults from "./components/Header/SearchResults";
+import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProducts";
+import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
+import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
+import SellerSettings from "./components/Seller/SellerSettings";
+import SellerRejects from "./components/Seller/SellerRejects";
+import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
+import AdminDashBoardComplaint from "./components/Admin/AdminDashBoardComplaint";
+import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
+import FileComplain from "./components/Account/FileComplain";
+import AccountComplaints from "./components/Account/AccountComplaints";
+import AccountComplaint from "./components/Account/AccountComplaint";
 
 class App extends React.Component {
   state = {
@@ -140,13 +150,43 @@ class App extends React.Component {
                 )
               }
             />
-            <Route path="/seller/store" exact component={Store} />
+            <Route path="/seller/store/:sellerId" exact component={Store} />
             <Route path="/search/results" component={SearchResults} />
             <Route
               path="/admin-sellers"
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoardSellers />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/complaints"
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardComplaints />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/complaint/:complaintId"
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardComplaint />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/rejects"
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardRejects />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -194,11 +234,33 @@ class App extends React.Component {
               }
             />
             <Route
-              path="/admin/buyer-info"
+              path="/admin/new-products"
               exact
               render={() =>
                 this.props.user && this.props.user.isAdmin ? (
-                  <BuyerInfo />
+                  <AdminDashBoardNewProducts />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/new-product/:productId"
+              exact
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardNewProduct />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/admin/root/new-product/why-reject/:productId"
+              exact
+              render={() =>
+                this.props.user && this.props.user.isAdmin ? (
+                  <AdminDashBoardNewProductReject />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -291,23 +353,34 @@ class App extends React.Component {
                 )
               }
             />
-            {/* <Route
-              path="/seller/profiling"
+            <Route
+              path="/seller/settings"
               exact
               render={() =>
                 this.props.user ? (
-                  <SellerProfiling />
+                  <SellerSettings />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
               }
-            /> */}
+            />
             <Route
               path="/seller/sell"
               exact
               render={() =>
                 this.props.user && this.props.user.verifiedPhoneNumber ? (
                   <SellerDashBoardNewProduct />
+                ) : (
+                  <Redirect to="/seller/sign-in" />
+                )
+              }
+            />
+            <Route
+              path="/seller/products/rejected"
+              exact
+              render={() =>
+                this.props.user && this.props.user.verifiedPhoneNumber ? (
+                  <SellerRejects />
                 ) : (
                   <Redirect to="/seller/sign-in" />
                 )
@@ -350,7 +423,7 @@ class App extends React.Component {
               path="/admin-dashboard"
               exact
               render={() =>
-                this.props.user.isAdmin ? (
+                this.props.user && this.props.user.isAdmin ? (
                   <AdminDashBoard />
                 ) : (
                   <Redirect to="/" />
@@ -445,6 +518,17 @@ class App extends React.Component {
                     }
                   />
                   <Route
+                    path="/buyer/file-complain/:orderId/:productId"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <FileComplain />
+                      )
+                    }
+                  />
+                  <Route
                     path="/add/review/:productId/:orderId"
                     exact
                     render={() =>
@@ -465,6 +549,11 @@ class App extends React.Component {
                         <PendingReviews />
                       )
                     }
+                  />
+                  <Route
+                    path="/products/search/:searchTerm"
+                    exact
+                    component={SearchResults}
                   />
                   <Route
                     path="/checkout"
@@ -509,6 +598,28 @@ class App extends React.Component {
                         <Redirect to="/sign-in" />
                       ) : (
                         <Orders />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/complaints"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <AccountComplaints />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/complaint/:complaintId"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <AccountComplaint />
                       )
                     }
                   />

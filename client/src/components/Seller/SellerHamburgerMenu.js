@@ -4,9 +4,13 @@ import { NavLink, Link } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
-import { GoClippy } from "react-icons/go";
+import { GoClippy, GoSettings } from "react-icons/go";
+import { GiCancel } from "react-icons/gi";
 
 import "./SellerHamburgerMenu.css";
+import { fetchRejects } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerHamburgerMenu extends React.Component {
   constructor(props) {
@@ -16,7 +20,9 @@ class SellerHamburgerMenu extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-
+  componentDidMount() {
+    this.props.fetchRejects();
+  }
   handleClick(e) {
     this.setState(prevState => {
       return {
@@ -25,6 +31,7 @@ class SellerHamburgerMenu extends React.Component {
     });
   }
   render() {
+    if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div id="hamburger-menu-wrapper">
         {this.state.open ? (
@@ -100,6 +107,34 @@ class SellerHamburgerMenu extends React.Component {
                     Reviews
                   </NavLink>
                 </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller/products/rejected"
+                  >
+                    <GiCancel className="mr-2" />
+                    Rejects
+                    {this.props.sellerRejects.length !== 0 && (
+                      <span
+                        className="badge ml-2"
+                        style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                      >
+                        {this.props.sellerRejects.length}
+                      </span>
+                    )}
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/seller/settings"
+                  >
+                    <GoSettings className="mr-2" />
+                    Settings
+                  </NavLink>
+                </li>
               </ul>
               <h6>OTHERS</h6>
               <hr />
@@ -135,5 +170,9 @@ class SellerHamburgerMenu extends React.Component {
     );
   }
 }
-
-export default SellerHamburgerMenu;
+const mapStateToProps = state => {
+  return {
+    sellerRejects: state.product.sellerRejects
+  };
+};
+export default connect(mapStateToProps, { fetchRejects })(SellerHamburgerMenu);

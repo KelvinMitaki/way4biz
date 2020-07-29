@@ -237,7 +237,15 @@ class Product extends React.Component {
                     >
                       <FaStore />
                     </IconContext.Provider>
-                    <p className="store-name ml-2">
+                    <p
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        this.props.history.push(
+                          `/seller/store/${this.props.product.seller._id}`
+                        )
+                      }
+                      className="store-name ml-2"
+                    >
                       {this.props.product.seller.storeName}
                     </p>
                   </div>

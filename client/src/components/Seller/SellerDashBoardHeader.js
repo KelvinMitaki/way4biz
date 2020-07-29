@@ -44,7 +44,7 @@ class SellerDashBoardHeader extends React.Component {
             Logout
           </li>
         </ul>
-        <ProfileImage />
+        <ProfileImage id="header-profile-image" size={"40px"} />
       </div>
     );
   }

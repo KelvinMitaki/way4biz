@@ -11,7 +11,7 @@ import Image from "./Image";
 function Market(props) {
   const observer = useRef();
   const lastItemElementRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.products.length < props.productCount) {
           return props.fetchMoreProducts();
@@ -19,7 +19,7 @@ function Market(props) {
         props.hasMoreFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -50,7 +50,6 @@ function Market(props) {
                     className="product-link"
                   >
                     <Image
-                      scrollPosition={window.pageYOffset}
                       image={
                         product.imageUrl[0].includes("http")
                           ? product.imageUrl[0]
@@ -78,7 +77,7 @@ function Market(props) {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        padding: "0px 10px",
+                        padding: "0px 10px"
                       }}
                       className="my-2 product-heart"
                     >
@@ -97,8 +96,6 @@ function Market(props) {
                   className="product-link"
                 >
                   <Image
-                    height="200vh"
-                    width="150vw"
                     image={
                       product.imageUrl[0].includes("http")
                         ? product.imageUrl[0]
@@ -118,7 +115,7 @@ function Market(props) {
                     style={{
                       padding: "0px 0px 0px 10px",
                       margin: "0px",
-                      fontSize: "smaller",
+                      fontSize: "smaller"
                     }}
                   >
                     {product.freeShipping && <span>Free Shipping</span>}
@@ -127,7 +124,7 @@ function Market(props) {
                     style={{
                       display: "flex",
                       padding: "0px 10px 0px 0px",
-                      margin: "0px",
+                      margin: "0px"
                     }}
                     className="product-heart"
                   >
@@ -142,11 +139,11 @@ function Market(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
-    hasMore: state.product.hasMore,
+    hasMore: state.product.hasMore
   };
 };
 export default connect(mapStateToProps, { fetchMoreProducts, hasMoreFalse })(

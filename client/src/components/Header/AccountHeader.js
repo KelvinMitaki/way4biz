@@ -16,7 +16,7 @@ class AccountHeader extends React.Component {
           <UserName />
           <Search id="account-header-search" />
           <Icons id="account-header-icons" />
-          <ProfileImage />
+          <ProfileImage id="header-profile-image" size={"40px"} />
         </div>
         <SecondaryHeader />
       </div>

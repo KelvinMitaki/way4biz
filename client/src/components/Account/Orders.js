@@ -43,7 +43,7 @@ export class Orders extends Component {
                       <div className="container-fluid">
                         {/* mapping here */}
                         {this.props.buyerOrders.length !== 0 &&
-                          this.props.buyerOrders.map((order) => (
+                          this.props.buyerOrders.map(order => (
                             <div
                               key={order._id}
                               className="row buyer-order-wrapper box-container"
@@ -65,7 +65,11 @@ export class Orders extends Component {
                                 </p>
                               </div>
                               <div className="col-6 col-lg-2">
-                                <p>Delivered</p>
+                                <p>
+                                  {(order.delivered && "Delivered") ||
+                                    (order.cancelled && "Cancelled") ||
+                                    (!order.delivered && "Pending")}
+                                </p>
                               </div>
                               <div className="col-6 col-lg-2">
                                 <p>
@@ -84,12 +88,12 @@ export class Orders extends Component {
                   </React.Fragment>
                 ) : (
                   <div
-                    className="box-container"
+                    className="box-container mt-3"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <IconContext.Provider
@@ -115,10 +119,10 @@ export class Orders extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     buyerOrders: state.product.buyerOrders,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);

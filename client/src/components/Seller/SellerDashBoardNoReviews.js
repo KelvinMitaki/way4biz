@@ -1,12 +1,16 @@
 import React from "react";
-
-import "./SellerDashBoardReviews.css";
+import { MdRateReview } from "react-icons/md";
+import "./SellerDashBoardNoReviews.css";
+import { IconContext } from "react-icons/lib";
 
 class SellerDashBoardNoReviews extends React.Component {
   render() {
     return (
       <div className="container seller-dashboard-no-reviews">
-        <p>Your products have no reviews yet.</p>
+        <IconContext.Provider value={{ className: "seller-no-reviews" }}>
+          <MdRateReview />
+        </IconContext.Provider>
+        <h4 className="mt-2">Your products have no reviews yet.</h4>
       </div>
     );
   }

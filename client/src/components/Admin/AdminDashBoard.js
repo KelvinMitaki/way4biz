@@ -15,7 +15,9 @@ import {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
+  fetchUnderReview,
+  countComplaints
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -35,6 +37,8 @@ class AdminDashBoard extends React.Component {
     this.props.fetchAdminOrders();
     this.props.fetchAdminPendingOrders();
     this.props.fetchWeeklySales();
+    this.props.fetchUnderReview();
+    this.props.countComplaints();
   }
 
   render() {
@@ -42,7 +46,9 @@ class AdminDashBoard extends React.Component {
       !this.props.newSellers ||
       !this.props.adminOrders ||
       !this.props.adminPendingOrders ||
-      !this.props.weeklySales
+      !this.props.weeklySales ||
+      !this.props.underReview ||
+      !this.props.complaintsCount
     )
       return <ScreenLoader />;
 
@@ -65,6 +71,19 @@ class AdminDashBoard extends React.Component {
     if (typeof pendingOrders === "object") {
       pendingOrders = 0;
     }
+    function kFormatter(num) {
+      return Math.abs(num) > 999
+        ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+        : Math.sign(num) * Math.abs(num);
+    }
+    const todaysComplaints =
+      this.props.complaintsCount && this.props.complaintsCount.todaysComplaints;
+    const totalComplaints =
+      this.props.complaintsCount && this.props.complaintsCount.totalComplaints;
+    const complaintsPercentage =
+      totalComplaints && todaysComplaints
+        ? (todaysComplaints / totalComplaints) * 100
+        : 0;
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
@@ -97,9 +116,10 @@ class AdminDashBoard extends React.Component {
                     <span>
                       {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
-                        this.props.stock
-                          .find(s => s.label === "Stock Out")
-                          .value.toLocaleString()}
+                        kFormatter(
+                          this.props.stock.find(s => s.label === "Stock Out")
+                            .value
+                        ).toLocaleString()}
                     </span>
                     <h3>
                       <BsArrowRepeat />
@@ -112,7 +132,13 @@ class AdminDashBoard extends React.Component {
                   style={{ borderRight: "1px solid #eee", height: "100%" }}
                 >
                   <div className="admin-big-number">
-                    <span>0</span>
+                    <span>
+                      {(
+                        this.props.adminOrders &&
+                        this.props.adminOrders.monthlyPrice &&
+                        kFormatter(this.props.adminOrders.monthlyPrice * 0.1)
+                      ).toLocaleString() || 0}
+                    </span>
                     <h3>
                       <FaMoneyBillAlt />
                     </h3>
@@ -121,7 +147,13 @@ class AdminDashBoard extends React.Component {
                 </div>
                 <div className="col-lg-3 admin-big-number-wrapper">
                   <div className="admin-big-number">
-                    <span>0</span>
+                    <span>
+                      {(
+                        this.props.adminOrders &&
+                        this.props.adminOrders.totalPrice &&
+                        kFormatter(this.props.adminOrders.totalPrice * 0.1)
+                      ).toLocaleString() || 0}
+                    </span>
                     <h3>
                       <AiFillPushpin />
                     </h3>
@@ -169,7 +201,8 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {todayOrders ? calc : 0}% change today
+                                  {todayOrders ? calc : 0}% change in the past
+                                  24 hours
                                 </p>
                               </div>
                             </Link>
@@ -180,7 +213,20 @@ class AdminDashBoard extends React.Component {
                               onClick={() => this.props.setPendingOrders()}
                             >
                               <div className="admin-individual-performance-upper-text">
-                                <p>Pending Orders</p>
+                                <p>
+                                  Pending Orders{" "}
+                                  {todaysPendingOrders && (
+                                    <span
+                                      className="badge"
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#f76b1a"
+                                      }}
+                                    >
+                                      {todaysPendingOrders}
+                                    </span>
+                                  )}
+                                </p>
                                 <p>
                                   {pendingOrders &&
                                     pendingOrders.toLocaleString()}
@@ -188,26 +234,47 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {calcPending}% change today
+                                  {calcPending}% change in the past 24 hours
                                 </p>
                               </div>
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <Link to="/admin/new-products">
                               <div className="admin-individual-performance-upper-text">
-                                <p>Transactions</p>
-                                <p>+50,000</p>
+                                <p>
+                                  New Products{" "}
+                                  {this.props.underReview.length !== 0 && (
+                                    <span
+                                      className="badge"
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#f76b1a"
+                                      }}
+                                    >
+                                      {this.props.underReview.length}
+                                    </span>
+                                  )}
+                                </p>
+                                <p>{this.props.adminOrders.totalProducts}</p>
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  1% change today
+                                  {this.props.adminOrders.totalProducts !== 0
+                                    ? (
+                                        (this.props.underReview.length /
+                                          this.props.adminOrders
+                                            .totalProducts) *
+                                        100
+                                      ).toFixed(2)
+                                    : 0}
+                                  % change
                                 </p>
                               </div>
                             </Link>
                           </div>
                           <div className="admin-inividual-performance-wrapper">
-                            <Link to="/">
+                            <div style={{ cursor: "hover" }}>
                               <div className="admin-individual-performance-upper-text">
                                 <p>Payments</p>
                                 <p>
@@ -218,12 +285,41 @@ class AdminDashBoard extends React.Component {
                               </div>
                               <div>
                                 <p style={{ fontSize: "12px" }}>
-                                  {Math.round(
+                                  {(
                                     (this.props.adminOrders.todayTotalPrice /
                                       this.props.adminOrders.totalPrice) *
-                                      100
+                                    100
+                                  ).toFixed(2)}
+                                  % change in the past 24 hours
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="admin-inividual-performance-wrapper">
+                            <Link to="/admin/complaints">
+                              <div className="admin-individual-performance-upper-text">
+                                <p>
+                                  Complaints{" "}
+                                  {todaysComplaints && todaysComplaints !== 0 && (
+                                    <span
+                                      className="badge"
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#f76b1a"
+                                      }}
+                                    >
+                                      {todaysComplaints}
+                                    </span>
                                   )}
-                                  % change today
+                                </p>
+                                <p>{totalComplaints}</p>
+                              </div>
+                              <div>
+                                <p style={{ fontSize: "12px" }}>
+                                  {complaintsPercentage === 100
+                                    ? complaintsPercentage
+                                    : complaintsPercentage.toFixed(2)}
+                                  % change in the past 24 hours
                                 </p>
                               </div>
                             </Link>
@@ -242,12 +338,52 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              {/* <div className="row admin-dashboard-bottom">
-                <h3>Sales Monitoring</h3>
-                <div className="dummy-content">
-                  The quick brown fox jumped over the lazy dog
+              <div className="row admin-dashboard-bottom">
+                <div className="col-lg-6">
+                  <h5 style={{ textAlign: "center" }}>
+                    Latest Rejected Products
+                  </h5>
+                  <div className="rejected-product">
+                    <p>
+                      The quick brown fox jumped over the lazy dog The quick
+                      brown fox jumped over the lazy dog
+                    </p>
+                    {/* <p>
+                      <Link to="/">
+                        The quick brown fox jumped over the lazy dog The quick
+                        brown fox jumped over the lazy dog
+                      </Link>
+                    </p> */}
+                  </div>
+                  <div className="rejected-product">
+                    <p>
+                      The quick brown fox jumped over the lazy dog The quick
+                      brown fox jumped over the lazy dog
+                    </p>
+                    {/* <p>
+                      <Link to="/">
+                        The quick brown fox jumped over the lazy dog The quick
+                        brown fox jumped over the lazy dog
+                      </Link>
+                    </p> */}
+                  </div>
+                  <div className="rejected-product">
+                    <p>
+                      The quick brown fox jumped over the lazy dog The quick
+                      brown fox jumped over the lazy dog
+                    </p>
+                    {/* <p>
+                      <Link to="/">
+                        The quick brown fox jumped over the lazy dog The quick
+                        brown fox jumped over the lazy dog
+                      </Link>
+                    </p> */}
+                  </div>
+                  <div className="all-rejects">
+                    <Link to="/admin/rejects">View All</Link>
+                  </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -261,6 +397,8 @@ const mapStateToProps = state => {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
+    complaintsCount: state.product.complaintsCount,
+    underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
     newSellers: state.sellerRegister.newSellers
   };
@@ -271,5 +409,7 @@ export default connect(mapStateToProps, {
   fetchAdminOrders,
   fetchAdminPendingOrders,
   fetchWeeklySales,
-  setPendingOrders
+  setPendingOrders,
+  fetchUnderReview,
+  countComplaints
 })(AdminDashBoard);

@@ -1,16 +1,17 @@
 import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
-import ProfileImage from "../Header/ProfileImage";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
 import { NavLink, Link } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdArrowDropDown } from "react-icons/md";
 import { connect } from "react-redux";
 import { fetchNewSellers } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import AdminProfile from "./AdminProfile";
+import { IconContext } from "react-icons";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
@@ -23,19 +24,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100,
-          },
-        ],
-      },
-    ],
+            num: 100
+          }
+        ]
+      }
+    ]
   };
   componentDidMount() {
     this.props.fetchNewSellers();
   }
-  handleClick = (e) => {
-    this.setState((prevState) => {
+  handleClick = e => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   };
@@ -105,15 +106,14 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
-                  this.props.newSellers.sellers.length.toLocaleString() !==
-                    0 && (
+                  this.props.newSellers.sellers.length !== 0 && (
                     <span
                       className="ml-1 badge"
                       style={{
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff",
+                        color: "#fff"
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -141,7 +141,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -170,14 +170,32 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </NavLink>
           </li>
         </ul>
-        <ProfileImage />
+        {/* <AdminProfile  /> */}
+        <div id="admin-profile-section">
+          <div className="d-flex align-items-center">
+            <AdminProfile id="admin-secondary-header-profile-image" />
+            <IconContext.Provider
+              value={{ className: "admin-secondary-header-dropdown-icon" }}
+            >
+              <MdArrowDropDown />
+            </IconContext.Provider>
+          </div>
+          <div className="admin-logout-section">
+            <p
+              className="p-2"
+              onClick={() => (window.location.href = "/api/logout")}
+            >
+              Logout
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    newSellers: state.sellerRegister.newSellers,
+    newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers })(

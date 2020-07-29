@@ -28,6 +28,7 @@
 
 textarea {
   resize: none;
+  border: 1px solid #d4d4d4;
 }
 
 .seller-input-field input:focus,

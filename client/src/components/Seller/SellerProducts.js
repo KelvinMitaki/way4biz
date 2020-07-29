@@ -11,12 +11,27 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerProducts extends React.Component {
-  state = {};
   componentDidMount() {
     this.props.fetchSellerProducts();
   }
 
   getTabs() {
+    const soldOut =
+      this.props.sellerProducts &&
+      this.props.sellerProducts.length !== 0 &&
+      this.props.sellerProducts.filter(pro => pro.stockQuantity < 1);
+    const onSite =
+      this.props.sellerProducts &&
+      this.props.sellerProducts.length !== 0 &&
+      this.props.sellerProducts.filter(pro => pro.onSite);
+    const underReview =
+      this.props.sellerProducts &&
+      this.props.sellerProducts.length !== 0 &&
+      this.props.sellerProducts.filter(pro => pro.underReview);
+    const rejected =
+      this.props.sellerProducts &&
+      this.props.sellerProducts.length !== 0 &&
+      this.props.sellerProducts.filter(pro => pro.rejected);
     let tabs = [
       {
         title: "Total Products",
@@ -27,10 +42,22 @@ class SellerProducts extends React.Component {
           />
         )
       },
-      { title: "Live On Site", data: <DashBoardProduct category="live" /> },
-      { title: "Under Review", data: <DashBoardProduct category="review" /> },
-      { title: "Rejected", data: <DashBoardProduct category="rejected" /> },
-      { title: "Sold Out", data: <DashBoardProduct category="sold-out" /> }
+      {
+        title: "Live On Site",
+        data: <DashBoardProduct products={onSite} category="live" />
+      },
+      {
+        title: "Under Review",
+        data: <DashBoardProduct products={underReview} category="review" />
+      },
+      {
+        title: "Rejected",
+        data: <DashBoardProduct products={rejected} category="rejected" />
+      },
+      {
+        title: "Sold Out",
+        data: <DashBoardProduct products={soldOut} category="sold-out" />
+      }
     ];
 
     return tabs.map((tab, index) => ({

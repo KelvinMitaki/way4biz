@@ -32,7 +32,7 @@ class AdminDashBoardSeller extends React.Component {
                   <Link to="/admin-sellers">
                     <BsArrowLeft />
                   </Link>
-                  <h3 className="ml-3">Seller ID</h3>
+                  <h3 className="ml-3">Seller Details</h3>
                 </div>
               </IconContext.Provider>
               <div className="admin-individual-seller-details">
@@ -45,14 +45,14 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>StoreName:</strong>
+                    <strong>StoreName: </strong>
                     {this.props.verifiedSeller.storeName}
                   </h5>
                 </div>
 
                 <div className="custom-row">
                   <h5>
-                    <strong>Date Joined:</strong>
+                    <strong>Date Joined: </strong>
                     {new Date(
                       this.props.verifiedSeller.createdAt
                     ).toLocaleString()}
@@ -60,51 +60,53 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>Phone:</strong>
-                    {this.props.verifiedSeller.storeName}
+                    <strong>Phone: </strong>
+                    {this.props.verifiedSeller.phoneNumber}
                   </h5>
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>Email:</strong>
-                    {this.props.verifiedSeller.storeName}
+                    <strong>Email: </strong>
+                    {this.props.verifiedSeller.email}
                   </h5>
                 </div>
-                <div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>City: </strong>
+                    {this.props.verifiedSeller.city}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Town: </strong>
+                    {this.props.verifiedSeller.town}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Address: </strong>
+                    {this.props.verifiedSeller.address}
+                  </h5>
+                </div>
+                <div className="custom-row">
                   <h5 className="mb-2">
                     <strong>Store Description</strong>
                   </h5>
-                  <p>
-                    The quic brown fox jumped over the lazy dog.The quic brown
-                    fox jumped over the lazy dog. The quic brown fox jumped over
-                    the lazy dog. The quic brown fox jumped over the lazy dog.
-                    The quic brown fox jumped over the lazy dog. The quic brown
-                    fox jumped over the lazy dog.The quic brown fox jumped over
-                    the lazy dog.The quic brown fox jumped over the lazy dog.The
-                    quic brown fox jumped over the lazy dog.The quic brown fox
-                    jumped over the lazy dog.The quic brown fox jumped over the
-                    lazy dog.The quic brown fox jumped over the lazy dog.The
-                    quic brown fox jumped over the lazy dog.The quic brown fox
-                    jumped over the lazy dog.
-                  </p>
+                  <p>{this.props.verifiedSeller.description}</p>
                 </div>
                 <div>
-                  <h5 className="mb-2">
+                  <h5 className="mb-2 ">
                     <strong>Seller Documents</strong>
                   </h5>
                   <div className="seller-images">
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
-                    <div>
-                      <img src="/1.jpg" />
-                    </div>
+                    {this.props.verifiedSeller.imageUrl.map((url, i) => (
+                      <div key={i}>
+                        <img
+                          src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                          alt={url}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

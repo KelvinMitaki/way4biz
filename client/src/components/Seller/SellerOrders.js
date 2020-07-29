@@ -15,8 +15,12 @@ class SellerOrders extends React.Component {
     this.props.fetchSellerOrders();
   }
   getTabs() {
-    const newOrders = this.props.sellerOrders.filter(order => !order.delivered);
-    const delivered = this.props.sellerOrders.filter(order => order.delivered);
+    const newOrders =
+      this.props.sellerOrders.length !== 0 &&
+      this.props.sellerOrders.filter(order => !order.delivered);
+    const delivered =
+      this.props.sellerOrders.length !== 0 &&
+      this.props.sellerOrders.filter(order => order.delivered);
     let tabs = [
       {
         title: "All",

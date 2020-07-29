@@ -9,23 +9,23 @@ import SellerDocuments from "./SellerDocuments";
 import {
   handleIncrementAction,
   handleDecrementAction,
-  handleCheckAction
+  handleCheckAction,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import FinishProfiling from "./FinishProfiling";
 
 class SellerProfiling extends React.Component {
-  handleCheck = val => {
+  handleCheck = (val) => {
     this.props.handleCheckAction(val);
   };
 
-  handleIncrement = e => {
+  handleIncrement = (e) => {
     e.preventDefault();
 
     this.props.handleIncrementAction();
   };
 
-  handleDecrement = e => {
+  handleDecrement = (e) => {
     e.preventDefault();
 
     this.props.handleDecrementAction();
@@ -75,7 +75,7 @@ class SellerProfiling extends React.Component {
             {this.setUpData()}
 
             <div className="nav-btns container my-3">
-              {this.props.open === 0 || this.props.open === 3 ? (
+              {this.props.open === 0 ? (
                 <div></div>
               ) : (
                 <button className="btn btn-md" onClick={this.handleDecrement}>
@@ -91,14 +91,14 @@ class SellerProfiling extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     open: state.sellerDetails.open,
-    proceed: state.sellerDetails.proceed
+    proceed: state.sellerDetails.proceed,
   };
 };
 export default connect(mapStateToProps, {
   handleIncrementAction,
   handleDecrementAction,
-  handleCheckAction
+  handleCheckAction,
 })(SellerProfiling);

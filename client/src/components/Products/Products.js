@@ -13,6 +13,7 @@ import {
   handleChangeAction,
   handleRadioButtonAction,
   handleCheckboxAction,
+  handleOkayButton,
 } from "../../redux/actions";
 import Rating from "../Product/Rating";
 import { IconContext } from "react-icons";
@@ -24,6 +25,7 @@ import { reduxForm } from "redux-form";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "./ProductsInput";
 import Image from "../Market/Image";
+import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 
 function Products(props) {
   const observer = useRef();
@@ -52,7 +54,8 @@ function Products(props) {
     props.handleCheckboxAction(
       { checked, name },
       props.match.params.category,
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const handleChange = (event) => {
@@ -65,7 +68,8 @@ function Products(props) {
     props.handleRadioButtonAction(
       props.match.params.category,
       { name, value },
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
@@ -77,7 +81,19 @@ function Products(props) {
           <div className="col-lg-3">
             <Categories id="products-categories" />
           </div>
-          <div className="col-lg-9" style={{ padding: "0px" }}>
+          <div
+            className="col-lg-9"
+            style={{ padding: "0px", position: "relative" }}
+          >
+            <div className="category-hover-popup-wrapper">
+              <CategoryHoverPopup
+                width={"50%"}
+                height={"80vh"}
+                position={"sticky"}
+                top={"110px"}
+              />
+            </div>
+
             <div className="products-top">
               <div className="container products-lg-top">
                 <ProductsInput />
@@ -126,13 +142,13 @@ function Products(props) {
                               justifyContent: "center",
                               fontSize: "12px",
                             }}
-                            onClick={() =>
-                              props.singleCategory(
+                            onClick={() => {
+                              console.log("products");
+                              props.handleOkayButton(
                                 props.match.params.category,
-                                props.filter,
                                 props.history
-                              )
-                            }
+                              );
+                            }}
                           >
                             OK
                           </button>
@@ -240,14 +256,14 @@ function Products(props) {
                           <div style={{ padding: "0px" }}>
                             <p
                               className="product-name"
-                              style={{ padding: "0px" }}
+                              style={{ padding: "0px 10px" }}
                             >
                               {product.name}
                             </p>
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px",
+                                padding: "0px 10px",
                               }}
                               className="price"
                             >
@@ -258,9 +274,9 @@ function Products(props) {
                         <div className="shipping-heart">
                           <div
                             style={{
-                              height: "10px",
-                              padding: "0px",
+                              padding: "0px 0px 0px 10px",
                               margin: "0px",
+                              fontSize: "smaller",
                             }}
                           >
                             {product.freeShipping && (
@@ -275,7 +291,7 @@ function Products(props) {
                           <div
                             style={{
                               display: "flex",
-                              padding: "0px 10px",
+                              padding: "0px 10px 0px 0px",
                               margin: "0px",
                             }}
                             className="mb-2"
@@ -296,8 +312,6 @@ function Products(props) {
                         className="product-link"
                       >
                         <Image
-                          height="200vh"
-                          width="150vw"
                           image={
                             product.imageUrl[0].includes("http")
                               ? product.imageUrl[0]
@@ -375,6 +389,7 @@ export default withRouter(
       handleRadioButtonAction,
       handleCheckboxAction,
       handleChangeAction,
+      handleOkayButton,
     })(Products)
   )
 );

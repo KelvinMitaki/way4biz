@@ -3,13 +3,21 @@ import { NavLink } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
-import { GoClippy } from "react-icons/go";
-import { AiOutlineTransaction } from "react-icons/ai";
+import { GoClippy, GoSettings } from "react-icons/go";
+import { GiCancel } from "react-icons/gi";
 
 import "./SellerDashBoardMenu.css";
+import ProfileImage from "../Header/ProfileImage";
+import { fetchRejects } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
+import { connect } from "react-redux";
 
 class SellerDashBoardMenu extends React.Component {
+  componentDidMount() {
+    this.props.fetchRejects();
+  }
   render() {
+    if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
@@ -53,21 +61,47 @@ class SellerDashBoardMenu extends React.Component {
               Reviews
             </li>
           </NavLink>
-          {/* <NavLink
+          <NavLink
             className="link"
             activeClassName="seller-menu-active"
-            to="/g"
+            to="/seller/products/rejected"
           >
             <li>
-              <AiOutlineTransaction className="mr-2" />
-              Transactions
+              <GiCancel className="mr-2" />
+              Rejects
+              {this.props.sellerRejects.length !== 0 && (
+                <span
+                  className="badge ml-2"
+                  style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                >
+                  {this.props.sellerRejects.length}
+                </span>
+              )}
             </li>
-          </NavLink> */}
+          </NavLink>
+          <NavLink
+            className="link"
+            activeClassName="seller-menu-active"
+            to="/seller/settings"
+          >
+            <li>
+              <GoSettings className="mr-2" />
+              Settings
+            </li>
+          </NavLink>
         </ul>
-        <div id="seller-menu-profile">Profile</div>
+        <div id="seller-menu-profile">
+          <ProfileImage id="seller-menu-user-icon" size={"70px"} />
+          <h6 className="ml-2">Hi {this.props.user.firstName}</h6>
+        </div>
       </div>
     );
   }
 }
-
-export default SellerDashBoardMenu;
+const mapStateToProps = state => {
+  return {
+    sellerRejects: state.product.sellerRejects,
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps, { fetchRejects })(SellerDashBoardMenu);

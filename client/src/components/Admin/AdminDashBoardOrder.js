@@ -34,9 +34,12 @@ class AdminDashBoardOrder extends React.Component {
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
                   <div className="d-flex align-items-center">
-                    <Link to="/admin-orders">
+                    <div
+                      onClick={() => this.props.history.goBack()}
+                      style={{ cursor: "pointer" }}
+                    >
                       <BsArrowLeft />
-                    </Link>
+                    </div>
                     <h3 className="ml-3">Order ID</h3>
                   </div>
                 </IconContext.Provider>
@@ -102,10 +105,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default withRouter(

@@ -5,7 +5,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {
@@ -17,28 +17,22 @@ class SellerOrderDetails extends React.Component {
           <div className="col-md-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mt-3">
-            <div className="container-fluid">
-              <div className="row">
-                <div>
-                  <IconContext.Provider
-                    value={{ className: "arrow-icon ml-3 my-2" }}
-                  >
-                    <div>
-                      <Link to="/seller-orders">
-                        <BsArrowLeft />
-                      </Link>
-                    </div>
-                  </IconContext.Provider>
-                </div>
-              </div>
-            </div>
-
+          <div className="col-lg-9">
             <div className="container-fluid seller-db-order-details-wrapper">
-              <div className="row">
-                <div className="col">
-                  <h3>Ordered Items</h3>
-                </div>
+              <div className="row align-items-center">
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => this.props.history.goBack()}
+                    >
+                      <BsArrowLeft />
+                    </div>
+                  </div>
+                </IconContext.Provider>
+                <h3 className="ml-2">Ordered Items</h3>
               </div>
               <div className="row y my-2">
                 <h6 className="col-lg-5">Item</h6>
@@ -110,4 +104,4 @@ const mapStateToProps = state => {
     sellerOrderDetails: state.detailsPersist.sellerOrderDetails
   };
 };
-export default connect(mapStateToProps)(SellerOrderDetails);
+export default withRouter(connect(mapStateToProps)(SellerOrderDetails));

@@ -1,8 +1,14 @@
 import React from "react";
 import "./Search.css";
-import { fetchProductsSearch, fetchProductReviews } from "../../redux/actions";
+import {
+  fetchProductsSearch,
+  fetchProductReviews,
+  handleSearchTerm,
+  searchTermProducts,
+  clearSearchTerm
+} from "../../redux/actions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineSearch } from "react-icons/ai";
 import reactSringReplace from "react-string-replace";
@@ -20,15 +26,15 @@ class Search extends React.Component {
     this.setState({
       typing: e.target.value
     });
-
+    this.props.handleSearchTerm(e.target.value);
     this.props.fetchProductsSearch(e.target.value);
   }
   render() {
     return (
       <div id={this.props.id} className="col">
-        {this.state.typing !== "" ? (
+        {this.props.searchedProducts.length !== 0 ? (
           <div
-            onClick={() => this.setState({ typing: "" })}
+            onClick={() => this.props.clearSearchTerm()}
             className="light-shed"
           ></div>
         ) : null}
@@ -38,10 +44,24 @@ class Search extends React.Component {
             onChange={this.handleChange}
             className="form-control header-input-search"
             placeholder="Apple iPhone"
-            value={this.state.typing}
+            value={this.props.typing}
           />
           <div className="input-group-append">
-            <button id="header-search-btn">
+            <button
+              disabled={this.props.typing && this.props.typing.trim() === ""}
+              id="header-search-btn"
+              onClick={() => {
+                this.props.searchTermProducts(
+                  this.props.filter,
+                  this.props.history,
+                  this.props.typing
+                );
+                this.props.history.push(
+                  `/products/search/${this.props.typing}`
+                );
+                this.props.clearSearchTerm();
+              }}
+            >
               <IconContext.Provider value={{ className: "icon mr-1 " }}>
                 <div className="icon-container">
                   <AiOutlineSearch />
@@ -51,7 +71,7 @@ class Search extends React.Component {
             </button>
           </div>
         </div>
-        {this.state.typing !== "" ? (
+        {this.props.typing !== "" ? (
           <div className="search-output tertiary-background">
             {this.props.searchedProducts.length > 0 &&
               this.props.searchedProducts.map(product => (
@@ -82,7 +102,7 @@ class Search extends React.Component {
                       <p className="search-product-name">
                         {reactSringReplace(
                           product.name,
-                          this.state.typing,
+                          this.props.typing,
                           (match, i) => {
                             return (
                               <span
@@ -111,12 +131,20 @@ class Search extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    searchedProducts: state.product.searchedProducts
+    searchedProducts: state.product.searchedProducts,
+    typing: state.cartReducer.typing,
+    filter: state.filter
   };
 };
-export default connect(mapStateToProps, {
-  fetchProductsSearch,
-  fetchProductReviews
-})(Search);
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchProductsSearch,
+    searchTermProducts,
+    fetchProductReviews,
+    handleSearchTerm,
+    clearSearchTerm
+  })(Search)
+);

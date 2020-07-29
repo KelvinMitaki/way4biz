@@ -6,6 +6,8 @@ import { Link, withRouter } from "react-router-dom";
 import { fetchAdminOrder } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { IconContext } from "react-icons";
+import { BsArrowLeft } from "react-icons/bs";
 
 class AdminDashBoardOrderItems extends React.Component {
   componentDidMount() {
@@ -22,14 +24,27 @@ class AdminDashBoardOrderItems extends React.Component {
         <AdminDashboardSecondaryHeader />
         <div className="container mt-4">
           <div className="box-container admin-order-items-wrapper">
-            <h3 style={{ textAlign: "center" }} className="my-2">
-              Ordered Items
-            </h3>
+            <div
+              className="d-flex align-items-center"
+              style={{ width: "80%", margin: "auto" }}
+            >
+              <IconContext.Provider
+                value={{ className: "arrow-icon ml-3 my-2" }}
+              >
+                <div>
+                  <div
+                    onClick={() => this.props.history.goBack()}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <BsArrowLeft />
+                  </div>
+                </div>
+              </IconContext.Provider>
+              <h3 className="ml-2">Ordered Items</h3>
+            </div>
+
             <div className="container">
               <div className="row y order-title">
-                {/* <div className="col-md-3">
-                  <h6>Buyer</h6>
-                </div> */}
                 <div className="col-md-3">
                   <h6 style={{ paddingLeft: "20%" }}>Item</h6>
                 </div>
@@ -43,7 +58,7 @@ class AdminDashBoardOrderItems extends React.Component {
               <div className="individual-order-item">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
-                  this.props.adminOrder["0"].product.map((p) => (
+                  this.props.adminOrder["0"].product.map(p => (
                     <div
                       key={p._id}
                       className="box-container row align-items-center"
@@ -76,7 +91,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
-                              (it) => it.product === p._id
+                              it => it.product === p._id
                             ).quantity
                           }
                         </p>
@@ -88,7 +103,11 @@ class AdminDashBoardOrderItems extends React.Component {
                           {this.props.adminOrder["0"].seller[0].lastName}
                         </p>
                         <p>
-                          <Link to="/seller/store">Visit Store</Link>
+                          <Link
+                            to={`/seller/store/${this.props.adminOrder["0"].seller[0]._id}`}
+                          >
+                            Visit Store
+                          </Link>
                         </p>
                       </div>
                     </div>
@@ -101,9 +120,9 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
+    adminOrder: state.product.adminOrder
   };
 };
 export default withRouter(

@@ -139,8 +139,90 @@ import {
   DELETE_SELLER_IMAGE,
   ACCEPT_SELLER_REQUEST,
   ACCEPT_SELLER_REQUEST_START,
-  ACCEPT_SELLER_REQUEST_STOP
+  ACCEPT_SELLER_REQUEST_STOP,
+  FETCH_UNDER_REVIEW_START,
+  FETCH_UNDER_REVIEW_STOP,
+  FETCH_UNDER_REVIEW,
+  FETCH_REVIEW_PRODUCT,
+  ACCEPT_PRODUCT_START,
+  ACCEPT_PRODUCT,
+  ACCEPT_PRODUCT_STOP,
+  REJECT_PRODUCT_START,
+  REJECT_PRODUCT,
+  REJECT_PRODUCT_STOP,
+  REJECT_MESSAGE,
+  REJECT_MESSAGE_START,
+  REJECT_MESSAGE_STOP,
+  FETCH_REJECTS,
+  FETCH_REJECTS_START,
+  FETCH_REJECTS_STOP,
+  DELETE_SELLER_PRODUCT,
+  DELETE_SELLER_PRODUCT_START,
+  DELETE_SELLER_PRODUCT_STOP,
+  FETCH_STORE_PRODUCTS_START,
+  FETCH_STORE_PRODUCTS_STOP,
+  FETCH_STORE_PRODUCTS,
+  HANDLE_SEARCH_TERM,
+  SEARCH_PRODUCTS,
+  SEARCH_PRODUCTS_START,
+  SEARCH_PRODUCTS_STOP,
+  MORE_SEARCH_PRODUCTS,
+  MORE_SEARCH_PRODUCTS_START,
+  MORE_SEARCH_PRODUCTS_STOP,
+  HAS_MORE_SEARCH_FALSE,
+  HANDLE_URL_SEARCH_TERM,
+  CLEAR_SEARCH_TERM,
+  NEW_COMPLAINT,
+  NEW_COMPLAINT_START,
+  NEW_COMPLAINT_STOP,
+  COUNT_COMPLAINTS,
+  COUNT_COMPLAINTS_START,
+  COUNT_COMPLAINTS_STOP,
+  FETCH_ALL_COMPLAINTS,
+  FETCH_COMPLAINT,
+  FETCH_COMPLAINT_STOP,
+  FETCH_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINTS,
+  FETCH_BUYER_COMPLAINT_START,
+  FETCH_BUYER_COMPLAINT,
+  FETCH_BUYER_COMPLAINT_STOP,
+  FETCH_REJECTED_PRODUCTS
 } from "./types";
+
+const authCheck = error => {
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    error.response.data.buyer
+  ) {
+    return (window.location.href = "/sign-in");
+  }
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    error.response.data.admin
+  ) {
+    return (window.location.href = "/");
+  }
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    error.response.data.profiling
+  ) {
+    return (window.location.href = "/seller/profiling");
+  }
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    error.response.data.seller
+  ) {
+    return (window.location.href = "/seller/sign-in");
+  }
+};
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
   try {
@@ -215,38 +297,7 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER_STOP });
   } catch (error) {
     dispatch({ type: FETCH_USER_FAILED });
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_USER_STOP });
   }
 };
@@ -281,38 +332,7 @@ export const editUser = (credentials, history) => async (
   } catch (error) {
     console.log(error);
     dispatch({ type: EDIT_USER_FAILED });
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: LOADING_STOP });
   }
 };
@@ -329,38 +349,7 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
 
     dispatch({ type: LOADING_STOP });
   }
@@ -396,38 +385,7 @@ export const updatePasswordLoggedIn = (
     history.push("/");
   } catch (error) {
     dispatch({ type: UPDATE_PASSWORD_LOGGED_IN_FAILED });
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: LOADING_STOP });
     console.log(error);
   }
@@ -478,38 +436,7 @@ export const fetchSeller = () => async dispatch => {
     }
     dispatch({ type: FETCH_SELLER, payload: res.data });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     console.log(error);
   }
 };
@@ -596,38 +523,7 @@ export const fetchSellerProducts = () => async (dispatch, getState) => {
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
     dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
     console.log(error.response);
   }
@@ -642,38 +538,7 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
@@ -700,38 +565,7 @@ export const storeImage = image => async dispatch => {
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     console.log(error.response.data);
     dispatch({ type: STORE_IMAGE_STOP });
   }
@@ -756,38 +590,7 @@ export const editProduct = (formvalues, productId, history) => async (
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
@@ -848,38 +651,7 @@ export const makeOrder = credentials => async (dispatch, getState) => {
     dispatch({ type: MAKE_ORDER });
     dispatch({ type: LOADING_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
@@ -892,38 +664,7 @@ export const fetchSellerOrders = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_ORDERS, payload: res.data });
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
     console.log(error.response);
   }
@@ -943,38 +684,7 @@ export const fetchBuyerOrders = () => async dispatch => {
     dispatch({ type: FETCH_BUYER_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
@@ -1001,38 +711,7 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
     dispatch({ type: FETCH_BUYER_ORDER_DETAILS, payload: res.data });
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
@@ -1046,6 +725,12 @@ export const hasMoreFalse = () => {
 export const hasMoreCategoryFalse = () => {
   return {
     type: HAS_MORE_CATEGORY_FALSE
+  };
+};
+
+export const hasMoreSearchFalse = () => {
+  return {
+    type: HAS_MORE_SEARCH_FALSE
   };
 };
 export const fetchProducts = () => async dispatch => {
@@ -1117,38 +802,7 @@ export const fetchPendingReviews = () => async dispatch => {
     dispatch({ type: FETCH_PENDING_REVIEWS, payload: res.data });
     dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_PENDING_REVIEWS_LOADING_STOP });
     console.log(error.response);
   }
@@ -1171,38 +825,7 @@ export const submitReview = (
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     history.push("/pending/reviews");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     console.log(error.response);
   }
@@ -1216,44 +839,33 @@ export const redirectOnFail = (
     dispatch({ type: REDIRECT_ON_FAIL_START });
     const res = await axios.get(`/api/url/add/review/${productId}/${orderId}`);
     if (!res.data.order) {
-      history.push("/pending/reviews");
+      history.push("/");
     }
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
+    authCheck(error);
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
+    history.push("/");
+  }
+};
+export const redirectOnNotDelivered = (
+  productId,
+  orderId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: REDIRECT_ON_FAIL_START });
+    const res = await axios.get(
+      `/api/redirect/on/not/delivered/${productId}/${orderId}`
+    );
+    if (!res.data.order) {
+      history.push("/");
     }
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
-    history.push("/pending/reviews");
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REDIRECT_ON_FAIL_STOP });
+    history.push("/");
   }
 };
 
@@ -1276,6 +888,7 @@ export const singleCategory = (category, filter, history) => async (
   try {
     const test = {};
     const sort = {};
+
     if (filter.rating) {
       test.rating = { $gte: 4 };
     }
@@ -1369,6 +982,131 @@ export const moreSingleCategoryProducts = (category, filter) => async (
     console.log(error.response);
   }
 };
+export const searchTermProducts = (
+  filter,
+  history,
+  searchTerm
+) => async dispatch => {
+  try {
+    const test = {};
+    const sort = {};
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
+    dispatch({ type: SEARCH_PRODUCTS_START });
+    const res = await axios.post(`/api/products/search/term`, {
+      itemsToSkip: 0,
+      searchTerm,
+      test,
+      sort
+    });
+    dispatch({ type: SEARCH_PRODUCTS, payload: res.data });
+    dispatch({ type: SEARCH_PRODUCTS_STOP });
+    // history.push(`/products/category/${category}`);
+  } catch (error) {
+    dispatch({ type: SEARCH_PRODUCTS_STOP });
+    console.log(error.response);
+    history.push("/");
+  }
+};
+export const moreSearchTermProducts = (filter, searchTerm) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const test = {};
+    const sort = {};
+    if (filter.rating) {
+      test.rating = { $gte: 4 };
+    }
+    if (filter.freeShipping) {
+      test.freeShipping = true;
+    }
+    if (filter.priceMin) {
+      test.price = { $gte: filter.priceMin };
+    }
+    if (filter.priceMax) {
+      test.price = { ...test.price, $lte: filter.priceMax };
+    }
+    if (filter.priceMin > filter.priceMax) {
+      test.price = { $gte: filter.priceMax, $lte: filter.priceMin };
+    }
+
+    if (filter.price === "highestPrice") {
+      sort.price = -1;
+    }
+    if (filter.price === "lowestPrice") {
+      sort.price = 1;
+    }
+
+    if (Object.keys(sort).length === 0) {
+      sort.price = 1;
+    }
+    // const itemsToSkip = getState().product.itemsToSkip;
+    const prodCount = getState().search.searchProductCount;
+    const singleProdLength = getState().search.searchProducts.length;
+
+    if (singleProdLength < prodCount) {
+      dispatch({ type: MORE_SEARCH_PRODUCTS_START });
+      const res = await axios.post(`/api/products/search/term`, {
+        itemsToSkip: singleProdLength,
+        test,
+        searchTerm,
+        sort
+      });
+      dispatch({ type: MORE_SEARCH_PRODUCTS, payload: res.data });
+    }
+    dispatch({ type: MORE_SEARCH_PRODUCTS_STOP });
+  } catch (error) {
+    dispatch({ type: MORE_SEARCH_PRODUCTS_STOP });
+    console.log(error);
+    console.log(error.response);
+  }
+};
+export const handleSearchTerm = term => {
+  return {
+    type: HANDLE_SEARCH_TERM,
+    payload: term
+  };
+};
+
+export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
+  dispatch(searchTermProducts(filter, history, term));
+  dispatch({
+    type: HANDLE_URL_SEARCH_TERM,
+    payload: term
+  });
+};
+
+export const clearSearchTerm = () => (dispatch, getState) => {
+  getState().search.searchItemsToSkip = 0;
+  getState().product.searchedProducts = [];
+  dispatch({
+    type: CLEAR_SEARCH_TERM
+  });
+};
 // export const fetchFilteredProducts = (filter, category) => async dispatch => {
 //   try {
 //     dispatch({ type: FILTERED_PRODUCTS_START });
@@ -1392,16 +1130,21 @@ export const moreSingleCategoryProducts = (category, filter) => async (
 //   }
 // };
 
-export const handleCheckboxAction = (event, category, history) => (
+export const handleCheckboxAction = (event, category, history, searchTerm) => (
   dispatch,
   getState
 ) => {
   dispatch({ type: HANDLE_CHECKBOX, payload: { event } });
   const filter = getState().filter;
-
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
-  dispatch(singleCategory(category, filter, history));
+
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
 };
 export const handleChangeAction = event => (dispatch, getState) => {
   // getState().product.itemsToSkip = 0;
@@ -1421,12 +1164,16 @@ export const revertFilter = (category, filter, history) => (
   dispatch({
     type: REVERT_FILTER
   });
-  dispatch(singleCategory(category, getState().filter, history));
+  if (category) {
+    dispatch(singleCategory(category, getState().filter, history));
+  }
 };
-export const handleRadioButtonAction = (category, event, history) => (
-  dispatch,
-  getState
-) => {
+export const handleRadioButtonAction = (
+  category,
+  event,
+  history,
+  searchTerm
+) => (dispatch, getState) => {
   getState().product.singleCategoryProducts = [];
   getState().product.itemsToSkip = 0;
 
@@ -1436,9 +1183,26 @@ export const handleRadioButtonAction = (category, event, history) => (
       event
     }
   });
-  dispatch(singleCategory(category, getState().filter, history));
-};
+  const filter = getState().filter;
 
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
+};
+export const handleOkayButton = (category, history) => (dispatch, getState) => {
+  const filter = getState().filter;
+  const searchTerm = getState().cartReducer.typing;
+
+  if (category) {
+    return dispatch(singleCategory(category, filter, history));
+  }
+  if (searchTerm) {
+    dispatch(searchTermProducts(filter, history, searchTerm));
+  }
+};
 export const fetchSellerReviews = () => async dispatch => {
   try {
     dispatch({ type: FETCH_SELLER_REVIEWS_START });
@@ -1446,38 +1210,7 @@ export const fetchSellerReviews = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_REVIEWS, payload: res.data });
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLER_REVIEWS_STOP });
     console.log(error.response);
   }
@@ -1500,38 +1233,7 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
     dispatch({ type: DELETE_IMAGE, payload: imageUrl });
     dispatch({ type: DELETE_IMAGE_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: DELETE_IMAGE_STOP });
     console.log(error.response.data);
   }
@@ -1546,38 +1248,7 @@ export const paymentPerDistance = (details, history) => async dispatch => {
     dispatch({ type: PAYMENT_DISTANCE_STOP });
     history.push("/checkout");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: PAYMENT_DISTANCE_STOP });
     console.log(error.response);
   }
@@ -1590,38 +1261,7 @@ export const getStock = () => async dispatch => {
     dispatch({ type: GET_STOCK, payload: res.data });
     dispatch({ type: GET_STOCK_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: GET_STOCK_STOP });
     console.log(error.response);
   }
@@ -1637,38 +1277,7 @@ export const fetchVerifiedSellers = () => async dispatch => {
     });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLERS_STOP });
     console.log(error.response);
   }
@@ -1681,38 +1290,7 @@ export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
     dispatch({ type: FETCH_VERIFIED_SELLER, payload: res.data });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLERS_STOP });
     history.push("/");
   }
@@ -1725,38 +1303,7 @@ export const fetchNewSellers = () => async dispatch => {
     dispatch({ type: FETCH_NEW_SELLERS, payload: res.data });
     dispatch({ type: FETCH_SELLERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLERS_STOP });
     console.log(error.response);
   }
@@ -1768,38 +1315,7 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
     dispatch({ type: FETCH_NEW_SELLER, payload: res.data });
     dispatch({ type: FETCH_NEW_SELLERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     history.push("/");
     dispatch({ type: FETCH_NEW_SELLERS_STOP });
     console.log(error.response);
@@ -1813,38 +1329,7 @@ export const fetchAdminOrders = () => async dispatch => {
     dispatch({ type: FETCH_ADMIN_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
   }
 };
 
@@ -1855,38 +1340,7 @@ export const fetchAdminPendingOrders = () => async dispatch => {
     dispatch({ type: FETCH_ADMIN_PENDING_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
@@ -1919,38 +1373,7 @@ export const fetchAllOrders = filter => async dispatch => {
     dispatch({ type: FETCH_ALL_ORDERS, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
@@ -1998,38 +1421,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
@@ -2048,38 +1440,7 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
     dispatch({ type: FETCH_ADMIN_ORDER, payload: res.data });
     dispatch({ type: FETCH_ADMIN_ORDER_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     if (
       error &&
       error.response &&
@@ -2096,42 +1457,11 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
 export const fetchOrderById = orderId => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_ORDER_BY_ID_START });
-    const res = await axios.get(`/api/root/admin/order/${orderId}`);
+    const res = await axios.get(`/api/admin/fetch/order/by/id/${orderId}`);
     dispatch({ type: FETCH_ORDER_BY_ID, payload: res.data });
     dispatch({ type: FETCH_ORDER_BY_ID_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     if (
       error &&
       error.response &&
@@ -2152,38 +1482,7 @@ export const fetchWeeklySales = () => async dispatch => {
     dispatch({ type: FETCH_WEEKLY_SALES, payload: res.data });
     dispatch({ type: FETCH_WEEKLY_SALES_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_WEEKLY_SALES_STOP });
     console.log(error.response);
   }
@@ -2204,38 +1503,7 @@ export const addNewCategory = (category, history) => async dispatch => {
     dispatch({ type: ADD_NEW_CATEGORY_STOP });
     history.push("/admin-categories");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: ADD_NEW_CATEGORY_STOP });
     console.log(error.response);
   }
@@ -2247,38 +1515,7 @@ export const fetchAllAdminCategories = () => async dispatch => {
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES, payload: res.data });
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
     console.log(error.response);
   }
@@ -2290,38 +1527,7 @@ export const fetchAllSellerCategories = () => async dispatch => {
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES, payload: res.data });
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_ALL_ADMIN_CATEGORIES_STOP });
     console.log(error.response);
   }
@@ -2334,38 +1540,7 @@ export const fetchSingleCategory = (categoryId, history) => async dispatch => {
     dispatch({ type: FETCH_SINGLE_CATEGORY, payload: res.data });
     dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     if (
       error &&
       error.response &&
@@ -2393,38 +1568,7 @@ export const editCategory = (
     dispatch({ type: EDIT_CATEGORY_STOP });
     history.push("/admin-categories");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     if (
       error &&
       error.response &&
@@ -2479,38 +1623,7 @@ export const storeSellerImage = image => async (dispatch, getState) => {
     dispatch({ type: STORE_IMAGE_STOP });
     throw new Error("Error getting url");
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     console.log(error.response.data);
     dispatch({ type: STORE_IMAGE_STOP });
   }
@@ -2523,38 +1636,7 @@ export const fetchSellerNewOrdersCount = () => async dispatch => {
     dispatch({ type: FETCH_SELLER_NEW_ORDERS_COUNT, payload: res.data });
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: FETCH_SELLER_ORDERS_STOP });
   }
 };
@@ -2568,38 +1650,7 @@ export const deleteSellerImage = imageUrl => async dispatch => {
     dispatch({ type: DELETE_SELLER_IMAGE, payload: imageUrl });
     dispatch({ type: DELETE_IMAGE_STOP });
   } catch (error) {
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
-    ) {
-      return (window.location.href = "/");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
+    authCheck(error);
     dispatch({ type: DELETE_IMAGE_STOP });
     console.log(error.response.data);
   }
@@ -2613,39 +1664,218 @@ export const acceptSellerRequest = (history, sellerId) => async dispatch => {
     dispatch({ type: ACCEPT_SELLER_REQUEST_STOP });
     history.push("/admin-new-sellers");
   } catch (error) {
+    authCheck(error);
+    dispatch({ type: ACCEPT_SELLER_REQUEST_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchUnderReview = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_UNDER_REVIEW_START });
+    const res = await axios.get("/api/root/admin/new/products");
+    dispatch({ type: FETCH_UNDER_REVIEW, payload: res.data });
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchReviewProduct = productId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_UNDER_REVIEW_START });
+    const res = await axios.get(`/api/root/admin/review/product/${productId}`);
+    dispatch({ type: FETCH_REVIEW_PRODUCT, payload: res.data });
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_UNDER_REVIEW_STOP });
+    console.log(error.response);
+  }
+};
+
+export const acceptProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: ACCEPT_PRODUCT_START });
+    await axios.post(`/api/root/admin/accept/product/${productId}`);
+    dispatch({ type: ACCEPT_PRODUCT });
+    await dispatch(fetchUnderReview());
+    history.push("/admin/new-products");
+    dispatch({ type: ACCEPT_PRODUCT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: ACCEPT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+export const rejectProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_PRODUCT_START });
+    await axios.post(`/api/root/admin/reject/product/${productId}`);
+    dispatch({ type: REJECT_PRODUCT });
+    history.push(`/admin/root/new-product/why-reject/${productId}`);
+    dispatch({ type: REJECT_PRODUCT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const rejectMessage = (
+  productId,
+  message,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: REJECT_MESSAGE_START });
+    await axios.post("/api/root/reject/message", { message, productId });
+    dispatch({ type: REJECT_MESSAGE });
+    history.push("/admin/new-products");
+    dispatch({ type: REJECT_MESSAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REJECT_MESSAGE_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRejects = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_REJECTS_START });
+    const res = await axios.get("/api/seller/product/rejects");
+    dispatch({ type: FETCH_REJECTS, payload: res.data });
+    dispatch({ type: FETCH_REJECTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_REJECTS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const deleteSellerProduct = (productId, history) => async dispatch => {
+  try {
+    dispatch({ type: DELETE_SELLER_PRODUCT_START });
+    await axios.delete(`/api/seller/product/delete/${productId}`);
+    dispatch({ type: DELETE_SELLER_PRODUCT });
+    await dispatch(fetchSellerProducts());
+    history.push("/seller-products");
+    dispatch({ type: DELETE_SELLER_PRODUCT_STOP });
+  } catch (error) {
+    authCheck(error);
+    history.push("/seller-products");
+    dispatch({ type: DELETE_SELLER_PRODUCT_STOP });
+    console.log(error.response);
+  }
+};
+export const fetchStoreProducts = sellerId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_STORE_PRODUCTS_START });
+    const res = await axios.get(`/api/fetch/store/products/${sellerId}`);
+    dispatch({ type: FETCH_STORE_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_STORE_PRODUCTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_STORE_PRODUCTS_STOP });
     if (
       error &&
       error.response &&
-      error.response.data &&
-      error.response.data.buyer
-    ) {
-      return (window.location.href = "/sign-in");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.admin
+      Object.keys(error.response.data).length === 0
     ) {
       return (window.location.href = "/");
     }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.profiling
-    ) {
-      return (window.location.href = "/seller/profiling");
-    }
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.seller
-    ) {
-      return (window.location.href = "/seller/sign-in");
-    }
-    dispatch({ type: ACCEPT_SELLER_REQUEST_STOP });
+    console.log(error.response);
+  }
+};
+
+export const newComplaint = (
+  body,
+  orderId,
+  productId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: NEW_COMPLAINT_START });
+    await axios.post(`/api/buyer/new/complaint/${orderId}/${productId}`, {
+      body
+    });
+    dispatch({ type: NEW_COMPLAINT });
+    history.push("/orders");
+    dispatch({ type: NEW_COMPLAINT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: NEW_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const countComplaints = () => async dispatch => {
+  try {
+    dispatch({ type: COUNT_COMPLAINTS_START });
+    const res = await axios.get("/api/complaints/count");
+    dispatch({ type: COUNT_COMPLAINTS, payload: res.data });
+    dispatch({ type: COUNT_COMPLAINTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: COUNT_COMPLAINTS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchAllComplaints = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/root/admin/complaints");
+    dispatch({ type: FETCH_ALL_COMPLAINTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchComplaint = complaintId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_COMPLAINT_START });
+    const res = await axios.get(`/api/root/admin/complaint/${complaintId}`);
+    dispatch({ type: FETCH_COMPLAINT, payload: res.data.complaint });
+    dispatch({ type: FETCH_COMPLAINT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchBuyerComplaints = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/buyer/complaints");
+    dispatch({ type: FETCH_BUYER_COMPLAINTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchBuyerComplaint = complaintId => async dispatch => {
+  try {
+    dispatch({ type: FETCH_BUYER_COMPLAINT_START });
+    const res = await axios.get(`/api/fetch/buyer/complaint/${complaintId}`);
+    dispatch({ type: FETCH_BUYER_COMPLAINT, payload: res.data.complaint });
+    dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
+    console.log(error.response);
+  }
+};
+
+export const fetchRejectedProducts = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/root/admin/fetch/rejected/products");
+    dispatch({ type: FETCH_REJECTED_PRODUCTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };

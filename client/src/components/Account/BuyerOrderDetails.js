@@ -10,6 +10,7 @@ import AccountHeader from "../Header/AccountHeader";
 import { connect } from "react-redux";
 import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -84,7 +85,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map((item) => {
+                      buyerOrderDetails.items.map(item => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -102,8 +103,8 @@ class BuyerOrderDetails extends Component {
 
                             <div className="row">
                               <div className="col-lg-6 d-flex align-items-center">
-                                <img
-                                  src={
+                                <Image
+                                  image={
                                     item.product.imageUrl[0].includes("http")
                                       ? item.product.imageUrl[0]
                                       : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl[0]} `
@@ -128,7 +129,7 @@ class BuyerOrderDetails extends Component {
                             </div>
                             <div
                               style={{ borderTop: "1px solid #eee" }}
-                              className="d-flex justify-content-end p-3"
+                              className="d-flex justify-content-between p-3"
                             >
                               <p>
                                 <Link
@@ -141,6 +142,16 @@ class BuyerOrderDetails extends Component {
                                   Buy Again
                                 </Link>
                               </p>
+                              {this.props.buyerOrderDetails.delivered && (
+                                <p>
+                                  <Link
+                                    className="file-complain-link"
+                                    to={`/buyer/file-complain/${buyerOrderDetails._id}/${item.product._id}`}
+                                  >
+                                    File Complaint
+                                  </Link>
+                                </p>
+                              )}
                             </div>
                           </div>
                         );
@@ -157,10 +168,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default withRouter(

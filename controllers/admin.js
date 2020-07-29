@@ -28,6 +28,8 @@ const Review = require("../models/Reviews");
 const Category = require("../models/Category");
 const isAdmin = require("../middlewares/is-admin");
 const auth = require("../middlewares/is-auth");
+const Reject = require("../models/Reject");
+const Complaint = require("../models/Complaint");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -843,7 +845,67 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/seller/product/rejects", auth, isSeller, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const rejects = await Reject.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      {
+        $unwind: "$seller"
+      },
+      {
+        $match: {
+          "seller._id": _id
+        }
+      },
+      {
+        $project: {
+          body: 1,
+          createdAt: 1,
+          name: "$product.name",
+          productId: "$product._id"
+        }
+      }
+    ]);
+    res.send(rejects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
+route.delete(
+  "/api/seller/product/delete/:productId",
+  auth,
+  isSeller,
+  async (req, res) => {
+    try {
+      const { _id } = req.session.user;
+      await Product.findOneAndDelete({
+        _id: req.params.productId,
+        seller: _id
+      });
+      res.send({ message: "Success :)" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 // SECURE THIS ROUTE LATER
 route.get("/api/root/admin/stock/report", auth, isAdmin, async (req, res) => {
   try {
@@ -942,13 +1004,37 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       { $project: { _id: 0, totalPrice: 1 } },
       { $group: { _id: null, todayTotalPrice: { $sum: "$totalPrice" } } }
     ]);
+    const monthlyPrice = await Order.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60 * 30
+            )
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          totalPrice: 1
+        }
+      },
+      { $group: { _id: null, monthlyPrice: { $sum: "$totalPrice" } } }
+    ]);
+    const totalProducts = await Product.find({}).estimatedDocumentCount();
     res.send({
       totalOrdersCount,
       todaysOrdersCount,
       totalPrice: totalPrice[0].totalPrice,
       todayTotalPrice: todayTotalPrice[0]
         ? todayTotalPrice[0].todayTotalPrice
-        : 0
+        : 0,
+      monthlyPrice:
+        monthlyPrice[0] && monthlyPrice[0].monthlyPrice
+          ? monthlyPrice[0].monthlyPrice
+          : 0,
+      totalProducts
     });
   } catch (error) {
     res.status(500).send(error);
@@ -1085,6 +1171,39 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   }
 });
 
+route.get(
+  "/api/admin/fetch/order/by/id/:orderId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { orderId } = req.params;
+      const order = await Order.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(orderId) } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "items.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "product.seller",
+            foreignField: "_id",
+            as: "seller"
+          }
+        }
+      ]);
+      res.send(order.length !== 0 ? order[0] : order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 route.get("/api/fetch/weekly/sales", auth, isAdmin, async (req, res) => {
   try {
     const items = await Order.aggregate([
@@ -1092,7 +1211,7 @@ route.get("/api/fetch/weekly/sales", auth, isAdmin, async (req, res) => {
         $match: {
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
-              Date.now() / 1000 - 24 * 60 * 60 * 7
+              Date.now() / 1000 - 24 * 60 * 60 * 6
             )
           }
         }
@@ -1193,7 +1312,6 @@ route.get(
     }
   }
 );
-
 route.post(
   "/api/accept/seller/request/:sellerId",
   auth,
@@ -1205,6 +1323,342 @@ route.post(
         isSeller: true
       });
       res.send(seller);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/root/admin/new/products", auth, isAdmin, async (req, res) => {
+  try {
+    const products = await Product.find({ underReview: true })
+      .populate("seller")
+      .exec();
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get(
+  "/api/root/admin/review/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.productId)
+        .populate("seller")
+        .exec();
+      res.send(product);
+    } catch (error) {
+      res.status(error).send(error);
+    }
+  }
+);
+// CHANGE UNDERREVIEW TO FALSE
+// CHANGE REJECTED TO TRUE OR FALSE
+// MODIFY PRODUCTS ON SITE
+route.post(
+  "/api/root/admin/accept/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const product = await Product.findById(productId);
+      product.underReview = false;
+      product.onSite = true;
+      await product.save();
+      res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/root/admin/reject/product/:productId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const product = await Product.findById(productId);
+      product.underReview = false;
+      product.rejected = true;
+      await product.save();
+      res.send(product);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.post(
+  "/api/root/reject/message",
+  auth,
+  isAdmin,
+  check("productId").not().isEmpty().withMessage("please enter a valid ID"),
+  check("message").not().isEmpty().withMessage("body must not be empty"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, message } = req.body;
+      const reject = new Reject({
+        product: productId,
+        body: message
+      });
+      await reject.save();
+      res.send(reject);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+// COMPLAINTS COUNT
+route.get("/api/complaints/count", auth, isAdmin, async (req, res) => {
+  try {
+    const todaysComplaints = await Complaint.aggregate([
+      {
+        $match: {
+          _id: {
+            $gt: mongoose.Types.ObjectId.createFromTime(
+              Date.now() / 1000 - 24 * 60 * 60
+            )
+          }
+        }
+      },
+      { $count: "todaysComplaints" }
+    ]);
+    const totalComplaints = await Complaint.find({}).estimatedDocumentCount();
+    res.send({
+      todaysComplaints: todaysComplaints[0]
+        ? todaysComplaints[0].todaysComplaints
+        : 0,
+      totalComplaints
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// ACTUAL COMPLAINTS
+route.get("/api/root/admin/complaints", auth, isAdmin, async (req, res) => {
+  try {
+    const complaints = await Complaint.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quantity",
+          imageUrl: "$product.imageUrl"
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
+    res.send(complaints);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get(
+  "/api/root/admin/complaint/:complaintId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const complaint = await Complaint.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(req.params.complaintId) } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "buyer",
+            foreignField: "_id",
+            as: "buyer"
+          }
+        },
+        {
+          $lookup: {
+            from: "orders",
+            localField: "order",
+            foreignField: "_id",
+            as: "order"
+          }
+        },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "buyerSeller",
+            foreignField: "_id",
+            as: "buyer"
+          }
+        },
+        { $unwind: "$order" },
+        {
+          $project: {
+            product: 1,
+            body: 1,
+            buyer: 1,
+            items: {
+              $filter: {
+                input: "$order.items",
+                as: "i",
+                cond: { $eq: ["$$i.product", "$product"] }
+              }
+            }
+          }
+        },
+        { $unwind: "$items" },
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        { $unwind: "$product" },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "product.seller",
+            foreignField: "_id",
+            as: "seller"
+          }
+        },
+        { $unwind: "$seller" },
+        { $unwind: "$buyer" },
+        {
+          $project: {
+            buyerFirstName: "$buyer.firstName",
+            buyerLastName: "$buyer.lastName",
+            buyerPhoneNumber: "$buyer.phoneNumber",
+            sellerFirstName: "$seller.firstName",
+            sellerLastName: "$seller.lastName",
+            sellerPhoneNumber: "$seller.phoneNumber",
+            sellerEmail: "$seller.email",
+            sellerId: "$seller._id",
+            productName: "$product.name",
+            productPrice: "$product.price",
+            quantityOrdered: "$items.quantity",
+            imageUrl: "$product.imageUrl",
+            body: 1
+          }
+        },
+        { $sort: { createdAt: -1 } }
+      ]);
+      res.send({ complaint: complaint[0] ? complaint[0] : {} });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get(
+  "/api/root/admin/fetch/rejected/products",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const rejectedProducts = await Reject.aggregate([
+        { $project: { product: 1, body: 1, createdAt: 1 } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        { $unwind: "$product" },
+        {
+          $lookup: {
+            from: "sellers",
+            localField: "product.seller",
+            foreignField: "_id",
+            as: "seller"
+          }
+        },
+        { $unwind: "$seller" },
+        {
+          $project: {
+            body: 1,
+            createdAt: 1,
+            imageUrl: "$product.imageUrl",
+            productName: "$product.name",
+            sellerFirstName: "$seller.firstName",
+            sellerLastName: "$seller.lastName",
+            sellerId: "$seller._id"
+          }
+        }
+      ]);
+      res.send(rejectedProducts);
     } catch (error) {
       res.status(500).send(error);
     }
