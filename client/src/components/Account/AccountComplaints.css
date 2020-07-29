@@ -25,3 +25,10 @@
   background-color: rgba(255, 192, 203, 0.5);
   border-radius: 5px;
 }
+
+.no-buyer-complaints {
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

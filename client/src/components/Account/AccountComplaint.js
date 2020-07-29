@@ -34,7 +34,13 @@ class AccountComplaint extends React.Component {
                 </div>
                 <div className="container">
                   <div className="box-container account-individual-complain">
-                    <p>
+                    <h5 className="my-1">
+                      <strong className="mr-1">Seller:</strong>Quavo
+                    </h5>
+                    <h6 className="my-1">
+                      <strong className="mr-1">Item:</strong>Saweerie
+                    </h6>
+                    <p className="my-1">
                       The quick brown fox jumped over the lazy dog. The quick
                       brown fox jumped over the lazy dog. The quick brown fox
                       jumped over the lazy dog. The quick brown fox jumped over

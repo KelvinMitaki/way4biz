@@ -25,6 +25,7 @@ class AccountComplaints extends React.Component {
                   <h3 className="ml-3">Complaints</h3>
                 </div>
                 <div className="container mt-3">
+                  {/* mapping here */}
                   <div className="box-container account-complain">
                     <p>
                       The quick brown fox jumped over the lazy dog. The quick
@@ -94,6 +95,10 @@ class AccountComplaints extends React.Component {
                         More
                       </Link>
                     </p>
+                  </div>
+                  {/* no fucking complaints */}
+                  <div className="no-buyer-complaints">
+                    <h4>No complaints filed yet.</h4>
                   </div>
                 </div>
               </div>
