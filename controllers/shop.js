@@ -725,6 +725,187 @@ route.get(
     }
   }
 );
+
+route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
+  try {
+    const complaints = await Complaint.aggregate([
+      { $match: { buyer: mongoose.Types.ObjectId(req.session.user._id) } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quantity",
+          imageUrl: "$product.imageUrl",
+          body: 1
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
+    res.send(complaints);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
+  try {
+    const complaint = await Complaint.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.complaintId),
+          buyer: mongoose.Types.ObjectId(req.session.user._id)
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyer",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order",
+          foreignField: "_id",
+          as: "order"
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "buyerSeller",
+          foreignField: "_id",
+          as: "buyer"
+        }
+      },
+      { $unwind: "$order" },
+      {
+        $project: {
+          product: 1,
+          body: 1,
+          buyer: 1,
+          items: {
+            $filter: {
+              input: "$order.items",
+              as: "i",
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
+      },
+      { $unwind: "$items" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      { $unwind: "$buyer" },
+      {
+        $project: {
+          buyerFirstName: "$buyer.firstName",
+          buyerLastName: "$buyer.lastName",
+          buyerPhoneNumber: "$buyer.phoneNumber",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerPhoneNumber: "$seller.phoneNumber",
+          sellerEmail: "$seller.email",
+          sellerId: "$seller._id",
+          productName: "$product.name",
+          productPrice: "$product.price",
+          quantityOrdered: "$items.quantity",
+          imageUrl: "$product.imageUrl",
+          body: 1
+        }
+      },
+      { $sort: { createdAt: -1 } }
+    ]);
+    res.send({ complaint: complaint[0] ? complaint[0] : {} });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
