@@ -18,7 +18,8 @@ class ProductsInput extends Component {
     this.props.handleCheckboxAction(
       { checked, name },
       this.props.match.params.category,
-      this.props.history
+      this.props.history,
+      this.props.match.params.searchTerm
     );
   };
   handleChange = event => {
@@ -31,7 +32,8 @@ class ProductsInput extends Component {
     this.props.handleRadioButtonAction(
       this.props.match.params.category,
       { name, value },
-      this.props.history
+      this.props.history,
+      this.props.match.params.searchTerm
     );
   };
   render() {

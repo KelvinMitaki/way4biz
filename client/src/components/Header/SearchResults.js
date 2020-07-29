@@ -65,7 +65,6 @@ function SearchResults(props) {
   );
   const handleCheckbox = event => {
     const { checked, name } = event.target;
-
     props.handleCheckboxAction(
       { checked, name },
       props.match.params.category,

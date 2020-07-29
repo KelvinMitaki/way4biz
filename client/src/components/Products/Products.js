@@ -53,7 +53,8 @@ function Products(props) {
     props.handleCheckboxAction(
       { checked, name },
       props.match.params.category,
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const handleChange = event => {
@@ -66,7 +67,8 @@ function Products(props) {
     props.handleRadioButtonAction(
       props.match.params.category,
       { name, value },
-      props.history
+      props.history,
+      props.match.params.searchTerm
     );
   };
   const { priceMax, priceMin, rating, freeShipping, price } = props.filter;
