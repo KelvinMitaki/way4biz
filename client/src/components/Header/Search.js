@@ -48,7 +48,7 @@ class Search extends React.Component {
           />
           <div className="input-group-append">
             <button
-              disabled={this.props.typing.trim() === ""}
+              disabled={this.props.typing && this.props.typing.trim() === ""}
               id="header-search-btn"
               onClick={() => {
                 this.props.searchTermProducts(
