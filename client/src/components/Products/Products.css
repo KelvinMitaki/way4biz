@@ -111,6 +111,14 @@
   background-color: #eaecee;
 }
 
+.category-hover-popup-wrapper {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
 @media screen and (max-width: 960px) {
   #products-categories {
     display: none;
@@ -122,6 +130,10 @@
   .products-sm-top {
     display: flex;
     padding: 0px;
+  }
+
+  .category-hover-popup-wrapper {
+    display: none;
   }
 }
 

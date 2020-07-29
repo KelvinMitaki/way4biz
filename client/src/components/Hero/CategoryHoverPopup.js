@@ -4,12 +4,21 @@ import "./CategoryHoverPopup.css";
 import { Link } from "react-router-dom";
 
 class CategoryHoverPopup extends React.Component {
-  handleClick = () => {
+  handleCleanArray = () => {
     // empty array
   };
   render() {
     return (
-      <div className="category-hover-popup">
+      <div
+        className="category-hover-popup"
+        style={{
+          width: this.props.width,
+          height: this.props.height,
+          position: this.props.position ? this.props.position : "absolute",
+          top: this.props.top ? this.props.top : 0,
+        }}
+        onMouseLeave={this.handleCleanArray}
+      >
         <div className="hovered-sub-categories-section-wrapper">
           {/* mapping here */}
           <div className="hovered-sub-categories-section ">
@@ -17,7 +26,7 @@ class CategoryHoverPopup extends React.Component {
             <ul>
               <li>
                 {/* on link click clean the array */}
-                <Link onClick={this.handleClick} to="/">
+                <Link onClick={this.handleCleanArray} to="/">
                   Test
                 </Link>
               </li>

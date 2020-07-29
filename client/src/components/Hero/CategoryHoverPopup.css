@@ -5,12 +5,12 @@
   left: 0px;
   bottom: 0px;
   right: 0px;
-  width: 102%;
-  height: 100%;
+  /* width: 102%;
+  height: 100%; */
   overflow-y: auto;
   background-color: #fff;
   margin-left: -15px;
-  display: none;
+  /* display: none; */
 }
 
 .hovered-sub-categories-section-wrapper {

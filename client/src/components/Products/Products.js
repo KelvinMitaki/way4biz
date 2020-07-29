@@ -25,6 +25,7 @@ import { reduxForm } from "redux-form";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "./ProductsInput";
 import Image from "../Market/Image";
+import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 
 function Products(props) {
   const observer = useRef();
@@ -80,7 +81,19 @@ function Products(props) {
           <div className="col-lg-3">
             <Categories id="products-categories" />
           </div>
-          <div className="col-lg-9" style={{ padding: "0px" }}>
+          <div
+            className="col-lg-9"
+            style={{ padding: "0px", position: "relative" }}
+          >
+            <div className="category-hover-popup-wrapper">
+              <CategoryHoverPopup
+                width={"50%"}
+                height={"80vh"}
+                position={"sticky"}
+                top={"110px"}
+              />
+            </div>
+
             <div className="products-top">
               <div className="container products-lg-top">
                 <ProductsInput />
