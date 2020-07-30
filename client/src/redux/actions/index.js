@@ -1874,7 +1874,7 @@ export const fetchBuyerComplaints = () => async dispatch => {
   }
 };
 
-export const fetchBuyerComplaint = complaintId => async dispatch => {
+export const fetchBuyerComplaint = (complaintId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_BUYER_COMPLAINT_START });
     const res = await axios.get(`/api/fetch/buyer/complaint/${complaintId}`);
@@ -1884,6 +1884,7 @@ export const fetchBuyerComplaint = complaintId => async dispatch => {
     authCheck(error);
     dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
     console.log(error.response);
+    history.push("/");
   }
 };
 

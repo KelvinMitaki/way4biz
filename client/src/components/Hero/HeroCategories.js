@@ -26,11 +26,14 @@ class HeroCategories extends React.Component {
     if (!this.props.categories) return <ScreenLoader />;
     return (
       <div id={this.props.id}>
-        <div className="category-head" onMouseOver={this.handleEmptyArray}>
+        <div
+          className="category-head"
+          onMouseOverCapture={this.handleEmptyArray}
+        >
           <h3>Categories</h3>
         </div>
         <ul className="categories">
-          <li onMouseOver={this.handleEmptyArray}>
+          <li onMouseOverCapture={this.handleEmptyArray}>
             <Link
               to="/categories"
               onClick={() => this.props.fetchAllCategories()}
@@ -50,8 +53,7 @@ class HeroCategories extends React.Component {
                   this.handleEmptyArray();
                   this.props.history.push(`/products/category/${category._id}`);
                 }}
-                onMouseOver={this.handleMouseOver}
-                onMouseOver={e => this.handleMouseOver(e, category._id)}
+                onMouseEnter={e => this.handleMouseOver(e, category._id)}
               >
                 <div>
                   <AiOutlineBars />

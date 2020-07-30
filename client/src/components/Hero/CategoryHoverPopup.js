@@ -1,11 +1,12 @@
 import React from "react";
-
 import "./CategoryHoverPopup.css";
 import { Link } from "react-router-dom";
+import { emptySubCategories } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class CategoryHoverPopup extends React.Component {
   handleCleanArray = () => {
-    // empty array
+    this.props.emptySubCategories();
   };
   render() {
     return (
@@ -15,7 +16,7 @@ class CategoryHoverPopup extends React.Component {
           width: this.props.width,
           height: this.props.height,
           position: this.props.position ? this.props.position : "absolute",
-          top: this.props.top ? this.props.top : 0,
+          top: this.props.top ? this.props.top : 0
         }}
         onMouseLeave={this.handleCleanArray}
       >
@@ -132,5 +133,9 @@ class CategoryHoverPopup extends React.Component {
     );
   }
 }
-
-export default CategoryHoverPopup;
+const mapStateToProps = state => {
+  return {};
+};
+export default connect(mapStateToProps, { emptySubCategories })(
+  CategoryHoverPopup
+);

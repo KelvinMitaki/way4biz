@@ -895,6 +895,7 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
           productPrice: "$product.price",
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
+          storeName: "$seller.storeName",
           body: 1
         }
       },
