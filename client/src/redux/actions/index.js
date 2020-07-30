@@ -629,6 +629,13 @@ export const fetchCategories = () => async dispatch => {
   }
 };
 
+export const fetchSubCategories = category => async dispatch => {
+  try {
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
 export const fetchAllCategories = () => async dispatch => {
   try {
     dispatch({ type: SINGLE_CATEGORY_START });

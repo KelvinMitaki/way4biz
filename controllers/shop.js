@@ -906,6 +906,23 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
   }
 });
 
+route.get("/api/products/find/subcategories/:category", async (req, res) => {
+  try {
+    const subcategories = await Product.aggregate([
+      {
+        $match: { category: req.params.category }
+      },
+      {
+        $project: { subcategory: 1 }
+      },
+      { $group: { _id: "$subcategory" } }
+    ]);
+    res.send(subcategories);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
