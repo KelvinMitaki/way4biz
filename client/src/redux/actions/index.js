@@ -186,7 +186,8 @@ import {
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_STOP,
-  FETCH_REJECTED_PRODUCTS
+  FETCH_REJECTED_PRODUCTS,
+  FETCH_SUB_CATEGORIES
 } from "./types";
 
 const authCheck = error => {
@@ -631,6 +632,8 @@ export const fetchCategories = () => async dispatch => {
 
 export const fetchSubCategories = category => async dispatch => {
   try {
+    const res = await axios.get(`/api/products/find/subcategories/${category}`);
+    dispatch({ type: FETCH_SUB_CATEGORIES, payload: res.data });
   } catch (error) {
     console.log(error.response);
   }

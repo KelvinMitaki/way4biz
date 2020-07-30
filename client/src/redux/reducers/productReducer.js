@@ -75,13 +75,15 @@ import {
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT_STOP,
-  FETCH_REJECTED_PRODUCTS
+  FETCH_REJECTED_PRODUCTS,
+  FETCH_SUB_CATEGORIES
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
   products: [],
   categories: null,
+  subcategories: null,
   singleCategoryProducts: [],
   buyerOrders: [],
   buyerOrderDetails: null,
@@ -374,6 +376,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, buyerComplaintLoading: false };
     case FETCH_REJECTED_PRODUCTS:
       return { ...state, rejectedProducts: action.payload };
+    case FETCH_SUB_CATEGORIES:
+      return { ...state, subcategories: action.payload };
     default:
       return state;
   }
