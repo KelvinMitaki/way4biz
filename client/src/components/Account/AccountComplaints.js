@@ -66,7 +66,7 @@ class AccountComplaints extends React.Component {
                         <div className="col-md-3">
                           <p>
                             <Link
-                              to="/"
+                              to="/complaint"
                               className="account-complaint-view-more"
                             >
                               View More
