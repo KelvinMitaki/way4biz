@@ -8,11 +8,17 @@ import SellerInput from "./SellerInput";
 import SellerTextArea from "../Account/SellerTextArea";
 import validator from "validator";
 import { connect } from "react-redux";
-import { updateSeller } from "../../redux/actions";
+import { updateSeller, fetchCurrentSeller } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerSettings extends React.Component {
+  componentDidMount() {
+    this.props.fetchCurrentSeller();
+  }
+
   render() {
+    if (this.props.fetchSellerLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -169,11 +175,14 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { updateSeller })(
-    reduxForm({ validate, form: "SellerSettings" })(SellerSettings)
+  connect(mapStateToProps, { updateSeller, fetchCurrentSeller })(
+    reduxForm({ validate, form: "SellerSettings", enableReinitialize: true })(
+      SellerSettings
+    )
   )
 );

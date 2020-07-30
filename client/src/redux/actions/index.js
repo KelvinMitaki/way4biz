@@ -189,7 +189,9 @@ import {
   FETCH_REJECTED_PRODUCTS,
   FETCH_SUB_CATEGORIES,
   EMPTY_SUB_CATEGORIES,
-  FETCH_LATEST_REJECTED_PRODUCTS
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_SELLER_START,
+  FETCH_SELLER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -302,6 +304,22 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER_FAILED });
     authCheck(error);
     dispatch({ type: FETCH_USER_STOP });
+  }
+};
+export const fetchCurrentSeller = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLER_START });
+    const res = await axios.get("/api/current_user");
+    console.log("Cpus: ", res.data.Cpus);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
+    dispatch({ type: FETCH_USER, payload: res.data });
+    dispatch({ type: FETCH_SELLER_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_USER_FAILED });
+    authCheck(error);
+    dispatch({ type: FETCH_SELLER_STOP });
   }
 };
 
