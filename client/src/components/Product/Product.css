@@ -18,6 +18,10 @@ hr {
 .stock-badge {
   border-radius: 3px;
   color: #fff;
+  display: flex;
+  align-items: center;
+  width: 80px;
+  justify-content: center;
 }
 
 .in-stock-badge {
