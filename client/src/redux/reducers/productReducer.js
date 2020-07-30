@@ -77,7 +77,8 @@ import {
   FETCH_BUYER_COMPLAINT_STOP,
   FETCH_REJECTED_PRODUCTS,
   FETCH_SUB_CATEGORIES,
-  EMPTY_SUB_CATEGORIES
+  EMPTY_SUB_CATEGORIES,
+  FETCH_LATEST_REJECTED_PRODUCTS
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -140,7 +141,8 @@ const INITIAL_STATE = {
   buyerComplaint: null,
   buyerComplaints: null,
   buyerComplaintLoading: false,
-  rejectedProducts: null
+  rejectedProducts: null,
+  latestRejectedProducts: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -381,6 +383,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, subCategories: action.payload };
     case EMPTY_SUB_CATEGORIES:
       return { ...state, subCategories: null };
+    case FETCH_LATEST_REJECTED_PRODUCTS:
+      return { ...state, latestRejectedProducts: action.payload };
     default:
       return state;
   }

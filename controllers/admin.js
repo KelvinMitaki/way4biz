@@ -1669,6 +1669,33 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
   try {
     const latestRejects = await Reject.aggregate([
       {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          imageUrl: "$product.imageUrl",
+          name: "$product.name",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          body: 1
+        }
+      },
+      {
         $sort: {
           createdAt: -1
         }

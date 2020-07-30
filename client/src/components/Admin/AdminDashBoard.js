@@ -17,19 +17,20 @@ import {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
-  countComplaints,
+  countComplaints
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import Image from "../Market/Image";
 
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
   componentDidMount() {
     this.props.getStock();
@@ -48,7 +49,8 @@ class AdminDashBoard extends React.Component {
       !this.props.adminPendingOrders ||
       !this.props.weeklySales ||
       !this.props.underReview ||
-      !this.props.complaintsCount
+      !this.props.complaintsCount ||
+      !this.props.latestRejectedProducts
     )
       return <ScreenLoader />;
 
@@ -114,10 +116,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find((s) => s.label === "Stock Out")
+                      {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find((s) => s.label === "Stock Out")
+                          this.props.stock.find(s => s.label === "Stock Out")
                             .value
                         ).toLocaleString()}
                     </span>
@@ -220,7 +222,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -249,7 +251,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -305,7 +307,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysComplaints}
@@ -343,63 +345,35 @@ class AdminDashBoard extends React.Component {
                   Latest Rejected Products
                 </h5>
                 {/* mapping here */}
-                <div className="rejected-product box-container">
-                  <div className="rejected-product-image-wrapper">
-                    <img className="rejected-product-image" src="/1.jpg" />
-                  </div>
-                  <div className="rejected-product-content">
-                    <h6 className="my-1">
-                      <strong>Name:</strong>Great Beer
-                    </h6>
-                    <h6 className="my-1">
-                      <strong>Owner:</strong>Kinuthia
-                    </h6>
-                    <p>
-                      The quick bron fox jumped over the lazy dog. The quick
-                      bron fox jumped over the lazy dog. The quick bron fox
-                      jumped over the lazy dog. The quick bron fox jumped over
-                      the lazy dog.
-                    </p>
-                  </div>
-                </div>
-                <div className="rejected-product box-container">
-                  <div className="rejected-product-image-wrapper">
-                    <img className="rejected-product-image" src="/1.jpg" />
-                  </div>
-                  <div className="rejected-product-content">
-                    <h6 className="my-1">
-                      <strong>Name:</strong>Great Beer
-                    </h6>
-                    <h6 className="my-1">
-                      <strong>Owner:</strong>Kinuthia
-                    </h6>
-                    <p>
-                      The quick bron fox jumped over the lazy dog. The quick
-                      bron fox jumped over the lazy dog. The quick bron fox
-                      jumped over the lazy dog. The quick bron fox jumped over
-                      the lazy dog.
-                    </p>
-                  </div>
-                </div>
-                <div className="rejected-product box-container">
-                  <div className="rejected-product-image-wrapper">
-                    <img className="rejected-product-image" src="/1.jpg" />
-                  </div>
-                  <div className="rejected-product-content">
-                    <h6 className="my-1">
-                      <strong>Name:</strong>Great Beer
-                    </h6>
-                    <h6 className="my-1">
-                      <strong>Owner:</strong>Kinuthia
-                    </h6>
-                    <p>
-                      The quick bron fox jumped over the lazy dog. The quick
-                      bron fox jumped over the lazy dog. The quick bron fox
-                      jumped over the lazy dog. The quick bron fox jumped over
-                      the lazy dog.
-                    </p>
-                  </div>
-                </div>
+                {this.props.latestRejectedProducts.length !== 0 &&
+                  this.props.latestRejectedProducts.map(p => (
+                    <div key={p._id} className="rejected-product box-container">
+                      <div className="rejected-product-image-wrapper">
+                        <Image
+                          width="80%"
+                          style={{ margin: "auto" }}
+                          image={
+                            p.imageUrl.includes("http")
+                              ? p.imageUrl
+                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl} `
+                          }
+                          alt={p.imageUrl}
+                        />
+                      </div>
+                      <div className="rejected-product-content">
+                        <h6 className="my-1">
+                          <strong>Name:</strong>
+                          {p.name}
+                        </h6>
+                        <h6 className="my-1">
+                          <strong>Owner:</strong>
+                          {p.sellerFirstName} {p.sellerLastName}
+                        </h6>
+                        <p>{p.body}</p>
+                      </div>
+                    </div>
+                  ))}
+
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
@@ -412,15 +386,16 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
     complaintsCount: state.product.complaintsCount,
+    latestRejectedProducts: state.product.latestRejectedProducts,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers,
+    newSellers: state.sellerRegister.newSellers
   };
 };
 export default connect(mapStateToProps, {
@@ -431,5 +406,5 @@ export default connect(mapStateToProps, {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
-  countComplaints,
+  countComplaints
 })(AdminDashBoard);
