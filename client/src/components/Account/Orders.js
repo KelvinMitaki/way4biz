@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AccountMenu from "./AccountMenu";
 import { Link } from "react-router-dom";
-import "./Order.css";
+import "./Orders.css";
 
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -43,7 +43,7 @@ export class Orders extends Component {
                       <div className="container-fluid">
                         {/* mapping here */}
                         {this.props.buyerOrders.length !== 0 &&
-                          this.props.buyerOrders.map(order => (
+                          this.props.buyerOrders.map((order) => (
                             <div
                               key={order._id}
                               className="row buyer-order-wrapper box-container"
@@ -88,12 +88,12 @@ export class Orders extends Component {
                   </React.Fragment>
                 ) : (
                   <div
-                    className="box-container mt-3"
+                    className="mt-3"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <IconContext.Provider
@@ -119,10 +119,10 @@ export class Orders extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerOrders: state.product.buyerOrders,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default connect(mapStateToProps, { fetchBuyerOrders })(Orders);

@@ -1,3 +1,9 @@
+.orders-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .buyer-order-wrapper {
   display: flex;
   align-items: center;

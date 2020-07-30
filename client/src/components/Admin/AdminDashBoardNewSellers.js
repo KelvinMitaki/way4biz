@@ -29,8 +29,11 @@ class AdminDashBoardNewSellers extends React.Component {
               <div className="row mt-3">
                 <div className="col">
                   <div className="row y">
-                    <div className="col-md-6">
-                      <h6 style={{ paddingLeft: "15px" }}>Seller Info</h6>
+                    <div className="col-md-3">
+                      <h6 style={{ paddingLeft: "15px" }}>Seller Name</h6>
+                    </div>
+                    <div className="col-md-3">
+                      <h6>Store Name</h6>
                     </div>
                     <div className="col-md-3">
                       <h6>Date Joined</h6>
@@ -46,17 +49,19 @@ class AdminDashBoardNewSellers extends React.Component {
                       key={seller._id}
                     >
                       <div className="row box-container">
-                        <div className="col-md-6">
-                          <div className="admin-seller-details">
-                            <p>
-                              <strong className="mr-2">Name:</strong>
-                              {seller.firstName} {seller.lastName}
-                            </p>
-                            <p>
-                              <strong className="mr-2">StoreName:</strong>
-                              {seller.storeName}
-                            </p>
-                          </div>
+                        <div className="col-md-3">
+                          {/* <div className="admin-seller-name"> */}
+                          <p>
+                            <strong className="mr-2 x">Name:</strong>
+                            {seller.firstName} {seller.lastName}
+                          </p>
+                          {/* </div> */}
+                        </div>
+                        <div className="col-md-3 d-flex align-items-center">
+                          <p>
+                            <strong className="mr-2 x">StoreName:</strong>
+                            {seller.storeName}
+                          </p>
                         </div>
                         <div className="col-md-3 d-flex align-items-center">
                           <p>
