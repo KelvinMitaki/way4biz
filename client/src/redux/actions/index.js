@@ -191,7 +191,9 @@ import {
   EMPTY_SUB_CATEGORIES,
   FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_SELLER_START,
-  FETCH_SELLER_STOP
+  FETCH_SELLER_STOP,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -801,12 +803,12 @@ export const hasMoreSearchFalse = () => {
 };
 export const fetchProducts = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_PRODUCTS_START });
     const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
