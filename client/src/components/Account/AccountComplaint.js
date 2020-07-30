@@ -30,7 +30,7 @@ class AccountComplaint extends React.Component {
         productPrice,
         quantityOrdered,
         imageUrl,
-        sellerId
+        sellerId,
       } = this.props.buyerComplaint;
 
       return (
@@ -43,7 +43,7 @@ class AccountComplaint extends React.Component {
                   <AccountMenu />
                 </div>
                 <div className="col-lg-8  box-container">
-                  <div className="container">
+                  {/* <div className="container">
                     <IconContext.Provider
                       value={{ className: "arrow-icon ml-3 my-2" }}
                     >
@@ -57,6 +57,27 @@ class AccountComplaint extends React.Component {
                         <h3 className="ml-3">Complaint</h3>
                       </div>
                     </IconContext.Provider>
+                  </div> */}
+
+                  <div className="d-flex align-items-center">
+                    <div style={{ flex: "1" }}>
+                      <IconContext.Provider
+                        value={{ className: "arrow-icon ml-3 my-2" }}
+                      >
+                        <div
+                          onClick={() => this.props.history.goBack()}
+                          className="d-flex align-items-center"
+                        >
+                          <div style={{ cursor: "pointer" }}>
+                            <BsArrowLeft />
+                          </div>
+                        </div>
+                      </IconContext.Provider>
+                    </div>
+
+                    <h3 className="ml-1" style={{ flex: "2" }}>
+                      Complaint
+                    </h3>
                   </div>
 
                   <div className="box-container p-2 account-complain">
@@ -147,10 +168,10 @@ class AccountComplaint extends React.Component {
   }
   // return <Redirect to="/" />;
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerComplaint: state.product.buyerComplaint,
-    buyerComplaintLoading: state.product.buyerComplaintLoading
+    buyerComplaintLoading: state.product.buyerComplaintLoading,
   };
 };
 export default withRouter(
