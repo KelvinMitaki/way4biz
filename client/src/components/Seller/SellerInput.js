@@ -8,10 +8,12 @@ const SellerInput = props => {
       </label>
 
       <input
+        readOnly={props.readOnly}
         className="form-control"
         type={props.type}
         {...props.input}
         id={props.htmlFor}
+        placeholder={props.placeholder}
       />
 
       <div style={{ color: "red" }}>

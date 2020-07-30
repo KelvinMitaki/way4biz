@@ -11,6 +11,7 @@ const SellerTextArea = props => {
         type={props.type}
         {...props.input}
         id={props.htmlFor}
+        placeholder={props.placeholder}
       ></textarea>
 
       <div style={{ color: "red" }}>

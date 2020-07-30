@@ -7,9 +7,11 @@ import { reduxForm, Field } from "redux-form";
 import SellerInput from "./SellerInput";
 import SellerTextArea from "../Account/SellerTextArea";
 import validator from "validator";
+import { connect } from "react-redux";
 
 class SellerSettings extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -22,7 +24,12 @@ class SellerSettings extends React.Component {
               Settings
             </h3> */}
             <div className="container">
-              <form className="form-group store-settings-form">
+              <form
+                className="form-group store-settings-form"
+                onSubmit={this.props.handleSubmit(formValues =>
+                  console.log(formValues)
+                )}
+              >
                 <h3
                   style={{ textAlign: "center", textDecoration: "underline" }}
                 >
@@ -45,14 +52,16 @@ class SellerSettings extends React.Component {
                   placeholder="Last Name"
                 />
                 <Field
+                  readOnly={true}
                   label="Phone"
-                  name="phone"
-                  htmlFor="phone"
+                  name="phoneNumber"
+                  htmlFor="phoneNumber"
                   component={SellerInput}
                   type="number"
                   placeholder="712345678"
                 />
                 <Field
+                  readOnly={true}
                   label="Email"
                   name="email"
                   htmlFor="email"
@@ -81,22 +90,31 @@ class SellerSettings extends React.Component {
                   type="text"
                   placeholder="Seller Description"
                 />
-              </form>
-              <button className="btn store-settings-btn mt-3">
-                {" "}
-                {this.props.loading && (
-                  <span
-                    className="spinner-grow spinner-grow-sm"
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                )}
-                {this.props.loading ? (
-                  <span> {"  "}Loading...</span>
-                ) : (
+                <button
+                  type="submit"
+                  disabled={
+                    !this.props.valid ||
+                    this.props.loading ||
+                    this.props.pristine
+                  }
+                  className="btn store-settings-btn mt-3"
+                >
+                  {" "}
+                  {this.props.loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.loading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Update</span>
+                  )}
                   <span>Update</span>
-                )}
-              </button>
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -151,4 +169,11 @@ const validate = formValues => {
 
   return errors;
 };
-export default reduxForm({ validate, form: "SellerSettings" })(SellerSettings);
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user
+  };
+};
+export default connect(mapStateToProps)(
+  reduxForm({ validate, form: "SellerSettings" })(SellerSettings)
+);
