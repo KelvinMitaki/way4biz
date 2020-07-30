@@ -139,7 +139,7 @@ class Product extends React.Component {
                   />
 
                   <div className="feature-imgs">
-                    <Slider {...carouselSettings} className="carousel">
+                    <Slider {...carouselSettings} className="product-carousel">
                       <div>
                         <img
                           className="carousel-img"

@@ -199,16 +199,16 @@ hr {
   color: #f76b1a !important;
 }
 
-.carousel {
+.product-carousel {
   max-width: 60% !important;
   margin: auto;
 }
 
-.carousel div {
+.product-carousel div {
   outline: none;
 }
 
-.carousel-img {
+.product-carousel-img {
   width: 60px;
 }
 
@@ -243,7 +243,7 @@ hr {
     padding: 0px;
   }
 
-  .carousel {
+  .product-carousel {
     max-width: 70% !important;
   }
 }
@@ -252,7 +252,7 @@ hr {
   .product-store .store-name {
     width: 300px !important;
   }
-  .carousel {
+  .product-carousel {
     max-width: 80% !important;
   }
 }
