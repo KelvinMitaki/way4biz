@@ -3,7 +3,11 @@ import React from "react";
 import "./HeroCategories.css";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { singleCategory, fetchAllCategories } from "../../redux/actions";
+import {
+  singleCategory,
+  fetchAllCategories,
+  fetchSubCategories
+} from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
@@ -15,8 +19,7 @@ class HeroCategories extends React.Component {
   };
 
   handleMouseOver = (e, category) => {
-    console.log(category);
-    // fetching here
+    this.props.fetchSubCategories(category);
   };
   render() {
     if (!this.props.categories) return <ScreenLoader />;
@@ -39,7 +42,7 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() => {
@@ -47,7 +50,7 @@ class HeroCategories extends React.Component {
                   this.props.history.push(`/products/category/${category._id}`);
                 }}
                 onMouseOver={this.handleMouseOver}
-                onMouseOver={(e) => this.handleMouseOver(e, category._id)}
+                onMouseOver={e => this.handleMouseOver(e, category._id)}
               >
                 <div>
                   <AiOutlineBars />
@@ -63,14 +66,17 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
-    filter: state.filter,
+    subcategories: state.product.subcategories,
+    filter: state.filter
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory, fetchAllCategories })(
-    HeroCategories
-  )
+  connect(mapStateToProps, {
+    singleCategory,
+    fetchAllCategories,
+    fetchSubCategories
+  })(HeroCategories)
 );

@@ -99,10 +99,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <RiDashboardLine /> <span className="ml-2">Dashboard</span>
             </NavLink>
           </li>
-          <li>
+          <li style={{ cursor: "pointer" }}>
             <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine />{" "}
-              <span className="ml-1">
+              <span style={{ cursor: "pointer" }} className="ml-1">
                 Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
