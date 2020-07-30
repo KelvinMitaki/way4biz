@@ -32,13 +32,50 @@ class AccountComplaints extends React.Component {
                 {this.props.buyerComplaints.length !== 0 ? (
                   <React.Fragment>
                     {" "}
-                    <div className="container">
+                    <div className="container mb-3">
                       <h3 className="mt-2" style={{ textAlign: "center" }}>
                         Complaints
                       </h3>
                     </div>
-                    <div className="container mt-3">
+                    <div className="container y">
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h6>Product</h6>
+                        </div>
+                        <div className="col-md-4">
+                          <h6>Seller</h6>
+                        </div>
+                        <div className="col-md-3"></div>
+                      </div>
+                    </div>
+                    <div className="container">
                       {/* mapping here */}
+                      <div className="row box-container account-complaint-wrapper">
+                        <div className="col-md-5">
+                          <p>
+                            <strong className="mr-2 x">Product:</strong>Great
+                            beer
+                          </p>
+                        </div>
+                        <div className="col-md-4">
+                          <p>
+                            <strong className="mr-2 x">Seller:</strong>
+                            <span>Desmond Oluoch Kehuaga </span>
+                          </p>
+                        </div>
+                        <div className="col-md-3">
+                          <p>
+                            <Link
+                              to="/"
+                              className="account-complaint-view-more"
+                            >
+                              View More
+                            </Link>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/*                       
                       {this.props.buyerComplaints.length !== 0 &&
                         this.props.buyerComplaints.map((comp) => (
                           <div
@@ -55,7 +92,7 @@ class AccountComplaints extends React.Component {
                               </Link>
                             </p>
                           </div>
-                        ))}
+                        ))} */}
                     </div>
                   </React.Fragment>
                 ) : (
