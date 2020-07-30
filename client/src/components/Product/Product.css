@@ -200,7 +200,7 @@ hr {
 }
 
 .carousel {
-  max-width: 80% !important;
+  max-width: 60% !important;
   margin: auto;
 }
 
@@ -242,10 +242,17 @@ hr {
     width: 100vw !important;
     padding: 0px;
   }
+
+  .carousel {
+    max-width: 70% !important;
+  }
 }
 
 @media screen and (max-width: 540px) {
   .product-store .store-name {
     width: 300px !important;
+  }
+  .carousel {
+    max-width: 80% !important;
   }
 }
