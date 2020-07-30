@@ -6,7 +6,6 @@ const SellerTextArea = props => {
       <label htmlFor={props.htmlFor}>
         {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
       </label>
-      <label htmlFor="store-description">Description</label>
       <textarea
         className="form-control"
         type={props.type}
