@@ -10,6 +10,7 @@ import { fetchStoreProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
+import Heart from "../Products/Heart";
 
 class Store extends Component {
   componentDidMount() {
@@ -83,7 +84,7 @@ class Store extends Component {
                           </p>
                         </div>
                       </Link>
-                      {pro.freeShipping && (
+                      {/* {pro.freeShipping && (
                         <div style={{ height: "10px", padding: "0px 10px" }}>
                           <p className="lead" style={{ fontSize: "smaller" }}>
                             Free Shipping
@@ -98,7 +99,32 @@ class Store extends Component {
                         }}
                         className="mb-2"
                       >
-                        {/* <Heart /> */}
+                        <Heart />
+                      </div> */}
+                      <div className="shipping-heart">
+                        <div
+                          style={{
+                            padding: "0px 0px 0px 10px",
+                            margin: "0px",
+                            fontSize: "smaller",
+                          }}
+                        >
+                          {pro.freeShipping && (
+                            <p className="lead" style={{ fontSize: "smaller" }}>
+                              Free Shipping
+                            </p>
+                          )}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            padding: "0px 10px 0px 0px",
+                            margin: "0px",
+                          }}
+                          className="mb-2"
+                        >
+                          <Heart product={pro} />
+                        </div>
                       </div>
                     </div>
                   ))}
