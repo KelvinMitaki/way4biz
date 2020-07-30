@@ -2,7 +2,7 @@ import React from "react";
 
 const SellerInput = (props) => {
   return (
-    <div className="form-group mt-3 seller-input-field">
+    <div className="form-group mt-3">
       <label htmlFor={props.htmlFor}>
         {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
       </label>

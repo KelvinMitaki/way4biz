@@ -101,7 +101,7 @@ class SellerSettings extends React.Component {
                     this.props.loading ||
                     this.props.pristine
                   }
-                  className="btn store-settings-btn mt-3"
+                  className="btn store-settings-btn"
                 >
                   {" "}
                   {this.props.loading && (
