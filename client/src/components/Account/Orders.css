@@ -1,8 +1,9 @@
-.orders-wrapper {
+/* .orders-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+  flex-direction: column;
+} */
 
 .buyer-order-wrapper {
   display: flex;

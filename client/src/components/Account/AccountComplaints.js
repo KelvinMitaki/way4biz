@@ -28,14 +28,7 @@ class AccountComplaints extends React.Component {
               <div className="col-lg-4">
                 <AccountMenu />
               </div>
-              <div
-                className="col-lg-8  box-container"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <div className="col-lg-8  box-container">
                 {this.props.buyerComplaints.length !== 0 ? (
                   <React.Fragment>
                     {" "}

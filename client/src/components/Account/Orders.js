@@ -94,6 +94,7 @@ export class Orders extends Component {
                       alignItems: "center",
                       justifyContent: "center",
                       flexDirection: "column",
+                      height: "100%",
                     }}
                   >
                     <IconContext.Provider
