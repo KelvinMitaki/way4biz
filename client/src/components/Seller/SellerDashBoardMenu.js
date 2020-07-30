@@ -18,6 +18,9 @@ class SellerDashBoardMenu extends React.Component {
   }
   render() {
     if (!this.props.sellerRejects) return <ScreenLoader />;
+    const newOrders =
+      this.props.sellerOrders.length !== 0 &&
+      this.props.sellerOrders.filter(order => !order.delivered);
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
@@ -49,6 +52,14 @@ class SellerDashBoardMenu extends React.Component {
             <li>
               <GoClippy className="mr-2" />
               Orders
+              {newOrders && newOrders.length !== 0 && (
+                <span
+                  className="badge ml-2"
+                  style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                >
+                  {newOrders.length}
+                </span>
+              )}
             </li>
           </NavLink>
           <NavLink
@@ -101,6 +112,7 @@ class SellerDashBoardMenu extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
+    sellerOrders: state.sellerRegister.sellerOrders,
     user: state.auth.user
   };
 };
