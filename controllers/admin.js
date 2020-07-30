@@ -512,7 +512,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
-          createdAt: { $first: "$createdAt" },
+          createdAt: { $first: "createdAt:-1" },
           productSellerData: {
             $push: "$productSellerData"
           }
@@ -1664,4 +1664,20 @@ route.get(
     }
   }
 );
+
+route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
+  try {
+    const latestRejects = await Reject.aggregate([
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      { $limit: 3 }
+    ]);
+    res.send(latestRejects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

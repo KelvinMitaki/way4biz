@@ -188,7 +188,8 @@ import {
   FETCH_BUYER_COMPLAINT_STOP,
   FETCH_REJECTED_PRODUCTS,
   FETCH_SUB_CATEGORIES,
-  EMPTY_SUB_CATEGORIES
+  EMPTY_SUB_CATEGORIES,
+  FETCH_LATEST_REJECTED_PRODUCTS
 } from "./types";
 
 const authCheck = error => {
@@ -1890,6 +1891,16 @@ export const fetchRejectedProducts = () => async dispatch => {
   try {
     const res = await axios.get("/api/root/admin/fetch/rejected/products");
     dispatch({ type: FETCH_REJECTED_PRODUCTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchLatestRejectedProducts = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/latest/rejected/products");
+    dispatch({ type: FETCH_LATEST_REJECTED_PRODUCTS, payload: res.data });
   } catch (error) {
     authCheck(error);
     console.log(error.response);
