@@ -9,10 +9,21 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addToCart, removeFromWishlist } from "../../redux/actions";
+import {
+  addToCart,
+  removeFromWishlist,
+  fetchWishlistProducts
+} from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 export class Wishlist extends Component {
+  componentDidMount() {
+    if (this.props.wishlist.length !== 0) {
+      this.props.fetchWishlistProducts();
+    }
+  }
   render() {
+    if (this.props.wishlistLoading) return <ScreenLoader />;
     return (
       <React.Fragment>
         <AccountHeader />
@@ -120,9 +131,12 @@ export class Wishlist extends Component {
 }
 const mapStateToProps = state => {
   return {
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
+    wishlistLoading: state.cartReducer.wishlistLoading
   };
 };
-export default connect(mapStateToProps, { addToCart, removeFromWishlist })(
-  Wishlist
-);
+export default connect(mapStateToProps, {
+  addToCart,
+  removeFromWishlist,
+  fetchWishlistProducts
+})(Wishlist);

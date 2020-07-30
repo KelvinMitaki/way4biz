@@ -193,7 +193,10 @@ import {
   FETCH_SELLER_START,
   FETCH_SELLER_STOP,
   FETCH_PRODUCTS_START,
-  FETCH_PRODUCTS_STOP
+  FETCH_PRODUCTS_STOP,
+  FETCH_WISHLIST_PRODUCTS,
+  FETCH_WISHLIST_PRODUCTS_START,
+  FETCH_WISHLIST_PRODUCTS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1955,6 +1958,19 @@ export const fetchLatestRejectedProducts = () => async dispatch => {
     dispatch({ type: FETCH_LATEST_REJECTED_PRODUCTS, payload: res.data });
   } catch (error) {
     authCheck(error);
+    console.log(error.response);
+  }
+};
+
+// MUST BE ITEMS IN WISHLIST
+export const fetchWishlistProducts = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
+    const res = await axios.get("/api/fetch/wishlits/products");
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
     console.log(error.response);
   }
 };

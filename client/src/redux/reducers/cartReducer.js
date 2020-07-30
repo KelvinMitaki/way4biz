@@ -7,13 +7,17 @@ import {
   REMOVE_FROM_WISHLIST,
   HANDLE_SEARCH_TERM,
   HANDLE_URL_SEARCH_TERM,
-  CLEAR_SEARCH_TERM
+  CLEAR_SEARCH_TERM,
+  FETCH_WISHLIST_PRODUCTS,
+  FETCH_WISHLIST_PRODUCTS_START,
+  FETCH_WISHLIST_PRODUCTS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
   cart: [],
   wishlist: [],
-  typing: ""
+  typing: "",
+  wishlistLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -78,6 +82,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, typing: action.payload };
     case CLEAR_SEARCH_TERM:
       return { ...state, typing: "" };
+    case FETCH_WISHLIST_PRODUCTS:
+      return { ...state, wishlist: action.payload };
+    case FETCH_WISHLIST_PRODUCTS_START:
+      return { ...state, wishlistLoading: true };
+    case FETCH_WISHLIST_PRODUCTS_STOP:
+      return { ...state, wishlistLoading: false };
     default:
       return state;
   }
