@@ -1,8 +1,8 @@
-.store-settings-form input,
-.store-settings-form textarea {
-  border: none;
-  border-bottom: 1px solid #d4d4d4;
-  border-radius: 0;
+.store-settings-form input:focus,
+.store-settings-form textarea:focus {
+  border: 1px solid #d4d4d4;
+  outline: none;
+  box-shadow: none;
 }
 
 .store-settings-form label {

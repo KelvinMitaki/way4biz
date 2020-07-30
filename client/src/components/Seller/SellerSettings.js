@@ -5,7 +5,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { reduxForm, Field } from "redux-form";
 import SellerInput from "./SellerInput";
-import SellerTextArea from "../Account/SellerTextArea";
+import SellerTextArea from "./SellerTextArea";
 import validator from "validator";
 import { connect } from "react-redux";
 import { updateSeller, fetchCurrentSeller } from "../../redux/actions";
@@ -30,7 +30,7 @@ class SellerSettings extends React.Component {
             <div className="container">
               <form
                 className="form-group store-settings-form"
-                onSubmit={this.props.handleSubmit(formValues =>
+                onSubmit={this.props.handleSubmit((formValues) =>
                   this.props.updateSeller(formValues, this.props.history)
                 )}
               >
@@ -126,7 +126,7 @@ class SellerSettings extends React.Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -172,11 +172,11 @@ const validate = formValues => {
 
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
     loading: state.auth.loading,
-    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
+    fetchSellerLoading: state.sellerRegister.fetchSellerLoading,
   };
 };
 export default withRouter(

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SellerTextArea = props => {
+const SellerTextArea = (props) => {
   return (
     <div className="form-group mt-3 seller-input-field">
       <label htmlFor={props.htmlFor}>
