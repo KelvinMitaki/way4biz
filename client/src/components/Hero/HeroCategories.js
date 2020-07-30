@@ -3,7 +3,12 @@ import React from "react";
 import "./HeroCategories.css";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { singleCategory, fetchAllCategories } from "../../redux/actions";
+import {
+  singleCategory,
+  fetchAllCategories,
+  fetchSubCategories,
+  emptySubCategories
+} from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
@@ -11,22 +16,24 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCategories extends React.Component {
   handleEmptyArray = () => {
-    // empty the array
+    this.props.emptySubCategories();
   };
 
   handleMouseOver = (e, category) => {
-    console.log(category);
-    // fetching here
+    this.props.fetchSubCategories(category);
   };
   render() {
     if (!this.props.categories) return <ScreenLoader />;
     return (
       <div id={this.props.id}>
-        <div className="category-head" onMouseOver={this.handleEmptyArray}>
+        <div
+          className="category-head"
+          onMouseOverCapture={this.handleEmptyArray}
+        >
           <h3>Categories</h3>
         </div>
         <ul className="categories">
-          <li onMouseOver={this.handleEmptyArray}>
+          <li onMouseOverCapture={this.handleEmptyArray}>
             <Link
               to="/categories"
               onClick={() => this.props.fetchAllCategories()}
@@ -39,15 +46,14 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() => {
                   this.handleEmptyArray();
                   this.props.history.push(`/products/category/${category._id}`);
                 }}
-                onMouseOver={this.handleMouseOver}
-                onMouseOver={(e) => this.handleMouseOver(e, category._id)}
+                onMouseEnter={e => this.handleMouseOver(e, category._id)}
               >
                 <div>
                   <AiOutlineBars />
@@ -63,14 +69,18 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
-    filter: state.filter,
+    subcategories: state.product.subcategories,
+    filter: state.filter
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory, fetchAllCategories })(
-    HeroCategories
-  )
+  connect(mapStateToProps, {
+    singleCategory,
+    fetchAllCategories,
+    fetchSubCategories,
+    emptySubCategories
+  })(HeroCategories)
 );

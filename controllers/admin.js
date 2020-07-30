@@ -160,6 +160,77 @@ route.post(
     }
   }
 );
+route.post(
+  "/api/seller/update/info",
+  isSeller,
+  check("firstName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage(
+      "Please enter your first name with a minimum of three characters"
+    ),
+  check("lastName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage(
+      "Please enter your last name with a minimum of three characters"
+    ),
+  check("email").trim().isEmail().withMessage("Please enter a valid email"),
+  check("description")
+    .trim()
+    .isLength({ min: 20 })
+    .withMessage("Please enter a description with a minimum of 20 characters"),
+  check("storeName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("Please enter a store name with 3 or more characters"),
+  check("phoneNumber")
+    .isNumeric()
+    .withMessage("Please enter a valid phone number"),
+  check("city").trim().not().isEmpty().withMessage("Please enter a valid city"),
+  check("address")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid street address"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const {
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
+        description,
+        storeName,
+        city,
+        address
+      } = req.body;
+
+      const seller = await Seller.findByIdAndUpdate(req.session.user._id, {
+        email: email.toLowerCase(),
+        firstName,
+        lastName,
+        phoneNumber,
+        description,
+        storeName: storeName.toLowerCase(),
+        city,
+        address
+      });
+
+      await seller.save();
+
+      res.status(201).send({
+        message: "Updated Successfully"
+      });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   try {
@@ -512,7 +583,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
-          createdAt: { $first: "$createdAt" },
+          createdAt: { $first: "createdAt:-1" },
           productSellerData: {
             $push: "$productSellerData"
           }
@@ -1664,4 +1735,48 @@ route.get(
     }
   }
 );
+
+route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
+  try {
+    const latestRejects = await Reject.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "product.seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          imageUrl: "$product.imageUrl",
+          name: "$product.name",
+          sellerFirstName: "$seller.firstName",
+          sellerLastName: "$seller.lastName",
+          sellerId: "$seller._id",
+          body: 1
+        }
+      },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      { $limit: 3 }
+    ]);
+    res.send(latestRejects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

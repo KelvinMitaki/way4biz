@@ -50,30 +50,38 @@ class AccountComplaints extends React.Component {
                     </div>
                     <div className="container">
                       {/* mapping here */}
-                      <div className="row box-container account-complaint-wrapper">
-                        <div className="col-md-5">
-                          <p>
-                            <strong className="mr-2 x">Product:</strong>Great
-                            beer
-                          </p>
-                        </div>
-                        <div className="col-md-4">
-                          <p>
-                            <strong className="mr-2 x">Seller:</strong>
-                            <span>Desmond Oluoch Kehuaga </span>
-                          </p>
-                        </div>
-                        <div className="col-md-3">
-                          <p>
-                            <Link
-                              to="/complaint"
-                              className="account-complaint-view-more"
-                            >
-                              View More
-                            </Link>
-                          </p>
-                        </div>
-                      </div>
+                      {this.props.buyerComplaints.length !== 0 &&
+                        this.props.buyerComplaints.map(c => (
+                          <div
+                            key={c._id}
+                            className="row box-container account-complaint-wrapper"
+                          >
+                            <div className="col-md-5">
+                              <p>
+                                <strong className="mr-2 x">Product:</strong>
+                                {c.productName}
+                              </p>
+                            </div>
+                            <div className="col-md-4">
+                              <p>
+                                <strong className="mr-2 x">Seller:</strong>
+                                <span>
+                                  {c.sellerFirstName} {c.sellerLastName}{" "}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="col-md-3">
+                              <p>
+                                <Link
+                                  to={`/complaint/${c._id}`}
+                                  className="account-complaint-view-more"
+                                >
+                                  View More
+                                </Link>
+                              </p>
+                            </div>
+                          </div>
+                        ))}
 
                       {/*                       
                       {this.props.buyerComplaints.length !== 0 &&
@@ -113,9 +121,9 @@ class AccountComplaints extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    buyerComplaints: state.product.buyerComplaints,
+    buyerComplaints: state.product.buyerComplaints
   };
 };
 export default connect(mapStateToProps, { fetchBuyerComplaints })(

@@ -186,7 +186,12 @@ import {
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_STOP,
-  FETCH_REJECTED_PRODUCTS
+  FETCH_REJECTED_PRODUCTS,
+  FETCH_SUB_CATEGORIES,
+  EMPTY_SUB_CATEGORIES,
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_SELLER_START,
+  FETCH_SELLER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -301,6 +306,22 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER_STOP });
   }
 };
+export const fetchCurrentSeller = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLER_START });
+    const res = await axios.get("/api/current_user");
+    console.log("Cpus: ", res.data.Cpus);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
+    dispatch({ type: FETCH_USER, payload: res.data });
+    dispatch({ type: FETCH_SELLER_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_USER_FAILED });
+    authCheck(error);
+    dispatch({ type: FETCH_SELLER_STOP });
+  }
+};
 
 export const passwordReset = email => async dispatch => {
   try {
@@ -409,7 +430,13 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: LOADING_STOP });
       return;
     }
-    if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.keyPattern &&
+      Object.keys(error.response.data.keyPattern)[0] === "phoneNumber"
+    ) {
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: "That phone number already exists"
@@ -424,6 +451,31 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       type: REGISTER_SELLER_FAILED,
       payload: "That store name already exists"
     });
+    dispatch({ type: LOADING_STOP });
+  }
+};
+export const updateSeller = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post("/api/seller/update/info", credentials);
+    dispatch({ type: REGISTER_SELLER, payload: res.data });
+    history.push("/seller-dashboard");
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+    if (error.response.data.email) {
+      getState().form.SellerRegister.values.email = "";
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: error.response.data.email
+      });
+      dispatch({ type: LOADING_STOP });
+      return;
+    }
     dispatch({ type: LOADING_STOP });
   }
 };
@@ -627,6 +679,20 @@ export const fetchCategories = () => async dispatch => {
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
+};
+
+export const fetchSubCategories = category => async dispatch => {
+  try {
+    const res = await axios.get(`/api/products/find/subcategories/${category}`);
+    dispatch({ type: FETCH_SUB_CATEGORIES, payload: res.data });
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const emptySubCategories = () => {
+  return {
+    type: EMPTY_SUB_CATEGORIES
+  };
 };
 
 export const fetchAllCategories = () => async dispatch => {
@@ -1857,7 +1923,7 @@ export const fetchBuyerComplaints = () => async dispatch => {
   }
 };
 
-export const fetchBuyerComplaint = complaintId => async dispatch => {
+export const fetchBuyerComplaint = (complaintId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_BUYER_COMPLAINT_START });
     const res = await axios.get(`/api/fetch/buyer/complaint/${complaintId}`);
@@ -1867,6 +1933,7 @@ export const fetchBuyerComplaint = complaintId => async dispatch => {
     authCheck(error);
     dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
     console.log(error.response);
+    history.push("/");
   }
 };
 
@@ -1874,6 +1941,16 @@ export const fetchRejectedProducts = () => async dispatch => {
   try {
     const res = await axios.get("/api/root/admin/fetch/rejected/products");
     dispatch({ type: FETCH_REJECTED_PRODUCTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchLatestRejectedProducts = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/latest/rejected/products");
+    dispatch({ type: FETCH_LATEST_REJECTED_PRODUCTS, payload: res.data });
   } catch (error) {
     authCheck(error);
     console.log(error.response);

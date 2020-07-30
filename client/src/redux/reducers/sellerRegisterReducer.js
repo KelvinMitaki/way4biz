@@ -15,7 +15,9 @@ import {
   FETCH_NEW_SELLERS_START,
   FETCH_NEW_SELLERS_STOP,
   ACCEPT_SELLER_REQUEST_START,
-  ACCEPT_SELLER_REQUEST_STOP
+  ACCEPT_SELLER_REQUEST_STOP,
+  FETCH_SELLER_START,
+  FETCH_SELLER_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -32,7 +34,8 @@ const INITIAL_STATE = {
   newSellers: null,
   newSeller: null,
   newSellerLoading: false,
-  sellerRequestLoading: false
+  sellerRequestLoading: false,
+  fetchSellerLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -78,6 +81,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerRequestLoading: true };
     case ACCEPT_SELLER_REQUEST_STOP:
       return { ...state, sellerRequestLoading: false };
+    case FETCH_SELLER_START:
+      return { ...state, fetchSellerLoading: true };
+    case FETCH_SELLER_STOP:
+      return { ...state, fetchSellerLoading: false };
     default:
       return state;
   }
