@@ -3,6 +3,8 @@ import React from "react";
 import "./SellerSettings.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
+import { reduxForm, Field } from "redux-form";
+import SellerInput from "./SellerInput";
 
 class SellerSettings extends React.Component {
   render() {
@@ -35,6 +37,14 @@ class SellerSettings extends React.Component {
                 >
                   Store Details
                 </h3>
+                <Field
+                  label="test"
+                  name="firstName"
+                  htmlFor="firstName"
+                  component={SellerInput}
+                  type="text"
+                  placeholder="Your Name"
+                />
                 <label htmlFor="store-name">Store Name</label>
                 <input className="form-control" id="store-name" type="text" />
                 <label htmlFor="store-description">Description</label>
@@ -53,4 +63,4 @@ class SellerSettings extends React.Component {
   }
 }
 
-export default SellerSettings;
+export default reduxForm({ form: "SellerSettings" })(SellerSettings);
