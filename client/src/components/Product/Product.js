@@ -14,23 +14,26 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts
+  fetchRelatedProducts,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+// import OwlCarousel from "react-owl-carousel";
+// import "owl.carousel/dist/assets/owl.carousel.css";
+// import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "../Market/Image";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
-      clicked: false
+      clicked: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -59,9 +62,9 @@ class Product extends React.Component {
   }
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
     const { product, addToCart } = this.props;
@@ -70,9 +73,9 @@ class Product extends React.Component {
 
   handleCloseModal(e) {
     e.preventDefault();
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        modalShow: !prevState.modalShow
+        modalShow: !prevState.modalShow,
       };
     });
   }
@@ -85,16 +88,16 @@ class Product extends React.Component {
         isFluidWidth: true,
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
-          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`
+          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
       },
       largeImage: {
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
           : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
         width: 1000,
-        height: 1000
+        height: 1000,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -102,13 +105,19 @@ class Product extends React.Component {
     const stockQuantity =
       this.props.product && this.props.product.stockQuantity;
     const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product && this.props.product._id
+      (item) => item._id === this.props.product && this.props.product._id
     );
     let itemInCart = false;
     itemInCart =
       this.props.product &&
       this.props.product._id &&
-      this.props.cart.find(item => item._id === this.props.product._id);
+      this.props.cart.find((item) => item._id === this.props.product._id);
+
+    const carouselSettings = {
+      dots: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+    };
     if (!this.props.product) return <ScreenLoader />;
     return (
       <div className="main">
@@ -130,17 +139,10 @@ class Product extends React.Component {
                   />
 
                   <div className="feature-imgs">
-                    <OwlCarousel
-                      loop={true}
-                      dots={true}
-                      items={4}
-                      className="product-owl-carousel"
-                      autoplay={true}
-                      autoplayTimeout={2000}
-                      controls={true}
-                    >
+                    <Slider {...carouselSettings} className="carousel">
                       <div>
                         <img
+                          className="carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -151,6 +153,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
+                          className="carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -161,6 +164,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
+                          className="carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -171,6 +175,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
+                          className="carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -181,6 +186,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
+                          className="carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -189,7 +195,7 @@ class Product extends React.Component {
                           alt={this.props.product.name}
                         />
                       </div>
-                    </OwlCarousel>
+                    </Slider>
                   </div>
                 </div>
                 <div className="col-lg-6 product-info pt-2">
@@ -258,7 +264,7 @@ class Product extends React.Component {
                           clickable={false}
                           value={Math.round(
                             this.props.productReviews
-                              .map(p => p.rating)
+                              .map((p) => p.rating)
                               .reduce((acc, cur) => acc + cur, 0) /
                               this.props.productReviews.length
                           )}
@@ -315,7 +321,7 @@ class Product extends React.Component {
                 {this.props.relatedProducts === 0 ? null : (
                   <div className="related-products-wrapper">
                     {this.props.relatedProducts.length !== 0 &&
-                      this.props.relatedProducts.map(item => (
+                      this.props.relatedProducts.map((item) => (
                         <Link key={item._id} to={`/product/${item._id}`}>
                           <div key={item._id} className="related-product">
                             <Image
@@ -382,7 +388,7 @@ const mapStateToProps = (state, ownProps) => {
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
-    productReviews: state.product.productReviews
+    productReviews: state.product.productReviews,
   };
 };
 export default withRouter(
@@ -391,6 +397,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts
+    fetchRelatedProducts,
   })(Product)
 );

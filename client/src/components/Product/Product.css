@@ -194,6 +194,24 @@ hr {
   font-size: smaller;
 }
 
+.slick-prev:before,
+.slick-next:before {
+  color: #f76b1a !important;
+}
+
+.carousel {
+  max-width: 80% !important;
+  margin: auto;
+}
+
+.carousel div {
+  outline: none;
+}
+
+.carousel-img {
+  width: 60px;
+}
+
 @media screen and (max-width: 960px) {
   .product-wrapper {
     padding: 0;
