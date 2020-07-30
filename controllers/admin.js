@@ -160,6 +160,76 @@ route.post(
     }
   }
 );
+route.post(
+  "/api/seller/update/info",
+  check("firstName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage(
+      "Please enter your first name with a minimum of three characters"
+    ),
+  check("lastName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage(
+      "Please enter your last name with a minimum of three characters"
+    ),
+  check("email").trim().isEmail().withMessage("Please enter a valid email"),
+  check("description")
+    .trim()
+    .isLength({ min: 20 })
+    .withMessage("Please enter a description with a minimum of 20 characters"),
+  check("storeName")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("Please enter a store name with 3 or more characters"),
+  check("phoneNumber")
+    .isNumeric()
+    .withMessage("Please enter a valid phone number"),
+  check("city").trim().not().isEmpty().withMessage("Please enter a valid city"),
+  check("address")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid street address"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const {
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
+        description,
+        storeName,
+        city,
+        address
+      } = req.body;
+
+      const seller = Seller.findByIdAndUpdate(req.params.user._id, {
+        email: email.toLowerCase(),
+        firstName,
+        lastName,
+        phoneNumber,
+        description,
+        storeName: storeName.toLowerCase(),
+        city,
+        address
+      });
+
+      await seller.save();
+
+      res.status(201).send({
+        message: "Updated Successfully"
+      });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
   try {
