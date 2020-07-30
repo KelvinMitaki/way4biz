@@ -187,7 +187,8 @@ import {
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_STOP,
   FETCH_REJECTED_PRODUCTS,
-  FETCH_SUB_CATEGORIES
+  FETCH_SUB_CATEGORIES,
+  EMPTY_SUB_CATEGORIES
 } from "./types";
 
 const authCheck = error => {
@@ -637,6 +638,11 @@ export const fetchSubCategories = category => async dispatch => {
   } catch (error) {
     console.log(error.response);
   }
+};
+export const emptySubCategories = () => {
+  return {
+    type: EMPTY_SUB_CATEGORIES
+  };
 };
 
 export const fetchAllCategories = () => async dispatch => {

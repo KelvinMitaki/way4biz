@@ -6,7 +6,8 @@ import { Link, withRouter } from "react-router-dom";
 import {
   singleCategory,
   fetchAllCategories,
-  fetchSubCategories
+  fetchSubCategories,
+  emptySubCategories
 } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
@@ -15,7 +16,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class HeroCategories extends React.Component {
   handleEmptyArray = () => {
-    // empty the array
+    this.props.emptySubCategories();
   };
 
   handleMouseOver = (e, category) => {
@@ -77,6 +78,7 @@ export default withRouter(
   connect(mapStateToProps, {
     singleCategory,
     fetchAllCategories,
-    fetchSubCategories
+    fetchSubCategories,
+    emptySubCategories
   })(HeroCategories)
 );
