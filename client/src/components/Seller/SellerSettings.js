@@ -8,10 +8,11 @@ import SellerInput from "./SellerInput";
 import SellerTextArea from "../Account/SellerTextArea";
 import validator from "validator";
 import { connect } from "react-redux";
+import { updateSeller } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 class SellerSettings extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -20,14 +21,11 @@ class SellerSettings extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9 mx-auto py-3 box-container">
-            {/* <h3 style={{ textAlign: "center" }} className="my-2">
-              Settings
-            </h3> */}
             <div className="container">
               <form
                 className="form-group store-settings-form"
                 onSubmit={this.props.handleSubmit(formValues =>
-                  console.log(formValues)
+                  this.props.updateSeller(formValues, this.props.history)
                 )}
               >
                 <h3
@@ -112,7 +110,6 @@ class SellerSettings extends React.Component {
                   ) : (
                     <span>Update</span>
                   )}
-                  <span>Update</span>
                 </button>
               </form>
             </div>
@@ -171,9 +168,12 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
+    loading: state.auth.loading
   };
 };
-export default connect(mapStateToProps)(
-  reduxForm({ validate, form: "SellerSettings" })(SellerSettings)
+export default withRouter(
+  connect(mapStateToProps, { updateSeller })(
+    reduxForm({ validate, form: "SellerSettings" })(SellerSettings)
+  )
 );

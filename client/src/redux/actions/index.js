@@ -412,7 +412,13 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: LOADING_STOP });
       return;
     }
-    if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.keyPattern &&
+      Object.keys(error.response.data.keyPattern)[0] === "phoneNumber"
+    ) {
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: "That phone number already exists"
@@ -430,15 +436,19 @@ export const registerSeller = credentials => async (dispatch, getState) => {
     dispatch({ type: LOADING_STOP });
   }
 };
-export const updateSeller = credentials => async (dispatch, getState) => {
+export const updateSeller = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: LOADING_START });
-
     const res = await axios.post("/api/seller/update/info", credentials);
-
     dispatch({ type: REGISTER_SELLER, payload: res.data });
+    history.push("/seller-dashboard");
     dispatch({ type: LOADING_STOP });
   } catch (error) {
+    authCheck(error);
+    console.log(error.response);
     if (error.response.data.email) {
       getState().form.SellerRegister.values.email = "";
       dispatch({
@@ -448,21 +458,6 @@ export const updateSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: LOADING_STOP });
       return;
     }
-    if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
-      dispatch({
-        type: REGISTER_SELLER_FAILED,
-        payload: "That phone number already exists"
-      });
-      dispatch({ type: LOADING_STOP });
-      return;
-    }
-    getState().form.SellerRegister.values[
-      Object.keys(error.response.data.keyPattern)[0]
-    ] = "";
-    dispatch({
-      type: REGISTER_SELLER_FAILED,
-      payload: "That store name already exists"
-    });
     dispatch({ type: LOADING_STOP });
   }
 };

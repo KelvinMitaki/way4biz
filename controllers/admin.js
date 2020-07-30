@@ -162,6 +162,7 @@ route.post(
 );
 route.post(
   "/api/seller/update/info",
+  isSeller,
   check("firstName")
     .trim()
     .isLength({ min: 3 })
@@ -209,7 +210,7 @@ route.post(
         address
       } = req.body;
 
-      const seller = Seller.findByIdAndUpdate(req.params.user._id, {
+      const seller = await Seller.findByIdAndUpdate(req.session.user._id, {
         email: email.toLowerCase(),
         firstName,
         lastName,
