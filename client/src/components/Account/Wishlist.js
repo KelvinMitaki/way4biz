@@ -19,7 +19,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 export class Wishlist extends Component {
   componentDidMount() {
     if (this.props.wishlist.length !== 0) {
-      this.props.fetchWishlistProducts();
+      this.props.fetchWishlistProducts(this.props.wishlist.map(i => i._id));
     }
   }
   render() {
