@@ -20,7 +20,7 @@ class AdminDashBoardNewSellers extends React.Component {
         <DashBoardHeader />
         <SecondaryHeader />
         <div className="container box-container mt-4">
-          {this.props.newSellers.length !== 0 ? (
+          {this.props.newSellers.sellers.length !== 0 ? (
             <React.Fragment>
               {" "}
               <div className="col">

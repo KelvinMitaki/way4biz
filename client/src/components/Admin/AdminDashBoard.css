@@ -93,13 +93,44 @@
 }
 
 .admin-dashboard-bottom div {
-  padding: 15px 5px;
+  padding: 5px;
 }
 
-.rejected-product:hover {
-  background-color: #eee;
+.rejected-product {
+  display: flex;
+  border-left: 3px solid #f76b1a;
 }
 
+.rejected-product-image-wrapper {
+  flex: 1;
+}
+
+.rejected-product-image {
+  width: 100px;
+}
+
+.rejected-product-content {
+  flex: 8;
+}
+
+.rejected-product-content h5 {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rejected-product-content p {
+  width: 100%;
+  margin: auto;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+/* 
 .rejected-product p {
   color: #000;
   width: 100%;
@@ -119,16 +150,17 @@
 .rejected-product a:hover {
   text-decoration: none;
   color: #f76b1a;
-}
+} */
 
 .all-rejects {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px 0px;
 }
 
 .all-rejects a {
-  color: #000;
+  color: #f76b1a;
 }
 
 .all-rejects a:hover {

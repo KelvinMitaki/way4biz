@@ -338,51 +338,71 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              <div className="row admin-dashboard-bottom">
-                {/* <div className="col-lg-6"> */}
-                <h5 style={{ textAlign: "center" }}>
+              <div className="row admin-dashboard-bottom px-2">
+                <h5 style={{ textAlign: "center" }} className="my-2">
                   Latest Rejected Products
                 </h5>
-                <div className="rejected-product">
-                  <p>
-                    The quick brown fox jumped over the lazy dog The quick brown
-                    fox jumped over the lazy dog
-                  </p>
-                  {/* <p>
-                      <Link to="/">
-                        The quick brown fox jumped over the lazy dog The quick
-                        brown fox jumped over the lazy dog
-                      </Link>
-                    </p> */}
+                {/* mapping here */}
+                <div className="rejected-product box-container">
+                  <div className="rejected-product-image-wrapper">
+                    <img className="rejected-product-image" src="/1.jpg" />
+                  </div>
+                  <div className="rejected-product-content">
+                    <h6 className="my-1">
+                      <strong>Name:</strong>Great Beer
+                    </h6>
+                    <h6 className="my-1">
+                      <strong>Owner:</strong>Kinuthia
+                    </h6>
+                    <p>
+                      The quick bron fox jumped over the lazy dog. The quick
+                      bron fox jumped over the lazy dog. The quick bron fox
+                      jumped over the lazy dog. The quick bron fox jumped over
+                      the lazy dog.
+                    </p>
+                  </div>
                 </div>
-                <div className="rejected-product">
-                  <p>
-                    The quick brown fox jumped over the lazy dog The quick brown
-                    fox jumped over the lazy dog
-                  </p>
-                  {/* <p>
-                      <Link to="/">
-                        The quick brown fox jumped over the lazy dog The quick
-                        brown fox jumped over the lazy dog
-                      </Link>
-                    </p> */}
+                <div className="rejected-product box-container">
+                  <div className="rejected-product-image-wrapper">
+                    <img className="rejected-product-image" src="/1.jpg" />
+                  </div>
+                  <div className="rejected-product-content">
+                    <h6 className="my-1">
+                      <strong>Name:</strong>Great Beer
+                    </h6>
+                    <h6 className="my-1">
+                      <strong>Owner:</strong>Kinuthia
+                    </h6>
+                    <p>
+                      The quick bron fox jumped over the lazy dog. The quick
+                      bron fox jumped over the lazy dog. The quick bron fox
+                      jumped over the lazy dog. The quick bron fox jumped over
+                      the lazy dog.
+                    </p>
+                  </div>
                 </div>
-                <div className="rejected-product">
-                  <p>
-                    The quick brown fox jumped over the lazy dog The quick brown
-                    fox jumped over the lazy dog
-                  </p>
-                  {/* <p>
-                      <Link to="/">
-                        The quick brown fox jumped over the lazy dog The quick
-                        brown fox jumped over the lazy dog
-                      </Link>
-                    </p> */}
+                <div className="rejected-product box-container">
+                  <div className="rejected-product-image-wrapper">
+                    <img className="rejected-product-image" src="/1.jpg" />
+                  </div>
+                  <div className="rejected-product-content">
+                    <h6 className="my-1">
+                      <strong>Name:</strong>Great Beer
+                    </h6>
+                    <h6 className="my-1">
+                      <strong>Owner:</strong>Kinuthia
+                    </h6>
+                    <p>
+                      The quick bron fox jumped over the lazy dog. The quick
+                      bron fox jumped over the lazy dog. The quick bron fox
+                      jumped over the lazy dog. The quick bron fox jumped over
+                      the lazy dog.
+                    </p>
+                  </div>
                 </div>
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
-                {/* </div> */}
               </div>
             </div>
           </div>

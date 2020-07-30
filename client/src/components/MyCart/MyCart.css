@@ -136,6 +136,11 @@
   background-color: #f76b1a;
   color: #fff;
 }
+
+.empty-cart-to-shop-btn:hover {
+  color: #fff;
+}
+
 .empty-cart-to-shop-btn:focus {
   box-shadow: none;
   outline: none;
