@@ -17,7 +17,7 @@ import {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
-  countComplaints
+  countComplaints,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -25,11 +25,11 @@ import ScreenLoader from "../Pages/ScreenLoader";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test"
+      title: "test",
     },
     lineData: {
-      data: [20, 10]
-    }
+      data: [20, 10],
+    },
   };
   componentDidMount() {
     this.props.getStock();
@@ -114,10 +114,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find(s => s.label === "Stock Out")
+                      {this.props.stock.find((s) => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find(s => s.label === "Stock Out")
+                          this.props.stock.find((s) => s.label === "Stock Out")
                             .value
                         ).toLocaleString()}
                     </span>
@@ -220,7 +220,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -249,7 +249,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -305,7 +305,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {todaysComplaints}
@@ -339,50 +339,50 @@ class AdminDashBoard extends React.Component {
               </div>
 
               <div className="row admin-dashboard-bottom">
-                <div className="col-lg-6">
-                  <h5 style={{ textAlign: "center" }}>
-                    Latest Rejected Products
-                  </h5>
-                  <div className="rejected-product">
-                    <p>
-                      The quick brown fox jumped over the lazy dog The quick
-                      brown fox jumped over the lazy dog
-                    </p>
-                    {/* <p>
+                {/* <div className="col-lg-6"> */}
+                <h5 style={{ textAlign: "center" }}>
+                  Latest Rejected Products
+                </h5>
+                <div className="rejected-product">
+                  <p>
+                    The quick brown fox jumped over the lazy dog The quick brown
+                    fox jumped over the lazy dog
+                  </p>
+                  {/* <p>
                       <Link to="/">
                         The quick brown fox jumped over the lazy dog The quick
                         brown fox jumped over the lazy dog
                       </Link>
                     </p> */}
-                  </div>
-                  <div className="rejected-product">
-                    <p>
-                      The quick brown fox jumped over the lazy dog The quick
-                      brown fox jumped over the lazy dog
-                    </p>
-                    {/* <p>
-                      <Link to="/">
-                        The quick brown fox jumped over the lazy dog The quick
-                        brown fox jumped over the lazy dog
-                      </Link>
-                    </p> */}
-                  </div>
-                  <div className="rejected-product">
-                    <p>
-                      The quick brown fox jumped over the lazy dog The quick
-                      brown fox jumped over the lazy dog
-                    </p>
-                    {/* <p>
-                      <Link to="/">
-                        The quick brown fox jumped over the lazy dog The quick
-                        brown fox jumped over the lazy dog
-                      </Link>
-                    </p> */}
-                  </div>
-                  <div className="all-rejects">
-                    <Link to="/admin/rejects">View All</Link>
-                  </div>
                 </div>
+                <div className="rejected-product">
+                  <p>
+                    The quick brown fox jumped over the lazy dog The quick brown
+                    fox jumped over the lazy dog
+                  </p>
+                  {/* <p>
+                      <Link to="/">
+                        The quick brown fox jumped over the lazy dog The quick
+                        brown fox jumped over the lazy dog
+                      </Link>
+                    </p> */}
+                </div>
+                <div className="rejected-product">
+                  <p>
+                    The quick brown fox jumped over the lazy dog The quick brown
+                    fox jumped over the lazy dog
+                  </p>
+                  {/* <p>
+                      <Link to="/">
+                        The quick brown fox jumped over the lazy dog The quick
+                        brown fox jumped over the lazy dog
+                      </Link>
+                    </p> */}
+                </div>
+                <div className="all-rejects">
+                  <Link to="/admin/rejects">View All</Link>
+                </div>
+                {/* </div> */}
               </div>
             </div>
           </div>
@@ -392,7 +392,7 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
@@ -400,7 +400,7 @@ const mapStateToProps = state => {
     complaintsCount: state.product.complaintsCount,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, {
@@ -411,5 +411,5 @@ export default connect(mapStateToProps, {
   fetchWeeklySales,
   setPendingOrders,
   fetchUnderReview,
-  countComplaints
+  countComplaints,
 })(AdminDashBoard);
