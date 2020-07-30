@@ -36,3 +36,10 @@
   box-shadow: none;
   outline: none;
 }
+
+.admin-no-categories {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
