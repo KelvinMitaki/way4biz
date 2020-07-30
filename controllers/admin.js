@@ -1692,6 +1692,7 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
           name: "$product.name",
           sellerFirstName: "$seller.firstName",
           sellerLastName: "$seller.lastName",
+          sellerId: "$seller._id",
           body: 1
         }
       },

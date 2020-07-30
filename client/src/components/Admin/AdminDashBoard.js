@@ -364,12 +364,18 @@ class AdminDashBoard extends React.Component {
                       </div>
                       <div className="rejected-product-content">
                         <h6 className="my-1">
-                          <strong>Name:</strong>
+                          <strong>Name: </strong>
                           {p.name}
                         </h6>
                         <h6 className="my-1">
-                          <strong>Owner:</strong>
-                          {p.sellerFirstName} {p.sellerLastName}
+                          <strong>Owner: </strong>
+                          <Link
+                            to={`/seller/store/${p.sellerId}`}
+                            className="reject-to-store"
+                            title="visit store"
+                          >
+                            {p.sellerFirstName} {p.sellerLastName}
+                          </Link>
                         </h6>
                         <p>{p.body}</p>
                       </div>
