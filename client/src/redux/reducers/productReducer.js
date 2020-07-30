@@ -84,7 +84,7 @@ const INITIAL_STATE = {
   productsError: null,
   products: [],
   categories: null,
-  subcategories: null,
+  subCategories: null,
   singleCategoryProducts: [],
   buyerOrders: [],
   buyerOrderDetails: null,
@@ -378,9 +378,9 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_REJECTED_PRODUCTS:
       return { ...state, rejectedProducts: action.payload };
     case FETCH_SUB_CATEGORIES:
-      return { ...state, subcategories: action.payload };
+      return { ...state, subCategories: action.payload };
     case EMPTY_SUB_CATEGORIES:
-      return { ...state, subcategories: null };
+      return { ...state, subCategories: null };
     default:
       return state;
   }
