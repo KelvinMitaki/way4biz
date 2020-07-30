@@ -25,16 +25,23 @@ class AdminDashBoardSeller extends React.Component {
           <SecondaryHeader />
           <div className="mt-4 container">
             <div className="box-container">
-              <IconContext.Provider
-                value={{ className: "arrow-icon ml-3 my-2" }}
-              >
-                <div className="d-flex align-items-center">
-                  <Link to="/admin-sellers">
-                    <BsArrowLeft />
-                  </Link>
-                  <h3 className="ml-3">Seller Details</h3>
+              <div className="d-flex align-items-center">
+                <div style={{ flex: "1" }}>
+                  <IconContext.Provider
+                    value={{ className: "arrow-icon ml-3 my-2" }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <Link to="/admin-sellers">
+                        <BsArrowLeft />
+                      </Link>
+                    </div>
+                  </IconContext.Provider>
                 </div>
-              </IconContext.Provider>
+
+                <h3 className="ml-1" style={{ flex: "2" }}>
+                  Seller Details
+                </h3>
+              </div>
               <div className="admin-individual-seller-details">
                 <div className="custom-row">
                   <h5>
