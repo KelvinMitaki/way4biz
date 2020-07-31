@@ -64,7 +64,7 @@ class AddressForm extends React.Component {
           <div className="container">
             <div className="row">
               <div
-                className="col-md-9 my-5 mx-auto box-container"
+                className="col-md-9  mx-auto box-container"
                 id="address-form"
               >
                 <h3 className="legend">Address</h3>

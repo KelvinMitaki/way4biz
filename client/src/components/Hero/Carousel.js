@@ -6,12 +6,15 @@ import { Link, withRouter } from "react-router-dom";
 
 import "./Carousel.css";
 import { connect } from "react-redux";
-import { signInClick, registerClick } from "../../redux/actions";
+import {
+  signInClick,
+  registerClick,
+  emptySubCategories
+} from "../../redux/actions";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
-import CategoryHoverPopup from "./CategoryHoverPopup";
 
 class HeroCarousel extends React.Component {
   shouldComponentUpdate(nextprops, nextState) {
@@ -23,7 +26,7 @@ class HeroCarousel extends React.Component {
   }
 
   handleMouseEnter = () => {
-    // clean array
+    this.props.emptySubCategories();
   };
   render() {
     if (this.props.products.length === 0) return <ScreenLoader />;
@@ -41,14 +44,17 @@ class HeroCarousel extends React.Component {
         ...this.props.products.slice(
           randomStop,
           randomStop > this.props.products.length ? randomStop - 4 : +1
-        ),
+        )
       ];
     }
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
           {/* if subcategories array length>1 */}
-          <CategoryHoverPopup width={"102%"} height={"100%"} />
+          {/* {this.props.subCategories &&
+            this.props.subCategories.length !== 0 && (
+              <CategoryHoverPopup width={"102%"} height={"100%"} />
+            )} */}
           {/* else null */}
           <div className="hero-carousel-wrapper">
             <div className="hero-carousel">
@@ -65,7 +71,7 @@ class HeroCarousel extends React.Component {
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&
-                trimmedProducts.map((prod) => (
+                trimmedProducts.map(prod => (
                   <div
                     key={prod._id}
                     style={{ cursor: "pointer" }}
@@ -118,7 +124,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%",
+                    width: "100%"
                   }}
                   className="mt-4"
                 >
@@ -126,7 +132,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -141,7 +147,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -155,7 +161,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -193,12 +199,15 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.auth.user,
+    subCategories: state.product.subCategories,
+    user: state.auth.user
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { registerClick, signInClick })(HeroCarousel)
+  connect(mapStateToProps, { registerClick, signInClick, emptySubCategories })(
+    HeroCarousel
+  )
 );

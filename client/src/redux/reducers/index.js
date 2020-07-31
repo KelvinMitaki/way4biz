@@ -16,7 +16,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: [
-    "cartReducer",
+    // "cartReducer",
     "detailsPersist",
     "filter",
     "image",

@@ -29,20 +29,25 @@ class AdminDashBoardOrder extends React.Component {
           <AdminDashboardSecondaryHeader />
           <div className="container mt-4">
             <div className="box-container">
-              <div>
-                <IconContext.Provider
-                  value={{ className: "arrow-icon ml-3 my-2" }}
-                >
-                  <div className="d-flex align-items-center">
-                    <div
-                      onClick={() => this.props.history.goBack()}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <BsArrowLeft />
+              <div className="d-flex align-items-center">
+                <div style={{ flex: "1" }}>
+                  <IconContext.Provider
+                    value={{ className: "arrow-icon ml-3 my-2" }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <div
+                        onClick={() => this.props.history.goBack()}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <BsArrowLeft />
+                      </div>
                     </div>
-                    <h3 className="ml-3">Order ID</h3>
-                  </div>
-                </IconContext.Provider>
+                  </IconContext.Provider>
+                </div>
+
+                <h3 className="ml-1" style={{ flex: "2" }}>
+                  Order
+                </h3>
               </div>
               <div className="container">
                 <div className="box-container p-3">
@@ -105,10 +110,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading
+    adminOrderLoading: state.product.adminOrderLoading,
   };
 };
 export default withRouter(

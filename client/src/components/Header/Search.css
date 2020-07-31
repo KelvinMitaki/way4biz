@@ -25,7 +25,7 @@
 
 #header-search-btn {
   width: 120px;
-  border: none;
+  border: 1px solid #f76b1a;
   background-color: #f76b1a;
   color: #fff;
   display: flex;
@@ -41,16 +41,20 @@
   font-size: 20px;
 }
 
+#header-search-btn:focus {
+  border: 1px solid #f76b1a;
+  box-shadow: none;
+  outline: none;
+}
+
 .search-output {
   width: 100%;
   position: absolute;
-  top: 64px;
+  top: 63px;
   z-index: 80000;
   border-top: 1px solid #fff;
   border-right: 1px solid #fff;
   border-left: 1px solid #fff;
-  max-height: 80vh;
-  overflow-y: auto;
 }
 
 .search-output div {

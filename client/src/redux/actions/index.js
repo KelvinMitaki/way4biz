@@ -134,7 +134,6 @@ import {
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
-  FETCH_SELLER_NEW_ORDERS,
   FETCH_SELLER_NEW_ORDERS_COUNT,
   DELETE_SELLER_IMAGE,
   ACCEPT_SELLER_REQUEST,
@@ -186,7 +185,23 @@ import {
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_STOP,
-  FETCH_REJECTED_PRODUCTS
+  FETCH_REJECTED_PRODUCTS,
+  FETCH_SUB_CATEGORIES,
+  EMPTY_SUB_CATEGORIES,
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_SELLER_START,
+  FETCH_SELLER_STOP,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_STOP,
+  FETCH_WISHLIST_PRODUCTS,
+  FETCH_WISHLIST_PRODUCTS_START,
+  FETCH_WISHLIST_PRODUCTS_STOP,
+  SAVE_CART,
+  FETCH_CART_ITEMS,
+  FETCH_CART_ITEMS_START,
+  FETCH_CART_ITEMS_STOP,
+  SAVE_WISHLIST,
+  PRE_MAKE_ORDER
 } from "./types";
 
 const authCheck = error => {
@@ -301,6 +316,22 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER_STOP });
   }
 };
+export const fetchCurrentSeller = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_SELLER_START });
+    const res = await axios.get("/api/current_user");
+    console.log("Cpus: ", res.data.Cpus);
+    if (res.data.user.phoneNumber) {
+      res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
+    }
+    dispatch({ type: FETCH_USER, payload: res.data });
+    dispatch({ type: FETCH_SELLER_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_USER_FAILED });
+    authCheck(error);
+    dispatch({ type: FETCH_SELLER_STOP });
+  }
+};
 
 export const passwordReset = email => async dispatch => {
   try {
@@ -409,7 +440,13 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: LOADING_STOP });
       return;
     }
-    if (Object.keys(error.response.data.keyPattern)[0] === "phoneNumber") {
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.keyPattern &&
+      Object.keys(error.response.data.keyPattern)[0] === "phoneNumber"
+    ) {
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: "That phone number already exists"
@@ -424,6 +461,31 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       type: REGISTER_SELLER_FAILED,
       payload: "That store name already exists"
     });
+    dispatch({ type: LOADING_STOP });
+  }
+};
+export const updateSeller = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: LOADING_START });
+    const res = await axios.post("/api/seller/update/info", credentials);
+    dispatch({ type: REGISTER_SELLER, payload: res.data });
+    history.push("/seller-dashboard");
+    dispatch({ type: LOADING_STOP });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+    if (error.response.data.email) {
+      getState().form.SellerRegister.values.email = "";
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: error.response.data.email
+      });
+      dispatch({ type: LOADING_STOP });
+      return;
+    }
     dispatch({ type: LOADING_STOP });
   }
 };
@@ -596,25 +658,58 @@ export const editProduct = (formvalues, productId, history) => async (
   }
 };
 
-export const addToCart = product => {
-  return {
+export const addToCart = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let cart = getState().cartReducer.cart;
+  const newCart =
+    cart.length !== 0 &&
+    cart.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
+      }
+      return item;
+    });
+  getState().cartReducer.cart = newCart;
+  dispatch({
     type: ADD_TO_CART,
     payload: product
-  };
+  });
 };
 
-export const removeFromCart = product => {
-  return {
+export const removeFromCart = product => async dispatch => {
+  dispatch({
     type: REMOVE_FROM_CART,
     payload: product
-  };
+  });
 };
 
-export const deleteFromCart = product => {
-  return {
-    type: DELETE_FROM_CART,
-    payload: product
-  };
+export const deleteFromCart = product => async (dispatch, getState) => {
+  try {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      await axios.patch("/api/delete/cart", { productId: product._id });
+    }
+    dispatch({
+      type: DELETE_FROM_CART,
+      payload: product
+    });
+  } catch (error) {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      authCheck(error);
+    }
+    console.log(error.response);
+  }
 };
 
 export const fetchCategories = () => async dispatch => {
@@ -629,6 +724,20 @@ export const fetchCategories = () => async dispatch => {
   }
 };
 
+export const fetchSubCategories = category => async dispatch => {
+  try {
+    const res = await axios.get(`/api/products/find/subcategories/${category}`);
+    dispatch({ type: FETCH_SUB_CATEGORIES, payload: res.data });
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const emptySubCategories = () => {
+  return {
+    type: EMPTY_SUB_CATEGORIES
+  };
+};
+
 export const fetchAllCategories = () => async dispatch => {
   try {
     dispatch({ type: SINGLE_CATEGORY_START });
@@ -639,6 +748,11 @@ export const fetchAllCategories = () => async dispatch => {
     console.log(error.response);
     dispatch({ type: SINGLE_CATEGORY_STOP });
   }
+};
+
+export const preMakeOrder = (credentials, history) => dispatch => {
+  dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
+  history.push("/mpesa-payment");
 };
 
 export const makeOrder = credentials => async (dispatch, getState) => {
@@ -690,18 +804,45 @@ export const fetchBuyerOrders = () => async dispatch => {
   }
 };
 
-export const addToWishlist = product => {
-  return {
+export const addToWishlist = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let wishlist = getState().cartReducer.wishlist;
+  const newWishlist =
+    wishlist.length !== 0 &&
+    wishlist.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
+      }
+      return item;
+    });
+  getState().carttReducer.wishlist = newWishlist;
+  dispatch({
     type: ADD_TO_WISHLIST,
     payload: product
-  };
+  });
 };
 
-export const removeFromWishlist = product => {
-  return {
-    type: REMOVE_FROM_WISHLIST,
-    payload: product
-  };
+export const removeFromWishlist = product => async dispatch => {
+  try {
+    await axios.patch("/api/delete/wishlist", { productId: product._id });
+    dispatch({
+      type: REMOVE_FROM_WISHLIST,
+      payload: product
+    });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };
 
 export const fetchBuyerOrderDetails = orderId => async dispatch => {
@@ -735,12 +876,12 @@ export const hasMoreSearchFalse = () => {
 };
 export const fetchProducts = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_PRODUCTS_START });
     const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -1243,7 +1384,6 @@ export const paymentPerDistance = (details, history) => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
-
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
     history.push("/checkout");
@@ -1560,10 +1700,9 @@ export const editCategory = (
 ) => async dispatch => {
   try {
     dispatch({ type: EDIT_CATEGORY_START });
-    const res = await axios.patch(
-      `/api/root/admin/edit/category/${categoryId}`,
-      { category }
-    );
+    await axios.patch(`/api/root/admin/edit/category/${categoryId}`, {
+      category
+    });
     dispatch({ type: EDIT_CATEGORY });
     dispatch({ type: EDIT_CATEGORY_STOP });
     history.push("/admin-categories");
@@ -1857,7 +1996,7 @@ export const fetchBuyerComplaints = () => async dispatch => {
   }
 };
 
-export const fetchBuyerComplaint = complaintId => async dispatch => {
+export const fetchBuyerComplaint = (complaintId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_BUYER_COMPLAINT_START });
     const res = await axios.get(`/api/fetch/buyer/complaint/${complaintId}`);
@@ -1867,6 +2006,7 @@ export const fetchBuyerComplaint = complaintId => async dispatch => {
     authCheck(error);
     dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
     console.log(error.response);
+    history.push("/");
   }
 };
 
@@ -1876,6 +2016,61 @@ export const fetchRejectedProducts = () => async dispatch => {
     dispatch({ type: FETCH_REJECTED_PRODUCTS, payload: res.data });
   } catch (error) {
     authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchLatestRejectedProducts = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/latest/rejected/products");
+    dispatch({ type: FETCH_LATEST_REJECTED_PRODUCTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+// MUST BE ITEMS IN WISHLIST
+export const fetchWishlistProducts = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
+    const res = await axios.get("/api/fetch/wishlits/products");
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const saveCartItems = cart => async dispatch => {
+  try {
+    await axios.post("/api/user/new/cart", { cart });
+    dispatch({ type: SAVE_CART });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+export const saveWishlistItems = wishlist => async dispatch => {
+  try {
+    await axios.post("/api/user/new/wishlist", { wishlist });
+    dispatch({ type: SAVE_WISHLIST });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchCartItems = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_CART_ITEMS_START });
+    const res = await axios.get("/api/user/fetch/cart/items");
+    dispatch({ type: FETCH_CART_ITEMS, payload: res.data });
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
     console.log(error.response);
   }
 };

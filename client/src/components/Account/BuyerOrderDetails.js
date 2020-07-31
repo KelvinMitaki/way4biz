@@ -29,7 +29,7 @@ class BuyerOrderDetails extends Component {
                 <AccountMenu />
               </div>
               <div className="col-lg-8 box-container order-details-wrapper">
-                <div className="container-fluid">
+                {/* <div className="container-fluid">
                   <div className="row">
                     <IconContext.Provider
                       value={{ className: "arrow-icon ml-3 my-2" }}
@@ -42,6 +42,23 @@ class BuyerOrderDetails extends Component {
                       </div>
                     </IconContext.Provider>
                   </div>
+                </div> */}
+                <div className="d-flex align-items-center">
+                  <div style={{ flex: "1" }}>
+                    <IconContext.Provider
+                      value={{ className: "arrow-icon ml-3 my-2" }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <Link to="/orders">
+                          <BsArrowLeft />
+                        </Link>
+                      </div>
+                    </IconContext.Provider>
+                  </div>
+
+                  <h3 className="ml-1" style={{ flex: "2" }}>
+                    Order Details
+                  </h3>
                 </div>
                 <div className="container-fluid">
                   <div className="buyer-order-details-info my-2">
@@ -85,7 +102,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map(item => {
+                      buyerOrderDetails.items.map((item) => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -168,10 +185,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default withRouter(

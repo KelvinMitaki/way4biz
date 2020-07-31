@@ -28,19 +28,24 @@ class AdminDashBoardOrderItems extends React.Component {
               className="d-flex align-items-center"
               style={{ width: "80%", margin: "auto" }}
             >
-              <IconContext.Provider
-                value={{ className: "arrow-icon ml-3 my-2" }}
-              >
-                <div>
-                  <div
-                    onClick={() => this.props.history.goBack()}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <BsArrowLeft />
+              <div style={{ flex: "1" }}>
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div className="d-flex align-items-center">
+                    <div
+                      onClick={() => this.props.history.goBack()}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <BsArrowLeft />
+                    </div>
                   </div>
-                </div>
-              </IconContext.Provider>
-              <h3 className="ml-2">Ordered Items</h3>
+                </IconContext.Provider>
+              </div>
+
+              <h3 className="ml-1" style={{ flex: "2" }}>
+                Ordered Items
+              </h3>
             </div>
 
             <div className="container">
@@ -72,6 +77,7 @@ class AdminDashBoardOrderItems extends React.Component {
                               ? p.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl[0]} `
                           }
+                          alt={p.imageUrl[0]}
                         />
                       </div>
                       <div className="col-md-5 admin-order-product">
@@ -105,6 +111,7 @@ class AdminDashBoardOrderItems extends React.Component {
                         <p>
                           <Link
                             to={`/seller/store/${this.props.adminOrder["0"].seller[0]._id}`}
+                            className="admin-order-visit-store"
                           >
                             Visit Store
                           </Link>

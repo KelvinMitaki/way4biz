@@ -4,10 +4,12 @@ import "./Hero.css";
 
 import SideBar from "./SideBar";
 import CaroDisplay from "./CaroDisplay";
+import { emptySubCategories } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class Hero extends React.Component {
   handleMouseLeave = () => {
-    // empty array
+    this.props.emptySubCategories();
   };
   render() {
     return (
@@ -21,4 +23,4 @@ class Hero extends React.Component {
   }
 }
 
-export default Hero;
+export default connect(null, { emptySubCategories })(Hero);

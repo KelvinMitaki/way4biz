@@ -1,16 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
 
-const modal = (props) => {
+const modal = props => {
   return (
     <div>
       <div
         className="modal-wrapper"
         style={{
           transform: props.show ? "translateY(-15vh)" : "translateY(-400vh)",
-          opacity: props.show ? "1" : "0",
+          opacity: props.show ? "1" : "0"
         }}
       >
         <div className="modal-header">
@@ -22,9 +22,13 @@ const modal = (props) => {
           <div className="container">
             <div className="row">
               <div className="col-md-6 my-2">
-                <Link className="btn btn-md continue-btn " to="/">
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => props.history.goBack()}
+                  className="btn btn-md continue-btn "
+                >
                   Continue Shopping
-                </Link>
+                </div>
               </div>
               <div className="col-md-6 my-2">
                 <Link className="btn btn-md shopping-btn-modal" to="/cart">
@@ -39,4 +43,4 @@ const modal = (props) => {
   );
 };
 
-export default modal;
+export default withRouter(modal);

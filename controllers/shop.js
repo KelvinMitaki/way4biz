@@ -9,6 +9,8 @@ const Order = require("../models/Order");
 const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
 const Complaint = require("../models/Complaint");
+const Cart = require("../models/Cart");
+const Wishlist = require("../models/Wishlist");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -16,12 +18,23 @@ route.post("/api/products", async (req, res) => {
     const products = await Product.aggregate([
       { $match: { onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          stockQuantity: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $skip: itemsToSkip },
@@ -45,12 +58,23 @@ route.post("/api/products/skip/category", async (req, res) => {
     const products = await Product.aggregate([
       { $match: { ...test, onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          stockQuantity: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $sort: sort },
@@ -91,12 +115,22 @@ route.post("/api/products/search/term", async (req, res) => {
       },
       { $match: { ...test, onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $sort: sort },
@@ -803,7 +837,8 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           productPrice: "$product.price",
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
-          body: 1
+          body: 1,
+          storeName: "$seller.storeName"
         }
       },
       { $sort: { createdAt: -1 } }
@@ -895,6 +930,7 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
           productPrice: "$product.price",
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
+          storeName: "$seller.storeName",
           body: 1
         }
       },
@@ -906,6 +942,201 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
   }
 });
 
+route.get("/api/products/find/subcategories/:category", async (req, res) => {
+  try {
+    const subcategories = await Product.aggregate([
+      {
+        $match: { category: req.params.category }
+      },
+      {
+        $project: { subcategory: 1 }
+      },
+      { $group: { _id: "$subcategory" } }
+    ]);
+    res.send(subcategories);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// route.post(
+//   "/api/fetch/wishlits/products",
+//   check("ids").isArray({ min: 1 }).withMessage("Invalid"),
+//   async (req, res) => {
+//     try {
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         return res.status(401).send({ message: errors.array()[0].msg });
+//       }
+//       const { ids } = req.body;
+//       const wishlist = await Product.aggregate([
+//         {
+//           $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
+//         },
+//         {
+//           $project: {
+//             freeShipping: 1,
+//             name: 1,
+//             price: 1,
+//             imageUrl: 1,
+//             stockQuantity: 1
+//           }
+//         }
+//       ]);
+//       res.send(wishlist);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   }
+// );
+
+route.post(
+  "/api/user/new/cart",
+  auth,
+  check("cart").isArray({ min: 1 }).withMessage("invalid"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { cart } = req.body;
+      const { _id } = req.session.user._id;
+
+      // cart.map(item => {
+      //   if (item && Object.keys(item).length === 0) {
+      //     return res.status(401).send({ message: "Invalid Cart" });
+      //   }
+      //   if (!item) {
+      //     return res.status(401).send({ message: "Empty" });
+      //   }
+      // });
+      const buyerExists = await Cart.findOne({ buyer: _id });
+      if (buyerExists) {
+        const updatedCart = await Cart.findOneAndUpdate(
+          { buyer: _id },
+          { items: cart }
+        );
+        await updatedCart.save();
+        return res.send(updatedCart);
+      }
+      const newCart = new Cart({
+        buyer: _id,
+        items: cart
+      });
+      await newCart.save();
+      res.send(newCart);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/user/new/wishlist",
+  auth,
+  check("wishlist").isArray({ min: 1 }).withMessage("invalid"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { wishlist } = req.body;
+      const { _id } = req.session.user._id;
+
+      wishlist.map(item => {
+        if (item && Object.keys(item).length === 0) {
+          return res.status(401).send({ message: "Invalid wishlist" });
+        }
+        if (!item) {
+          return res.status(401).send({ message: "Empty" });
+        }
+      });
+      const buyerExists = await Wishlist.findOne({ buyer: _id });
+      if (buyerExists) {
+        const updatedWishlist = await Wishlist.findOneAndUpdate(
+          { buyer: _id },
+          { items: wishlist }
+        );
+        await updatedWishlist.save();
+        return res.send(updatedWishlist);
+      }
+      const newWishlist = new Wishlist({
+        buyer: _id,
+        items: wishlist
+      });
+      await newWishlist.save();
+      res.send(newWishlist);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const cart = await Cart.aggregate([{ $match: { buyer: _id } }]);
+    res.send(cart.length !== 0 ? cart[0].items : cart);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const wishlist = await Wishlist.aggregate([{ $match: { buyer: _id } }]);
+    res.send(wishlist.length !== 0 ? wishlist[0].items : wishlist);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.patch(
+  "/api/delete/wishlist",
+  auth,
+  check("productId").not().isEmpty().withMessage("Invalid Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { productId } = req.body;
+      const wishlist = await Wishlist.findOneAndUpdate(
+        { buyer: _id },
+        { $pull: { items: { _id: productId } } }
+      );
+      await wishlist.save();
+      res.send(wishlist);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.patch(
+  "/api/delete/cart",
+  auth,
+  check("productId").not().isEmpty().withMessage("Invalid Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { productId } = req.body;
+      const cart = await Cart.findOneAndUpdate(
+        { buyer: _id },
+        { $pull: { items: { _id: productId } } }
+      );
+      await cart.save();
+      res.send(cart);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

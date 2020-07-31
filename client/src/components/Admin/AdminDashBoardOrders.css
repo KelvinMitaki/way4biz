@@ -70,3 +70,10 @@
   padding: 3px;
   border-radius: 5px;
 }
+
+.admin-no-orders {
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

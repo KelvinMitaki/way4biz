@@ -63,7 +63,6 @@ import {
   REJECT_MESSAGE_STOP,
   FETCH_REJECTS,
   FETCH_STORE_PRODUCTS,
-  HANDLE_SEARCH_TERM,
   NEW_COMPLAINT_START,
   NEW_COMPLAINT_STOP,
   COUNT_COMPLAINTS,
@@ -75,13 +74,19 @@ import {
   FETCH_BUYER_COMPLAINT,
   FETCH_BUYER_COMPLAINT_START,
   FETCH_BUYER_COMPLAINT_STOP,
-  FETCH_REJECTED_PRODUCTS
+  FETCH_REJECTED_PRODUCTS,
+  FETCH_SUB_CATEGORIES,
+  EMPTY_SUB_CATEGORIES,
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
   productsError: null,
   products: [],
   categories: null,
+  subCategories: null,
   singleCategoryProducts: [],
   buyerOrders: [],
   buyerOrderDetails: null,
@@ -137,7 +142,9 @@ const INITIAL_STATE = {
   buyerComplaint: null,
   buyerComplaints: null,
   buyerComplaintLoading: false,
-  rejectedProducts: null
+  rejectedProducts: null,
+  latestRejectedProducts: null,
+  fetchProductsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -374,6 +381,16 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, buyerComplaintLoading: false };
     case FETCH_REJECTED_PRODUCTS:
       return { ...state, rejectedProducts: action.payload };
+    case FETCH_SUB_CATEGORIES:
+      return { ...state, subCategories: action.payload };
+    case EMPTY_SUB_CATEGORIES:
+      return { ...state, subCategories: null };
+    case FETCH_LATEST_REJECTED_PRODUCTS:
+      return { ...state, latestRejectedProducts: action.payload };
+    case FETCH_PRODUCTS_START:
+      return { ...state, fetchProductsLoading: true };
+    case FETCH_PRODUCTS_STOP:
+      return { ...state, fetchProductsLoading: false };
     default:
       return state;
   }

@@ -11,7 +11,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 import {
   fetchReviewProduct,
   acceptProduct,
-  rejectProduct
+  rejectProduct,
 } from "../../redux/actions";
 import Image from "../Market/Image";
 
@@ -27,14 +27,24 @@ class AdminDashBoardNewProduct extends React.Component {
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div className="container box-container mt-4">
-          <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
-            <div className="d-flex align-items-center">
-              <Link to="/admin/new-products">
-                <BsArrowLeft />
-              </Link>
-              <h3 className="ml-1">Product Details</h3>
+          <div className="d-flex align-items-center">
+            <div style={{ flex: "1" }}>
+              <IconContext.Provider
+                value={{ className: "arrow-icon ml-3 my-2" }}
+              >
+                <div className="d-flex align-items-center">
+                  <Link to="/admin/new-products">
+                    <BsArrowLeft />
+                  </Link>
+                </div>
+              </IconContext.Provider>
             </div>
-          </IconContext.Provider>
+
+            <h3 className="ml-1" style={{ flex: "2" }}>
+              Product Details
+            </h3>
+          </div>
+
           <div className="admin-new-product-details mt-3">
             <div className="custom-row">
               <h6>
@@ -137,18 +147,18 @@ class AdminDashBoardNewProduct extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     reviewProduct: state.product.reviewProduct,
     acceptProductLoading: state.product.acceptProductLoading,
     rejectProductLoading: state.product.rejectProductLoading,
-    fetchReviewProductLoading: state.product.fetchReviewProductLoading
+    fetchReviewProductLoading: state.product.fetchReviewProductLoading,
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     fetchReviewProduct,
     acceptProduct,
-    rejectProduct
+    rejectProduct,
   })(AdminDashBoardNewProduct)
 );

@@ -16,7 +16,11 @@ class HeaderWishList extends React.Component {
         >
           <div className="icon-container">
             <AiOutlineHeart />
-            <span className="badge">{this.props.wishlist.length}</span>
+            {this.props.isSignedIn ? (
+              <span className="badge">{this.props.wishlist.length}</span>
+            ) : (
+              <span className="badge">0</span>
+            )}
           </div>
         </IconContext.Provider>
         {/* <span className="badge">0</span> */}
@@ -27,7 +31,8 @@ class HeaderWishList extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default connect(mapStateToProps)(HeaderWishList);

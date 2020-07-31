@@ -5,7 +5,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class SellerOrderDetails extends React.Component {

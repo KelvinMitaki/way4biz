@@ -16,7 +16,7 @@ import BeautyStars from "beauty-stars";
 import ScreenLoader from "../Pages/ScreenLoader";
 class AddReview extends Component {
   state = {
-    value: 0
+    value: 0,
   };
   componentDidMount() {
     this.props.redirectOnFail(
@@ -26,9 +26,9 @@ class AddReview extends Component {
     );
   }
 
-  ratingChanged = val => {
+  ratingChanged = (val) => {
     this.setState({
-      value: val
+      value: val,
     });
   };
 
@@ -44,7 +44,7 @@ class AddReview extends Component {
                 <AccountMenu />
               </div>
               <div className="col-lg-8 box-container  add-review-wrapper">
-                <IconContext.Provider
+                {/* <IconContext.Provider
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
                   <div className="d-flex align-items-center">
@@ -53,12 +53,29 @@ class AddReview extends Component {
                     </Link>
                     <h3 className="ml-3">Rate Item</h3>
                   </div>
-                </IconContext.Provider>
+                </IconContext.Provider> */}
+                <div className="d-flex align-items-center">
+                  <div style={{ flex: "1" }}>
+                    <IconContext.Provider
+                      value={{ className: "arrow-icon ml-3 my-2" }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <Link to="/pending/reviews">
+                          <BsArrowLeft />
+                        </Link>
+                      </div>
+                    </IconContext.Provider>
+                  </div>
+
+                  <h3 className="ml-1" style={{ flex: "2" }}>
+                    Rate Item
+                  </h3>
+                </div>
                 <div className="d-flex justify-content-center my-3">
                   {/* <Rating clickable={true} /> */}
                   <BeautyStars
                     value={this.state.value}
-                    onChange={val => this.ratingChanged(val)}
+                    onChange={(val) => this.ratingChanged(val)}
                     size={30}
                     activeColor={"#f76b10"}
                     inactiveColor={"#d4d4d4"}
@@ -66,7 +83,7 @@ class AddReview extends Component {
                 </div>
                 <form
                   style={{ textAlign: "center" }}
-                  onSubmit={this.props.handleSubmit(formValues =>
+                  onSubmit={this.props.handleSubmit((formValues) =>
                     this.props.submitReview(
                       formValues,
                       this.state.value,
@@ -128,7 +145,7 @@ class AddReview extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -150,11 +167,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
     sellerReviewsLoading: state.product.sellerReviewsLoading,
-    redirectOnFailLoading: state.product.redirectOnFailLoading
+    redirectOnFailLoading: state.product.redirectOnFailLoading,
   };
 };
 export default withRouter(

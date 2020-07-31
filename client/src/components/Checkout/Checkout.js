@@ -7,13 +7,13 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { withRouter, Redirect } from "react-router-dom";
-import { reduxForm } from "redux-form";
+import { reduxForm, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
-import { makeOrder, fetchProducts } from "../../redux/actions";
+import { fetchProducts, preMakeOrder } from "../../redux/actions";
 
 class CheckOut extends React.Component {
   componentDidMount() {
-    if (!this.props.distance) {
+    if (!this.props.distance || this.props.cart.length === 0) {
       return <Redirect to="/address" />;
     }
   }
@@ -37,9 +37,10 @@ class CheckOut extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
+
           <form
             onSubmit={this.props.handleSubmit(formValues =>
-              this.props.makeOrder({ formValues, cart })
+              this.props.preMakeOrder({ formValues, cart }, this.props.history)
             )}
           >
             <div className="container main-checkout-wrapper">
@@ -97,11 +98,13 @@ class CheckOut extends React.Component {
                       </div>
                       <div>
                         <button
+                          // check which payment method is choosen and do the routing
                           className="btn btn-md order-btn"
                           disabled={
                             !this.props.valid ||
                             this.props.loading ||
-                            this.props.pristine
+                            this.props.pristine ||
+                            !this.props.payment
                           }
                           type="submit"
                         >
@@ -132,16 +135,19 @@ class CheckOut extends React.Component {
     );
   }
 }
+const selector = formValueSelector("Chekout");
 const mapStateToProps = state => {
+  const payment = selector(state, "payment");
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     loading: state.auth.loading,
-    distance: state.detailsPersist.distance
+    distance: state.detailsPersist.distance,
+    payment
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout" })(
-    connect(mapStateToProps, { makeOrder, fetchProducts })(CheckOut)
+  reduxForm({ form: "Chekout", destroyOnUnmount: false })(
+    connect(mapStateToProps, { preMakeOrder, fetchProducts })(CheckOut)
   )
 );

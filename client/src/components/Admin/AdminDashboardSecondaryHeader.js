@@ -2,7 +2,7 @@ import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
@@ -99,10 +99,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <RiDashboardLine /> <span className="ml-2">Dashboard</span>
             </NavLink>
           </li>
-          <li>
+          <li style={{ cursor: "pointer" }}>
             <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine />{" "}
-              <span className="ml-1">
+              <span style={{ cursor: "pointer" }} className="ml-1">
                 Sellers{" "}
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&

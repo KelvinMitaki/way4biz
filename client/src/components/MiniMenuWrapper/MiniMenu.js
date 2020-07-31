@@ -13,6 +13,7 @@ import { MdRateReview } from "react-icons/md";
 import { connect } from "react-redux";
 import { GoClippy } from "react-icons/go";
 import "./MiniMenu.css";
+import { BsQuestionCircle } from "react-icons/bs";
 
 class MiniMenu extends React.Component {
   render() {
@@ -55,9 +56,10 @@ class MiniMenu extends React.Component {
                   <div className="icon-container">
                     <FaOpencart />
                     <span className="badge ml-1">
-                      {this.props.cart
-                        .map(item => item.quantity)
-                        .reduce((cur, acc) => cur + acc, 0)}
+                      {this.props.cart &&
+                        this.props.cart
+                          .map(item => item.quantity)
+                          .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
                 </IconContext.Provider>
@@ -115,6 +117,10 @@ class MiniMenu extends React.Component {
                     <NavLink className="primary-link" to="/pending/reviews">
                       <MdRateReview />
                       <span className="ml-2">Pending Reviews</span>
+                    </NavLink>
+                    <NavLink className="primary-link" to="/complaints">
+                      <BsQuestionCircle />
+                      <span className="ml-2">Complaints</span>
                     </NavLink>
                     {this.props.user && this.props.user.storeName && (
                       <NavLink className="primary-link" to="/seller-dashboard">
