@@ -196,7 +196,10 @@ import {
   FETCH_WISHLIST_PRODUCTS,
   FETCH_WISHLIST_PRODUCTS_START,
   FETCH_WISHLIST_PRODUCTS_STOP,
-  SAVE_CART
+  SAVE_CART,
+  FETCH_CART_ITEMS,
+  FETCH_CART_ITEMS_START,
+  FETCH_CART_ITEMS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1980,6 +1983,19 @@ export const saveCartItems = cart => async dispatch => {
     dispatch({ type: SAVE_CART });
   } catch (error) {
     authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchCartItems = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_CART_ITEMS_START });
+    const res = await axios.get("/api/user/fetch/cart/items");
+    dispatch({ type: FETCH_CART_ITEMS, payload: res.data });
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
     console.log(error.response);
   }
 };

@@ -10,14 +10,17 @@ import {
   CLEAR_SEARCH_TERM,
   FETCH_WISHLIST_PRODUCTS,
   FETCH_WISHLIST_PRODUCTS_START,
-  FETCH_WISHLIST_PRODUCTS_STOP
+  FETCH_WISHLIST_PRODUCTS_STOP,
+  FETCH_CART_ITEMS_START,
+  FETCH_CART_ITEMS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  cart: [],
+  cart: null,
   wishlist: [],
   typing: "",
-  wishlistLoading: false
+  wishlistLoading: false,
+  cartLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -88,6 +91,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, wishlistLoading: true };
     case FETCH_WISHLIST_PRODUCTS_STOP:
       return { ...state, wishlistLoading: false };
+    case FETCH_CART_ITEMS_START:
+      return { ...state, cartLoading: true };
+    case FETCH_CART_ITEMS_STOP:
+      return { ...state, cartLoading: false };
     default:
       return state;
   }

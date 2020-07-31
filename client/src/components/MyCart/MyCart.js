@@ -3,17 +3,21 @@ import "./MyCart.css";
 import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteFromCart } from "../../redux/actions";
+import { deleteFromCart, fetchCartItems } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Image from "../Market/Image";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
   componentDidMount() {
-    // RETRIEVE FROM DB IF LOGGED IN
+    if (this.props.isSignedIn) {
+      this.props.fetchCartItems();
+    }
   }
   render() {
+    if (!this.props.cart || this.props.cartLoading) return <ScreenLoader />;
     if (this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">
@@ -146,7 +150,11 @@ class MyCart extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
+    isSignedIn: state.cartReducer.isSignedIn,
+    cartLoading: state.cartReducer.cartLoading
   };
 };
-export default withRouter(connect(mapStateToProps, { deleteFromCart })(MyCart));
+export default withRouter(
+  connect(mapStateToProps, { deleteFromCart, fetchCartItems })(MyCart)
+);
