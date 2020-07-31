@@ -101,6 +101,15 @@
   width: 100%;
 }
 
+.google:hover {
+  color: #fff;
+}
+
+.google:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .secondary-google {
   background-color: #4885ed;
   border: 1px solid #4885ed;
