@@ -15,7 +15,6 @@ import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
-import CategoryHoverPopup from "./CategoryHoverPopup";
 
 class HeroCarousel extends React.Component {
   shouldComponentUpdate(nextprops, nextState) {
@@ -48,7 +47,6 @@ class HeroCarousel extends React.Component {
         )
       ];
     }
-    console.log(this.props.subCategories);
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">

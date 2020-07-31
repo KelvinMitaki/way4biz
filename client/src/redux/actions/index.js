@@ -134,7 +134,6 @@ import {
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
-  FETCH_SELLER_NEW_ORDERS,
   FETCH_SELLER_NEW_ORDERS_COUNT,
   DELETE_SELLER_IMAGE,
   ACCEPT_SELLER_REQUEST,
@@ -1632,10 +1631,9 @@ export const editCategory = (
 ) => async dispatch => {
   try {
     dispatch({ type: EDIT_CATEGORY_START });
-    const res = await axios.patch(
-      `/api/root/admin/edit/category/${categoryId}`,
-      { category }
-    );
+    await axios.patch(`/api/root/admin/edit/category/${categoryId}`, {
+      category
+    });
     dispatch({ type: EDIT_CATEGORY });
     dispatch({ type: EDIT_CATEGORY_STOP });
     history.push("/admin-categories");
@@ -1978,8 +1976,7 @@ export const fetchWishlistProducts = ids => async dispatch => {
 
 export const saveCartItems = cart => async dispatch => {
   try {
-    const res = await axios.post("/api/user/new/cart", { cart });
-    console.log(res);
+    await axios.post("/api/user/new/cart", { cart });
     dispatch({ type: SAVE_CART });
   } catch (error) {
     authCheck(error);

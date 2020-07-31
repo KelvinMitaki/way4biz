@@ -4,7 +4,6 @@ import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashBoardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import Complaints from "./Complaints";
 import "./AdminDashBoardComplaints.css";
-import { Link } from "react-router-dom";
 
 class AdminDashBoardComplaints extends React.Component {
   render() {

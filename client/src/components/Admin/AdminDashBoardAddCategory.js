@@ -3,8 +3,6 @@ import React from "react";
 import "./AdminDashBoardAddCategory.css";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
-import { IconContext } from "react-icons/lib";
-import { AiOutlineSearch } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { addNewCategory } from "../../redux/actions";
 import { connect } from "react-redux";
@@ -14,26 +12,26 @@ class AdminDashBoardAddCategory extends React.Component {
   state = {
     main: "",
     subcategories: [],
-    typing: "",
+    typing: ""
   };
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleTypingSubmit = (e) => {
+  handleTypingSubmit = e => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: "",
+        typing: ""
       });
     }
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (this.state.main !== "" && this.state.subcategories.length !== 0) {
       this.props.addNewCategory(
         {
           main: this.state.main,
-          subcategories: this.state.subcategories,
+          subcategories: this.state.subcategories
         },
         this.props.history
       );
@@ -100,7 +98,7 @@ class AdminDashBoardAddCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  ),
+                                  )
                                 })
                               }
                             >
