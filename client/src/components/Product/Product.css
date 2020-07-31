@@ -93,6 +93,10 @@ hr {
   height: 40px;
 }
 
+.add-to-cart:hover {
+  color: #fff;
+}
+
 .add-to-cart:focus {
   outline: none;
   box-shadow: none;
