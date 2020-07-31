@@ -997,6 +997,16 @@ route.post(
   }
 );
 
+route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const cart = await Cart.aggregate([{ $match: { buyer: _id } }]);
+    res.send(cart.length !== 0 ? cart[0].items : cart);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

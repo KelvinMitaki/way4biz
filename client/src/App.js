@@ -91,9 +91,13 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(item => ({
-            product: item._id,
-            quantity: item.quantity
+          this.props.cart.map(i => ({
+            freeShipping: i.freeShipping,
+            name: i.name,
+            price: i.price,
+            stockQuantity: i.stockQuantity,
+            imageUrl: i.imageUrl,
+            seller: { storeName: i.seller.storeName }
           }))
         );
     }

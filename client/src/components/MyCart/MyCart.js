@@ -151,7 +151,7 @@ class MyCart extends React.Component {
 const mapStateToProps = state => {
   return {
     cart: state.cartReducer.cart,
-    isSignedIn: state.cartReducer.isSignedIn,
+    isSignedIn: state.auth.isSignedIn,
     cartLoading: state.cartReducer.cartLoading
   };
 };
