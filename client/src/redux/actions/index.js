@@ -200,7 +200,8 @@ import {
   FETCH_CART_ITEMS,
   FETCH_CART_ITEMS_START,
   FETCH_CART_ITEMS_STOP,
-  SAVE_WISHLIST
+  SAVE_WISHLIST,
+  PRE_MAKE_ORDER
 } from "./types";
 
 const authCheck = error => {
@@ -714,6 +715,11 @@ export const fetchAllCategories = () => async dispatch => {
     console.log(error.response);
     dispatch({ type: SINGLE_CATEGORY_STOP });
   }
+};
+
+export const preMakeOrder = (credentials, history) => dispatch => {
+  dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
+  history.push("/mpesa-payment");
 };
 
 export const makeOrder = credentials => async (dispatch, getState) => {
@@ -1318,7 +1324,6 @@ export const paymentPerDistance = (details, history) => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
-
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
     history.push("/checkout");

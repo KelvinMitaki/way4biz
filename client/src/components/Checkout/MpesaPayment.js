@@ -4,10 +4,21 @@ import "./MpesaPayment.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { formValueSelector } from "redux-form";
 
 class MpesaPayment extends React.Component {
   render() {
+    if (!this.props.order) return <Redirect to="/checkout" />;
+    if (this.props.order && !this.props.order.formValues)
+      return <Redirect to="/checkout" />;
+    if (
+      this.props.order &&
+      this.props.order.formValues &&
+      !this.props.order.formValues.payment
+    )
+      return <Redirect to="/checkout" />;
     return (
       <div className="main">
         <div className="content">
@@ -80,5 +91,9 @@ class MpesaPayment extends React.Component {
     );
   }
 }
-
-export default MpesaPayment;
+const mapStateToProps = state => {
+  return {
+    order: state.cartReducer.order
+  };
+};
+export default connect(mapStateToProps)(MpesaPayment);

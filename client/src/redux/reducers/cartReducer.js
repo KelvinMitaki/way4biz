@@ -13,7 +13,8 @@ import {
   FETCH_WISHLIST_PRODUCTS_STOP,
   FETCH_CART_ITEMS_START,
   FETCH_CART_ITEMS_STOP,
-  FETCH_CART_ITEMS
+  FETCH_CART_ITEMS,
+  PRE_MAKE_ORDER
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -21,7 +22,8 @@ const INITIAL_STATE = {
   wishlist: [],
   typing: "",
   wishlistLoading: false,
-  cartLoading: false
+  cartLoading: false,
+  order: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -114,6 +116,8 @@ export default (state = INITIAL_STATE, action) => {
           ...action.payload.filter(prod => !productIds.has(prod._id))
         ]
       };
+    case PRE_MAKE_ORDER:
+      return { ...state, order: action.payload };
     default:
       return state;
   }
