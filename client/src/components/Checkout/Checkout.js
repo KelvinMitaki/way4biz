@@ -6,7 +6,7 @@ import PaymentMethods from "./PaymentMethods";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { makeOrder, fetchProducts } from "../../redux/actions";
@@ -25,12 +25,12 @@ class CheckOut extends React.Component {
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map(item => item.price * item.quantity)
+        .map((item) => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
     const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
-      .map(item => item.price * item.quantity)
+      .map((item) => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -38,7 +38,7 @@ class CheckOut extends React.Component {
         <div className="content">
           <Header />
           <form
-            onSubmit={this.props.handleSubmit(formValues =>
+            onSubmit={this.props.handleSubmit((formValues) =>
               this.props.makeOrder({ formValues, cart })
             )}
           >
@@ -96,7 +96,9 @@ class CheckOut extends React.Component {
                         </p>
                       </div>
                       <div>
-                        <button
+                        <Link
+                          // check which payment method is choosen and do the routing
+                          to="/mpesa-payment"
                           className="btn btn-md order-btn"
                           disabled={
                             !this.props.valid ||
@@ -117,7 +119,7 @@ class CheckOut extends React.Component {
                           ) : (
                             <span>Order Now</span>
                           )}
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -132,12 +134,12 @@ class CheckOut extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     loading: state.auth.loading,
-    distance: state.detailsPersist.distance
+    distance: state.detailsPersist.distance,
   };
 };
 export default withRouter(

@@ -18,7 +18,7 @@ import {
   saveCartItems,
   saveWishlistItems,
   fetchCartItems,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -70,10 +70,11 @@ import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
 import FileComplain from "./components/Account/FileComplain";
 import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
+import MpesaPayment from "./components/Checkout/MpesaPayment";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -83,7 +84,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -94,7 +95,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(i => ({
+          this.props.cart.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -102,7 +103,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity
+            quantity: i.quantity,
           }))
         );
 
@@ -114,13 +115,13 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map(i => ({
+          this.props.wishlist.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             imageUrl: i.imageUrl,
-            _id: i._id
+            _id: i._id,
           }))
         );
       this.props.fetchWishlistProducts();
@@ -136,7 +137,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -148,23 +149,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -613,6 +614,17 @@ class App extends React.Component {
                     }
                   />
                   <Route
+                    path="/mpesa-payment"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <MpesaPayment />
+                      )
+                    }
+                  />
+                  <Route
                     path="/account"
                     exact
                     render={() =>
@@ -709,13 +721,13 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -726,5 +738,5 @@ export default connect(mapStateToProps, {
   saveCartItems,
   fetchCartItems,
   fetchWishlistProducts,
-  saveWishlistItems
+  saveWishlistItems,
 })(App);
