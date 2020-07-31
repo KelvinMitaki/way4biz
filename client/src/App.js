@@ -11,7 +11,12 @@ import Account from "./components/Account/Account";
 import ChangePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
-import { fetchUser, fetchProducts, fetchCategories } from "./redux/actions";
+import {
+  fetchUser,
+  fetchProducts,
+  fetchCategories,
+  saveCartItems
+} from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
@@ -80,8 +85,17 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.isSignedIn) {
-      // save cart items to db
+    if (
+      this.props.isSignedIn &&
+      JSON.stringify(prevProps.cart) !== JSON.stringify(this.props.cart)
+    ) {
+      this.props.cart.length !== 0 &&
+        this.props.saveCartItems(
+          this.props.cart.map(item => ({
+            product: item._id,
+            quantity: item.quantity
+          }))
+        );
     }
     if (prevState.scrolling !== this.state.scrolling) {
       this.scrolled = false;
@@ -668,5 +682,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
-  fetchCategories
+  fetchCategories,
+  saveCartItems
 })(App);
