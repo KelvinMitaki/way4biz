@@ -16,6 +16,7 @@ import {
 } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 
+// DECREASE FROM BOTH CART AND WISHLIST
 export class Wishlist extends Component {
   componentDidMount() {
     if (this.props.wishlist.length !== 0) {
