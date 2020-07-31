@@ -6,6 +6,7 @@
 .address-map {
   width: 100%;
   height: 50vh;
+  margin-top: 15px;
 }
 
 @media screen and (max-width: 960px) {
