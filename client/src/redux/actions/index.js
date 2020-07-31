@@ -658,11 +658,23 @@ export const editProduct = (formvalues, productId, history) => async (
   }
 };
 
-export const addToCart = product => {
-  return {
+export const addToCart = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let cart = getState().cartReducer.cart;
+  const newCart =
+    cart.length !== 0 &&
+    cart.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return { ...item, stockQuantity: pro.stockQuantity };
+      }
+      return item;
+    });
+  getState().cartReducer.cart = newCart;
+  dispatch({
     type: ADD_TO_CART,
     payload: product
-  };
+  });
 };
 
 export const removeFromCart = product => async dispatch => {
