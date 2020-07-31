@@ -50,7 +50,7 @@ class Heart extends React.Component {
 const mapStateToProps = state => {
   return {
     wishlist: state.cartReducer.wishlist,
-    isSignedIn: state.cartReducer.isSignedIn
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default withRouter(

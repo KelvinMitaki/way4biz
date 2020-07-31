@@ -89,7 +89,14 @@ export default (state = INITIAL_STATE, action) => {
     case CLEAR_SEARCH_TERM:
       return { ...state, typing: "" };
     case FETCH_WISHLIST_PRODUCTS:
-      return { ...state, wishlist: action.payload };
+      const ids = new Set(state.wishlist.map(p => p._id));
+      return {
+        ...state,
+        wishlist: [
+          ...state.wishlist,
+          ...action.payload.filter(prod => !ids.has(prod._id))
+        ]
+      };
     case FETCH_WISHLIST_PRODUCTS_START:
       return { ...state, wishlistLoading: true };
     case FETCH_WISHLIST_PRODUCTS_STOP:
