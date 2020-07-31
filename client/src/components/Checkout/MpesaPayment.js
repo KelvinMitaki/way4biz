@@ -6,7 +6,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { formValueSelector } from "redux-form";
+import { makeOrder } from "../../redux/actions";
 
 class MpesaPayment extends React.Component {
   render() {
@@ -19,6 +19,12 @@ class MpesaPayment extends React.Component {
       !this.props.order.formValues.payment
     )
       return <Redirect to="/checkout" />;
+    if (
+      !this.props.distance ||
+      (this.props.distance && Object.keys(this.props.distance).length === 0)
+    )
+      return <Redirect to="/checkout" />;
+
     return (
       <div className="main">
         <div className="content">
@@ -63,7 +69,20 @@ class MpesaPayment extends React.Component {
                       </p>
                     </li>
 
-                    <button className="btn btn-md initiate-payment">
+                    <button
+                      disabled={
+                        !this.props.distance ||
+                        (this.props.distance &&
+                          Object.keys(this.props.distance).length === 0)
+                      }
+                      onClick={() =>
+                        this.props.makeOrder({
+                          ...this.props.order,
+                          distanceId: this.props.distance._id
+                        })
+                      }
+                      className="btn btn-md initiate-payment"
+                    >
                       Initiate Payment
                     </button>
 
@@ -93,7 +112,8 @@ class MpesaPayment extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    order: state.cartReducer.order
+    order: state.cartReducer.order,
+    distance: state.detailsPersist.distance
   };
 };
-export default connect(mapStateToProps)(MpesaPayment);
+export default connect(mapStateToProps, { makeOrder })(MpesaPayment);
