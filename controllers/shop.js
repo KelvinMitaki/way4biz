@@ -10,6 +10,7 @@ const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
 const Complaint = require("../models/Complaint");
 const Cart = require("../models/Cart");
+const Wishlist = require("../models/Wishlist");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -991,6 +992,47 @@ route.post(
       });
       await newCart.save();
       res.send(newCart);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/user/new/wishlist",
+  auth,
+  check("wishlist").isArray({ min: 1 }).withMessage("invalid"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { wishlist } = req.body;
+      const { _id } = req.session.user._id;
+
+      wishlist.map(item => {
+        if (item && Object.keys(item).length === 0) {
+          return res.status(401).send({ message: "Invalid wishlist" });
+        }
+        if (!item) {
+          return res.status(401).send({ message: "Empty" });
+        }
+      });
+      const buyerExists = await Wishlist.findOne({ buyer: _id });
+      if (buyerExists) {
+        const updatedWishlist = await Wishlist.findOneAndUpdate(
+          { buyer: _id },
+          { items: wishlist }
+        );
+        await updatedWishlist.save();
+        return res.send(updatedWishlist);
+      }
+      const newWishlist = new Wishlist({
+        buyer: _id,
+        items: wishlist
+      });
+      await newWishlist.save();
+      res.send(newWishlist);
     } catch (error) {
       res.status(500).send(error);
     }
