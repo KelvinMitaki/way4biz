@@ -778,11 +778,17 @@ export const addToWishlist = product => {
   };
 };
 
-export const removeFromWishlist = product => {
-  return {
-    type: REMOVE_FROM_WISHLIST,
-    payload: product
-  };
+export const removeFromWishlist = product => async dispatch => {
+  try {
+    await axios.patch("/api/delete/wishlist", { productId: product._id });
+    dispatch({
+      type: REMOVE_FROM_WISHLIST,
+      payload: product
+    });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };
 
 export const fetchBuyerOrderDetails = orderId => async dispatch => {

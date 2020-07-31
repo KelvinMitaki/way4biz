@@ -1061,6 +1061,29 @@ route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
   }
 });
 
+route.patch(
+  "/api/delete/wishlist",
+  auth,
+  check("productId").not().isEmpty().withMessage("Invalid Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { productId } = req.body;
+      const wishlist = await Wishlist.findOneAndUpdate(
+        { buyer: _id },
+        { $pull: { "items._id": productId } }
+      );
+      await wishlist.save();
+      res.send(wishlist);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
