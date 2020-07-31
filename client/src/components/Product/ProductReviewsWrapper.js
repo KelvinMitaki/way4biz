@@ -25,7 +25,7 @@ class ProductReviewsWrapper extends React.Component {
         <div className="content">
           <Header />
           <div id="product-reviews-wrapper" className="box-container">
-            <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+            {/* <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
               <div className="d-flex align-items-center review-wrapper">
                 <div
                   style={{ cursor: "pointer" }}
@@ -46,12 +46,31 @@ class ProductReviewsWrapper extends React.Component {
                   </span>
                 </div>
               </div>
-            </IconContext.Provider>
-            {/* <ProductReviews /> */}
+            </IconContext.Provider> */}
+            <div className="d-flex align-items-center">
+              <div style={{ flex: "1" }}>
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.props.history.goBack()}
+                    className="reviews-link"
+                  >
+                    <BsArrowLeft />
+                  </div>
+                </IconContext.Provider>
+              </div>
+
+              <h3 className="ml-1" style={{ flex: "2" }}>
+                Customer Reviews
+              </h3>
+            </div>
+
             <div style={{ borderTop: "1px solid #d4d4d4" }}>
               {/* mapping here */}
               {this.props.productReviews.length !== 0 &&
-                this.props.productReviews.map(prod => (
+                this.props.productReviews.map((prod) => (
                   <div className="buyer-review-wrapper" key={prod._id}>
                     <Rating size={15} clickable={false} value={prod.rating} />
 
@@ -81,10 +100,10 @@ class ProductReviewsWrapper extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     productReviews: state.product.productReviews,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default withRouter(
