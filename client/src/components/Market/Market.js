@@ -7,6 +7,7 @@ import { fetchMoreProducts, hasMoreFalse } from "../../redux/actions";
 import RandomCategories from "./RandomCategories";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import Image from "./Image";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 function Market(props) {
   const observer = useRef();
@@ -29,6 +30,7 @@ function Market(props) {
     [props]
   );
 
+  if (props.fetchProductsLoading) return <ScreenLoader />;
   return (
     <div className="container-fluid market">
       {/* <div className="col market-head"></div> */}
@@ -143,6 +145,7 @@ const mapStateToProps = state => {
   return {
     products: state.product.products,
     productCount: state.product.productCount,
+    fetchProductsLoading: state.product.fetchProductsLoading,
     hasMore: state.product.hasMore
   };
 };

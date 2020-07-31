@@ -63,7 +63,6 @@ import {
   REJECT_MESSAGE_STOP,
   FETCH_REJECTS,
   FETCH_STORE_PRODUCTS,
-  HANDLE_SEARCH_TERM,
   NEW_COMPLAINT_START,
   NEW_COMPLAINT_STOP,
   COUNT_COMPLAINTS,
@@ -78,7 +77,9 @@ import {
   FETCH_REJECTED_PRODUCTS,
   FETCH_SUB_CATEGORIES,
   EMPTY_SUB_CATEGORIES,
-  FETCH_LATEST_REJECTED_PRODUCTS
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -142,7 +143,8 @@ const INITIAL_STATE = {
   buyerComplaints: null,
   buyerComplaintLoading: false,
   rejectedProducts: null,
-  latestRejectedProducts: null
+  latestRejectedProducts: null,
+  fetchProductsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -385,6 +387,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, subCategories: null };
     case FETCH_LATEST_REJECTED_PRODUCTS:
       return { ...state, latestRejectedProducts: action.payload };
+    case FETCH_PRODUCTS_START:
+      return { ...state, fetchProductsLoading: true };
+    case FETCH_PRODUCTS_STOP:
+      return { ...state, fetchProductsLoading: false };
     default:
       return state;
   }

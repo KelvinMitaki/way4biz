@@ -63,7 +63,7 @@ class AdminDashBoardOrderItems extends React.Component {
               <div className="individual-order-item">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
-                  this.props.adminOrder["0"].product.map((p) => (
+                  this.props.adminOrder["0"].product.map(p => (
                     <div
                       key={p._id}
                       className="box-container row align-items-center"
@@ -77,6 +77,7 @@ class AdminDashBoardOrderItems extends React.Component {
                               ? p.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl[0]} `
                           }
+                          alt={p.imageUrl[0]}
                         />
                       </div>
                       <div className="col-md-5 admin-order-product">
@@ -96,7 +97,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
-                              (it) => it.product === p._id
+                              it => it.product === p._id
                             ).quantity
                           }
                         </p>
@@ -126,9 +127,9 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
+    adminOrder: state.product.adminOrder
   };
 };
 export default withRouter(

@@ -44,6 +44,7 @@ class SellerDocuments extends React.Component {
               <div key={i}>
                 <img
                   src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                  alt={url}
                 />
                 <div
                   className="seller-uploads-trash-button-wrapper"

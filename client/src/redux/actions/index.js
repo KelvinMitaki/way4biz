@@ -134,7 +134,6 @@ import {
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
-  FETCH_SELLER_NEW_ORDERS,
   FETCH_SELLER_NEW_ORDERS_COUNT,
   DELETE_SELLER_IMAGE,
   ACCEPT_SELLER_REQUEST,
@@ -191,7 +190,17 @@ import {
   EMPTY_SUB_CATEGORIES,
   FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_SELLER_START,
-  FETCH_SELLER_STOP
+  FETCH_SELLER_STOP,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_STOP,
+  FETCH_WISHLIST_PRODUCTS,
+  FETCH_WISHLIST_PRODUCTS_START,
+  FETCH_WISHLIST_PRODUCTS_STOP,
+  SAVE_CART,
+  FETCH_CART_ITEMS,
+  FETCH_CART_ITEMS_START,
+  FETCH_CART_ITEMS_STOP,
+  SAVE_WISHLIST
 } from "./types";
 
 const authCheck = error => {
@@ -801,12 +810,12 @@ export const hasMoreSearchFalse = () => {
 };
 export const fetchProducts = () => async dispatch => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: FETCH_PRODUCTS_START });
     const res = await axios.post(`/api/products`, { itemsToSkip: 0 });
     dispatch({ type: FETCH_PRODUCTS, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
   } catch (error) {
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: FETCH_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -1626,10 +1635,9 @@ export const editCategory = (
 ) => async dispatch => {
   try {
     dispatch({ type: EDIT_CATEGORY_START });
-    const res = await axios.patch(
-      `/api/root/admin/edit/category/${categoryId}`,
-      { category }
-    );
+    await axios.patch(`/api/root/admin/edit/category/${categoryId}`, {
+      category
+    });
     dispatch({ type: EDIT_CATEGORY });
     dispatch({ type: EDIT_CATEGORY_STOP });
     history.push("/admin-categories");
@@ -1953,6 +1961,51 @@ export const fetchLatestRejectedProducts = () => async dispatch => {
     dispatch({ type: FETCH_LATEST_REJECTED_PRODUCTS, payload: res.data });
   } catch (error) {
     authCheck(error);
+    console.log(error.response);
+  }
+};
+
+// MUST BE ITEMS IN WISHLIST
+export const fetchWishlistProducts = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
+    const res = await axios.get("/api/fetch/wishlits/products");
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS, payload: res.data });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+  } catch (error) {
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const saveCartItems = cart => async dispatch => {
+  try {
+    await axios.post("/api/user/new/cart", { cart });
+    dispatch({ type: SAVE_CART });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+export const saveWishlistItems = wishlist => async dispatch => {
+  try {
+    await axios.post("/api/user/new/wishlist", { wishlist });
+    dispatch({ type: SAVE_WISHLIST });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchCartItems = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_CART_ITEMS_START });
+    const res = await axios.get("/api/user/fetch/cart/items");
+    dispatch({ type: FETCH_CART_ITEMS, payload: res.data });
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_CART_ITEMS_STOP });
     console.log(error.response);
   }
 };

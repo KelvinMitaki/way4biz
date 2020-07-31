@@ -7,11 +7,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
-import {
-  redirectOnFail,
-  newComplaint,
-  redirectOnNotDelivered
-} from "../../redux/actions";
+import { newComplaint, redirectOnNotDelivered } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Pages/Home";
 import Cart from "./components/Pages/Cart";
 import Authenticate from "./components/Authenticate/Authenticate";
@@ -11,7 +11,15 @@ import Account from "./components/Account/Account";
 import ChangePassword from "./components/Account/changePassword";
 import Orders from "./components/Account/Orders";
 import Wishlist from "./components/Account/Wishlist";
-import { fetchUser, fetchProducts, fetchCategories } from "./redux/actions";
+import {
+  fetchUser,
+  fetchProducts,
+  fetchCategories,
+  saveCartItems,
+  saveWishlistItems,
+  fetchCartItems,
+  fetchWishlistProducts,
+} from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
 import NotFound from "./components/Pages/NotFound";
@@ -81,6 +89,44 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.isSignedIn &&
+      JSON.stringify(prevProps.cart) !== JSON.stringify(this.props.cart)
+    ) {
+      this.props.cart.length !== 0 &&
+        this.props.saveCartItems(
+          this.props.cart.map((i) => ({
+            freeShipping: i.freeShipping,
+            name: i.name,
+            price: i.price,
+            stockQuantity: i.stockQuantity,
+            imageUrl: i.imageUrl,
+            seller: { storeName: i.seller.storeName },
+            _id: i._id,
+            quantity: i.quantity,
+          }))
+        );
+
+      this.props.fetchCartItems();
+    }
+    if (
+      this.props.isSignedIn &&
+      JSON.stringify(prevProps.wishlist) !== JSON.stringify(this.props.wishlist)
+    ) {
+      this.props.wishlist.length !== 0 &&
+        this.props.saveWishlistItems(
+          this.props.wishlist.map((i) => ({
+            freeShipping: i.freeShipping,
+            name: i.name,
+            price: i.price,
+            stockQuantity: i.stockQuantity,
+            imageUrl: i.imageUrl,
+            _id: i._id,
+          }))
+        );
+      this.props.fetchWishlistProducts();
+    }
+
     if (prevState.scrolling !== this.state.scrolling) {
       this.scrolled = false;
     }
@@ -635,7 +681,17 @@ class App extends React.Component {
                       )
                     }
                   />
-                  <Route path="/wishlist" exact component={Wishlist} />
+                  <Route
+                    path="/wishlist"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <Wishlist />
+                      )
+                    }
+                  />
                   <Route
                     path="/change-password"
                     exact
@@ -670,6 +726,8 @@ const mapStateToProps = (state) => {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
+    cart: state.cartReducer.cart,
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -677,4 +735,8 @@ export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
   fetchCategories,
+  saveCartItems,
+  fetchCartItems,
+  fetchWishlistProducts,
+  saveWishlistItems,
 })(App);

@@ -2,7 +2,7 @@ import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
 import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";

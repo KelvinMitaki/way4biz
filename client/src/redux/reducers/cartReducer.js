@@ -7,21 +7,31 @@ import {
   REMOVE_FROM_WISHLIST,
   HANDLE_SEARCH_TERM,
   HANDLE_URL_SEARCH_TERM,
-  CLEAR_SEARCH_TERM
+  CLEAR_SEARCH_TERM,
+  FETCH_WISHLIST_PRODUCTS,
+  FETCH_WISHLIST_PRODUCTS_START,
+  FETCH_WISHLIST_PRODUCTS_STOP,
+  FETCH_CART_ITEMS_START,
+  FETCH_CART_ITEMS_STOP,
+  FETCH_CART_ITEMS
 } from "../actions/types";
 
 const INITIAL_STATE = {
   cart: [],
   wishlist: [],
-  typing: ""
+  typing: "",
+  wishlistLoading: false,
+  cartLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const productExists = state.cart.find(
-        product => product._id.toString() === action.payload._id.toString()
-      );
+      const productExists =
+        state.cart &&
+        state.cart.find(
+          product => product._id.toString() === action.payload._id.toString()
+        );
       if (productExists) {
         return {
           ...state,
@@ -78,6 +88,25 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, typing: action.payload };
     case CLEAR_SEARCH_TERM:
       return { ...state, typing: "" };
+    case FETCH_WISHLIST_PRODUCTS:
+      return { ...state, wishlist: action.payload };
+    case FETCH_WISHLIST_PRODUCTS_START:
+      return { ...state, wishlistLoading: true };
+    case FETCH_WISHLIST_PRODUCTS_STOP:
+      return { ...state, wishlistLoading: false };
+    case FETCH_CART_ITEMS_START:
+      return { ...state, cartLoading: true };
+    case FETCH_CART_ITEMS_STOP:
+      return { ...state, cartLoading: false };
+    case FETCH_CART_ITEMS:
+      const productIds = new Set(state.cart.map(p => p._id));
+      return {
+        ...state,
+        cart: [
+          ...state.cart,
+          ...action.payload.filter(prod => !productIds.has(prod._id))
+        ]
+      };
     default:
       return state;
   }
