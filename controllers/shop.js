@@ -18,13 +18,23 @@ route.post("/api/products", async (req, res) => {
     const products = await Product.aggregate([
       { $match: { onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
           imageUrl: 1,
-          stockQuantity: 1
+          stockQuantity: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $skip: itemsToSkip },
@@ -48,13 +58,23 @@ route.post("/api/products/skip/category", async (req, res) => {
     const products = await Product.aggregate([
       { $match: { ...test, onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
           imageUrl: 1,
-          stockQuantity: 1
+          stockQuantity: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $sort: sort },
@@ -95,12 +115,22 @@ route.post("/api/products/search/term", async (req, res) => {
       },
       { $match: { ...test, onSite: true } },
       {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
         $project: {
           price: 1,
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          seller: { storeName: "$seller.storeName" }
         }
       },
       { $sort: sort },
@@ -1075,10 +1105,33 @@ route.patch(
       const { productId } = req.body;
       const wishlist = await Wishlist.findOneAndUpdate(
         { buyer: _id },
-        { $pull: { "items._id": productId } }
+        { $pull: { items: { _id: productId } } }
       );
       await wishlist.save();
       res.send(wishlist);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.patch(
+  "/api/delete/cart",
+  auth,
+  check("productId").not().isEmpty().withMessage("Invalid Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { productId } = req.body;
+      const cart = await Cart.findOneAndUpdate(
+        { buyer: _id },
+        { $pull: { items: { _id: productId } } }
+      );
+      await cart.save();
+      res.send(cart);
     } catch (error) {
       res.status(500).send(error);
     }

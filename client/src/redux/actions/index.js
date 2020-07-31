@@ -672,11 +672,23 @@ export const removeFromCart = product => {
   };
 };
 
-export const deleteFromCart = product => {
-  return {
-    type: DELETE_FROM_CART,
-    payload: product
-  };
+export const deleteFromCart = product => async (dispatch, getState) => {
+  try {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      await axios.patch("/api/delete/cart", { productId: product._id });
+    }
+    dispatch({
+      type: DELETE_FROM_CART,
+      payload: product
+    });
+  } catch (error) {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      authCheck(error);
+    }
+    console.log(error.response);
+  }
 };
 
 export const fetchCategories = () => async dispatch => {
