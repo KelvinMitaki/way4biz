@@ -80,6 +80,9 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.isSignedIn) {
+      // save cart items to db
+    }
     if (prevState.scrolling !== this.state.scrolling) {
       this.scrolled = false;
     }
@@ -657,7 +660,8 @@ const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    cart: state.cartReducer.cart
   };
 };
 

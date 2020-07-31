@@ -1967,7 +1967,6 @@ export const fetchWishlistProducts = ids => async dispatch => {
   try {
     dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
     const res = await axios.post("/api/fetch/wishlits/products", { ids });
-    console.log(res.data);
     dispatch({ type: FETCH_WISHLIST_PRODUCTS, payload: res.data });
     dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
   } catch (error) {

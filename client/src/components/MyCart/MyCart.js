@@ -10,6 +10,9 @@ import { Link } from "react-router-dom";
 import Image from "../Market/Image";
 
 class MyCart extends React.Component {
+  componentDidMount() {
+    // RETRIEVE FROM DB IF LOGGED IN
+  }
   render() {
     if (this.props.cart.length !== 0) {
       return (

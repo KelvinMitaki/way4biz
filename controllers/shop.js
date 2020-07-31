@@ -9,6 +9,7 @@ const Order = require("../models/Order");
 const Review = require("../models/Reviews");
 const Distance = require("../models/Distance");
 const Complaint = require("../models/Complaint");
+const Cart = require("../models/Cart");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -923,6 +924,65 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/fetch/wishlits/products",
+  check("ids").isArray({ min: 1 }).withMessage("Invalid"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { ids } = req.body;
+      const wishlist = await Product.aggregate([
+        {
+          $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
+        },
+        {
+          $project: {
+            freeShipping: 1,
+            name: 1,
+            price: 1,
+            imageUrl: 1,
+            stockQuantity: 1
+          }
+        }
+      ]);
+      res.send(wishlist);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.post(
+  "/api/user/new/cart",
+  auth,
+  check("cart").isArray({ min: 1 }).withMessage("invalid"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send(errors.array()[0].msg);
+      }
+      const { cart } = req.body;
+      const { _id } = req.session.user._id;
+      cart.map(item => {
+        if (typeof item !== "object") {
+          return res.status(401).send({ message: "Invalid Cart" });
+        }
+      });
+      const newCart = new Cart({
+        buyer: _id,
+        cart
+      });
+      await newCart.save();
+      res.send(newCart);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
