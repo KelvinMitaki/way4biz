@@ -11,14 +11,9 @@ import Image from "../Market/Image";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
-  componentDidMount() {
-    if (this.props.isSignedIn) {
-      this.props.fetchCartItems();
-    }
-  }
   render() {
-    if (!this.props.cart || this.props.cartLoading) return <ScreenLoader />;
-    if (this.props.cart.length !== 0) {
+    if (this.props.cartLoading) return <ScreenLoader />;
+    if (this.props.cart && this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">
           <div className="col7">

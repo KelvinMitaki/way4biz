@@ -13,10 +13,12 @@ class Cart extends React.Component {
         <IconContext.Provider value={{ className: "icon cart-icon" }}>
           <div className="icon-container">
             <FaOpencart />
-            <span className="badge">
-              {this.props.cart
-                .map((item) => item.quantity)
-                .reduce((cur, acc) => cur + acc, 0)}
+            <span className="badge ml-1">
+              {(this.props.cart &&
+                this.props.cart
+                  .map(item => item.quantity)
+                  .reduce((cur, acc) => cur + acc, 0)) ||
+                0}
             </span>
           </div>
         </IconContext.Provider>
@@ -26,9 +28,9 @@ class Cart extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    cart: state.cartReducer.cart,
+    cart: state.cartReducer.cart
   };
 };
 export default connect(mapStateToProps)(Cart);

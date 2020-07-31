@@ -18,11 +18,6 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 // DECREASE FROM BOTH CART AND WISHLIST
 export class Wishlist extends Component {
-  componentDidMount() {
-    if (this.props.isSignedIn) {
-      this.props.fetchWishlistProducts();
-    }
-  }
   render() {
     if (this.props.wishlistLoading) return <ScreenLoader />;
     return (

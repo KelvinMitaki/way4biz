@@ -112,6 +112,7 @@ class Product extends React.Component {
     itemInCart =
       this.props.product &&
       this.props.product._id &&
+      this.props.cart &&
       this.props.cart.find(item => item._id === this.props.product._id);
 
     const carouselSettings = {
@@ -219,6 +220,9 @@ class Product extends React.Component {
                         <div
                           style={{ cursor: "pointer" }}
                           onClick={() => {
+                            if (!this.props.isSignedIn) {
+                              return this.props.history.push("/sign-in");
+                            }
                             this.props.removeFromWishlist(this.props.product);
                             this.setState({ clicked: false });
                           }}
@@ -391,7 +395,8 @@ const mapStateToProps = (state, ownProps) => {
     wishlist: state.cartReducer.wishlist,
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
-    productReviews: state.product.productReviews
+    productReviews: state.product.productReviews,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default withRouter(

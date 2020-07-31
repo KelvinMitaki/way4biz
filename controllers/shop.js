@@ -807,7 +807,8 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           productPrice: "$product.price",
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
-          body: 1
+          body: 1,
+          storeName: "$seller.storeName"
         }
       },
       { $sort: { createdAt: -1 } }

@@ -12,11 +12,12 @@ import {
   FETCH_WISHLIST_PRODUCTS_START,
   FETCH_WISHLIST_PRODUCTS_STOP,
   FETCH_CART_ITEMS_START,
-  FETCH_CART_ITEMS_STOP
+  FETCH_CART_ITEMS_STOP,
+  FETCH_CART_ITEMS
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  cart: null,
+  cart: [],
   wishlist: [],
   typing: "",
   wishlistLoading: false,
@@ -26,9 +27,11 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const productExists = state.cart.find(
-        product => product._id.toString() === action.payload._id.toString()
-      );
+      const productExists =
+        state.cart &&
+        state.cart.find(
+          product => product._id.toString() === action.payload._id.toString()
+        );
       if (productExists) {
         return {
           ...state,
@@ -95,6 +98,15 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, cartLoading: true };
     case FETCH_CART_ITEMS_STOP:
       return { ...state, cartLoading: false };
+    case FETCH_CART_ITEMS:
+      const productIds = new Set(state.cart.map(p => p._id));
+      return {
+        ...state,
+        cart: [
+          ...state.cart,
+          ...action.payload.filter(prod => !productIds.has(prod._id))
+        ]
+      };
     default:
       return state;
   }
