@@ -15,11 +15,60 @@ class MpesaPayment extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
-                <div className="box-container">
-                  <h5>
-                    <Link to="/checkout">Change Payment Method</Link>
-                  </h5>
-                  <h3 style={{ textAlign: "center" }}>Mpesa Payment</h3>
+                <div className="box-container py-3 pl-2 pr-1">
+                  <h6 className="mb-2">
+                    <Link id="change-payment-method" to="/checkout">
+                      Change Payment Method
+                    </Link>
+                  </h6>
+                  <h3>Mpesa Payment</h3>
+                  <ul className="my-1 mpesa-payment-guide">
+                    <li>
+                      <p>
+                        Ensure you have enough money in mpesa to make payment
+                        for your order.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Once you initiate payment a prompt will be sent to the
+                        phone with this number 0712345678.
+                        <Link to="/address" className="ml-2">
+                          Change number here
+                        </Link>
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        This prompt will ask you to enter your mpesa pin. Key in
+                        your pin and press OK.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <strong>
+                          Once you initiate payment don't leave this page.
+                        </strong>
+                      </p>
+                    </li>
+
+                    <button className="btn btn-md initiate-payment">
+                      Initiate Payment
+                    </button>
+
+                    <li>
+                      <p>
+                        On successful payment,you will receive an mpesa
+                        confirmation message.
+                      </p>
+                    </li>
+                    <li>
+                      <p>Press the UNPAID button which should turn to PAID.</p>
+                    </li>
+                    <button className="btn btn-md mpesa">
+                      <strong>UNPAID</strong>
+                    </button>
+                  </ul>
                 </div>
               </div>
             </div>

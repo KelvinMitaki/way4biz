@@ -97,6 +97,7 @@ class CheckOut extends React.Component {
                       </div>
                       <div>
                         <Link
+                          // check which payment method is choosen and do the routing
                           to="/mpesa-payment"
                           className="btn btn-md order-btn"
                           disabled={
