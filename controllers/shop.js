@@ -23,7 +23,8 @@ route.post("/api/products", async (req, res) => {
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          stockQuantity: 1
         }
       },
       { $skip: itemsToSkip },
@@ -52,7 +53,8 @@ route.post("/api/products/skip/category", async (req, res) => {
           name: 1,
           price: 1,
           freeShipping: 1,
-          imageUrl: 1
+          imageUrl: 1,
+          stockQuantity: 1
         }
       },
       { $sort: sort },
@@ -925,36 +927,36 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.post(
-  "/api/fetch/wishlits/products",
-  check("ids").isArray({ min: 1 }).withMessage("Invalid"),
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(401).send({ message: errors.array()[0].msg });
-      }
-      const { ids } = req.body;
-      const wishlist = await Product.aggregate([
-        {
-          $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
-        },
-        {
-          $project: {
-            freeShipping: 1,
-            name: 1,
-            price: 1,
-            imageUrl: 1,
-            stockQuantity: 1
-          }
-        }
-      ]);
-      res.send(wishlist);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }
-);
+// route.post(
+//   "/api/fetch/wishlits/products",
+//   check("ids").isArray({ min: 1 }).withMessage("Invalid"),
+//   async (req, res) => {
+//     try {
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         return res.status(401).send({ message: errors.array()[0].msg });
+//       }
+//       const { ids } = req.body;
+//       const wishlist = await Product.aggregate([
+//         {
+//           $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
+//         },
+//         {
+//           $project: {
+//             freeShipping: 1,
+//             name: 1,
+//             price: 1,
+//             imageUrl: 1,
+//             stockQuantity: 1
+//           }
+//         }
+//       ]);
+//       res.send(wishlist);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   }
+// );
 
 route.post(
   "/api/user/new/cart",
@@ -1044,6 +1046,15 @@ route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
     const { _id } = req.session.user;
     const cart = await Cart.aggregate([{ $match: { buyer: _id } }]);
     res.send(cart.length !== 0 ? cart[0].items : cart);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
+  try {
+    const { _id } = req.session.user;
+    const wishlist = await Wishlist.aggregate([{ $match: { buyer: _id } }]);
+    res.send(wishlist.length !== 0 ? wishlist[0].items : wishlist);
   } catch (error) {
     res.status(500).send(error);
   }

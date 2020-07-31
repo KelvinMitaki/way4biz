@@ -199,7 +199,8 @@ import {
   SAVE_CART,
   FETCH_CART_ITEMS,
   FETCH_CART_ITEMS_START,
-  FETCH_CART_ITEMS_STOP
+  FETCH_CART_ITEMS_STOP,
+  SAVE_WISHLIST
 } from "./types";
 
 const authCheck = error => {
@@ -1965,10 +1966,10 @@ export const fetchLatestRejectedProducts = () => async dispatch => {
 };
 
 // MUST BE ITEMS IN WISHLIST
-export const fetchWishlistProducts = ids => async dispatch => {
+export const fetchWishlistProducts = () => async dispatch => {
   try {
     dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
-    const res = await axios.post("/api/fetch/wishlits/products", { ids });
+    const res = await axios.get("/api/fetch/wishlits/products");
     dispatch({ type: FETCH_WISHLIST_PRODUCTS, payload: res.data });
     dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
   } catch (error) {
@@ -1981,6 +1982,15 @@ export const saveCartItems = cart => async dispatch => {
   try {
     await axios.post("/api/user/new/cart", { cart });
     dispatch({ type: SAVE_CART });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+export const saveWishlistItems = wishlist => async dispatch => {
+  try {
+    await axios.post("/api/user/new/wishlist", { wishlist });
+    dispatch({ type: SAVE_WISHLIST });
   } catch (error) {
     authCheck(error);
     console.log(error.response);

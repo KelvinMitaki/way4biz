@@ -19,8 +19,8 @@ import ScreenLoader from "../Pages/ScreenLoader";
 // DECREASE FROM BOTH CART AND WISHLIST
 export class Wishlist extends Component {
   componentDidMount() {
-    if (this.props.wishlist.length !== 0) {
-      this.props.fetchWishlistProducts(this.props.wishlist.map(i => i._id));
+    if (this.props.isSignedIn) {
+      this.props.fetchWishlistProducts();
     }
   }
   render() {
@@ -133,7 +133,8 @@ export class Wishlist extends Component {
 const mapStateToProps = state => {
   return {
     wishlist: state.cartReducer.wishlist,
-    wishlistLoading: state.cartReducer.wishlistLoading
+    wishlistLoading: state.cartReducer.wishlistLoading,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default connect(mapStateToProps, {

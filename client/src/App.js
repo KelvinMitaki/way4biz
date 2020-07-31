@@ -15,7 +15,8 @@ import {
   fetchUser,
   fetchProducts,
   fetchCategories,
-  saveCartItems
+  saveCartItems,
+  saveWishlistItems
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -97,7 +98,24 @@ class App extends React.Component {
             price: i.price,
             stockQuantity: i.stockQuantity,
             imageUrl: i.imageUrl,
-            seller: { storeName: i.seller.storeName }
+            seller: { storeName: i.seller.storeName },
+            _id: i._id
+          }))
+        );
+    }
+    if (
+      this.props.isSignedIn &&
+      JSON.stringify(prevProps.wishlist) !== JSON.stringify(this.props.wishlist)
+    ) {
+      this.props.wishlist.length !== 0 &&
+        this.props.saveWishlistItems(
+          this.props.wishlist.map(i => ({
+            freeShipping: i.freeShipping,
+            name: i.name,
+            price: i.price,
+            stockQuantity: i.stockQuantity,
+            imageUrl: i.imageUrl,
+            _id: i._id
           }))
         );
     }
@@ -679,7 +697,8 @@ const mapStateToProps = state => {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
+    wishlist: state.cartReducer.wishlist
   };
 };
 
@@ -687,5 +706,6 @@ export default connect(mapStateToProps, {
   fetchUser,
   fetchProducts,
   fetchCategories,
-  saveCartItems
+  saveCartItems,
+  saveWishlistItems
 })(App);
