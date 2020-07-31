@@ -142,7 +142,7 @@ class Product extends React.Component {
                     <Slider {...carouselSettings} className="product-carousel">
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -153,7 +153,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -164,7 +164,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -175,7 +175,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -186,7 +186,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
