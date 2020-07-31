@@ -71,6 +71,7 @@ import FileComplain from "./components/Account/FileComplain";
 import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
+import CardPayment from "./components/Checkout/CardPayment";
 
 class App extends React.Component {
   state = {
@@ -621,6 +622,17 @@ class App extends React.Component {
                         <Redirect to="/sign-in" />
                       ) : (
                         <MpesaPayment />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/card-payment"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <CardPayment />
                       )
                     }
                   />
