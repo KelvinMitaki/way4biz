@@ -86,6 +86,7 @@ class Product extends React.Component {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
+        // width:100%,
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
           : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`
@@ -114,7 +115,7 @@ class Product extends React.Component {
       this.props.cart.find(item => item._id === this.props.product._id);
 
     const carouselSettings = {
-      dots: true,
+      // dots: true,
       slidesToShow: 4,
       slidesToScroll: 1
     };
@@ -142,7 +143,7 @@ class Product extends React.Component {
                     <Slider {...carouselSettings} className="product-carousel">
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -153,7 +154,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -164,7 +165,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -175,7 +176,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -186,7 +187,7 @@ class Product extends React.Component {
                       </div>
                       <div>
                         <img
-                          className="carousel-img"
+                          className="product-carousel-img"
                           src={
                             this.props.product.imageUrl[0].includes("http")
                               ? this.props.product.imageUrl[0]
@@ -243,16 +244,18 @@ class Product extends React.Component {
                     >
                       <FaStore />
                     </IconContext.Provider>
-                    <p
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        this.props.history.push(
-                          `/seller/store/${this.props.product.seller._id}`
-                        )
-                      }
-                      className="store-name ml-2"
-                    >
-                      {this.props.product.seller.storeName}
+                    <p>
+                      <span
+                        style={{ cursor: "pointer", display: "inline-block" }}
+                        onClick={() =>
+                          this.props.history.push(
+                            `/seller/store/${this.props.product.seller._id}`
+                          )
+                        }
+                        className="store-name ml-2"
+                      >
+                        {this.props.product.seller.storeName}
+                      </span>
                     </p>
                   </div>
                   <div className="product-rating">
