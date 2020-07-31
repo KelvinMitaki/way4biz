@@ -666,7 +666,16 @@ export const addToCart = product => (dispatch, getState) => {
     cart.map(item => {
       const pro = products.find(p => p._id.toString() === item._id.toString());
       if (pro) {
-        return { ...item, stockQuantity: pro.stockQuantity };
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
       }
       return item;
     });
@@ -795,11 +804,32 @@ export const fetchBuyerOrders = () => async dispatch => {
   }
 };
 
-export const addToWishlist = product => {
-  return {
+export const addToWishlist = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let wishlist = getState().cartReducer.wishlist;
+  const newWishlist =
+    wishlist.length !== 0 &&
+    wishlist.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
+      }
+      return item;
+    });
+  getState().carttReducer.wishlist = newWishlist;
+  dispatch({
     type: ADD_TO_WISHLIST,
     payload: product
-  };
+  });
 };
 
 export const removeFromWishlist = product => async dispatch => {
