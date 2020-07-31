@@ -665,11 +665,11 @@ export const addToCart = product => {
   };
 };
 
-export const removeFromCart = product => {
-  return {
+export const removeFromCart = product => async dispatch => {
+  dispatch({
     type: REMOVE_FROM_CART,
     payload: product
-  };
+  });
 };
 
 export const deleteFromCart = product => async (dispatch, getState) => {
