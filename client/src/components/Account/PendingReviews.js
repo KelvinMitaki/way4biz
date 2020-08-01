@@ -68,7 +68,7 @@ class PendingReviews extends React.Component {
                 {/* show if there is pending reviews */}
                 {this.props.pendingReviewProducts.length !== 0 && (
                   <div className="container-fluid p-0 buyer-pending-reviews">
-                    <h4>Pending Reviews</h4>
+                    <h4 className="my-3">Pending Reviews</h4>
                     <div className="buyer-pending-reviews-wrapper mt-2 container">
                       {/* mapping takes place here */}
                       {test.map((item) => (
@@ -87,7 +87,7 @@ class PendingReviews extends React.Component {
                             />
                             <div id="buyer-review-product-details">
                               <div className="mb-3">
-                                <h6>{item.name} hey There kingmane </h6>
+                                <h6>{item.name}</h6>
                               </div>
 
                               <p>Ksh.{item.price.toLocaleString()}</p>
