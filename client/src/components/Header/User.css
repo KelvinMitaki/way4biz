@@ -39,6 +39,16 @@
   color: #fff;
 }
 
+.login:hover {
+  color: #fff;
+}
+
+.login:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
 #register-link {
   color: #f76b1a;
   font-weight: bold;
