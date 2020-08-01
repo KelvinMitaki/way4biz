@@ -674,12 +674,14 @@ export const addToCart = product => (dispatch, getState) => {
           imageUrl: pro.imageUrl,
           seller: { storeName: pro.seller.storeName },
           _id: pro._id,
-          quantity: pro.quantity
+          quantity: item.quantity
         };
       }
       return item;
     });
-  getState().cartReducer.cart = newCart;
+  if (newCart) {
+    getState().cartReducer.cart = newCart;
+  }
   dispatch({
     type: ADD_TO_CART,
     payload: product

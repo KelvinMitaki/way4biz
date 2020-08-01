@@ -44,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
           )
         };
       }
+
       return {
         ...state,
         cart: [{ ...action.payload, quantity: 1 }, ...state.cart]
