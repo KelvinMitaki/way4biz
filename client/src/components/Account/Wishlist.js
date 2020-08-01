@@ -79,8 +79,8 @@ export class Wishlist extends Component {
                           </div>
                         </div>
                         <div className="col-12 wishlist-more-info">
-                          <div className="row my-3">
-                            <div className="col-6 d-flex justify-content-start">
+                          <div className="row px-2 my-3 justify-content-between align-items-center">
+                            <span className="d-flex">
                               {item.stockQuantity >= 1 ? (
                                 <Link
                                   id="order-today-link"
@@ -94,10 +94,10 @@ export class Wishlist extends Component {
                                   out of stock
                                 </div>
                               )}
-                            </div>
-                            <div
+                            </span>
+                            <span
                               id="remove-wishlist"
-                              className="col-6 d-flex justify-content-end"
+                              className="d-flex align-items-center"
                               style={{ cursor: "pointer" }}
                               onClick={() =>
                                 this.props.removeFromWishlist(item)
@@ -109,7 +109,7 @@ export class Wishlist extends Component {
                                 <FaTrashAlt />
                                 <span className="ml-2">Remove</span>
                               </IconContext.Provider>
-                            </div>
+                            </span>
                           </div>
                         </div>
                       </div>
