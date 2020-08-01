@@ -200,7 +200,8 @@ import {
   FETCH_CART_ITEMS,
   FETCH_CART_ITEMS_START,
   FETCH_CART_ITEMS_STOP,
-  SAVE_WISHLIST
+  SAVE_WISHLIST,
+  PRE_MAKE_ORDER
 } from "./types";
 
 const authCheck = error => {
@@ -657,25 +658,58 @@ export const editProduct = (formvalues, productId, history) => async (
   }
 };
 
-export const addToCart = product => {
-  return {
+export const addToCart = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let cart = getState().cartReducer.cart;
+  const newCart =
+    cart.length !== 0 &&
+    cart.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
+      }
+      return item;
+    });
+  getState().cartReducer.cart = newCart;
+  dispatch({
     type: ADD_TO_CART,
     payload: product
-  };
+  });
 };
 
-export const removeFromCart = product => {
-  return {
+export const removeFromCart = product => async dispatch => {
+  dispatch({
     type: REMOVE_FROM_CART,
     payload: product
-  };
+  });
 };
 
-export const deleteFromCart = product => {
-  return {
-    type: DELETE_FROM_CART,
-    payload: product
-  };
+export const deleteFromCart = product => async (dispatch, getState) => {
+  try {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      await axios.patch("/api/delete/cart", { productId: product._id });
+    }
+    dispatch({
+      type: DELETE_FROM_CART,
+      payload: product
+    });
+  } catch (error) {
+    const isSignedIn = getState().auth.isSignedIn;
+    if (isSignedIn) {
+      authCheck(error);
+    }
+    console.log(error.response);
+  }
 };
 
 export const fetchCategories = () => async dispatch => {
@@ -714,6 +748,11 @@ export const fetchAllCategories = () => async dispatch => {
     console.log(error.response);
     dispatch({ type: SINGLE_CATEGORY_STOP });
   }
+};
+
+export const preMakeOrder = (credentials, history) => dispatch => {
+  dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
+  history.push("/mpesa-payment");
 };
 
 export const makeOrder = credentials => async (dispatch, getState) => {
@@ -765,18 +804,45 @@ export const fetchBuyerOrders = () => async dispatch => {
   }
 };
 
-export const addToWishlist = product => {
-  return {
+export const addToWishlist = product => (dispatch, getState) => {
+  const products = getState().product.products;
+  let wishlist = getState().cartReducer.wishlist;
+  const newWishlist =
+    wishlist.length !== 0 &&
+    wishlist.map(item => {
+      const pro = products.find(p => p._id.toString() === item._id.toString());
+      if (pro) {
+        return {
+          freeShipping: pro.freeShipping,
+          name: pro.name,
+          price: pro.price,
+          stockQuantity: pro.stockQuantity,
+          imageUrl: pro.imageUrl,
+          seller: { storeName: pro.seller.storeName },
+          _id: pro._id,
+          quantity: pro.quantity
+        };
+      }
+      return item;
+    });
+  getState().carttReducer.wishlist = newWishlist;
+  dispatch({
     type: ADD_TO_WISHLIST,
     payload: product
-  };
+  });
 };
 
-export const removeFromWishlist = product => {
-  return {
-    type: REMOVE_FROM_WISHLIST,
-    payload: product
-  };
+export const removeFromWishlist = product => async dispatch => {
+  try {
+    await axios.patch("/api/delete/wishlist", { productId: product._id });
+    dispatch({
+      type: REMOVE_FROM_WISHLIST,
+      payload: product
+    });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };
 
 export const fetchBuyerOrderDetails = orderId => async dispatch => {
@@ -1318,7 +1384,6 @@ export const paymentPerDistance = (details, history) => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
-
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
     history.push("/checkout");

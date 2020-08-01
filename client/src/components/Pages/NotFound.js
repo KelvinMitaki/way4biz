@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import "./NotFound.css";
 import { Link } from "react-router-dom";
 export class NotFound extends Component {
@@ -29,11 +28,17 @@ export class NotFound extends Component {
     let width = this.state.width;
     let height = this.state.height;
     if (width > 420 && height < 960) {
-      return <img width="100%" height="100%" src="/404smlw.png" />;
+      return (
+        <img width="100%" height="100%" src="/404smlw.png" alt="/404smlw.png" />
+      );
     } else if (width > 960) {
-      return <img width="100%" height="100%" src="/404.png" />;
+      return (
+        <img width="100%" height="100%" src="/404.png" alt="/404smlw.png" />
+      );
     } else {
-      return <img width="100%" height="100%" src="/404sm.png" />;
+      return (
+        <img width="100%" height="100%" src="/404sm.png" alt="/404smlw.png" />
+      );
     }
   }
   render() {

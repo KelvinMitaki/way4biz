@@ -8,6 +8,7 @@ class QuantityCounter extends React.Component {
     return (
       <div id="quantity-counter">
         <button
+          disabled={this.props.item.quantity === 1}
           className="mr-3"
           onClick={() => this.props.removeFromCart(this.props.item)}
         >
