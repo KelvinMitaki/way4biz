@@ -33,3 +33,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
+#order-help h6 a {
+  color: #f76b1a;
+}

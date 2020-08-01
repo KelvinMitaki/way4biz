@@ -92,14 +92,11 @@ class OrderPaymentSuccess extends React.Component {
                     className="my-3"
                   ></div>
                   <h5 className="mb-2">For Help</h5>
-                  <div>
-                    <div>
-                      <h6>
-                        View all order details at{" "}
-                        <Link to="/">Your Account</Link> or contact{" "}
-                        <Link to="/">Customer service.</Link>
-                      </h6>
-                    </div>
+                  <div id="order-help">
+                    <h6>
+                      View all order details <Link to="/">here</Link> or contact{" "}
+                      <Link to="/">Customer Service.</Link>
+                    </h6>
                   </div>
                 </div>
               </div>
