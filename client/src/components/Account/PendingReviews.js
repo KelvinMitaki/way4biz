@@ -76,7 +76,7 @@ class PendingReviews extends React.Component {
                           key={item._id}
                           className="buyer-pending-review box-container row"
                         >
-                          <div className="col-md-10 d-flex">
+                          <div className="col-md-10">
                             <img
                               src={
                                 item.imageUrl[0].includes("http")
@@ -87,10 +87,10 @@ class PendingReviews extends React.Component {
                             />
                             <div id="buyer-review-product-details">
                               <div className="mb-3">
-                                <h6>{item.name}</h6>
+                                <h6>{item.name} hey There kingmane </h6>
                               </div>
 
-                              <p>Ksh.{item.price.toLocaleString()} </p>
+                              <p>Ksh.{item.price.toLocaleString()}</p>
                             </div>
                           </div>
                           <div className="col-md-2 rate-link-wrapper">
