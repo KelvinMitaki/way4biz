@@ -20,17 +20,18 @@ class PendingReviews extends React.Component {
     let test;
     if (this.props.pendingReviewProducts) {
       test = this.props.pendingReviewProducts
-        .map(product => {
-          product.productData = product.productData.map(data => ({
+        .map((product) => {
+          product.productData = product.productData.map((data) => ({
             ...data,
-            orderId: product._id
+            orderId: product._id,
           }));
 
           return product.productData;
         })
         .reduce((acc, cur) => acc.concat(cur), [])
         .filter(
-          (item, i, arr) => i === arr.findIndex(item2 => item2._id === item._id)
+          (item, i, arr) =>
+            i === arr.findIndex((item2) => item2._id === item._id)
         );
     }
     return (
@@ -66,11 +67,11 @@ class PendingReviews extends React.Component {
                 )}
                 {/* show if there is pending reviews */}
                 {this.props.pendingReviewProducts.length !== 0 && (
-                  <div className="container-fluid buyer-pending-reviews">
+                  <div className="container-fluid p-0 buyer-pending-reviews">
                     <h4>Pending Reviews</h4>
                     <div className="buyer-pending-reviews-wrapper mt-2 container">
                       {/* mapping takes place here */}
-                      {test.map(item => (
+                      {test.map((item) => (
                         <div
                           key={item._id}
                           className="buyer-pending-review box-container row"
@@ -84,7 +85,7 @@ class PendingReviews extends React.Component {
                               }
                               alt={item.name}
                             />
-                            <div id="buyer-review-product-name">
+                            <div id="buyer-review-product-details">
                               <div className="mb-3">
                                 <h6>{item.name}</h6>
                               </div>
@@ -115,10 +116,10 @@ class PendingReviews extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     pendingReviewProducts: state.product.pendingReviewProducts,
-    pendingReviewsLoading: state.auth.pendingReviewsLoading
+    pendingReviewsLoading: state.auth.pendingReviewsLoading,
   };
 };
 export default connect(mapStateToProps, { fetchPendingReviews })(
