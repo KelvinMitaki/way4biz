@@ -47,7 +47,7 @@ class OrderPaymentSuccess extends React.Component {
                       <p>Qty:1 @ ksh.1,000 each</p>
                     </div>
                   </div>
-
+                  {/* mapping ends here */}
                   <div style={{ borderBottom: "1px solid #d4d4d4" }}></div>
                   <div className="order-amounts mt-3">
                     <div>
