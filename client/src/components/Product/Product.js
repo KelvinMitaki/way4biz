@@ -54,7 +54,9 @@ class Product extends React.Component {
     if (
       prevProps.relatedProducts.length !== this.props.relatedProducts.length ||
       prevProps.productReviews.length !== this.props.productReviews.length ||
-      prevState.modalShow !== this.state.modalShow
+      prevState.modalShow !== this.state.modalShow ||
+      this.state.clicked !== prevState.clicked ||
+      this.props.product
     ) {
       return true;
     }
@@ -105,9 +107,11 @@ class Product extends React.Component {
   render() {
     const stockQuantity =
       this.props.product && this.props.product.stockQuantity;
-    const itemInWishlist = this.props.wishlist.find(
-      item => item._id === this.props.product && this.props.product._id
-    );
+    const itemInWishlist =
+      this.props.product &&
+      this.props.wishlist.find(
+        item => item._id.toString() === this.props.product._id.toString()
+      );
     let itemInCart = false;
     itemInCart =
       this.props.product &&
@@ -120,7 +124,8 @@ class Product extends React.Component {
       slidesToShow: 4,
       slidesToScroll: 1
     };
-    if (!this.props.product) return <ScreenLoader />;
+    if (!this.props.product || this.props.saveWishlistLoading)
+      return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -216,25 +221,24 @@ class Product extends React.Component {
                     <IconContext.Provider
                       value={{ size: "2em", color: "#f76b1a" }}
                     >
-                      {this.state.clicked || itemInWishlist ? (
+                      {itemInWishlist && (
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            this.props.removeFromWishlist(this.props.product);
+                          }}
+                        >
+                          <IoMdHeart />
+                        </div>
+                      )}
+                      {!itemInWishlist && (
                         <div
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             if (!this.props.isSignedIn) {
                               return this.props.history.push("/sign-in");
                             }
-                            this.props.removeFromWishlist(this.props.product);
-                            this.setState({ clicked: false });
-                          }}
-                        >
-                          <IoMdHeart />
-                        </div>
-                      ) : (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
                             this.props.addToWishlist(this.props.product);
-                            this.setState({ clicked: true });
                           }}
                         >
                           <IoMdHeartEmpty />
@@ -393,6 +397,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     product,
     wishlist: state.cartReducer.wishlist,
+    saveWishlistLoading: state.cartReducer.saveWishlistLoading,
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
     productReviews: state.product.productReviews,
