@@ -33,7 +33,7 @@ export class Wishlist extends Component {
               {/* show this component if wishlist is empty */}
               {this.props.wishlist.length === 0 && (
                 <React.Fragment>
-                  <div className="container-fluid wishlist-no-saved-items">
+                  <div className="container wishlist-no-saved-items">
                     <IconContext.Provider
                       value={{ className: "wishlist-large-icon" }}
                     >
