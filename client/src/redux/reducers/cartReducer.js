@@ -14,7 +14,9 @@ import {
   FETCH_CART_ITEMS_START,
   FETCH_CART_ITEMS_STOP,
   FETCH_CART_ITEMS,
-  PRE_MAKE_ORDER
+  PRE_MAKE_ORDER,
+  SAVE_WISHLIST_START,
+  SAVE_WISHLIST_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -23,7 +25,8 @@ const INITIAL_STATE = {
   typing: "",
   wishlistLoading: false,
   cartLoading: false,
-  order: null
+  order: null,
+  saveWishlistLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -119,6 +122,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     case PRE_MAKE_ORDER:
       return { ...state, order: action.payload };
+    case SAVE_WISHLIST_START:
+      return { ...state, saveWishlistLoading: true };
+    case SAVE_WISHLIST_STOP:
+      return { ...state, saveWishlistLoading: false };
     default:
       return state;
   }

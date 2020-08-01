@@ -201,7 +201,9 @@ import {
   FETCH_CART_ITEMS_START,
   FETCH_CART_ITEMS_STOP,
   SAVE_WISHLIST,
-  PRE_MAKE_ORDER
+  PRE_MAKE_ORDER,
+  SAVE_WISHLIST_STOP,
+  SAVE_WISHLIST_START
 } from "./types";
 
 const authCheck = error => {
@@ -809,6 +811,10 @@ export const fetchBuyerOrders = () => async dispatch => {
 export const addToWishlist = product => (dispatch, getState) => {
   const products = getState().product.products;
   let wishlist = getState().cartReducer.wishlist;
+  const itemFound = wishlist.find(item => item._id === product._id);
+  if (itemFound) {
+    return;
+  }
   const newWishlist =
     wishlist.length !== 0 &&
     wishlist.map(item => {
@@ -822,12 +828,14 @@ export const addToWishlist = product => (dispatch, getState) => {
           imageUrl: pro.imageUrl,
           seller: { storeName: pro.seller.storeName },
           _id: pro._id,
-          quantity: pro.quantity
+          quantity: item.quantity
         };
       }
       return item;
     });
-  getState().carttReducer.wishlist = newWishlist;
+  if (newWishlist) {
+    getState().cartReducer.wishlist = newWishlist;
+  }
   dispatch({
     type: ADD_TO_WISHLIST,
     payload: product
@@ -836,13 +844,16 @@ export const addToWishlist = product => (dispatch, getState) => {
 
 export const removeFromWishlist = product => async dispatch => {
   try {
+    dispatch({ type: SAVE_WISHLIST_START });
     await axios.patch("/api/delete/wishlist", { productId: product._id });
     dispatch({
       type: REMOVE_FROM_WISHLIST,
       payload: product
     });
+    dispatch({ type: SAVE_WISHLIST_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: SAVE_WISHLIST_STOP });
     console.log(error.response);
   }
 };
@@ -2056,10 +2067,13 @@ export const saveCartItems = cart => async dispatch => {
 };
 export const saveWishlistItems = wishlist => async dispatch => {
   try {
+    dispatch({ type: SAVE_WISHLIST_START });
     await axios.post("/api/user/new/wishlist", { wishlist });
     dispatch({ type: SAVE_WISHLIST });
+    dispatch({ type: SAVE_WISHLIST_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: SAVE_WISHLIST_STOP });
     console.log(error.response);
   }
 };
