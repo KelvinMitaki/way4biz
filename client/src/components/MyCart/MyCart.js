@@ -12,7 +12,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
   render() {
-    if (this.props.cartLoading) return <ScreenLoader />;
+    // if (this.props.cartLoading) return <ScreenLoader />;
     if (this.props.cart && this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">

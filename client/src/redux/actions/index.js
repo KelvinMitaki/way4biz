@@ -679,7 +679,6 @@ export const addToCart = product => (dispatch, getState) => {
       }
       return item;
     });
-  console.log(newCart);
   if (newCart) {
     getState().cartReducer.cart = newCart;
   }
