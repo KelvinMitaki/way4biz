@@ -44,6 +44,10 @@ export default (state = INITIAL_STATE, action) => {
           )
         };
       }
+
+      if (!Array.isArray(state.cart)) {
+        state.cart = [];
+      }
       return {
         ...state,
         cart: [{ ...action.payload, quantity: 1 }, ...state.cart]
