@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import { BsCheckCircle } from "react-icons/bs";
 
 class OrderPaymentSuccess extends React.Component {
   render() {
@@ -16,7 +17,14 @@ class OrderPaymentSuccess extends React.Component {
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1 successful-order">
-                  <h3 className="my-2">We've got it!</h3>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <BsCheckCircle
+                      style={{ fontSize: "100px", color: "#4BB543" }}
+                    />
+                  </div>
+                  <h3 className="my-3" style={{ textAlign: "center" }}>
+                    We've got it!
+                  </h3>
                   <h6 className="order-placement-top">
                     Your order has been placed.We have also sent you an email
                     confirmation.You can check the status of{" "}
