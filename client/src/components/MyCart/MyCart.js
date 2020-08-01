@@ -8,7 +8,7 @@ import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Image from "../Market/Image";
-import ScreenLoader from "../Pages/ScreenLoader";
+// import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
   render() {

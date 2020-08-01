@@ -822,12 +822,14 @@ export const addToWishlist = product => (dispatch, getState) => {
           imageUrl: pro.imageUrl,
           seller: { storeName: pro.seller.storeName },
           _id: pro._id,
-          quantity: pro.quantity
+          quantity: item.quantity
         };
       }
       return item;
     });
-  getState().carttReducer.wishlist = newWishlist;
+  if (newWishlist) {
+    getState().cartReducer.wishlist = newWishlist;
+  }
   dispatch({
     type: ADD_TO_WISHLIST,
     payload: product

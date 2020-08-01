@@ -220,9 +220,6 @@ class Product extends React.Component {
                         <div
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            if (!this.props.isSignedIn) {
-                              return this.props.history.push("/sign-in");
-                            }
                             this.props.removeFromWishlist(this.props.product);
                             this.setState({ clicked: false });
                           }}
@@ -233,6 +230,9 @@ class Product extends React.Component {
                         <div
                           style={{ cursor: "pointer" }}
                           onClick={() => {
+                            if (!this.props.isSignedIn) {
+                              return this.props.history.push("/sign-in");
+                            }
                             this.props.addToWishlist(this.props.product);
                             this.setState({ clicked: true });
                           }}
