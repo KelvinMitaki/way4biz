@@ -21,3 +21,10 @@
 #auth-navigator div p {
   cursor: pointer;
 }
+
+@media screen and (max-width: 719px) {
+  #auth-section {
+    height: calc(100vh - 80px);
+    /* width: 100vw; */
+  }
+}
