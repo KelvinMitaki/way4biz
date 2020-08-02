@@ -38,7 +38,7 @@ class OrderPaymentSuccess extends React.Component {
                   {/* mapping here */}
                   <div className="row align-items-center">
                     <div className="col-3">
-                      <img src="/1.jpg" width="100%" />
+                      <img src="/1.jpg" width="100%" alt="1.jpg" />
                     </div>
                     <div className="col-9">
                       <h6 className="order-item-name mb-2">

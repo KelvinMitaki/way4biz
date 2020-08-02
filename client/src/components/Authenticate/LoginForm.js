@@ -16,7 +16,7 @@ class LoginForm extends React.Component {
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit((formValues) => {
+          onSubmit={this.props.handleSubmit(formValues => {
             return this.props.logIn(formValues, this.props.history);
           })}
         >
@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
@@ -92,10 +92,10 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     error: state.auth.error,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 export default withRouter(
