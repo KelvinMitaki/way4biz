@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
+import { makeOrder } from "../../redux/actions";
+import { connect } from "react-redux";
 
 export class StripePaymentButton extends Component {
   render() {
@@ -10,10 +12,11 @@ export class StripePaymentButton extends Component {
       <StripeCheckout
         name="Way4Biz"
         amount={amount * 100}
-        token={token => console.log(token)}
+        token={token => this.props.makeOrder({ ...this.props.order, ...token })}
         stripeKey={process.env.REACT_APP_STRIPE}
         currency="KES"
         email={this.props.email}
+        locale="en"
       >
         <button className="btn btn-md initiate-payment">
           Initiate Payment
@@ -23,4 +26,4 @@ export class StripePaymentButton extends Component {
   }
 }
 
-export default StripePaymentButton;
+export default connect(null, { makeOrder })(StripePaymentButton);

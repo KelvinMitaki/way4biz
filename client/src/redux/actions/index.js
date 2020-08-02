@@ -765,7 +765,11 @@ export const makeOrder = credentials => async (dispatch, getState) => {
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    await axios.post("/api/new/order", { ...credentials, distanceId });
+    const res = await axios.post("/api/new/order", {
+      ...credentials,
+      distanceId
+    });
+    console.log(res.data);
     dispatch({ type: MAKE_ORDER });
     dispatch({ type: LOADING_STOP });
   } catch (error) {

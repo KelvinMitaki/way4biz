@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const route = require("express").Router();
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 
@@ -414,13 +415,14 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please choose a valid location"),
+  check("id").not().isEmpty().withMessage("Payment failed. please try again"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const { formValues, cart, distanceId } = req.body;
+      const { formValues, cart, distanceId, id, email } = req.body;
       const { _id } = req.session.user;
       const test = cart.map(item => {
         return {
@@ -436,6 +438,12 @@ route.post(
       const price = cart
         .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
+      const charge = await stripe.charges.create({
+        amount: price * 100,
+        currency: "kes",
+        description: `payed ${price} to account by ${email}`,
+        source: id
+      });
       const order = new Order({
         items: test,
         paymentMethod: formValues.payment,
@@ -444,9 +452,10 @@ route.post(
         distance: distanceId
       });
       await order.save();
-
+      console.log(charge);
       res.send(order);
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }

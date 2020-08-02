@@ -39,27 +39,12 @@ class StripePayment extends React.Component {
                       Change Payment Method
                     </Link>
                   </h6>
-                  <h3>Mpesa Payment</h3>
+                  <h3>Card Payment</h3>
                   <ul className="my-1 mpesa-payment-guide">
                     <li>
                       <p>
-                        Ensure you have enough money in mpesa to make payment
-                        for your order.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        Once you initiate payment a prompt will be sent to the
-                        phone with this number 0712345678.
-                        <Link to="/address" className="ml-2">
-                          Change number here
-                        </Link>
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        This prompt will ask you to enter your mpesa pin. Key in
-                        your pin and press OK.
+                        Ensure you have enough money in your bank account to
+                        make payment for your order.
                       </p>
                     </li>
                     <li>
@@ -72,6 +57,7 @@ class StripePayment extends React.Component {
                     <StripePaymentButton
                       email={this.props.user.email}
                       cart={this.props.order.cart}
+                      order={this.props.order}
                     />
                     <li>
                       <p>
