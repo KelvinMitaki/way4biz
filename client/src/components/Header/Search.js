@@ -48,7 +48,10 @@ class Search extends React.Component {
           />
           <div className="input-group-append">
             <button
-              disabled={this.props.typing && this.props.typing.trim() === ""}
+              disabled={
+                (this.props.typing && this.props.typing.trim() === "") ||
+                !this.props.typing
+              }
               id="header-search-btn"
               onClick={() => {
                 this.props.searchTermProducts(
@@ -76,7 +79,7 @@ class Search extends React.Component {
             {this.props.searchedProducts.length > 0 &&
               this.props.searchedProducts.map(product => (
                 <div
-                  onClick={() => this.setState({ typing: "" })}
+                  onClick={() => this.props.clearSearchTerm()}
                   key={product._id}
                 >
                   <div className="searched-output-link-wrapper">
