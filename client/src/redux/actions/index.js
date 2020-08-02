@@ -845,15 +845,18 @@ export const addToWishlist = product => (dispatch, getState) => {
 export const removeFromWishlist = product => async dispatch => {
   try {
     dispatch({ type: SAVE_WISHLIST_START });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
     await axios.patch("/api/delete/wishlist", { productId: product._id });
     dispatch({
       type: REMOVE_FROM_WISHLIST,
       payload: product
     });
     dispatch({ type: SAVE_WISHLIST_STOP });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: SAVE_WISHLIST_STOP });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
