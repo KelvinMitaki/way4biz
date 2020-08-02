@@ -734,16 +734,16 @@ class App extends React.Component {
                   )
                 }
               />
+              <Route
+                path="/sign-in"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
+                }
+              />
               <Route component={NotFound} />
             </Switch>
           </div>
-          <Route
-            path="/sign-in"
-            exact
-            render={() =>
-              this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
-            }
-          />
         </div>
       );
     }

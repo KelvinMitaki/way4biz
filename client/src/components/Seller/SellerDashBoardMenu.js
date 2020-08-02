@@ -14,10 +14,12 @@ import { connect } from "react-redux";
 
 class SellerDashBoardMenu extends React.Component {
   componentDidMount() {
-    this.props.fetchRejects();
+    if (this.props.user && this.props.user.isSeller) {
+      this.props.fetchRejects();
+    }
   }
   render() {
-    if (!this.props.sellerRejects) return <ScreenLoader />;
+    // if (!this.props.sellerRejects) return <ScreenLoader />;
     const newOrders =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(order => !order.delivered);
@@ -80,14 +82,15 @@ class SellerDashBoardMenu extends React.Component {
             <li>
               <GiCancel className="mr-2" />
               Rejects
-              {this.props.sellerRejects.length !== 0 && (
-                <span
-                  className="badge ml-2"
-                  style={{ color: "#fff", backgroundColor: "#f76b1a" }}
-                >
-                  {this.props.sellerRejects.length}
-                </span>
-              )}
+              {this.props.sellerRejects &&
+                this.props.sellerRejects.length !== 0 && (
+                  <span
+                    className="badge ml-2"
+                    style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                  >
+                    {this.props.sellerRejects.length}
+                  </span>
+                )}
             </li>
           </NavLink>
           <NavLink

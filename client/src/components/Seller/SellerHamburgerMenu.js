@@ -21,7 +21,9 @@ class SellerHamburgerMenu extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    this.props.fetchRejects();
+    if (this.props.user && this.props.user.isSeller) {
+      this.props.fetchRejects();
+    }
   }
   handleClick(e) {
     this.setState(prevState => {
@@ -31,7 +33,7 @@ class SellerHamburgerMenu extends React.Component {
     });
   }
   render() {
-    if (!this.props.sellerRejects) return <ScreenLoader />;
+    // if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div id="hamburger-menu-wrapper">
         {this.state.open ? (
@@ -115,14 +117,15 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     <GiCancel className="mr-2" />
                     Rejects
-                    {this.props.sellerRejects.length !== 0 && (
-                      <span
-                        className="badge ml-2"
-                        style={{ backgroundColor: "#f76b1a", color: "#fff" }}
-                      >
-                        {this.props.sellerRejects.length}
-                      </span>
-                    )}
+                    {this.props.sellerRejects &&
+                      this.props.sellerRejects.length !== 0 && (
+                        <span
+                          className="badge ml-2"
+                          style={{ backgroundColor: "#f76b1a", color: "#fff" }}
+                        >
+                          {this.props.sellerRejects.length}
+                        </span>
+                      )}
                   </NavLink>
                 </li>
                 <li className="my-4">
@@ -172,7 +175,8 @@ class SellerHamburgerMenu extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerRejects: state.product.sellerRejects
+    sellerRejects: state.product.sellerRejects,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps, { fetchRejects })(SellerHamburgerMenu);
