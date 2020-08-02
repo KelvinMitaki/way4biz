@@ -55,14 +55,18 @@ class SellerDashBoardMenu extends React.Component {
             <li>
               <GoClippy className="mr-2" />
               Orders
-              {newOrders && newOrders.length !== 0 && (
-                <span
-                  className="badge ml-2"
-                  style={{ color: "#fff", backgroundColor: "#f76b1a" }}
-                >
-                  {newOrders.length}
-                </span>
-              )}
+              {this.props.dashboard &&
+                this.props.dashboard.newOrders &&
+                this.props.dashboard.newOrders !== 0 && (
+                  <span
+                    className="badge ml-2"
+                    style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                  >
+                    {this.props.dashboard &&
+                      this.props.dashboard.newOrders &&
+                      this.props.dashboard.newOrders.toLocaleString()}
+                  </span>
+                )}
             </li>
           </NavLink>
           <NavLink
@@ -117,7 +121,8 @@ const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
     sellerOrders: state.sellerRegister.sellerOrders,
-    user: state.auth.user
+    user: state.auth.user,
+    dashboard: state.product.dashboard
   };
 };
 export default connect(mapStateToProps, { fetchRejects })(SellerDashBoardMenu);
