@@ -83,11 +83,11 @@ class StripePayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
     distance: state.detailsPersist.distance,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, { makeOrder })(StripePayment);
