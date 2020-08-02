@@ -43,6 +43,11 @@ class MpesaError extends React.Component {
                   <h6 className="my-2">
                     You can also try other payment methods.
                   </h6>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <button className="btn btn-md mpesa-error-to-shop">
+                      Go To Shop
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
