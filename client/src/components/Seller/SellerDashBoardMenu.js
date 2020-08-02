@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
@@ -19,7 +19,9 @@ class SellerDashBoardMenu extends React.Component {
     }
   }
   render() {
-    // if (!this.props.sellerRejects) return <ScreenLoader />;
+    if (this.props.user && this.props.user.isSeller) {
+      if (!this.props.sellerRejects) return <ScreenLoader />;
+    }
     const newOrders =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(order => !order.delivered);

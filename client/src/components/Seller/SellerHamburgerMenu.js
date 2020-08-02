@@ -33,7 +33,9 @@ class SellerHamburgerMenu extends React.Component {
     });
   }
   render() {
-    // if (!this.props.sellerRejects) return <ScreenLoader />;
+    if (this.props.user && this.props.user.isSeller) {
+      if (!this.props.sellerRejects) return <ScreenLoader />;
+    }
     return (
       <div id="hamburger-menu-wrapper">
         {this.state.open ? (
