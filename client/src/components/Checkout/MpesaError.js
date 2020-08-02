@@ -22,9 +22,9 @@ class MpesaError extends React.Component {
                       style={{ fontSize: "100px", color: "#f76b1a" }}
                     />
                   </div>
-                  <h2 style={{ textAlign: "center" }}>
+                  <h3 style={{ textAlign: "center" }}>
                     Ooops! Something is wrong.
-                  </h2>
+                  </h3>
 
                   <ul className="mpesa-error-guides">
                     <li>
