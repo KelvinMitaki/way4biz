@@ -50,8 +50,8 @@ class MpesaPayment extends React.Component {
                       <p>
                         Once you initiate payment a prompt will be sent to the
                         phone with this number 0712345678.
-                        <Link to="/address" className="ml-2">
-                          Change number here
+                        <Link to="/address" className="ml-1">
+                          <small>Change number here</small>
                         </Link>
                       </p>
                     </li>
@@ -78,7 +78,7 @@ class MpesaPayment extends React.Component {
                       onClick={() =>
                         this.props.makeOrder({
                           ...this.props.order,
-                          distanceId: this.props.distance._id
+                          distanceId: this.props.distance._id,
                         })
                       }
                       className="btn btn-md initiate-payment"
@@ -110,10 +110,10 @@ class MpesaPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
-    distance: state.detailsPersist.distance
+    distance: state.detailsPersist.distance,
   };
 };
 export default connect(mapStateToProps, { makeOrder })(MpesaPayment);
