@@ -10,7 +10,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchSellerReviews } from "../../redux/actions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import SellerDashBoardNoReviews from "./SellerDashBoardNoReviews";
 
 class Review extends React.Component {
@@ -18,6 +18,8 @@ class Review extends React.Component {
     this.props.fetchSellerReviews();
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (this.props.sellerReviewsLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -33,7 +35,7 @@ class Review extends React.Component {
                 <SellerDashBoardNoReviews />
               )}
               {this.props.sellerReviews.length !== 0 &&
-                this.props.sellerReviews.map((review) => (
+                this.props.sellerReviews.map(review => (
                   <div className="review-wrapper mb-3" key={review._id}>
                     <Rating clickable={false} size={15} value={4} />
                     <div className="seller-review-product-title-name">
@@ -75,10 +77,11 @@ class Review extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sellerReviews: state.product.sellerReviews,
     sellerReviewsLoading: state.product.sellerReviewsLoading,
+    user: state.auth.user
   };
 };
 export default withRouter(

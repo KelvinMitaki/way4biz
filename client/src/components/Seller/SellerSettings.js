@@ -9,7 +9,7 @@ import SellerTextArea from "./SellerTextArea";
 import validator from "validator";
 import { connect } from "react-redux";
 import { updateSeller, fetchCurrentSeller } from "../../redux/actions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class SellerSettings extends React.Component {
@@ -18,6 +18,8 @@ class SellerSettings extends React.Component {
   }
 
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (this.props.fetchSellerLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -30,7 +32,7 @@ class SellerSettings extends React.Component {
             <div className="container">
               <form
                 className="form-group store-settings-form"
-                onSubmit={this.props.handleSubmit((formValues) =>
+                onSubmit={this.props.handleSubmit(formValues =>
                   this.props.updateSeller(formValues, this.props.history)
                 )}
               >
@@ -126,7 +128,7 @@ class SellerSettings extends React.Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -172,11 +174,12 @@ const validate = (formValues) => {
 
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
     loading: state.auth.loading,
-    fetchSellerLoading: state.sellerRegister.fetchSellerLoading,
+    user: state.auth.user,
+    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
   };
 };
 export default withRouter(

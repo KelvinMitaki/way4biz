@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Footer.css";
+import { connect } from "react-redux";
 
 class Footer extends React.Component {
   render() {
@@ -41,7 +42,13 @@ class Footer extends React.Component {
               <h6>Make Money On Way4Biz</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/sell">Sell on Way4Biz</Link>
+                  {this.props.user && this.props.user.isSeller && (
+                    <Link to="/seller/sell">Sell on Way4Biz</Link>
+                  )}
+                  {!this.props.user && (
+                    <Link to="/seller/register">Sell on Way4Biz</Link>
+                  )}
+                  <Link to="/">Sell on Way4Biz</Link>
                 </p>
               </div>
             </div>
@@ -67,5 +74,9 @@ class Footer extends React.Component {
     );
   }
 }
-
-export default Footer;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps)(Footer);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { reduxForm, Field, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import validator from "validator";
 import {
   addProduct,
@@ -28,6 +28,8 @@ export class Sell extends Component {
     this.props.unpersistImage();
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (this.props.deleteImageLoading || !this.props.adminCategories)
       return <ScreenLoader />;
     const adminCategories =
@@ -203,6 +205,7 @@ const mapStateToProps = state => {
   const category = selector(state, "category");
   return {
     loading: state.auth.loading,
+    user: state.auth.user,
     description: state.product.description,
     adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
