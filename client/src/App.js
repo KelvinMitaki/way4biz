@@ -73,6 +73,7 @@ import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
 import CardPayment from "./components/Checkout/CardPayment";
 import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
+import StripePayment from "./components/StripePayment/StripePayment";
 
 class App extends React.Component {
   state = {
@@ -703,6 +704,17 @@ class App extends React.Component {
                         <Redirect to="/sign-in" />
                       ) : (
                         <AccountComplaint />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/stripe/payment"
+                    exact
+                    render={() =>
+                      this.props.isSignedIn === false ? (
+                        <Redirect to="/sign-in" />
+                      ) : (
+                        <StripePayment />
                       )
                     }
                   />
