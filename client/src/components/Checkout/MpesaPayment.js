@@ -7,8 +7,10 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
+import { Prompt } from "react-router-dom";
 
 class MpesaPayment extends React.Component {
+  state = { paying: false };
   render() {
     if (!this.props.order) return <Redirect to="/checkout" />;
     if (this.props.order && !this.props.order.formValues)
@@ -29,6 +31,10 @@ class MpesaPayment extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
+          {this.state.paying ? (
+            <Prompt message="Leaving this page while processing payment can lead to issues." />
+          ) : null}
+
           <div className="container">
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
@@ -50,8 +56,8 @@ class MpesaPayment extends React.Component {
                       <p>
                         Once you initiate payment a prompt will be sent to the
                         phone with this number 0712345678.
-                        <Link to="/address" className="ml-2">
-                          Change number here
+                        <Link to="/address" className="ml-1">
+                          <small>Change number here</small>
                         </Link>
                       </p>
                     </li>
@@ -75,12 +81,15 @@ class MpesaPayment extends React.Component {
                         (this.props.distance &&
                           Object.keys(this.props.distance).length === 0)
                       }
-                      onClick={() =>
+                      onClick={() => {
+                        this.setState({
+                          paying: true,
+                        });
                         this.props.makeOrder({
                           ...this.props.order,
-                          distanceId: this.props.distance._id
-                        })
-                      }
+                          distanceId: this.props.distance._id,
+                        });
+                      }}
                       className="btn btn-md initiate-payment"
                     >
                       Initiate Payment
@@ -110,10 +119,10 @@ class MpesaPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
-    distance: state.detailsPersist.distance
+    distance: state.detailsPersist.distance,
   };
 };
 export default connect(mapStateToProps, { makeOrder })(MpesaPayment);
