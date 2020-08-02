@@ -1,11 +1,10 @@
 import React from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
 import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
-
 import "./SellerDashBoardMenu.css";
 import ProfileImage from "../Header/ProfileImage";
 import { fetchRejects } from "../../redux/actions";
