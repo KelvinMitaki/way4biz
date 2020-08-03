@@ -14,7 +14,7 @@ class Footer extends React.Component {
               <h6>About Way4Biz</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/about">About Us</Link>
+                  <Link to="/about-us">About Us</Link>
                 </p>
                 <p>
                   <Link to="/terms">Terms and Conditions</Link>

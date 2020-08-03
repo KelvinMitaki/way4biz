@@ -77,6 +77,7 @@ import StripePayment from "./components/StripePayment/StripePayment";
 import StripeError from "./components/StripePayment/StripeError";
 import MpesaError from "./components/Checkout/MpesaError";
 import About from "./components/Pages/About";
+import TermsConditions from "./components/Pages/TermsConditions";
 
 class App extends React.Component {
   state = {
@@ -187,6 +188,7 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/about-us" component={About} />
+              <Route path="/terms" component={TermsConditions} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
