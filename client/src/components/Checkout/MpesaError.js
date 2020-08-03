@@ -41,7 +41,10 @@ class MpesaError extends React.Component {
                       </p>
                     </li>
                     <li>
-                      <h6>You can also try other payment methods.</h6>
+                      <h6>
+                        You can also try other payment methods or contact us{" "}
+                        <Link to="/">here</Link> for help.
+                      </h6>
                     </li>
                   </ul>
 
