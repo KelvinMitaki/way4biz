@@ -10,7 +10,7 @@ import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
 import { Prompt } from "react-router-dom";
 
 class MpesaPayment extends React.Component {
-  state = { paying: false };
+  state = { click: 0 };
   render() {
     // if (!this.props.order) return <Redirect to="/checkout" />;
     // if (this.props.order && !this.props.order.formValues)
@@ -30,9 +30,6 @@ class MpesaPayment extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
-          {this.state.paying ? (
-            <Prompt message="Leaving this page while processing payment can lead to issues." />
-          ) : null}
 
           <div className="container">
             <div className="row">
@@ -80,9 +77,10 @@ class MpesaPayment extends React.Component {
                       //   (this.props.distance &&
                       //     Object.keys(this.props.distance).length === 0)
                       // }
+                      disabled={this.state.click > 0}
                       onClick={() => {
                         this.setState({
-                          paying: true
+                          click: this.state.click + 1
                         });
                         this.props.makeOrder(
                           {
@@ -108,7 +106,10 @@ class MpesaPayment extends React.Component {
                     </li>
                     <button
                       className="btn btn-md mpesa"
-                      onClick={() => this.props.fetchOrderSuccess()}
+                      disabled={!this.props.pendingOrder}
+                      onClick={() =>
+                        this.props.fetchOrderSuccess(this.props.history)
+                      }
                     >
                       <strong>UNPAID</strong>
                     </button>
@@ -127,6 +128,7 @@ class MpesaPayment extends React.Component {
 const mapStateToProps = state => {
   return {
     order: state.cartReducer.order,
+    pendingOrder: state.cartReducer.pendingOrder,
     distance: state.detailsPersist.distance
   };
 };

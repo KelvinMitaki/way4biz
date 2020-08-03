@@ -795,7 +795,7 @@ export const makeOrder = (credentials, history) => async (
   }
 };
 
-export const fetchOrderSuccess = () => async (dispatch, getState) => {
+export const fetchOrderSuccess = history => async (dispatch, getState) => {
   try {
     const orderId =
       getState().cartReducer.pendingOrder &&
@@ -803,6 +803,21 @@ export const fetchOrderSuccess = () => async (dispatch, getState) => {
     if (orderId) {
       const res = await axios.get(`/api/mpesa/order/${orderId}`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
+    }
+    const orderSuccess = getState().cartReducer.orderSuccess;
+    if (
+      orderSuccess &&
+      orderSuccess.mpesaCode &&
+      orderSuccess.mpesaCode === 0
+    ) {
+      return history.push("/order/success");
+    }
+    if (
+      orderSuccess &&
+      orderSuccess.mpesaCode &&
+      orderSuccess.mpesaCode !== 0
+    ) {
+      return history.push("/mpesa/error");
     }
   } catch (error) {
     authCheck(error);
