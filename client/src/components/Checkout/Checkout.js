@@ -22,15 +22,16 @@ class CheckOut extends React.Component {
       this.props.fetchProducts();
       return <Redirect to="/" />;
     }
+    if (!this.props.distance) return <Redirect to="/address" />;
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map((item) => item.price * item.quantity)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
     const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
-      .map((item) => item.price * item.quantity)
+      .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -39,7 +40,7 @@ class CheckOut extends React.Component {
           <Header />
 
           <form
-            onSubmit={this.props.handleSubmit((formValues) =>
+            onSubmit={this.props.handleSubmit(formValues =>
               this.props.preMakeOrder({ formValues, cart }, this.props.history)
             )}
           >
@@ -136,14 +137,14 @@ class CheckOut extends React.Component {
   }
 }
 const selector = formValueSelector("Chekout");
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const payment = selector(state, "payment");
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     loading: state.auth.loading,
     distance: state.detailsPersist.distance,
-    payment,
+    payment
   };
 };
 export default withRouter(

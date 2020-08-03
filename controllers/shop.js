@@ -1,3 +1,5 @@
+const request = require("request");
+
 const mongoose = require("mongoose");
 const route = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
@@ -403,63 +405,159 @@ route.post(
 //     }
 //   }
 // );
-
+const date = new Date();
+let datevalues = [
+  date.getFullYear(),
+  date.getMonth() + 1,
+  date.getDate(),
+  date.getHours(),
+  date.getMinutes(),
+  date.getSeconds()
+];
 route.post(
   "/api/new/order",
   auth,
-  check("formValues.payment")
-    .not()
-    .isEmpty()
-    .withMessage("Please choose a valid payment method"),
-  check("distanceId")
-    .not()
-    .isEmpty()
-    .withMessage("Please choose a valid location"),
-  check("id").not().isEmpty().withMessage("Payment failed. please try again"),
+  // check("formValues.payment")
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("Please choose a valid payment method"),
+  // check("distanceId")
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("Please choose a valid location"),
+  // check("id").not().isEmpty().withMessage("Payment failed. please try again"),
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(401).send({ message: errors.array()[0].msg });
-      }
-      const { formValues, cart, distanceId, id, email } = req.body;
-      const { _id } = req.session.user;
-      const test = cart.map(item => {
-        return {
-          product: item._id,
-          quantity: item.quantity
-        };
-      });
-      cart.forEach(async item => {
-        await Product.findByIdAndUpdate(item._id, {
-          $inc: { stockQuantity: -item.quantity }
-        });
-      });
-      const price = cart
-        .map(item => item.price)
-        .reduce((acc, curr) => acc + curr, 0);
-      const charge = await stripe.charges.create({
-        amount: price * 100,
-        currency: "kes",
-        description: `payed ${price} to account by ${email}`,
-        source: id
-      });
-      const order = new Order({
-        items: test,
-        paymentMethod: formValues.payment,
-        totalPrice: price,
-        buyer: _id,
-        distance: distanceId
-      });
-      await order.save();
-      console.log(charge);
-      res.send(order);
+      // const errors = validationResult(req);
+      // if (!errors.isEmpty()) {
+      //   return res.status(401).send({ message: errors.array()[0].msg });
+      // }
+      // const { formValues, cart, id, email } = req.body;
+      // const { _id } = req.session.user;
+      // const test = cart.map(item => {
+      //   return {
+      //     product: item._id,
+      //     quantity: item.quantity
+      //   };
+      // });
+      // cart.forEach(async item => {
+      //   await Product.findByIdAndUpdate(item._id, {
+      //     $inc: { stockQuantity: -item.quantity }
+      //   });
+      // });
+      // const price = cart
+      //   .map(item => item.price)
+      //   .reduce((acc, curr) => acc + curr, 0);
+      //**MPESA */
+      const url =
+        "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+      const auth = Buffer.from(
+        `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+      ).toString("base64");
+      request(
+        {
+          url,
+          headers: {
+            Authorization: "Basic " + auth
+          }
+        },
+        (err, response, body) => {
+          if (err) return console.log("err", err);
+
+          datevalues = datevalues.map(date => {
+            if (date < 10 && !date.toString().includes("0")) {
+              return (date = "0" + date.toString());
+            }
+            return date.toString();
+          });
+          console.log(datevalues.join(""));
+          const STK_URL =
+            "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+          request(
+            {
+              method: "POST",
+              url: STK_URL,
+              headers: {
+                Authorization: "Bearer " + JSON.parse(body).access_token
+              },
+              json: {
+                BusinessShortCode: "174379",
+                Password: Buffer.from(
+                  `174379${process.env.MPESA_PASS_KEY}${datevalues.join("")}`
+                ).toString("base64"),
+                Timestamp: datevalues.join(""),
+                TransactionType: "CustomerPayBillOnline",
+                Amount: "1",
+                PartyA: "254721559392",
+                PartyB: "174379",
+                PhoneNumber: "254721559392",
+                CallBackURL: "https://0ff1a17bd03d.ngrok.io/api/stk_callback",
+                AccountReference: "Way4Biz",
+                TransactionDesc: "Paybill"
+              }
+            },
+            (err, response, body2) => {
+              if (err) return console.log("err", err);
+              console.log("body2", body2);
+            }
+          );
+        }
+      );
+      // **STRIPE*/
+      // const charge = await stripe.charges.create({
+      //   amount: price * 100,
+      //   currency: "kes",
+      //   description: `payed ${price} to account by ${email}`,
+      //   source: id
+      // });
+      // const order = new Order({
+      //   items: test,
+      //   paymentMethod: formValues.payment,
+      //   totalPrice: price,
+      //   buyer: _id,
+      //   distance: distanceId
+      // });
+      // await order.save();
+      // // console.log(charge);
+
+      res.send({ message: "hey" });
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
     }
   }
 );
+
+const http = require("http");
+const WebSocketServer = require("websocket").server;
+const { v4 } = require("uuid");
+const server = http.createServer();
+server.listen(8000);
+console.log("port 8000");
+const WSserver = new WebSocketServer({
+  httpServer: server
+});
+const clients = {};
+
+route.post("/api/stk_callback", (req, res) => {
+  const clientID = v4();
+  WSserver.on("request", request => {
+    const connection = request.accept(null, request.origin);
+    clients[clientID] = connection;
+    connection.on("message", message => {
+      if (message.type === "utf8") {
+        for (key in clients) {
+          clients[key].sendUTF(req.body);
+          console.log(`message sent to ${clients[key]}`);
+        }
+      }
+    });
+  });
+  console.log(req.body);
+});
+// route.get("/api/mpesa_callback", (req, res) => {
+//   console.log({ message: "test" });
+// });
 
 // CREATE PRODUCT INDEX
 // FIX THIS

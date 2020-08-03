@@ -4,28 +4,35 @@ import "./MpesaPayment.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
 import { Prompt } from "react-router-dom";
+import { w3cwebsocket } from "websocket";
 
+const client = new w3cwebsocket("ws://localhost:8000");
 class MpesaPayment extends React.Component {
   state = { paying: false };
+  componentDidMount() {
+    client.onopen = () => {
+      console.log("client connected");
+    };
+  }
   render() {
-    if (!this.props.order) return <Redirect to="/checkout" />;
-    if (this.props.order && !this.props.order.formValues)
-      return <Redirect to="/checkout" />;
-    if (
-      this.props.order &&
-      this.props.order.formValues &&
-      !this.props.order.formValues.payment
-    )
-      return <Redirect to="/checkout" />;
-    if (
-      !this.props.distance ||
-      (this.props.distance && Object.keys(this.props.distance).length === 0)
-    )
-      return <Redirect to="/checkout" />;
+    // if (!this.props.order) return <Redirect to="/checkout" />;
+    // if (this.props.order && !this.props.order.formValues)
+    //   return <Redirect to="/checkout" />;
+    // if (
+    //   this.props.order &&
+    //   this.props.order.formValues &&
+    //   !this.props.order.formValues.payment
+    // )
+    //   return <Redirect to="/checkout" />;
+    // if (
+    //   !this.props.distance ||
+    //   (this.props.distance && Object.keys(this.props.distance).length === 0)
+    // )
+    //   return <Redirect to="/checkout" />;
 
     return (
       <div className="main">
@@ -76,19 +83,22 @@ class MpesaPayment extends React.Component {
                     </li>
 
                     <button
-                      disabled={
-                        !this.props.distance ||
-                        (this.props.distance &&
-                          Object.keys(this.props.distance).length === 0)
-                      }
+                      // disabled={
+                      //   !this.props.distance ||
+                      //   (this.props.distance &&
+                      //     Object.keys(this.props.distance).length === 0)
+                      // }
                       onClick={() => {
                         this.setState({
-                          paying: true,
+                          paying: true
                         });
-                        this.props.makeOrder({
-                          ...this.props.order,
-                          distanceId: this.props.distance._id,
-                        });
+                        this.props.makeOrder(
+                          {
+                            ...this.props.order
+                            // distanceId: this.props.distance._id
+                          },
+                          this.props.history
+                        );
                       }}
                       className="btn btn-md initiate-payment"
                     >
@@ -119,10 +129,12 @@ class MpesaPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     order: state.cartReducer.order,
-    distance: state.detailsPersist.distance,
+    distance: state.detailsPersist.distance
   };
 };
-export default connect(mapStateToProps, { makeOrder })(MpesaPayment);
+export default withRouter(
+  connect(mapStateToProps, { makeOrder })(MpesaPayment)
+);

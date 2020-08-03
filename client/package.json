@@ -48,7 +48,8 @@
     "slick-carousel": "^1.8.1",
     "uuid": "^8.2.0",
     "validator": "^13.1.1",
-    "waypoints": "^4.0.1"
+    "waypoints": "^4.0.1",
+    "websocket": "^1.0.31"
   },
   "scripts": {
     "start": "env-cmd -f ./config/keys.env react-scripts start",

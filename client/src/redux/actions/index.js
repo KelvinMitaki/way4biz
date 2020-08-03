@@ -756,10 +756,16 @@ export const fetchAllCategories = () => async dispatch => {
 
 export const preMakeOrder = (credentials, history) => dispatch => {
   dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
-  history.push("/mpesa-payment");
+  if (credentials.formValues.payment === "mpesa") {
+    return history.push("/mpesa-payment");
+  }
+  history.push("/stripe/payment");
 };
 
-export const makeOrder = credentials => async (dispatch, getState) => {
+export const makeOrder = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: LOADING_START });
     const distanceId =
@@ -772,6 +778,7 @@ export const makeOrder = credentials => async (dispatch, getState) => {
     console.log(res.data);
     dispatch({ type: MAKE_ORDER });
     dispatch({ type: LOADING_STOP });
+    history.push("/order/success");
   } catch (error) {
     authCheck(error);
     dispatch({ type: LOADING_STOP });
