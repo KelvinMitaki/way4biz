@@ -27,7 +27,7 @@ class MpesaError extends React.Component {
                     Ooops! Something is wrong.
                   </h3>
 
-                  <ul className="mpesa-error-guides">
+                  <ul className="mpesa-error-guides my-3">
                     <li>
                       <p>Ensure you are using a safaricom registered number.</p>
                     </li>
@@ -63,7 +63,7 @@ class MpesaError extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
 export default withRouter(connect(mapStateToProps)(MpesaError));
