@@ -34,7 +34,7 @@ class Footer extends React.Component {
                   <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>
                 </p>
                 <p>
-                  <Link to="/how-to-sell?">How to sell on Way4Biz?</Link>
+                  <Link to="/how-to-sell">How to sell on Way4Biz?</Link>
                 </p>
               </div>
             </div>

@@ -79,6 +79,8 @@ import MpesaError from "./components/Checkout/MpesaError";
 import About from "./components/Pages/About";
 import TermsConditions from "./components/Pages/TermsConditions";
 import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
+import Contact from "./components/Pages/Contact";
+import HowToSell from "./components/Pages/HowToSell";
 
 class App extends React.Component {
   state = {
@@ -192,6 +194,7 @@ class App extends React.Component {
               <Route path="/terms" component={TermsConditions} />
               <Route path="/privacy-policy" component={PrivacyPolicy} />
               <Route path="/contact-us" component={Contact} />
+              <Route path="/how-to-sell" component={HowToSell} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
