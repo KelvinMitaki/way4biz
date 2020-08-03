@@ -776,10 +776,7 @@ export const makeOrder = (credentials, history) => async (
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    // const res = await axios.post("/api/new/order", {
-    //   ...credentials,
-    //   distanceId
-    // });
+    console.log(credentials);
     const response = await fetch("/api/new/order", {
       method: "POST",
       body: JSON.stringify({
@@ -789,9 +786,13 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    dispatch({ type: MAKE_ORDER, payload: res });
+    if (!res.message) {
+      dispatch({ type: MAKE_ORDER, payload: res });
+    }
     dispatch({ type: LOADING_STOP });
-    // history.push("/order/success");
+    if (res.paymentMethod !== "mpesa") {
+      history.push("/order/success");
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: LOADING_STOP });
@@ -808,7 +809,7 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
 
     const orderSuccess = getState().cartReducer.orderSuccess;
     if (orderId) {
-      const res = await axios.get(`/api/mpesa/order/${orderId}`);
+      const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });

@@ -5,6 +5,8 @@ const route = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
+const moment = require("moment");
+const Mpesa = require("mpesa-node");
 
 const Product = require("../models/Product");
 const auth = require("../middlewares/is-auth");
@@ -405,36 +407,27 @@ route.post(
 //     }
 //   }
 // );
-const date = new Date();
-let datevalues = [
-  date.getFullYear(),
-  date.getMonth() + 1,
-  date.getDate(),
-  date.getHours(),
-  date.getMinutes(),
-  date.getSeconds()
-];
+let checkoutRequestId;
 let orderId;
 route.post(
   "/api/new/order",
   auth,
-  // check("formValues.payment")
-  //   .not()
-  //   .isEmpty()
-  //   .withMessage("Please choose a valid payment method"),
-  // check("distanceId")
-  //   .not()
-  //   .isEmpty()
-  //   .withMessage("Please choose a valid location"),
-  // check("id").not().isEmpty().withMessage("Payment failed. please try again"),
+  check("formValues.payment")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid payment method"),
+  check("distanceId")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid location"),
   async (req, res) => {
     try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //   return res.status(401).send({ message: errors.array()[0].msg });
-      // }
-      // id, email
-      const { formValues, cart } = req.body;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { formValues, cart, distanceId } = req.body;
+      const id = req.body.id;
       const { _id } = req.session.user;
       const test = cart.map(item => {
         return {
@@ -450,79 +443,66 @@ route.post(
       const price = cart
         .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
-      //**MPESA */
-      const url =
-        "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-      const auth = Buffer.from(
-        `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
-      ).toString("base64");
-      request(
-        {
-          url,
-          headers: {
-            Authorization: "Basic " + auth
-          }
-        },
-        (err, response, body) => {
-          if (err) return console.log("err", err);
-
-          datevalues = datevalues.map(date => {
-            if (date < 10 && !date.toString().includes("0")) {
-              return (date = "0" + date.toString());
-            }
-            return date.toString();
+      if (formValues.payment === "mpesa") {
+        const mpesaApi = new Mpesa({
+          consumerKey: process.env.MPESA_CONSUMER_KEY,
+          consumerSecret: process.env.MPESA_CONSUMER_SECRET
+        });
+        mpesaApi
+          .lipaNaMpesaOnline(
+            `254${req.session.user.phoneNumber}`,
+            1,
+            "https://e-commerce-gig.herokuapp.com/api/stk_callback",
+            "Way4Biz",
+            "Online payment",
+            "CustomerPayBillOnline",
+            "174379",
+            process.env.MPESA_PASS_KEY
+          )
+          .then(res => {
+            console.log(res.data);
+            checkoutRequestId = res.data.CheckoutRequestID;
+          })
+          .catch(err => {
+            console.log("err", err);
           });
-          console.log(datevalues.join(""));
-          const STK_URL =
-            "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
-          request(
-            {
-              method: "POST",
-              url: STK_URL,
-              headers: {
-                Authorization: "Bearer " + JSON.parse(body).access_token
-              },
-              json: {
-                BusinessShortCode: "174379",
-                Password: Buffer.from(
-                  `174379${process.env.MPESA_PASS_KEY}${datevalues.join("")}`
-                ).toString("base64"),
-                Timestamp: datevalues.join(""),
-                TransactionType: "CustomerPayBillOnline",
-                Amount: "1",
-                PartyA: "254721559392",
-                PartyB: "174379",
-                PhoneNumber: "254721559392",
-                CallBackURL: "https://0ff1a17bd03d.ngrok.io/api/stk_callback",
-                AccountReference: "Way4Biz",
-                TransactionDesc: "Paybill"
-              }
-            },
-            (err, response, body2) => {
-              if (err) return console.log("err", err);
-              console.log("body2", body2);
-            }
-          );
-        }
-      );
+        const order = new Order({
+          items: test,
+          paymentMethod: formValues.payment,
+          totalPrice: price,
+          buyer: _id,
+          distance: distanceId
+        });
+        await order.save();
+        orderId = order._id;
+        const orderWithDistance = await Order.findById(order._id).populate(
+          "distance"
+        );
+        return res.send(orderWithDistance);
+      }
       // **STRIPE*/
-      // const charge = await stripe.charges.create({
-      //   amount: price * 100,
-      //   currency: "kes",
-      //   description: `payed ${price} to account by ${email}`,
-      //   source: id
-      // });
-      const order = new Order({
-        items: test,
-        paymentMethod: formValues.payment,
-        totalPrice: price,
-        buyer: _id,
-        distance: "5f13fdc9b3d5c8272c83b714"
-      });
-      await order.save();
-      // // console.log(charge);
-      orderId = order._id;
-      res.send(order);
+      if (id) {
+        const charge = await stripe.charges.create({
+          amount: price * 100,
+          currency: "kes",
+          description: `payed ${price} to account by ${req.session.user.email}`,
+          source: id
+        });
+        const order = new Order({
+          items: test,
+          paymentMethod: formValues.payment,
+          totalPrice: price,
+          buyer: _id,
+          distance: distanceId
+        });
+        console.log(charge);
+        await order.save();
+        const orderWithDistance = await Order.findById(order._id).populate(
+          "distance"
+        );
+        res.send(orderWithDistance);
+      }
+      res.status(401).send({ message: "Invalid ID" });
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -530,30 +510,68 @@ route.post(
   }
 );
 
-route.post("/api/stk_callback", async (req, res) => {
-  console.log(req.body);
-  console.log(orderId);
+route.post("/api/mpesa/paid/order", auth, async (req, res) => {
   try {
-    if (
-      req.body &&
-      req.body.Body &&
-      req.body.Body.stkCallback &&
-      req.body.Body.stkCallback.ResultCode
-    ) {
-      const order = await Order.findByIdAndUpdate(orderId, {
-        mpesaCode: req.body.Body.stkCallback.ResultCode,
-        mpesaDesc: req.body.Body.stkCallback.ResultDesc
-      });
-      await order.save();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-route.get("/api/mpesa/order/:orderId", auth, async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.orderId).populate("distance");
-    res.send(order);
+    const url =
+      "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+    const auth = Buffer.from(
+      `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+    ).toString("base64");
+    request(
+      {
+        url,
+        headers: {
+          Authorization: "Basic " + auth
+        }
+      },
+      (err, response, body) => {
+        if (err) return console.log("err", err);
+        const datevalues = moment().format("YYYYMMDDHHmmss");
+        const STK_URL =
+          "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
+        request(
+          {
+            method: "POST",
+            url: STK_URL,
+            headers: {
+              Authorization: "Bearer " + JSON.parse(body).access_token
+            },
+            json: {
+              BusinessShortCode: "174379",
+              Password: Buffer.from(
+                `174379${process.env.MPESA_PASS_KEY}${datevalues}`
+              ).toString("base64"),
+              Timestamp: datevalues,
+              CheckoutRequestID: checkoutRequestId
+            }
+          },
+          async (err, response, body2) => {
+            if (err) {
+              return res.send(err);
+            }
+            if (body2.ResultCode && body2.ResultCode === "0") {
+              const order = await Order.findByIdAndUpdate(orderId, {
+                mpesaCode: body2.ResultCode,
+                mpesaDesc: body2.ResultDesc,
+                paid: true
+              }).populate("distance");
+
+              await order.save();
+              return res.send(order);
+            }
+            if (body2.ResultCode && body2.ResultCode !== "0") {
+              const order = await Order.findByIdAndUpdate(orderId, {
+                mpesaCode: body2.ResultCode,
+                mpesaDesc: body2.ResultDesc
+              }).populate("distance");
+
+              await order.save();
+              return res.send(order);
+            }
+          }
+        );
+      }
+    );
   } catch (error) {
     res.status(500).send(error);
   }

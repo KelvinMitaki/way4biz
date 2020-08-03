@@ -15,7 +15,11 @@ export class StripePaymentButton extends Component {
         amount={amount * 100}
         token={token =>
           this.props.makeOrder(
-            { ...this.props.order, ...token },
+            {
+              ...this.props.order,
+              distanceId: this.props.distance._id,
+              ...token
+            },
             this.props.history
           )
         }

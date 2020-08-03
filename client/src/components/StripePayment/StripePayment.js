@@ -58,19 +58,8 @@ class StripePayment extends React.Component {
                       email={this.props.user.email}
                       cart={this.props.order.cart}
                       order={this.props.order}
+                      distance={this.props.distance}
                     />
-                    <li>
-                      <p>
-                        On successful payment,you will receive an mpesa
-                        confirmation message.
-                      </p>
-                    </li>
-                    <li>
-                      <p>Press the UNPAID button which should turn to PAID.</p>
-                    </li>
-                    <button className="btn btn-md mpesa">
-                      <strong>UNPAID</strong>
-                    </button>
                   </ul>
                 </div>
               </div>
@@ -83,11 +72,11 @@ class StripePayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     order: state.cartReducer.order,
     distance: state.detailsPersist.distance,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps, { makeOrder })(StripePayment);

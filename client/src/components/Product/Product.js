@@ -311,7 +311,7 @@ class Product extends React.Component {
                       className="btn btn-md my-3 add-to-cart btn-block"
                       onClick={this.handleClick}
                       disabled={
-                        this.props.product.stockQuantity === 0 ||
+                        this.props.product.stockQuantity <= 0 ||
                         (itemInCart &&
                           itemInCart.quantity >=
                             this.props.product.stockQuantity)

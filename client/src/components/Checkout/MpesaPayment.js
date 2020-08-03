@@ -7,7 +7,6 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
-import { Prompt } from "react-router-dom";
 
 class MpesaPayment extends React.Component {
   state = { click: 0 };
@@ -74,20 +73,20 @@ class MpesaPayment extends React.Component {
                     </li>
 
                     <button
-                      // disabled={
-                      //   !this.props.distance ||
-                      //   (this.props.distance &&
-                      //     Object.keys(this.props.distance).length === 0)
-                      // }
-                      disabled={this.state.click > 0}
+                      disabled={
+                        !this.props.distance ||
+                        (this.props.distance &&
+                          Object.keys(this.props.distance).length === 0) ||
+                        this.state.click > 0
+                      }
                       onClick={() => {
                         this.setState({
                           click: this.state.click + 1
                         });
                         this.props.makeOrder(
                           {
-                            ...this.props.order
-                            // distanceId: this.props.distance._id
+                            ...this.props.order,
+                            distanceId: this.props.distance._id
                           },
                           this.props.history
                         );
@@ -108,7 +107,11 @@ class MpesaPayment extends React.Component {
                     </li>
                     <button
                       className="btn btn-md initiate-payment"
-                      disabled={!this.props.pendingOrder}
+                      disabled={
+                        !this.props.pendingOrder ||
+                        (this.props.pendingOrder &&
+                          Object.keys(this.props.pendingOrder).length === 0)
+                      }
                       onClick={() =>
                         this.props.fetchOrderSuccess(this.props.history)
                       }

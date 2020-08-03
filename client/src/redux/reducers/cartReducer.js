@@ -143,7 +143,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ORDER_SUCCESS_STOP:
       return { ...state, orderSuccessLoading: false };
     case DELETE_CART:
-      return { ...state, cart: [] };
+      return { ...state, cart: [], order: null };
     default:
       return state;
   }
