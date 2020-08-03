@@ -48,7 +48,9 @@ class Footer extends React.Component {
                   {!this.props.user && (
                     <Link to="/seller/register">Sell on Way4Biz</Link>
                   )}
-                  <Link to="/">Sell on Way4Biz</Link>
+                  {this.props.user && !this.props.isSeller && (
+                    <Link to="/">Sell on Way4Biz</Link>
+                  )}
                 </p>
               </div>
             </div>
