@@ -16,7 +16,12 @@ import {
   FETCH_CART_ITEMS,
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_START,
-  SAVE_WISHLIST_STOP
+  SAVE_WISHLIST_STOP,
+  FETCH_ORDER_SUCCESS,
+  REMOVE_PENDING_AND_SUCCESS,
+  FETCH_ORDER_SUCCESS_START,
+  FETCH_ORDER_SUCCESS_STOP,
+  DELETE_CART
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,7 +31,10 @@ const INITIAL_STATE = {
   wishlistLoading: false,
   cartLoading: false,
   order: null,
-  saveWishlistLoading: false
+  saveWishlistLoading: false,
+  pendingOrder: null,
+  orderSuccess: null,
+  orderSuccessLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -80,7 +88,7 @@ export default (state = INITIAL_STATE, action) => {
         )
       };
     case MAKE_ORDER:
-      return { ...state, cart: [] };
+      return { ...state, cart: [], pendingOrder: action.payload };
     case ADD_TO_WISHLIST:
       return { ...state, wishlist: [action.payload, ...state.wishlist] };
     case REMOVE_FROM_WISHLIST:
@@ -126,6 +134,16 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, saveWishlistLoading: true };
     case SAVE_WISHLIST_STOP:
       return { ...state, saveWishlistLoading: false };
+    case FETCH_ORDER_SUCCESS:
+      return { ...state, orderSuccess: action.payload };
+    case REMOVE_PENDING_AND_SUCCESS:
+      return { ...state, pendingOrder: null, orderSuccess: null };
+    case FETCH_ORDER_SUCCESS_START:
+      return { ...state, orderSuccessLoading: true };
+    case FETCH_ORDER_SUCCESS_STOP:
+      return { ...state, orderSuccessLoading: false };
+    case DELETE_CART:
+      return { ...state, cart: [], order: null };
     default:
       return state;
   }

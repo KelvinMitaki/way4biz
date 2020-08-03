@@ -24,9 +24,9 @@ class SecondaryHeader extends React.Component {
           <Link className="mx-4 secondary-header-link" to="/privacy-policy">
             Privacy Policy
           </Link>
-          <Link className="mx-4 secondary-header-link" to="/contact-developers">
+          {/* <Link className="mx-4 secondary-header-link" to="/contact-developers">
             Contact Developers
-          </Link>
+          </Link> */}
         </div>
         <div id="small-screen-secondary-header">
           <div className="small-screen-secondary-header-items">
@@ -58,12 +58,12 @@ class SecondaryHeader extends React.Component {
             >
               Privacy Policy
             </Link>
-            <Link
+            {/* <Link
               className="small-screen-secondary-header-link"
               to="/contact-developers"
             >
               Contact Developers
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

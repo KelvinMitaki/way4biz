@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import {
   addToCart,
   removeFromWishlist,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -33,7 +33,7 @@ export class Wishlist extends Component {
               {/* show this component if wishlist is empty */}
               {this.props.wishlist.length === 0 && (
                 <React.Fragment>
-                  <div className="container-fluid wishlist-no-saved-items">
+                  <div className="container wishlist-no-saved-items">
                     <IconContext.Provider
                       value={{ className: "wishlist-large-icon" }}
                     >
@@ -55,7 +55,7 @@ export class Wishlist extends Component {
               <div className="container-fluid wishlist-saved-items">
                 {/* mapping here */}
                 {this.props.wishlist.length !== 0 &&
-                  this.props.wishlist.map(item => (
+                  this.props.wishlist.map((item) => (
                     <div
                       className="wishlist-product-wrapper box-container"
                       key={item._id}
@@ -79,8 +79,8 @@ export class Wishlist extends Component {
                           </div>
                         </div>
                         <div className="col-12 wishlist-more-info">
-                          <div className="row my-3">
-                            <div className="col-6 d-flex justify-content-center">
+                          <div className="row px-2 my-3 justify-content-between align-items-center">
+                            <span className="d-flex">
                               {item.stockQuantity >= 1 ? (
                                 <Link
                                   id="order-today-link"
@@ -94,10 +94,10 @@ export class Wishlist extends Component {
                                   out of stock
                                 </div>
                               )}
-                            </div>
-                            <div
+                            </span>
+                            <span
                               id="remove-wishlist"
-                              className="col-6 d-flex justify-content-center"
+                              className="d-flex align-items-center"
                               style={{ cursor: "pointer" }}
                               onClick={() =>
                                 this.props.removeFromWishlist(item)
@@ -109,7 +109,7 @@ export class Wishlist extends Component {
                                 <FaTrashAlt />
                                 <span className="ml-2">Remove</span>
                               </IconContext.Provider>
-                            </div>
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -125,15 +125,15 @@ export class Wishlist extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     wishlist: state.cartReducer.wishlist,
     wishlistLoading: state.cartReducer.wishlistLoading,
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default connect(mapStateToProps, {
   addToCart,
   removeFromWishlist,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 })(Wishlist);

@@ -9,6 +9,7 @@ import DashBoardOrder from "./DashBoardOrder";
 import { fetchSellerOrders } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { Redirect } from "react-router-dom";
 
 class SellerOrders extends React.Component {
   componentDidMount() {
@@ -42,6 +43,8 @@ class SellerOrders extends React.Component {
     }));
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (this.props.sellerOrdersLoading) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -83,7 +86,8 @@ class SellerOrders extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerOrders: state.sellerRegister.sellerOrders,
-    sellerOrdersLoading: state.auth.sellerOrdersLoading
+    sellerOrdersLoading: state.auth.sellerOrdersLoading,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps, { fetchSellerOrders })(SellerOrders);

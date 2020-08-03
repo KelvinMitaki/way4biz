@@ -148,7 +148,7 @@ class BuyerOrderDetails extends Component {
                               style={{ borderTop: "1px solid #eee" }}
                               className="d-flex justify-content-between p-3"
                             >
-                              <p>
+                              <span>
                                 <Link
                                   className="buy-again-link"
                                   to="/cart"
@@ -158,16 +158,16 @@ class BuyerOrderDetails extends Component {
                                 >
                                   Buy Again
                                 </Link>
-                              </p>
+                              </span>
                               {this.props.buyerOrderDetails.delivered && (
-                                <p>
+                                <span>
                                   <Link
                                     className="file-complain-link"
                                     to={`/buyer/file-complain/${buyerOrderDetails._id}/${item.product._id}`}
                                   >
                                     File Complaint
                                   </Link>
-                                </p>
+                                </span>
                               )}
                             </div>
                           </div>

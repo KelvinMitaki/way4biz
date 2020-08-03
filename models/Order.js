@@ -48,6 +48,16 @@ const OrderSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Distance"
+    },
+    mpesaCode: {
+      type: Number
+    },
+    mpesaDesc: {
+      type: String
+    },
+    paid: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

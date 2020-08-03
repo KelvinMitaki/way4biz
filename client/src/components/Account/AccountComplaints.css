@@ -9,6 +9,9 @@
 
 .account-complaint-wrapper {
   border-left: 3px solid #f76b1a;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .account-complaint-wrapper div p {

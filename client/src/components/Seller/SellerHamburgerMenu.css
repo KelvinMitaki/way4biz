@@ -90,7 +90,7 @@
 
 #seller-account-links::-webkit-scrollbar-thumb,
 #seller-others-links::-webkit-scrollbar-thumb {
-  background-color: #f76b1a;
+  background-color: #000822;
 }
 
 @media screen and (min-width: 961px) {

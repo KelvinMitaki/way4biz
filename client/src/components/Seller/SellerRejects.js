@@ -3,7 +3,7 @@ import React from "react";
 import "./SellerRejects.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { fetchRejects, deleteSellerProduct } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -11,9 +11,13 @@ import { GiGlassCelebration } from "react-icons/gi";
 
 class SellerRejects extends React.Component {
   componentDidMount() {
-    this.props.fetchRejects();
+    if (this.props.user && this.props.user.isSeller) {
+      this.props.fetchRejects();
+    }
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (!this.props.sellerRejects) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -83,7 +87,8 @@ class SellerRejects extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerRejects: state.product.sellerRejects
+    sellerRejects: state.product.sellerRejects,
+    user: state.auth.user
   };
 };
 export default withRouter(

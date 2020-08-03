@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Footer.css";
+import { connect } from "react-redux";
 
 class Footer extends React.Component {
   render() {
@@ -13,13 +14,13 @@ class Footer extends React.Component {
               <h6>About Way4Biz</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/about">About Us</Link>
+                  <Link to="/about-us">About Us</Link>
                 </p>
                 <p>
                   <Link to="/terms">Terms and Conditions</Link>
                 </p>
                 <p>
-                  <Link to="/privacy">Privacy Policy</Link>
+                  <Link to="/privacy-policy">Privacy Policy</Link>
                 </p>
               </div>
             </div>
@@ -27,13 +28,13 @@ class Footer extends React.Component {
               <h6>Help Center</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/contact-us">Contact Us</Link>
                 </p>
-                <p>
+                {/* <p>
                   <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>
-                </p>
+                </p> */}
                 <p>
-                  <Link to="/how-to-sell?">How to sell on Way4Biz?</Link>
+                  <Link to="/how-to-sell">How to sell on Way4Biz?</Link>
                 </p>
               </div>
             </div>
@@ -41,7 +42,15 @@ class Footer extends React.Component {
               <h6>Make Money On Way4Biz</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/sell">Sell on Way4Biz</Link>
+                  {this.props.user && this.props.user.isSeller && (
+                    <Link to="/seller/sell">Sell on Way4Biz</Link>
+                  )}
+                  {!this.props.user && (
+                    <Link to="/seller/register">Sell on Way4Biz</Link>
+                  )}
+                  {this.props.user && !this.props.user.isSeller && (
+                    <Link to="/">Sell on Way4Biz</Link>
+                  )}
                 </p>
               </div>
             </div>
@@ -67,5 +76,9 @@ class Footer extends React.Component {
     );
   }
 }
-
-export default Footer;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps)(Footer);

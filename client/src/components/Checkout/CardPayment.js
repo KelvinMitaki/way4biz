@@ -4,6 +4,7 @@ import "./CardPayment.css";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
+import { Link } from "react-router-dom";
 
 class CardPayment extends React.Component {
   render() {

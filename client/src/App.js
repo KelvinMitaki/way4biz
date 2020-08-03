@@ -18,7 +18,7 @@ import {
   saveCartItems,
   saveWishlistItems,
   fetchCartItems,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -71,10 +71,22 @@ import FileComplain from "./components/Account/FileComplain";
 import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
+import CardPayment from "./components/Checkout/CardPayment";
+import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
+import StripePayment from "./components/StripePayment/StripePayment";
+import StripeError from "./components/StripePayment/StripeError";
+import MpesaError from "./components/Checkout/MpesaError";
+import About from "./components/Pages/About";
+import TermsConditions from "./components/Pages/TermsConditions";
+import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
+import Contact from "./components/Pages/Contact";
+import HowToSell from "./components/Pages/HowToSell";
+import SupportCenter from "./components/Pages/SupportCenter";
+import CustomerService from "./components/Pages/CustomerService";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -84,7 +96,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -95,7 +107,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(i => ({
+          this.props.cart.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -103,7 +115,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity
+            quantity: i.quantity,
           }))
         );
 
@@ -115,14 +127,14 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map(i => ({
+          this.props.wishlist.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             seller: { storeName: i.seller.storeName },
             imageUrl: i.imageUrl,
-            _id: i._id
+            _id: i._id,
           }))
         );
       this.props.fetchWishlistProducts();
@@ -138,7 +150,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -150,23 +162,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -178,557 +190,603 @@ class App extends React.Component {
           {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
           <MobileLogo />
           <div>
-            <Route path="/" exact component={Home} />
-            <Route
-              path="/product/main/reviews/:productId"
-              exact
-              component={ProductReviewsWrapper}
-            />
-            <Route path="/404" component={NotFound} />
-            <Route
-              path="/seller/profiling"
-              exact
-              render={() =>
-                this.props.user &&
-                this.props.user.verifiedPhoneNumber &&
-                !this.props.user.isSeller ? (
-                  <SellerProfiling />
-                ) : (
-                  <Redirect to="/" />
-                )
-              }
-            />
-            <Route path="/seller/store/:sellerId" exact component={Store} />
-            <Route path="/search/results" component={SearchResults} />
-            <Route
-              path="/admin-sellers"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardSellers />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/complaints"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardComplaints />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/complaint/:complaintId"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardComplaint />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/rejects"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardRejects />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-orders"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardOrders />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-order/:orderId"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardOrder />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-categories"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardCategories />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/root/admin-order/view-items/:orderId"
-              exact
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardOrderItems />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/new-products"
-              exact
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardNewProducts />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/new-product/:productId"
-              exact
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardNewProduct />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin/root/new-product/why-reject/:productId"
-              exact
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardNewProductReject />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-category/add"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardAddCategory />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-category/edit/:categoryId"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardEditCategory />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-seller/:sellerId"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardSeller />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-new-sellers"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardNewSellers />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-new-seller/:sellerId"
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoardNewSeller />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/products/category/:category"
-              exact
-              component={ProductParent}
-            />
-            <Route
-              path="/order/details/:orderId"
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerOrderDetails />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller-dashboard"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerDashBoard />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller-orders"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerOrders />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller/settings"
-              exact
-              render={() =>
-                this.props.user ? (
-                  <SellerSettings />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller/sell"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerDashBoardNewProduct />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller/products/rejected"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerRejects />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller-review"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <Review />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller-products"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerProducts />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/seller/edit/:productId"
-              exact
-              render={() =>
-                this.props.user && this.props.user.verifiedPhoneNumber ? (
-                  <SellerDashBoardProductEdit />
-                ) : (
-                  <Redirect to="/seller/sign-in" />
-                )
-              }
-            />
-            <Route
-              path="/admin-dashboard"
-              exact
-              render={() =>
-                this.props.user && this.props.user.isAdmin ? (
-                  <AdminDashBoard />
-                ) : (
-                  <Redirect to="/" />
-                )
-              }
-            />
-            <Route
-              render={() => (
-                <Switch>
-                  <Route
-                    path="/password/reset"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === true ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <ForgotPassword />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/product/:productId"
-                    exact
-                    component={ParentProduct}
-                  />
-                  <Route path="/categories" exact component={MainCategories} />
-                  <Route path="/cart" exact component={Cart} />
-                  <Route
-                    path="/confirm/phoneNumber"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <SellerPhoneNumber />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/number/verify"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <VerifySellerNumber />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/seller/register"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <SellerRegister />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/seller/sign-in"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <SellerLogin />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/password/reset/callback"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <ResetPassword />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/address"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <AddressForm />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/buyer/file-complain/:orderId/:productId"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <FileComplain />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/add/review/:productId/:orderId"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <AddReview />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/pending/reviews"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <PendingReviews />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/products/search/:searchTerm"
-                    exact
-                    component={SearchResults}
-                  />
-                  <Route
-                    path="/checkout"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <CheckOut />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/mpesa-payment"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <MpesaPayment />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/account"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <Account />
-                      )
-                    }
-                  />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/about-us" component={About} />
+              <Route path="/terms" component={TermsConditions} />
+              <Route path="/privacy-policy" component={PrivacyPolicy} />
+              <Route path="/contact-us" component={Contact} />
+              <Route path="/how-to-sell" component={HowToSell} />
+              <Route path="/support-center" component={SupportCenter} />
+              <Route path="/customer-service" component={CustomerService} />
+              <Route
+                path="/product/main/reviews/:productId"
+                exact
+                component={ProductReviewsWrapper}
+              />
+              <Route
+                path="/seller/profiling"
+                exact
+                render={() =>
+                  this.props.user &&
+                  this.props.user.verifiedPhoneNumber &&
+                  !this.props.user.isSeller ? (
+                    <SellerProfiling />
+                  ) : (
+                    <Redirect to="/" />
+                  )
+                }
+              />
+              <Route path="/seller/store/:sellerId" exact component={Store} />
+              <Route path="/search/results" component={SearchResults} />
+              <Route
+                path="/admin-sellers"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardSellers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/complaints"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardComplaints />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/complaint/:complaintId"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardComplaint />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/rejects"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardRejects />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-orders"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardOrders />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-order/:orderId"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardOrder />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-categories"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardCategories />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/root/admin-order/view-items/:orderId"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardOrderItems />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/new-products"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardNewProducts />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/new-product/:productId"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardNewProduct />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/root/new-product/why-reject/:productId"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardNewProductReject />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-category/add"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardAddCategory />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-category/edit/:categoryId"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardEditCategory />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-seller/:sellerId"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardSeller />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-new-sellers"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardNewSellers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-new-seller/:sellerId"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardNewSeller />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/products/category/:category"
+                exact
+                component={ProductParent}
+              />
+              <Route
+                path="/order/details/:orderId"
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerOrderDetails />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller-dashboard"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerDashBoard />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller-orders"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerOrders />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller/settings"
+                exact
+                render={() =>
+                  this.props.user ? (
+                    <SellerSettings />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller/sell"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerDashBoardNewProduct />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller/products/rejected"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerRejects />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller-review"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <Review />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller-products"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerProducts />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/seller/edit/:productId"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerDashBoardProductEdit />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin-dashboard"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoard />
+                  ) : (
+                    <Redirect to="/" />
+                  )
+                }
+              />
 
-                  <Route
-                    path="/buyer/order/details/:orderId"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <BuyerOrderDetails />
-                      )
-                    }
-                  />
+              <Route
+                path="/password/reset"
+                exact
+                render={() =>
+                  this.props.isSignedIn === true ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <ForgotPassword />
+                  )
+                }
+              />
+              <Route
+                path="/product/:productId"
+                exact
+                component={ParentProduct}
+              />
+              <Route path="/categories" exact component={MainCategories} />
+              <Route path="/cart" exact component={Cart} />
+              <Route
+                path="/confirm/phoneNumber"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <SellerPhoneNumber />
+                  )
+                }
+              />
+              <Route
+                path="/number/verify"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <VerifySellerNumber />
+                  )
+                }
+              />
+              <Route
+                path="/seller/register"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <SellerRegister />
+                  )
+                }
+              />
+              <Route
+                path="/seller/sign-in"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <Redirect to="/" /> : <SellerLogin />
+                }
+              />
+              <Route
+                path="/password/reset/callback"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <ResetPassword />
+                  )
+                }
+              />
+              <Route
+                path="/address"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AddressForm />
+                  )
+                }
+              />
+              <Route
+                path="/buyer/file-complain/:orderId/:productId"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <FileComplain />
+                  )
+                }
+              />
+              <Route
+                path="/add/review/:productId/:orderId"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AddReview />
+                  )
+                }
+              />
+              <Route
+                path="/pending/reviews"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <PendingReviews />
+                  )
+                }
+              />
+              <Route
+                path="/products/search/:searchTerm"
+                exact
+                component={SearchResults}
+              />
+              <Route
+                path="/checkout"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <CheckOut />
+                  )
+                }
+              />
+              <Route
+                path="/mpesa-payment"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <MpesaPayment />
+                  )
+                }
+              />
+              <Route
+                path="/order/success"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <OrderPaymentSuccess />
+                  )
+                }
+              />
+              <Route
+                path="/card-payment"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <CardPayment />
+                  )
+                }
+              />
+              <Route
+                path="/account"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <Account />
+                  )
+                }
+              />
 
-                  <Route
-                    path="/orders"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <Orders />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/complaints"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <AccountComplaints />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/complaint/:complaintId"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <AccountComplaint />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/wishlist"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <Wishlist />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/change-password"
-                    exact
-                    render={() =>
-                      this.props.isSignedIn === false ? (
-                        <Redirect to="/sign-in" />
-                      ) : (
-                        <ChangePassword />
-                      )
-                    }
-                  />
-                  {/* <Route component={NotFound} /> */}
-                </Switch>
-              )}
-            />
+              <Route
+                path="/buyer/order/details/:orderId"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <BuyerOrderDetails />
+                  )
+                }
+              />
+
+              <Route
+                path="/orders"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <Orders />
+                  )
+                }
+              />
+              <Route
+                path="/complaints"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AccountComplaints />
+                  )
+                }
+              />
+              <Route
+                path="/complaint/:complaintId"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AccountComplaint />
+                  )
+                }
+              />
+              <Route
+                path="/stripe/payment"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <StripePayment />
+                  )
+                }
+              />
+              <Route
+                path="/wishlist"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <Wishlist />
+                  )
+                }
+              />
+              <Route
+                path="/change-password"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <ChangePassword />
+                  )
+                }
+              />
+              <Route
+                path="/sign-in"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
+                }
+              />
+              <Route
+                path="/mpesa/error"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <MpesaError /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/stripe/error"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? <StripeError /> : <Redirect to="/" />
+                }
+              />
+              <Route component={NotFound} />
+            </Switch>
           </div>
-          <Route
-            path="/sign-in"
-            exact
-            render={() =>
-              this.props.isSignedIn ? <Redirect to="/" /> : <Authenticate />
-            }
-          />
         </div>
       );
     }
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -739,5 +797,5 @@ export default connect(mapStateToProps, {
   saveCartItems,
   fetchCartItems,
   fetchWishlistProducts,
-  saveWishlistItems
+  saveWishlistItems,
 })(App);

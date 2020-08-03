@@ -203,7 +203,12 @@ import {
   SAVE_WISHLIST,
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_STOP,
-  SAVE_WISHLIST_START
+  SAVE_WISHLIST_START,
+  FETCH_ORDER_SUCCESS,
+  REMOVE_PENDING_AND_SUCCESS,
+  FETCH_ORDER_SUCCESS_START,
+  FETCH_ORDER_SUCCESS_STOP,
+  DELETE_CART
 } from "./types";
 
 const authCheck = error => {
@@ -756,23 +761,84 @@ export const fetchAllCategories = () => async dispatch => {
 
 export const preMakeOrder = (credentials, history) => dispatch => {
   dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
-  history.push("/mpesa-payment");
+  if (credentials.formValues.payment === "mpesa") {
+    return history.push("/mpesa-payment");
+  }
+  history.push("/stripe/payment");
 };
 
-export const makeOrder = credentials => async (dispatch, getState) => {
+export const makeOrder = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: LOADING_START });
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    await axios.post("/api/new/order", { ...credentials, distanceId });
-    dispatch({ type: MAKE_ORDER });
+    console.log(credentials);
+    const response = await fetch("/api/new/order", {
+      method: "POST",
+      body: JSON.stringify({
+        ...credentials,
+        distanceId
+      }),
+      headers: { "Content-Type": "application/json" }
+    });
+    const res = await response.json();
+    if (!res.message) {
+      dispatch({ type: MAKE_ORDER, payload: res });
+    }
     dispatch({ type: LOADING_STOP });
+    if (res.paymentMethod !== "mpesa") {
+      history.push("/order/success");
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};
+
+export const fetchOrderSuccess = history => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FETCH_ORDER_SUCCESS_START });
+    const orderId =
+      getState().cartReducer.pendingOrder &&
+      getState().cartReducer.pendingOrder._id;
+
+    const orderSuccess = getState().cartReducer.orderSuccess;
+    if (orderId) {
+      const res = await axios.post(`/api/mpesa/paid/order`);
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
+    }
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
+    if (
+      orderSuccess &&
+      orderSuccess.mpesaCode &&
+      orderSuccess.mpesaCode === 0
+    ) {
+      return history.push("/order/success");
+    }
+    if (
+      orderSuccess &&
+      orderSuccess.mpesaCode &&
+      orderSuccess.mpesaCode !== 0
+    ) {
+      return history.push("/mpesa/error");
+    }
+    history.push("/order/success");
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     console.log(error.response);
   }
+};
+
+export const removePendingAndSuccess = () => {
+  return {
+    type: REMOVE_PENDING_AND_SUCCESS
+  };
 };
 
 export const fetchSellerOrders = () => async dispatch => {
@@ -845,15 +911,18 @@ export const addToWishlist = product => (dispatch, getState) => {
 export const removeFromWishlist = product => async dispatch => {
   try {
     dispatch({ type: SAVE_WISHLIST_START });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
     await axios.patch("/api/delete/wishlist", { productId: product._id });
     dispatch({
       type: REMOVE_FROM_WISHLIST,
       payload: product
     });
     dispatch({ type: SAVE_WISHLIST_STOP });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: SAVE_WISHLIST_STOP });
+    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -2087,6 +2156,16 @@ export const fetchCartItems = () => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_CART_ITEMS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const deleteCart = () => async dispatch => {
+  try {
+    await axios.delete("/api/delete/whole/cart");
+    dispatch({ type: DELETE_CART });
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };

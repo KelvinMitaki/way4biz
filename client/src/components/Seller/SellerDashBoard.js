@@ -7,12 +7,15 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
 import { fetchSellerNewOrdersCount } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { Redirect } from "react-router-dom";
 
 class SellerDashBoard extends React.Component {
   componentDidMount() {
     this.props.fetchSellerNewOrdersCount();
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     if (!this.props.dashboard) return <ScreenLoader />;
     return (
       <div className="container-fluid dashboard-wrapper">
