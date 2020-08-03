@@ -82,6 +82,7 @@ import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
 import Contact from "./components/Pages/Contact";
 import HowToSell from "./components/Pages/HowToSell";
 import SupportCenter from "./components/Pages/SupportCenter";
+import CustomerService from "./components/Pages/CustomerService";
 
 class App extends React.Component {
   state = {
@@ -197,6 +198,7 @@ class App extends React.Component {
               <Route path="/contact-us" component={Contact} />
               <Route path="/how-to-sell" component={HowToSell} />
               <Route path="/support-center" component={SupportCenter} />
+              <Route path="/customer-service" component={CustomerService} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
