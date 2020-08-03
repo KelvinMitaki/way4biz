@@ -544,7 +544,14 @@ route.post("/api/stk_callback", async (req, res) => {
     await order.save();
   }
 });
-
+route.get("/api/mpesa/order/:orderId", auth, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.orderId);
+    res.send(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 // CREATE PRODUCT INDEX
 // FIX THIS
 route.get("/api/products/find/categories", async (req, res) => {
