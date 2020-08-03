@@ -48,7 +48,7 @@ class Footer extends React.Component {
                   {!this.props.user && (
                     <Link to="/seller/register">Sell on Way4Biz</Link>
                   )}
-                  <Link to="/">Sell on Way4Biz</Link>
+                  {/* <Link to="/">Sell on Way4Biz</Link> */}
                 </p>
               </div>
             </div>
@@ -74,9 +74,9 @@ class Footer extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(Footer);
