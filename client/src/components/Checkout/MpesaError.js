@@ -3,13 +3,19 @@ import React from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./MpesaError.css";
 import { connect } from "react-redux";
 
 class MpesaError extends React.Component {
   render() {
+    if (
+      !this.props.orderSuccess ||
+      !this.props.orderSuccess.mpesaCode ||
+      this.props.orderSuccess.mpesaCode === 0
+    )
+      return <Redirect to="/" />;
     return (
       <div className="main">
         <div className="content">
@@ -27,7 +33,7 @@ class MpesaError extends React.Component {
                     Ooops! Something is wrong.
                   </h3>
 
-                  <ul className="mpesa-error-guides">
+                  <ul className="mpesa-error-guides my-3">
                     <li>
                       <p>Ensure you are using a safaricom registered number.</p>
                     </li>
@@ -40,10 +46,14 @@ class MpesaError extends React.Component {
                         transaction.
                       </p>
                     </li>
+                    <li>
+                      <h6>
+                        You can also try other payment methods or contact us{" "}
+                        <Link to="/">here</Link> for help.
+                      </h6>
+                    </li>
                   </ul>
-                  <h6 className="my-2">
-                    You can also try other payment methods.
-                  </h6>
+
                   <div className="d-flex align-items-center justify-content-center">
                     <button
                       className="btn btn-md mpesa-error-to-shop"
@@ -64,6 +74,8 @@ class MpesaError extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return {};
+  return {
+    orderSuccess: state.cartReducer.orderSuccess
+  };
 };
 export default withRouter(connect(mapStateToProps)(MpesaError));

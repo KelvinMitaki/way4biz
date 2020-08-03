@@ -38,7 +38,7 @@ class StripeError extends React.Component {
                       to="/"
                       className="btn btn-md my-3 stripe-error-to-shop"
                     >
-                      Back To Shop
+                      Go To Checkout
                     </Link>
                   </div>
                 </div>
