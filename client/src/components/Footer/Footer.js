@@ -30,9 +30,9 @@ class Footer extends React.Component {
                 <p>
                   <Link to="/contact-us">Contact Us</Link>
                 </p>
-                <p>
+                {/* <p>
                   <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>
-                </p>
+                </p> */}
                 <p>
                   <Link to="/how-to-sell">How to sell on Way4Biz?</Link>
                 </p>
