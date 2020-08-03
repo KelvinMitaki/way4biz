@@ -78,6 +78,7 @@ import StripeError from "./components/StripePayment/StripeError";
 import MpesaError from "./components/Checkout/MpesaError";
 import About from "./components/Pages/About";
 import TermsConditions from "./components/Pages/TermsConditions";
+import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
 
 class App extends React.Component {
   state = {
@@ -189,6 +190,7 @@ class App extends React.Component {
               <Route path="/" exact component={Home} />
               <Route path="/about-us" component={About} />
               <Route path="/terms" component={TermsConditions} />
+              <Route path="/privacy-policy" component={PrivacyPolicy} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact

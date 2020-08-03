@@ -20,7 +20,7 @@ class Footer extends React.Component {
                   <Link to="/terms">Terms and Conditions</Link>
                 </p>
                 <p>
-                  <Link to="/privacy">Privacy Policy</Link>
+                  <Link to="/privacy-policy">Privacy Policy</Link>
                 </p>
               </div>
             </div>
