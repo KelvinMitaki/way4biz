@@ -16,8 +16,8 @@ class MpesaError extends React.Component {
   render() {
     if (
       !this.props.orderSuccess ||
-      !this.props.orderSuccess.mpesaCode ||
-      this.props.orderSuccess.mpesaCode === 0
+      // !this.props.orderSuccess.mpesaCode ||
+      (this.props.orderSuccess && this.props.orderSuccess.mpesaCode === 0)
     )
       return <Redirect to="/" />;
     return (

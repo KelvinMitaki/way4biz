@@ -18,7 +18,9 @@ import {
   SAVE_WISHLIST_START,
   SAVE_WISHLIST_STOP,
   FETCH_ORDER_SUCCESS,
-  REMOVE_PENDING_AND_SUCCESS
+  REMOVE_PENDING_AND_SUCCESS,
+  FETCH_ORDER_SUCCESS_START,
+  FETCH_ORDER_SUCCESS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -30,7 +32,8 @@ const INITIAL_STATE = {
   order: null,
   saveWishlistLoading: false,
   pendingOrder: null,
-  orderSuccess: null
+  orderSuccess: null,
+  orderSuccessLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -134,6 +137,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, orderSuccess: action.payload };
     case REMOVE_PENDING_AND_SUCCESS:
       return { ...state, pendingOrder: null, orderSuccess: null };
+    case FETCH_ORDER_SUCCESS_START:
+      return { ...state, orderSuccessLoading: true };
+    case FETCH_ORDER_SUCCESS_STOP:
+      return { ...state, orderSuccessLoading: false };
     default:
       return state;
   }

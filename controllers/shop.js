@@ -472,6 +472,7 @@ route.post(
             }
             return date.toString();
           });
+          console.log(datevalues.join(""));
           const STK_URL =
             "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
           request(
@@ -531,22 +532,27 @@ route.post(
 
 route.post("/api/stk_callback", async (req, res) => {
   console.log(req.body);
-  if (
-    req.body &&
-    req.body.Body &&
-    req.body.Body.stkCallback &&
-    req.body.Body.stkCallback.ResultCode
-  ) {
-    const order = await Order.findByIdAndUpdate(orderId, {
-      mpesaCode: req.body.Body.stkCallback.ResultCode,
-      mpesaDesc: req.body.Body.stkCallback.ResultDesc
-    });
-    await order.save();
+  console.log(orderId);
+  try {
+    if (
+      req.body &&
+      req.body.Body &&
+      req.body.Body.stkCallback &&
+      req.body.Body.stkCallback.ResultCode
+    ) {
+      const order = await Order.findByIdAndUpdate(orderId, {
+        mpesaCode: req.body.Body.stkCallback.ResultCode,
+        mpesaDesc: req.body.Body.stkCallback.ResultDesc
+      });
+      await order.save();
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 route.get("/api/mpesa/order/:orderId", auth, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.orderId);
+    const order = await Order.findById(req.params.orderId).populate("distance");
     res.send(order);
   } catch (error) {
     res.status(500).send(error);

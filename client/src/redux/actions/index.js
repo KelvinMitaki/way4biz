@@ -205,7 +205,9 @@ import {
   SAVE_WISHLIST_STOP,
   SAVE_WISHLIST_START,
   FETCH_ORDER_SUCCESS,
-  REMOVE_PENDING_AND_SUCCESS
+  REMOVE_PENDING_AND_SUCCESS,
+  FETCH_ORDER_SUCCESS_START,
+  FETCH_ORDER_SUCCESS_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -798,15 +800,17 @@ export const makeOrder = (credentials, history) => async (
 
 export const fetchOrderSuccess = history => async (dispatch, getState) => {
   try {
+    dispatch({ type: FETCH_ORDER_SUCCESS_START });
     const orderId =
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
 
     const orderSuccess = getState().cartReducer.orderSuccess;
-    if (orderId && !orderSuccess) {
+    if (orderId) {
       const res = await axios.get(`/api/mpesa/order/${orderId}`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     if (
       orderSuccess &&
       orderSuccess.mpesaCode &&
@@ -821,8 +825,10 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     ) {
       return history.push("/mpesa/error");
     }
+    history.push("/order/success");
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     console.log(error.response);
   }
 };
