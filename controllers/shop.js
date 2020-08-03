@@ -568,6 +568,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               await order.save();
               return res.send(order);
             }
+            res.send({ message: "error" });
           }
         );
       }

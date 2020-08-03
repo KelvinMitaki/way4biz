@@ -791,6 +791,7 @@ export const makeOrder = (credentials, history) => async (
     }
     dispatch({ type: LOADING_STOP });
     if (res.paymentMethod !== "mpesa") {
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
       history.push("/order/success");
     }
   } catch (error) {
@@ -825,6 +826,9 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
       orderSuccess.mpesaCode &&
       orderSuccess.mpesaCode !== 0
     ) {
+      return history.push("/mpesa/error");
+    }
+    if (orderSuccess && orderSuccess.message) {
       return history.push("/mpesa/error");
     }
     history.push("/order/success");
