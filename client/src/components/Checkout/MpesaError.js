@@ -7,8 +7,12 @@ import { Link, withRouter, Redirect } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./MpesaError.css";
 import { connect } from "react-redux";
+import { removePendingAndSuccess } from "../../redux/actions";
 
 class MpesaError extends React.Component {
+  componentWillMount() {
+    this.props.removePendingAndSuccess();
+  }
   render() {
     if (
       !this.props.orderSuccess ||
@@ -78,4 +82,6 @@ const mapStateToProps = state => {
     orderSuccess: state.cartReducer.orderSuccess
   };
 };
-export default withRouter(connect(mapStateToProps)(MpesaError));
+export default withRouter(
+  connect(mapStateToProps, { removePendingAndSuccess })(MpesaError)
+);

@@ -204,7 +204,8 @@ import {
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_STOP,
   SAVE_WISHLIST_START,
-  FETCH_ORDER_SUCCESS
+  FETCH_ORDER_SUCCESS,
+  REMOVE_PENDING_AND_SUCCESS
 } from "./types";
 
 const authCheck = error => {
@@ -824,6 +825,12 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     authCheck(error);
     console.log(error.response);
   }
+};
+
+export const removePendingAndSuccess = () => {
+  return {
+    type: REMOVE_PENDING_AND_SUCCESS
+  };
 };
 
 export const fetchSellerOrders = () => async dispatch => {
