@@ -28,7 +28,7 @@ class Footer extends React.Component {
               <h6>Help Center</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/contact-us">Contact Us</Link>
                 </p>
                 <p>
                   <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>

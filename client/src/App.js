@@ -191,6 +191,7 @@ class App extends React.Component {
               <Route path="/about-us" component={About} />
               <Route path="/terms" component={TermsConditions} />
               <Route path="/privacy-policy" component={PrivacyPolicy} />
+              <Route path="/contact-us" component={Contact} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
