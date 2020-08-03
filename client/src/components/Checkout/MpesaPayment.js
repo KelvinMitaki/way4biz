@@ -6,18 +6,11 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { makeOrder } from "../../redux/actions";
+import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
 import { Prompt } from "react-router-dom";
-import { w3cwebsocket } from "websocket";
 
-const client = new w3cwebsocket("ws://localhost:8000");
 class MpesaPayment extends React.Component {
   state = { paying: false };
-  componentDidMount() {
-    client.onopen = () => {
-      console.log("client connected");
-    };
-  }
   render() {
     // if (!this.props.order) return <Redirect to="/checkout" />;
     // if (this.props.order && !this.props.order.formValues)
@@ -33,7 +26,6 @@ class MpesaPayment extends React.Component {
     //   (this.props.distance && Object.keys(this.props.distance).length === 0)
     // )
     //   return <Redirect to="/checkout" />;
-
     return (
       <div className="main">
         <div className="content">
@@ -114,7 +106,10 @@ class MpesaPayment extends React.Component {
                     <li>
                       <p>Press the UNPAID button which should turn to PAID.</p>
                     </li>
-                    <button className="btn btn-md mpesa">
+                    <button
+                      className="btn btn-md mpesa"
+                      onClick={() => this.props.fetchOrderSuccess()}
+                    >
                       <strong>UNPAID</strong>
                     </button>
                   </ul>
@@ -136,5 +131,5 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { makeOrder })(MpesaPayment)
+  connect(mapStateToProps, { makeOrder, fetchOrderSuccess })(MpesaPayment)
 );

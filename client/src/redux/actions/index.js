@@ -203,7 +203,8 @@ import {
   SAVE_WISHLIST,
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_STOP,
-  SAVE_WISHLIST_START
+  SAVE_WISHLIST_START,
+  FETCH_ORDER_SUCCESS
 } from "./types";
 
 const authCheck = error => {
@@ -771,17 +772,40 @@ export const makeOrder = (credentials, history) => async (
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    const res = await axios.post("/api/new/order", {
-      ...credentials,
-      distanceId
+    // const res = await axios.post("/api/new/order", {
+    //   ...credentials,
+    //   distanceId
+    // });
+    const response = await fetch("/api/new/order", {
+      method: "POST",
+      body: JSON.stringify({
+        ...credentials,
+        distanceId
+      }),
+      headers: { "Content-Type": "application/json" }
     });
-    console.log(res.data);
-    dispatch({ type: MAKE_ORDER });
+    const res = await response.json();
+    dispatch({ type: MAKE_ORDER, payload: res });
     dispatch({ type: LOADING_STOP });
-    history.push("/order/success");
+    // history.push("/order/success");
   } catch (error) {
     authCheck(error);
     dispatch({ type: LOADING_STOP });
+    console.log(error);
+  }
+};
+
+export const fetchOrderSuccess = () => async (dispatch, getState) => {
+  try {
+    const orderId =
+      getState().cartReducer.pendingOrder &&
+      getState().cartReducer.pendingOrder._id;
+    if (orderId) {
+      const res = await axios.get(`/api/mpesa/order/${orderId}`);
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
+    }
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };

@@ -414,6 +414,7 @@ let datevalues = [
   date.getMinutes(),
   date.getSeconds()
 ];
+let orderId;
 route.post(
   "/api/new/order",
   auth,
@@ -432,22 +433,23 @@ route.post(
       // if (!errors.isEmpty()) {
       //   return res.status(401).send({ message: errors.array()[0].msg });
       // }
-      // const { formValues, cart, id, email } = req.body;
-      // const { _id } = req.session.user;
-      // const test = cart.map(item => {
-      //   return {
-      //     product: item._id,
-      //     quantity: item.quantity
-      //   };
-      // });
-      // cart.forEach(async item => {
-      //   await Product.findByIdAndUpdate(item._id, {
-      //     $inc: { stockQuantity: -item.quantity }
-      //   });
-      // });
-      // const price = cart
-      //   .map(item => item.price)
-      //   .reduce((acc, curr) => acc + curr, 0);
+      // id, email
+      const { formValues, cart } = req.body;
+      const { _id } = req.session.user;
+      const test = cart.map(item => {
+        return {
+          product: item._id,
+          quantity: item.quantity
+        };
+      });
+      cart.forEach(async item => {
+        await Product.findByIdAndUpdate(item._id, {
+          $inc: { stockQuantity: -item.quantity }
+        });
+      });
+      const price = cart
+        .map(item => item.price)
+        .reduce((acc, curr) => acc + curr, 0);
       //**MPESA */
       const url =
         "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
@@ -470,7 +472,6 @@ route.post(
             }
             return date.toString();
           });
-          console.log(datevalues.join(""));
           const STK_URL =
             "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
           request(
@@ -510,17 +511,17 @@ route.post(
       //   description: `payed ${price} to account by ${email}`,
       //   source: id
       // });
-      // const order = new Order({
-      //   items: test,
-      //   paymentMethod: formValues.payment,
-      //   totalPrice: price,
-      //   buyer: _id,
-      //   distance: distanceId
-      // });
-      // await order.save();
+      const order = new Order({
+        items: test,
+        paymentMethod: formValues.payment,
+        totalPrice: price,
+        buyer: _id,
+        distance: "5f13fdc9b3d5c8272c83b714"
+      });
+      await order.save();
       // // console.log(charge);
-
-      res.send({ message: "hey" });
+      orderId = order._id;
+      res.send(order);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -528,36 +529,21 @@ route.post(
   }
 );
 
-const http = require("http");
-const WebSocketServer = require("websocket").server;
-const { v4 } = require("uuid");
-const server = http.createServer();
-server.listen(8000);
-console.log("port 8000");
-const WSserver = new WebSocketServer({
-  httpServer: server
-});
-const clients = {};
-
-route.post("/api/stk_callback", (req, res) => {
-  const clientID = v4();
-  WSserver.on("request", request => {
-    const connection = request.accept(null, request.origin);
-    clients[clientID] = connection;
-    connection.on("message", message => {
-      if (message.type === "utf8") {
-        for (key in clients) {
-          clients[key].sendUTF(req.body);
-          console.log(`message sent to ${clients[key]}`);
-        }
-      }
-    });
-  });
+route.post("/api/stk_callback", async (req, res) => {
   console.log(req.body);
+  if (
+    req.body &&
+    req.body.Body &&
+    req.body.Body.stkCallback &&
+    req.body.Body.stkCallback.ResultCode
+  ) {
+    const order = await Order.findByIdAndUpdate(orderId, {
+      mpesaCode: req.body.Body.stkCallback.ResultCode,
+      mpesaDesc: req.body.Body.stkCallback.ResultDesc
+    });
+    await order.save();
+  }
 });
-// route.get("/api/mpesa_callback", (req, res) => {
-//   console.log({ message: "test" });
-// });
 
 // CREATE PRODUCT INDEX
 // FIX THIS

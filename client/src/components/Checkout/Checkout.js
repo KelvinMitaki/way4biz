@@ -22,7 +22,7 @@ class CheckOut extends React.Component {
       this.props.fetchProducts();
       return <Redirect to="/" />;
     }
-    if (!this.props.distance) return <Redirect to="/address" />;
+    // if (!this.props.distance) return <Redirect to="/address" />;
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
@@ -81,9 +81,10 @@ class CheckOut extends React.Component {
                       <div>
                         <p>Shipping</p>
                         <p>
-                          {Math.round(
-                            this.props.distance.shippingFees
-                          ).toLocaleString()}
+                          {this.props.distance &&
+                            Math.round(
+                              this.props.distance.shippingFees
+                            ).toLocaleString()}
                         </p>
                       </div>
                       <hr />

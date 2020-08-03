@@ -16,7 +16,8 @@ import {
   FETCH_CART_ITEMS,
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_START,
-  SAVE_WISHLIST_STOP
+  SAVE_WISHLIST_STOP,
+  FETCH_ORDER_SUCCESS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,7 +27,9 @@ const INITIAL_STATE = {
   wishlistLoading: false,
   cartLoading: false,
   order: null,
-  saveWishlistLoading: false
+  saveWishlistLoading: false,
+  pendingOrder: null,
+  orderSuccess: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -80,7 +83,7 @@ export default (state = INITIAL_STATE, action) => {
         )
       };
     case MAKE_ORDER:
-      return { ...state, cart: [] };
+      return { ...state, cart: [], pendingOrder: action.payload };
     case ADD_TO_WISHLIST:
       return { ...state, wishlist: [action.payload, ...state.wishlist] };
     case REMOVE_FROM_WISHLIST:
@@ -126,6 +129,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, saveWishlistLoading: true };
     case SAVE_WISHLIST_STOP:
       return { ...state, saveWishlistLoading: false };
+    case FETCH_ORDER_SUCCESS:
+      return { ...state, orderSuccess: action.payload };
     default:
       return state;
   }
