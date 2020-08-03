@@ -3,9 +3,10 @@ import React from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { Link, Redirect } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./MpesaError.css";
+import { connect } from "react-redux";
 
 class MpesaError extends React.Component {
   render() {
@@ -44,8 +45,11 @@ class MpesaError extends React.Component {
                     You can also try other payment methods.
                   </h6>
                   <div className="d-flex align-items-center justify-content-center">
-                    <button className="btn btn-md mpesa-error-to-shop">
-                      Go To Shop
+                    <button
+                      className="btn btn-md mpesa-error-to-shop"
+                      onClick={() => this.props.history.push("/checkout")}
+                    >
+                      Go To Checkout
                     </button>
                   </div>
                 </div>
@@ -59,5 +63,7 @@ class MpesaError extends React.Component {
     );
   }
 }
-
-export default MpesaError;
+const mapStateToProps = state => {
+  return {};
+};
+export default withRouter(connect(mapStateToProps)(MpesaError));

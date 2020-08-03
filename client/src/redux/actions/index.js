@@ -800,11 +800,12 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     const orderId =
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
-    if (orderId) {
+
+    const orderSuccess = getState().cartReducer.orderSuccess;
+    if (orderId && !orderSuccess) {
       const res = await axios.get(`/api/mpesa/order/${orderId}`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
-    const orderSuccess = getState().cartReducer.orderSuccess;
     if (
       orderSuccess &&
       orderSuccess.mpesaCode &&

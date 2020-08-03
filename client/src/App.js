@@ -747,14 +747,14 @@ class App extends React.Component {
                 path="/mpesa/error"
                 exact
                 render={() =>
-                  this.props.isSignedIn ? <Redirect to="/" /> : <MpesaError />
+                  this.props.isSignedIn ? <MpesaError /> : <Redirect to="/" />
                 }
               />
               <Route
                 path="/stripe/error"
                 exact
                 render={() =>
-                  this.props.isSignedIn ? <Redirect to="/" /> : <StripeError />
+                  this.props.isSignedIn ? <StripeError /> : <Redirect to="/" />
                 }
               />
               <Route component={NotFound} />
