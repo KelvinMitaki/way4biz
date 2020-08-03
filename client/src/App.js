@@ -18,7 +18,7 @@ import {
   saveCartItems,
   saveWishlistItems,
   fetchCartItems,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -76,10 +76,17 @@ import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
 import StripePayment from "./components/StripePayment/StripePayment";
 import StripeError from "./components/StripePayment/StripeError";
 import MpesaError from "./components/Checkout/MpesaError";
+import About from "./components/Pages/About";
+import TermsConditions from "./components/Pages/TermsConditions";
+import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
+import Contact from "./components/Pages/Contact";
+import HowToSell from "./components/Pages/HowToSell";
+import SupportCenter from "./components/Pages/SupportCenter";
+import CustomerService from "./components/Pages/CustomerService";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const { fetchUser, fetchProducts, fetchCategories } = this.props;
@@ -89,7 +96,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -100,7 +107,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(i => ({
+          this.props.cart.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -108,7 +115,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity
+            quantity: i.quantity,
           }))
         );
 
@@ -120,14 +127,14 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map(i => ({
+          this.props.wishlist.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             seller: { storeName: i.seller.storeName },
             imageUrl: i.imageUrl,
-            _id: i._id
+            _id: i._id,
           }))
         );
       this.props.fetchWishlistProducts();
@@ -143,7 +150,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -155,23 +162,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -185,6 +192,13 @@ class App extends React.Component {
           <div>
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/about-us" component={About} />
+              <Route path="/terms" component={TermsConditions} />
+              <Route path="/privacy-policy" component={PrivacyPolicy} />
+              <Route path="/contact-us" component={Contact} />
+              <Route path="/how-to-sell" component={HowToSell} />
+              <Route path="/support-center" component={SupportCenter} />
+              <Route path="/customer-service" component={CustomerService} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
@@ -766,13 +780,13 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -783,5 +797,5 @@ export default connect(mapStateToProps, {
   saveCartItems,
   fetchCartItems,
   fetchWishlistProducts,
-  saveWishlistItems
+  saveWishlistItems,
 })(App);
