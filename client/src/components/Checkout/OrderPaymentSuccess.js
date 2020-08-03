@@ -7,8 +7,12 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { BsCheckCircle } from "react-icons/bs";
 import { connect } from "react-redux";
 import Image from "../Market/Image";
+import { deleteCart } from "../../redux/actions";
 
 class OrderPaymentSuccess extends React.Component {
+  componentDidMount() {
+    this.props.deleteCart();
+  }
   render() {
     if (!this.props.orderSuccess) return <Redirect to="/" />;
     return (
@@ -174,4 +178,4 @@ const mapStateToProps = state => {
     user: state.auth.user
   };
 };
-export default connect(mapStateToProps)(OrderPaymentSuccess);
+export default connect(mapStateToProps, { deleteCart })(OrderPaymentSuccess);

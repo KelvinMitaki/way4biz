@@ -207,7 +207,8 @@ import {
   FETCH_ORDER_SUCCESS,
   REMOVE_PENDING_AND_SUCCESS,
   FETCH_ORDER_SUCCESS_START,
-  FETCH_ORDER_SUCCESS_STOP
+  FETCH_ORDER_SUCCESS_STOP,
+  DELETE_CART
 } from "./types";
 
 const authCheck = error => {
@@ -2154,6 +2155,16 @@ export const fetchCartItems = () => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_CART_ITEMS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const deleteCart = () => async dispatch => {
+  try {
+    await axios.delete("/api/delete/whole/cart");
+    dispatch({ type: DELETE_CART });
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };

@@ -558,6 +558,15 @@ route.get("/api/mpesa/order/:orderId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.delete("/api/delete/whole/cart", auth, async (req, res) => {
+  try {
+    const cart = await Cart.findOneAndDelete({ buyer: req.session.user._id });
+    res.send(cart);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 // CREATE PRODUCT INDEX
 // FIX THIS
 route.get("/api/products/find/categories", async (req, res) => {

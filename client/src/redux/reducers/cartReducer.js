@@ -20,7 +20,8 @@ import {
   FETCH_ORDER_SUCCESS,
   REMOVE_PENDING_AND_SUCCESS,
   FETCH_ORDER_SUCCESS_START,
-  FETCH_ORDER_SUCCESS_STOP
+  FETCH_ORDER_SUCCESS_STOP,
+  DELETE_CART
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -141,6 +142,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, orderSuccessLoading: true };
     case FETCH_ORDER_SUCCESS_STOP:
       return { ...state, orderSuccessLoading: false };
+    case DELETE_CART:
+      return { ...state, cart: [] };
     default:
       return state;
   }
