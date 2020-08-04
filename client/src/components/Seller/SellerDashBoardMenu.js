@@ -21,9 +21,6 @@ class SellerDashBoardMenu extends React.Component {
     if (this.props.user && this.props.user.isSeller) {
       if (!this.props.sellerRejects) return <ScreenLoader />;
     }
-    const newOrders =
-      this.props.sellerOrders.length !== 0 &&
-      this.props.sellerOrders.filter(order => !order.delivered);
     return (
       <div className="primary-background" id="seller-dashboard-menu">
         <ul id="seller-menu-items">
