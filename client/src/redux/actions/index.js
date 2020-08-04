@@ -828,16 +828,17 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
+
     if (
       orderSuccess &&
-      orderSuccess.mpesaCode &&
+      Object.keys(orderSuccess).length > 1 &&
       orderSuccess.mpesaCode === 0
     ) {
       return history.push("/order/success");
     }
     if (
       orderSuccess &&
-      orderSuccess.mpesaCode &&
+      Object.keys(orderSuccess).length > 1 &&
       orderSuccess.mpesaCode !== 0
     ) {
       return history.push("/mpesa/error");
@@ -845,9 +846,7 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     if (orderSuccess && orderSuccess.message) {
       return history.push("/mpesa/error");
     }
-    if (orderSuccess && !orderSuccess.mpesaCode) {
-      return history.push("/mpesa/error");
-    }
+
     history.push("/order/success");
   } catch (error) {
     authCheck(error);

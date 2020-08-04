@@ -551,6 +551,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               return res.send(err);
             }
             console.log(body2);
+            console.log(orderId);
             if (body2.ResultCode && body2.ResultCode === "0") {
               await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
@@ -575,6 +576,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
 
               return res.send(savedOrder);
             }
+            await Order.findByIdAndUpdate(orderId, { cancelled: true });
             res.send({ message: "error" });
           }
         );
