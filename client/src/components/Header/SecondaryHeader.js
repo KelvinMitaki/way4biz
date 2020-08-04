@@ -15,11 +15,17 @@ class SecondaryHeader extends React.Component {
               Sell with us
             </Link>
           )}
-          <Link className="mx-4 secondary-header-link" to="/customer-service">
+          {/* <Link className="mx-4 secondary-header-link" to="/customer-service">
             Customer Service
           </Link>
           <Link className="mx-4 secondary-header-link" to="/support-center">
             Support Center
+          </Link> */}
+          <Link className="mx-4 secondary-header-link" to="/about-us">
+            About Us
+          </Link>
+          <Link className="mx-4 secondary-header-link" to="/contact-us">
+            Contact Us
           </Link>
           <Link className="mx-4 secondary-header-link" to="/privacy-policy">
             Privacy Policy
@@ -39,7 +45,7 @@ class SecondaryHeader extends React.Component {
               </Link>
             )}
 
-            <Link
+            {/* <Link
               className="small-screen-secondary-header-link"
               to="/customer-service"
             >
@@ -51,6 +57,18 @@ class SecondaryHeader extends React.Component {
               to="/support-center"
             >
               Support Center
+            </Link> */}
+            <Link
+              className="mx-4 small-screen-secondary-header-link"
+              to="/about-us"
+            >
+              About Us
+            </Link>
+            <Link
+              className="mx-4 small-screen-secondary-header-link"
+              to="/contact-us"
+            >
+              Contact Us
             </Link>
             <Link
               className="small-screen-secondary-header-link"
