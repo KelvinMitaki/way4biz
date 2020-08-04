@@ -1,5 +1,5 @@
 import React from "react";
-// import { Carousel } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { FaUserCircle, FaUserAlt } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
@@ -15,7 +15,7 @@ import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
-import Carousel from "nuka-carousel";
+// import Carousel from "react-slick";
 
 class HeroCarousel extends React.Component {
   shouldComponentUpdate(nextprops, nextState) {
@@ -48,6 +48,12 @@ class HeroCarousel extends React.Component {
         ),
       ];
     }
+    const carouselSettings = {
+      // dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+    };
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -57,7 +63,7 @@ class HeroCarousel extends React.Component {
               <CategoryHoverPopup width={"102%"} height={"100%"} />
             )} */}
           {/* else null */}
-          {/* <div className="hero-carousel-wrapper">
+          <div className="hero-carousel-wrapper">
             <div className="hero-carousel">
               <Carousel id="hero-sliders">
                 <Carousel.Item className="slider">
@@ -68,19 +74,8 @@ class HeroCarousel extends React.Component {
                 </Carousel.Item>
               </Carousel>
             </div>
-          </div> */}
-          <div className="hero-carousel-wrapper">
-            <div className="hero-carousel">
-              <Carousel>
-                <div className="slider" id="hero-slider">
-                  <img className="img-fluid" src="j.jpg" alt="First slide" />
-                </div>
-                <div className="slider" id="hero-slider">
-                  <img className="img-fluid" src="p.jpg" alt="Second slide" />
-                </div>
-              </Carousel>
-            </div>
           </div>
+
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&

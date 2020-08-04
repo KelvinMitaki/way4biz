@@ -9,9 +9,9 @@
   }
 }
 
-@media screen and (min-height: 950px) {
+/* @media screen and (min-height: 950px) {
   .hero-carousel,
   .slider {
     height: calc(50vh - 20px);
   }
-}
+} */

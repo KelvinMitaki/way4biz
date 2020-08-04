@@ -143,6 +143,24 @@
   align-items: center;
   justify-content: center;
 }
+
+/* style carousel buttons */
+
+.carousel-indicators {
+  position: absolute;
+  bottom: -10px;
+  /* background-c olor: red; */
+}
+
+.carousel-indicators li {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.carousel-indicators .active {
+  background-color: #f76b1a !important;
+}
 @media screen and (max-width: 960px) {
   .hero-carousel-wrapper {
     height: 250px;

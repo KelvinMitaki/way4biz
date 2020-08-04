@@ -19,7 +19,8 @@
 .categories {
   padding: 20px 0px 20px 0px;
   background-color: #fff;
-  height: calc(80vh - 50px);
+  /* height: calc(80vh - 50px); */
+  height: 100%;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -79,11 +80,11 @@
   font-size: 25px;
 }
 
-@media screen and (min-height: 950px) {
+/* @media screen and (min-height: 950px) {
   .categories {
     height: calc(50vh - 20px);
   }
-}
+} */
 
 @media screen and (max-width: 960px) {
   #categories {
