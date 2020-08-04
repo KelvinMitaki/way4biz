@@ -25,28 +25,6 @@ class ProductReviewsWrapper extends React.Component {
         <div className="content">
           <Header />
           <div id="product-reviews-wrapper" className="box-container">
-            {/* <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
-              <div className="d-flex align-items-center review-wrapper">
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => this.props.history.goBack()}
-                  className="reviews-link"
-                >
-                  <BsArrowLeft />
-                  <span
-                    style={{
-                      //   fontWeight: "bold",
-                      fontSize: "25px",
-                      textDecoration: "none",
-                      color: "#000"
-                    }}
-                    className="ml-2 "
-                  >
-                    Customer Reviews
-                  </span>
-                </div>
-              </div>
-            </IconContext.Provider> */}
             <div className="d-flex align-items-center">
               <div style={{ flex: "1" }}>
                 <IconContext.Provider
