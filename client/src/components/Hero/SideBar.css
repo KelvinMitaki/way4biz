@@ -1,6 +1,7 @@
 #sidebar {
   height: 100%;
   padding: 0px;
+  background-color: #fff;
 }
 
 @media screen and (max-width: 960px) {
