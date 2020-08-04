@@ -493,14 +493,15 @@ route.post(
           paymentMethod: formValues.payment,
           totalPrice: price,
           buyer: _id,
-          distance: distanceId
+          distance: distanceId,
+          paid: true
         });
         console.log(charge);
         await order.save();
         const orderWithDistance = await Order.findById(order._id).populate(
           "distance"
         );
-        res.send(orderWithDistance);
+        return res.send(orderWithDistance);
       }
       res.status(401).send({ message: "Invalid ID" });
     } catch (error) {

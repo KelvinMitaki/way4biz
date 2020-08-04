@@ -776,7 +776,6 @@ export const makeOrder = (credentials, history) => async (
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    console.log(credentials);
     const response = await fetch("/api/new/order", {
       method: "POST",
       body: JSON.stringify({
