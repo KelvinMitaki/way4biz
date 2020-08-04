@@ -48,12 +48,7 @@ class HeroCarousel extends React.Component {
         ),
       ];
     }
-    const carouselSettings = {
-      // dots: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
-    };
+
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -201,6 +196,12 @@ class HeroCarousel extends React.Component {
                 </Link>
               </div>
             ) : null}
+
+            <div className="container anything pt-4">
+              <div>
+                <h4 id="latest-deal">Latest Deal</h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>
