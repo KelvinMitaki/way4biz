@@ -9,12 +9,13 @@ import { connect } from "react-redux";
 import {
   signInClick,
   registerClick,
-  emptySubCategories
+  emptySubCategories,
 } from "../../redux/actions";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
+// import Carousel from "react-slick";
 
 class HeroCarousel extends React.Component {
   shouldComponentUpdate(nextprops, nextState) {
@@ -44,9 +45,10 @@ class HeroCarousel extends React.Component {
         ...this.props.products.slice(
           randomStop,
           randomStop > this.props.products.length ? randomStop - 4 : +1
-        )
+        ),
       ];
     }
+
     return (
       <div className="hero-main-wrapper">
         <div id="hero-main-wrapper-left">
@@ -68,10 +70,11 @@ class HeroCarousel extends React.Component {
               </Carousel>
             </div>
           </div>
+
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&
-                trimmedProducts.map(prod => (
+                trimmedProducts.map((prod) => (
                   <div
                     key={prod._id}
                     style={{ cursor: "pointer" }}
@@ -124,7 +127,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%"
+                    width: "100%",
                   }}
                   className="mt-4"
                 >
@@ -132,7 +135,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -147,7 +150,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -161,7 +164,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -193,17 +196,23 @@ class HeroCarousel extends React.Component {
                 </Link>
               </div>
             ) : null}
+
+            <div className="container anything pt-4">
+              <div>
+                <h4 id="latest-deal">Latest Deal</h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     products: state.product.products,
     subCategories: state.product.subCategories,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(

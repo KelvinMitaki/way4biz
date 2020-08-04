@@ -208,7 +208,11 @@ import {
   REMOVE_PENDING_AND_SUCCESS,
   FETCH_ORDER_SUCCESS_START,
   FETCH_ORDER_SUCCESS_STOP,
-  DELETE_CART
+  DELETE_CART,
+  CHECKOUT_USER_START,
+  CHECKOUT_USER_STOP,
+  DELETE_CART_START,
+  DELETE_CART_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -376,6 +380,7 @@ export const editUser = (credentials, history) => async (
 };
 export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
+    dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
     const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
@@ -383,13 +388,13 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: CHECKOUT_USER, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: CHECKOUT_USER_STOP });
   } catch (error) {
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
     authCheck(error);
 
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: CHECKOUT_USER_STOP });
   }
 };
 
@@ -785,21 +790,29 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    if (!res.message) {
+    if (response.status === "500") {
       dispatch({ type: MAKE_ORDER, payload: res });
-    }
-    dispatch({ type: LOADING_STOP });
-    if (res.paymentMethod !== "mpesa") {
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      return history.push("/stripe/error");
+    }
+
+    if (res.paymentMethod && res.paymentMethod !== "mpesa") {
+      dispatch({ type: MAKE_ORDER, payload: res });
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      dispatch({ type: LOADING_STOP });
       return history.push("/order/success");
     }
-    if (res.message) {
-      return history.push("/stripe/error");
+    dispatch({ type: MAKE_ORDER, payload: res });
+    if (!res.paymentMethod) {
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      history.push("/stripe/error");
     }
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
     dispatch({ type: LOADING_STOP });
-    console.log(error);
+    history.push("/stripe/error");
+    console.log(error.response);
   }
 };
 
@@ -810,22 +823,23 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
 
-    const orderSuccess = getState().cartReducer.orderSuccess;
     if (orderId) {
       const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
+    const orderSuccess = getState().cartReducer.orderSuccess;
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
+
     if (
       orderSuccess &&
-      orderSuccess.mpesaCode &&
+      Object.keys(orderSuccess).length > 1 &&
       orderSuccess.mpesaCode === 0
     ) {
       return history.push("/order/success");
     }
     if (
       orderSuccess &&
-      orderSuccess.mpesaCode &&
+      Object.keys(orderSuccess).length > 1 &&
       orderSuccess.mpesaCode !== 0
     ) {
       return history.push("/mpesa/error");
@@ -833,10 +847,12 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     if (orderSuccess && orderSuccess.message) {
       return history.push("/mpesa/error");
     }
+
     history.push("/order/success");
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
+    history.push("/mpesa/error");
     console.log(error.response);
   }
 };
@@ -2168,10 +2184,13 @@ export const fetchCartItems = () => async dispatch => {
 
 export const deleteCart = () => async dispatch => {
   try {
+    dispatch({ type: DELETE_CART_START });
     await axios.delete("/api/delete/whole/cart");
     dispatch({ type: DELETE_CART });
+    dispatch({ type: DELETE_CART_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: DELETE_CART_STOP });
     console.log(error.response);
   }
 };

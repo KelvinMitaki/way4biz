@@ -20,9 +20,7 @@ import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
-// import OwlCarousel from "react-owl-carousel";
-// import "owl.carousel/dist/assets/owl.carousel.css";
-// import "owl.carousel/dist/assets/owl.theme.default.css";
+
 import Image from "../Market/Image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -32,11 +30,9 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false,
+      show: false,
       clicked: false
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -62,25 +58,15 @@ class Product extends React.Component {
     }
     return false;
   }
-  handleClick(e) {
-    e.preventDefault();
-    this.setState(prevState => {
-      return {
-        modalShow: !prevState.modalShow
-      };
-    });
+  showModal = () => {
+    this.setState({ show: true });
     const { product, addToCart } = this.props;
     addToCart(product);
-  }
+  };
 
-  handleCloseModal(e) {
-    e.preventDefault();
-    this.setState(prevState => {
-      return {
-        modalShow: !prevState.modalShow
-      };
-    });
-  }
+  hideModal = () => {
+    this.setState({ show: false });
+  };
 
   getImageProps() {
     const { product } = this.props;
@@ -132,12 +118,11 @@ class Product extends React.Component {
           <Header />
           {this.props.product && (
             <div className="container-fluid product-wrapper">
-              {this.state.modalShow ? (
-                <div
-                  onClick={this.handleCloseModal}
-                  className="back-shed"
-                ></div>
-              ) : null}
+              <AddToCartModalButton
+                show={this.state.show}
+                handleClose={this.hideModal}
+              />
+
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
                   <ReactImageMagnify
@@ -309,7 +294,7 @@ class Product extends React.Component {
                   <div>
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
-                      onClick={this.handleClick}
+                      onClick={this.showModal}
                       disabled={
                         this.props.product.stockQuantity <= 0 ||
                         (itemInCart &&
@@ -319,11 +304,6 @@ class Product extends React.Component {
                     >
                       Add to Cart
                     </button>
-                    <AddToCartModalButton
-                      className="modal"
-                      show={this.state.modalShow}
-                      close={this.handleCloseModal}
-                    ></AddToCartModalButton>
                   </div>
                 </div>
               </div>

@@ -8,11 +8,11 @@ import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Image from "../Market/Image";
-// import ScreenLoader from "../Pages/ScreenLoader";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
   render() {
-    // if (this.props.cartLoading) return <ScreenLoader />;
+    if (this.props.deleteCartLoading) return <ScreenLoader />;
     if (this.props.cart && this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">
@@ -29,7 +29,7 @@ class MyCart extends React.Component {
                     <div className="col-12">
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
-                        <div className="col-5 col-md-6">
+                        <div className="col-5 col-md-5">
                           <Image
                             height="150px"
                             width="150px"
@@ -41,15 +41,15 @@ class MyCart extends React.Component {
                             alt={item.name}
                           />
                         </div>
-                        <div className="price-title col-7 col-md-6">
-                          <p
-                            className="store-name"
-                            style={{ fontWeight: "bold" }}
+                        <div className="price-title col-7 col-md-7">
+                          <h6
+                            className="cart-store-name my-1"
+                            // style={{ fontWeight: "bold" }}
                           >
                             Seller:{item.seller.storeName}
-                          </p>
+                          </h6>
                           <p
-                            className="product-name"
+                            className="cart-product-name mb-1"
                             style={{ fontWeight: "bolder" }}
                           >
                             {item.name}
@@ -147,7 +147,8 @@ const mapStateToProps = state => {
   return {
     cart: state.cartReducer.cart,
     isSignedIn: state.auth.isSignedIn,
-    cartLoading: state.cartReducer.cartLoading
+    cartLoading: state.cartReducer.cartLoading,
+    deleteCartLoading: state.cartReducer.deleteCartLoading
   };
 };
 export default withRouter(

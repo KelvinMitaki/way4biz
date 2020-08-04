@@ -6,9 +6,16 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./StripeError.css";
+import { connect } from "react-redux";
+import { removePendingAndSuccess } from "../../redux/actions";
 
 class StripeError extends React.Component {
+  componentWillUnmount() {
+    this.props.removePendingAndSuccess();
+  }
   render() {
+    if (!this.props.orderSuccess || this.props.orderSuccess._id)
+      return <Redirect to="/" />;
     return (
       <div className="main">
         <div className="content">
@@ -52,5 +59,11 @@ class StripeError extends React.Component {
     );
   }
 }
-
-export default StripeError;
+const mapStateToProps = state => {
+  return {
+    orderSuccess: state.cartReducer.orderSuccess
+  };
+};
+export default connect(mapStateToProps, { removePendingAndSuccess })(
+  StripeError
+);

@@ -142,20 +142,20 @@ class AddressForm extends React.Component {
                     className="btn btn-md btn-block address-btn mt-3 "
                     disabled={
                       !this.props.valid ||
-                      this.props.loading ||
+                      this.props.checkoutUserLoading ||
                       Object.keys(this.state.townLatLng).length === 0 ||
                       Object.keys(this.state.cityLatLng).length === 0
                     }
                     type="submit"
                   >
-                    {this.props.loading && (
+                    {this.props.checkoutUserLoading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
                         role="status"
                         aria-hidden="true"
                       ></span>
                     )}
-                    {this.props.loading ? (
+                    {this.props.checkoutUserLoading ? (
                       <span> {"  "}Loading...</span>
                     ) : (
                       <span>Proceed To Checkout</span>
@@ -224,7 +224,7 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
-    loading: state.auth.loading,
+    checkoutUserLoading: state.auth.checkoutUserLoading,
     checkoutUserError: state.auth.checkoutUserError,
     cart: state.cartReducer.cart
   };

@@ -494,12 +494,14 @@ route.post(
           totalPrice: price,
           buyer: _id,
           distance: distanceId,
-          paid: true
+          paid: true,
+          brand: charge.payment_method_details.card.brand,
+          last4: charge.payment_method_details.card.last4
         });
         console.log(charge);
         await order.save();
         const orderWithDistance = await Order.findById(order._id).populate(
-          "distance"
+          "distance items.product"
         );
         return res.send(orderWithDistance);
       }
@@ -550,25 +552,32 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
             if (err) {
               return res.send(err);
             }
+            console.log(body2);
             if (body2.ResultCode && body2.ResultCode === "0") {
-              const order = await Order.findByIdAndUpdate(orderId, {
+              await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
                 mpesaDesc: body2.ResultDesc,
                 paid: true
-              }).populate("distance");
+              });
+              const savedOrder = await Order.findById(orderId).populate(
+                "distance items.product"
+              );
 
-              await order.save();
-              return res.send(order);
+              return res.send(savedOrder);
             }
             if (body2.ResultCode && body2.ResultCode !== "0") {
-              const order = await Order.findByIdAndUpdate(orderId, {
+              await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
-                mpesaDesc: body2.ResultDesc
-              }).populate("distance");
+                mpesaDesc: body2.ResultDesc,
+                cancelled: true
+              });
+              const savedOrder = await Order.findById(orderId).populate(
+                "distance items.product"
+              );
 
-              await order.save();
-              return res.send(order);
+              return res.send(savedOrder);
             }
+            await Order.findByIdAndUpdate(orderId, { cancelled: true });
             res.send({ message: "error" });
           }
         );

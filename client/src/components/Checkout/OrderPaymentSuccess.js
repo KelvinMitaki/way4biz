@@ -16,6 +16,8 @@ class OrderPaymentSuccess extends React.Component {
   }
   render() {
     if (!this.props.orderSuccess) return <Redirect to="/" />;
+    if (this.props.orderSuccess && this.props.orderSuccess.message)
+      return <Redirect to="/mpesa/error" />;
     return (
       <div className="main">
         <div className="content">
@@ -52,14 +54,27 @@ class OrderPaymentSuccess extends React.Component {
                     this.props.orderSuccess.items.map(item => (
                       <div className="row align-items-center" key={item._id}>
                         <div className="col-3">
-                          {/* <Image width="100%" image alt /> */}
-                          <img src="/1.jpg" width="100%" alt="1.jpg" />
+                          <Image
+                            width="100%"
+                            image={
+                              item.product.imageUrl[0].includes("http")
+                                ? item.product.imageUrl[0]
+                                : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.product.imageUrl[0]} `
+                            }
+                            alt={item.product.imageUrl[0]}
+                          />
                         </div>
                         <div className="col-9">
                           <h6 className="order-item-name mb-2">
-                            Great Beer Of Congo
+                            {item.product.name}
                           </h6>
-                          <p>Qty:1 @ ksh.1,000 each</p>
+                          <h6 style={{ display: "inline-block" }}>
+                            Qty:{" "}
+                            <span>
+                              {item.quantity} @ ksh.
+                              {item.product.price.toLocaleString()} each
+                            </span>
+                          </h6>
                         </div>
                       </div>
                     ))}
@@ -114,8 +129,12 @@ class OrderPaymentSuccess extends React.Component {
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          <h5>Visa</h5>
-                          <p>***********5678</p>
+                          <h5>
+                            {`${this.props.orderSuccess.brand[0].toUpperCase()}${this.props.orderSuccess.brand.substring(
+                              1
+                            )}`}
+                          </h5>
+                          <p>***********{this.props.orderSuccess.last4}</p>
                         </React.Fragment>
                       )}
                     </div>

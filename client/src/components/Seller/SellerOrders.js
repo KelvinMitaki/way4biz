@@ -18,10 +18,15 @@ class SellerOrders extends React.Component {
   getTabs() {
     const newOrders =
       this.props.sellerOrders.length !== 0 &&
-      this.props.sellerOrders.filter(order => !order.delivered);
+      this.props.sellerOrders.filter(
+        order => !order.delivered && !order.cancelled
+      );
     const delivered =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(order => order.delivered);
+    const cancelled =
+      this.props.sellerOrders.length !== 0 &&
+      this.props.sellerOrders.filter(order => order.cancelled);
     let tabs = [
       {
         title: "All",
@@ -31,7 +36,7 @@ class SellerOrders extends React.Component {
 
       { title: "Delivered", data: <DashBoardOrder sellerOrders={delivered} /> },
 
-      { title: "Cancelled", data: <DashBoardOrder /> }
+      { title: "Cancelled", data: <DashBoardOrder sellerOrders={cancelled} /> }
     ];
 
     return tabs.map((tab, index) => ({
