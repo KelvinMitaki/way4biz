@@ -11,20 +11,20 @@ import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
 class MpesaPayment extends React.Component {
   state = { click: 0 };
   render() {
-    // if (!this.props.order) return <Redirect to="/checkout" />;
-    // if (this.props.order && !this.props.order.formValues)
-    //   return <Redirect to="/checkout" />;
-    // if (
-    //   this.props.order &&
-    //   this.props.order.formValues &&
-    //   !this.props.order.formValues.payment
-    // )
-    //   return <Redirect to="/checkout" />;
-    // if (
-    //   !this.props.distance ||
-    //   (this.props.distance && Object.keys(this.props.distance).length === 0)
-    // )
-    //   return <Redirect to="/checkout" />;
+    if (!this.props.order) return <Redirect to="/checkout" />;
+    if (this.props.order && !this.props.order.formValues)
+      return <Redirect to="/checkout" />;
+    if (
+      this.props.order &&
+      this.props.order.formValues &&
+      !this.props.order.formValues.payment
+    )
+      return <Redirect to="/checkout" />;
+    if (
+      !this.props.distance ||
+      (this.props.distance && Object.keys(this.props.distance).length === 0)
+    )
+      return <Redirect to="/checkout" />;
     if (!this.props.user || (this.props.user && !this.props.user.phoneNumber))
       return <Redirect to="/address" />;
     return (
@@ -85,8 +85,7 @@ class MpesaPayment extends React.Component {
                         });
                         this.props.makeOrder(
                           {
-                            ...this.props.order,
-                            distanceId: this.props.distance._id
+                            ...this.props.order
                           },
                           this.props.history
                         );
