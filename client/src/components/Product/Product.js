@@ -20,9 +20,7 @@ import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
 import { Link, withRouter } from "react-router-dom";
 import ScreenLoader from "../Pages/ScreenLoader";
-// import OwlCarousel from "react-owl-carousel";
-// import "owl.carousel/dist/assets/owl.carousel.css";
-// import "owl.carousel/dist/assets/owl.theme.default.css";
+
 import Image from "../Market/Image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -305,11 +303,6 @@ class Product extends React.Component {
                     >
                       Add to Cart
                     </button>
-                    {/* <AddToCartModalButton
-                      className="modal"
-                      show={this.state.modalShow}
-                      close={this.handleCloseModal}
-                    ></AddToCartModalButton> */}
                   </div>
                 </div>
               </div>
