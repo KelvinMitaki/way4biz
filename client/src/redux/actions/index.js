@@ -791,7 +791,10 @@ export const makeOrder = (credentials, history) => async (
     dispatch({ type: LOADING_STOP });
     if (res.paymentMethod !== "mpesa") {
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      history.push("/order/success");
+      return history.push("/order/success");
+    }
+    if (res.message) {
+      return history.push("/stripe/error");
     }
   } catch (error) {
     authCheck(error);
