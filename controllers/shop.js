@@ -550,6 +550,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
             if (err) {
               return res.send(err);
             }
+            console.log(body2);
             if (body2.ResultCode && body2.ResultCode === "0") {
               const order = await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,

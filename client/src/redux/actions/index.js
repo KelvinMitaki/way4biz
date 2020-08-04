@@ -789,7 +789,6 @@ export const makeOrder = (credentials, history) => async (
       dispatch({ type: MAKE_ORDER, payload: res });
     }
     dispatch({ type: LOADING_STOP });
-    console.log(credentials);
     if (res.message) {
       return history.push("/stripe/error");
     }
@@ -811,11 +810,12 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
 
-    const orderSuccess = getState().cartReducer.orderSuccess;
     if (orderId) {
       const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
+      console.log(res.data);
     }
+    const orderSuccess = getState().cartReducer.orderSuccess;
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     if (
       orderSuccess &&

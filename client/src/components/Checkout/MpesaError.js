@@ -10,13 +10,12 @@ import { connect } from "react-redux";
 import { removePendingAndSuccess } from "../../redux/actions";
 
 class MpesaError extends React.Component {
-  componentWillMount() {
+  componentWillUnmount() {
     this.props.removePendingAndSuccess();
   }
   render() {
     if (
       !this.props.orderSuccess ||
-      // !this.props.orderSuccess.mpesaCode ||
       (this.props.orderSuccess && this.props.orderSuccess.mpesaCode === 0)
     )
       return <Redirect to="/" />;
