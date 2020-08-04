@@ -163,9 +163,9 @@
 .carousel-indicators .active {
   background-color: #f76b1a !important;
 }
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 991px) {
   .hero-carousel-wrapper {
-    height: 250px;
+    height: 100%;
   }
 
   #hero-main-wrapper-left {
@@ -182,8 +182,8 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+/* @media screen and (max-width: 540px) {
   .hero-carousel-wrapper {
     height: 200px;
   }
-}
+} */
