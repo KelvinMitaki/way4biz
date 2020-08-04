@@ -29,7 +29,9 @@ import {
   SINGLE_CATEGORY_START,
   SINGLE_CATEGORY_STOP,
   FETCH_USER_START,
-  FETCH_USER_STOP
+  FETCH_USER_STOP,
+  CHECKOUT_USER_START,
+  CHECKOUT_USER_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -50,7 +52,8 @@ const INITIAL_STATE = {
   pendingReviewsLoading: false,
   sellerOrdersLoading: false,
   sellerProductsLoading: false,
-  singleCategoryLoading: false
+  singleCategoryLoading: false,
+  checkoutUserLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -109,6 +112,10 @@ export default (state = INITIAL_STATE, action) => {
         };
       }
       return { ...state, isSignedIn: false };
+    case CHECKOUT_USER_START:
+      return { ...state, checkoutUserLoading: true };
+    case CHECKOUT_USER_STOP:
+      return { ...state, checkoutUserLoading: false };
     case CHECKOUT_USER_FAILED:
       return { ...state, checkoutUserError: "Saving changes failed" };
     case EDIT_USER_FAILED:

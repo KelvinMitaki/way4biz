@@ -208,7 +208,9 @@ import {
   REMOVE_PENDING_AND_SUCCESS,
   FETCH_ORDER_SUCCESS_START,
   FETCH_ORDER_SUCCESS_STOP,
-  DELETE_CART
+  DELETE_CART,
+  CHECKOUT_USER_START,
+  CHECKOUT_USER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -376,6 +378,7 @@ export const editUser = (credentials, history) => async (
 };
 export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
+    dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
     const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
@@ -383,13 +386,13 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: CHECKOUT_USER, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: CHECKOUT_USER_STOP });
   } catch (error) {
     console.log(error);
     dispatch({ type: CHECKOUT_USER_FAILED });
     authCheck(error);
 
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: CHECKOUT_USER_STOP });
   }
 };
 
@@ -798,8 +801,10 @@ export const makeOrder = (credentials, history) => async (
       return history.push("/order/success");
     }
     dispatch({ type: MAKE_ORDER, payload: res });
-    dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-    history.push("/stripe/error");
+    if (!res.paymentMethod) {
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      history.push("/stripe/error");
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
@@ -819,6 +824,7 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     if (orderId) {
       const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
+      console.log(res);
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
@@ -837,6 +843,9 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
       return history.push("/mpesa/error");
     }
     if (orderSuccess && orderSuccess.message) {
+      return history.push("/mpesa/error");
+    }
+    if (orderSuccess && !orderSuccess.mpesaCode) {
       return history.push("/mpesa/error");
     }
     history.push("/order/success");

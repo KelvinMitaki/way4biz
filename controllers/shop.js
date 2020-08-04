@@ -552,23 +552,28 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
             }
             console.log(body2);
             if (body2.ResultCode && body2.ResultCode === "0") {
-              const order = await Order.findByIdAndUpdate(orderId, {
+              await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
                 mpesaDesc: body2.ResultDesc,
                 paid: true
-              }).populate("distance");
+              });
+              const savedOrder = await Order.findById(orderId).populate(
+                "distance"
+              );
 
-              await order.save();
-              return res.send(order);
+              return res.send(savedOrder);
             }
             if (body2.ResultCode && body2.ResultCode !== "0") {
-              const order = await Order.findByIdAndUpdate(orderId, {
+              await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
-                mpesaDesc: body2.ResultDesc
-              }).populate("distance");
+                mpesaDesc: body2.ResultDesc,
+                cancelled: true
+              });
+              const savedOrder = await Order.findById(orderId).populate(
+                "distance"
+              );
 
-              await order.save();
-              return res.send(order);
+              return res.send(savedOrder);
             }
             res.send({ message: "error" });
           }
