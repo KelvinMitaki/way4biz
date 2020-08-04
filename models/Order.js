@@ -58,6 +58,12 @@ const OrderSchema = new mongoose.Schema(
     paid: {
       type: Boolean,
       default: false
+    },
+    brand: {
+      type: String
+    },
+    last4: {
+      type: String
     }
   },
   { timestamps: true }

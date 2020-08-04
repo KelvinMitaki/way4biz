@@ -20,7 +20,7 @@ class StripeError extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
-          <div className="container">
+          <div className="container mt-3">
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1">
@@ -42,7 +42,7 @@ class StripeError extends React.Component {
                   </p>
                   <div className="d-flex align-items-center justify-content-center">
                     <Link
-                      to="/"
+                      to="/checkout"
                       className="btn btn-md my-3 stripe-error-to-shop"
                     >
                       Go To Checkout
@@ -59,9 +59,9 @@ class StripeError extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    orderSuccess: state.cartReducer.orderSuccess
+    orderSuccess: state.cartReducer.orderSuccess,
   };
 };
 export default connect(mapStateToProps, { removePendingAndSuccess })(

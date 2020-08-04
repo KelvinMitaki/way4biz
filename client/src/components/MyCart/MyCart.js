@@ -8,11 +8,11 @@ import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Image from "../Market/Image";
-// import ScreenLoader from "../Pages/ScreenLoader";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
   render() {
-    // if (this.props.cartLoading) return <ScreenLoader />;
+    if (this.props.deleteCartLoading) return <ScreenLoader />;
     if (this.props.cart && this.props.cart.length !== 0) {
       return (
         <div className="cart-wrapper">
@@ -23,7 +23,7 @@ class MyCart extends React.Component {
                   <h3>Cart({this.props.cart.length})</h3>
                 </div>
               </div>
-              {this.props.cart.map((item) => (
+              {this.props.cart.map(item => (
                 <React.Fragment key={item._id}>
                   <div className="row box-container">
                     <div className="col-12">
@@ -100,7 +100,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map((item) => item.price * item.quantity)
+                      .map(item => item.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
@@ -143,11 +143,12 @@ class MyCart extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     cart: state.cartReducer.cart,
     isSignedIn: state.auth.isSignedIn,
     cartLoading: state.cartReducer.cartLoading,
+    deleteCartLoading: state.cartReducer.deleteCartLoading
   };
 };
 export default withRouter(
