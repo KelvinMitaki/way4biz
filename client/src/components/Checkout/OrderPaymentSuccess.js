@@ -15,7 +15,10 @@ class OrderPaymentSuccess extends React.Component {
     this.props.removePendingAndSuccess();
   }
   render() {
+    console.log(this.props.orderSuccess);
     if (!this.props.orderSuccess) return <Redirect to="/" />;
+    if (this.props.orderSuccess && this.props.orderSuccess.message)
+      return <Redirect to="/mpesa/error" />;
     return (
       <div className="main">
         <div className="content">

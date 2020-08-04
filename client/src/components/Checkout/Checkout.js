@@ -104,20 +104,20 @@ class CheckOut extends React.Component {
                           className="btn btn-md order-btn"
                           disabled={
                             !this.props.valid ||
-                            this.props.loading ||
+                            this.props.checkoutUserLoading ||
                             this.props.pristine ||
                             !this.props.payment
                           }
                           type="submit"
                         >
-                          {this.props.loading && (
+                          {this.props.checkoutUserLoading && (
                             <span
                               className="spinner-grow spinner-grow-sm"
                               role="status"
                               aria-hidden="true"
                             ></span>
                           )}
-                          {this.props.loading ? (
+                          {this.props.checkoutUserLoading ? (
                             <span> {"  "}Loading...</span>
                           ) : (
                             <span>Order Now</span>
@@ -143,7 +143,7 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    loading: state.auth.loading,
+    checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
     payment
   };
