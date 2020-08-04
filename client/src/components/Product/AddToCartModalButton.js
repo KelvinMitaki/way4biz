@@ -49,7 +49,7 @@ const Modal = (props) => {
     : "modal display-nones";
 
   return (
-    <div className={showHideClassName}>
+    <div className={showHideClassName} onClick={props.handleClose}>
       <section className="modal-main">
         <div className="modal-header">
           <span className="close-modal-btn" onClick={props.handleClose}>
