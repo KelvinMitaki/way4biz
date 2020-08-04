@@ -785,21 +785,27 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    if (!res.message) {
+    if (response.status === "500") {
       dispatch({ type: MAKE_ORDER, payload: res });
-    }
-    dispatch({ type: LOADING_STOP });
-    if (res.message) {
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
       return history.push("/stripe/error");
     }
-    if (!res.message && res.paymentMethod !== "mpesa") {
+
+    if (res.paymentMethod && res.paymentMethod !== "mpesa") {
+      dispatch({ type: MAKE_ORDER, payload: res });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      dispatch({ type: LOADING_STOP });
       return history.push("/order/success");
     }
+    dispatch({ type: MAKE_ORDER, payload: res });
+    dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+    history.push("/stripe/error");
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
     dispatch({ type: LOADING_STOP });
-    console.log(error);
+    history.push("/stripe/error");
+    console.log(error.response);
   }
 };
 
@@ -813,7 +819,6 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     if (orderId) {
       const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
-      console.log(res.data);
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
@@ -838,6 +843,7 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
+    history.push("/mpesa/error");
     console.log(error.response);
   }
 };
