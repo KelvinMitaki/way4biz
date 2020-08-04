@@ -14,7 +14,7 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts
+  fetchRelatedProducts,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -32,11 +32,9 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalShow: false,
-      clicked: false
+      show: false,
+      clicked: false,
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -62,25 +60,14 @@ class Product extends React.Component {
     }
     return false;
   }
-  handleClick(e) {
-    e.preventDefault();
-    this.setState(prevState => {
-      return {
-        modalShow: !prevState.modalShow
-      };
-    });
-    const { product, addToCart } = this.props;
-    addToCart(product);
-  }
 
-  handleCloseModal(e) {
-    e.preventDefault();
-    this.setState(prevState => {
-      return {
-        modalShow: !prevState.modalShow
-      };
-    });
-  }
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
 
   getImageProps() {
     const { product } = this.props;
@@ -91,16 +78,16 @@ class Product extends React.Component {
         // width:100%,
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
-          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`
+          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
       },
       largeImage: {
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
           : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
         width: 1000,
-        height: 1000
+        height: 1000,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -110,19 +97,19 @@ class Product extends React.Component {
     const itemInWishlist =
       this.props.product &&
       this.props.wishlist.find(
-        item => item._id.toString() === this.props.product._id.toString()
+        (item) => item._id.toString() === this.props.product._id.toString()
       );
     let itemInCart = false;
     itemInCart =
       this.props.product &&
       this.props.product._id &&
       this.props.cart &&
-      this.props.cart.find(item => item._id === this.props.product._id);
+      this.props.cart.find((item) => item._id === this.props.product._id);
 
     const carouselSettings = {
       // dots: true,
       slidesToShow: 4,
-      slidesToScroll: 1
+      slidesToScroll: 1,
     };
     if (!this.props.product || this.props.saveWishlistLoading)
       return <ScreenLoader />;
@@ -132,12 +119,11 @@ class Product extends React.Component {
           <Header />
           {this.props.product && (
             <div className="container-fluid product-wrapper">
-              {this.state.modalShow ? (
-                <div
-                  onClick={this.handleCloseModal}
-                  className="back-shed"
-                ></div>
-              ) : null}
+              <AddToCartModalButton
+                show={this.state.show}
+                handleClose={this.hideModal}
+              />
+
               <div className="row" id="product">
                 <div className="col-lg-6 product-imgs">
                   <ReactImageMagnify
@@ -275,7 +261,7 @@ class Product extends React.Component {
                           clickable={false}
                           value={Math.round(
                             this.props.productReviews
-                              .map(p => p.rating)
+                              .map((p) => p.rating)
                               .reduce((acc, cur) => acc + cur, 0) /
                               this.props.productReviews.length
                           )}
@@ -309,7 +295,7 @@ class Product extends React.Component {
                   <div>
                     <button
                       className="btn btn-md my-3 add-to-cart btn-block"
-                      onClick={this.handleClick}
+                      onClick={this.showModal}
                       disabled={
                         this.props.product.stockQuantity === 0 ||
                         (itemInCart &&
@@ -319,11 +305,11 @@ class Product extends React.Component {
                     >
                       Add to Cart
                     </button>
-                    <AddToCartModalButton
+                    {/* <AddToCartModalButton
                       className="modal"
                       show={this.state.modalShow}
                       close={this.handleCloseModal}
-                    ></AddToCartModalButton>
+                    ></AddToCartModalButton> */}
                   </div>
                 </div>
               </div>
@@ -332,7 +318,7 @@ class Product extends React.Component {
                 {this.props.relatedProducts === 0 ? null : (
                   <div className="related-products-wrapper">
                     {this.props.relatedProducts.length !== 0 &&
-                      this.props.relatedProducts.map(item => (
+                      this.props.relatedProducts.map((item) => (
                         <Link key={item._id} to={`/product/${item._id}`}>
                           <div key={item._id} className="related-product">
                             <Image
@@ -401,7 +387,7 @@ const mapStateToProps = (state, ownProps) => {
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
     productReviews: state.product.productReviews,
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default withRouter(
@@ -410,6 +396,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts
+    fetchRelatedProducts,
   })(Product)
 );
