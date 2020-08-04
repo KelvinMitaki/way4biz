@@ -210,7 +210,9 @@ import {
   FETCH_ORDER_SUCCESS_STOP,
   DELETE_CART,
   CHECKOUT_USER_START,
-  CHECKOUT_USER_STOP
+  CHECKOUT_USER_STOP,
+  DELETE_CART_START,
+  DELETE_CART_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2182,10 +2184,13 @@ export const fetchCartItems = () => async dispatch => {
 
 export const deleteCart = () => async dispatch => {
   try {
+    dispatch({ type: DELETE_CART_START });
     await axios.delete("/api/delete/whole/cart");
     dispatch({ type: DELETE_CART });
+    dispatch({ type: DELETE_CART_STOP });
   } catch (error) {
     authCheck(error);
+    dispatch({ type: DELETE_CART_STOP });
     console.log(error.response);
   }
 };
