@@ -19,12 +19,13 @@
 .categories {
   padding: 20px 0px 20px 0px;
   background-color: #fff;
-  height: calc(80vh - 50px);
+  height: 100%;
   list-style: none;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1001;
+  margin: 0;
 }
 
 .categories li a:first-child {
@@ -32,7 +33,7 @@
 }
 
 .categories li {
-  height: 50px;
+  height: 40px;
   display: flex;
   width: 100%;
   align-items: center;
@@ -43,10 +44,6 @@
   font-weight: 400;
   justify-content: space-between;
 }
-/* 
-.categories li:hover .category-hover-popup {
-  display: block;
-} */
 
 .right-arrow {
   font-size: 28px;
@@ -79,11 +76,11 @@
   font-size: 25px;
 }
 
-@media screen and (min-height: 950px) {
+/* @media screen and (min-height: 950px) {
   .categories {
     height: calc(50vh - 20px);
   }
-}
+} */
 
 @media screen and (max-width: 960px) {
   #categories {

@@ -32,8 +32,11 @@
 .hero-account-section,
 .random-stuff {
   height: 100%;
-  /* border: 1px solid #d4d4d4; */
-  border-radius: 10px;
+}
+
+.hero-account-section {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 #hero-sliders,
@@ -48,7 +51,6 @@
 .slider img {
   height: 100%;
   width: 100%;
-  border-radius: 10px !important;
   position: relative;
   z-index: -1;
   overflow: hidden;
@@ -143,9 +145,27 @@
   align-items: center;
   justify-content: center;
 }
-@media screen and (max-width: 960px) {
+
+/* style carousel buttons */
+
+.carousel-indicators {
+  position: absolute;
+  bottom: -10px;
+  /* background-c olor: red; */
+}
+
+.carousel-indicators li {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.carousel-indicators .active {
+  background-color: #f76b1a !important;
+}
+@media screen and (max-width: 991px) {
   .hero-carousel-wrapper {
-    height: 250px;
+    height: 100%;
   }
 
   #hero-main-wrapper-left {
@@ -162,8 +182,8 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+/* @media screen and (max-width: 540px) {
   .hero-carousel-wrapper {
     height: 200px;
   }
-}
+} */

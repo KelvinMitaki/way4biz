@@ -23,13 +23,13 @@ class MyCart extends React.Component {
                   <h3>Cart({this.props.cart.length})</h3>
                 </div>
               </div>
-              {this.props.cart.map(item => (
+              {this.props.cart.map((item) => (
                 <React.Fragment key={item._id}>
                   <div className="row box-container">
                     <div className="col-12">
                       {/* <div className="container"> */}
                       <div className="row no-gutters cart-product-details">
-                        <div className="col-5 col-md-6">
+                        <div className="col-5 col-md-5">
                           <Image
                             height="150px"
                             width="150px"
@@ -41,15 +41,15 @@ class MyCart extends React.Component {
                             alt={item.name}
                           />
                         </div>
-                        <div className="price-title col-7 col-md-6">
-                          <p
-                            className="store-name"
-                            style={{ fontWeight: "bold" }}
+                        <div className="price-title col-7 col-md-7">
+                          <h6
+                            className="cart-store-name my-1"
+                            // style={{ fontWeight: "bold" }}
                           >
                             Seller:{item.seller.storeName}
-                          </p>
+                          </h6>
                           <p
-                            className="product-name"
+                            className="cart-product-name mb-1"
                             style={{ fontWeight: "bolder" }}
                           >
                             {item.name}
@@ -100,7 +100,7 @@ class MyCart extends React.Component {
                   <p>
                     Ksh.
                     {this.props.cart
-                      .map(item => item.price * item.quantity)
+                      .map((item) => item.price * item.quantity)
                       .reduce((acc, curr) => acc + curr, 0)
                       .toLocaleString()}
                   </p>
@@ -143,11 +143,11 @@ class MyCart extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cart: state.cartReducer.cart,
     isSignedIn: state.auth.isSignedIn,
-    cartLoading: state.cartReducer.cartLoading
+    cartLoading: state.cartReducer.cartLoading,
   };
 };
 export default withRouter(
