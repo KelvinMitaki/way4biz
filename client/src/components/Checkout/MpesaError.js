@@ -3,13 +3,23 @@ import React from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./MpesaError.css";
 import { connect } from "react-redux";
+import { removePendingAndSuccess } from "../../redux/actions";
 
 class MpesaError extends React.Component {
+  componentWillMount() {
+    this.props.removePendingAndSuccess();
+  }
   render() {
+    if (
+      !this.props.orderSuccess ||
+      // !this.props.orderSuccess.mpesaCode ||
+      (this.props.orderSuccess && this.props.orderSuccess.mpesaCode === 0)
+    )
+      return <Redirect to="/" />;
     return (
       <div className="main">
         <div className="content">
@@ -67,7 +77,11 @@ class MpesaError extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    orderSuccess: state.cartReducer.orderSuccess
+  };
 };
-export default withRouter(connect(mapStateToProps)(MpesaError));
+export default withRouter(
+  connect(mapStateToProps, { removePendingAndSuccess })(MpesaError)
+);

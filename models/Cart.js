@@ -7,7 +7,9 @@ const CartSchema = new mongoose.Schema({
   },
   buyer: {
     type: mongoose.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    unique: true,
+    required: true
   }
 });
 const Cart = mongoose.model("Cart", CartSchema);

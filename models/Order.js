@@ -54,6 +54,10 @@ const OrderSchema = new mongoose.Schema(
     },
     mpesaDesc: {
       type: String
+    },
+    paid: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

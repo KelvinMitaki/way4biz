@@ -22,7 +22,7 @@ class CheckOut extends React.Component {
       this.props.fetchProducts();
       return <Redirect to="/" />;
     }
-    // if (!this.props.distance) return <Redirect to="/address" />;
+    if (!this.props.distance) return <Redirect to="/address" />;
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart

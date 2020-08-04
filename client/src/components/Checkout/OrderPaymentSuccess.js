@@ -1,14 +1,21 @@
 import React from "react";
-
 import "./OrderPaymentSuccess.css";
 import Header from "../Header/Header";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { BsCheckCircle } from "react-icons/bs";
+import { connect } from "react-redux";
+import Image from "../Market/Image";
+import { deleteCart, removePendingAndSuccess } from "../../redux/actions";
 
 class OrderPaymentSuccess extends React.Component {
+  componentWillUnmount() {
+    this.props.deleteCart();
+    this.props.removePendingAndSuccess();
+  }
   render() {
+    if (!this.props.orderSuccess) return <Redirect to="/" />;
     return (
       <div className="main">
         <div className="content">
@@ -28,42 +35,69 @@ class OrderPaymentSuccess extends React.Component {
                   <h6 className="order-placement-top">
                     Your order has been placed.We have also sent you an email
                     confirmation.You can check the status of{" "}
-                    <Link to="/" className="mx-1" id="check-order-status">
-                      Order 12345678
+                    <Link
+                      to={`/buyer/order/details/${this.props.orderSuccess._id}`}
+                      className="mx-1"
+                      id="check-order-status"
+                    >
+                      Order {this.props.orderSuccess._id}
                     </Link>{" "}
                     at any time from your account.
                   </h6>
                   <h5 className="mt-4 mb-2">Order Summary</h5>
                   <div style={{ borderBottom: "1px solid #d4d4d4" }}></div>
                   {/* mapping here */}
-                  <div className="row align-items-center">
-                    <div className="col-3">
-                      <img src="/1.jpg" width="100%" alt="1.jpg" />
-                    </div>
-                    <div className="col-9">
-                      <h6 className="order-item-name mb-2">
-                        Great Beer Of Congo
-                      </h6>
-                      <p>Qty:1 @ ksh.1,000 each</p>
-                    </div>
-                  </div>
+                  {this.props.orderSuccess.items &&
+                    this.props.orderSuccess.items.length !== 0 &&
+                    this.props.orderSuccess.items.map(item => (
+                      <div className="row align-items-center" key={item._id}>
+                        <div className="col-3">
+                          {/* <Image width="100%" image alt /> */}
+                          <img src="/1.jpg" width="100%" alt="1.jpg" />
+                        </div>
+                        <div className="col-9">
+                          <h6 className="order-item-name mb-2">
+                            Great Beer Of Congo
+                          </h6>
+                          <p>Qty:1 @ ksh.1,000 each</p>
+                        </div>
+                      </div>
+                    ))}
                   {/* mapping ends here */}
                   <div style={{ borderBottom: "1px solid #d4d4d4" }}></div>
                   <div className="order-amounts mt-3">
                     <div>
                       <h5>Order Subtotal</h5>
-                      <p>Ksh.1,500</p>
+                      <p>
+                        Ksh.
+                        {this.props.orderSuccess.totalPrice &&
+                          this.props.orderSuccess.totalPrice.toLocaleString()}{" "}
+                      </p>
                     </div>
                     <div>
                       <h5>Shipping Cost</h5>
-                      <p>Ksh.100</p>
+                      <p>
+                        Ksh.
+                        {this.props.orderSuccess.distance &&
+                          this.props.orderSuccess.distance.shippingFees &&
+                          this.props.orderSuccess.distance.shippingFees.toLocaleString()}{" "}
+                      </p>
                     </div>
                     <div className="mt-3" style={{ color: "#f76b1a" }}>
                       <h5>
                         <strong>Order Total</strong>
                       </h5>
                       <p>
-                        <strong>Ksh.1,600</strong>
+                        <strong>
+                          Ksh.
+                          {this.props.orderSuccess.totalPrice &&
+                            this.props.orderSuccess.distance &&
+                            this.props.orderSuccess.distance.shippingFees &&
+                            (
+                              this.props.orderSuccess.totalPrice +
+                              this.props.orderSuccess.distance.shippingFees
+                            ).toLocaleString()}
+                        </strong>
                       </p>
                     </div>
                   </div>
@@ -74,12 +108,29 @@ class OrderPaymentSuccess extends React.Component {
                   <h5 className="mb-2">Payment Information</h5>
                   <div className="order-payment-info">
                     <div>
-                      <h5>Visa</h5>
-                      <p>***********5678</p>
+                      {this.props.orderSuccess.paymentMethod === "mpesa" ? (
+                        <React.Fragment>
+                          <h5>Phone Number</h5>0{this.props.user.phoneNumber}
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <h5>Visa</h5>
+                          <p>***********5678</p>
+                        </React.Fragment>
+                      )}
                     </div>
                     <div>
                       <h5>Amount</h5>
-                      <p>Ksh.1,600</p>
+                      <p>
+                        Ksh.
+                        {this.props.orderSuccess.totalPrice &&
+                          this.props.orderSuccess.distance &&
+                          this.props.orderSuccess.distance.shippingFees &&
+                          (
+                            this.props.orderSuccess.totalPrice +
+                            this.props.orderSuccess.distance.shippingFees
+                          ).toLocaleString()}
+                      </p>
                     </div>
                   </div>
                   <div
@@ -89,10 +140,10 @@ class OrderPaymentSuccess extends React.Component {
                   <h5 className="mb-2">Shipping Address</h5>
                   <div>
                     <div>
-                      <h6>Ongata Rongai</h6>
-                    </div>
-                    <div>
-                      <h6>Nyotu</h6>
+                      <h6>
+                        {this.props.orderSuccess.distance &&
+                          this.props.orderSuccess.distance.destination}
+                      </h6>
                     </div>
                   </div>
                   <div
@@ -102,8 +153,13 @@ class OrderPaymentSuccess extends React.Component {
                   <h5 className="mb-2">For Help</h5>
                   <div id="order-help">
                     <h6>
-                      View all order details <Link to="/">here</Link> or contact{" "}
-                      <Link to="/">Customer Service.</Link>
+                      View all order details{" "}
+                      <Link
+                        to={`/buyer/order/details/${this.props.orderSuccess._id}`}
+                      >
+                        here
+                      </Link>{" "}
+                      or contact <Link to="/">Customer Service.</Link>
                     </h6>
                   </div>
                 </div>
@@ -117,5 +173,13 @@ class OrderPaymentSuccess extends React.Component {
     );
   }
 }
-
-export default OrderPaymentSuccess;
+const mapStateToProps = state => {
+  return {
+    orderSuccess: state.cartReducer.orderSuccess,
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps, {
+  deleteCart,
+  removePendingAndSuccess
+})(OrderPaymentSuccess);

@@ -7,7 +7,6 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
-import { Prompt } from "react-router-dom";
 
 class MpesaPayment extends React.Component {
   state = { click: 0 };
@@ -26,6 +25,8 @@ class MpesaPayment extends React.Component {
     //   (this.props.distance && Object.keys(this.props.distance).length === 0)
     // )
     //   return <Redirect to="/checkout" />;
+    if (!this.props.user || (this.props.user && !this.props.user.phoneNumber))
+      return <Redirect to="/address" />;
     return (
       <div className="main">
         <div className="content">
@@ -51,7 +52,7 @@ class MpesaPayment extends React.Component {
                     <li>
                       <p>
                         Once you initiate payment a prompt will be sent to the
-                        phone with this number 0712345678.
+                        phone with this number 0{this.props.user.phoneNumber}
                         <Link to="/address" className="ml-1">
                           <small>Change number here</small>
                         </Link>
@@ -72,20 +73,20 @@ class MpesaPayment extends React.Component {
                     </li>
 
                     <button
-                      // disabled={
-                      //   !this.props.distance ||
-                      //   (this.props.distance &&
-                      //     Object.keys(this.props.distance).length === 0)
-                      // }
-                      disabled={this.state.click > 0}
+                      disabled={
+                        !this.props.distance ||
+                        (this.props.distance &&
+                          Object.keys(this.props.distance).length === 0) ||
+                        this.state.click > 0
+                      }
                       onClick={() => {
                         this.setState({
                           click: this.state.click + 1
                         });
                         this.props.makeOrder(
                           {
-                            ...this.props.order
-                            // distanceId: this.props.distance._id
+                            ...this.props.order,
+                            distanceId: this.props.distance._id
                           },
                           this.props.history
                         );
@@ -105,13 +106,28 @@ class MpesaPayment extends React.Component {
                       <p>Press the UNPAID button which should turn to PAID.</p>
                     </li>
                     <button
-                      className="btn btn-md mpesa"
-                      disabled={!this.props.pendingOrder}
+                      className="btn btn-md initiate-payment"
+                      disabled={
+                        !this.props.pendingOrder ||
+                        (this.props.pendingOrder &&
+                          Object.keys(this.props.pendingOrder).length === 0)
+                      }
                       onClick={() =>
                         this.props.fetchOrderSuccess(this.props.history)
                       }
                     >
-                      <strong>UNPAID</strong>
+                      {this.props.orderSuccessLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
+                      {this.props.orderSuccessLoading ? (
+                        <span> {"  "}Loading...</span>
+                      ) : (
+                        <strong>UNPAID</strong>
+                      )}
                     </button>
                   </ul>
                 </div>
@@ -129,7 +145,9 @@ const mapStateToProps = state => {
   return {
     order: state.cartReducer.order,
     pendingOrder: state.cartReducer.pendingOrder,
-    distance: state.detailsPersist.distance
+    orderSuccessLoading: state.cartReducer.orderSuccessLoading,
+    distance: state.detailsPersist.distance,
+    user: state.auth.user
   };
 };
 export default withRouter(

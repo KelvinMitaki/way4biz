@@ -40,15 +40,14 @@ class AdminDashBoardSellers extends React.Component {
               </div>
               {/* mapping here */}
               {this.props.verifiedSellers.length !== 0 &&
-                this.props.verifiedSellers.map((seller) => (
+                this.props.verifiedSellers.map(seller => (
                   <div key={seller._id} className="admin-seller container">
                     <div className="row box-container">
                       <div className="col-md-3">
                         {/* <div className="admin-seller-details"> */}
                         <p>
                           <strong className="mr-2 x">Name:</strong>
-                          {seller.firstName} {seller.lastName}The quick brown
-                          fox jumped over the lazy dog
+                          {seller.firstName} {seller.lastName}
                         </p>
                         {/* </div> */}
                       </div>
@@ -84,10 +83,10 @@ class AdminDashBoardSellers extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     verifiedSellers: state.sellerRegister.verifiedSellers,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading,
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
   };
 };
 export default connect(mapStateToProps, { fetchVerifiedSellers })(

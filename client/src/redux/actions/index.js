@@ -204,7 +204,11 @@ import {
   PRE_MAKE_ORDER,
   SAVE_WISHLIST_STOP,
   SAVE_WISHLIST_START,
-  FETCH_ORDER_SUCCESS
+  FETCH_ORDER_SUCCESS,
+  REMOVE_PENDING_AND_SUCCESS,
+  FETCH_ORDER_SUCCESS_START,
+  FETCH_ORDER_SUCCESS_STOP,
+  DELETE_CART
 } from "./types";
 
 const authCheck = error => {
@@ -772,10 +776,6 @@ export const makeOrder = (credentials, history) => async (
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
-    // const res = await axios.post("/api/new/order", {
-    //   ...credentials,
-    //   distanceId
-    // });
     const response = await fetch("/api/new/order", {
       method: "POST",
       body: JSON.stringify({
@@ -785,9 +785,17 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    dispatch({ type: MAKE_ORDER, payload: res });
+    if (!res.message) {
+      dispatch({ type: MAKE_ORDER, payload: res });
+    }
     dispatch({ type: LOADING_STOP });
-    // history.push("/order/success");
+    if (res.paymentMethod !== "mpesa") {
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      return history.push("/order/success");
+    }
+    if (res.message) {
+      return history.push("/stripe/error");
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: LOADING_STOP });
@@ -797,15 +805,17 @@ export const makeOrder = (credentials, history) => async (
 
 export const fetchOrderSuccess = history => async (dispatch, getState) => {
   try {
+    dispatch({ type: FETCH_ORDER_SUCCESS_START });
     const orderId =
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
 
     const orderSuccess = getState().cartReducer.orderSuccess;
-    if (orderId && !orderSuccess) {
-      const res = await axios.get(`/api/mpesa/order/${orderId}`);
+    if (orderId) {
+      const res = await axios.post(`/api/mpesa/paid/order`);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     if (
       orderSuccess &&
       orderSuccess.mpesaCode &&
@@ -820,10 +830,21 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     ) {
       return history.push("/mpesa/error");
     }
+    if (orderSuccess && orderSuccess.message) {
+      return history.push("/mpesa/error");
+    }
+    history.push("/order/success");
   } catch (error) {
     authCheck(error);
+    dispatch({ type: FETCH_ORDER_SUCCESS_STOP });
     console.log(error.response);
   }
+};
+
+export const removePendingAndSuccess = () => {
+  return {
+    type: REMOVE_PENDING_AND_SUCCESS
+  };
 };
 
 export const fetchSellerOrders = () => async dispatch => {
@@ -2141,6 +2162,16 @@ export const fetchCartItems = () => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_CART_ITEMS_STOP });
+    console.log(error.response);
+  }
+};
+
+export const deleteCart = () => async dispatch => {
+  try {
+    await axios.delete("/api/delete/whole/cart");
+    dispatch({ type: DELETE_CART });
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };
