@@ -17,7 +17,6 @@ export class StripePaymentButton extends Component {
           this.props.makeOrder(
             {
               ...this.props.order,
-              distanceId: this.props.distance._id,
               ...token
             },
             this.props.history
