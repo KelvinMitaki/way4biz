@@ -46,7 +46,7 @@ import "./AddToCartModalButton.css";
 const Modal = (props) => {
   const showHideClassName = props.show
     ? "modal display-block"
-    : "modal display-none";
+    : "modal display-nones";
 
   return (
     <div className={showHideClassName}>
