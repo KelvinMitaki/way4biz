@@ -65,11 +65,21 @@
 .modal-main {
   position: fixed;
   background: white;
-  width: 50%;
+  width: 40%;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: slide-in 0.5s ease-in-out;
+}
+
+@keyframes slide-in {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 50%;
+  }
 }
 
 .display-block {
@@ -80,15 +90,14 @@
   display: none;
 }
 
-@media screen and (max-width: 960px) {
-  /* .continue-btn,
-  .shopping-btn-modal,
-  .continue-btn:hover,
-  .shopping-btn-modal:hover {
-    width: 180px !important;
-  } */
-
+@media screen and (max-width: 1190px) {
   .modal-main {
-    width: 90%;
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .modal-main {
+    width: 80%;
   }
 }

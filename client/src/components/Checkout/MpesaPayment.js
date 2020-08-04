@@ -51,8 +51,8 @@ class MpesaPayment extends React.Component {
                     </li>
                     <li>
                       <p>
-                        Once you initiate payment a prompt will be sent to the
-                        phone with this number 0{this.props.user.phoneNumber}
+                        Once you initiate payment, a prompt will be sent to the
+                        phone with this number 0{this.props.user.phoneNumber}.
                         <Link to="/address" className="ml-1">
                           <small>Change number here</small>
                         </Link>
@@ -81,11 +81,11 @@ class MpesaPayment extends React.Component {
                       }
                       onClick={() => {
                         this.setState({
-                          click: this.state.click + 1
+                          click: this.state.click + 1,
                         });
                         this.props.makeOrder(
                           {
-                            ...this.props.order
+                            ...this.props.order,
                           },
                           this.props.history
                         );
@@ -94,7 +94,12 @@ class MpesaPayment extends React.Component {
                     >
                       Initiate Payment
                     </button>
-
+                    <li>
+                      <p>
+                        This process may take up to 2 minutes.{" "}
+                        <strong>Be patient</strong>.
+                      </p>
+                    </li>
                     <li>
                       <p>
                         On successful payment,you will receive an mpesa
@@ -102,7 +107,7 @@ class MpesaPayment extends React.Component {
                       </p>
                     </li>
                     <li>
-                      <p>Press the UNPAID button which should turn to PAID.</p>
+                      <p>Press the REDIRECT button for redirection.</p>
                     </li>
                     <button
                       className="btn btn-md initiate-payment"
@@ -125,7 +130,7 @@ class MpesaPayment extends React.Component {
                       {this.props.orderSuccessLoading ? (
                         <span> {"  "}Loading...</span>
                       ) : (
-                        <strong>UNPAID</strong>
+                        <strong>REDIRECT</strong>
                       )}
                     </button>
                   </ul>
@@ -140,13 +145,13 @@ class MpesaPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
     pendingOrder: state.cartReducer.pendingOrder,
     orderSuccessLoading: state.cartReducer.orderSuccessLoading,
     distance: state.detailsPersist.distance,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(

@@ -46,10 +46,10 @@ import "./AddToCartModalButton.css";
 const Modal = (props) => {
   const showHideClassName = props.show
     ? "modal display-block"
-    : "modal display-none";
+    : "modal display-nones";
 
   return (
-    <div className={showHideClassName}>
+    <div className={showHideClassName} onClick={props.handleClose}>
       <section className="modal-main">
         <div className="modal-header">
           <span className="close-modal-btn" onClick={props.handleClose}>
