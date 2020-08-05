@@ -80,14 +80,14 @@ class AdminDashBoardOrder extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Buyer:</strong>
                         {this.props.adminOrder.buyer.firstName}{" "}
                         {this.props.adminOrder.buyer.lastName}
                       </p>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Paid:</strong>
                         {this.props.adminOrder["0"].paid
@@ -95,7 +95,9 @@ class AdminDashBoardOrder extends React.Component {
                           : "false"}
                       </p>
                     </div>
-                    <div className="col-md-4">
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">
                       <p>
                         <Link
                           to={`/root/admin-order/view-items/${this.props.adminOrder["0"]._id}`}
@@ -116,10 +118,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading
+    adminOrderLoading: state.product.adminOrderLoading,
   };
 };
 export default withRouter(
