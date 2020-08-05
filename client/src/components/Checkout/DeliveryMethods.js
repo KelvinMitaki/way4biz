@@ -7,7 +7,7 @@ import RadioField from "./RadioField";
 class DeliveryMethods extends React.Component {
   render() {
     return (
-      <div className="ml-3 mt-3">
+      <div className="ml-3 mt-2">
         <div className="delivery">
           <Field
             type="radio"
