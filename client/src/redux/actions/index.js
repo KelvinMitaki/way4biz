@@ -709,20 +709,23 @@ export const removeFromCart = product => async dispatch => {
 
 export const deleteFromCart = product => async (dispatch, getState) => {
   try {
-    const isSignedIn = getState().auth.isSignedIn;
-    if (isSignedIn) {
-      await axios.patch("/api/delete/cart", { productId: product._id });
-    }
+    // const isSignedIn = getState().auth.isSignedIn;
+    // if (isSignedIn) {
+    //   await axios.patch("/api/delete/cart", { productId: product._id });
+    // }
     dispatch({
       type: DELETE_FROM_CART,
       payload: product
     });
+    if (getState().cartReducer.cart.length === 0) {
+      dispatch(saveCartItems(getState().cartReducer.cart));
+    }
   } catch (error) {
     const isSignedIn = getState().auth.isSignedIn;
     if (isSignedIn) {
       authCheck(error);
     }
-    console.log(error.response);
+    console.log(error);
   }
 };
 
@@ -2151,6 +2154,7 @@ export const saveCartItems = cart => async dispatch => {
   try {
     await axios.post("/api/user/new/cart", { cart });
     dispatch({ type: SAVE_CART });
+    dispatch(fetchCartItems());
   } catch (error) {
     authCheck(error);
     console.log(error.response);

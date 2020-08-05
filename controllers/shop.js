@@ -1136,7 +1136,7 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
 route.post(
   "/api/user/new/cart",
   auth,
-  check("cart").isArray({ min: 1 }).withMessage("invalid"),
+  check("cart").isArray({ min: 0 }).withMessage("invalid"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -1258,29 +1258,29 @@ route.patch(
     }
   }
 );
-route.patch(
-  "/api/delete/cart",
-  auth,
-  check("productId").not().isEmpty().withMessage("Invalid Id"),
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(401).send({ message: errors.array()[0].msg });
-      }
-      const { _id } = req.session.user;
-      const { productId } = req.body;
-      const cart = await Cart.findOneAndUpdate(
-        { buyer: _id },
-        { $pull: { items: { _id: productId } } }
-      );
-      await cart.save();
-      res.send(cart);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }
-);
+// route.patch(
+//   "/api/delete/cart",
+//   auth,
+//   check("productId").not().isEmpty().withMessage("Invalid Id"),
+//   async (req, res) => {
+//     try {
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         return res.status(401).send({ message: errors.array()[0].msg });
+//       }
+//       const { _id } = req.session.user;
+//       const { productId } = req.body;
+//       const cart = await Cart.findOneAndUpdate(
+//         { buyer: _id },
+//         { $pull: { items: { _id: productId } } }
+//       );
+//       await cart.save();
+//       res.send(cart);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   }
+// );
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
