@@ -23,7 +23,7 @@ export class Wishlist extends Component {
     return (
       <React.Fragment>
         <AccountHeader />
-        <div className="container">
+        <div className="container mt-4">
           <div className="row">
             <div className="col-lg-4">
               <AccountMenu />
