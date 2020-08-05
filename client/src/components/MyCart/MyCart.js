@@ -117,7 +117,7 @@ class MyCart extends React.Component {
                 Proceed To Checkout
               </button>
               <button
-                onClick={() => this.props.history.push("/")}
+                onClick={() => this.props.history.goBack()}
                 className="btn shopping-btn btn-md btn-block"
               >
                 Continue Shopping

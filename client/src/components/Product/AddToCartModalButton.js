@@ -43,7 +43,7 @@ import "./AddToCartModalButton.css";
 //   );
 // };
 
-const Modal = (props) => {
+const Modal = props => {
   const showHideClassName = props.show
     ? "modal display-block"
     : "modal display-nones";
@@ -62,7 +62,7 @@ const Modal = (props) => {
               <div className="col-md-6 my-2">
                 <div
                   style={{ cursor: "pointer" }}
-                  onClick={() => props.history.goBack()}
+                  onClick={() => props.handleClose()}
                   className="btn btn-md continue-btn "
                 >
                   Continue Shopping
