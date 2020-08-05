@@ -1597,7 +1597,7 @@ export const fetchAllOrders = filter => async dispatch => {
   try {
     let test = {};
     if (!filter) {
-      test = null;
+      test.paid = true;
     }
 
     if (filter && filter === "today") {
@@ -1641,7 +1641,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
   try {
     let test = {};
     if (!filter) {
-      test = {};
+      test.paid = true;
     }
 
     if (filter && filter === "today") {
