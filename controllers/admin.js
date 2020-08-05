@@ -1159,11 +1159,11 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $skip: itemsToSkip },
         { $limit: 5 }
       ]);
-      if (!orders || orders.length === 0) {
-        return res.status(404).send({ message: "No orders found" });
-      }
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
-      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+      return res.send({
+        orders,
+        ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+      });
     }
     if (typeof test === "object" && Object.keys(test).length !== 0) {
       const orders = await Order.aggregate([
@@ -1172,14 +1172,15 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $skip: itemsToSkip },
         { $limit: 5 }
       ]);
-      if (!orders || orders.length === 0) {
-        return res.status(404).send({ message: "No orders found" });
-      }
+
       const ordersCount = await Order.aggregate([
         { $match: test },
         { $count: "ordersCount" }
       ]);
-      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+      return res.send({
+        orders,
+        ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+      });
     }
     const orders = await Order.aggregate([
       {
@@ -1194,9 +1195,6 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       { $limit: 5 }
     ]);
 
-    if (!orders || orders.length === 0) {
-      return res.status(404).send({ message: "No orders found" });
-    }
     const ordersCount = await Order.aggregate([
       {
         $match: {
@@ -1207,7 +1205,11 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       },
       { $count: "ordersCount" }
     ]);
-    res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+
+    res.send({
+      orders,
+      ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
