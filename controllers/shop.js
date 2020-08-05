@@ -577,7 +577,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
 
               return res.send(savedOrder);
             }
-            await Order.findByIdAndUpdate(orderId, { cancelled: true });
+            await Order.findByIdAndDelete(orderId);
             res.send({ message: "error" });
           }
         );
