@@ -34,6 +34,7 @@ class Product extends React.Component {
     this.state = {
       show: false,
       clicked: false,
+      imageIndex: 0, // the index of the image to be shown,initially 0
     };
   }
   componentDidMount() {
@@ -70,8 +71,14 @@ class Product extends React.Component {
     this.setState({ show: false });
   };
 
+  handleImageHover = (e, index) => {
+    console.log("Helloo World");
+    // modify the state imageIndex with the new index
+  };
+
   getImageProps() {
     const { product } = this.props;
+    // const url = [this.state.imageIndex];
     return {
       smallImage: {
         alt: product.name,
@@ -141,6 +148,7 @@ class Product extends React.Component {
                           <div>
                             <img
                               className="product-carousel-img"
+                              // onMouseOver={(e) => this.handleImageHover(idx)}
                               src={
                                 this.props.product.imageUrl[0].includes("http")
                                   ? this.props.product.imageUrl[0]
