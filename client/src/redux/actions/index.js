@@ -1596,18 +1596,16 @@ export const fetchAdminPendingOrders = () => async dispatch => {
 export const fetchAllOrders = filter => async dispatch => {
   try {
     let test = {};
-    if (!filter) {
-      test.paid = true;
-    }
+    test.paid = true;
 
     if (filter && filter === "today") {
-      test = Date.now() / 1000 - 60 * 60 * 24;
+      test = Date.now() - 60 * 60 * 24 * 1000;
     }
     if (filter && filter === "lastWeek") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 7;
     }
     if (filter && filter === "lastMonth") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 30;
     }
     if (filter && filter === "pendingOrders") {
       test.delivered = false;
@@ -1640,18 +1638,15 @@ export const adminRadio = event => (dispatch, getState) => {
 export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
   try {
     let test = {};
-    if (!filter) {
-      test.paid = true;
-    }
-
+    test.paid = true;
     if (filter && filter === "today") {
-      test = Date.now() / 1000 - 60 * 60 * 24;
+      test = Date.now() - 60 * 60 * 24 * 1000;
     }
     if (filter && filter === "lastWeek") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 7;
     }
     if (filter && filter === "lastMonth") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 30;
     }
     if (filter && filter === "pendingOrders") {
       test.delivered = false;
@@ -1672,6 +1667,11 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
+};
+
+export const resetSkipAndCount = () => (dispatch, getState) => {
+  getState().product.ordersToSkip = 0;
+  getState().product.orderCount = 0;
 };
 
 export const hasMoreOrdersFalse = () => {

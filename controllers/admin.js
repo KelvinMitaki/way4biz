@@ -1185,7 +1185,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       {
         $match: {
           _id: {
-            $gt: mongoose.Types.ObjectId.createFromTime(test)
+            $gt: mongoose.Types.ObjectId.createFromTime(test / 1000)
           }
         }
       },
@@ -1201,7 +1201,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       {
         $match: {
           _id: {
-            $gt: mongoose.Types.ObjectId.createFromTime(test)
+            $gt: mongoose.Types.ObjectId.createFromTime(test / 1000)
           }
         }
       },

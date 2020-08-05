@@ -12,7 +12,8 @@ import {
   hasMoreOrdersFalse,
   adminRadio,
   fetchMoreAllOrders,
-  fetchOrderById
+  fetchOrderById,
+  resetSkipAndCount
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -23,7 +24,12 @@ import { useState } from "react";
 
 function AdminDashBoardOrders(props) {
   const [orderId, setOrderId] = useState({ orderId: null });
-  const { fetchAllOrders, ordersDate } = props;
+  const { fetchAllOrders, ordersDate, resetSkipAndCount } = props;
+  useEffect(() => {
+    return () => {
+      resetSkipAndCount();
+    };
+  }, [resetSkipAndCount]);
   useEffect(() => {
     fetchAllOrders(ordersDate);
   }, [fetchAllOrders, ordersDate]);
@@ -256,5 +262,6 @@ export default connect(mapStateToProps, {
   hasMoreOrdersFalse,
   adminRadio,
   fetchMoreAllOrders,
+  resetSkipAndCount,
   fetchOrderById
 })(AdminDashBoardOrders);
