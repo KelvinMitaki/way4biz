@@ -5,6 +5,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { BsArrowLeft } from "react-icons/bs";
 
 class ExpressDelivery extends React.Component {
   render() {
@@ -19,7 +21,7 @@ class ExpressDelivery extends React.Component {
               >
                 <div className="d-flex align-items-center">
                   {/* goback() */}
-                  <Link to="/orders">
+                  <Link to="/">
                     <BsArrowLeft />
                   </Link>
                 </div>
@@ -35,7 +37,7 @@ class ExpressDelivery extends React.Component {
             than normal.The price is calculated based on distance.
           </h6>
           <p>
-            <Link to="/">About normal shipping</Link>
+            <Link to="/normal-delivery">About normal shipping</Link>
           </p>
         </div>
         <Footer />

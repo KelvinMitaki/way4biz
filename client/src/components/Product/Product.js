@@ -349,7 +349,10 @@ class Product extends React.Component {
                             which are not urgent,bulk goods etc
                           </span>
                           <small>
-                            <Link className="learn-more-link" to="/">
+                            <Link
+                              className="learn-more-link"
+                              to="/normal-delivery"
+                            >
                               Learn More
                             </Link>
                           </small>
@@ -371,7 +374,10 @@ class Product extends React.Component {
                             but also expensive
                           </span>
                           <small>
-                            <Link className="learn-more-link" to="/">
+                            <Link
+                              className="learn-more-link"
+                              to="/express-delivery"
+                            >
                               Learn More
                             </Link>
                           </small>
