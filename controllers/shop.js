@@ -27,8 +27,8 @@ route.post("/api/products", async (req, res) => {
           from: "sellers",
           localField: "seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       {
@@ -39,20 +39,19 @@ route.post("/api/products", async (req, res) => {
           freeShipping: 1,
           imageUrl: 1,
           stockQuantity: 1,
-          seller: { storeName: "$seller.storeName" },
-        },
+          seller: { storeName: "$seller.storeName" }
+        }
       },
       { $skip: itemsToSkip },
-      { $limit: 6 },
+      { $limit: 6 }
     ]);
     const productCount = await Product.aggregate([
       { $match: { onSite: true } },
-      { $count: "productCount" },
+      { $count: "productCount" }
     ]);
     res.send({
       products,
-      productCount:
-        productCount.length !== 0 ? productCount[0].productCount : 0,
+      productCount: productCount.length !== 0 ? productCount[0].productCount : 0
     });
   } catch (error) {
     res.status(500).send(error);
@@ -68,8 +67,8 @@ route.post("/api/products/skip/category", async (req, res) => {
           from: "sellers",
           localField: "seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       {
@@ -80,12 +79,12 @@ route.post("/api/products/skip/category", async (req, res) => {
           freeShipping: 1,
           imageUrl: 1,
           stockQuantity: 1,
-          seller: { storeName: "$seller.storeName" },
-        },
+          seller: { storeName: "$seller.storeName" }
+        }
       },
       { $sort: sort },
       { $skip: itemsToSkip },
-      { $limit: 6 },
+      { $limit: 6 }
     ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
@@ -93,9 +92,9 @@ route.post("/api/products/skip/category", async (req, res) => {
 
     const productCount = await Product.aggregate([
       {
-        $match: { ...test, onSite: true },
+        $match: { ...test, onSite: true }
       },
-      { $count: test.category },
+      { $count: test.category }
     ]);
 
     res.send({ products, productCount: productCount[0][test.category] });
@@ -113,11 +112,11 @@ route.post("/api/products/search/term", async (req, res) => {
             path: "name",
             query: searchTerm,
             fuzzy: {
-              maxEdits: 1,
+              maxEdits: 1
             },
-            tokenOrder: "sequential",
-          },
-        },
+            tokenOrder: "sequential"
+          }
+        }
       },
       { $match: { ...test, onSite: true } },
       {
@@ -125,8 +124,8 @@ route.post("/api/products/search/term", async (req, res) => {
           from: "sellers",
           localField: "seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       {
@@ -136,12 +135,12 @@ route.post("/api/products/search/term", async (req, res) => {
           price: 1,
           freeShipping: 1,
           imageUrl: 1,
-          seller: { storeName: "$seller.storeName" },
-        },
+          seller: { storeName: "$seller.storeName" }
+        }
       },
       { $sort: sort },
       { $skip: itemsToSkip },
-      { $limit: 6 },
+      { $limit: 6 }
     ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
@@ -154,14 +153,14 @@ route.post("/api/products/search/term", async (req, res) => {
             path: "name",
             query: searchTerm,
             fuzzy: {
-              maxEdits: 1,
+              maxEdits: 1
             },
-            tokenOrder: "sequential",
-          },
-        },
+            tokenOrder: "sequential"
+          }
+        }
       },
       { $match: { ...test, onSite: true } },
-      { $count: "products" },
+      { $count: "products" }
     ]);
 
     res.send({ products, productCount: productCount[0].products });
@@ -212,7 +211,7 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
       const products = await Product.find({
         subcategory,
         price: { $gte: min },
-        onSite: true,
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
@@ -220,7 +219,7 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
       const products = await Product.find({
         subcategory,
         price: { $lte: max },
-        onSite: true,
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
@@ -228,7 +227,7 @@ route.post("/api/products/category/:subcategory", async (req, res) => {
       const products = await Product.find({
         subcategory,
         price: { $gte: min, $lte: max },
-        onSite: true,
+        onSite: true
       }).sort(sortBy);
       return res.send(products);
     }
@@ -256,25 +255,25 @@ route.post("/api/product/search", async (req, res) => {
             path: "name",
             query: searchTerm,
             fuzzy: {
-              maxEdits: 1,
+              maxEdits: 1
             },
-            tokenOrder: "sequential",
-          },
-        },
+            tokenOrder: "sequential"
+          }
+        }
       },
       {
-        $match: { onSite: true },
+        $match: { onSite: true }
       },
       {
-        $limit: 5,
+        $limit: 5
       },
       {
         $project: {
           name: 1,
           imageUrl: 1,
-          price: 1,
-        },
-      },
+          price: 1
+        }
+      }
     ]);
     res.send(test);
   } catch (error) {
@@ -286,7 +285,7 @@ route.get("/api/product/:productId", async (req, res) => {
     const { productId } = req.params;
     const product = await Product.findOne({
       _id: productId,
-      onSite: true,
+      onSite: true
     }).populate("seller", "storeName");
 
     res.send(product);
@@ -299,7 +298,7 @@ route.get("/api/product/:productId", async (req, res) => {
 route.get("/api/orders", auth, async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.session.user._id }).sort({
-      createdAt: -1,
+      createdAt: -1
     });
     res.send(orders);
   } catch (error) {
@@ -351,7 +350,7 @@ route.post(
         number,
         deliveryAddress,
         region,
-        city,
+        city
       } = req.body;
       // CALCULATE DISTANCE AND DISTANCE CHARGES BASED ON REGION/CITY AND INCLUDE IT IN THE REQ.DELIVERY
       req.delivery = {
@@ -360,7 +359,7 @@ route.post(
         number,
         deliveryAddress,
         region,
-        city,
+        city
       };
       res.send({ price: 50000 });
     } catch (error) {
@@ -430,24 +429,24 @@ route.post(
       const { formValues, cart, distanceId } = req.body;
       const id = req.body.id;
       const { _id } = req.session.user;
-      const test = cart.map((item) => {
+      const test = cart.map(item => {
         return {
           product: item._id,
-          quantity: item.quantity,
+          quantity: item.quantity
         };
       });
-      cart.forEach(async (item) => {
+      cart.forEach(async item => {
         await Product.findByIdAndUpdate(item._id, {
-          $inc: { stockQuantity: -item.quantity },
+          $inc: { stockQuantity: -item.quantity }
         });
       });
       const price = cart
-        .map((item) => item.price)
+        .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
       if (formValues.payment === "mpesa") {
         const mpesaApi = new Mpesa({
           consumerKey: process.env.MPESA_CONSUMER_KEY,
-          consumerSecret: process.env.MPESA_CONSUMER_SECRET,
+          consumerSecret: process.env.MPESA_CONSUMER_SECRET
         });
         mpesaApi
           .lipaNaMpesaOnline(
@@ -460,11 +459,11 @@ route.post(
             "174379",
             process.env.MPESA_PASS_KEY
           )
-          .then((res) => {
+          .then(res => {
             console.log(res.data);
             checkoutRequestId = res.data.CheckoutRequestID;
           })
-          .catch((err) => {
+          .catch(err => {
             console.log("err", err);
           });
         const order = new Order({
@@ -472,7 +471,7 @@ route.post(
           paymentMethod: formValues.payment,
           totalPrice: price,
           buyer: _id,
-          distance: distanceId,
+          distance: distanceId
         });
         await order.save();
         orderId = order._id;
@@ -487,7 +486,7 @@ route.post(
           amount: price * 100,
           currency: "kes",
           description: `payed ${price} to account by ${req.session.user.email}`,
-          source: id,
+          source: id
         });
         const order = new Order({
           items: test,
@@ -497,7 +496,7 @@ route.post(
           distance: distanceId,
           paid: true,
           brand: charge.payment_method_details.card.brand,
-          last4: charge.payment_method_details.card.last4,
+          last4: charge.payment_method_details.card.last4
         });
         console.log(charge);
         await order.save();
@@ -525,8 +524,8 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
       {
         url,
         headers: {
-          Authorization: "Basic " + auth,
-        },
+          Authorization: "Basic " + auth
+        }
       },
       (err, response, body) => {
         if (err) return console.log("err", err);
@@ -538,7 +537,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
             method: "POST",
             url: STK_URL,
             headers: {
-              Authorization: "Bearer " + JSON.parse(body).access_token,
+              Authorization: "Bearer " + JSON.parse(body).access_token
             },
             json: {
               BusinessShortCode: "174379",
@@ -546,8 +545,8 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
                 `174379${process.env.MPESA_PASS_KEY}${datevalues}`
               ).toString("base64"),
               Timestamp: datevalues,
-              CheckoutRequestID: checkoutRequestId,
-            },
+              CheckoutRequestID: checkoutRequestId
+            }
           },
           async (err, response, body2) => {
             if (err) {
@@ -558,7 +557,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
                 mpesaDesc: body2.ResultDesc,
-                paid: true,
+                paid: true
               });
               const savedOrder = await Order.findById(orderId).populate(
                 "distance items.product"
@@ -570,7 +569,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
                 mpesaDesc: body2.ResultDesc,
-                cancelled: true,
+                cancelled: true
               });
               const savedOrder = await Order.findById(orderId).populate(
                 "distance items.product"
@@ -578,7 +577,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
 
               return res.send(savedOrder);
             }
-            await Order.findByIdAndUpdate(orderId, { cancelled: true });
+            await Order.findByIdAndDelete(orderId);
             res.send({ message: "error" });
           }
         );
@@ -608,7 +607,7 @@ route.get("/api/products/find/categories", async (req, res) => {
     const category = await Product.aggregate([
       { $group: { _id: "$category" } },
       { $limit: 9 },
-      { $sort: { _id: 1 } },
+      { $sort: { _id: 1 } }
     ]);
     res.send(category);
   } catch (error) {
@@ -620,9 +619,9 @@ route.get("/api/fetch/all/categories", async (req, res) => {
   try {
     const categories = await Product.aggregate([
       {
-        $group: { _id: "$category" },
+        $group: { _id: "$category" }
       },
-      { $sort: { _id: 1 } },
+      { $sort: { _id: 1 } }
     ]);
     res.send(categories);
   } catch (error) {
@@ -670,37 +669,37 @@ route.get("/api/pending/reviews", auth, async (req, res) => {
             $filter: {
               input: "$items",
               as: "i",
-              cond: { $eq: ["$$i.reviewed", false] },
-            },
-          },
-        },
+              cond: { $eq: ["$$i.reviewed", false] }
+            }
+          }
+        }
       },
       {
-        $unwind: "$items",
+        $unwind: "$items"
       },
       {
         $lookup: {
           from: "products",
           localField: "items.product",
           foreignField: "_id",
-          as: "productData",
-        },
+          as: "productData"
+        }
       },
       {
-        $unwind: "$productData",
+        $unwind: "$productData"
       },
       {
         $group: {
           _id: "$_id",
           items: {
-            $push: "$items",
+            $push: "$items"
           },
           productData: {
-            $push: "$productData",
-          },
-        },
+            $push: "$productData"
+          }
+        }
       },
-      { $sort: { createdAt: -1 } },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(orders);
   } catch (error) {
@@ -731,7 +730,7 @@ route.post(
       const order = await Order.findOne({
         _id: orderId,
         buyer: req.session.user._id,
-        items: { $elemMatch: { reviewed: false, product: productId } },
+        items: { $elemMatch: { reviewed: false, product: productId } }
       });
       if (!order) {
         return res.status(404).send({ message: "No order with that ID" });
@@ -743,7 +742,7 @@ route.post(
         userSeller: req.session.user._id,
         order: orderId,
         product: productId,
-        rating,
+        rating
       });
       await review.save();
       await Order.findOneAndUpdate(
@@ -753,9 +752,8 @@ route.post(
       const product = await Product.findById(productId);
       const reviews = await Review.find({ product: productId });
       product.rating = Math.round(
-        reviews
-          .map((order) => order.rating)
-          .reduce((acc, cur) => acc + cur, 0) / reviews.length
+        reviews.map(order => order.rating).reduce((acc, cur) => acc + cur, 0) /
+          reviews.length
       );
       await product.save();
       res.send(review);
@@ -770,7 +768,7 @@ route.get("/api/url/add/review/:productId/:orderId", auth, async (req, res) => {
     const order = await Order.findOne({
       _id: orderId,
       buyer: req.session.user._id,
-      items: { $elemMatch: { reviewed: false, product: productId } },
+      items: { $elemMatch: { reviewed: false, product: productId } }
     });
     res.send({ order });
   } catch (error) {
@@ -806,7 +804,7 @@ route.post(
         destination: response.destination_addresses[0],
         distance: response.rows[0].elements[0].distance.value,
         shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
-        buyer: _id,
+        buyer: _id
       });
       if (!distanceExists) {
         const dist = new Distance({
@@ -814,7 +812,7 @@ route.post(
           distance: response.rows[0].elements[0].distance.value,
           shippingFees:
             (response.rows[0].elements[0].distance.value / 1000) * 3,
-          buyer: _id,
+          buyer: _id
         });
         await dist.save();
         return res.send(dist);
@@ -829,16 +827,16 @@ route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
       {
         $match: {
           seller: mongoose.Types.ObjectId(req.params.sellerId),
-          onSite: true,
-        },
+          onSite: true
+        }
       },
       {
         $lookup: {
           from: "sellers",
           localField: "seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       {
@@ -847,9 +845,9 @@ route.get("/api/fetch/store/products/:sellerId", async (req, res) => {
           price: 1,
           imageUrl: 1,
           storeName: "$seller.storeName",
-          freeShipping: 1,
-        },
-      },
+          freeShipping: 1
+        }
+      }
     ]);
     res.send(products);
   } catch (error) {
@@ -878,7 +876,7 @@ route.post(
         buyerSeller: _id,
         body,
         order: orderId,
-        product: productId,
+        product: productId
       });
       await complaint.save();
       res.send(complaint);
@@ -897,7 +895,7 @@ route.get(
         _id: orderId,
         delivered: true,
         buyer: req.session.user._id,
-        items: { $elemMatch: { product: productId } },
+        items: { $elemMatch: { product: productId } }
       });
       res.send({ order });
     } catch (error) {
@@ -915,24 +913,24 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           from: "users",
           localField: "buyer",
           foreignField: "_id",
-          as: "buyer",
-        },
+          as: "buyer"
+        }
       },
       {
         $lookup: {
           from: "orders",
           localField: "order",
           foreignField: "_id",
-          as: "order",
-        },
+          as: "order"
+        }
       },
       {
         $lookup: {
           from: "sellers",
           localField: "buyerSeller",
           foreignField: "_id",
-          as: "buyer",
-        },
+          as: "buyer"
+        }
       },
       { $unwind: "$order" },
       {
@@ -944,10 +942,10 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
             $filter: {
               input: "$order.items",
               as: "i",
-              cond: { $eq: ["$$i.product", "$product"] },
-            },
-          },
-        },
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
       },
       { $unwind: "$items" },
       {
@@ -955,8 +953,8 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           from: "products",
           localField: "product",
           foreignField: "_id",
-          as: "product",
-        },
+          as: "product"
+        }
       },
       { $unwind: "$product" },
       {
@@ -964,8 +962,8 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           from: "sellers",
           localField: "product.seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       { $unwind: "$buyer" },
@@ -984,10 +982,10 @@ route.get("/api/fetch/buyer/complaints", auth, async (req, res) => {
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
           body: 1,
-          storeName: "$seller.storeName",
-        },
+          storeName: "$seller.storeName"
+        }
       },
-      { $sort: { createdAt: -1 } },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send(complaints);
   } catch (error) {
@@ -1000,32 +998,32 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
       {
         $match: {
           _id: mongoose.Types.ObjectId(req.params.complaintId),
-          buyer: mongoose.Types.ObjectId(req.session.user._id),
-        },
+          buyer: mongoose.Types.ObjectId(req.session.user._id)
+        }
       },
       {
         $lookup: {
           from: "users",
           localField: "buyer",
           foreignField: "_id",
-          as: "buyer",
-        },
+          as: "buyer"
+        }
       },
       {
         $lookup: {
           from: "orders",
           localField: "order",
           foreignField: "_id",
-          as: "order",
-        },
+          as: "order"
+        }
       },
       {
         $lookup: {
           from: "sellers",
           localField: "buyerSeller",
           foreignField: "_id",
-          as: "buyer",
-        },
+          as: "buyer"
+        }
       },
       { $unwind: "$order" },
       {
@@ -1037,10 +1035,10 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
             $filter: {
               input: "$order.items",
               as: "i",
-              cond: { $eq: ["$$i.product", "$product"] },
-            },
-          },
-        },
+              cond: { $eq: ["$$i.product", "$product"] }
+            }
+          }
+        }
       },
       { $unwind: "$items" },
       {
@@ -1048,8 +1046,8 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
           from: "products",
           localField: "product",
           foreignField: "_id",
-          as: "product",
-        },
+          as: "product"
+        }
       },
       { $unwind: "$product" },
       {
@@ -1057,8 +1055,8 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
           from: "sellers",
           localField: "product.seller",
           foreignField: "_id",
-          as: "seller",
-        },
+          as: "seller"
+        }
       },
       { $unwind: "$seller" },
       { $unwind: "$buyer" },
@@ -1077,10 +1075,10 @@ route.get("/api/fetch/buyer/complaint/:complaintId", auth, async (req, res) => {
           quantityOrdered: "$items.quantity",
           imageUrl: "$product.imageUrl",
           storeName: "$seller.storeName",
-          body: 1,
-        },
+          body: 1
+        }
       },
-      { $sort: { createdAt: -1 } },
+      { $sort: { createdAt: -1 } }
     ]);
     res.send({ complaint: complaint[0] && complaint[0] ? complaint[0] : {} });
   } catch (error) {
@@ -1092,12 +1090,12 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
   try {
     const subcategories = await Product.aggregate([
       {
-        $match: { category: req.params.category },
+        $match: { category: req.params.category }
       },
       {
-        $project: { subcategory: 1 },
+        $project: { subcategory: 1 }
       },
-      { $group: { _id: "$subcategory" } },
+      { $group: { _id: "$subcategory" } }
     ]);
     res.send(subcategories);
   } catch (error) {
@@ -1167,7 +1165,7 @@ route.post(
       }
       const newCart = new Cart({
         buyer: _id,
-        items: cart,
+        items: cart
       });
       await newCart.save();
       res.send(newCart);
@@ -1189,7 +1187,7 @@ route.post(
       const { wishlist } = req.body;
       const { _id } = req.session.user._id;
 
-      wishlist.map((item) => {
+      wishlist.map(item => {
         if (item && Object.keys(item).length === 0) {
           return res.status(401).send({ message: "Invalid wishlist" });
         }
@@ -1208,7 +1206,7 @@ route.post(
       }
       const newWishlist = new Wishlist({
         buyer: _id,
-        items: wishlist,
+        items: wishlist
       });
       await newWishlist.save();
       res.send(newWishlist);
@@ -1230,8 +1228,52 @@ route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
 route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
   try {
     const { _id } = req.session.user;
-    const wishlist = await Wishlist.aggregate([{ $match: { buyer: _id } }]);
-    res.send(wishlist.length !== 0 ? wishlist[0].items : wishlist);
+    const wishlist = await Wishlist.aggregate([
+      { $match: { buyer: _id } },
+      { $project: { _id: "$items._id" } }
+    ]);
+    const products = await Product.aggregate([
+      {
+        $match: {
+          _id: {
+            $in:
+              wishlist.length !== 0
+                ? wishlist[0]._id.map(id => mongoose.Types.ObjectId(id))
+                : []
+          }
+        }
+      },
+      {
+        $project: {
+          freeShipping: 1,
+          name: 1,
+          price: 1,
+          stockQuantity: 1,
+          imageUrl: 1,
+          seller: 1
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          freeShipping: 1,
+          name: 1,
+          price: 1,
+          stockQuantity: 1,
+          imageUrl: 1,
+          seller: { storeName: "$seller.storeName" }
+        }
+      }
+    ]);
+    res.send(products);
   } catch (error) {
     res.status(500).send(error);
   }
