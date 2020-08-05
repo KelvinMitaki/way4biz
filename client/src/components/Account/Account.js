@@ -48,7 +48,7 @@ class Account extends React.Component {
       <div className="main">
         <div className="content">
           <AccountHeader />
-          <div className="container mt-4 account-wrapper">
+          <div className="container account-wrapper">
             <div className="row">
               <div className="col-lg-4">
                 <AccountMenu />

@@ -22,12 +22,12 @@ export class Orders extends Component {
       <div className="main">
         <div className="content">
           <AccountHeader />
-          <div className="container mt-4">
+          <div className="container">
             <div className="row">
               <div className="col-lg-4">
                 <AccountMenu />
               </div>
-              <div className="col-lg-8 box-container  orders-wrapper">
+              <div className="col-lg-8 p-0 box-container  orders-wrapper">
                 {this.props.buyerOrders.length !== 0 ? (
                   <React.Fragment>
                     <h3 style={{ textAlign: "center" }} className="mb-4">

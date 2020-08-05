@@ -7,6 +7,7 @@ hr {
 }
 
 #address-details h3,
+#delivery-details h3,
 #payment-methods h3 {
   margin: 10px 20px;
 }

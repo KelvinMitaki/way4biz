@@ -21,8 +21,8 @@ class AddressForm extends React.Component {
     townLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263
-    }
+      lng: 36.8263,
+    },
   };
   componentDidMount() {
     if (this.props.initialValues.city) {
@@ -38,19 +38,19 @@ class AddressForm extends React.Component {
       this.handleAddressSelect(address);
     }
   }
-  handleCitySelect = async selectedCity => {
+  handleCitySelect = async (selectedCity) => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleTownSelect = async selectedTown => {
+  handleTownSelect = async (selectedTown) => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
     this.setState({ townLatLng: latlng });
     this.props.change("town", selectedTown);
   };
-  handleAddressSelect = async selectedAddress => {
+  handleAddressSelect = async (selectedAddress) => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -62,7 +62,7 @@ class AddressForm extends React.Component {
       <div className="main">
         <div className="content">
           <Header />
-          <div className="container">
+          <div className="container mt-4">
             <div className="row">
               <div
                 className="col-md-9  mx-auto box-container"
@@ -71,13 +71,13 @@ class AddressForm extends React.Component {
                 <h3 className="legend">Address</h3>
                 {/* <hr /> */}
                 <form
-                  onSubmit={this.props.handleSubmit(formValues => {
+                  onSubmit={this.props.handleSubmit((formValues) => {
                     this.props.paymentPerDistance(
                       {
                         origins: ["thika"],
                         destination: [
-                          `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
-                        ]
+                          `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`,
+                        ],
                       },
                       this.props.history
                     );
@@ -129,7 +129,7 @@ class AddressForm extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"]
+                      types: ["establishment"],
                     }}
                     onSelect={this.handleAddressSelect}
                   />
@@ -181,7 +181,7 @@ class AddressForm extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -221,12 +221,12 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
     checkoutUserLoading: state.auth.checkoutUserLoading,
     checkoutUserError: state.auth.checkoutUserError,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(
