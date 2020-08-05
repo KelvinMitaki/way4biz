@@ -37,7 +37,8 @@ hr {
   margin-top: 15px;
 }
 
-.product-info {
+.product-info,
+.product-delivery-return {
   background-color: #f8f9f9;
 }
 
@@ -204,7 +205,7 @@ hr {
 }
 
 .product-carousel {
-  max-width: 60% !important;
+  max-width: 80% !important;
   margin: auto;
 }
 

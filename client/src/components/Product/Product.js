@@ -14,7 +14,7 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts
+  fetchRelatedProducts,
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -31,7 +31,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
       show: false,
-      clicked: false
+      clicked: false,
     };
   }
   componentDidMount() {
@@ -77,16 +77,16 @@ class Product extends React.Component {
         // width:100%,
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
-          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`
+          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
       },
       largeImage: {
         src: product.imageUrl[0].includes("http")
           ? product.imageUrl[0]
           : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
-        width: 1000,
-        height: 1000
+        width: 800,
+        height: 800,
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
     };
   }
 
@@ -96,19 +96,19 @@ class Product extends React.Component {
     const itemInWishlist =
       this.props.product &&
       this.props.wishlist.find(
-        item => item._id.toString() === this.props.product._id.toString()
+        (item) => item._id.toString() === this.props.product._id.toString()
       );
     let itemInCart = false;
     itemInCart =
       this.props.product &&
       this.props.product._id &&
       this.props.cart &&
-      this.props.cart.find(item => item._id === this.props.product._id);
+      this.props.cart.find((item) => item._id === this.props.product._id);
 
     const carouselSettings = {
       // dots: true,
       slidesToShow: 4,
-      slidesToScroll: 1
+      slidesToScroll: 1,
     };
     if (!this.props.product || this.props.saveWishlistLoading)
       return <ScreenLoader />;
@@ -124,195 +124,209 @@ class Product extends React.Component {
               />
 
               <div className="row" id="product">
-                <div className="col-lg-6 product-imgs">
-                  <ReactImageMagnify
-                    enlargedImagePosition={"over"}
-                    {...this.getImageProps()}
-                  />
-
-                  <div className="feature-imgs">
-                    <Slider {...carouselSettings} className="product-carousel">
-                      <div>
-                        <img
-                          className="product-carousel-img"
-                          src={
-                            this.props.product.imageUrl[0].includes("http")
-                              ? this.props.product.imageUrl[0]
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                          }
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="product-carousel-img"
-                          src={
-                            this.props.product.imageUrl[0].includes("http")
-                              ? this.props.product.imageUrl[0]
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                          }
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="product-carousel-img"
-                          src={
-                            this.props.product.imageUrl[0].includes("http")
-                              ? this.props.product.imageUrl[0]
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                          }
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="product-carousel-img"
-                          src={
-                            this.props.product.imageUrl[0].includes("http")
-                              ? this.props.product.imageUrl[0]
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                          }
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="product-carousel-img"
-                          src={
-                            this.props.product.imageUrl[0].includes("http")
-                              ? this.props.product.imageUrl[0]
-                              : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                          }
-                          alt={this.props.product.name}
-                        />
-                      </div>
-                    </Slider>
-                  </div>
-                </div>
-                <div className="col-lg-6 product-info pt-2">
-                  {stockQuantity >= 1 ? (
-                    <span className="badge stock-badge in-stock-badge">
-                      In Stock
-                    </span>
-                  ) : (
-                    <span className="badge stock-badge out-of-stock-badge">
-                      Out Of Stock
-                    </span>
-                  )}
-
-                  <div className="product-name-wishlist">
-                    <h5 className="mr-2">{this.props.product.name}</h5>
-                    <IconContext.Provider
-                      value={{ size: "2em", color: "#f76b1a" }}
-                    >
-                      {itemInWishlist && (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            this.props.removeFromWishlist(this.props.product);
-                          }}
+                <div className="col-md-9 product-imgs">
+                  <div className="row">
+                    <div className="col-md-5">
+                      <ReactImageMagnify
+                        enlargedImagePosition={"over"}
+                        {...this.getImageProps()}
+                      />
+                      <div className="feature-imgs">
+                        <Slider
+                          {...carouselSettings}
+                          className="product-carousel"
                         >
-                          <IoMdHeart />
-                        </div>
+                          <div>
+                            <img
+                              className="product-carousel-img"
+                              src={
+                                this.props.product.imageUrl[0].includes("http")
+                                  ? this.props.product.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
+                              }
+                              alt={this.props.product.name}
+                            />
+                          </div>
+                          <div>
+                            <img
+                              className="product-carousel-img"
+                              src={
+                                this.props.product.imageUrl[0].includes("http")
+                                  ? this.props.product.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
+                              }
+                              alt={this.props.product.name}
+                            />
+                          </div>
+                          <div>
+                            <img
+                              className="product-carousel-img"
+                              src={
+                                this.props.product.imageUrl[0].includes("http")
+                                  ? this.props.product.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
+                              }
+                              alt={this.props.product.name}
+                            />
+                          </div>
+                          <div>
+                            <img
+                              className="product-carousel-img"
+                              src={
+                                this.props.product.imageUrl[0].includes("http")
+                                  ? this.props.product.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
+                              }
+                              alt={this.props.product.name}
+                            />
+                          </div>
+                          <div>
+                            <img
+                              className="product-carousel-img"
+                              src={
+                                this.props.product.imageUrl[0].includes("http")
+                                  ? this.props.product.imageUrl[0]
+                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
+                              }
+                              alt={this.props.product.name}
+                            />
+                          </div>
+                        </Slider>
+                      </div>
+                    </div>
+                    <div className="col-md-7 product-info pt-2">
+                      {stockQuantity >= 1 ? (
+                        <span className="badge stock-badge in-stock-badge">
+                          In Stock
+                        </span>
+                      ) : (
+                        <span className="badge stock-badge out-of-stock-badge">
+                          Out Of Stock
+                        </span>
                       )}
-                      {!itemInWishlist && (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            if (!this.props.isSignedIn) {
-                              return this.props.history.push("/sign-in");
-                            }
-                            this.props.addToWishlist(this.props.product);
-                          }}
+
+                      <div className="product-name-wishlist">
+                        <h5 className="mr-2">{this.props.product.name}</h5>
+                        <IconContext.Provider
+                          value={{ size: "2em", color: "#f76b1a" }}
                         >
-                          <IoMdHeartEmpty />
-                        </div>
-                      )}
-                    </IconContext.Provider>
-                  </div>
-                  <div className="product-store">
-                    <IconContext.Provider
-                      value={{ className: "product-store-icon-wrapper" }}
-                    >
-                      <FaStore />
-                    </IconContext.Provider>
-                    <p>
-                      <span
-                        style={{ cursor: "pointer", display: "inline-block" }}
-                        onClick={() =>
-                          this.props.history.push(
-                            `/seller/store/${this.props.product.seller._id}`
-                          )
-                        }
-                        className="store-name ml-2"
-                      >
-                        {this.props.product.seller.storeName}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="product-rating">
-                    {this.props.productReviews.length !== 0 ? (
-                      <React.Fragment>
-                        <Rating
-                          key={this.props.productReviews.length}
-                          size={18}
-                          clickable={false}
-                          value={Math.round(
-                            this.props.productReviews
-                              .map(p => p.rating)
-                              .reduce((acc, cur) => acc + cur, 0) /
-                              this.props.productReviews.length
+                          {itemInWishlist && (
+                            <div
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                this.props.removeFromWishlist(
+                                  this.props.product
+                                );
+                              }}
+                            >
+                              <IoMdHeart />
+                            </div>
                           )}
-                        />
-                      </React.Fragment>
-                    ) : (
-                      <Rating size={18} clickable={false} value={0} />
-                    )}
-
-                    <span className="ml-2">
-                      <Link
-                        style={{ color: "#f76b1a" }}
-                        to={`/product/main/reviews/${this.props.product._id}`}
-                      >
-                        (
-                        {this.props.productReviews.length === 1 ? (
-                          <span>{this.props.productReviews.length} Review</span>
-                        ) : (
-                          <span>
-                            {this.props.productReviews.length} Reviews
+                          {!itemInWishlist && (
+                            <div
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                if (!this.props.isSignedIn) {
+                                  return this.props.history.push("/sign-in");
+                                }
+                                this.props.addToWishlist(this.props.product);
+                              }}
+                            >
+                              <IoMdHeartEmpty />
+                            </div>
+                          )}
+                        </IconContext.Provider>
+                      </div>
+                      <div className="product-store">
+                        <IconContext.Provider
+                          value={{ className: "product-store-icon-wrapper" }}
+                        >
+                          <FaStore />
+                        </IconContext.Provider>
+                        <p>
+                          <span
+                            style={{
+                              cursor: "pointer",
+                              display: "inline-block",
+                            }}
+                            onClick={() =>
+                              this.props.history.push(
+                                `/seller/store/${this.props.product.seller._id}`
+                              )
+                            }
+                            className="store-name ml-2"
+                          >
+                            {this.props.product.seller.storeName}
                           </span>
-                        )}{" "}
-                        )
-                      </Link>
-                    </span>
-                  </div>
-                  <div className="product-price">
-                    <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
-                  </div>
+                        </p>
+                      </div>
+                      <div className="product-rating">
+                        {this.props.productReviews.length !== 0 ? (
+                          <React.Fragment>
+                            <Rating
+                              key={this.props.productReviews.length}
+                              size={18}
+                              clickable={false}
+                              value={Math.round(
+                                this.props.productReviews
+                                  .map((p) => p.rating)
+                                  .reduce((acc, cur) => acc + cur, 0) /
+                                  this.props.productReviews.length
+                              )}
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <Rating size={18} clickable={false} value={0} />
+                        )}
 
-                  <div>
-                    <button
-                      className="btn btn-md my-3 add-to-cart btn-block"
-                      onClick={this.showModal}
-                      disabled={
-                        this.props.product.stockQuantity <= 0 ||
-                        (itemInCart &&
-                          itemInCart.quantity >=
-                            this.props.product.stockQuantity)
-                      }
-                    >
-                      Add to Cart
-                    </button>
+                        <span className="ml-2">
+                          <Link
+                            style={{ color: "#f76b1a" }}
+                            to={`/product/main/reviews/${this.props.product._id}`}
+                          >
+                            (
+                            {this.props.productReviews.length === 1 ? (
+                              <span>
+                                {this.props.productReviews.length} Review
+                              </span>
+                            ) : (
+                              <span>
+                                {this.props.productReviews.length} Reviews
+                              </span>
+                            )}{" "}
+                            )
+                          </Link>
+                        </span>
+                      </div>
+                      <div className="product-price">
+                        <h4>Ksh.{this.props.product.price.toLocaleString()}</h4>
+                      </div>
+
+                      <div>
+                        <button
+                          className="btn btn-md my-3 add-to-cart btn-block"
+                          onClick={this.showModal}
+                          disabled={
+                            this.props.product.stockQuantity <= 0 ||
+                            (itemInCart &&
+                              itemInCart.quantity >=
+                                this.props.product.stockQuantity)
+                          }
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="col-md-3 product-delivery-return"></div>
               <div className="related-products">
                 <h3>Related Products</h3>
                 {this.props.relatedProducts === 0 ? null : (
                   <div className="related-products-wrapper">
                     {this.props.relatedProducts.length !== 0 &&
-                      this.props.relatedProducts.map(item => (
+                      this.props.relatedProducts.map((item) => (
                         <Link key={item._id} to={`/product/${item._id}`}>
                           <div key={item._id} className="related-product">
                             <Image
@@ -381,7 +395,7 @@ const mapStateToProps = (state, ownProps) => {
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
     productReviews: state.product.productReviews,
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default withRouter(
@@ -390,6 +404,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts
+    fetchRelatedProducts,
   })(Product)
 );
