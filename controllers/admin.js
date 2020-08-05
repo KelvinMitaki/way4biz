@@ -509,7 +509,6 @@ route.delete(
     }
   }
 );
-
 route.get("/api/seller/orders", isSeller, async (req, res) => {
   try {
     const { user } = req.session;
@@ -523,7 +522,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           paymentMethod: 1,
           buyer: 1,
           createdAt: 1,
-          delivered: 1
+          delivered: 1,
+          cancelled: 1
         }
       },
       { $unwind: "$items" },
@@ -560,6 +560,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyerUser: 1,
           buyerSeller: 1,
           delivered: 1,
+          cancelled: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -579,11 +580,12 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           paymentMethod: {
             $first: "$paymentMethod"
           },
+          cancelled: { $first: "$cancelled" },
           delivered: { $first: "$delivered" },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
-          createdAt: { $first: "createdAt:-1" },
+          createdAt: { $first: "$createdAt" },
           productSellerData: {
             $push: "$productSellerData"
           }

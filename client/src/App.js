@@ -118,8 +118,6 @@ class App extends React.Component {
             quantity: i.quantity
           }))
         );
-
-      this.props.fetchCartItems();
     }
     if (
       this.props.isSignedIn &&

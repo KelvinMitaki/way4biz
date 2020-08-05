@@ -103,7 +103,10 @@ class DashBoardOrder extends React.Component {
                   </div>
                   <div className="col-md-6 col-lg-2">
                     <div>
-                      <strong className="x mr-2">Status:</strong>Delivered
+                      <strong className="x mr-2">Status:</strong>
+                      {(order.cancelled && "Cancelled") ||
+                        (order.delivered && "Delivered") ||
+                        (!order.cancelled && !order.delivered && "Pending")}
                     </div>
                   </div>
                 </div>
