@@ -38,7 +38,7 @@ class PendingReviews extends React.Component {
       <div className="main">
         <div className="content">
           <AccountHeader />
-          <div className="container pending-reviews-wrapper">
+          <div className="container mt-4 pending-reviews-wrapper">
             <div className="row">
               <div className="col-lg-4">
                 <AccountMenu />
