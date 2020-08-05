@@ -44,8 +44,9 @@ class CheckOut extends React.Component {
             onSubmit={this.props.handleSubmit((formValues) =>
               this.props.preMakeOrder({ formValues, cart }, this.props.history)
             )}
+            className="mt-4"
           >
-            <div className="container main-checkout-wrapper">
+            <div className="container  main-checkout-wrapper">
               <div className="row">
                 <div className="col-md-8 mx-auto">
                   <div id="address-details" className="mb-3 box-container">
