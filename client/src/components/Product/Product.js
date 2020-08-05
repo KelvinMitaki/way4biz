@@ -25,6 +25,8 @@ import Image from "../Market/Image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { RiMotorbikeLine } from "react-icons/ri";
+import { FiTruck } from "react-icons/fi";
 
 class Product extends React.Component {
   constructor(props) {
@@ -319,8 +321,67 @@ class Product extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className="col-md-3">
+                  <div
+                    className="delivery-info"
+                    style={{ backgroundColor: "#fff" }}
+                  >
+                    <div
+                      style={{
+                        borderBottom: "1px solid #d4d4d4",
+                        padding: "10px 10px 5px 10px",
+                      }}
+                    >
+                      <h5>DELIVERY</h5>
+                    </div>
+                    <div id="normal-delivery-info">
+                      <h6 className="my-1">Normal Delivery</h6>
+                      <div>
+                        <FiTruck
+                          style={{
+                            fontSize: "50px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <p>
+                          <span className="delivery-text my-1">
+                            Delivery in 3-7 days. This method is ideal for goods
+                            which are not urgent,bulk goods etc
+                          </span>
+                          <small>
+                            <Link className="learn-more-link" to="/">
+                              Learn More
+                            </Link>
+                          </small>
+                        </p>
+                      </div>
+                    </div>
+                    <div id="express-delivery-info">
+                      <h6 className="my-1">Express Delivery</h6>
+                      <div>
+                        <RiMotorbikeLine
+                          style={{
+                            fontSize: "50px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <p>
+                          <span className="delivery-text my-1">
+                            Delivery within 24hrs. This delivery method is fast
+                            but also expensive
+                          </span>
+                          <small>
+                            <Link className="learn-more-link" to="/">
+                              Learn More
+                            </Link>
+                          </small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="col-md-3 product-delivery-return"></div>
+
               <div className="related-products">
                 <h3>Related Products</h3>
                 {this.props.relatedProducts === 0 ? null : (
