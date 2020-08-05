@@ -39,7 +39,10 @@ class PaymentMethods extends React.Component {
             <div>
               <img src="debit.png" alt="debit" />
             </div>
-            <p>This a</p>
+            <p>
+              This is a fast secure bank money transfer method. Any valid card
+              is supported.
+            </p>
           </div>
         </div>
       </div>
