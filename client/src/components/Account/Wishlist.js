@@ -29,7 +29,9 @@ export class Wishlist extends Component {
               <AccountMenu />
             </div>
             <div className="col-lg-8 box-container wishlist">
-              <h4 style={{ textAlign: "center" }}>Saved Items</h4>
+              <h4 style={{ textAlign: "center" }} className="mb-2">
+                Saved Items
+              </h4>
               {/* show this component if wishlist is empty */}
               {this.props.wishlist.length === 0 && (
                 <React.Fragment>
