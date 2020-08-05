@@ -22,9 +22,9 @@ class ExpressDelivery extends React.Component {
                 >
                   <div className="d-flex align-items-center">
                     {/* goback() */}
-                    <Link to="/">
+                    <div onClick={() => this.props.history.goBack()}>
                       <BsArrowLeft />
-                    </Link>
+                    </div>
                   </div>
                 </IconContext.Provider>
               </div>
