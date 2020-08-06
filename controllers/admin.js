@@ -1148,22 +1148,6 @@ route.get("/api/root/admin/pending/orders", auth, isAdmin, async (req, res) => {
   }
 });
 
-route.get("/api/test", async (req, res) => {
-  try {
-    const orders = await Order.updateMany(
-      { deliveryMethod: "normal" },
-      { deliveryMethod: "Normal" }
-    );
-    const other = await Order.updateMany(
-      { deliveryMethod: "express" },
-      { deliveryMethod: "Express" }
-    );
-    res.send({ orders, other });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
 // FETCH ALL ORDERS
 route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
   try {
