@@ -85,6 +85,7 @@ import SupportCenter from "./components/Pages/SupportCenter";
 import CustomerService from "./components/Pages/CustomerService";
 import NormalDelivery from "./components/Checkout/NormalDelivery";
 import ExpressDelivery from "./components/Checkout/ExpressDelivery";
+import Logistics from "./components/Pages/Logistics";
 
 class App extends React.Component {
   state = {
@@ -201,6 +202,7 @@ class App extends React.Component {
               <Route path="/customer-service" component={CustomerService} />
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
+              <Route path="/logistics" component={Logistics} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact

@@ -51,7 +51,7 @@ class OrderPaymentSuccess extends React.Component {
                   {/* mapping here */}
                   {this.props.orderSuccess.items &&
                     this.props.orderSuccess.items.length !== 0 &&
-                    this.props.orderSuccess.items.map(item => (
+                    this.props.orderSuccess.items.map((item) => (
                       <div className="row align-items-center" key={item._id}>
                         <div className="col-3">
                           <Image
@@ -192,13 +192,13 @@ class OrderPaymentSuccess extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     orderSuccess: state.cartReducer.orderSuccess,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, {
   deleteCart,
-  removePendingAndSuccess
+  removePendingAndSuccess,
 })(OrderPaymentSuccess);

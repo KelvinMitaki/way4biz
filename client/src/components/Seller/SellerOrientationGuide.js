@@ -19,18 +19,7 @@ class SellerOrientationGuide extends React.Component {
         >
           Orientation Guide
         </h3>
-        <div>
-          Please download a copy of the guide from the link.
-          <a
-            className="my-2"
-            href="/1.jpg"
-            download
-            id="download-guide-link"
-            onClick={this.handleClick}
-          >
-            Download PDF Guide
-          </a>
-        </div>
+
         <p>
           What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
           and typesetting industry. Lorem Ipsum has been the industry's standard
@@ -79,6 +68,18 @@ class SellerOrientationGuide extends React.Component {
           is therefore always free from repetition, injected humour, or
           non-characteristic words etc.
         </p>
+        <div>
+          To proceed,please download a copy of the guide from the link.
+          <a
+            className="my-2"
+            href="/1.jpg"
+            download
+            id="download-guide-link"
+            onClick={this.handleClick}
+          >
+            Download PDF Guide
+          </a>
+        </div>
       </div>
     );
   }

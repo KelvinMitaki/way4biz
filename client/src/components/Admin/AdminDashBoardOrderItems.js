@@ -24,10 +24,7 @@ class AdminDashBoardOrderItems extends React.Component {
         <AdminDashboardSecondaryHeader />
         <div className="container mt-4">
           <div className="box-container admin-order-items-wrapper">
-            <div
-              className="d-flex align-items-center"
-              style={{ width: "80%", margin: "auto" }}
-            >
+            <div className="d-flex align-items-center">
               <div style={{ flex: "1" }}>
                 <IconContext.Provider
                   value={{ className: "arrow-icon ml-3 my-2" }}
@@ -60,7 +57,7 @@ class AdminDashBoardOrderItems extends React.Component {
                   <h6>Seller</h6>
                 </div>
               </div>
-              <div className="individual-order-item">
+              <div className="admin-order-items-wrapper">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
                   this.props.adminOrder["0"].product.map((p) => (
@@ -103,7 +100,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           }
                         </p>
                       </div>
-                      <div className="col-md-4 p-0">
+                      <div className="col-md-4">
                         <p>
                           <strong className="x mr-1">Seller:</strong>
                           {this.props.adminOrder["0"].seller[0].firstName}{" "}
@@ -120,6 +117,14 @@ class AdminDashBoardOrderItems extends React.Component {
                       </div>
                     </div>
                   ))}
+                <div
+                  className="container-fluid d-flex  mt-4 justify-content-center"
+                  style={{ height: "30px" }}
+                >
+                  <button className="btn btn-lg admin-confirm-delivery-btn">
+                    Confirm Delivery
+                  </button>
+                </div>
               </div>
             </div>
           </div>
