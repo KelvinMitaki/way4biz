@@ -402,33 +402,7 @@ class Product extends React.Component {
                   </div>
                 </div>
               </div>
-
               <div className="related-products">
-                <h3>Related Products</h3>
-                {this.props.relatedProducts === 0 ? null : (
-                  <div className="related-products-wrapper">
-                    {this.props.relatedProducts.length !== 0 &&
-                      this.props.relatedProducts.map(item => (
-                        <Link key={item._id} to={`/product/${item._id}`}>
-                          <div key={item._id} className="related-product">
-                            <Image
-                              image={
-                                item.imageUrl[0].includes("http")
-                                  ? item.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
-                              }
-                              alt={item.name}
-                            />
-                            <p className="related-product-name">{item.name}</p>
-                            <p style={{ fontWeight: "bolder" }}>
-                              Ksh.{item.price.toLocaleString()}{" "}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                  </div>
-                )}
-
                 <div className="row product-features-reviews-specifications mt-3">
                   <div className="col p-0">
                     <ProductSecondaryDetails
@@ -436,6 +410,37 @@ class Product extends React.Component {
                     />
                   </div>
                 </div>
+                {this.props.relatedProducts &&
+                  this.props.relatedProducts.length !== 0 && (
+                    <React.Fragment>
+                      <h3>Related Products</h3>
+                      {this.props.relatedProducts === 0 ? null : (
+                        <div className="related-products-wrapper">
+                          {this.props.relatedProducts.length !== 0 &&
+                            this.props.relatedProducts.map(item => (
+                              <Link key={item._id} to={`/product/${item._id}`}>
+                                <div key={item._id} className="related-product">
+                                  <Image
+                                    image={
+                                      item.imageUrl[0].includes("http")
+                                        ? item.imageUrl[0]
+                                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
+                                    }
+                                    alt={item.name}
+                                  />
+                                  <p className="related-product-name">
+                                    {item.name}
+                                  </p>
+                                  <p style={{ fontWeight: "bolder" }}>
+                                    Ksh.{item.price.toLocaleString()}{" "}
+                                  </p>
+                                </div>
+                              </Link>
+                            ))}
+                        </div>
+                      )}
+                    </React.Fragment>
+                  )}
                 {/* <div>
                   <h3>Recommended For You</h3>
                   <div className="recommended-products-wrapper">

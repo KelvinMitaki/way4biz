@@ -216,6 +216,7 @@
 .product-carousel-img {
   width: 60px;
   margin: 0px 10px;
+  cursor: pointer;
 }
 
 .current-carousel-image {
