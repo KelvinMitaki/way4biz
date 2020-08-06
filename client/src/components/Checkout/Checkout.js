@@ -27,12 +27,12 @@ class CheckOut extends React.Component {
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map((item) => item.price * item.quantity)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
     const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
-      .map((item) => item.price * item.quantity)
+      .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -41,7 +41,7 @@ class CheckOut extends React.Component {
           <Header />
 
           <form
-            onSubmit={this.props.handleSubmit((formValues) =>
+            onSubmit={this.props.handleSubmit(formValues =>
               this.props.preMakeOrder({ formValues, cart }, this.props.history)
             )}
             className="mt-4"
@@ -144,19 +144,29 @@ class CheckOut extends React.Component {
     );
   }
 }
+const validate = formValues => {
+  const errors = {};
+  if (!formValues.payment) {
+    errors.payment = "Please choose a valid payment method";
+  }
+  if (!formValues.delivery) {
+    errors.delivery = "Please choose a valid delivery method";
+  }
+  return errors;
+};
 const selector = formValueSelector("Chekout");
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const payment = selector(state, "payment");
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
-    payment,
+    payment
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout", destroyOnUnmount: false })(
+  reduxForm({ form: "Chekout", validate, destroyOnUnmount: false })(
     connect(mapStateToProps, { preMakeOrder, fetchProducts })(CheckOut)
   )
 );

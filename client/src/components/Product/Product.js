@@ -188,7 +188,7 @@ class Product extends React.Component {
                             className="product-carousel"
                           >
                             {this.props.product.imageUrl.map((item, idx) => (
-                              <div>
+                              <div key={idx}>
                                 <img
                                   className={`product-carousel-img ${
                                     idx === this.state.imageIndex
