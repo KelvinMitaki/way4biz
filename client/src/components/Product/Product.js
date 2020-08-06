@@ -72,26 +72,36 @@ class Product extends React.Component {
   };
 
   handleImageHover = (e, index) => {
-    console.log("Helloo World");
+    console.log(index);
+    this.setState({
+      imageIndex: index,
+    });
     // modify the state imageIndex with the new index
   };
 
+  processImageUrl(product) {
+    if (product.imageUrl[this.state.imageIndex].includes("http")) {
+      return product.imageUrl[this.state.imageIndex];
+    }
+    return `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`;
+  }
+
   getImageProps() {
     const { product } = this.props;
-    // const url = [this.state.imageIndex];
     return {
       smallImage: {
         alt: product.name,
         isFluidWidth: true,
-        // width:100%,
-        src: product.imageUrl[0].includes("http")
-          ? product.imageUrl[0]
-          : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
+        src: this.processImageUrl(product),
+        // src: product.imageUrl[0].includes("http")
+        //   ? product.imageUrl[0]
+        //   : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
       },
       largeImage: {
-        src: product.imageUrl[0].includes("http")
-          ? product.imageUrl[0]
-          : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
+        src: this.processImageUrl(product),
+        // src: product.imageUrl[0].includes("http")
+        //   ? product.imageUrl[0]
+        //   : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
         width: 800,
         height: 800,
       },
@@ -141,67 +151,46 @@ class Product extends React.Component {
                         {...this.getImageProps()}
                       />
                       <div className="feature-imgs">
-                        <Slider
-                          {...carouselSettings}
-                          className="product-carousel"
-                        >
-                          <div>
-                            <img
-                              className="product-carousel-img"
-                              // onMouseOver={(e) => this.handleImageHover(idx)}
-                              src={
-                                this.props.product.imageUrl[0].includes("http")
-                                  ? this.props.product.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                              }
-                              alt={this.props.product.name}
-                            />
-                          </div>
-                          <div>
-                            <img
-                              className="product-carousel-img"
-                              src={
-                                this.props.product.imageUrl[0].includes("http")
-                                  ? this.props.product.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                              }
-                              alt={this.props.product.name}
-                            />
-                          </div>
-                          <div>
-                            <img
-                              className="product-carousel-img"
-                              src={
-                                this.props.product.imageUrl[0].includes("http")
-                                  ? this.props.product.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                              }
-                              alt={this.props.product.name}
-                            />
-                          </div>
-                          <div>
-                            <img
-                              className="product-carousel-img"
-                              src={
-                                this.props.product.imageUrl[0].includes("http")
-                                  ? this.props.product.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                              }
-                              alt={this.props.product.name}
-                            />
-                          </div>
-                          <div>
-                            <img
-                              className="product-carousel-img"
-                              src={
-                                this.props.product.imageUrl[0].includes("http")
-                                  ? this.props.product.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${this.props.product.imageUrl[0]} `
-                              }
-                              alt={this.props.product.name}
-                            />
-                          </div>
-                        </Slider>
+                        {this.props.product.imageUrl.length <= 4 ? (
+                          this.props.product.imageUrl.map((item, idx) => (
+                            <div key={idx}>
+                              <img
+                                className="product-carousel-img"
+                                onMouseOver={(e) =>
+                                  this.handleImageHover(e, idx)
+                                }
+                                src={
+                                  item.includes("http")
+                                    ? item
+                                    : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item} `
+                                }
+                                alt={this.props.product.name}
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <Slider
+                            {...carouselSettings}
+                            className="product-carousel"
+                          >
+                            {this.props.product.imageUrl.map((item, idx) => (
+                              <div>
+                                <img
+                                  className="product-carousel-img"
+                                  onMouseOver={(e) =>
+                                    this.handleImageHover(e, idx)
+                                  }
+                                  src={
+                                    item.includes("http")
+                                      ? item
+                                      : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item} `
+                                  }
+                                  alt={this.props.product.name}
+                                />
+                              </div>
+                            ))}
+                          </Slider>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-7 product-info pt-2">
