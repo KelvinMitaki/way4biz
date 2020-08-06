@@ -14,7 +14,7 @@ import {
   addToWishlist,
   removeFromWishlist,
   fetchSingleProduct,
-  fetchRelatedProducts,
+  fetchRelatedProducts
 } from "../../redux/actions";
 import { IconContext } from "react-icons/lib";
 import ProductSecondaryDetails from "./ProductSecondaryDetails";
@@ -35,6 +35,8 @@ class Product extends React.Component {
       show: false,
       clicked: false,
       imageIndex: 0, // the index of the image to be shown,initially 0
+      loaded: false,
+      imageUrl: null
     };
   }
   componentDidMount() {
@@ -42,11 +44,19 @@ class Product extends React.Component {
     this.props.product &&
       this.props.fetchRelatedProducts(this.props.product.subcategory);
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (!prevProps.product) {
       this.props.product &&
         this.props.product.subcategory &&
         this.props.fetchRelatedProducts(this.props.product.subcategory);
+    }
+    if (prevState.imageIndex !== this.state.imageIndex) {
+      this.setState({
+        imageUrl: this.props.product.imageUrl[this.state.imageIndex]
+      });
+    }
+    if (prevState.imageUrl !== this.state.imageUrl) {
+      this.setState({ loaded: false });
     }
   }
   shouldComponentUpdate(prevProps, prevState) {
@@ -73,13 +83,16 @@ class Product extends React.Component {
 
   handleImageHover = (e, index) => {
     this.setState({
-      imageIndex: index,
+      imageIndex: index
     });
     // console.log(this.state.imageIndex);
     // modify the state imageIndex with the new index
   };
 
   processImageUrl(product) {
+    if (!this.state.loaded) {
+      return "/load.jpg";
+    }
     if (product.imageUrl[this.state.imageIndex].includes("http")) {
       return product.imageUrl[this.state.imageIndex];
     }
@@ -96,13 +109,14 @@ class Product extends React.Component {
         alt: product.name,
         isFluidWidth: true,
         src: this.processImageUrl(product),
+        onLoad: () => this.setState({ loaded: true })
       },
       largeImage: {
         src: this.processImageUrl(product),
         width: 800,
-        height: 800,
+        height: 800
       },
-      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 },
+      enlargedImageContainerStyle: { background: "#fff", zIndex: 9 }
     };
   }
 
@@ -112,20 +126,20 @@ class Product extends React.Component {
     const itemInWishlist =
       this.props.product &&
       this.props.wishlist.find(
-        (item) => item._id.toString() === this.props.product._id.toString()
+        item => item._id.toString() === this.props.product._id.toString()
       );
     let itemInCart = false;
     itemInCart =
       this.props.product &&
       this.props.product._id &&
       this.props.cart &&
-      this.props.cart.find((item) => item._id === this.props.product._id);
+      this.props.cart.find(item => item._id === this.props.product._id);
 
     const carouselSettings = {
       // dots: true,
       slidesToShow: 4,
       slidesToScroll: 1,
-      infinite: false,
+      infinite: false
     };
     if (!this.props.product || this.props.saveWishlistLoading)
       return <ScreenLoader />;
@@ -158,9 +172,7 @@ class Product extends React.Component {
                                     ? `current-carousel-image`
                                     : null
                                 }`}
-                                onMouseOver={(e) =>
-                                  this.handleImageHover(e, idx)
-                                }
+                                onMouseOver={e => this.handleImageHover(e, idx)}
                                 src={
                                   item.includes("http")
                                     ? item
@@ -183,7 +195,7 @@ class Product extends React.Component {
                                       ? `current-carousel-image`
                                       : null
                                   }`}
-                                  onMouseOver={(e) =>
+                                  onMouseOver={e =>
                                     this.handleImageHover(e, idx)
                                   }
                                   src={
@@ -252,7 +264,7 @@ class Product extends React.Component {
                           <span
                             style={{
                               cursor: "pointer",
-                              display: "inline-block",
+                              display: "inline-block"
                             }}
                             onClick={() =>
                               this.props.history.push(
@@ -274,7 +286,7 @@ class Product extends React.Component {
                               clickable={false}
                               value={Math.round(
                                 this.props.productReviews
-                                  .map((p) => p.rating)
+                                  .map(p => p.rating)
                                   .reduce((acc, cur) => acc + cur, 0) /
                                   this.props.productReviews.length
                               )}
@@ -332,7 +344,7 @@ class Product extends React.Component {
                     <div
                       style={{
                         borderBottom: "1px solid #d4d4d4",
-                        padding: "10px 10px 5px 10px",
+                        padding: "10px 10px 5px 10px"
                       }}
                     >
                       <h5>DELIVERY</h5>
@@ -343,7 +355,7 @@ class Product extends React.Component {
                         <FiTruck
                           style={{
                             fontSize: "50px",
-                            marginRight: "10px",
+                            marginRight: "10px"
                           }}
                         />
                         <p>
@@ -368,7 +380,7 @@ class Product extends React.Component {
                         <RiMotorbikeLine
                           style={{
                             fontSize: "50px",
-                            marginRight: "10px",
+                            marginRight: "10px"
                           }}
                         />
                         <p>
@@ -390,33 +402,7 @@ class Product extends React.Component {
                   </div>
                 </div>
               </div>
-
               <div className="related-products">
-                <h3>Related Products</h3>
-                {this.props.relatedProducts === 0 ? null : (
-                  <div className="related-products-wrapper">
-                    {this.props.relatedProducts.length !== 0 &&
-                      this.props.relatedProducts.map((item) => (
-                        <Link key={item._id} to={`/product/${item._id}`}>
-                          <div key={item._id} className="related-product">
-                            <Image
-                              image={
-                                item.imageUrl[0].includes("http")
-                                  ? item.imageUrl[0]
-                                  : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
-                              }
-                              alt={item.name}
-                            />
-                            <p className="related-product-name">{item.name}</p>
-                            <p style={{ fontWeight: "bolder" }}>
-                              Ksh.{item.price.toLocaleString()}{" "}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                  </div>
-                )}
-
                 <div className="row product-features-reviews-specifications mt-3">
                   <div className="col p-0">
                     <ProductSecondaryDetails
@@ -424,6 +410,37 @@ class Product extends React.Component {
                     />
                   </div>
                 </div>
+                {this.props.relatedProducts &&
+                  this.props.relatedProducts.length !== 0 && (
+                    <React.Fragment>
+                      <h3>Related Products</h3>
+                      {this.props.relatedProducts === 0 ? null : (
+                        <div className="related-products-wrapper">
+                          {this.props.relatedProducts.length !== 0 &&
+                            this.props.relatedProducts.map(item => (
+                              <Link key={item._id} to={`/product/${item._id}`}>
+                                <div key={item._id} className="related-product">
+                                  <Image
+                                    image={
+                                      item.imageUrl[0].includes("http")
+                                        ? item.imageUrl[0]
+                                        : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${item.imageUrl[0]} `
+                                    }
+                                    alt={item.name}
+                                  />
+                                  <p className="related-product-name">
+                                    {item.name}
+                                  </p>
+                                  <p style={{ fontWeight: "bolder" }}>
+                                    Ksh.{item.price.toLocaleString()}{" "}
+                                  </p>
+                                </div>
+                              </Link>
+                            ))}
+                        </div>
+                      )}
+                    </React.Fragment>
+                  )}
                 {/* <div>
                   <h3>Recommended For You</h3>
                   <div className="recommended-products-wrapper">
@@ -465,7 +482,7 @@ const mapStateToProps = (state, ownProps) => {
     cart: state.cartReducer.cart,
     relatedProducts: state.product.relatedProducts,
     productReviews: state.product.productReviews,
-    isSignedIn: state.auth.isSignedIn,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default withRouter(
@@ -474,6 +491,6 @@ export default withRouter(
     addToWishlist,
     removeFromWishlist,
     fetchSingleProduct,
-    fetchRelatedProducts,
+    fetchRelatedProducts
   })(Product)
 );
