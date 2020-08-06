@@ -215,6 +215,11 @@
 
 .product-carousel-img {
   width: 60px;
+  margin: 0px 10px;
+}
+
+.current-carousel-image {
+  border: 2px solid #f76b1a;
 }
 
 #normal-delivery-info,

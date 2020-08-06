@@ -72,7 +72,6 @@ class Product extends React.Component {
   };
 
   handleImageHover = (e, index) => {
-    console.log(index);
     this.setState({
       imageIndex: index,
     });
@@ -93,15 +92,9 @@ class Product extends React.Component {
         alt: product.name,
         isFluidWidth: true,
         src: this.processImageUrl(product),
-        // src: product.imageUrl[0].includes("http")
-        //   ? product.imageUrl[0]
-        //   : ` https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`,
       },
       largeImage: {
         src: this.processImageUrl(product),
-        // src: product.imageUrl[0].includes("http")
-        //   ? product.imageUrl[0]
-        //   : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]} `,
         width: 800,
         height: 800,
       },
@@ -155,7 +148,11 @@ class Product extends React.Component {
                           this.props.product.imageUrl.map((item, idx) => (
                             <div key={idx}>
                               <img
-                                className="product-carousel-img"
+                                className={`product-carousel-img ${
+                                  idx === this.state.imageIndex
+                                    ? `current-carousel-image`
+                                    : null
+                                }`}
                                 onMouseOver={(e) =>
                                   this.handleImageHover(e, idx)
                                 }
@@ -176,7 +173,11 @@ class Product extends React.Component {
                             {this.props.product.imageUrl.map((item, idx) => (
                               <div>
                                 <img
-                                  className="product-carousel-img"
+                                  className={`product-carousel-img ${
+                                    idx === this.state.imageIndex
+                                      ? `current-carousel-image`
+                                      : null
+                                  }`}
                                   onMouseOver={(e) =>
                                     this.handleImageHover(e, idx)
                                   }
