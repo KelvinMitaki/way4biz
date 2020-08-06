@@ -51,7 +51,7 @@ class AccountComplaints extends React.Component {
                     <div className="container">
                       {/* mapping here */}
                       {this.props.buyerComplaints.length !== 0 &&
-                        this.props.buyerComplaints.map((c) => (
+                        this.props.buyerComplaints.map(c => (
                           <div
                             key={c._id}
                             className="row box-container account-complaint-wrapper"
@@ -65,7 +65,7 @@ class AccountComplaints extends React.Component {
                             <div className="col-md-4">
                               <p>
                                 <strong className="mr-2 x">Store Name:</strong>
-                                <span>{c.storeName}Helloo Helloo Helloo</span>
+                                <span>{c.storeName}</span>
                               </p>
                             </div>
                             <div className="col-md-3">
@@ -119,9 +119,9 @@ class AccountComplaints extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    buyerComplaints: state.product.buyerComplaints,
+    buyerComplaints: state.product.buyerComplaints
   };
 };
 export default connect(mapStateToProps, { fetchBuyerComplaints })(

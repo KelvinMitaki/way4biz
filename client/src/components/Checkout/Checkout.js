@@ -41,9 +41,10 @@ class CheckOut extends React.Component {
           <Header />
 
           <form
-            onSubmit={this.props.handleSubmit(formValues =>
-              this.props.preMakeOrder({ formValues, cart }, this.props.history)
-            )}
+            onSubmit={this.props.handleSubmit(formValues => {
+              console.log(formValues);
+              this.props.preMakeOrder({ formValues, cart }, this.props.history);
+            })}
             className="mt-4"
           >
             <div className="container  main-checkout-wrapper">
