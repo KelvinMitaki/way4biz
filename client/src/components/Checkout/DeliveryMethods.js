@@ -13,7 +13,7 @@ class DeliveryMethods extends React.Component {
             type="radio"
             label="Normal Delivery"
             name="delivery"
-            value="normal"
+            value="Normal"
             id="radio-1000"
             component={RadioField}
           />
@@ -27,7 +27,7 @@ class DeliveryMethods extends React.Component {
             type="radio"
             label="Express Delivery"
             name="delivery"
-            value="express"
+            value="Express"
             id="radio-1100"
             component={RadioField}
           />
