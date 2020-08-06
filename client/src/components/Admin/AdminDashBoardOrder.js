@@ -118,10 +118,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default withRouter(
