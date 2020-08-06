@@ -89,8 +89,19 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.totalPrice.toLocaleString()}
-                    <div style={{ borderBottom: "1px solid #eee" }}></div>
                   </div>
+                  {buyerOrderDetails &&
+                    Object.keys(buyerOrderDetails).length !== 0 && (
+                      <p className>
+                        <strong className="mr-2">Status:</strong>
+                        {(buyerOrderDetails.cancelled && "Cancelled") ||
+                          (buyerOrderDetails.delivered && "Delivered") ||
+                          (buyerOrderDetails.paid &&
+                            !buyerOrderDetails.delivered &&
+                            "Pending")}
+                      </p>
+                    )}
+                  <div style={{ borderBottom: "1px solid #eee" }}></div>
                   <div className="container-fluid p-0">
                     <h5 className="my-2" style={{ textTransform: "uppercase" }}>
                       Items in your order
@@ -102,7 +113,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map((item) => {
+                      buyerOrderDetails.items.map(item => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -111,12 +122,7 @@ class BuyerOrderDetails extends Component {
                             <div
                               style={{ borderBottom: "1px solid #eee" }}
                               className="p-3"
-                            >
-                              <p>
-                                <strong className="mr-2">Status:</strong>
-                                Received
-                              </p>
-                            </div>
+                            ></div>
 
                             <div className="row">
                               <div className="col-lg-6 d-flex align-items-center">
@@ -185,10 +191,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default withRouter(
