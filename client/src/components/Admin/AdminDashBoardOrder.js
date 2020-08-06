@@ -67,11 +67,16 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Status:</strong>
-                        {this.props.adminOrder["0"].delivered ? (
-                          <span> Delivered</span>
-                        ) : (
-                          <span> Pending</span>
-                        )}
+                        {(this.props.adminOrder["0"].cancelled && (
+                          <span> Cancelled</span>
+                        )) ||
+                          (this.props.adminOrder["0"].delivered && (
+                            <span> Delivered</span>
+                          )) ||
+                          (this.props.adminOrder["0"].paid &&
+                            !this.props.adminOrder["0"].delivered && (
+                              <span> Pending</span>
+                            ))}
                       </p>
                     </div>
                     <div className="col-md-6">
@@ -107,7 +112,7 @@ class AdminDashBoardOrder extends React.Component {
                       alignItems: "center",
                       justifyContent: "center",
                       borderTop: "1px solid #d4d4d4",
-                      padding: "20px",
+                      padding: "20px"
                     }}
                   >
                     <Link
@@ -127,10 +132,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default withRouter(

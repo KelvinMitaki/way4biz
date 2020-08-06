@@ -2152,7 +2152,9 @@ export const fetchWishlistProducts = () => async dispatch => {
 
 export const saveCartItems = cart => async dispatch => {
   try {
-    await axios.post("/api/user/new/cart", { cart });
+    await axios.post("/api/user/new/cart", {
+      cart: cart.map(item => ({ product: item._id, quantity: item.quantity }))
+    });
     dispatch({ type: SAVE_CART });
     dispatch(fetchCartItems());
   } catch (error) {

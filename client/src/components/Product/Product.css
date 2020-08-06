@@ -207,6 +207,7 @@
 .product-carousel {
   max-width: 80% !important;
   margin: auto;
+  padding: 0px 10px;
 }
 
 .product-carousel div {
