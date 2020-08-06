@@ -1145,15 +1145,6 @@ route.post(
       }
       const { cart } = req.body;
       const { _id } = req.session.user._id;
-
-      // cart.map(item => {
-      //   if (item && Object.keys(item).length === 0) {
-      //     return res.status(401).send({ message: "Invalid Cart" });
-      //   }
-      //   if (!item) {
-      //     return res.status(401).send({ message: "Empty" });
-      //   }
-      // });
       const buyerExists = await Cart.findOne({ buyer: _id });
       if (buyerExists) {
         const updatedCart = await Cart.findOneAndUpdate(
