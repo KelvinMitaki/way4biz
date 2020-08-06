@@ -92,7 +92,7 @@ class BuyerOrderDetails extends Component {
                   </div>
                   {buyerOrderDetails &&
                     Object.keys(buyerOrderDetails).length !== 0 && (
-                      <p className>
+                      <p>
                         <strong className="mr-2">Status:</strong>
                         {(buyerOrderDetails.cancelled && "Cancelled") ||
                           (buyerOrderDetails.delivered && "Delivered") ||
