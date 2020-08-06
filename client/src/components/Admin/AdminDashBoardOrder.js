@@ -91,6 +91,10 @@ class AdminDashBoardOrder extends React.Component {
                         {this.props.adminOrder.buyer.firstName}{" "}
                         {this.props.adminOrder.buyer.lastName}
                       </p>
+                      <p>
+                        <strong className="mr-2">Delivery Method:</strong>
+                        {this.props.adminOrder["0"].deliveryMethod}
+                      </p>
                     </div>
                     <div className="col-md-6">
                       <p>

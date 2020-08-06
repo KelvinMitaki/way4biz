@@ -368,45 +368,6 @@ route.post(
   }
 );
 
-// route.post(
-//   "/api/checkout/payment",
-//   auth,
-//   delivery,
-//   check("paymentMethod")
-//     .trim()
-//     .isLength({ min: 2 })
-//     .withMessage("Please check your payment method"),
-//   async (req, res) => {
-//     try {
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(401).send({ message: errors.array()[0].msg });
-//       }
-//       const {
-//         firstName,
-//         lastName,
-//         number,
-//         deliveryAddress,
-//         region,
-//         city
-//       } = req.delivery;
-//       const { paymentMethod } = req.body;
-//       const order = new Order({
-//         firstName,
-//         lastName,
-//         number,
-//         deliveryAddress,
-//         region,
-//         city,
-//         paymentMethod
-//       });
-//       await order.save();
-//       res.status(201).send(order);
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-//   }
-// );
 let checkoutRequestId;
 let orderId;
 route.post(
@@ -416,6 +377,10 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please choose a valid payment method"),
+  check("formValues.delivery")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid delivery method"),
   check("distanceId")
     .not()
     .isEmpty()
@@ -443,6 +408,7 @@ route.post(
       const price = cart
         .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
+      const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
         const mpesaApi = new Mpesa({
           consumerKey: process.env.MPESA_CONSUMER_KEY,
@@ -469,7 +435,8 @@ route.post(
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
-          totalPrice: price,
+          deliveryMethod: formValues.delivery,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
           distance: distanceId
         });
@@ -483,7 +450,7 @@ route.post(
       // **STRIPE*/
       if (id) {
         const charge = await stripe.charges.create({
-          amount: price * 100,
+          amount: (price + Math.round(distance.shippingFees)) * 100,
           currency: "kes",
           description: `payed ${price} to account by ${req.session.user.email}`,
           source: id
@@ -491,7 +458,8 @@ route.post(
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
-          totalPrice: price,
+          deliveryMethod: formValues.delivery,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
           distance: distanceId,
           paid: true,
@@ -1102,36 +1070,6 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
     res.status(500).send(error);
   }
 });
-// route.post(
-//   "/api/fetch/wishlits/products",
-//   check("ids").isArray({ min: 1 }).withMessage("Invalid"),
-//   async (req, res) => {
-//     try {
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(401).send({ message: errors.array()[0].msg });
-//       }
-//       const { ids } = req.body;
-//       const wishlist = await Product.aggregate([
-//         {
-//           $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
-//         },
-//         {
-//           $project: {
-//             freeShipping: 1,
-//             name: 1,
-//             price: 1,
-//             imageUrl: 1,
-//             stockQuantity: 1
-//           }
-//         }
-//       ]);
-//       res.send(wishlist);
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-//   }
-// );
 
 route.post(
   "/api/user/new/cart",
@@ -1253,6 +1191,7 @@ route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
   try {
     const { _id } = req.session.user;

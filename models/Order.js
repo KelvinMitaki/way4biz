@@ -64,6 +64,10 @@ const OrderSchema = new mongoose.Schema(
     },
     last4: {
       type: String
+    },
+    deliveryMethod: {
+      type: String,
+      required: true
     }
   },
   { timestamps: true }
