@@ -18,12 +18,11 @@ const Modal = (props) => {
         </div>
         <div className="modal-body">
           <div className="container p-0">
-            {/* <div className="row"> */}
             <p className="mb-3" style={{ textJustify: "left" }}>
               A new item has been added to your Shopping Cart. You now have 2
               items in your Shopping Cart.
             </p>
-            {/* </div> */}
+            <hr className="my-2" />
             <div className="row">
               <div className="col-md-6 my-2">
                 <div
