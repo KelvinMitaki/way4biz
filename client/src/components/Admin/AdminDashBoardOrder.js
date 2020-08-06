@@ -48,8 +48,8 @@ class AdminDashBoardOrder extends React.Component {
                 </h3>
               </div>
               <div className="container">
-                <div className="box-container p-3">
-                  <div className="row">
+                <div className="box-container">
+                  <div className="row pl-2">
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Order ID: </strong>
@@ -63,7 +63,7 @@ class AdminDashBoardOrder extends React.Component {
                       ).toLocaleString()}
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row pl-2">
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Status:</strong>
@@ -79,7 +79,7 @@ class AdminDashBoardOrder extends React.Component {
                       {this.props.adminOrder["0"].items.length.toLocaleString()}
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row pl-2">
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Buyer:</strong>
@@ -96,17 +96,26 @@ class AdminDashBoardOrder extends React.Component {
                       </p>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <p>
-                        <Link
-                          to={`/root/admin-order/view-items/${this.props.adminOrder["0"]._id}`}
-                          className="admin-order-items-view"
-                        >
-                          View Details
-                        </Link>
-                      </p>
-                    </div>
+                  <div
+                    style={{
+                      height: "30px",
+                      position: "relative",
+                      bottom: "0px",
+                      left: "0px",
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderTop: "1px solid #d4d4d4",
+                      padding: "20px",
+                    }}
+                  >
+                    <Link
+                      to={`/root/admin-order/view-items/${this.props.adminOrder["0"]._id}`}
+                      className="admin-order-items-view"
+                    >
+                      View Details
+                    </Link>
                   </div>
                 </div>
               </div>
