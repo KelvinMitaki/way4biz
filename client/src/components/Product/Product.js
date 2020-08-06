@@ -53,7 +53,7 @@ class Product extends React.Component {
     if (
       prevProps.relatedProducts.length !== this.props.relatedProducts.length ||
       prevProps.productReviews.length !== this.props.productReviews.length ||
-      prevState.modalShow !== this.state.modalShow ||
+      prevState.imageIndex !== this.state.imageIndex ||
       this.state.clicked !== prevState.clicked ||
       this.props.product
     ) {
@@ -75,6 +75,7 @@ class Product extends React.Component {
     this.setState({
       imageIndex: index,
     });
+    // console.log(this.state.imageIndex);
     // modify the state imageIndex with the new index
   };
 
@@ -82,11 +83,14 @@ class Product extends React.Component {
     if (product.imageUrl[this.state.imageIndex].includes("http")) {
       return product.imageUrl[this.state.imageIndex];
     }
-    return `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${product.imageUrl[0]}`;
+    return `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${
+      product.imageUrl[this.state.imageIndex]
+    }`;
   }
 
   getImageProps() {
     const { product } = this.props;
+    // console.log(product.imageUrl);
     return {
       smallImage: {
         alt: product.name,
@@ -121,6 +125,7 @@ class Product extends React.Component {
       // dots: true,
       slidesToShow: 4,
       slidesToScroll: 1,
+      infinite: false,
     };
     if (!this.props.product || this.props.saveWishlistLoading)
       return <ScreenLoader />;
@@ -173,11 +178,12 @@ class Product extends React.Component {
                             {this.props.product.imageUrl.map((item, idx) => (
                               <div>
                                 <img
-                                  className={`product-carousel-img ${
-                                    idx === this.state.imageIndex
-                                      ? `current-carousel-image`
-                                      : null
-                                  }`}
+                                  className="product-carousel-img"
+                                  // className={`product-carousel-img ${
+                                  //   idx === this.state.imageIndex
+                                  //     ? `current-carousel-image`
+                                  //     : null
+                                  // }`}
                                   onMouseOver={(e) =>
                                     this.handleImageHover(e, idx)
                                   }
