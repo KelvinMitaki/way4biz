@@ -68,6 +68,10 @@ const OrderSchema = new mongoose.Schema(
     deliveryMethod: {
       type: String,
       required: true
+    },
+    dispatched: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
