@@ -408,6 +408,7 @@ route.post(
       const price = cart
         .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
+      const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
         const mpesaApi = new Mpesa({
           consumerKey: process.env.MPESA_CONSUMER_KEY,
@@ -435,7 +436,7 @@ route.post(
           items: test,
           paymentMethod: formValues.payment,
           deliveryMethod: formValues.delivery,
-          totalPrice: price,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
           distance: distanceId
         });
@@ -449,7 +450,7 @@ route.post(
       // **STRIPE*/
       if (id) {
         const charge = await stripe.charges.create({
-          amount: price * 100,
+          amount: (price + Math.round(distance.shippingFees)) * 100,
           currency: "kes",
           description: `payed ${price} to account by ${req.session.user.email}`,
           source: id
@@ -458,7 +459,7 @@ route.post(
           items: test,
           paymentMethod: formValues.payment,
           deliveryMethod: formValues.delivery,
-          totalPrice: price,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
           distance: distanceId,
           paid: true,
