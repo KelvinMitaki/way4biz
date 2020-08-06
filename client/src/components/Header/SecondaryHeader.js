@@ -21,15 +21,18 @@ class SecondaryHeader extends React.Component {
           <Link className="mx-4 secondary-header-link" to="/support-center">
             Support Center
           </Link> */}
-          <Link className="mx-4 secondary-header-link" to="/about-us">
-            About Us
+          <Link className="mx-4 secondary-header-link" to="/logistics">
+            Logistics Services
           </Link>
-          <Link className="mx-4 secondary-header-link" to="/contact-us">
+          <Link className="mx-4 secondary-header-link" to="/">
+            Help
+          </Link>
+          {/* <Link className="mx-4 secondary-header-link" to="/contact-us">
             Contact Us
-          </Link>
-          <Link className="mx-4 secondary-header-link" to="/privacy-policy">
+          </Link> */}
+          {/* <Link className="mx-4 secondary-header-link" to="/privacy-policy">
             Privacy Policy
-          </Link>
+          </Link> */}
           {/* <Link className="mx-4 secondary-header-link" to="/contact-developers">
             Contact Developers
           </Link> */}
@@ -59,10 +62,16 @@ class SecondaryHeader extends React.Component {
               Support Center
             </Link> */}
             <Link
+              className="small-screen-secondary-header-link"
+              to="/logistics"
+            >
+              Logistics Services
+            </Link>
+            <Link
               className="mx-4 small-screen-secondary-header-link"
               to="/about-us"
             >
-              About Us
+              Help
             </Link>
             <Link
               className="mx-4 small-screen-secondary-header-link"
@@ -70,12 +79,12 @@ class SecondaryHeader extends React.Component {
             >
               Contact Us
             </Link>
-            <Link
+            {/* <Link
               className="small-screen-secondary-header-link"
               to="/privacy-policy"
             >
               Privacy Policy
-            </Link>
+            </Link> */}
             {/* <Link
               className="small-screen-secondary-header-link"
               to="/contact-developers"
