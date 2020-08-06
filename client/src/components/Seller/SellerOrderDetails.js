@@ -98,8 +98,8 @@ class SellerOrderDetails extends React.Component {
                   className="container-fluid d-flex  mt-4 justify-content-center"
                   style={{ height: "30px" }}
                 >
-                  <button className="btn btn-lg confirm-delivery-btn">
-                    Confirm Delivery
+                  <button className="btn btn-lg confirm-dispatch-btn">
+                    Confirm Dispatch
                   </button>
                 </div>
               </div>

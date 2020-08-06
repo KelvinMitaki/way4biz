@@ -63,7 +63,8 @@
   border-radius: 5px;
 }
 
-.confirm-delivery-btn {
+.confirm-delivery-btn,
+.confirm-dispatch-btn {
   background-color: #f76b1a;
   color: #fff;
   display: flex;
@@ -72,11 +73,13 @@
   border: none;
 }
 
-.confirm-delivery-btn:hover {
+.confirm-delivery-btn:hover,
+.confirm-dispatch-btn:hover {
   color: #fff;
 }
 
-.confirm-delivery-btn:focus {
+.confirm-delivery-btn:focus,
+.confirm-dispatch-btn:hover {
   outline: none;
   box-shadow: none;
 }
