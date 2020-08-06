@@ -1,5 +1,5 @@
 .admin-order-items-wrapper {
-  width: 85%;
+  width: 80%;
   margin: auto;
   padding-bottom: 10px;
 }
@@ -51,6 +51,36 @@
   text-decoration: underline;
 }
 
+.admin-order-visit-store {
+  color: #f76b1a;
+  padding: 3px;
+}
+
+.admin-order-visit-store:hover {
+  text-decoration: none;
+  color: #f76b1a;
+  background-color: rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+}
+
+.admin-confirm-delivery-btn {
+  background-color: #f76b1a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.admin-confirm-delivery-btn:hover {
+  color: #fff;
+}
+
+.admin-confirm-delivery-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 @media screen and (max-width: 960px) {
   .admin-order-items-wrapper {
     width: 90%;
@@ -72,6 +102,11 @@
 }
 
 @media screen and (max-width: 520px) {
+  .admin-order-items-wrapper {
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+  }
   .individual-order-item .row div {
     padding: 0px 10%;
   }
