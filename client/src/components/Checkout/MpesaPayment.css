@@ -3,9 +3,9 @@
   cursor: pointer;
 }
 
-#change-payment-method:hover {
+/* #change-payment-method:hover {
   text-decoration: none;
-}
+} */
 
 .mpesa-payment-guide {
   margin: 0px 0px 0px 30px;
