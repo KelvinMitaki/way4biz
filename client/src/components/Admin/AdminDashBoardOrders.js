@@ -70,7 +70,7 @@ function AdminDashBoardOrders(props) {
       <AdminDashBoardHeader />
       <AdminDashboardSecondaryHeader />
       <div
-        className="container mt-4 mx-0 py-2"
+        className="container mt-4 mx-auto py-2"
         style={{ backgroundColor: "#fff" }}
       >
         {props.allAdminOrders.length !== 0 ? (
