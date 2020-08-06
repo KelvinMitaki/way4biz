@@ -1,4 +1,4 @@
-.admin-secondary-dashboard-header {
+.admin-dashboard-secondary-header {
   height: 60px;
   background-color: #fff;
   box-shadow: 0px 3px 12px 0px rgba(0, 0, 0, 0.1);
@@ -9,10 +9,13 @@
   align-items: center;
   z-index: 2000;
   justify-content: space-between;
+  left: 0px;
+  width: 100%;
 }
 .admin-hamburger-menu-wrapper {
   position: relative;
   height: 60px;
+  left: 0px;
 }
 
 .admin-hamburger-menu {
@@ -29,8 +32,6 @@
   top: 60px;
   background-color: white;
   z-index: 9001;
-  /* max-height: calc(100vh - 80px);
-  min-height: calc(100vh - 140px); */
   padding: 20px 10px;
   font-size: 18px;
 }

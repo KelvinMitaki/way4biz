@@ -27,19 +27,6 @@
   }
 }
 
-/* .seller-menu-slide-out {
-  animation: slide-out 0.5s forwards;
-}
-
-@keyframes slide-out {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-} */
-
 .seller-menu-section {
   height: 100vh;
   display: flex;
