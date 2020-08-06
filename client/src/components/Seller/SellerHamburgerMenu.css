@@ -15,10 +15,10 @@
 }
 
 .seller-menu-slide-in {
-  animation: slide-in 0.5s forwards;
+  animation: ham-slide-in 0.5s forwards;
 }
 
-@keyframes slide-in {
+@keyframes ham-slide-in {
   0% {
     transform: translateX(-100%);
   }
@@ -27,7 +27,7 @@
   }
 }
 
-.seller-menu-slide-out {
+/* .seller-menu-slide-out {
   animation: slide-out 0.5s forwards;
 }
 
@@ -38,7 +38,7 @@
   100% {
     transform: translateX(-100%);
   }
-}
+} */
 
 .seller-menu-section {
   height: 100vh;
