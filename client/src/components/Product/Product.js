@@ -178,12 +178,11 @@ class Product extends React.Component {
                             {this.props.product.imageUrl.map((item, idx) => (
                               <div>
                                 <img
-                                  className="product-carousel-img"
-                                  // className={`product-carousel-img ${
-                                  //   idx === this.state.imageIndex
-                                  //     ? `current-carousel-image`
-                                  //     : null
-                                  // }`}
+                                  className={`product-carousel-img ${
+                                    idx === this.state.imageIndex
+                                      ? `current-carousel-image`
+                                      : null
+                                  }`}
                                   onMouseOver={(e) =>
                                     this.handleImageHover(e, idx)
                                   }
