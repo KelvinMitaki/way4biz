@@ -1210,8 +1210,45 @@ route.post(
 route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
   try {
     const { _id } = req.session.user;
-    const cart = await Cart.aggregate([{ $match: { buyer: _id } }]);
-    res.send(cart.length !== 0 ? cart[0].items : cart);
+    const cart = await Cart.aggregate([
+      { $match: { buyer: _id } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      { $unwind: "$products" },
+      {
+        $project: {
+          product: {
+            freeShipping: "$products.freeShipping",
+            name: "$products.name",
+            price: "$products.price",
+            stockQuantity: "$products.stockQuantity",
+            seller: "$products.seller",
+            imageUrl: "$products.imageUrl",
+            _id: "$products._id"
+          },
+          items: 1
+        }
+      }
+    ]);
+    const newCart = cart.map(query => {
+      const item = query.items.find(
+        item => item.product.toString() === query.product._id.toString()
+      );
+      if (item) {
+        return {
+          ...query.product,
+          quantity: item.quantity
+        };
+      }
+      return query;
+    });
+    res.send(newCart);
   } catch (error) {
     res.status(500).send(error);
   }
