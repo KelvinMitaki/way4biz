@@ -523,7 +523,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyer: 1,
           createdAt: 1,
           delivered: 1,
-          cancelled: 1
+          cancelled: 1,
+          dispatched: 1
         }
       },
       { $unwind: "$items" },
@@ -561,6 +562,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyerSeller: 1,
           delivered: 1,
           cancelled: 1,
+          dispatched: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -582,6 +584,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           },
           cancelled: { $first: "$cancelled" },
           delivered: { $first: "$delivered" },
+          dispatched: { $first: "$dispatched" },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
@@ -1783,4 +1786,26 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/confirm/seller/dispatch",
+  isSeller,
+  check("productId").not().isEmpty(),
+  check("orderId").not().isEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId, "items.product": productId },
+        { dispatched: true }
+      );
+      res.send(order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;

@@ -24,12 +24,11 @@ class DashBoardOrder extends React.Component {
             <h6 className="col-lg-2 p-0">Status</h6>
           </div>
         </div>
-
         <div className="container-fluid p-0">
           {/* mapping here */}
           {this.props.sellerOrders &&
             this.props.sellerOrders.length !== 0 &&
-            this.props.sellerOrders.map((order) => (
+            this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
                   <div className="col-md-6 col-lg-4">
@@ -54,10 +53,14 @@ class DashBoardOrder extends React.Component {
                           this.props.fetchSellerOrderDetails({
                             items: order.items,
                             productSellerData: order.productSellerData,
+                            cancelled: order.cancelled,
+                            delivered: order.delivered,
+                            dispatched: order.dispatched,
+                            orderId: order._id,
                             buyer:
                               order.buyerSeller.length !== 0
                                 ? order.buyerSeller
-                                : order.buyerUser,
+                                : order.buyerUser
                           })
                         }
                       >
@@ -88,9 +91,9 @@ class DashBoardOrder extends React.Component {
                       <strong className="x mr-2">Amount:</strong>
                       Ksh.
                       {order.productSellerData
-                        .map((prod) => {
+                        .map(prod => {
                           const matchingProd = order.items.find(
-                            (item) => item.product === prod._id
+                            item => item.product === prod._id
                           );
                           if (matchingProd) {
                             return prod.price * matchingProd.quantity;

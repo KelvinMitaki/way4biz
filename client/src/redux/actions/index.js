@@ -212,7 +212,10 @@ import {
   CHECKOUT_USER_START,
   CHECKOUT_USER_STOP,
   DELETE_CART_START,
-  DELETE_CART_STOP
+  DELETE_CART_STOP,
+  CONFIRM_DISPATCH,
+  CONFIRM_DISPATCH_START,
+  CONFIRM_DISPATCH_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2198,5 +2201,22 @@ export const deleteCart = () => async dispatch => {
     authCheck(error);
     dispatch({ type: DELETE_CART_STOP });
     console.log(error.response);
+  }
+};
+
+export const confirmDispatch = (
+  orderId,
+  productId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: CONFIRM_DISPATCH_START });
+    await axios.post("/api/confirm/seller/dispatch", { orderId, productId });
+    dispatch({ type: CONFIRM_DISPATCH });
+    history.push("/seller-orders");
+    dispatch({ type: CONFIRM_DISPATCH_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONFIRM_DISPATCH_STOP });
   }
 };
