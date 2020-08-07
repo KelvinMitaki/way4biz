@@ -21,7 +21,7 @@ class SecondaryHeader extends React.Component {
             <Link className="mx-4 secondary-header-link" to="/logistics">
               Logistics Services
             </Link>
-            <Link className="mx-4 secondary-header-link" to="/">
+            <Link className="mx-4 secondary-header-link" to="/help-center">
               Help center
             </Link>
           </div>
@@ -45,7 +45,7 @@ class SecondaryHeader extends React.Component {
             </Link>
             <Link
               className="mx-4 small-screen-secondary-header-link"
-              to="/about-us"
+              to="/help-center"
             >
               Help center
             </Link>
