@@ -787,7 +787,7 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     const { _id } = req.session.user;
     // NEW ORDERS
     const newOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, cancelled: false, dispatched: false } },
       {
         $lookup: {
           from: "products",
