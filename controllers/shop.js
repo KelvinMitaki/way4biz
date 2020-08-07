@@ -438,6 +438,7 @@ route.post(
           deliveryMethod: formValues.delivery,
           totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
+          buyerSeller: _id,
           distance: distanceId
         });
         await order.save();
@@ -461,6 +462,7 @@ route.post(
           deliveryMethod: formValues.delivery,
           totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
+          buyerSeller: _id,
           distance: distanceId,
           paid: true,
           brand: charge.payment_method_details.card.brand,
@@ -1081,7 +1083,7 @@ route.post(
       if (!errors.isEmpty()) {
         return res.status(401).send(errors.array()[0].msg);
       }
-      const cart = JSON.parse(req.body.cart);
+      const { cart } = req.body;
       const { _id } = req.session.user._id;
       const buyerExists = await Cart.findOne({ buyer: _id });
       if (buyerExists) {

@@ -2216,7 +2216,6 @@ export const confirmDispatch = (
     dispatch({ type: CONFIRM_DISPATCH_START });
     await axios.post("/api/confirm/seller/dispatch", { orderId, productId });
     dispatch({ type: CONFIRM_DISPATCH });
-    dispatch(fetchSellerOrders());
     dispatch(fetchSellerNewOrdersCount());
     history.push("/seller-orders");
     dispatch({ type: CONFIRM_DISPATCH_STOP });

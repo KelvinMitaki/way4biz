@@ -13,17 +13,7 @@ import { Redirect } from "react-router-dom";
 
 class SellerOrders extends React.Component {
   componentDidMount() {
-    if (this.props.sellerOrders.length === 0) {
-      this.props.fetchSellerOrders();
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.sellerOrders.length !== this.props.sellerOrders.length ||
-      this.props.sellerOrders.length === 0
-    ) {
-      this.props.fetchSellerOrders();
-    }
+    this.props.fetchSellerOrders();
   }
   getTabs() {
     const newOrders =

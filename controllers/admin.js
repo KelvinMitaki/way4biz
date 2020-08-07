@@ -1223,9 +1223,8 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   try {
     const { orderId } = req.params;
     const buyer = await Order.findById(orderId)
-      .populate("buyer")
-      .select({ buyer: 1, _id: 0 })
-      .exec();
+      .populate("buyer buyerSeller")
+      .select({ buyer: 1, buyerSeller: 1, _id: 0 });
     const order = await Order.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(orderId) } },
       {
@@ -1245,12 +1244,14 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
         }
       }
     ]);
-    res.send({ ...order, buyer: buyer.buyer });
+    res.send({
+      ...order,
+      buyer: buyer.buyer ? buyer.buyer : buyer.buyerSeller
+    });
   } catch (error) {
     res.status(500).send(error);
   }
 });
-
 route.get(
   "/api/admin/fetch/order/by/id/:orderId",
   auth,
