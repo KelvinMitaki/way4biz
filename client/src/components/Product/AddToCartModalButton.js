@@ -2,8 +2,9 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
+import { connect } from "react-redux";
 
-const Modal = (props) => {
+const Modal = props => {
   const showHideClassName = props.show
     ? "modal display-block"
     : "modal display-nones";
@@ -19,8 +20,8 @@ const Modal = (props) => {
         <div className="modal-body">
           <div className="container p-0">
             <p className="mb-3" style={{ textJustify: "left" }}>
-              A new item has been added to your Shopping Cart. You now have 2
-              items in your Shopping Cart.
+              A new item has been added to your Shopping Cart. You now have{" "}
+              {props.cart.length} items in your Shopping Cart.
             </p>
             <hr className="my-2" />
             <div className="row">
@@ -46,4 +47,9 @@ const Modal = (props) => {
     </div>
   );
 };
-export default withRouter(Modal);
+const mapStateToProps = state => {
+  return {
+    cart: state.cartReducer.cart
+  };
+};
+export default withRouter(connect(mapStateToProps)(Modal));

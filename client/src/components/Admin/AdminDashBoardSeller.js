@@ -68,7 +68,7 @@ class AdminDashBoardSeller extends React.Component {
                 <div className="custom-row">
                   <h5>
                     <strong>Phone: </strong>
-                    {this.props.verifiedSeller.phoneNumber}
+                    +254{this.props.verifiedSeller.phoneNumber}
                   </h5>
                 </div>
                 <div className="custom-row">
@@ -125,10 +125,10 @@ class AdminDashBoardSeller extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     verifiedSeller: state.sellerRegister.verifiedSeller,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading,
+    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
   };
 };
 export default withRouter(

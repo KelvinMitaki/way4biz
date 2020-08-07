@@ -787,7 +787,7 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     const { _id } = req.session.user;
     // NEW ORDERS
     const newOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, cancelled: false, dispatched: false } },
       {
         $lookup: {
           from: "products",
@@ -1121,13 +1121,15 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
 route.get("/api/root/admin/pending/orders", auth, isAdmin, async (req, res) => {
   try {
     const pendingOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, paid: true, dispatched: true } },
       { $count: "pendingOrders" }
     ]);
     const todaysPendingOrders = await Order.aggregate([
       {
         $match: {
           delivered: false,
+          paid: true,
+          dispatched: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60
@@ -1801,6 +1803,28 @@ route.post(
       const order = await Order.findOneAndUpdate(
         { _id: orderId, "items.product": productId },
         { dispatched: true }
+      );
+      res.send(order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/confirm/admin/delivery",
+  auth,
+  isAdmin,
+  check("orderId").not().isEmpty().withMessage("Please enter a valid order id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId },
+        { delivered: true }
       );
       res.send(order);
     } catch (error) {

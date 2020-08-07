@@ -3,7 +3,7 @@ import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import "./AdminDashBoardOrderItems.css";
 import { Link, withRouter } from "react-router-dom";
-import { fetchAdminOrder } from "../../redux/actions";
+import { fetchAdminOrder, confirmDelivery } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { IconContext } from "react-icons";
@@ -60,7 +60,7 @@ class AdminDashBoardOrderItems extends React.Component {
               <div className="admin-order-items-wrapper">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
-                  this.props.adminOrder["0"].product.map((p) => (
+                  this.props.adminOrder["0"].product.map(p => (
                     <div
                       key={p._id}
                       className="box-container row align-items-center"
@@ -95,7 +95,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
-                              (it) => it.product === p._id
+                              it => it.product === p._id
                             ).quantity
                           }
                         </p>
@@ -117,14 +117,37 @@ class AdminDashBoardOrderItems extends React.Component {
                       </div>
                     </div>
                   ))}
-                <div
-                  className="container-fluid d-flex  mt-4 justify-content-center"
-                  style={{ height: "30px" }}
-                >
-                  <button className="btn btn-lg confirm-delivery-btn">
-                    Confirm Delivery
-                  </button>
-                </div>
+                {this.props.adminOrder["0"].paid &&
+                  this.props.adminOrder["0"].dispatched &&
+                  !this.props.adminOrder["0"].delivered && (
+                    <div
+                      className="container-fluid d-flex  mt-4 justify-content-center"
+                      style={{ height: "30px" }}
+                    >
+                      <button
+                        className="btn btn-lg confirm-delivery-btn"
+                        onClick={() =>
+                          this.props.confirmDelivery(
+                            this.props.adminOrder["0"]._id,
+                            this.props.history
+                          )
+                        }
+                      >
+                        {this.props.deliveryLoading && (
+                          <span
+                            className="spinner-grow spinner-grow-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        )}
+                        {this.props.deliveryLoading ? (
+                          <span> {"  "}Loading...</span>
+                        ) : (
+                          <span>Confirm Delivery</span>
+                        )}
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -133,11 +156,14 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     adminOrder: state.product.adminOrder,
+    deliveryLoading: state.product.deliveryLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchAdminOrder })(AdminDashBoardOrderItems)
+  connect(mapStateToProps, { fetchAdminOrder, confirmDelivery })(
+    AdminDashBoardOrderItems
+  )
 );

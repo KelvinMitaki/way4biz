@@ -25,6 +25,7 @@ class SellerHamburgerMenu extends React.Component {
       this.props.fetchRejects();
     }
   }
+
   handleClick(e) {
     this.setState(prevState => {
       return {
@@ -99,6 +100,18 @@ class SellerHamburgerMenu extends React.Component {
                   >
                     <GoClippy className="mr-2" />
                     Orders
+                    {this.props.dashboard &&
+                      this.props.dashboard.newOrders !== 0 && (
+                        <span
+                          className="badge ml-2"
+                          style={{ color: "#fff", backgroundColor: "#f76b1a" }}
+                        >
+                          {this.props.dashboard &&
+                            this.props.dashboard.newOrders &&
+                            this.props.dashboard.newOrders !== 0 &&
+                            this.props.dashboard.newOrders.toLocaleString()}
+                        </span>
+                      )}
                   </NavLink>
                 </li>
                 <li className="my-4">
@@ -178,7 +191,10 @@ class SellerHamburgerMenu extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
+    sellerOrders: state.sellerRegister.sellerOrders,
     user: state.auth.user
   };
 };
-export default connect(mapStateToProps, { fetchRejects })(SellerHamburgerMenu);
+export default connect(mapStateToProps, {
+  fetchRejects
+})(SellerHamburgerMenu);

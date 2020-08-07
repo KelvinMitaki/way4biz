@@ -101,7 +101,7 @@ class SellerDashBoard extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    dashboard: state.product.dashboard
+    dashboard: state.detailsPersist.dashboard
   };
 };
 export default connect(mapStateToProps, { fetchSellerNewOrdersCount })(

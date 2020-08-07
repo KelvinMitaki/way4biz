@@ -81,7 +81,9 @@ import {
   FETCH_PRODUCTS_START,
   FETCH_PRODUCTS_STOP,
   CONFIRM_DISPATCH_START,
-  CONFIRM_DISPATCH_STOP
+  CONFIRM_DISPATCH_STOP,
+  CONFIRM_DELIVERY_START,
+  CONFIRM_DELIVERY_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -147,7 +149,8 @@ const INITIAL_STATE = {
   rejectedProducts: null,
   latestRejectedProducts: null,
   fetchProductsLoading: false,
-  dispatchLoading: false
+  dispatchLoading: false,
+  deliveryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -398,6 +401,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, dispatchLoading: true };
     case CONFIRM_DISPATCH_STOP:
       return { ...state, dispatchLoading: false };
+    case CONFIRM_DELIVERY_START:
+      return { ...state, deliveryLoading: true };
+    case CONFIRM_DELIVERY_STOP:
+      return { ...state, deliveryLoading: false };
     default:
       return state;
   }
