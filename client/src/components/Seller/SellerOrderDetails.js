@@ -139,4 +139,6 @@ const mapStateToProps = state => {
     dispatchLoading: state.product.dispatchLoading
   };
 };
-export default withRouter(connect(mapStateToProps)(SellerOrderDetails));
+export default withRouter(
+  connect(mapStateToProps, { confirmDispatch })(SellerOrderDetails)
+);

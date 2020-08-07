@@ -1786,4 +1786,26 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/confirm/seller/dispatch",
+  isSeller,
+  check("productId").not().isEmpty(),
+  check("orderId").not().isEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId, "items.product": productId },
+        { dispatched: true }
+      );
+      res.send(order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
