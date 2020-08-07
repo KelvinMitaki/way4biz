@@ -56,6 +56,7 @@ class DashBoardOrder extends React.Component {
                             cancelled: order.cancelled,
                             delivered: order.delivered,
                             dispatched: order.dispatched,
+                            orderId: order._id,
                             buyer:
                               order.buyerSeller.length !== 0
                                 ? order.buyerSeller
