@@ -215,7 +215,10 @@ import {
   DELETE_CART_STOP,
   CONFIRM_DISPATCH,
   CONFIRM_DISPATCH_START,
-  CONFIRM_DISPATCH_STOP
+  CONFIRM_DISPATCH_STOP,
+  CONFIRM_DELIVERY,
+  CONFIRM_DELIVERY_START,
+  CONFIRM_DELIVERY_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2218,5 +2221,18 @@ export const confirmDispatch = (
   } catch (error) {
     authCheck(error);
     dispatch({ type: CONFIRM_DISPATCH_STOP });
+  }
+};
+
+export const confirmDelivery = (orderId, history) => async dispatch => {
+  try {
+    dispatch({ type: CONFIRM_DELIVERY_START });
+    await axios.post("/api/confirm/admin/delivery", { orderId });
+    dispatch({ type: CONFIRM_DELIVERY });
+    history.push("/admin-orders");
+    dispatch({ type: CONFIRM_DELIVERY_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONFIRM_DELIVERY_STOP });
   }
 };
