@@ -19,7 +19,7 @@ class SellerOrders extends React.Component {
     const newOrders =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(
-        order => !order.delivered && !order.cancelled
+        order => !order.delivered && !order.cancelled && !order.dispatched
       );
     const delivered =
       this.props.sellerOrders.length !== 0 &&
