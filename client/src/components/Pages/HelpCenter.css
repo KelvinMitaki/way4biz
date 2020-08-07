@@ -28,6 +28,28 @@
   outline: none;
 }
 
+.help-center-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 20px 0px;
+}
+
+.help-center-card p {
+  text-align: center;
+  line-height: 25px;
+}
+
+.help-center-learn-more-link {
+  color: #f76b1a;
+}
+
+.help-center-learn-more-link:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 1140px) {
   .help-center-hero {
     height: 300px;
