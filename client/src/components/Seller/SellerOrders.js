@@ -12,8 +12,16 @@ import ScreenLoader from "../Pages/ScreenLoader";
 import { Redirect } from "react-router-dom";
 
 class SellerOrders extends React.Component {
+  componentDidMount() {
+    if (this.props.sellerOrders.length === 0) {
+      this.props.fetchSellerOrders();
+    }
+  }
   componentDidUpdate(prevProps) {
-    if (prevProps.sellerOrders.length !== this.props.sellerOrders.length) {
+    if (
+      prevProps.sellerOrders.length !== this.props.sellerOrders.length ||
+      this.props.sellerOrders.length === 0
+    ) {
       this.props.fetchSellerOrders();
     }
   }
@@ -99,7 +107,7 @@ class SellerOrders extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrders: state.detailsPersist.sellerOrders,
+    sellerOrders: state.sellerRegister.sellerOrders,
     sellerOrdersLoading: state.auth.sellerOrdersLoading,
     user: state.auth.user
   };

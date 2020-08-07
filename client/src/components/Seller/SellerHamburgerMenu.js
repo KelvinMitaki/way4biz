@@ -191,7 +191,7 @@ class SellerHamburgerMenu extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
-    sellerOrders: state.detailsPersist.sellerOrders,
+    sellerOrders: state.sellerRegister.sellerOrders,
     user: state.auth.user
   };
 };
