@@ -2,4 +2,34 @@
   width: 100%;
   height: 400px;
   background: linear-gradient(to bottom right, #f76b1a, yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#help-center-header {
+  text-transform: uppercase;
+  color: #fff;
+}
+
+@media screen and (max-width: 1140px) {
+  .help-center-hero {
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .help-center-hero {
+    height: 200px;
+  }
+
+  #help-center-header {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #help-center-header {
+    font-size: 20px;
+  }
 }
