@@ -68,7 +68,7 @@ class AddressForm extends React.Component {
                 className="col-md-9  mx-auto box-container"
                 id="address-form"
               >
-                <h3 className="legend">Address</h3>
+                <h3 className="legend">Address Details</h3>
                 {/* <hr /> */}
                 <form
                   onSubmit={this.props.handleSubmit((formValues) => {
