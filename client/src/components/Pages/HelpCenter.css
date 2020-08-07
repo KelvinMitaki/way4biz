@@ -29,16 +29,24 @@
 }
 
 .help-center-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  text-align: center;
   margin: 20px 0px;
 }
 
 .help-center-card p {
-  text-align: center;
+  text-align: left;
   line-height: 25px;
+}
+
+.help-center-text {
+  width: 100%;
+  margin: auto;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .help-center-learn-more-link {

@@ -48,10 +48,13 @@ class HelpCenter extends React.Component {
               <div className="row">
                 <div className="col-md-4 help-center-card">
                   <BsQuestionCircle style={{ fontSize: "80px" }} />
-                  <h3 className="my-2">Who we are?</h3>
+                  <h5 className="my-2">Who we are?</h5>
                   <p>
-                    We are a 2 in 1 company specializing in marketing and
-                    delivery.
+                    <span className="help-center-text">
+                      We are a 2 in 1 company specializing in marketing and
+                      delivery of retailers goods to customers.
+                    </span>
+
                     <Link
                       to="about-us"
                       className="ml-1 help-center-learn-more-link"
@@ -62,10 +65,13 @@ class HelpCenter extends React.Component {
                 </div>
                 <div className="col-md-4 help-center-card">
                   <RiBookletLine style={{ fontSize: "80px" }} />
-                  <h3 className="my-2">Our Client Policy</h3>
+                  <h5 className="my-2">Our Client Policy</h5>
                   <p>
-                    The quick brown fox jumped over the lazy dog.The quick brown
-                    fox .
+                    <span className="help-center-text">
+                      The quick brown fox jumped over the lazy dog.The quick
+                      brown fox.
+                    </span>
+
                     <Link
                       to="about-us"
                       className="ml-1 help-center-learn-more-link"
@@ -76,10 +82,13 @@ class HelpCenter extends React.Component {
                 </div>
                 <div className="col-md-4 help-center-card">
                   <FiMail style={{ fontSize: "80px" }} />
-                  <h3 className="my-2">Contact Us</h3>
+                  <h5 className="my-2">Contact Us</h5>
                   <p>
-                    Our contact team is there to assist you whenever you need
-                    help instantly.
+                    <span className="help-center-text">
+                      Our passionate help team is there to assist you whenever
+                      you need help instantly.
+                    </span>
+
                     <Link
                       to="contact-us"
                       className="ml-1 help-center-learn-more-link"
