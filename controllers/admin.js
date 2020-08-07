@@ -1121,13 +1121,15 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
 route.get("/api/root/admin/pending/orders", auth, isAdmin, async (req, res) => {
   try {
     const pendingOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, paid: true, dispatched: true } },
       { $count: "pendingOrders" }
     ]);
     const todaysPendingOrders = await Order.aggregate([
       {
         $match: {
           delivered: false,
+          paid: true,
+          dispatched: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60

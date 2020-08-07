@@ -2229,6 +2229,7 @@ export const confirmDelivery = (orderId, history) => async dispatch => {
     dispatch({ type: CONFIRM_DELIVERY_START });
     await axios.post("/api/confirm/admin/delivery", { orderId });
     dispatch({ type: CONFIRM_DELIVERY });
+    dispatch({ type: SET_PENDING_ORDERS });
     history.push("/admin-orders");
     dispatch({ type: CONFIRM_DELIVERY_STOP });
   } catch (error) {
