@@ -4,8 +4,8 @@ import "./HelpCenter.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { AiOutlineSearch, AiFillMail } from "react-icons/ai";
-import { BsExclamationCircle, BsArrowRight } from "react-icons/bs";
+import { AiOutlineSearch } from "react-icons/ai";
+import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
 import { RiBookletLine } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -23,26 +23,31 @@ class HelpCenter extends React.Component {
             <div className="help-center-hero">
               <h1 id="help-center-header">How can we help?</h1>
               <div className="input-group mt-3" id="help-center-input">
-                <div className="input-group-prepend">
+                <input
+                  className="form-control"
+                  placeholder="eg. How to sell on way4Biz?"
+                />
+                <div className="input-group-append">
                   <div
                     style={{
-                      backgroundColor: "#fff",
-                      width: "40px",
+                      backgroundColor: "#f76b1a",
+                      width: "60px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "flex-end",
+                      justifyContent: "center",
                     }}
                   >
-                    <AiOutlineSearch style={{ fontSize: "20px" }} />
+                    <AiOutlineSearch
+                      style={{ fontSize: "20px", color: "#fff" }}
+                    />
                   </div>
                 </div>
-                <input className="form-control" placeholder="Search..." />
               </div>
             </div>
             <div className="container my-4">
               <div className="row">
                 <div className="col-md-4 help-center-card">
-                  <BsExclamationCircle style={{ fontSize: "80px" }} />
+                  <BsQuestionCircle style={{ fontSize: "80px" }} />
                   <h3 className="my-2">Who we are?</h3>
                   <p>
                     We are a 2 in 1 company specializing in marketing and
@@ -60,7 +65,7 @@ class HelpCenter extends React.Component {
                   <h3 className="my-2">Our Client Policy</h3>
                   <p>
                     The quick brown fox jumped over the lazy dog.The quick brown
-                    fox jumped over the lazy dog.
+                    fox .
                     <Link
                       to="about-us"
                       className="ml-1 help-center-learn-more-link"
