@@ -121,7 +121,7 @@ class AdminDashBoardOrderItems extends React.Component {
                   className="container-fluid d-flex  mt-4 justify-content-center"
                   style={{ height: "30px" }}
                 >
-                  <button className="btn btn-lg admin-confirm-delivery-btn">
+                  <button className="btn btn-lg confirm-delivery-btn">
                     Confirm Delivery
                   </button>
                 </div>
