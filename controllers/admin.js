@@ -1808,4 +1808,26 @@ route.post(
     }
   }
 );
+route.post(
+  "/api/confirm/admin/delivery",
+  auth,
+  isAdmin,
+  check("orderId").not().isEmpty().withMessage("Please enter a valid order id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId },
+        { delivered: true }
+      );
+      res.send(order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
