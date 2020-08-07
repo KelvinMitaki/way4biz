@@ -1222,26 +1222,9 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
 route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   try {
     const { orderId } = req.params;
-    const buyer = await Order.aggregate([
-      { $match: { _id: mongoose.Types.ObjectId(orderId) } },
-      {
-        $lookup: {
-          from: "users",
-          foreignField: "_id",
-          localField: "buyer",
-          as: "buyer"
-        }
-      },
-      {
-        $lookup: {
-          from: "sellers",
-          foreignField: "_id",
-          localField: "buyerSeller",
-          as: "buyer"
-        }
-      },
-      { $project: { buyer: 1, _id: 0 } }
-    ]);
+    const buyer = await Order.findById(orderId)
+      .populate("buyer buyerSeller")
+      .select({ buyer: 1, buyerSeller: 1, _id: 0 });
     const order = await Order.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(orderId) } },
       {
@@ -1261,19 +1244,10 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
         }
       }
     ]);
-    res.send({ ...order, buyer: buyer.length !== 0 ? buyer[0].buyer : [] });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-route.get("/api/test", async (req, res) => {
-  try {
-    const orders = await Order.find({});
-    orders.forEach(async order => {
-      order.buyerSeller = order.buyer;
-      await order.save();
+    res.send({
+      ...order,
+      buyer: buyer.buyer ? buyer.buyer : buyer.buyerSeller
     });
-    res.send(orders);
   } catch (error) {
     res.status(500).send(error);
   }
