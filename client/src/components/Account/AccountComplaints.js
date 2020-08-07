@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { fetchBuyerComplaints } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsExclamationCircle } from "react-icons/bs";
 // import { IconContext } from "react-icons";
 // import { BsArrowLeft } from "react-icons/bs";
 // import ScreenLoader from "../Pages/ScreenLoader";
@@ -51,7 +51,7 @@ class AccountComplaints extends React.Component {
                     <div className="container">
                       {/* mapping here */}
                       {this.props.buyerComplaints.length !== 0 &&
-                        this.props.buyerComplaints.map(c => (
+                        this.props.buyerComplaints.map((c) => (
                           <div
                             key={c._id}
                             className="row box-container account-complaint-wrapper"
@@ -103,7 +103,7 @@ class AccountComplaints extends React.Component {
                   </React.Fragment>
                 ) : (
                   <div className="no-buyer-complaints">
-                    <BsQuestionCircle
+                    <BsExclamationCircle
                       style={{ fontSize: "100px", color: "#f76b1a" }}
                     />
                     <h5 className="mt-3">No complaints filed yet.</h5>
@@ -119,9 +119,9 @@ class AccountComplaints extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    buyerComplaints: state.product.buyerComplaints
+    buyerComplaints: state.product.buyerComplaints,
   };
 };
 export default connect(mapStateToProps, { fetchBuyerComplaints })(

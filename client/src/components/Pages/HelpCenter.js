@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { AiOutlineSearch, AiFillMail } from "react-icons/ai";
-import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
+import { BsExclamationCircle, BsArrowRight } from "react-icons/bs";
 import { RiBookletLine } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -42,7 +42,7 @@ class HelpCenter extends React.Component {
             <div className="container my-4">
               <div className="row">
                 <div className="col-md-4 help-center-card">
-                  <BsQuestionCircle style={{ fontSize: "80px" }} />
+                  <BsExclamationCircle style={{ fontSize: "80px" }} />
                   <h3 className="my-2">Who we are?</h3>
                   <p>
                     We are a 2 in 1 company specializing in marketing and

@@ -5,7 +5,7 @@ import "./AccountMenu.css";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsExclamationCircle } from "react-icons/bs";
 import { connect } from "react-redux";
 
 export class AccountMenu extends Component {
@@ -63,7 +63,7 @@ export class AccountMenu extends Component {
               to="/complaints"
               className="navlink"
             >
-              <BsQuestionCircle />
+              <BsExclamationCircle />
               <span className="ml-2">Complaints</span>
             </NavLink>
           </div>
@@ -83,9 +83,9 @@ export class AccountMenu extends Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default connect(mapStateToProps)(AccountMenu);
