@@ -151,7 +151,9 @@ class OrderPaymentSuccess extends React.Component {
                           this.props.orderSuccess.distance.shippingFees &&
                           (
                             this.props.orderSuccess.totalPrice +
-                            this.props.orderSuccess.distance.shippingFees
+                            Math.round(
+                              this.props.orderSuccess.distance.shippingFees
+                            )
                           ).toLocaleString()}
                       </p>
                     </div>
