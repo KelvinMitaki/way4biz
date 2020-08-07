@@ -1081,7 +1081,7 @@ route.post(
       if (!errors.isEmpty()) {
         return res.status(401).send(errors.array()[0].msg);
       }
-      const { cart } = req.body;
+      const cart = JSON.parse(req.body.cart);
       const { _id } = req.session.user._id;
       const buyerExists = await Cart.findOne({ buyer: _id });
       if (buyerExists) {
