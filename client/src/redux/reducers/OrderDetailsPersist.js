@@ -1,8 +1,13 @@
-import { FETCH_SELLER_ORDER_DETAILS, PAYMENT_DISTANCE } from "../actions/types";
+import {
+  FETCH_SELLER_ORDER_DETAILS,
+  PAYMENT_DISTANCE,
+  FETCH_SELLER_ORDERS
+} from "../actions/types";
 
 const INITIAL_STATE = {
   sellerOrderDetails: [],
-  distance: null
+  distance: null,
+  sellerOrders: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,6 +16,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sellerOrderDetails: action.payload };
     case PAYMENT_DISTANCE:
       return { ...state, distance: action.payload };
+
+    case FETCH_SELLER_ORDERS:
+      return { ...state, sellerOrders: action.payload };
     default:
       return state;
   }

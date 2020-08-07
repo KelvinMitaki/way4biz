@@ -97,7 +97,7 @@ class SellerOrders extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrders: state.sellerRegister.sellerOrders,
+    sellerOrders: state.detailsPersist.sellerOrders,
     sellerOrdersLoading: state.auth.sellerOrdersLoading,
     user: state.auth.user
   };

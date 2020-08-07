@@ -116,9 +116,11 @@ class SellerDashBoardMenu extends React.Component {
 const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
-    sellerOrders: state.sellerRegister.sellerOrders,
+    sellerOrders: state.detailsPersist.sellerOrders,
     user: state.auth.user,
     dashboard: state.product.dashboard
   };
 };
-export default connect(mapStateToProps, { fetchRejects })(SellerDashBoardMenu);
+export default connect(mapStateToProps, {
+  fetchRejects
+})(SellerDashBoardMenu);
