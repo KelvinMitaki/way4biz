@@ -5,11 +5,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 #help-center-header {
   text-transform: uppercase;
   color: #fff;
+}
+
+#help-center-input {
+  width: 40%;
+  margin: 0px auto;
+}
+
+#help-center-input input {
+  height: 50px;
+  border: none;
+}
+
+#help-center-input input:focus {
+  box-shadow: none;
+  outline: none;
 }
 
 @media screen and (max-width: 1140px) {
@@ -26,10 +42,23 @@
   #help-center-header {
     font-size: 30px;
   }
+  #help-center-input {
+    width: 50%;
+    margin: 0px auto;
+  }
 }
 
 @media screen and (max-width: 540px) {
   #help-center-header {
     font-size: 20px;
+  }
+  #help-center-input {
+    width: 70%;
+    margin: 0px auto;
+  }
+
+  #help-center-input input {
+    height: 40px;
+    border: none;
   }
 }
