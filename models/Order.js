@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       ref: "User"
     },
-    buyer: {
+    buyerSeller: {
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Seller"
