@@ -27,19 +27,19 @@ class SellerOrders extends React.Component {
     const cancelled =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(order => order.cancelled);
-    const dispatched =
-      this.props.sellerOrders.length !== 0 &&
-      this.props.sellerOrders.filter(order => order.dispatched);
+    // const dispatched =
+    //   this.props.sellerOrders.length !== 0 &&
+    //   this.props.sellerOrders.filter(order => order.dispatched);
     let tabs = [
       {
         title: "All",
         data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />
       },
       { title: "New", data: <DashBoardOrder sellerOrders={newOrders} /> },
-      {
-        title: "Dispatched",
-        data: <DashBoardOrder sellerOrders={dispatched} />
-      },
+      // {
+      //   title: "Dispatched",
+      //   data: <DashBoardOrder sellerOrders={dispatched} />
+      // },
 
       { title: "Delivered", data: <DashBoardOrder sellerOrders={delivered} /> },
 

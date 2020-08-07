@@ -1803,9 +1803,18 @@ route.post(
       const { productId, orderId } = req.body;
       const order = await Order.findOneAndUpdate(
         { _id: orderId, "items.product": productId },
-        { dispatched: true }
+        { "items.$.sellerDispatched": true }
       );
-      res.send(order);
+      await order.save();
+
+      const falseItem = order.items.find(item => !item.sellerDispatched);
+      if (falseItem) {
+        return res.send(order);
+      }
+      const updatedOrder = await Order.findByIdAndUpdate(orderId, {
+        dispatched: true
+      });
+      res.send(updatedOrder);
     } catch (error) {
       res.status(500).send(error);
     }

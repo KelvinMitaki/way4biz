@@ -25,6 +25,10 @@ const OrderSchema = new mongoose.Schema(
         reviewed: {
           type: Boolean,
           default: false
+        },
+        sellerDispatched: {
+          type: Boolean,
+          default: false
         }
       }
     ],
