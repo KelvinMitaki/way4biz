@@ -13,7 +13,7 @@ import {
   adminRadio,
   fetchMoreAllOrders,
   fetchOrderById,
-  resetSkipAndCount,
+  resetSkipAndCount
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -35,7 +35,7 @@ function AdminDashBoardOrders(props) {
   }, [fetchAllOrders, ordersDate]);
   const observer = useRef();
   const lastOrderRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.allAdminOrders.length < props.orderCount) {
           return props.fetchMoreAllOrders(props.ordersDate);
@@ -43,7 +43,7 @@ function AdminDashBoardOrders(props) {
         props.hasMoreOrdersFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -53,11 +53,11 @@ function AdminDashBoardOrders(props) {
     },
     [props]
   );
-  const handleRadioButton = (event) => {
+  const handleRadioButton = event => {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     props.fetchOrderById(orderId.orderId.trim());
     setOrderId({ orderId: null });
@@ -82,7 +82,7 @@ function AdminDashBoardOrders(props) {
               <form onSubmit={handleSubmit} className="search">
                 <div className="form-group input-group">
                   <input
-                    onChange={(e) => setOrderId({ orderId: e.target.value })}
+                    onChange={e => setOrderId({ orderId: e.target.value })}
                     className="form-control"
                     type="text"
                     placeholder="Search order ID..."
@@ -214,9 +214,7 @@ function AdminDashBoardOrders(props) {
                           </div>
                           <div className="col-lg-2">
                             <strong className="x mr-2">Dispatched: </strong>
-                            <span>
-                              {new Date(order.createdAt).toLocaleString()}
-                            </span>
+                            <span>{order.dispatched ? "true" : "false"}</span>
                           </div>
                           <div className="col-lg-2">
                             <Link
@@ -259,7 +257,7 @@ function AdminDashBoardOrders(props) {
                         </div>
                         <div className="col-lg-2">
                           <strong className="x mr-2">Dispatched: </strong>
-                          <span>true</span>
+                          <span>{order.dispatched ? "true" : "false"}</span>
                         </div>
                         <div className="col-lg-2">
                           <Link
@@ -289,7 +287,7 @@ function AdminDashBoardOrders(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
@@ -297,7 +295,7 @@ const mapStateToProps = (state) => {
     ordersDate: state.product.ordersDate,
     radioLoading: state.product.radioLoading,
     orderError: state.product.orderError,
-    adminOrderLoading: state.product.adminOrderLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default connect(mapStateToProps, {
@@ -306,5 +304,5 @@ export default connect(mapStateToProps, {
   adminRadio,
   fetchMoreAllOrders,
   resetSkipAndCount,
-  fetchOrderById,
+  fetchOrderById
 })(AdminDashBoardOrders);
