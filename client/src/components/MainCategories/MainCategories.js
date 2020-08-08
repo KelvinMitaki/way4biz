@@ -58,7 +58,9 @@ class MainCategories extends React.Component {
                     >
                       <MainIcons icon={category.icon} />
                     </IconContext.Provider>
-                    <div className="ml-2">{category._id}</div>
+                    <div className="ml-2">
+                      <h6>{category._id}</h6>
+                    </div>
                   </Link>
                 ))}
             </div>
