@@ -11,13 +11,27 @@ import { GiCancel } from "react-icons/gi";
 class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
-    typing: ""
+    typing: "",
+    icon: ""
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
       this.props.match.params.categoryId,
       this.props.history
     );
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      (this.props.singleCategory &&
+        this.props.singleCategory.category &&
+        this.props.singleCategory.category.icon) !==
+      (prevProps &&
+        prevProps.singleCategory &&
+        prevProps.singleCategory.category &&
+        prevProps.singleCategory.category.icon)
+    ) {
+      this.setState({ icon: this.props.singleCategory.category.icon });
+    }
   }
   handleTypingSubmit = e => {
     if (this.state.typing !== "") {
@@ -29,7 +43,10 @@ class AdminDashBoardEditCategory extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.subcategories.length !== 0) {
+    if (
+      this.state.subcategories.length !== 0 ||
+      this.state.icon.trim() !== ""
+    ) {
       this.props.editCategory(
         this.props.singleCategory._id,
         this.props.history,
@@ -38,7 +55,8 @@ class AdminDashBoardEditCategory extends React.Component {
           subcategories: [
             ...this.state.subcategories,
             ...this.props.singleCategory.category.subcategories
-          ]
+          ],
+          icon: this.state.icon.trim()
         }
       );
     }
@@ -77,18 +95,13 @@ class AdminDashBoardEditCategory extends React.Component {
                   />
                   <label htmlFor="add-icon">Icon</label>
                   <input
-                    readOnly
                     className="form-control"
                     type="text"
                     placeholder="Category Name"
                     id="add-icon"
-                    value={
-                      (Object.keys(this.props.singleCategory).length !== 0 &&
-                        Object.keys(this.props.singleCategory.category)
-                          .length !== 0 &&
-                        this.props.singleCategory.category.icon) ||
-                      ""
-                    }
+                    name="icon"
+                    onChange={e => this.setState({ icon: e.target.value })}
+                    value={this.state.icon}
                   />
                   <label htmlFor="sub-categories">Sub Categories</label>
                   <div className="input-group">
