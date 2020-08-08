@@ -29,6 +29,7 @@ import ProductsInput from "../Products/ProductsInput";
 import Image from "../Market/Image";
 import ScreenLoader from "../Pages/ScreenLoader";
 import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
+import MobileLogo from "./MobileLogo";
 
 function SearchResults(props) {
   const observer = useRef();
@@ -95,6 +96,7 @@ function SearchResults(props) {
   return (
     <div className="main">
       <div className="content">
+        <MobileLogo />
         <Header />
         <div className="container-fluid" id="products">
           <div className="row">

@@ -7,12 +7,14 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import MobileLogo from "../Header/MobileLogo";
 
 class ExpressDelivery extends React.Component {
   render() {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container mt-4 box-container py-3">
             <div className="d-flex align-items-center">

@@ -1,9 +1,9 @@
 import React from "react";
 
 import "./PrivacyPolicy.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 
 class PrivacyPolicy extends React.Component {
   render() {

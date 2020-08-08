@@ -14,6 +14,7 @@ import { checkoutUser, paymentPerDistance } from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
+import MobileLogo from "../Header/MobileLogo";
 
 class AddressForm extends React.Component {
   state = {
@@ -61,6 +62,7 @@ class AddressForm extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container mt-4">
             <div className="row">

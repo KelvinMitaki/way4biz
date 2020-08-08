@@ -7,6 +7,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder, fetchOrderSuccess } from "../../redux/actions";
+import MobileLogo from "../Header/MobileLogo";
 
 class MpesaPayment extends React.Component {
   state = { click: 0 };
@@ -30,6 +31,7 @@ class MpesaPayment extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
 
           <div className="container">

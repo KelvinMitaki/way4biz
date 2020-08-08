@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
 import Heart from "../Products/Heart";
+import MobileLogo from "../Header/MobileLogo";
 
 class Store extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class Store extends Component {
       <div className="main">
         <div className="content">
           {/* if buyer or seller display this header if admin display admin header */}
+          <MobileLogo />
           <Header />
           <div className="container-fluid" id="products">
             <div className="row">

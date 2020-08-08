@@ -5,12 +5,14 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom";
+import MobileLogo from "../Header/MobileLogo";
 
 class CardPayment extends React.Component {
   render() {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container">
             <div className="row">

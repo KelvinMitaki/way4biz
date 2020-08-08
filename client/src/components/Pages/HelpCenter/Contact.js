@@ -1,12 +1,9 @@
 import React from "react";
 
 import "./Contact.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import { reduxForm, Field } from "redux-form";
-import validator from "validator";
-import FormField from "../Checkout/FormField";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 
 class Contact extends React.Component {
   render() {

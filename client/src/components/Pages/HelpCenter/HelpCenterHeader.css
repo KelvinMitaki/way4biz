@@ -1,0 +1,32 @@
+#help-center-header {
+  height: 85px;
+  display: flex;
+  align-items: center;
+  padding: 0px 150px;
+}
+
+.helper-center-menu-items {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  flex: 4;
+  margin: 0px;
+}
+
+.helper-center-menu-items li {
+  margin: 0px 20px;
+}
+
+.help-center-active {
+  color: #f76b1a;
+}
+
+@media screen and (max-width: 960px) {
+  #help-center-header {
+    padding: 0px 10px;
+  }
+
+  .helper-center-menu-items {
+    display: none;
+  }
+}

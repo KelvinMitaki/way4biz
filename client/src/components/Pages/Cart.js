@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import "./Cart.css";
+import MobileLogo from "../Header/MobileLogo";
 class Cart extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -12,6 +13,7 @@ class Cart extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <MyCart />
         </div>

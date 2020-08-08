@@ -26,6 +26,7 @@ import BottomPageLoader from "../Pages/BottomPageLoader";
 import ProductsInput from "./ProductsInput";
 import Image from "../Market/Image";
 import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
+import MobileLogo from "../Header/MobileLogo";
 
 function Products(props) {
   const observer = useRef();
@@ -76,6 +77,7 @@ function Products(props) {
   return (
     <div className="main">
       <div className="content">
+        <MobileLogo />
         <Header />
         <div className="container-fluid" id="products">
           <div className="row">

@@ -76,17 +76,18 @@ import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
 import StripePayment from "./components/StripePayment/StripePayment";
 import StripeError from "./components/StripePayment/StripeError";
 import MpesaError from "./components/Checkout/MpesaError";
-import About from "./components/Pages/About";
-import TermsConditions from "./components/Pages/TermsConditions";
-import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
-import Contact from "./components/Pages/Contact";
-import HowToSell from "./components/Pages/HowToSell";
-import SupportCenter from "./components/Pages/SupportCenter";
-import CustomerService from "./components/Pages/CustomerService";
 import NormalDelivery from "./components/Checkout/NormalDelivery";
 import ExpressDelivery from "./components/Checkout/ExpressDelivery";
 import Logistics from "./components/Pages/Logistics";
-import HelpCenter from "./components/Pages/HelpCenter";
+import FAQS from "./components/Pages/HelpCenter/FAQS";
+import About from "./components/Pages/HelpCenter/About";
+import TermsConditions from "./components/Pages/HelpCenter/TermsConditions";
+import PrivacyPolicy from "./components/Pages/HelpCenter/PrivacyPolicy";
+import Contact from "./components/Pages/HelpCenter/Contact";
+import HowToSell from "./components/Pages/HelpCenter/HowToSell";
+import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
+import CustomerService from "./components/Pages/HelpCenter/CustomerService";
+import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
 
 class App extends React.Component {
   state = {
@@ -190,7 +191,7 @@ class App extends React.Component {
       return (
         <div id="main">
           {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
-          <MobileLogo />
+          {/* <MobileLogo /> */}
           <div>
             <Switch>
               <Route path="/" exact component={Home} />
@@ -205,6 +206,7 @@ class App extends React.Component {
               <Route path="/express-delivery" component={ExpressDelivery} />
               <Route path="/logistics" component={Logistics} />
               <Route path="/help-center" component={HelpCenter} />
+              <Route path="/faqs" component={FAQS} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact

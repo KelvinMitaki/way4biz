@@ -1,27 +1,28 @@
 import React from "react";
 
 import "./HelpCenter.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
 import { RiBookletLine } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import HelpCenterHeader from "./HelpCenterHeader";
 
 class HelpCenter extends React.Component {
   render() {
     return (
       <div className="main">
         <div className="content">
-          <Header />
+          <HelpCenterHeader />
           <div
             className="container-fluid p-0 m-0"
             style={{ backgroundColor: "#fff" }}
           >
             <div className="help-center-hero">
-              <h1 id="help-center-header">How can we help?</h1>
+              <h1 style={{ textTransform: "uppercase" }}>How can we help?</h1>
               <div className="input-group mt-3" id="help-center-input">
                 <input
                   className="form-control"

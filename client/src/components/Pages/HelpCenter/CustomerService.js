@@ -1,11 +1,11 @@
 import React from "react";
 
-import "./About.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import "./CustomerService.css";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 
-class About extends React.Component {
+class CustomerService extends React.Component {
   render() {
     return (
       <div className="main">
@@ -13,7 +13,7 @@ class About extends React.Component {
           <Header />
           <div className="container">
             <h3 style={{ textAlign: "center" }} className="my-2">
-              Our Mission and Vision
+              Customer Service
             </h3>
             <p className="my-2">
               What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
@@ -75,4 +75,4 @@ class About extends React.Component {
   }
 }
 
-export default About;
+export default CustomerService;

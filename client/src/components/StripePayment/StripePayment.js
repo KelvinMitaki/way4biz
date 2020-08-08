@@ -8,6 +8,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
 import StripePaymentButton from "./StripePaymentButton";
+import MobileLogo from "../Header/MobileLogo";
 
 // INCLUDE VAT
 class StripePayment extends React.Component {
@@ -29,6 +30,7 @@ class StripePayment extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container mt-3">
             <div className="row">
