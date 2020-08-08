@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { fetchProductReviews } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import NoReviews from "./NoReviews";
+import MobileLogo from "../Header/MobileLogo";
 
 class ProductReviewsWrapper extends React.Component {
   componentDidMount() {
@@ -23,6 +24,7 @@ class ProductReviewsWrapper extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div id="product-reviews-wrapper" className="box-container">
             <div className="d-flex align-items-center">

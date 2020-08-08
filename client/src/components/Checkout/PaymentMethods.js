@@ -22,13 +22,7 @@ class PaymentMethods extends React.Component {
             <div>
               <img src="mpesa.png" alt="m-pesa" />
             </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Senectus et netus et malesuada fames ac turpis egestas. At erat
-              pellentesque adipiscing commodo elit at. Quis lectus nulla at
-              volutpat. Felis eget nunc lobortis mattis.
-            </p>
+            <p>This is a fast and secure mobile money transfer method.</p>
           </div>
         </div>
         <div className="payment" id="debit">
@@ -46,11 +40,8 @@ class PaymentMethods extends React.Component {
               <img src="debit.png" alt="debit" />
             </div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Senectus et netus et malesuada fames ac turpis egestas. At erat
-              pellentesque adipiscing commodo elit at. Quis lectus nulla at
-              volutpat. Felis eget nunc lobortis mattis.
+              This is a fast secure bank money transfer method. Any valid card
+              is supported.
             </p>
           </div>
         </div>

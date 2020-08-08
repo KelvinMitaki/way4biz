@@ -8,6 +8,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./MpesaError.css";
 import { connect } from "react-redux";
 import { removePendingAndSuccess } from "../../redux/actions";
+import MobileLogo from "../Header/MobileLogo";
 
 class MpesaError extends React.Component {
   componentWillUnmount() {
@@ -22,6 +23,7 @@ class MpesaError extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container">
             <div className="row">
@@ -76,9 +78,9 @@ class MpesaError extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    orderSuccess: state.cartReducer.orderSuccess
+    orderSuccess: state.cartReducer.orderSuccess,
   };
 };
 export default withRouter(

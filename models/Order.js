@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       ref: "User"
     },
-    buyer: {
+    buyerSeller: {
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Seller"
@@ -23,6 +23,10 @@ const OrderSchema = new mongoose.Schema(
           required: true
         },
         reviewed: {
+          type: Boolean,
+          default: false
+        },
+        sellerDispatched: {
           type: Boolean,
           default: false
         }
@@ -64,6 +68,14 @@ const OrderSchema = new mongoose.Schema(
     },
     last4: {
       type: String
+    },
+    deliveryMethod: {
+      type: String,
+      required: true
+    },
+    dispatched: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

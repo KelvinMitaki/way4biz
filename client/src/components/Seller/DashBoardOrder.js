@@ -24,7 +24,6 @@ class DashBoardOrder extends React.Component {
             <h6 className="col-lg-2 p-0">Status</h6>
           </div>
         </div>
-
         <div className="container-fluid p-0">
           {/* mapping here */}
           {this.props.sellerOrders &&
@@ -54,6 +53,10 @@ class DashBoardOrder extends React.Component {
                           this.props.fetchSellerOrderDetails({
                             items: order.items,
                             productSellerData: order.productSellerData,
+                            cancelled: order.cancelled,
+                            delivered: order.delivered,
+                            dispatched: order.dispatched,
+                            orderId: order._id,
                             buyer:
                               order.buyerSeller.length !== 0
                                 ? order.buyerSeller

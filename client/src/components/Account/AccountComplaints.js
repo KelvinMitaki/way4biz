@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { fetchBuyerComplaints } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsExclamationCircle } from "react-icons/bs";
 // import { IconContext } from "react-icons";
 // import { BsArrowLeft } from "react-icons/bs";
 // import ScreenLoader from "../Pages/ScreenLoader";
@@ -65,7 +65,7 @@ class AccountComplaints extends React.Component {
                             <div className="col-md-4">
                               <p>
                                 <strong className="mr-2 x">Store Name:</strong>
-                                <span>{c.storeName}Helloo Helloo Helloo</span>
+                                <span>{c.storeName}</span>
                               </p>
                             </div>
                             <div className="col-md-3">
@@ -103,7 +103,7 @@ class AccountComplaints extends React.Component {
                   </React.Fragment>
                 ) : (
                   <div className="no-buyer-complaints">
-                    <BsQuestionCircle
+                    <BsExclamationCircle
                       style={{ fontSize: "100px", color: "#f76b1a" }}
                     />
                     <h5 className="mt-3">No complaints filed yet.</h5>

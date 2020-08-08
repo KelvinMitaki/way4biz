@@ -7,12 +7,13 @@ import {
   singleCategory,
   fetchAllCategories,
   fetchSubCategories,
-  emptySubCategories,
+  emptySubCategories
 } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MainIcons from "../MainCategories/MainIcons";
 
 class HeroCategories extends React.Component {
   handleEmptyArray = () => {
@@ -46,17 +47,17 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() => {
                   this.handleEmptyArray();
                   this.props.history.push(`/products/category/${category._id}`);
                 }}
-                onMouseEnter={(e) => this.handleMouseOver(e, category._id)}
+                onMouseEnter={e => this.handleMouseOver(e, category._id)}
               >
                 <div>
-                  <AiOutlineBars />
+                  <MainIcons icon={category.icon} />
                   <span className="ml-2">{category._id}</span>
                 </div>
                 <IconContext.Provider value={{ className: "right-arrow" }}>
@@ -69,11 +70,11 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
     subcategories: state.product.subcategories,
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(
@@ -81,6 +82,6 @@ export default withRouter(
     singleCategory,
     fetchAllCategories,
     fetchSubCategories,
-    emptySubCategories,
+    emptySubCategories
   })(HeroCategories)
 );

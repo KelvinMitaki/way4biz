@@ -12,12 +12,26 @@ class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
     typing: "",
+    icon: "",
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
       this.props.match.params.categoryId,
       this.props.history
     );
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      (this.props.singleCategory &&
+        this.props.singleCategory.category &&
+        this.props.singleCategory.category.icon) !==
+      (prevProps &&
+        prevProps.singleCategory &&
+        prevProps.singleCategory.category &&
+        prevProps.singleCategory.category.icon)
+    ) {
+      this.setState({ icon: this.props.singleCategory.category.icon });
+    }
   }
   handleTypingSubmit = (e) => {
     if (this.state.typing !== "") {
@@ -29,7 +43,10 @@ class AdminDashBoardEditCategory extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.subcategories.length !== 0) {
+    if (
+      this.state.subcategories.length !== 0 ||
+      this.state.icon.trim() !== ""
+    ) {
       this.props.editCategory(
         this.props.singleCategory._id,
         this.props.history,
@@ -39,6 +56,7 @@ class AdminDashBoardEditCategory extends React.Component {
             ...this.state.subcategories,
             ...this.props.singleCategory.category.subcategories,
           ],
+          icon: this.state.icon.trim(),
         }
       );
     }
@@ -75,6 +93,16 @@ class AdminDashBoardEditCategory extends React.Component {
                       ""
                     }
                   />
+                  <label htmlFor="add-icon">Icon</label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Category Name"
+                    id="add-icon"
+                    name="icon"
+                    onChange={(e) => this.setState({ icon: e.target.value })}
+                    value={this.state.icon}
+                  />
                   <label htmlFor="sub-categories">Sub Categories</label>
                   <div className="input-group">
                     <input
@@ -92,7 +120,7 @@ class AdminDashBoardEditCategory extends React.Component {
                       onClick={this.handleTypingSubmit}
                     >
                       <button
-                        id="header-search-btn"
+                        id="sub-category-enter"
                         disabled={this.state.typing === ""}
                       >
                         <div className="icon-container">
@@ -145,9 +173,23 @@ class AdminDashBoardEditCategory extends React.Component {
                   <button
                     type="submit"
                     className="btn btn-md add-category-btn"
-                    disabled={this.state.subcategories.length === 0}
+                    disabled={
+                      this.state.subcategories.length === 0 ||
+                      this.props.editCategoryLoading
+                    }
                   >
-                    Edit Category
+                    {this.props.editCategoryLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    {this.props.editCategoryLoading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Edit Category</span>
+                    )}
                   </button>
                 </form>
               </div>
@@ -161,6 +203,7 @@ class AdminDashBoardEditCategory extends React.Component {
 const mapStateToProps = (state) => {
   return {
     singleCategory: state.product.singleCategory,
+    editCategoryLoading: state.product.editCategoryLoading,
   };
 };
 export default withRouter(

@@ -523,7 +523,8 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyer: 1,
           createdAt: 1,
           delivered: 1,
-          cancelled: 1
+          cancelled: 1,
+          dispatched: 1
         }
       },
       { $unwind: "$items" },
@@ -561,6 +562,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           buyerSeller: 1,
           delivered: 1,
           cancelled: 1,
+          dispatched: 1,
           productSellerData: {
             $filter: {
               input: "$productData",
@@ -582,6 +584,7 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           },
           cancelled: { $first: "$cancelled" },
           delivered: { $first: "$delivered" },
+          dispatched: { $first: "$dispatched" },
           buyerSeller: { $first: "$buyerSeller" },
           buyerUser: { $first: "$buyerUser" },
           buyer: { $first: "$buyer" },
@@ -784,7 +787,7 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     const { _id } = req.session.user;
     // NEW ORDERS
     const newOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, cancelled: false, dispatched: false } },
       {
         $lookup: {
           from: "products",
@@ -1067,6 +1070,7 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
     const todayTotalPrice = await Order.aggregate([
       {
         $match: {
+          paid: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60
@@ -1080,6 +1084,7 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
     const monthlyPrice = await Order.aggregate([
       {
         $match: {
+          paid: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60 * 30
@@ -1118,13 +1123,15 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
 route.get("/api/root/admin/pending/orders", auth, isAdmin, async (req, res) => {
   try {
     const pendingOrders = await Order.aggregate([
-      { $match: { delivered: false } },
+      { $match: { delivered: false, paid: true, dispatched: true } },
       { $count: "pendingOrders" }
     ]);
     const todaysPendingOrders = await Order.aggregate([
       {
         $match: {
           delivered: false,
+          paid: true,
+          dispatched: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60
@@ -1159,11 +1166,11 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $skip: itemsToSkip },
         { $limit: 5 }
       ]);
-      if (!orders || orders.length === 0) {
-        return res.status(404).send({ message: "No orders found" });
-      }
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
-      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+      return res.send({
+        orders,
+        ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+      });
     }
     if (typeof test === "object" && Object.keys(test).length !== 0) {
       const orders = await Order.aggregate([
@@ -1172,20 +1179,21 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $skip: itemsToSkip },
         { $limit: 5 }
       ]);
-      if (!orders || orders.length === 0) {
-        return res.status(404).send({ message: "No orders found" });
-      }
+
       const ordersCount = await Order.aggregate([
         { $match: test },
         { $count: "ordersCount" }
       ]);
-      return res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+      return res.send({
+        orders,
+        ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+      });
     }
     const orders = await Order.aggregate([
       {
         $match: {
           _id: {
-            $gt: mongoose.Types.ObjectId.createFromTime(test)
+            $gt: mongoose.Types.ObjectId.createFromTime(test / 1000)
           }
         }
       },
@@ -1194,20 +1202,21 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       { $limit: 5 }
     ]);
 
-    if (!orders || orders.length === 0) {
-      return res.status(404).send({ message: "No orders found" });
-    }
     const ordersCount = await Order.aggregate([
       {
         $match: {
           _id: {
-            $gt: mongoose.Types.ObjectId.createFromTime(test)
+            $gt: mongoose.Types.ObjectId.createFromTime(test / 1000)
           }
         }
       },
       { $count: "ordersCount" }
     ]);
-    res.send({ orders, ordersCount: ordersCount[0].ordersCount });
+
+    res.send({
+      orders,
+      ordersCount: ordersCount.length !== 0 ? ordersCount[0].ordersCount : 0
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -1216,9 +1225,8 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
   try {
     const { orderId } = req.params;
     const buyer = await Order.findById(orderId)
-      .populate("buyer")
-      .select({ buyer: 1, _id: 0 })
-      .exec();
+      .populate("buyer buyerSeller")
+      .select({ buyer: 1, buyerSeller: 1, _id: 0 });
     const order = await Order.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(orderId) } },
       {
@@ -1238,12 +1246,14 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
         }
       }
     ]);
-    res.send({ ...order, buyer: buyer.buyer });
+    res.send({
+      ...order,
+      buyer: buyer.buyer ? buyer.buyer : buyer.buyerSeller
+    });
   } catch (error) {
     res.status(500).send(error);
   }
 });
-
 route.get(
   "/api/admin/fetch/order/by/id/:orderId",
   auth,
@@ -1302,6 +1312,10 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid main"),
+  check("category.icon")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid icon"),
   check("category.subcategories")
     .not()
     .isEmpty()
@@ -1781,4 +1795,57 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post(
+  "/api/confirm/seller/dispatch",
+  isSeller,
+  check("productId").not().isEmpty(),
+  check("orderId").not().isEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { productId, orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId, "items.product": productId },
+        { "items.$.sellerDispatched": true }
+      );
+      await order.save();
+
+      const falseItem = order.items.find(item => !item.sellerDispatched);
+      if (falseItem) {
+        return res.send(order);
+      }
+      const updatedOrder = await Order.findByIdAndUpdate(orderId, {
+        dispatched: true
+      });
+      res.send(updatedOrder);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post(
+  "/api/confirm/admin/delivery",
+  auth,
+  isAdmin,
+  check("orderId").not().isEmpty().withMessage("Please enter a valid order id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { orderId } = req.body;
+      const order = await Order.findOneAndUpdate(
+        { _id: orderId },
+        { delivered: true }
+      );
+      res.send(order);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;

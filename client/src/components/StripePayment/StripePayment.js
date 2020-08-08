@@ -8,6 +8,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
 import StripePaymentButton from "./StripePaymentButton";
+import MobileLogo from "../Header/MobileLogo";
 
 // INCLUDE VAT
 class StripePayment extends React.Component {
@@ -29,8 +30,9 @@ class StripePayment extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
-          <div className="container">
+          <div className="container mt-3">
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1">
@@ -49,8 +51,15 @@ class StripePayment extends React.Component {
                     </li>
                     <li>
                       <p>
+                        We recommend you disable ad blocker in your browser if
+                        you have it enabled.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
                         <strong>
-                          Once you initiate payment don't leave this page.
+                          Once you initiate payment don't leave this page. Wait
+                          until you are redirected.
                         </strong>
                       </p>
                     </li>
@@ -72,11 +81,11 @@ class StripePayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
     distance: state.detailsPersist.distance,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, { makeOrder })(StripePayment);

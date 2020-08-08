@@ -79,7 +79,15 @@ import {
   EMPTY_SUB_CATEGORIES,
   FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_PRODUCTS_START,
-  FETCH_PRODUCTS_STOP
+  FETCH_PRODUCTS_STOP,
+  CONFIRM_DISPATCH_START,
+  CONFIRM_DISPATCH_STOP,
+  CONFIRM_DELIVERY_START,
+  CONFIRM_DELIVERY_STOP,
+  EDIT_CATEGORY_START,
+  EDIT_CATEGORY_STOP,
+  ADD_NEW_CATEGORY_START,
+  ADD_NEW_CATEGORY_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -144,7 +152,11 @@ const INITIAL_STATE = {
   buyerComplaintLoading: false,
   rejectedProducts: null,
   latestRejectedProducts: null,
-  fetchProductsLoading: false
+  fetchProductsLoading: false,
+  dispatchLoading: false,
+  deliveryLoading: false,
+  editCategoryLoading: false,
+  addCategoryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -391,6 +403,22 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchProductsLoading: true };
     case FETCH_PRODUCTS_STOP:
       return { ...state, fetchProductsLoading: false };
+    case CONFIRM_DISPATCH_START:
+      return { ...state, dispatchLoading: true };
+    case CONFIRM_DISPATCH_STOP:
+      return { ...state, dispatchLoading: false };
+    case CONFIRM_DELIVERY_START:
+      return { ...state, deliveryLoading: true };
+    case CONFIRM_DELIVERY_STOP:
+      return { ...state, deliveryLoading: false };
+    case EDIT_CATEGORY_START:
+      return { ...state, editCategoryLoading: true };
+    case EDIT_CATEGORY_STOP:
+      return { ...state, editCategoryLoading: false };
+    case ADD_NEW_CATEGORY_START:
+      return { ...state, addCategoryLoading: true };
+    case ADD_NEW_CATEGORY_STOP:
+      return { ...state, addCategoryLoading: false };
     default:
       return state;
   }

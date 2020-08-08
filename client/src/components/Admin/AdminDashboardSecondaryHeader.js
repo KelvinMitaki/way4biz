@@ -24,26 +24,26 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100
-          }
-        ]
-      }
-    ]
+            num: 100,
+          },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchNewSellers();
   }
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
   render() {
     if (!this.props.newSellers) return <ScreenLoader />;
     return (
-      <div className="container-fluid admin-secondary-dashboard-header">
+      <div className="container-fluid admin-dashboard-secondary-header">
         {this.state.open ? (
           <div
             onClick={this.handleClick}
@@ -113,7 +113,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff"
+                        color: "#fff",
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -141,7 +141,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -193,9 +193,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers })(

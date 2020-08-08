@@ -8,7 +8,7 @@
 
 #check-order-status:hover {
   color: #f76b1a;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .order-item-name {

@@ -15,28 +15,15 @@
 }
 
 .seller-menu-slide-in {
-  animation: slide-in 0.5s forwards;
+  animation: ham-slide-in 0.5s forwards;
 }
 
-@keyframes slide-in {
+@keyframes ham-slide-in {
   0% {
     transform: translateX(-100%);
   }
   100% {
     transform: translateX(0%);
-  }
-}
-
-.seller-menu-slide-out {
-  animation: slide-out 0.5s forwards;
-}
-
-@keyframes slide-out {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
   }
 }
 

@@ -13,6 +13,7 @@ import {
   adminRadio,
   fetchMoreAllOrders,
   fetchOrderById,
+  resetSkipAndCount
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -23,13 +24,18 @@ import { useState } from "react";
 
 function AdminDashBoardOrders(props) {
   const [orderId, setOrderId] = useState({ orderId: null });
-  const { fetchAllOrders, ordersDate } = props;
+  const { fetchAllOrders, ordersDate, resetSkipAndCount } = props;
+  useEffect(() => {
+    return () => {
+      resetSkipAndCount();
+    };
+  }, [resetSkipAndCount]);
   useEffect(() => {
     fetchAllOrders(ordersDate);
   }, [fetchAllOrders, ordersDate]);
   const observer = useRef();
   const lastOrderRef = useCallback(
-    (node) => {
+    node => {
       const fetchMoreData = () => {
         if (props.allAdminOrders.length < props.orderCount) {
           return props.fetchMoreAllOrders(props.ordersDate);
@@ -37,7 +43,7 @@ function AdminDashBoardOrders(props) {
         props.hasMoreOrdersFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -47,12 +53,11 @@ function AdminDashBoardOrders(props) {
     },
     [props]
   );
-  const handleRadioButton = (event) => {
+  const handleRadioButton = event => {
     const { name, value } = event.target;
-    console.log(name, value);
     props.adminRadio({ name, value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     props.fetchOrderById(orderId.orderId.trim());
     setOrderId({ orderId: null });
@@ -61,11 +66,11 @@ function AdminDashBoardOrders(props) {
     return <ScreenLoader />;
 
   return (
-    <div className="container-fluid p-0 mb-5">
+    <div className="container-fluid  p-0 mb-5">
       <AdminDashBoardHeader />
       <AdminDashboardSecondaryHeader />
       <div
-        className="container mt-4 py-2 m-0 mx-auto "
+        className="container mt-4 mx-auto py-2"
         style={{ backgroundColor: "#fff" }}
       >
         {props.allAdminOrders.length !== 0 ? (
@@ -77,7 +82,7 @@ function AdminDashBoardOrders(props) {
               <form onSubmit={handleSubmit} className="search">
                 <div className="form-group input-group">
                   <input
-                    onChange={(e) => setOrderId({ orderId: e.target.value })}
+                    onChange={e => setOrderId({ orderId: e.target.value })}
                     className="form-control"
                     type="text"
                     placeholder="Search order ID..."
@@ -160,7 +165,23 @@ function AdminDashBoardOrders(props) {
                 </div>
               </div>
             </div>
-            {/* mapping here */}
+            <div className="row y pl-2 mb-1">
+              <div className="col-lg-3">
+                <h6>Order ID</h6>
+              </div>
+              <div className="col-lg-3">
+                <h6>Date</h6>
+              </div>
+              <div className="col-lg-2">
+                <h6>Status</h6>
+              </div>
+              <div className="col-lg-2">
+                <h6>Dispatched</h6>
+              </div>
+              <div className="col-lg-2">
+                <h6></h6>
+              </div>
+            </div>
             {props.allAdminOrders &&
               props.allAdminOrders.length !== 0 &&
               props.allAdminOrders.map((order, index) => {
@@ -173,17 +194,29 @@ function AdminDashBoardOrders(props) {
                     >
                       <div className="admin-dashboard-order p-3">
                         <div className="row">
-                          <div className="col-md-5">
-                            <strong>Order ID: </strong>
+                          <div className="col-lg-3">
+                            <strong className="x mr-2">Order ID: </strong>
                             <span>{order._id}</span>{" "}
                           </div>
-                          <div className="col-md-5">
-                            <strong>Date: </strong>
+                          <div className="col-lg-3">
+                            <strong className="x mr-2">Date: </strong>
                             <span>
                               {new Date(order.createdAt).toLocaleString()}
                             </span>
                           </div>
-                          <div className="col-md-2">
+                          <div className="col-lg-2">
+                            <strong className="x mr-2">Status: </strong>
+                            <span>
+                              {(order.cancelled && "Cancelled") ||
+                                (order.delivered && "Delivered") ||
+                                (order.paid && !order.delivered && "Pending")}
+                            </span>
+                          </div>
+                          <div className="col-lg-2">
+                            <strong className="x mr-2">Dispatched: </strong>
+                            <span>{order.dispatched ? "true" : "false"}</span>
+                          </div>
+                          <div className="col-lg-2">
                             <Link
                               className="admin-order-view-more-link"
                               to={`/admin-order/${order._id}`}
@@ -201,19 +234,32 @@ function AdminDashBoardOrders(props) {
                     className="admin-dashboard-order-wrapper box-container"
                     key={order._id}
                   >
-                    <div className="admin-dashboard-order p-3">
+                    <div className="admin-dashboard-order py-3 pl-2">
                       <div className="row">
-                        <div className="col-md-5">
-                          <strong>Order ID: </strong>
+                        <div className="col-lg-3">
+                          <strong className="x mr-2">Order ID: </strong>
                           <span>{order._id}</span>{" "}
                         </div>
-                        <div className="col-md-5">
-                          <strong>Date: </strong>
+                        <div className="col-lg-3">
+                          <strong className="x mr-2">Date: </strong>
                           <span>
                             {new Date(order.createdAt).toLocaleString()}
                           </span>
                         </div>
-                        <div className="col-md-2">
+
+                        <div className="col-lg-2">
+                          <strong className="x mr-2">Status: </strong>
+                          <span>
+                            {(order.cancelled && "Cancelled") ||
+                              (order.delivered && "Delivered") ||
+                              (order.paid && !order.delivered && "Pending")}
+                          </span>
+                        </div>
+                        <div className="col-lg-2">
+                          <strong className="x mr-2">Dispatched: </strong>
+                          <span>{order.dispatched ? "true" : "false"}</span>
+                        </div>
+                        <div className="col-lg-2">
                           <Link
                             className="admin-order-view-more-link"
                             to={`/admin-order/${order._id}`}
@@ -226,7 +272,7 @@ function AdminDashBoardOrders(props) {
                   </div>
                 );
               })}
-            <div className="box-container">
+            <div>
               <h2>{props.orderError && props.orderError}</h2>
             </div>
             {/* </div> */}
@@ -241,7 +287,7 @@ function AdminDashBoardOrders(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     allAdminOrders: state.product.allAdminOrders,
     orderCount: state.product.orderCount,
@@ -249,7 +295,7 @@ const mapStateToProps = (state) => {
     ordersDate: state.product.ordersDate,
     radioLoading: state.product.radioLoading,
     orderError: state.product.orderError,
-    adminOrderLoading: state.product.adminOrderLoading,
+    adminOrderLoading: state.product.adminOrderLoading
   };
 };
 export default connect(mapStateToProps, {
@@ -257,5 +303,6 @@ export default connect(mapStateToProps, {
   hasMoreOrdersFalse,
   adminRadio,
   fetchMoreAllOrders,
-  fetchOrderById,
+  resetSkipAndCount,
+  fetchOrderById
 })(AdminDashBoardOrders);

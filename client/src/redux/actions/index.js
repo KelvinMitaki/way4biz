@@ -212,7 +212,13 @@ import {
   CHECKOUT_USER_START,
   CHECKOUT_USER_STOP,
   DELETE_CART_START,
-  DELETE_CART_STOP
+  DELETE_CART_STOP,
+  CONFIRM_DISPATCH,
+  CONFIRM_DISPATCH_START,
+  CONFIRM_DISPATCH_STOP,
+  CONFIRM_DELIVERY,
+  CONFIRM_DELIVERY_START,
+  CONFIRM_DELIVERY_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -709,20 +715,23 @@ export const removeFromCart = product => async dispatch => {
 
 export const deleteFromCart = product => async (dispatch, getState) => {
   try {
-    const isSignedIn = getState().auth.isSignedIn;
-    if (isSignedIn) {
-      await axios.patch("/api/delete/cart", { productId: product._id });
-    }
+    // const isSignedIn = getState().auth.isSignedIn;
+    // if (isSignedIn) {
+    //   await axios.patch("/api/delete/cart", { productId: product._id });
+    // }
     dispatch({
       type: DELETE_FROM_CART,
       payload: product
     });
+    if (getState().cartReducer.cart.length === 0) {
+      dispatch(saveCartItems(getState().cartReducer.cart));
+    }
   } catch (error) {
     const isSignedIn = getState().auth.isSignedIn;
     if (isSignedIn) {
       authCheck(error);
     }
-    console.log(error.response);
+    console.log(error);
   }
 };
 
@@ -1593,18 +1602,16 @@ export const fetchAdminPendingOrders = () => async dispatch => {
 export const fetchAllOrders = filter => async dispatch => {
   try {
     let test = {};
-    if (!filter) {
-      test = null;
-    }
+    test.paid = true;
 
     if (filter && filter === "today") {
-      test = Date.now() / 1000 - 60 * 60 * 24;
+      test = Date.now() - 60 * 60 * 24 * 1000;
     }
     if (filter && filter === "lastWeek") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 7;
     }
     if (filter && filter === "lastMonth") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 30;
     }
     if (filter && filter === "pendingOrders") {
       test.delivered = false;
@@ -1637,18 +1644,15 @@ export const adminRadio = event => (dispatch, getState) => {
 export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
   try {
     let test = {};
-    if (!filter) {
-      test = {};
-    }
-
+    test.paid = true;
     if (filter && filter === "today") {
-      test = Date.now() / 1000 - 60 * 60 * 24;
+      test = Date.now() - 60 * 60 * 24 * 1000;
     }
     if (filter && filter === "lastWeek") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 7;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 7;
     }
     if (filter && filter === "lastMonth") {
-      test = Date.now() / 1000 - 60 * 60 * 24 * 30;
+      test = Date.now() - 60 * 60 * 24 * 1000 * 30;
     }
     if (filter && filter === "pendingOrders") {
       test.delivered = false;
@@ -1669,6 +1673,11 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
+};
+
+export const resetSkipAndCount = () => (dispatch, getState) => {
+  getState().product.ordersToSkip = 0;
+  getState().product.orderCount = 0;
 };
 
 export const hasMoreOrdersFalse = () => {
@@ -2149,8 +2158,11 @@ export const fetchWishlistProducts = () => async dispatch => {
 
 export const saveCartItems = cart => async dispatch => {
   try {
-    await axios.post("/api/user/new/cart", { cart });
+    await axios.post("/api/user/new/cart", {
+      cart: cart.map(item => ({ product: item._id, quantity: item.quantity }))
+    });
     dispatch({ type: SAVE_CART });
+    dispatch(fetchCartItems());
   } catch (error) {
     authCheck(error);
     console.log(error.response);
@@ -2192,5 +2204,37 @@ export const deleteCart = () => async dispatch => {
     authCheck(error);
     dispatch({ type: DELETE_CART_STOP });
     console.log(error.response);
+  }
+};
+
+export const confirmDispatch = (
+  orderId,
+  productId,
+  history
+) => async dispatch => {
+  try {
+    dispatch({ type: CONFIRM_DISPATCH_START });
+    await axios.post("/api/confirm/seller/dispatch", { orderId, productId });
+    dispatch({ type: CONFIRM_DISPATCH });
+    dispatch(fetchSellerNewOrdersCount());
+    history.push("/seller-orders");
+    dispatch({ type: CONFIRM_DISPATCH_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONFIRM_DISPATCH_STOP });
+  }
+};
+
+export const confirmDelivery = (orderId, history) => async dispatch => {
+  try {
+    dispatch({ type: CONFIRM_DELIVERY_START });
+    await axios.post("/api/confirm/admin/delivery", { orderId });
+    dispatch({ type: CONFIRM_DELIVERY });
+    dispatch({ type: SET_PENDING_ORDERS });
+    history.push("/admin-orders");
+    dispatch({ type: CONFIRM_DELIVERY_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONFIRM_DELIVERY_STOP });
   }
 };

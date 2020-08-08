@@ -3,11 +3,12 @@ import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import "./AdminDashBoardOrderItems.css";
 import { Link, withRouter } from "react-router-dom";
-import { fetchAdminOrder } from "../../redux/actions";
+import { fetchAdminOrder, confirmDelivery } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import Image from "../Market/Image";
 
 class AdminDashBoardOrderItems extends React.Component {
   componentDidMount() {
@@ -24,10 +25,7 @@ class AdminDashBoardOrderItems extends React.Component {
         <AdminDashboardSecondaryHeader />
         <div className="container mt-4">
           <div className="box-container admin-order-items-wrapper">
-            <div
-              className="d-flex align-items-center"
-              style={{ width: "80%", margin: "auto" }}
-            >
+            <div className="d-flex align-items-center">
               <div style={{ flex: "1" }}>
                 <IconContext.Provider
                   value={{ className: "arrow-icon ml-3 my-2" }}
@@ -60,7 +58,7 @@ class AdminDashBoardOrderItems extends React.Component {
                   <h6>Seller</h6>
                 </div>
               </div>
-              <div className="individual-order-item">
+              <div className="admin-order-items-wrapper">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
                   this.props.adminOrder["0"].product.map(p => (
@@ -70,9 +68,9 @@ class AdminDashBoardOrderItems extends React.Component {
                       style={{ borderLeft: "3px solid #f76b1a" }}
                     >
                       <div className="col-md-3">
-                        <img
+                        <Image
                           width={"100px"}
-                          src={
+                          image={
                             p.imageUrl[0].includes("http")
                               ? p.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl[0]} `
@@ -82,6 +80,7 @@ class AdminDashBoardOrderItems extends React.Component {
                       </div>
                       <div className="col-md-5 admin-order-product">
                         <p
+                          className="admin-order-item-name"
                           style={{ cursor: "pointer" }}
                           onClick={() =>
                             this.props.history.push(`/product/${p._id}`)
@@ -102,7 +101,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           }
                         </p>
                       </div>
-                      <div className="col-md-4 p-0">
+                      <div className="col-md-4">
                         <p>
                           <strong className="x mr-1">Seller:</strong>
                           {this.props.adminOrder["0"].seller[0].firstName}{" "}
@@ -119,6 +118,37 @@ class AdminDashBoardOrderItems extends React.Component {
                       </div>
                     </div>
                   ))}
+                {this.props.adminOrder["0"].paid &&
+                  this.props.adminOrder["0"].dispatched &&
+                  !this.props.adminOrder["0"].delivered && (
+                    <div
+                      className="container-fluid d-flex  mt-4 justify-content-center"
+                      style={{ height: "30px" }}
+                    >
+                      <button
+                        className="btn btn-lg confirm-delivery-btn"
+                        onClick={() =>
+                          this.props.confirmDelivery(
+                            this.props.adminOrder["0"]._id,
+                            this.props.history
+                          )
+                        }
+                      >
+                        {this.props.deliveryLoading && (
+                          <span
+                            className="spinner-grow spinner-grow-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        )}
+                        {this.props.deliveryLoading ? (
+                          <span> {"  "}Loading...</span>
+                        ) : (
+                          <span>Confirm Delivery</span>
+                        )}
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -129,9 +159,12 @@ class AdminDashBoardOrderItems extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder
+    adminOrder: state.product.adminOrder,
+    deliveryLoading: state.product.deliveryLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchAdminOrder })(AdminDashBoardOrderItems)
+  connect(mapStateToProps, { fetchAdminOrder, confirmDelivery })(
+    AdminDashBoardOrderItems
+  )
 );

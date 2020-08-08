@@ -20,6 +20,22 @@
   overflow: auto;
 }
 
+#buyer-destination::-webkit-scrollbar {
+  width: 8px;
+}
+
+#buyer-destination::-webkit-scrollbar-track {
+  background-color: #eaecee;
+  border: 1px solid #d4d4d4;
+}
+
+#buyer-destination::-webkit-scrollbar-thumb {
+  background-color: #f76b1a;
+  height: 5px;
+  width: 10px;
+  border-radius: 10px;
+}
+
 .arrow-icon {
   font-size: 35px;
   color: #f76b1a;

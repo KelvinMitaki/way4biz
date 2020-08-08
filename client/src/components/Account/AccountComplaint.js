@@ -43,22 +43,6 @@ class AccountComplaint extends React.Component {
                   <AccountMenu />
                 </div>
                 <div className="col-lg-8  box-container">
-                  {/* <div className="container">
-                    <IconContext.Provider
-                      value={{ className: "arrow-icon ml-3 my-2" }}
-                    >
-                      <div
-                        onClick={() => this.props.history.goBack()}
-                        className="d-flex align-items-center"
-                      >
-                        <div style={{ cursor: "pointer" }}>
-                          <BsArrowLeft />
-                        </div>
-                        <h3 className="ml-3">Complaint</h3>
-                      </div>
-                    </IconContext.Provider>
-                  </div> */}
-
                   <div className="d-flex align-items-center">
                     <div style={{ flex: "1" }}>
                       <IconContext.Provider

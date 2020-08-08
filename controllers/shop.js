@@ -16,6 +16,7 @@ const Distance = require("../models/Distance");
 const Complaint = require("../models/Complaint");
 const Cart = require("../models/Cart");
 const Wishlist = require("../models/Wishlist");
+const Category = require("../models/Category");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -368,45 +369,6 @@ route.post(
   }
 );
 
-// route.post(
-//   "/api/checkout/payment",
-//   auth,
-//   delivery,
-//   check("paymentMethod")
-//     .trim()
-//     .isLength({ min: 2 })
-//     .withMessage("Please check your payment method"),
-//   async (req, res) => {
-//     try {
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(401).send({ message: errors.array()[0].msg });
-//       }
-//       const {
-//         firstName,
-//         lastName,
-//         number,
-//         deliveryAddress,
-//         region,
-//         city
-//       } = req.delivery;
-//       const { paymentMethod } = req.body;
-//       const order = new Order({
-//         firstName,
-//         lastName,
-//         number,
-//         deliveryAddress,
-//         region,
-//         city,
-//         paymentMethod
-//       });
-//       await order.save();
-//       res.status(201).send(order);
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-//   }
-// );
 let checkoutRequestId;
 let orderId;
 route.post(
@@ -416,6 +378,10 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please choose a valid payment method"),
+  check("formValues.delivery")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid delivery method"),
   check("distanceId")
     .not()
     .isEmpty()
@@ -443,6 +409,7 @@ route.post(
       const price = cart
         .map(item => item.price)
         .reduce((acc, curr) => acc + curr, 0);
+      const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
         const mpesaApi = new Mpesa({
           consumerKey: process.env.MPESA_CONSUMER_KEY,
@@ -469,8 +436,10 @@ route.post(
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
-          totalPrice: price,
+          deliveryMethod: formValues.delivery,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
+          buyerSeller: _id,
           distance: distanceId
         });
         await order.save();
@@ -483,7 +452,7 @@ route.post(
       // **STRIPE*/
       if (id) {
         const charge = await stripe.charges.create({
-          amount: price * 100,
+          amount: (price + Math.round(distance.shippingFees)) * 100,
           currency: "kes",
           description: `payed ${price} to account by ${req.session.user.email}`,
           source: id
@@ -491,8 +460,10 @@ route.post(
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
-          totalPrice: price,
+          deliveryMethod: formValues.delivery,
+          totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
+          buyerSeller: _id,
           distance: distanceId,
           paid: true,
           brand: charge.payment_method_details.card.brand,
@@ -577,7 +548,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
 
               return res.send(savedOrder);
             }
-            await Order.findByIdAndUpdate(orderId, { cancelled: true });
+            await Order.findByIdAndDelete(orderId);
             res.send({ message: "error" });
           }
         );
@@ -623,7 +594,24 @@ route.get("/api/fetch/all/categories", async (req, res) => {
       },
       { $sort: { _id: 1 } }
     ]);
-    res.send(categories);
+    const catIcons = await Category.find({}).select({
+      "category.icon": 1,
+      "category.main": 1,
+      _id: 0
+    });
+    const newCats = categories.map(category => {
+      const catFound = catIcons.find(
+        icon => icon.category.main === category._id
+      );
+      if (catFound) {
+        return {
+          ...category,
+          icon: catFound.category.icon
+        };
+      }
+      return category;
+    });
+    res.send(newCats);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -1102,41 +1090,11 @@ route.get("/api/products/find/subcategories/:category", async (req, res) => {
     res.status(500).send(error);
   }
 });
-// route.post(
-//   "/api/fetch/wishlits/products",
-//   check("ids").isArray({ min: 1 }).withMessage("Invalid"),
-//   async (req, res) => {
-//     try {
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(401).send({ message: errors.array()[0].msg });
-//       }
-//       const { ids } = req.body;
-//       const wishlist = await Product.aggregate([
-//         {
-//           $match: { _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } }
-//         },
-//         {
-//           $project: {
-//             freeShipping: 1,
-//             name: 1,
-//             price: 1,
-//             imageUrl: 1,
-//             stockQuantity: 1
-//           }
-//         }
-//       ]);
-//       res.send(wishlist);
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-//   }
-// );
 
 route.post(
   "/api/user/new/cart",
   auth,
-  check("cart").isArray({ min: 1 }).withMessage("invalid"),
+  check("cart").isArray({ min: 0 }).withMessage("invalid"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -1145,15 +1103,6 @@ route.post(
       }
       const { cart } = req.body;
       const { _id } = req.session.user._id;
-
-      // cart.map(item => {
-      //   if (item && Object.keys(item).length === 0) {
-      //     return res.status(401).send({ message: "Invalid Cart" });
-      //   }
-      //   if (!item) {
-      //     return res.status(401).send({ message: "Empty" });
-      //   }
-      // });
       const buyerExists = await Cart.findOne({ buyer: _id });
       if (buyerExists) {
         const updatedCart = await Cart.findOneAndUpdate(
@@ -1219,17 +1168,99 @@ route.post(
 route.get("/api/user/fetch/cart/items", auth, async (req, res) => {
   try {
     const { _id } = req.session.user;
-    const cart = await Cart.aggregate([{ $match: { buyer: _id } }]);
-    res.send(cart.length !== 0 ? cart[0].items : cart);
+    const cart = await Cart.aggregate([
+      { $match: { buyer: _id } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "products"
+        }
+      },
+      { $unwind: "$products" },
+      {
+        $project: {
+          product: {
+            freeShipping: "$products.freeShipping",
+            name: "$products.name",
+            price: "$products.price",
+            stockQuantity: "$products.stockQuantity",
+            seller: "$products.seller",
+            imageUrl: "$products.imageUrl",
+            _id: "$products._id"
+          },
+          items: 1
+        }
+      }
+    ]);
+    const newCart = cart.map(query => {
+      const item = query.items.find(
+        item => item.product.toString() === query.product._id.toString()
+      );
+      if (item) {
+        return {
+          ...query.product,
+          quantity: item.quantity
+        };
+      }
+      return query;
+    });
+    res.send(newCart);
   } catch (error) {
     res.status(500).send(error);
   }
 });
+
 route.get("/api/fetch/wishlits/products", auth, async (req, res) => {
   try {
     const { _id } = req.session.user;
-    const wishlist = await Wishlist.aggregate([{ $match: { buyer: _id } }]);
-    res.send(wishlist.length !== 0 ? wishlist[0].items : wishlist);
+    const wishlist = await Wishlist.aggregate([
+      { $match: { buyer: _id } },
+      { $project: { _id: "$items._id" } }
+    ]);
+    const products = await Product.aggregate([
+      {
+        $match: {
+          _id: {
+            $in:
+              wishlist.length !== 0
+                ? wishlist[0]._id.map(id => mongoose.Types.ObjectId(id))
+                : []
+          }
+        }
+      },
+      {
+        $project: {
+          freeShipping: 1,
+          name: 1,
+          price: 1,
+          stockQuantity: 1,
+          imageUrl: 1,
+          seller: 1
+        }
+      },
+      {
+        $lookup: {
+          from: "sellers",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller"
+        }
+      },
+      { $unwind: "$seller" },
+      {
+        $project: {
+          freeShipping: 1,
+          name: 1,
+          price: 1,
+          stockQuantity: 1,
+          imageUrl: 1,
+          seller: { storeName: "$seller.storeName" }
+        }
+      }
+    ]);
+    res.send(products);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -1258,29 +1289,29 @@ route.patch(
     }
   }
 );
-route.patch(
-  "/api/delete/cart",
-  auth,
-  check("productId").not().isEmpty().withMessage("Invalid Id"),
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(401).send({ message: errors.array()[0].msg });
-      }
-      const { _id } = req.session.user;
-      const { productId } = req.body;
-      const cart = await Cart.findOneAndUpdate(
-        { buyer: _id },
-        { $pull: { items: { _id: productId } } }
-      );
-      await cart.save();
-      res.send(cart);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }
-);
+// route.patch(
+//   "/api/delete/cart",
+//   auth,
+//   check("productId").not().isEmpty().withMessage("Invalid Id"),
+//   async (req, res) => {
+//     try {
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         return res.status(401).send({ message: errors.array()[0].msg });
+//       }
+//       const { _id } = req.session.user;
+//       const { productId } = req.body;
+//       const cart = await Cart.findOneAndUpdate(
+//         { buyer: _id },
+//         { $pull: { items: { _id: productId } } }
+//       );
+//       await cart.save();
+//       res.send(cart);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   }
+// );
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });

@@ -7,6 +7,7 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { confirmDispatch } from "../../redux/actions";
 
 class SellerOrderDetails extends React.Component {
   render() {
@@ -91,6 +92,39 @@ class SellerOrderDetails extends React.Component {
                       </div>
                     </div>
                   ))}
+                {!this.props.sellerOrderDetails.cancelled &&
+                  !this.props.sellerOrderDetails.delivered &&
+                  !this.props.sellerOrderDetails.dispatched && (
+                    <div
+                      className="container-fluid d-flex  mt-4 justify-content-center"
+                      style={{ height: "30px" }}
+                    >
+                      <button
+                        className="btn btn-lg confirm-dispatch-btn"
+                        onClick={() =>
+                          this.props.confirmDispatch(
+                            this.props.sellerOrderDetails.orderId,
+                            this.props.sellerOrderDetails.productSellerData["0"]
+                              ._id,
+                            this.props.history
+                          )
+                        }
+                      >
+                        {this.props.dispatchLoading && (
+                          <span
+                            className="spinner-grow spinner-grow-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        )}
+                        {this.props.dispatchLoading ? (
+                          <span> {"  "}Loading...</span>
+                        ) : (
+                          <span>Confirm Dispatch</span>
+                        )}
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -101,7 +135,10 @@ class SellerOrderDetails extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    sellerOrderDetails: state.detailsPersist.sellerOrderDetails
+    sellerOrderDetails: state.detailsPersist.sellerOrderDetails,
+    dispatchLoading: state.product.dispatchLoading
   };
 };
-export default withRouter(connect(mapStateToProps)(SellerOrderDetails));
+export default withRouter(
+  connect(mapStateToProps, { confirmDispatch })(SellerOrderDetails)
+);

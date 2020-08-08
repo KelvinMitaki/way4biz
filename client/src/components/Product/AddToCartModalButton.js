@@ -2,48 +2,9 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import "./AddToCartModalButton.css";
+import { connect } from "react-redux";
 
-// const modal = (props) => {
-//   return (
-//     <div>
-//       <div
-//         className="modal-wrapper"
-//         style={{
-//           transform: props.show ? "translateY(-15vh)" : "translateY(-400vh)",
-//           opacity: props.show ? "1" : "0",
-//         }}
-//       >
-//         <div className="modal-header">
-//           <span className="close-modal-btn" onClick={props.close}>
-//             ×
-//           </span>
-//         </div>
-//         <div className="modal-body">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-md-6 my-2">
-//                 <div
-//                   style={{ cursor: "pointer" }}
-//                   onClick={() => props.history.goBack()}
-//                   className="btn btn-md continue-btn "
-//                 >
-//                   Continue Shopping
-//                 </div>
-//               </div>
-//               <div className="col-md-6 my-2">
-//                 <Link className="btn btn-md shopping-btn-modal" to="/cart">
-//                   Proceed To Cart
-//                 </Link>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-const Modal = (props) => {
+const Modal = props => {
   const showHideClassName = props.show
     ? "modal display-block"
     : "modal display-nones";
@@ -57,12 +18,17 @@ const Modal = (props) => {
           </span>
         </div>
         <div className="modal-body">
-          <div className="container">
+          <div className="container p-0">
+            <p className="mb-3" style={{ textJustify: "left" }}>
+              A new item has been added to your Shopping Cart. You now have{" "}
+              {props.cart.length} items in your Shopping Cart.
+            </p>
+            <hr className="my-2" />
             <div className="row">
               <div className="col-md-6 my-2">
                 <div
                   style={{ cursor: "pointer" }}
-                  onClick={() => props.history.goBack()}
+                  onClick={() => props.handleClose()}
                   className="btn btn-md continue-btn "
                 >
                   Continue Shopping
@@ -81,4 +47,9 @@ const Modal = (props) => {
     </div>
   );
 };
-export default withRouter(Modal);
+const mapStateToProps = state => {
+  return {
+    cart: state.cartReducer.cart
+  };
+};
+export default withRouter(connect(mapStateToProps)(Modal));

@@ -8,15 +8,25 @@ import { BsPhone } from "react-icons/bs";
 
 import "./RandomCategories.css";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
+import MainIcons from "../MainCategories/MainIcons";
 
 class RandomCategories extends React.Component {
   render() {
+    if (!this.props.categories || !this.props.categories[0].icon)
+      return <ScreenLoader />;
+    const firstRow =
+      this.props.categories.length > 2 && this.props.categories.slice(0, 3);
+    const secondRow =
+      this.props.categories.length > 7 && this.props.categories.slice(3, 7);
     return (
       <div className="md-screen-random-categories">
         <div id="random-categories-wrapper">
           <div className="container row-1">
             <div className="row no-gutters">
               {/* mapping here */}
+
               <div className="col-3">
                 <div className="random-category-container">
                   <Link to="/categories">
@@ -33,122 +43,46 @@ class RandomCategories extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/clothes">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <FaTshirt />
-                      </IconContext.Provider>
+              {firstRow.map(cat => (
+                <div key={cat._id} className="col-3">
+                  <div className="random-category-container">
+                    <Link to={`/products/category/${cat._id}`}>
+                      <div className="random-category-icon">
+                        <IconContext.Provider
+                          value={{ className: "random-category-inner-icon" }}
+                        >
+                          <MainIcons icon={cat.icon} />
+                        </IconContext.Provider>
+                      </div>
+                    </Link>
+                    <div className="random-category-text">
+                      <small>{cat._id}</small>
                     </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Men's Clothing</small>
                   </div>
                 </div>
-              </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/clothes">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <GiLargeDress />
-                      </IconContext.Provider>
-                    </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Women's Clothing</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/toys">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <FaBaby />
-                      </IconContext.Provider>
-                    </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Toys and Babies</small>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="container row-2">
             <div className="row no-gutters">
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/electronics">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <RiComputerLine />
-                      </IconContext.Provider>
+              {secondRow.map((cat, i) => (
+                <div key={cat._id} className="col-3">
+                  <div className="random-category-container">
+                    <Link to={`/products/category/${cat._id}`}>
+                      <div className="random-category-icon">
+                        <IconContext.Provider
+                          value={{ className: "random-category-inner-icon" }}
+                        >
+                          <MainIcons icon={cat.icon} />
+                        </IconContext.Provider>
+                      </div>
+                    </Link>
+                    <div className="random-category-text">
+                      <small>{cat._id}</small>
                     </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Electronics and Computers</small>
                   </div>
                 </div>
-              </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/gadgets">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <BsPhone />
-                      </IconContext.Provider>
-                    </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Phones and Accessories</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/utensils">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <FaUtensils />
-                      </IconContext.Provider>
-                    </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Kitchen and Utensils</small>
-                  </div>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="random-category-container">
-                  <Link to="/products/category/jewelry">
-                    <div className="random-category-icon">
-                      <IconContext.Provider
-                        value={{ className: "random-category-inner-icon" }}
-                      >
-                        <GiWatch />
-                      </IconContext.Provider>
-                    </div>
-                  </Link>
-                  <div className="random-category-text">
-                    <small>Jewelry and Watches</small>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -156,5 +90,9 @@ class RandomCategories extends React.Component {
     );
   }
 }
-
-export default RandomCategories;
+const mapStateToProps = state => {
+  return {
+    categories: state.product.categories
+  };
+};
+export default connect(mapStateToProps)(RandomCategories);

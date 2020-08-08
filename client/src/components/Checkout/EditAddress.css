@@ -16,3 +16,8 @@
 .change-address-link {
   border: 1px solid #fff !important;
 }
+
+#checkout-edit-address-link:hover {
+  background-color: rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+}
