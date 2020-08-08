@@ -16,3 +16,25 @@
   border: 1px solid #d4d4d4;
   outline: none;
 }
+
+#sub-category-enter {
+  background-color: #f76b1a;
+  color: #fff;
+  border: none;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#sub-category-enter:hover {
+  color: #fff;
+}
+
+#sub-category-enter:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}

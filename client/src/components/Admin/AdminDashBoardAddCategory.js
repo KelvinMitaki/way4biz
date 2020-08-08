@@ -13,20 +13,20 @@ class AdminDashBoardAddCategory extends React.Component {
     main: "",
     icon: "",
     subcategories: [],
-    typing: ""
+    typing: "",
   };
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleTypingSubmit = e => {
+  handleTypingSubmit = (e) => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: ""
+        typing: "",
       });
     }
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (
       this.state.main.trim() !== "" &&
@@ -37,7 +37,7 @@ class AdminDashBoardAddCategory extends React.Component {
         {
           main: this.state.main.trim(),
           subcategories: this.state.subcategories,
-          icon: this.state.icon.trim()
+          icon: this.state.icon.trim(),
         },
         this.props.history
       );
@@ -91,7 +91,7 @@ class AdminDashBoardAddCategory extends React.Component {
                       onClick={this.handleTypingSubmit}
                     >
                       <button
-                        id="header-search-btn"
+                        id="sub-category-enter"
                         disabled={this.state.typing === ""}
                       >
                         <div className="icon-container">
@@ -114,7 +114,7 @@ class AdminDashBoardAddCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  )
+                                  ),
                                 })
                               }
                             >
@@ -156,9 +156,9 @@ class AdminDashBoardAddCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    addCategoryLoading: state.product.addCategoryLoading
+    addCategoryLoading: state.product.addCategoryLoading,
   };
 };
 export default withRouter(

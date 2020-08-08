@@ -12,7 +12,7 @@ class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
     typing: "",
-    icon: ""
+    icon: "",
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
@@ -33,15 +33,15 @@ class AdminDashBoardEditCategory extends React.Component {
       this.setState({ icon: this.props.singleCategory.category.icon });
     }
   }
-  handleTypingSubmit = e => {
+  handleTypingSubmit = (e) => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: ""
+        typing: "",
       });
     }
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (
       this.state.subcategories.length !== 0 ||
@@ -54,9 +54,9 @@ class AdminDashBoardEditCategory extends React.Component {
           main: this.props.singleCategory.category.main,
           subcategories: [
             ...this.state.subcategories,
-            ...this.props.singleCategory.category.subcategories
+            ...this.props.singleCategory.category.subcategories,
           ],
-          icon: this.state.icon.trim()
+          icon: this.state.icon.trim(),
         }
       );
     }
@@ -100,7 +100,7 @@ class AdminDashBoardEditCategory extends React.Component {
                     placeholder="Category Name"
                     id="add-icon"
                     name="icon"
-                    onChange={e => this.setState({ icon: e.target.value })}
+                    onChange={(e) => this.setState({ icon: e.target.value })}
                     value={this.state.icon}
                   />
                   <label htmlFor="sub-categories">Sub Categories</label>
@@ -108,7 +108,9 @@ class AdminDashBoardEditCategory extends React.Component {
                     <input
                       name="typing"
                       type="text"
-                      onChange={e => this.setState({ typing: e.target.value })}
+                      onChange={(e) =>
+                        this.setState({ typing: e.target.value })
+                      }
                       className="form-control"
                       placeholder="e.g iPhone"
                       value={this.state.typing}
@@ -118,7 +120,7 @@ class AdminDashBoardEditCategory extends React.Component {
                       onClick={this.handleTypingSubmit}
                     >
                       <button
-                        id="header-search-btn"
+                        id="sub-category-enter"
                         disabled={this.state.typing === ""}
                       >
                         <div className="icon-container">
@@ -141,7 +143,7 @@ class AdminDashBoardEditCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  )
+                                  ),
                                 })
                               }
                             >
@@ -198,10 +200,10 @@ class AdminDashBoardEditCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     singleCategory: state.product.singleCategory,
-    editCategoryLoading: state.product.editCategoryLoading
+    editCategoryLoading: state.product.editCategoryLoading,
   };
 };
 export default withRouter(
