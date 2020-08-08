@@ -218,7 +218,15 @@ import {
   CONFIRM_DISPATCH_STOP,
   CONFIRM_DELIVERY,
   CONFIRM_DELIVERY_START,
-  CONFIRM_DELIVERY_STOP
+  CONFIRM_DELIVERY_STOP,
+  REGISTER_SELLER_START,
+  REGISTER_SELLER_STOP,
+  LOG_IN_START,
+  LOG_IN_STOP,
+  SELLER_LOGIN_START,
+  SELLER_LOGIN_STOP,
+  REGISTER_START,
+  REGISTER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -258,7 +266,7 @@ const authCheck = error => {
 
 export const logIn = (credentials, history) => async (dispatch, getState) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: LOG_IN_START });
     const res = await axios.post("/api/login", credentials);
 
     if (res.data && res.data.phoneNumber) {
@@ -270,14 +278,14 @@ export const logIn = (credentials, history) => async (dispatch, getState) => {
     });
     if (res.data.isAdmin) {
       history.push("/admin-dashboard");
-      dispatch({ type: LOADING_STOP });
+      dispatch({ type: LOG_IN_STOP });
       return;
     }
     history.push("/");
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: LOG_IN_STOP });
   } catch (error) {
     getState().form.LoginForm.values.password = "";
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: LOG_IN_STOP });
     dispatch({ type: LOG_IN_FAILED });
   }
 };
@@ -286,7 +294,7 @@ export const sellerLogIn = (credentials, history) => async (
   getState
 ) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: SELLER_LOGIN_START });
     const res = await axios.post("/api/seller/login", credentials);
     if (res.data && res.data.phoneNumber) {
       res.data.phoneNumber = res.data.phoneNumber.toString();
@@ -295,25 +303,25 @@ export const sellerLogIn = (credentials, history) => async (
       type: LOG_IN,
       payload: res.data
     });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SELLER_LOGIN_STOP });
     history.push("/seller-dashboard");
   } catch (error) {
     getState().form.SellerLogin.values.password = "";
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: SELLER_LOGIN_STOP });
     dispatch({ type: LOG_IN_FAILED });
   }
 };
 export const register = credentials => async (dispatch, getState) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: REGISTER_START });
     await axios.post("/api/register", credentials);
     dispatch({ type: REGISTER });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_STOP });
   } catch (error) {
     console.log(error);
     getState().form.RegisterForm.values.email = "";
     dispatch({ type: REGISTER_FAILED });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_STOP });
   }
 };
 
@@ -442,12 +450,12 @@ export const updatePasswordLoggedIn = (
 
 export const registerSeller = credentials => async (dispatch, getState) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: REGISTER_SELLER_START });
 
     const res = await axios.post("/api/seller/register", credentials);
 
     dispatch({ type: REGISTER_SELLER, payload: res.data });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_SELLER_STOP });
   } catch (error) {
     if (error.response.data.email) {
       getState().form.SellerRegister.values.email = "";
@@ -455,7 +463,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
         type: REGISTER_SELLER_FAILED,
         payload: error.response.data.email
       });
-      dispatch({ type: LOADING_STOP });
+      dispatch({ type: REGISTER_SELLER_STOP });
       return;
     }
     if (
@@ -469,7 +477,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
         type: REGISTER_SELLER_FAILED,
         payload: "That phone number already exists"
       });
-      dispatch({ type: LOADING_STOP });
+      dispatch({ type: REGISTER_SELLER_STOP });
       return;
     }
     getState().form.SellerRegister.values[
@@ -479,7 +487,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       type: REGISTER_SELLER_FAILED,
       payload: "That store name already exists"
     });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_SELLER_STOP });
   }
 };
 export const updateSeller = (credentials, history) => async (
