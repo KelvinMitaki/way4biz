@@ -25,7 +25,6 @@ class HeroCategories extends React.Component {
   };
   render() {
     if (!this.props.categories) return <ScreenLoader />;
-    console.log(this.props.categories);
     return (
       <div id={this.props.id}>
         <div

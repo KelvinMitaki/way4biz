@@ -18,7 +18,8 @@ import {
   saveCartItems,
   saveWishlistItems,
   fetchCartItems,
-  fetchWishlistProducts
+  fetchWishlistProducts,
+  fetchAllCategories
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -94,10 +95,16 @@ class App extends React.Component {
     scrolling: false
   };
   componentDidMount() {
-    const { fetchUser, fetchProducts, fetchCategories } = this.props;
+    const {
+      fetchUser,
+      fetchProducts,
+      fetchCategories,
+      fetchAllCategories
+    } = this.props;
     fetchUser();
     fetchProducts();
     fetchCategories();
+    fetchAllCategories();
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
@@ -803,6 +810,7 @@ export default connect(mapStateToProps, {
   fetchProducts,
   fetchCategories,
   saveCartItems,
+  fetchAllCategories,
   fetchCartItems,
   fetchWishlistProducts,
   saveWishlistItems

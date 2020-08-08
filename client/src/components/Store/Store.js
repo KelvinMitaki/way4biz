@@ -6,7 +6,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import "./Store.css";
 import Image from "../Market/Image";
 import HeroCategories from "../Hero/HeroCategories";
-import { fetchStoreProducts } from "../../redux/actions";
+import { fetchStoreProducts, fetchAllCategories } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import CategoryHoverPopup from "../Hero/CategoryHoverPopup";
@@ -16,9 +16,15 @@ import MobileLogo from "../Header/MobileLogo";
 class Store extends Component {
   componentDidMount() {
     this.props.fetchStoreProducts(this.props.match.params.sellerId);
+    this.props.fetchAllCategories();
   }
   render() {
-    if (!this.props.storeProducts) return <ScreenLoader />;
+    if (
+      !this.props.storeProducts ||
+      !this.props.categories ||
+      !this.props.categories[0].icon
+    )
+      return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -52,7 +58,7 @@ class Store extends Component {
                 </div>
                 <div className="products-section">
                   {this.props.storeProducts.length !== 0 &&
-                    this.props.storeProducts.map((pro) => (
+                    this.props.storeProducts.map(pro => (
                       <div key={pro._id} className="product">
                         <Link
                           to={`/product/${pro._id}`}
@@ -79,7 +85,7 @@ class Store extends Component {
                             <p
                               style={{
                                 fontWeight: "bolder",
-                                padding: "0px 10px",
+                                padding: "0px 10px"
                               }}
                               className="price"
                             >
@@ -109,7 +115,7 @@ class Store extends Component {
                             style={{
                               padding: "0px 0px 0px 10px",
                               margin: "0px",
-                              fontSize: "smaller",
+                              fontSize: "smaller"
                             }}
                           >
                             {pro.freeShipping && (
@@ -125,7 +131,7 @@ class Store extends Component {
                             style={{
                               display: "flex",
                               padding: "0px 10px 0px 0px",
-                              margin: "0px",
+                              margin: "0px"
                             }}
                             className="mb-2"
                           >
@@ -145,11 +151,12 @@ class Store extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     storeProducts: state.product.storeProducts,
+    categories: state.product.categories
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchStoreProducts })(Store)
+  connect(mapStateToProps, { fetchStoreProducts, fetchAllCategories })(Store)
 );
