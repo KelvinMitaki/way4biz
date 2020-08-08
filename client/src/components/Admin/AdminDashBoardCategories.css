@@ -2,7 +2,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
 }
 
 .add-category-btn {
@@ -25,7 +24,8 @@
   background-color: #f76b1a;
   color: #fff;
   border: none;
-  border-radius: 0px;
+  border-radius: 8px;
+  width: 250px;
 }
 
 .edit-category-btn:hover {
@@ -42,4 +42,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sub-categories {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-bottom: 1px solid #d4d4d4;
+  border-top: 1px solid #d4d4d4;
+}
+
+.sub-categories span {
+  margin: 5px 5px;
+  padding: 5px;
+  background-color: #eaecee;
+  border-radius: 5px;
 }

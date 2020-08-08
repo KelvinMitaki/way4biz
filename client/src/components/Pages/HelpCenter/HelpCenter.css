@@ -8,10 +8,9 @@
   flex-direction: column;
 }
 
-/* #help-center-header {
-  text-transform: uppercase;
-  color: #fff;
-} */
+#help-center-hero-head {
+  font-size: 50px;
+}
 
 #help-center-input {
   width: 40%;
@@ -69,9 +68,10 @@
     height: 200px;
   }
 
-  #help-center-header {
-    font-size: 30px;
+  #help-center-hero-head {
+    font-size: 40px;
   }
+
   #help-center-input {
     width: 50%;
     margin: 0px auto;
@@ -79,11 +79,11 @@
 }
 
 @media screen and (max-width: 540px) {
-  #help-center-header {
+  #help-center-hero-head {
     font-size: 20px;
   }
   #help-center-input {
-    width: 70%;
+    width: 80%;
     margin: 0px auto;
   }
 

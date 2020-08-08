@@ -22,7 +22,12 @@ class HelpCenter extends React.Component {
             style={{ backgroundColor: "#fff" }}
           >
             <div className="help-center-hero">
-              <h1 style={{ textTransform: "uppercase" }}>How can we help?</h1>
+              <h1
+                id="help-center-hero-head"
+                style={{ textTransform: "uppercase" }}
+              >
+                How can we help?
+              </h1>
               <div className="input-group mt-3" id="help-center-input">
                 <input
                   className="form-control"

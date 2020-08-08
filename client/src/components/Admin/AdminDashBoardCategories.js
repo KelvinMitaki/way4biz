@@ -18,71 +18,86 @@ class AdminDashBoardCategories extends React.Component {
       <div className="container-fluid p-0">
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
-        <div className="container mt-4 mb-5">
-          <div className="box-container">
+        <div className="mt-4 mb-5">
+          <div>
             {this.props.adminCategories.length !== 0 ? (
               <React.Fragment>
                 {" "}
                 <h3 className="my-2" style={{ textAlign: "center" }}>
                   Categories
                 </h3>
-                <div className="container my-2" id="add-category-btn-wrapper">
-                  <Link
-                    to="/admin-category/add"
-                    className="btn btn-md add-category-btn"
-                  >
-                    Add Category
-                  </Link>
+                <div className="container my-2">
+                  <div className="row">
+                    <div
+                      className="col-lg-8 mx-auto"
+                      id="add-category-btn-wrapper"
+                    >
+                      <Link
+                        to="/admin-category/add"
+                        className="btn btn-md add-category-btn"
+                      >
+                        Add Category
+                      </Link>
+                    </div>
+                  </div>
                 </div>
                 <div className="container">
-                  {/* mapping here */}
-                  {this.props.adminCategories.length !== 0 &&
-                    this.props.adminCategories.map((cat) => (
-                      <div
-                        key={cat._id}
-                        className="box-container admin-category-wrapper"
-                      >
-                        <div className="row p-3 align-items-center">
+                  <div className="row">
+                    <div className="col-lg-8 mx-auto">
+                      {this.props.adminCategories.length !== 0 &&
+                        this.props.adminCategories.map((cat) => (
                           <div
-                            className="col-md-4"
-                            style={{ borderRight: "1px solid #d4d4d4" }}
+                            key={cat._id}
+                            className="box-container admin-category-wrapper"
                           >
-                            <h4>{cat.category.main}</h4>
+                            <div className="p-3 align-items-center">
+                              <div className="mb-2">
+                                <h4
+                                  style={{
+                                    textTransform: "capitalize",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {cat.category.main}
+                                </h4>
+                              </div>
+                              <div>
+                                <p className="sub-categories">
+                                  {cat.category.subcategories.map((s, i) => {
+                                    if (
+                                      cat.category.subcategories.length ===
+                                      i + 1
+                                    ) {
+                                      return (
+                                        <React.Fragment key={i}>
+                                          <span>{s}</span>
+                                        </React.Fragment>
+                                      );
+                                    }
+                                    return (
+                                      <React.Fragment key={i}>
+                                        <span>{s}</span>
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </p>
+                              </div>
+                            </div>
+                            <div style={{ textAlign: "center" }}>
+                              <div>
+                                <Link
+                                  to={`/admin-category/edit/${cat._id}`}
+                                  className="btn btn-md edit-category-btn mb-2"
+                                >
+                                  Edit Category
+                                </Link>
+                              </div>
+                            </div>
                           </div>
-                          <div className="col-md-8">
-                            <p>
-                              {cat.category.subcategories.map((s, i) => {
-                                if (
-                                  cat.category.subcategories.length ===
-                                  i + 1
-                                ) {
-                                  return (
-                                    <React.Fragment key={i}>
-                                      <span>{s}</span>
-                                    </React.Fragment>
-                                  );
-                                }
-                                return (
-                                  <React.Fragment key={i}>
-                                    <span>{s}</span>,{" "}
-                                  </React.Fragment>
-                                );
-                              })}
-                            </p>
-                          </div>
-                        </div>
-                        <div style={{ borderTop: "1px solid #d4d4d4" }}>
-                          <div>
-                            <Link
-                              to={`/admin-category/edit/${cat._id}`}
-                              className="btn btn-lg btn-block edit-category-btn"
-                            >
-                              Edit Category
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                        ))}
+                    </div>
+                  </div>
+                  {/* mapping here */}
                 </div>
               </React.Fragment>
             ) : (
