@@ -1,5 +1,6 @@
 #logo,
-#account-header-logo {
+#account-header-logo,
+#help-center-header-logo {
   height: 100%;
   flex: 1;
   display: flex;

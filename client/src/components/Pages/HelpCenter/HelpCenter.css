@@ -8,10 +8,10 @@
   flex-direction: column;
 }
 
-#help-center-header {
+/* #help-center-header {
   text-transform: uppercase;
   color: #fff;
-}
+} */
 
 #help-center-input {
   width: 40%;
