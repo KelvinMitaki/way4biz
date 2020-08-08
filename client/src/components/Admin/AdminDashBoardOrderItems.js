@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
+import Image from "../Market/Image";
 
 class AdminDashBoardOrderItems extends React.Component {
   componentDidMount() {
@@ -67,9 +68,9 @@ class AdminDashBoardOrderItems extends React.Component {
                       style={{ borderLeft: "3px solid #f76b1a" }}
                     >
                       <div className="col-md-3">
-                        <img
+                        <Image
                           width={"100px"}
-                          src={
+                          image={
                             p.imageUrl[0].includes("http")
                               ? p.imageUrl[0]
                               : `https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${p.imageUrl[0]} `
