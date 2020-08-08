@@ -1,12 +1,11 @@
 import React from "react";
 
-import "./About.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
-import MobileLogo from "../Header/MobileLogo";
+import "./TermsConditions.css";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
+import Header from "../../Header/Header";
 
-class About extends React.Component {
+class TermsConditions extends React.Component {
   render() {
     return (
       <div className="main">
@@ -14,7 +13,7 @@ class About extends React.Component {
           <Header />
           <div className="container">
             <h3 style={{ textAlign: "center" }} className="my-2">
-              Our Mission and Vision
+              Terms and Conditions
             </h3>
             <p className="my-2">
               What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
@@ -76,4 +75,4 @@ class About extends React.Component {
   }
 }
 
-export default About;
+export default TermsConditions;

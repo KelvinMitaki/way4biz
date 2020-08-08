@@ -1,9 +1,9 @@
 import React from "react";
 
 import "./HelpCenter.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
 import { RiBookletLine } from "react-icons/ri";
