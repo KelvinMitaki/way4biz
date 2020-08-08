@@ -16,6 +16,7 @@ const Distance = require("../models/Distance");
 const Complaint = require("../models/Complaint");
 const Cart = require("../models/Cart");
 const Wishlist = require("../models/Wishlist");
+const Category = require("../models/Category");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -593,7 +594,24 @@ route.get("/api/fetch/all/categories", async (req, res) => {
       },
       { $sort: { _id: 1 } }
     ]);
-    res.send(categories);
+    const catIcons = await Category.find({}).select({
+      "category.icon": 1,
+      "category.main": 1,
+      _id: 0
+    });
+    const newCats = categories.map(category => {
+      const catFound = catIcons.find(
+        icon => icon.category.main === category._id
+      );
+      if (catFound) {
+        return {
+          ...category,
+          icon: catFound.category.icon
+        };
+      }
+      return category;
+    });
+    res.send(newCats);
   } catch (error) {
     res.status(500).send(error);
   }
