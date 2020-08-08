@@ -17,6 +17,15 @@
   margin: 0px 20px;
 }
 
+.helper-center-menu-items li a {
+  color: #fff;
+}
+
+.helper-center-menu-items li a:hover {
+  color: #f76b1a;
+  text-decoration: none;
+}
+
 .help-center-active {
   color: #f76b1a;
 }

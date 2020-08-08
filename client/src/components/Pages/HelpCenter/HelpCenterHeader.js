@@ -20,28 +20,18 @@ class HelpCenterHeader extends React.Component {
         <Logo id="help-center-header-logo" />
         <ul className="helper-center-menu-items">
           <li>
-            <NavLink to="/" activeClassName="help-center-active">
-              <p>Hellooo</p>
+            <NavLink to="/about-us" exact activeClassName="help-center-active">
+              <p>Who We Are</p>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" activeClassName="help-center-active">
-              <p>Hellooo</p>
+            <NavLink to="/contact-us">
+              <p>Contact Us</p>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" activeClassName="help-center-active">
-              <p>Hellooo</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/" activeClassName="help-center-active">
-              <p>Hellooo</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/" activeClassName="help-center-active">
-              <p>Hellooo</p>
+            <NavLink to="/faqs">
+              <p>FAQs</p>
             </NavLink>
           </li>
         </ul>
