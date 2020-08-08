@@ -25,6 +25,7 @@
     margin: auto;
     word-wrap: break-word;
     -webkit-line-clamp: 2;
+    line-height: 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
