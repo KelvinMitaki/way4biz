@@ -36,23 +36,50 @@ class HelpCenterHeader extends React.Component {
           </li>
         </ul>
         <div id="help-center-hamburger-wrapper">
+          <div id="help-center-hamburger">
+            {this.state.open ? (
+              <HamburgerMenu
+                width={30}
+                height={20}
+                color="#f76b1a"
+                isOpen={true}
+                menuClicked={this.handleClick}
+              />
+            ) : (
+              <HamburgerMenu
+                width={30}
+                height={20}
+                color="#f76b1a"
+                isOpen={false}
+                menuClicked={this.handleClick}
+              />
+            )}
+          </div>
           {this.state.open ? (
-            <HamburgerMenu
-              width={30}
-              height={20}
-              color="#f76b1a"
-              isOpen={true}
-              menuClicked={this.handleClick}
-            />
-          ) : (
-            <HamburgerMenu
-              width={30}
-              height={20}
-              color="#f76b1a"
-              isOpen={false}
-              menuClicked={this.handleClick}
-            />
-          )}
+            <div className="help-center-sm-menu">
+              <ul id="help-center-sm-menu-items">
+                <li>
+                  <NavLink
+                    to="/about-us"
+                    exact
+                    activeClassName="help-center-active"
+                  >
+                    <p>Who We Are</p>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/contact-us">
+                    <p>Contact Us</p>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/faqs">
+                    <p>FAQs</p>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          ) : null}
         </div>
       </div>
     );
