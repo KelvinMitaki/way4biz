@@ -6,11 +6,13 @@ import { connect } from "react-redux";
 import { sellerLogIn } from "../../redux/actions";
 import validator from "validator";
 import AuthHeader from "../Authenticate/AuthHeader";
+import MobileLogo from "../Header/MobileLogo";
 
 export class SellerLogin extends Component {
   render() {
     return (
       <div>
+        <MobileLogo />
         <AuthHeader />
         <br />
         <h2 style={{ textAlign: "center" }}>Sign In</h2>
