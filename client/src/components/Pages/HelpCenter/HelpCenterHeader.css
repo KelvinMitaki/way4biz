@@ -21,12 +21,32 @@
   color: #f76b1a;
 }
 
+#help-center-hamburger-wrapper {
+  display: none;
+}
+
+@media screen and (max-width: 1140px) {
+  #help-center-header {
+    padding: 0px 20px;
+    justify-content: space-between;
+  }
+}
+
 @media screen and (max-width: 960px) {
   #help-center-header {
     padding: 0px 10px;
+    justify-content: space-between;
+  }
+
+  #help-center-header-logo {
+    flex: 0;
   }
 
   .helper-center-menu-items {
     display: none;
+  }
+  #help-center-hamburger-wrapper {
+    display: block;
+    /* flex: 1; */
   }
 }
