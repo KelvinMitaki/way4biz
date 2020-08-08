@@ -7,11 +7,13 @@ import AuthField from "./AuthField";
 import "../Account/Account.css";
 
 import AuthHeader from "./AuthHeader";
+import MobileLogo from "../Header/MobileLogo";
 
 export class ForgotPassword extends Component {
   render() {
     return (
       <div>
+        <MobileLogo />
         <AuthHeader />
         <div className="container">
           <div className="row">
@@ -23,7 +25,7 @@ export class ForgotPassword extends Component {
                   <h3 className="mb-3">Reset your password</h3>
 
                   <form
-                    onSubmit={this.props.handleSubmit(formValues =>
+                    onSubmit={this.props.handleSubmit((formValues) =>
                       this.props.passwordReset(formValues)
                     )}
                   >
@@ -70,7 +72,7 @@ export class ForgotPassword extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||
@@ -80,11 +82,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     resetPasswordError: state.auth.resetPasswordError,
-    success: state.auth.success
+    success: state.auth.success,
   };
 };
 export default reduxForm({ validate, form: "ForgotPassword" })(
