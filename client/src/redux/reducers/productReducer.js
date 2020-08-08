@@ -83,7 +83,11 @@ import {
   CONFIRM_DISPATCH_START,
   CONFIRM_DISPATCH_STOP,
   CONFIRM_DELIVERY_START,
-  CONFIRM_DELIVERY_STOP
+  CONFIRM_DELIVERY_STOP,
+  EDIT_CATEGORY_START,
+  EDIT_CATEGORY_STOP,
+  ADD_NEW_CATEGORY_START,
+  ADD_NEW_CATEGORY_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -150,7 +154,9 @@ const INITIAL_STATE = {
   latestRejectedProducts: null,
   fetchProductsLoading: false,
   dispatchLoading: false,
-  deliveryLoading: false
+  deliveryLoading: false,
+  editCategoryLoading: false,
+  addCategoryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -405,6 +411,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deliveryLoading: true };
     case CONFIRM_DELIVERY_STOP:
       return { ...state, deliveryLoading: false };
+    case EDIT_CATEGORY_START:
+      return { ...state, editCategoryLoading: true };
+    case EDIT_CATEGORY_STOP:
+      return { ...state, editCategoryLoading: false };
+    case ADD_NEW_CATEGORY_START:
+      return { ...state, addCategoryLoading: true };
+    case ADD_NEW_CATEGORY_STOP:
+      return { ...state, addCategoryLoading: false };
     default:
       return state;
   }

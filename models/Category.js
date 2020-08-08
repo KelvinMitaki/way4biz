@@ -6,6 +6,10 @@ const CategoriesSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    icon: {
+      type: String,
+      required: true
+    },
     subcategories: {
       type: [String],
       required: true

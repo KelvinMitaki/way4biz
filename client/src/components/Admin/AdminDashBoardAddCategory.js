@@ -11,6 +11,7 @@ import { withRouter } from "react-router-dom";
 class AdminDashBoardAddCategory extends React.Component {
   state = {
     main: "",
+    icon: "",
     subcategories: [],
     typing: ""
   };
@@ -27,11 +28,16 @@ class AdminDashBoardAddCategory extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.main !== "" && this.state.subcategories.length !== 0) {
+    if (
+      this.state.main.trim() !== "" &&
+      this.state.icon.trim() !== "" &&
+      this.state.subcategories.length !== 0
+    ) {
       this.props.addNewCategory(
         {
-          main: this.state.main,
-          subcategories: this.state.subcategories
+          main: this.state.main.trim(),
+          subcategories: this.state.subcategories,
+          icon: this.state.icon.trim()
         },
         this.props.history
       );
@@ -57,17 +63,27 @@ class AdminDashBoardAddCategory extends React.Component {
                     type="text"
                     placeholder="eg Phones"
                     id="add-category"
-                    value={this.state.main}
                     onChange={this.handleChange}
+                    value={this.state.main}
+                  />
+                  <label htmlFor="add-icon">Icon</label>
+                  <input
+                    name="icon"
+                    className="form-control"
+                    type="text"
+                    placeholder="Icon Name"
+                    id="add-icon"
+                    onChange={this.handleChange}
+                    value={this.state.icon}
                   />
                   <label htmlFor="sub-categories">Sub Categories</label>
                   <div className="input-group">
                     <input
                       name="typing"
                       type="text"
-                      onChange={this.handleChange}
                       className="form-control"
                       placeholder="e.g iPhone"
+                      onChange={this.handleChange}
                       value={this.state.typing}
                     />
                     <div
@@ -114,11 +130,23 @@ class AdminDashBoardAddCategory extends React.Component {
                   type="submit"
                   className="btn btn-md add-category-btn mb-2"
                   disabled={
-                    this.state.main === "" &&
-                    this.state.subcategories.length === 0
+                    (this.state.main === "" &&
+                      this.state.subcategories.length === 0) ||
+                    this.props.addCategoryLoading
                   }
                 >
-                  Add Category
+                  {this.props.addCategoryLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.addCategoryLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Add Category</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -128,7 +156,11 @@ class AdminDashBoardAddCategory extends React.Component {
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    addCategoryLoading: state.product.addCategoryLoading
+  };
+};
 export default withRouter(
-  connect(null, { addNewCategory })(AdminDashBoardAddCategory)
+  connect(mapStateToProps, { addNewCategory })(AdminDashBoardAddCategory)
 );
