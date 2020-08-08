@@ -14,6 +14,7 @@ import {
 import ScreenLoader from "../Pages/ScreenLoader.js";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
+import MainIcons from "./MainIcons.js";
 
 class MainCategories extends React.Component {
   componentDidMount() {
@@ -53,7 +54,7 @@ class MainCategories extends React.Component {
                     <IconContext.Provider
                       value={{ className: "small-screen-category-icon" }}
                     >
-                      <AiOutlineBars />
+                      <MainIcons icon={category.icon} />
                     </IconContext.Provider>
                     <div className="ml-2">{category._id}</div>
                   </Link>

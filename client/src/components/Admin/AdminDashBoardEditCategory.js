@@ -75,6 +75,21 @@ class AdminDashBoardEditCategory extends React.Component {
                       ""
                     }
                   />
+                  <label htmlFor="add-icon">Icon</label>
+                  <input
+                    readOnly
+                    className="form-control"
+                    type="text"
+                    placeholder="Category Name"
+                    id="add-icon"
+                    value={
+                      (Object.keys(this.props.singleCategory).length !== 0 &&
+                        Object.keys(this.props.singleCategory.category)
+                          .length !== 0 &&
+                        this.props.singleCategory.category.icon) ||
+                      ""
+                    }
+                  />
                   <label htmlFor="sub-categories">Sub Categories</label>
                   <div className="input-group">
                     <input
