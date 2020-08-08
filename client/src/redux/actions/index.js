@@ -224,7 +224,9 @@ import {
   LOG_IN_START,
   LOG_IN_STOP,
   SELLER_LOGIN_START,
-  SELLER_LOGIN_STOP
+  SELLER_LOGIN_STOP,
+  REGISTER_START,
+  REGISTER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -311,15 +313,15 @@ export const sellerLogIn = (credentials, history) => async (
 };
 export const register = credentials => async (dispatch, getState) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: REGISTER_START });
     await axios.post("/api/register", credentials);
     dispatch({ type: REGISTER });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_STOP });
   } catch (error) {
     console.log(error);
     getState().form.RegisterForm.values.email = "";
     dispatch({ type: REGISTER_FAILED });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: REGISTER_STOP });
   }
 };
 
