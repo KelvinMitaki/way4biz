@@ -9,12 +9,13 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   singleCategory,
-  fetchAllCategories
+  fetchAllCategories,
 } from "../../redux/actions/index.js";
 import ScreenLoader from "../Pages/ScreenLoader.js";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
 import MainIcons from "./MainIcons.js";
+import MobileLogo from "../Header/MobileLogo";
 
 class MainCategories extends React.Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ class MainCategories extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div id="all-categories-wrapper">
             <div className="container">
@@ -38,7 +40,7 @@ class MainCategories extends React.Component {
             <div className="container categories-section box-container">
               {this.props.categories &&
                 this.props.categories.length !== 0 &&
-                this.props.categories.map(category => (
+                this.props.categories.map((category) => (
                   <Link
                     key={category._id}
                     to={`/products/category/${category._id}`}
@@ -68,11 +70,11 @@ class MainCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.product.categories,
     singleCategoryLoading: state.auth.singleCategoryLoading,
-    filter: state.filter
+    filter: state.filter,
   };
 };
 export default withRouter(
