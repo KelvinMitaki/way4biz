@@ -8,6 +8,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import { connect } from "react-redux";
 import Image from "../Market/Image";
 import { deleteCart, removePendingAndSuccess } from "../../redux/actions";
+import MobileLogo from "../Header/MobileLogo";
 
 class OrderPaymentSuccess extends React.Component {
   componentWillUnmount() {
@@ -21,6 +22,7 @@ class OrderPaymentSuccess extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container">
             <div className="row">
@@ -51,7 +53,7 @@ class OrderPaymentSuccess extends React.Component {
                   {/* mapping here */}
                   {this.props.orderSuccess.items &&
                     this.props.orderSuccess.items.length !== 0 &&
-                    this.props.orderSuccess.items.map(item => (
+                    this.props.orderSuccess.items.map((item) => (
                       <div className="row align-items-center" key={item._id}>
                         <div className="col-3">
                           <Image
@@ -198,13 +200,13 @@ class OrderPaymentSuccess extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     orderSuccess: state.cartReducer.orderSuccess,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, {
   deleteCart,
-  removePendingAndSuccess
+  removePendingAndSuccess,
 })(OrderPaymentSuccess);

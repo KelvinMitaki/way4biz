@@ -7,12 +7,14 @@ import FormField from "../Checkout/FormField";
 import { connect } from "react-redux";
 import { updatePasswordLoggedIn } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import MobileLogo from "../Header/MobileLogo";
 
 export class ChangePassword extends Component {
   render() {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container">
             <div className="row">

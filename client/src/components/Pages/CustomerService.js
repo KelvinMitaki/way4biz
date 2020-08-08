@@ -4,6 +4,7 @@ import "./CustomerService.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
+import MobileLogo from "../Header/MobileLogo";
 
 class CustomerService extends React.Component {
   render() {

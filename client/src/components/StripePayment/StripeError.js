@@ -8,6 +8,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import "./StripeError.css";
 import { connect } from "react-redux";
 import { removePendingAndSuccess } from "../../redux/actions";
+import MobileLogo from "../Header/MobileLogo";
 
 class StripeError extends React.Component {
   componentWillUnmount() {
@@ -19,6 +20,7 @@ class StripeError extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div className="container mt-3">
             <div className="row">

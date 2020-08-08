@@ -8,6 +8,7 @@ import { fetchProducts } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "./ScreenLoader";
 import "./Home.css";
+import MobileLogo from "../Header/MobileLogo";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Home extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           <div id="top-border"></div>
           <Hero />

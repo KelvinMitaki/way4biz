@@ -27,6 +27,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { RiMotorbikeLine } from "react-icons/ri";
 import { FiTruck } from "react-icons/fi";
+import MobileLogo from "../Header/MobileLogo";
 
 class Product extends React.Component {
   constructor(props) {
@@ -146,6 +147,7 @@ class Product extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <Header />
           {this.props.product && (
             <div className="container-fluid product-wrapper">

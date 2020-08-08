@@ -191,7 +191,7 @@ class App extends React.Component {
       return (
         <div id="main">
           {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
-          <MobileLogo />
+          {/* <MobileLogo /> */}
           <div>
             <Switch>
               <Route path="/" exact component={Home} />
