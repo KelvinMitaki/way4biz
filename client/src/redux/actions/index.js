@@ -1506,8 +1506,8 @@ export const paymentPerDistance = (details, history) => async dispatch => {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
-    dispatch({ type: PAYMENT_DISTANCE_STOP });
     history.push("/checkout");
+    dispatch({ type: PAYMENT_DISTANCE_STOP });
   } catch (error) {
     authCheck(error);
     dispatch({ type: PAYMENT_DISTANCE_STOP });
