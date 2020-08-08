@@ -34,8 +34,9 @@
   .individual-category {
     border: none;
     border-bottom: 1px solid #eee;
-    padding: 10px;
+    padding: 0px 20px;
     justify-content: flex-start;
+    height: 50px;
   }
 
   .individual-category:first-child {
@@ -44,6 +45,7 @@
 
   .small-screen-category-icon {
     display: block;
-    font-size: 50px;
+    font-size: 30px;
+    margin-right: 10px;
   }
 }
