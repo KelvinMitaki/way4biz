@@ -1070,6 +1070,7 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
     const todayTotalPrice = await Order.aggregate([
       {
         $match: {
+          paid: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60
@@ -1083,6 +1084,7 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
     const monthlyPrice = await Order.aggregate([
       {
         $match: {
+          paid: true,
           _id: {
             $gt: mongoose.Types.ObjectId.createFromTime(
               Date.now() / 1000 - 24 * 60 * 60 * 30
@@ -1310,6 +1312,10 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid main"),
+  check("category.icon")
+    .not()
+    .isEmpty()
+    .withMessage("Please enter a valid icon"),
   check("category.subcategories")
     .not()
     .isEmpty()
