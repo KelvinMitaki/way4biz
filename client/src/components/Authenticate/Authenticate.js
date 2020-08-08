@@ -6,6 +6,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import { signInClick, registerClick } from "../../redux/actions";
 import { connect } from "react-redux";
+import MobileLogo from "../Header/MobileLogo";
 
 class Authenticate extends React.Component {
   handleSignInClick = (e) => {
@@ -19,6 +20,7 @@ class Authenticate extends React.Component {
   render() {
     return (
       <div id="auth-section">
+        <MobileLogo />
         <AuthHeader />
         <div className="container-fluid my-5 auth-forms">
           <div className="row">

@@ -13,6 +13,7 @@ import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import SimpleMap from "./SimpleMap";
+import MobileLogo from "../Header/MobileLogo";
 
 export class SellerRegister extends Component {
   state = {
@@ -45,6 +46,7 @@ export class SellerRegister extends Component {
     }
     return (
       <div>
+        <MobileLogo />
         <AuthHeader />
         <br />
         <h1 style={{ textAlign: "center" }}>Register</h1>
