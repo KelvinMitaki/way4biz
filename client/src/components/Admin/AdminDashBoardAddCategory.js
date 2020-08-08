@@ -130,11 +130,23 @@ class AdminDashBoardAddCategory extends React.Component {
                   type="submit"
                   className="btn btn-md add-category-btn mb-2"
                   disabled={
-                    this.state.main === "" &&
-                    this.state.subcategories.length === 0
+                    (this.state.main === "" &&
+                      this.state.subcategories.length === 0) ||
+                    this.props.addCategoryLoading
                   }
                 >
-                  Add Category
+                  {this.props.addCategoryLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.addCategoryLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Add Category</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -144,7 +156,11 @@ class AdminDashBoardAddCategory extends React.Component {
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    addCategoryLoading: state.product.addCategoryLoading
+  };
+};
 export default withRouter(
-  connect(null, { addNewCategory })(AdminDashBoardAddCategory)
+  connect(mapStateToProps, { addNewCategory })(AdminDashBoardAddCategory)
 );

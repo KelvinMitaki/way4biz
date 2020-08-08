@@ -11,7 +11,7 @@ import { GiCancel } from "react-icons/gi";
 class AdminDashBoardEditCategory extends React.Component {
   state = {
     subcategories: [],
-    typing: "",
+    typing: ""
   };
   componentDidMount() {
     this.props.fetchSingleCategory(
@@ -19,15 +19,15 @@ class AdminDashBoardEditCategory extends React.Component {
       this.props.history
     );
   }
-  handleTypingSubmit = (e) => {
+  handleTypingSubmit = e => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: "",
+        typing: ""
       });
     }
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (this.state.subcategories.length !== 0) {
       this.props.editCategory(
@@ -37,8 +37,8 @@ class AdminDashBoardEditCategory extends React.Component {
           main: this.props.singleCategory.category.main,
           subcategories: [
             ...this.state.subcategories,
-            ...this.props.singleCategory.category.subcategories,
-          ],
+            ...this.props.singleCategory.category.subcategories
+          ]
         }
       );
     }
@@ -80,9 +80,7 @@ class AdminDashBoardEditCategory extends React.Component {
                     <input
                       name="typing"
                       type="text"
-                      onChange={(e) =>
-                        this.setState({ typing: e.target.value })
-                      }
+                      onChange={e => this.setState({ typing: e.target.value })}
                       className="form-control"
                       placeholder="e.g iPhone"
                       value={this.state.typing}
@@ -115,7 +113,7 @@ class AdminDashBoardEditCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  ),
+                                  )
                                 })
                               }
                             >
@@ -145,9 +143,23 @@ class AdminDashBoardEditCategory extends React.Component {
                   <button
                     type="submit"
                     className="btn btn-md add-category-btn"
-                    disabled={this.state.subcategories.length === 0}
+                    disabled={
+                      this.state.subcategories.length === 0 ||
+                      this.props.editCategoryLoading
+                    }
                   >
-                    Edit Category
+                    {this.props.editCategoryLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    {this.props.editCategoryLoading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Edit Category</span>
+                    )}
                   </button>
                 </form>
               </div>
@@ -158,9 +170,10 @@ class AdminDashBoardEditCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     singleCategory: state.product.singleCategory,
+    editCategoryLoading: state.product.editCategoryLoading
   };
 };
 export default withRouter(
