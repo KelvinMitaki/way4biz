@@ -214,7 +214,7 @@ function AdminDashBoardOrders(props) {
                           </div>
                           <div className="col-lg-2">
                             <strong className="x mr-2">Dispatched: </strong>
-                            <span>{order.dispatched}</span>
+                            <span>{order.dispatched ? "true" : "false"}</span>
                           </div>
                           <div className="col-lg-2">
                             <Link
@@ -257,7 +257,7 @@ function AdminDashBoardOrders(props) {
                         </div>
                         <div className="col-lg-2">
                           <strong className="x mr-2">Dispatched: </strong>
-                          <span>{order.dispatched}</span>
+                          <span>{order.dispatched ? "true" : "false"}</span>
                         </div>
                         <div className="col-lg-2">
                           <Link
