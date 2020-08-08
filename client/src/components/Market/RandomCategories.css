@@ -30,6 +30,7 @@
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    padding: 5px 0px;
   }
 
   .random-category-container {
