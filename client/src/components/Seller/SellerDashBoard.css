@@ -1,5 +1,8 @@
 .dashboard-content {
   padding: 20px;
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  position: relative;
 }
 
 .dashboard-content hr {

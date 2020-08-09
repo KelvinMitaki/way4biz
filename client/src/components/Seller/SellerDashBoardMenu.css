@@ -1,10 +1,11 @@
 #seller-dashboard-menu {
-  height: 100vh;
+  height: calc(100vh - 90px);
+  /* height: 100vh; */
   width: 100%;
   margin: 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: 90px;
   left: 0px;
 }
 
@@ -14,6 +15,8 @@
   color: #fff;
   height: 80%;
   overflow-y: auto;
+  position: relative;
+  /* z-index: 100; */
 }
 
 .seller-menu-active {
