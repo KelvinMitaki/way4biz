@@ -61,7 +61,6 @@ class GoodsReach extends React.Component {
             component={RadioField}
             onChange={this.handleDelivery}
           />
-
           <div>
             <p>Let our delivery personel deliver your goods at your place.</p>
           </div>
