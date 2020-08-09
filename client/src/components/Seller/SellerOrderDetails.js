@@ -104,8 +104,9 @@ class SellerOrderDetails extends React.Component {
                         onClick={() =>
                           this.props.confirmDispatch(
                             this.props.sellerOrderDetails.orderId,
-                            this.props.sellerOrderDetails.productSellerData["0"]
-                              ._id,
+                            this.props.sellerOrderDetails.productSellerData.map(
+                              item => item._id
+                            ),
                             this.props.history
                           )
                         }

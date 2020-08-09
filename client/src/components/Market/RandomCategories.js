@@ -1,11 +1,6 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
-import { FaTshirt, FaBaby, FaUtensils } from "react-icons/fa";
-import { GiLargeDress, GiWatch } from "react-icons/gi";
-import { RiComputerLine } from "react-icons/ri";
-import { BsPhone } from "react-icons/bs";
-
 import "./RandomCategories.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";

@@ -1369,28 +1369,6 @@ export const clearSearchTerm = () => (dispatch, getState) => {
     type: CLEAR_SEARCH_TERM
   });
 };
-// export const fetchFilteredProducts = (filter, category) => async dispatch => {
-//   try {
-//     dispatch({ type: FILTERED_PRODUCTS_START });
-//     const test = {};
-
-//     if (filter.rating) {
-//       test.rating = { $gte: 4 };
-//     }
-//     if (filter.freeShipping) {
-//       test.freeShipping = true;
-//     }
-//     test.category = category;
-
-//     const res = await axios.post(`/api/products/filter`, { test });
-//     console.log(res.data);
-//     // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//   } catch (error) {
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//     console.log(error.response);
-//   }
-// };
 
 export const handleCheckboxAction = (event, category, history, searchTerm) => (
   dispatch,
@@ -2217,12 +2195,12 @@ export const deleteCart = () => async dispatch => {
 
 export const confirmDispatch = (
   orderId,
-  productId,
+  productIds,
   history
 ) => async dispatch => {
   try {
     dispatch({ type: CONFIRM_DISPATCH_START });
-    await axios.post("/api/confirm/seller/dispatch", { orderId, productId });
+    await axios.post("/api/confirm/seller/dispatch", { orderId, productIds });
     dispatch({ type: CONFIRM_DISPATCH });
     dispatch(fetchSellerNewOrdersCount());
     history.push("/seller-orders");
