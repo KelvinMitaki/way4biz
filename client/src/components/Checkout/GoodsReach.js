@@ -3,6 +3,7 @@ import React from "react";
 import "./GoodsReach.css";
 import { Field } from "redux-form";
 import RadioField from "./RadioField";
+import DeliveryMethods from "./DeliveryMethods";
 
 class GoodsReach extends React.Component {
   state = { collection: false, delivery: false };
@@ -26,6 +27,12 @@ class GoodsReach extends React.Component {
   render() {
     return (
       <div className="ml-3 mt-2">
+        {this.state.delivery ? (
+          <DeliveryMethods
+            delivery={this.handleDelivery}
+            show={this.state.delivery}
+          />
+        ) : null}
         <div className="goods-reach">
           <Field
             type="radio"
@@ -56,7 +63,7 @@ class GoodsReach extends React.Component {
           />
 
           <div>
-            <p>Let our delivery guy deliver your goods at your place.</p>
+            <p>Let our delivery personel deliver your goods at your place.</p>
           </div>
         </div>
       </div>

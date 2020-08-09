@@ -4,10 +4,10 @@ import { Link, withRouter } from "react-router-dom";
 import "./AddToCartModalButton.css";
 import { connect } from "react-redux";
 
-const Modal = props => {
+const Modal = (props) => {
   const showHideClassName = props.show
     ? "modal display-block"
-    : "modal display-nones";
+    : "modal display-none";
 
   return (
     <div className={showHideClassName} onClick={props.handleClose}>
@@ -47,9 +47,9 @@ const Modal = props => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(connect(mapStateToProps)(Modal));
