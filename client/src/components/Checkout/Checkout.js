@@ -52,7 +52,7 @@ class CheckOut extends React.Component {
               <div className="row">
                 <div className="col-md-8 mx-auto">
                   <div id="address-details" className="mb-3 box-container">
-                    <h3>Address Details</h3>
+                    <h4>Address Details</h4>
                     <hr />
                     <div id="current-address">
                       <h6>
@@ -67,12 +67,12 @@ class CheckOut extends React.Component {
                     <br />
                   </div>
                   <div id="delivery-details" className="mb-3 box-container">
-                    <h3>Delivery Methods</h3>
+                    <h4>How should the goods reach you?</h4>
                     <hr />
-                    <DeliveryMethods />
+                    {/* <DeliveryMethods /> */}
                   </div>
                   <div id="payment-methods" className="box-container">
-                    <h3>Payment Methods</h3>
+                    <h4>Payment Methods</h4>
                     <hr />
                     <p className="ml-3">
                       How do you want to pay for your order?
