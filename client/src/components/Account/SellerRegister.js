@@ -4,7 +4,7 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
@@ -14,6 +14,7 @@ import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import SimpleMap from "./SimpleMap";
 import MobileLogo from "../Header/MobileLogo";
+import "./SellerRegister.css";
 
 export class SellerRegister extends Component {
   state = {
@@ -48,9 +49,9 @@ export class SellerRegister extends Component {
       <div>
         <MobileLogo />
         <AuthHeader />
-        <br />
-        <h1 style={{ textAlign: "center" }}>Register</h1>
-        <br />
+        <h1 style={{ textAlign: "center" }} className="my-2">
+          Register
+        </h1>
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             const { registerSeller } = this.props;
@@ -168,9 +169,15 @@ export class SellerRegister extends Component {
           <div className="form-primary-error">
             {this.props.sellerRegisterError && this.props.sellerRegisterError}
           </div>
-          <br />
-          <br />
         </form>
+        <p className="my-2" id="seller-register-sign-in">
+          Already have an account?{" "}
+          <Link to="/seller/sign-in" id="seller-register-sign-in-link">
+            Sign in
+          </Link>
+        </p>
+        <br />
+        <br />
       </div>
     );
   }
