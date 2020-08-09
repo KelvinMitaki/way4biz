@@ -4,23 +4,32 @@ import "./GoodsReach.css";
 import { Field } from "redux-form";
 import RadioField from "./RadioField";
 import DeliveryMethods from "./DeliveryMethods";
+import PickUp from "./PickUp";
 
 class GoodsReach extends React.Component {
   state = { collection: false, delivery: false };
 
-  handleCollection = (e) => {
-    this.setState((prevState) => {
-      return {
-        collection: !prevState.collection,
-      };
+  handleCollectionOpen = (e) => {
+    this.setState({
+      collection: true,
     });
   };
 
-  handleDelivery = (e) => {
-    this.setState((prevState) => {
-      return {
-        delivery: !prevState.delivery,
-      };
+  handleCollectionClose = (e) => {
+    this.setState({
+      collection: false,
+    });
+  };
+
+  handleDeliveryOpen = (e) => {
+    this.setState({
+      delivery: true,
+    });
+  };
+
+  handleDeliveryClose = (e) => {
+    this.setState({
+      delivery: false,
     });
   };
 
@@ -29,8 +38,14 @@ class GoodsReach extends React.Component {
       <div className="ml-3 mt-2">
         {this.state.delivery ? (
           <DeliveryMethods
-            delivery={this.handleDelivery}
+            delivery={this.handleDeliveryClose}
             show={this.state.delivery}
+          />
+        ) : null}
+        {this.state.collection ? (
+          <PickUp
+            collection={this.handleCollectionClose}
+            show={this.state.collection}
           />
         ) : null}
         <div className="goods-reach">
@@ -41,7 +56,7 @@ class GoodsReach extends React.Component {
             value="self-collection"
             id="radio-5000"
             component={RadioField}
-            onChange={this.handleCollection}
+            onChange={this.handleCollectionOpen}
           />
 
           <div>
@@ -59,7 +74,7 @@ class GoodsReach extends React.Component {
             id="radio-5500"
             value="our-delivery"
             component={RadioField}
-            onChange={this.handleDelivery}
+            onChange={this.handleDeliveryOpen}
           />
           <div>
             <p>Let our delivery personel deliver your goods at your place.</p>
