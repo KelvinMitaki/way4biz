@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { fetchProducts, preMakeOrder } from "../../redux/actions";
 import DeliveryMethods from "./DeliveryMethods";
 import MobileLogo from "../Header/MobileLogo";
+import GoodsReach from "./GoodsReach";
 
 class CheckOut extends React.Component {
   componentDidMount() {
@@ -69,6 +70,7 @@ class CheckOut extends React.Component {
                   <div id="delivery-details" className="mb-3 box-container">
                     <h4>How should the goods reach you?</h4>
                     <hr />
+                    <GoodsReach />
                     {/* <DeliveryMethods /> */}
                   </div>
                   <div id="payment-methods" className="box-container">
