@@ -1,8 +1,41 @@
 import React from "react";
+import { AiOutlineMinusCircle } from "react-icons/ai";
+import { BsPlusCircle } from "react-icons/bs";
 
 class FAQAccordion extends React.Component {
+  state = { open: false };
+
+  handleOpen = (e) => {
+    console.log("opening");
+    this.setState({
+      open: true,
+    });
+  };
+
+  handleClose = (e) => {
+    console.log("closing");
+    this.setState({
+      open: false,
+    });
+  };
   render() {
-    return <div></div>;
+    return (
+      <div>
+        {!this.state.open ? (
+          <div>
+            <p onClick={this.handleOpen}>
+              <BsPlusCircle /> How to sell on way4biz?
+            </p>
+          </div>
+        ) : (
+          <div>
+            <p onClick={this.handleClose}>
+              <AiOutlineMinusCircle /> How to sell on way4biz?
+            </p>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

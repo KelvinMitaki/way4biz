@@ -123,7 +123,11 @@ class HelpCenter extends React.Component {
               <h3>FAQs</h3>
               <p>Quickly find out if we addressed your query.</p>
               <div>
-                <FAQAccordion clicked={this.handleClick} />
+                <FAQAccordion />
+                <FAQAccordion />
+                <FAQAccordion />
+                <FAQAccordion />
+                <FAQAccordion />
               </div>
             </div>
           </div>
