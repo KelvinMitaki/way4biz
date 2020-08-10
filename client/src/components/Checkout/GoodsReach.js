@@ -9,27 +9,27 @@ import PickUp from "./PickUp";
 class GoodsReach extends React.Component {
   state = { collection: false, delivery: false };
 
-  handleCollectionOpen = (e) => {
+  handleCollectionOpen = e => {
     this.setState({
-      collection: true,
+      collection: true
     });
   };
 
-  handleCollectionClose = (e) => {
+  handleCollectionClose = e => {
     this.setState({
-      collection: false,
+      collection: false
     });
   };
 
-  handleDeliveryOpen = (e) => {
+  handleDeliveryOpen = e => {
     this.setState({
-      delivery: true,
+      delivery: true
     });
   };
 
-  handleDeliveryClose = (e) => {
+  handleDeliveryClose = e => {
     this.setState({
-      delivery: false,
+      delivery: false
     });
   };
 

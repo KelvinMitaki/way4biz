@@ -394,6 +394,7 @@ export const editUser = (credentials, history) => async (
 };
 export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
+    console.log(credentials);
     dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
