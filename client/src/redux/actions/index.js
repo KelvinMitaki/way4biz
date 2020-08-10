@@ -785,7 +785,6 @@ export const fetchAllCategories = () => async dispatch => {
 };
 
 export const preMakeOrder = (credentials, history) => dispatch => {
-  console.log(credentials);
   dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
   if (credentials.formValues.payment === "mpesa") {
     return history.push("/mpesa-payment");
