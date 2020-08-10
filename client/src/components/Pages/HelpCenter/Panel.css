@@ -1,5 +1,5 @@
 .panel {
-  background-color: #f0ebe1;
+  background-color: #eaecee;
 }
 .panel__label {
   position: relative;
@@ -28,7 +28,7 @@
   width: 22px;
   height: 2px;
   margin: auto 0px;
-  background-color: #372717;
+  background-color: #f76b1a;
 }
 .panel__label:before {
   -webkit-transform: rotate(-90deg);
@@ -43,7 +43,7 @@
   opacity: 1;
 }
 .panel[aria-expanded="true"] .panel__label {
-  color: #957029;
+  color: #000;
 }
 .panel[aria-expanded="true"] .panel__label:before {
   -webkit-transform: rotate(0deg);
@@ -58,7 +58,7 @@
 .panel__content {
   margin: 5px 25px 25px;
   font-size: 14px;
-  color: #756658;
+  color: #000;
   opacity: 0;
   -webkit-transition: opacity 0.3s linear 0.18s;
   transition: opacity 0.3s linear 0.18s;
