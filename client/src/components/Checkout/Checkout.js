@@ -36,6 +36,7 @@ class CheckOut extends React.Component {
       .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
+    console.log(this.props.goodsReach);
     return (
       <div className="main">
         <div className="content">
@@ -120,7 +121,12 @@ class CheckOut extends React.Component {
                             this.props.checkoutUserLoading ||
                             this.props.pristine ||
                             !this.props.payment ||
-                            !this.props.delivery
+                            (!this.props.delivery &&
+                              this.props.goodsReach &&
+                              this.props.goodsReach !== "self-collection") ||
+                            (this.props.goodsReach &&
+                              this.props.goodsReach === "self-collection" &&
+                              Object.keys(this.props.address).length === 0)
                           }
                           type="submit"
                         >
@@ -156,7 +162,7 @@ const validate = formValues => {
   if (!formValues.payment) {
     errors.payment = "Please choose a valid payment method";
   }
-  if (!formValues.delivery) {
+  if (!formValues.delivery && formValues["goods-reach"] !== "self-collection") {
     errors.delivery = "Please choose a valid delivery method";
   }
   return errors;
@@ -165,13 +171,16 @@ const selector = formValueSelector("Chekout");
 const mapStateToProps = state => {
   const payment = selector(state, "payment");
   const delivery = selector(state, "delivery");
+  const goodsReach = selector(state, "goods-reach");
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
+    address: state.selfCollection.address,
     payment,
-    delivery
+    delivery,
+    goodsReach
   };
 };
 export default withRouter(

@@ -13,7 +13,7 @@ import { IconContext } from "react-icons";
 import { AiOutlineSearch } from "react-icons/ai";
 import reactSringReplace from "react-string-replace";
 import Image from "../Market/Image";
-import { debounce } from "lodash";
+// import { debounce } from "lodash";
 
 class Search extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Search extends React.Component {
       typing: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    this.fetchSearch = debounce(this.fetchSearch, 1000);
+    // this.fetchSearch = debounce(this.fetchSearch, 1000);
   }
   async handleChange(e) {
     this.setState({
