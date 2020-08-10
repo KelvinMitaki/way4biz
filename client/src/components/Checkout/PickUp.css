@@ -13,6 +13,11 @@
   padding: 10px 5px;
 }
 
+.pick-up-point:hover {
+  background-color: #eaecee;
+  color: #f76b1a;
+}
+
 @media screen and (max-width: 540px) {
   .pick-up-points {
     max-height: 200px;
