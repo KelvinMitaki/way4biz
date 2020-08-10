@@ -788,37 +788,38 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     // NEW ORDERS
     const newOrders = await Order.aggregate([
       { $match: { delivered: false, cancelled: false, dispatched: false } },
+      { $unwind: "$items" },
       {
         $lookup: {
           from: "products",
           localField: "items.product",
           foreignField: "_id",
-          as: "products"
+          as: "items.product"
         }
       },
+      { $unwind: "$items.product" },
+      { $project: { items: 1 } },
       {
-        $project: {
-          products: 1,
-          totalPrice: 1,
-          buyer: 1,
-          createdAt: 1
-        }
+        $group: { _id: "$_id", items: { $push: "$items" } }
       },
-      { $match: { "products.seller": _id } },
+      { $match: { "items.product.seller": _id } },
       {
         $project: {
-          totalPrice: 1,
-          buyer: 1,
-          createdAt: 1,
-          products: {
+          items: {
             $filter: {
-              input: "$products",
+              input: "$items",
               as: "p",
-              cond: { $eq: ["$$p.seller", _id] }
+              cond: {
+                $and: [
+                  { $eq: ["$$p.product.seller", _id] },
+                  { $eq: ["$$p.sellerDispatched", false] }
+                ]
+              }
             }
           }
         }
       },
+      { $match: { items: { $ne: [] } } },
       { $count: "newOrders" }
     ]);
     // SUCCESSFUL SALES

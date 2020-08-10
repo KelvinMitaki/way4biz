@@ -18,20 +18,21 @@ import {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts
+  fetchLatestRejectedProducts,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test"
+      title: "test",
     },
     lineData: {
-      data: [20, 10]
-    }
+      data: [20, 10],
+    },
   };
   componentDidMount() {
     this.props.getStock();
@@ -91,6 +92,7 @@ class AdminDashBoard extends React.Component {
     if (this.props.stock.length !== 0) {
       return (
         <div className="container-fluid dashboard-wrapper">
+          <MobileLogo />
           <AdminDashBoardHeader />
           <div className="container-fluid p-0">
             <AdminDashboardSecondaryHeader />
@@ -118,10 +120,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find(s => s.label === "Stock Out")
+                      {this.props.stock.find((s) => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find(s => s.label === "Stock Out")
+                          this.props.stock.find((s) => s.label === "Stock Out")
                             .value
                         ).toLocaleString()}
                     </span>
@@ -224,7 +226,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -253,7 +255,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -309,7 +311,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a"
+                                        backgroundColor: "#f76b1a",
                                       }}
                                     >
                                       {todaysComplaints}
@@ -348,7 +350,7 @@ class AdminDashBoard extends React.Component {
                 </h5>
                 {/* mapping here */}
                 {this.props.latestRejectedProducts.length !== 0 &&
-                  this.props.latestRejectedProducts.map(p => (
+                  this.props.latestRejectedProducts.map((p) => (
                     <div key={p._id} className="rejected-product box-container">
                       <div className="rejected-product-image-wrapper">
                         <Image
@@ -394,7 +396,7 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
@@ -403,7 +405,7 @@ const mapStateToProps = state => {
     latestRejectedProducts: state.product.latestRejectedProducts,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.sellerRegister.newSellers,
   };
 };
 export default connect(mapStateToProps, {
@@ -415,5 +417,5 @@ export default connect(mapStateToProps, {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts
+  fetchLatestRejectedProducts,
 })(AdminDashBoard);

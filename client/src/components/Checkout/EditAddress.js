@@ -7,6 +7,12 @@ class EditAddressSection extends Component {
   render() {
     return (
       <div>
+        <p style={{ margin: "0px 20px" }}>
+          <small>
+            This is the place your goods will be delivered. Be as precise as
+            possible.
+          </small>
+        </p>
         <Link
           to="/address"
           style={{
