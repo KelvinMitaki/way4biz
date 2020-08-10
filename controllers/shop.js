@@ -571,10 +571,6 @@ route.delete("/api/delete/whole/cart", auth, async (req, res) => {
 // FIX THIS
 route.get("/api/products/find/categories", async (req, res) => {
   try {
-    // await Product.find().distinct("category", (err, uniqueCategories) => {
-    //   if (err) return res.send(err);
-    //   res.send(uniqueCategories);
-    // });
     const category = await Product.aggregate([
       { $group: { _id: "$category" } },
       { $limit: 9 },

@@ -788,37 +788,38 @@ route.get("/api/seller/new/orders", auth, isSeller, async (req, res) => {
     // NEW ORDERS
     const newOrders = await Order.aggregate([
       { $match: { delivered: false, cancelled: false, dispatched: false } },
+      { $unwind: "$items" },
       {
         $lookup: {
           from: "products",
           localField: "items.product",
           foreignField: "_id",
-          as: "products"
+          as: "items.product"
         }
       },
+      { $unwind: "$items.product" },
+      { $project: { items: 1 } },
       {
-        $project: {
-          products: 1,
-          totalPrice: 1,
-          buyer: 1,
-          createdAt: 1
-        }
+        $group: { _id: "$_id", items: { $push: "$items" } }
       },
-      { $match: { "products.seller": _id } },
+      { $match: { "items.product.seller": _id } },
       {
         $project: {
-          totalPrice: 1,
-          buyer: 1,
-          createdAt: 1,
-          products: {
+          items: {
             $filter: {
-              input: "$products",
+              input: "$items",
               as: "p",
-              cond: { $eq: ["$$p.seller", _id] }
+              cond: {
+                $and: [
+                  { $eq: ["$$p.product.seller", _id] },
+                  { $eq: ["$$p.sellerDispatched", false] }
+                ]
+              }
             }
           }
         }
       },
+      { $match: { items: { $ne: [] } } },
       { $count: "newOrders" }
     ]);
     // SUCCESSFUL SALES
@@ -1798,29 +1799,31 @@ route.get("/api/latest/rejected/products", auth, isAdmin, async (req, res) => {
 route.post(
   "/api/confirm/seller/dispatch",
   isSeller,
-  check("productId").not().isEmpty(),
-  check("orderId").not().isEmpty(),
+  check("productIds").isArray().withMessage("Please enter a valid array"),
+  check("orderId").not().isEmpty().withMessage("Invalid orderId"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const { productId, orderId } = req.body;
+      const { productIds, orderId } = req.body;
       const order = await Order.findOneAndUpdate(
-        { _id: orderId, "items.product": productId },
-        { "items.$.sellerDispatched": true }
+        { _id: orderId, "items.product": { $in: productIds } },
+        { "items.$[el].sellerDispatched": true },
+        { multi: true, arrayFilters: [{ "el.product": { $in: productIds } }] }
       );
       await order.save();
 
-      const falseItem = order.items.find(item => !item.sellerDispatched);
+      const savedOrder = await Order.findById(orderId);
+      const falseItem = savedOrder.items.find(item => !item.sellerDispatched);
+
       if (falseItem) {
         return res.send(order);
       }
-      const updatedOrder = await Order.findByIdAndUpdate(orderId, {
-        dispatched: true
-      });
-      res.send(updatedOrder);
+      savedOrder.dispatched = true;
+      await savedOrder.save();
+      res.send(savedOrder);
     } catch (error) {
       res.status(500).send(error);
     }
