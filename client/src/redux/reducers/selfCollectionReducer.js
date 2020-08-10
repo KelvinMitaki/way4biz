@@ -2,7 +2,7 @@ import { SELF_COLLECTION_ADDRESS } from "../actions/types";
 
 const INITIAL_STATE = {
   address: {},
-  city: "Ngong Road Apartments, Ngong Road, Nairobi, Kenya"
+  city: "Thika"
 };
 
 export default (state = INITIAL_STATE, action) => {

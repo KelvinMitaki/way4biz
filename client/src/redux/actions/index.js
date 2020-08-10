@@ -1485,7 +1485,6 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
 };
 
 export const paymentPerDistance = (details, history) => async dispatch => {
-  console.log(details);
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
@@ -2231,9 +2230,23 @@ export const confirmDelivery = (orderId, history) => async dispatch => {
   }
 };
 
-export const selfCollectionAddress = latLng => {
-  return {
-    type: SELF_COLLECTION_ADDRESS,
-    payload: latLng
-  };
+export const selfCollectionAddress = latLng => async (dispatch, getState) => {
+  try {
+    const lat = latLng.lat;
+    const lng = latLng.lng;
+    const details = {
+      destination: [`${lat},${lng}`],
+      origins: [getState().selfCollection.city]
+    };
+    const res = await axios.post(`/api/buyer/destination`, details);
+    console.log(res.data);
+    dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
+    dispatch({
+      type: SELF_COLLECTION_ADDRESS,
+      payload: latLng
+    });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };

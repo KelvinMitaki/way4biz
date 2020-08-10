@@ -32,7 +32,6 @@ class CheckOut extends React.Component {
         .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
-    const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
       .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
@@ -108,7 +107,7 @@ class CheckOut extends React.Component {
                           {(
                             parseInt(total.replace(",", "")) +
                             parseInt(VAT) +
-                            parseInt(shipping)
+                            Math.round(this.props.distance.shippingFees)
                           ).toLocaleString()}
                         </p>
                       </div>
