@@ -227,7 +227,9 @@ import {
   SELLER_LOGIN_STOP,
   REGISTER_START,
   REGISTER_STOP,
-  SELF_COLLECTION_ADDRESS
+  SELF_COLLECTION_ADDRESS,
+  SELF_COLLECTION_START,
+  SELF_COLLECTION_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2238,14 +2240,16 @@ export const selfCollectionAddress = latLng => async (dispatch, getState) => {
       destination: [`${lat},${lng}`],
       origins: [getState().selfCollection.city]
     };
+    dispatch({ type: SELF_COLLECTION_START });
     const res = await axios.post(`/api/buyer/destination`, details);
-    console.log(res.data);
+    dispatch({ type: SELF_COLLECTION_STOP });
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({
       type: SELF_COLLECTION_ADDRESS,
       payload: latLng
     });
   } catch (error) {
+    dispatch({ type: SELF_COLLECTION_STOP });
     authCheck(error);
     console.log(error.response);
   }

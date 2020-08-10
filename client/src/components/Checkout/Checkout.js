@@ -36,7 +36,6 @@ class CheckOut extends React.Component {
       .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
-    console.log(this.props.goodsReach);
     return (
       <div className="main">
         <div className="content">

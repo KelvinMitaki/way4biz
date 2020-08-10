@@ -3,6 +3,7 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import "./PickUp.css";
 import { selfCollectionAddress } from "../../redux/actions";
 import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class PickUp extends React.Component {
   handleSelect = async selectedCity => {
@@ -17,6 +18,7 @@ class PickUp extends React.Component {
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
+          {this.props.selfCollectionLoading && <ScreenLoader />}
           <div className="modal-header">
             <span className="close-modal-btn" onClick={this.props.collection}>
               ×
@@ -45,7 +47,8 @@ class PickUp extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    city: state.selfCollection.city
+    city: state.selfCollection.city,
+    selfCollectionLoading: state.selfCollection.selfCollectionLoading
   };
 };
 export default connect(mapStateToProps, { selfCollectionAddress })(PickUp);
