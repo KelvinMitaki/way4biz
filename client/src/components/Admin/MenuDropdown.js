@@ -71,7 +71,7 @@ class MenuDropdown extends React.Component {
 
           <MdKeyboardArrowDown className="ml-1" />
         </span>
-        <div className="panel">
+        <div className="my-panel">
           {childKeys.map((childKey) => (
             <p key={Math.random()}>
               <NavLink

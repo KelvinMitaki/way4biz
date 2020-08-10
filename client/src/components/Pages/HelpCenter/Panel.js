@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDom from "react-dom";
 import "./Panel.css";
-
 class Panel extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       height: 0,
     };
@@ -12,13 +12,14 @@ class Panel extends React.Component {
 
   componentDidMount() {
     window.setTimeout(() => {
-      const element = ReactDom.findDOMNode(this);
-      const height = element.querySelector(".my-panel-inner").scrollHeight;
+      const el = ReactDom.findDOMNode(this);
+      const height = el.querySelector(".panel__inner").scrollHeight;
       this.setState({
         height,
       });
     }, 333);
   }
+
   render() {
     const { label, content, activeTab, index, activateTab } = this.props;
     const { height } = this.state;
@@ -26,17 +27,18 @@ class Panel extends React.Component {
     const innerStyle = {
       height: `${isActive ? height : 0}px`,
     };
+
     return (
-      <div className="my-panel" role="tabpanel" aria-expanded={isActive}>
-        <button className="my-panel-label" role="tab" onClick={activateTab}>
+      <div className="panel" role="tabpanel" aria-expanded={isActive}>
+        <button className="panel__label" role="tab" onClick={activateTab}>
           {label}
         </button>
         <div
-          className="my-panel-inner"
+          className="panel__inner"
           style={innerStyle}
           aria-hidden={!isActive}
         >
-          <p className="my-panel-content">{content}</p>
+          <p className="panel__content">{content}</p>
         </div>
       </div>
     );

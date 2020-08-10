@@ -1,29 +1,4 @@
-.faq-text-down {
-  min-height: 30px;
-  animation: faq-slide-down 0.5s ease-in;
-}
-
-@keyframes faq-slide-down {
-  0% {
-    transform: translateY(0%);
-  }
-
-  100% {
-    transform: translateY(100%);
-  }
-}
-
-.faq-text-up {
-  min-height: 30px;
-  animation: faq-slide-up 0.5s ease-in;
-}
-
-@keyframes faq-slide-up {
-  0% {
-    transform: translateY(100%);
-  }
-
-  100% {
-    transform: translateY(0%);
-  }
+.my-accordion {
+  width: 100%;
+  /* max-width: 470px; */
 }

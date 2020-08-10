@@ -1,24 +1,24 @@
 import React from "react";
-import { AiOutlineMinusCircle } from "react-icons/ai";
-import { BsPlusCircle } from "react-icons/bs";
+// import { AiOutlineMinusCircle } from "react-icons/ai";
+// import { BsPlusCircle } from "react-icons/bs";
 import "./FAQAccordion.css";
 import Panel from "./Panel";
 
 class FAQAccordion extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeTab: 0 };
+
+    this.state = {
+      activeTab: 0,
+    };
 
     this.activateTab = this.activateTab.bind(this);
   }
 
   activateTab(index) {
-    console.log("Helloo world");
-    this.setState((prevState) => {
-      return {
-        activeTab: prevState.activeTab === index ? -1 : index,
-      };
-    });
+    this.setState((prev) => ({
+      activeTab: prev.activeTab === index ? -1 : index,
+    }));
   }
 
   render() {
@@ -49,17 +49,16 @@ class FAQAccordion extends React.Component {
           "SVG is awesome for icons! It's a vector image format with optional support for CSS, JavaScript, reusability, accessibility and a bunch more. It was made for this sort of thing.",
       },
     ];
-    const activeTab = this.state;
+    const { activeTab } = this.state;
     return (
       <div className="my-accordion" role="tablist">
-        {panels.map((panel, idx) => (
+        {panels.map((panel, index) => (
           <Panel
-            key={idx}
+            key={index}
             activeTab={activeTab}
-            index={idx}
-            label={panel.label}
-            content={panel.content}
-            activateTab={this.activateTab.bind(idx)}
+            index={index}
+            {...panel}
+            activateTab={this.activateTab.bind(null, index)}
           />
         ))}
       </div>

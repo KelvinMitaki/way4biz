@@ -1,4 +1,7 @@
-/* .my-panel-label {
+.panel {
+  background-color: #f0ebe1;
+}
+.panel__label {
   position: relative;
   display: block;
   width: 100%;
@@ -8,56 +11,26 @@
   padding: 25px 60px 25px 25px;
   font-weight: 500;
   font-size: 17px;
-  transition: color 0.2s linear;
-  cursor: pointer;
-}
-
-.my-panel-inner {
-  overflow: hidden;
-  will-change: height;
-  transition: height 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
-}
-
-.my-panel-content {
-  margin: 5px 25px 25px;
-  font-size: 14px;
-  color: gray;
-  opacity: 0;
-  transition: opacity 0.3s linear 0.18s;
-} */
-
-.my-panel {
-  background-color: #f0ebe1;
-}
-.my-panel-label {
-  position: relative;
-  display: block;
-  width: 100%;
-  background: none;
-  border: none;
-  text-align: left;
-  font-weight: 500;
-  font-size: 17px;
   font-family: inherit;
   -webkit-transition: color 0.2s linear;
   transition: color 0.2s linear;
   cursor: pointer;
 }
-.my-panel-label:focus {
+.panel__label:focus {
   outline: none;
 }
-.my-panel-label:after,
-.my-panel-label:before {
+.panel__label:after,
+.panel__label:before {
   content: "";
   position: absolute;
   right: 25px;
   top: 50%;
   width: 22px;
   height: 2px;
-  margin-top: 10px;
+  margin-top: -10px;
   background-color: #372717;
 }
-.my-panel-label:before {
+.panel__label:before {
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
   -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.65, 0.05, 0.36, 1);
@@ -66,23 +39,23 @@
   transition: transform 0.35s cubic-bezier(0.65, 0.05, 0.36, 1),
     -webkit-transform 0.35s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
-.my-panel[aria-expanded="true"] .my-panel-content {
+.panel[aria-expanded="true"] .panel__content {
   opacity: 1;
 }
-.my-panel[aria-expanded="true"] .my-panel-label {
+.panel[aria-expanded="true"] .panel__label {
   color: #957029;
 }
-.my-panel[aria-expanded="true"] .mypanel-label:before {
+.panel[aria-expanded="true"] .panel__label:before {
   -webkit-transform: rotate(0deg);
   transform: rotate(0deg);
 }
-.my-panel-inner {
+.panel__inner {
   overflow: hidden;
   will-change: height;
   -webkit-transition: height 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
   transition: height 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
-.my-panel-content {
+.panel__content {
   margin: 5px 25px 25px;
   font-size: 14px;
   color: #756658;
@@ -90,6 +63,6 @@
   -webkit-transition: opacity 0.3s linear 0.18s;
   transition: opacity 0.3s linear 0.18s;
 }
-.my-panel:not(:last-child) {
+.panel:not(:last-child) {
   margin-bottom: 3px;
 }
