@@ -66,10 +66,6 @@ class HelpCenter extends React.Component {
               <p>Quickly find out if we addressed your query.</p>
               <div className="my-3">
                 <FAQAccordion />
-                <FAQAccordion />
-                <FAQAccordion />
-                <FAQAccordion />
-                <FAQAccordion />
               </div>
             </div>
           </div>
