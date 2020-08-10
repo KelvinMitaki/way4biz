@@ -10,8 +10,18 @@ import { RiBookletLine } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import HelpCenterHeader from "./HelpCenterHeader";
+import FAQAccordion from "./FAQAccordion";
 
 class HelpCenter extends React.Component {
+  state = {
+    open: 1,
+  };
+
+  handleClick = (e, val) => {
+    this.setState({
+      open: val,
+    });
+  };
   render() {
     return (
       <div className="main">
@@ -50,6 +60,9 @@ class HelpCenter extends React.Component {
                 </div>
               </div>
             </div>
+
+            {/* 
+
             <div className="container my-4">
               <div className="row">
                 <div className="col-md-4 help-center-card">
@@ -103,6 +116,14 @@ class HelpCenter extends React.Component {
                     </Link>
                   </p>
                 </div>
+              </div>
+            </div> */}
+
+            <div className="container my-4">
+              <h3>FAQs</h3>
+              <p>Quickly find out if we addressed your query.</p>
+              <div>
+                <FAQAccordion clicked={this.handleClick} />
               </div>
             </div>
           </div>
