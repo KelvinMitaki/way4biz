@@ -34,7 +34,7 @@ class HelpCenter extends React.Component {
             <div className="help-center-hero">
               <h1
                 id="help-center-hero-head"
-                style={{ textTransform: "uppercase" }}
+                style={{ textTransform: "uppercase", color: "#fff" }}
               >
                 How can we help?
               </h1>
@@ -62,8 +62,8 @@ class HelpCenter extends React.Component {
             </div>
 
             <div className="container my-4">
-              <h3>FAQs</h3>
-              <p>Quickly find out if we addressed your query.</p>
+              <h1>FAQs</h1>
+              <h6>Quickly find out if we addressed your query.</h6>
               <div className="my-3">
                 <FAQAccordion />
               </div>
