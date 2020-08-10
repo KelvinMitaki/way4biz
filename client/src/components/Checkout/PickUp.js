@@ -1,17 +1,14 @@
 import React from "react";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import "./PickUp.css";
+import { selfCollectionAddress } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class PickUp extends React.Component {
-  state = {
-    address: {},
-    city: "Ngong Road Apartments, Ngong Road, Nairobi, Kenya"
-  };
-
   handleSelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
-    this.setState({ address: latlng }, () => console.log(this.state.address));
+    this.props.selfCollectionAddress(latlng);
   };
   render() {
     const showHideClassName = this.props.show
@@ -31,11 +28,11 @@ class PickUp extends React.Component {
               <div className="ml-3 mt-2">
                 <ul className="pick-up-points">
                   <li
-                    onClick={() => this.handleSelect(this.state.city)}
+                    onClick={() => this.handleSelect(this.props.city)}
                     style={{ cursor: "pointer" }}
                     className="pick-up-point"
                   >
-                    <p>{this.state.city}</p>
+                    <p>{this.props.city}</p>
                   </li>
                 </ul>
               </div>
@@ -46,5 +43,9 @@ class PickUp extends React.Component {
     );
   }
 }
-
-export default PickUp;
+const mapStateToProps = state => {
+  return {
+    city: state.selfCollection.city
+  };
+};
+export default connect(mapStateToProps, { selfCollectionAddress })(PickUp);

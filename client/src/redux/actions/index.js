@@ -226,7 +226,8 @@ import {
   SELLER_LOGIN_START,
   SELLER_LOGIN_STOP,
   REGISTER_START,
-  REGISTER_STOP
+  REGISTER_STOP,
+  SELF_COLLECTION_ADDRESS
 } from "./types";
 
 const authCheck = error => {
@@ -2228,4 +2229,11 @@ export const confirmDelivery = (orderId, history) => async dispatch => {
     authCheck(error);
     dispatch({ type: CONFIRM_DELIVERY_STOP });
   }
+};
+
+export const selfCollectionAddress = latLng => {
+  return {
+    type: SELF_COLLECTION_ADDRESS,
+    payload: latLng
+  };
 };
