@@ -6,14 +6,12 @@ class FAQAccordion extends React.Component {
   state = { open: false };
 
   handleOpen = (e) => {
-    console.log("opening");
     this.setState({
       open: true,
     });
   };
 
   handleClose = (e) => {
-    console.log("closing");
     this.setState({
       open: false,
     });
