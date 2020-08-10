@@ -38,7 +38,7 @@ class HelpCenter extends React.Component {
               >
                 How can we help?
               </h1>
-              <div className="input-group mt-3" id="help-center-input">
+              {/* <div className="input-group mt-3" id="help-center-input">
                 <input
                   className="form-control"
                   placeholder="eg. How to sell on way4Biz?"
@@ -58,7 +58,7 @@ class HelpCenter extends React.Component {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="container my-4">
