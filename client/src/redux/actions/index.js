@@ -394,7 +394,6 @@ export const editUser = (credentials, history) => async (
 };
 export const checkoutUser = credentials => async (dispatch, getState) => {
   try {
-    console.log(credentials);
     dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
     const userId = getState().auth.user._id;
@@ -783,6 +782,7 @@ export const fetchAllCategories = () => async dispatch => {
 };
 
 export const preMakeOrder = (credentials, history) => dispatch => {
+  console.log(credentials);
   dispatch({ type: PRE_MAKE_ORDER, payload: credentials });
   if (credentials.formValues.payment === "mpesa") {
     return history.push("/mpesa-payment");
@@ -1484,6 +1484,7 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
 };
 
 export const paymentPerDistance = (details, history) => async dispatch => {
+  console.log(details);
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);

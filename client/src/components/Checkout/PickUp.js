@@ -11,13 +11,12 @@ class PickUp extends React.Component {
   handleSelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
-    this.setState({ address: latlng });
+    this.setState({ address: latlng }, () => console.log(this.state.address));
   };
   render() {
     const showHideClassName = this.props.show
       ? "modal display-block"
       : "modal display-none";
-    console.log(this.state.address);
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
