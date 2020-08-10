@@ -85,7 +85,7 @@ class GoodsReach extends React.Component {
             onChange={this.handleDeliveryOpen}
           />
           <div>
-            <p>Let our delivery personel deliver your goods at your place.</p>
+            <p>Let our delivery personnel deliver your goods at your place.</p>
           </div>
         </div>
       </div>

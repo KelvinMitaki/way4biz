@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Contact.css";
-import Header from "../../Header/Header";
+import HelpCenterHeader from "./HelpCenterHeader";
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 
@@ -10,7 +10,7 @@ class Contact extends React.Component {
     return (
       <div className="main">
         <div className="content">
-          <Header />
+          <HelpCenterHeader />
           <div
             className="container-fluid p-0 m-0"
             style={{ backgroundColor: "#fff" }}
