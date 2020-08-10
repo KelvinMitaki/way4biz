@@ -1347,11 +1347,14 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
     console.log(error.response);
   }
 };
-export const handleSearchTerm = term => {
-  return {
+export const handleSearchTerm = term => dispatch => {
+  if (term.trim() === "") {
+    dispatch(clearSearchTerm());
+  }
+  dispatch({
     type: HANDLE_SEARCH_TERM,
     payload: term
-  };
+  });
 };
 
 export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
