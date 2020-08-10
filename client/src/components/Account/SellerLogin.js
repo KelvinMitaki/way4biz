@@ -22,7 +22,7 @@ export class SellerLogin extends Component {
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit((formValues) => {
+          onSubmit={this.props.handleSubmit(formValues => {
             return this.props.sellerLogIn(formValues, this.props.history);
           })}
         >
@@ -35,17 +35,17 @@ export class SellerLogin extends Component {
           />
           <button
             className="btn btn-md btn-block auth-btn mt-3 primary-button"
-            disabled={!this.props.valid || this.props.loading}
+            disabled={!this.props.valid || this.props.sellerLoginLoading}
             type="submit"
           >
-            {this.props.loading && (
+            {this.props.sellerLoginLoading && (
               <span
                 className="spinner-grow spinner-grow-sm"
                 role="status"
                 aria-hidden="true"
               ></span>
             )}
-            {this.props.loading ? (
+            {this.props.sellerLoginLoading ? (
               <span> {"  "}Loading...</span>
             ) : (
               <span>Login</span>
@@ -65,7 +65,7 @@ export class SellerLogin extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
@@ -82,10 +82,10 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     error: state.auth.error,
-    loading: state.auth.loading,
+    sellerLoginLoading: state.auth.sellerLoginLoading
   };
 };
 export default withRouter(

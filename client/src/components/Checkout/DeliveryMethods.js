@@ -10,7 +10,7 @@ class DeliveryMethods extends React.Component {
       ? "modal display-block"
       : "modal display-none";
     return (
-      <div className={showHideClassName} onClick={this.props.delivery}>
+      <div className={showHideClassName}>
         <section className="modal-main">
           <div className="modal-header">
             <span className="close-modal-btn" onClick={this.props.delivery}>

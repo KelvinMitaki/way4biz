@@ -4,7 +4,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
-  z-index: 1000000;
+  z-index: 600;
   /* margin-bottom: 20px; */
 }
 

@@ -193,6 +193,7 @@ const mapStateToProps = (state) => {
     sellerRejects: state.product.sellerRejects,
     sellerOrders: state.sellerRegister.sellerOrders,
     user: state.auth.user,
+    dashboard: state.detailsPersist.dashboard,
   };
 };
 export default connect(mapStateToProps, {

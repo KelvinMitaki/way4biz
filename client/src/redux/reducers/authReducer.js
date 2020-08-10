@@ -31,7 +31,13 @@ import {
   FETCH_USER_START,
   FETCH_USER_STOP,
   CHECKOUT_USER_START,
-  CHECKOUT_USER_STOP
+  CHECKOUT_USER_STOP,
+  LOG_IN_START,
+  LOG_IN_STOP,
+  SELLER_LOGIN_START,
+  SELLER_LOGIN_STOP,
+  REGISTER_START,
+  REGISTER_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -53,13 +59,28 @@ const INITIAL_STATE = {
   sellerOrdersLoading: false,
   sellerProductsLoading: false,
   singleCategoryLoading: false,
-  checkoutUserLoading: false
+  checkoutUserLoading: false,
+  loginLoading: false,
+  sellerLoginLoading: false,
+  registerLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOG_IN:
       return { ...state, isSignedIn: true, user: action.payload };
+    case LOG_IN_START:
+      return { ...state, loginLoading: true };
+    case LOG_IN_STOP:
+      return { ...state, loginLoading: false };
+    case SELLER_LOGIN_START:
+      return { ...state, sellerLoginLoading: true };
+    case SELLER_LOGIN_STOP:
+      return { ...state, sellerLoginLoading: false };
+    case REGISTER_START:
+      return { ...state, registerLoading: true };
+    case REGISTER_STOP:
+      return { ...state, registerLoading: false };
     case LOG_IN_FAILED:
       return {
         ...state,
