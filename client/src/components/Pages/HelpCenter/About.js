@@ -1,8 +1,8 @@
 import React from "react";
 
 import "./About.css";
-import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
+import HelpCenterHeader from "./HelpCenterHeader";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 import { IoMdRocket } from "react-icons/io";
 import { GiBinoculars } from "react-icons/gi";
@@ -13,7 +13,7 @@ class About extends React.Component {
     return (
       <div className="main">
         <div className="content">
-          <Header />
+          <HelpCenterHeader />
           <div
             className="container-fluid p-0"
             style={{ backgroundColor: "#fff" }}
