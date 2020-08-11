@@ -4,6 +4,7 @@ import "./SellerPoints.css";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EarnPoints from "./EarnPoints";
+import RedeemPoints from "./RedeemPoints";
 
 class SellerPoints extends React.Component {
   getTabs() {
@@ -14,7 +15,7 @@ class SellerPoints extends React.Component {
       },
       {
         name: "Redeem Points",
-        content: "The quick brown fox jumped over the lazy dog",
+        content: <RedeemPoints />,
       },
     ];
 
