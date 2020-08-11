@@ -29,11 +29,11 @@ class HelpCenterHeader extends React.Component {
               <p>Contact Us</p>
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/faqs">
               <p>FAQs</p>
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <div id="help-center-hamburger-wrapper">
           <div id="help-center-hamburger">
@@ -72,11 +72,11 @@ class HelpCenterHeader extends React.Component {
                     <p>Contact Us</p>
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/faqs">
                     <p>FAQs</p>
                   </NavLink>
-                </li>
+                </li> */}
               </ul>
             </div>
           ) : null}
