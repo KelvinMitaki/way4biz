@@ -229,7 +229,9 @@ import {
   REGISTER_STOP,
   SELF_COLLECTION_ADDRESS,
   SELF_COLLECTION_START,
-  SELF_COLLECTION_STOP
+  SELF_COLLECTION_STOP,
+  VERIFIED_SELLER_START,
+  VERIFIED_SELLER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -1526,13 +1528,13 @@ export const fetchVerifiedSellers = () => async dispatch => {
 
 export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
   try {
-    dispatch({ type: FETCH_SELLERS_START });
+    dispatch({ type: VERIFIED_SELLER_START });
     const res = await axios.get(`/api/verified/seller/${sellerId}`);
     dispatch({ type: FETCH_VERIFIED_SELLER, payload: res.data });
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: VERIFIED_SELLER_STOP });
   } catch (error) {
     authCheck(error);
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: VERIFIED_SELLER_STOP });
     history.push("/");
   }
 };

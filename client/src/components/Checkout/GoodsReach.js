@@ -74,20 +74,24 @@ class GoodsReach extends React.Component {
             </p>
           </div>
         </div>
-        <div className="goods-reach">
-          <Field
-            type="radio"
-            label="Our Delivery"
-            name="goods-reach"
-            id="radio-5500"
-            value="our-delivery"
-            component={RadioField}
-            onChange={this.handleDeliveryOpen}
-          />
-          <div>
-            <p>Let our delivery personnel deliver your goods at your place.</p>
+        {Object.keys(this.props.address).length === 0 && (
+          <div className="goods-reach">
+            <Field
+              type="radio"
+              label="Our Delivery"
+              name="goods-reach"
+              id="radio-5500"
+              value="our-delivery"
+              component={RadioField}
+              onChange={this.handleDeliveryOpen}
+            />
+            <div>
+              <p>
+                Let our delivery personnel deliver your goods at your place.
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

@@ -14,7 +14,6 @@ import {
   removeFromWishlist,
   fetchWishlistProducts
 } from "../../redux/actions";
-import ScreenLoader from "../Pages/ScreenLoader";
 
 // DECREASE FROM BOTH CART AND WISHLIST
 export class Wishlist extends Component {
