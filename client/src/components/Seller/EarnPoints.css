@@ -1,0 +1,25 @@
+.referral-input {
+  border: 1px solid #d4d4d4;
+}
+
+.referral-input:focus {
+  border: 1px solid #d4d4d4;
+  outline: none;
+  box-shadow: none;
+}
+
+#referral-btn {
+  background-color: #f76b1a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 5px;
+}
+
+#referral-btn:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
