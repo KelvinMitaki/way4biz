@@ -7,7 +7,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
 import { fetchSellerNewOrdersCount } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class SellerDashBoard extends React.Component {
   componentDidMount() {
@@ -28,13 +28,17 @@ class SellerDashBoard extends React.Component {
               </div>
               <div className="col-lg-9 mx-auto">
                 <div className="dashboard-content">
-                  <div className="mb-2">
+                  <div className="mb-2 container">
                     <div className="row align-items-center">
-                      <div className="col-6">
-                        <h1>Welcome {this.props.user.firstName}</h1>
+                      <div className="col-8 pl-0">
+                        <h6 className="seller-welcome">
+                          Welcome {this.props.user.firstName}
+                        </h6>
                       </div>
-                      <div className="col-6 d-flex justify-content-end">
-                        <h4>Points:0</h4>
+                      <div className="col-4 d-flex justify-content-end">
+                        <h6 className="seller-welcome">
+                          <Link to="/">Points:1000</Link>
+                        </h6>
                       </div>
                     </div>
                   </div>

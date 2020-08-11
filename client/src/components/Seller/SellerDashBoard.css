@@ -5,6 +5,15 @@
   position: relative;
 }
 
+.seller-welcome {
+  font-size: 40px;
+}
+
+.seller-welcome a {
+  color: #f76b1a;
+  font-size: 30px;
+}
+
 .dashboard-content hr {
   background-color: #eee;
 }
@@ -20,4 +29,34 @@
   min-height: 20 0px;
   min-height: 200px;
   align-items: center;
+}
+
+@media screen and (max-width: 960px) {
+  .seller-welcome {
+    font-size: 30px;
+  }
+
+  .seller-welcome a {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .seller-welcome {
+    font-size: 25px;
+  }
+
+  .seller-welcome a {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .seller-welcome {
+    font-size: 20px;
+  }
+
+  .seller-welcome a {
+    font-size: 20px;
+  }
 }
