@@ -449,9 +449,6 @@ route.post(
         );
         return res.send(orderWithDistance);
       }
-      console.log("cart", cart);
-      console.log("test", test);
-      console.log("price", price);
       // **STRIPE*/
       if (id) {
         const charge = await stripe.charges.create({

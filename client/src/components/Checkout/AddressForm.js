@@ -165,13 +165,16 @@ class AddressForm extends React.Component {
                       <span>Proceed To Checkout</span>
                     )}
                   </button>
-                  <div className="form-primary-error">
+                  <div style={{ color: "red", margin: "10px 0px" }}>
                     {this.props.checkoutUserError &&
                       this.props.checkoutUserError}
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
                       (Object.keys(this.state.cityLatLng).length === 0 && (
-                        <p>Please choose a valid destination</p>
+                        <p>
+                          Please choose a valid destination or wait for the map
+                          to load if you have already chosen.
+                        </p>
                       ))}
                   </div>
                 </form>
