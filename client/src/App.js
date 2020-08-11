@@ -197,6 +197,9 @@ class App extends React.Component {
         <div id="main">
           {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
           {/* <MobileLogo /> */}
+          <div style={{ display: "none" }}>
+            <StripePayment />
+          </div>
           <div>
             <Switch>
               <Route path="/" exact component={Home} />
