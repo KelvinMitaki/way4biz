@@ -3,13 +3,14 @@ import Tabs from "react-responsive-tabs";
 import "./SellerPoints.css";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
+import EarnPoints from "./EarnPoints";
 
 class SellerPoints extends React.Component {
   getTabs() {
     const data = [
       {
         name: "Earn Points",
-        content: "The quick brown fox jumped over the lazy dog",
+        content: <EarnPoints />,
       },
       {
         name: "Redeem Points",
