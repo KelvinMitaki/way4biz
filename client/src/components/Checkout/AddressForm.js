@@ -165,7 +165,7 @@ class AddressForm extends React.Component {
                       <span>Proceed To Checkout</span>
                     )}
                   </button>
-                  <div className="form-primary-error">
+                  <div style={{ color: "red", margin: "10px 0px" }}>
                     {this.props.checkoutUserError &&
                       this.props.checkoutUserError}
                     {(!this.props.pristine &&
