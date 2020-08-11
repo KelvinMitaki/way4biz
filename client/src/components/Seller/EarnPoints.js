@@ -8,7 +8,7 @@ class EarnPoints extends React.Component {
       <div className="container py-2" style={{ backgroundColor: "#fff" }}>
         <h6>
           You currently have 1000 points. To earn more points refer many sellers
-          to sell on our platform. The more points you have, the greater the
+          to sell on our platform. The more points you have, the higher the
           chances of winnig a brand new suzuki porsche.
         </h6>
 
