@@ -9,7 +9,7 @@ class Contact extends React.Component {
   render() {
     return (
       <div className="main">
-        <div className="content">
+        <div className="content white-body">
           <HelpCenterHeader />
           <div
             className="container-fluid p-0 m-0"
