@@ -30,7 +30,7 @@
 .shopping-btn-modal:hover {
   padding: 10px 15px;
   color: #fff;
-  min-width: 200px !important;
+  min-width: 180px !important;
 }
 
 .continue-btn:focus,
@@ -94,11 +94,17 @@
 
 @media screen and (max-width: 1190px) {
   .modal-main {
-    width: 60%;
+    width: 50%;
   }
 }
 
 @media screen and (max-width: 960px) {
+  .modal-main {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 540px) {
   .modal-main {
     width: 90%;
   }

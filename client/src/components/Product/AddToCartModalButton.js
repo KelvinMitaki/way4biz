@@ -25,7 +25,7 @@ const Modal = (props) => {
             </p>
             <hr className="my-2" />
             <div className="row" style={{ textAlign: "center" }}>
-              <div className="col-md-6 my-2">
+              <div className="col-sm-6 my-2">
                 <div
                   style={{
                     cursor: "pointer",
@@ -36,7 +36,7 @@ const Modal = (props) => {
                   Continue Shopping
                 </div>
               </div>
-              <div className="col-md-6 my-2">
+              <div className="col-sm-6 my-2">
                 <Link className="btn btn-md shopping-btn-modal" to="/cart">
                   Proceed To Cart
                 </Link>
