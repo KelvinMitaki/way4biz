@@ -2,7 +2,7 @@ import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { NavLink, Link } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
-import { MdRateReview } from "react-icons/md";
+import { MdRateReview, MdControlPointDuplicate } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
 import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
@@ -141,6 +141,16 @@ class SellerHamburgerMenu extends React.Component {
                           {this.props.sellerRejects.length}
                         </span>
                       )}
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
+                    to="/points"
+                  >
+                    <MdControlPointDuplicate className="mr-2" />
+                    Points
                   </NavLink>
                 </li>
                 <li className="my-4">
