@@ -1,7 +1,11 @@
 import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import "./AdminDashboardSecondaryHeader.css";
-import { RiDashboardLine, RiFileUserLine } from "react-icons/ri";
+import {
+  RiDashboardLine,
+  RiFileUserLine,
+  RiInboxArchiveLine,
+} from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
@@ -167,6 +171,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
               activeClassName="admin-active-lg-link"
             >
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/inbox" activeClassName="admin-active-lg-link">
+              <RiInboxArchiveLine /> <span className="ml-2">Inbox</span>
             </NavLink>
           </li>
         </ul>
