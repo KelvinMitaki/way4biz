@@ -47,7 +47,7 @@ class SellerDashBoard extends React.Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-6 pl-0">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -57,7 +57,7 @@ class SellerDashBoard extends React.Component {
                           <h6>NEW ORDERS</h6>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-6 pl-0">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -75,7 +75,7 @@ class SellerDashBoard extends React.Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-6 pl-0">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -85,7 +85,7 @@ class SellerDashBoard extends React.Component {
                           <h6>SUCCESSFUL SALES</h6>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-6 pl-0">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
