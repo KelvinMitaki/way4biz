@@ -407,7 +407,7 @@ route.post(
         });
       });
       const price = cart
-        .map(item => item.price)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
       const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
@@ -449,6 +449,9 @@ route.post(
         );
         return res.send(orderWithDistance);
       }
+      console.log("cart", cart);
+      console.log("test", test);
+      console.log("price", price);
       // **STRIPE*/
       if (id) {
         const charge = await stripe.charges.create({

@@ -1,7 +1,8 @@
 import {
   SELF_COLLECTION_ADDRESS,
   SELF_COLLECTION_START,
-  SELF_COLLECTION_STOP
+  SELF_COLLECTION_STOP,
+  REMOVE_ADDRESS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -18,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, selfCollectionLoading: true };
     case SELF_COLLECTION_STOP:
       return { ...state, selfCollectionLoading: false };
+    case REMOVE_ADDRESS:
+      return { ...state, address: {} };
     default:
       return state;
   }

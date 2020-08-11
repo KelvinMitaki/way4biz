@@ -231,7 +231,8 @@ import {
   SELF_COLLECTION_START,
   SELF_COLLECTION_STOP,
   VERIFIED_SELLER_START,
-  VERIFIED_SELLER_STOP
+  VERIFIED_SELLER_STOP,
+  REMOVE_ADDRESS
 } from "./types";
 
 const authCheck = error => {
@@ -2250,4 +2251,10 @@ export const selfCollectionAddress = latLng => async (dispatch, getState) => {
     authCheck(error);
     console.log(error.response);
   }
+};
+
+export const removeAddress = () => {
+  return {
+    type: REMOVE_ADDRESS
+  };
 };
