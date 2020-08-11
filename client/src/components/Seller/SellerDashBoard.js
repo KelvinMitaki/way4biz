@@ -37,7 +37,7 @@ class SellerDashBoard extends React.Component {
                       </div>
                       <div className="col-4 d-flex justify-content-end">
                         <h6 className="seller-welcome">
-                          <Link to="/">Points:1000</Link>
+                          <Link to="/points">Points:1000</Link>
                         </h6>
                       </div>
                     </div>

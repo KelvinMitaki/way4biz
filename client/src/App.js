@@ -89,6 +89,7 @@ import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
 import CustomerService from "./components/Pages/HelpCenter/CustomerService";
 import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
 import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
+import SellerPoints from "./components/Seller/SellerPoints";
 
 class App extends React.Component {
   state = {
@@ -417,6 +418,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.verifiedPhoneNumber ? (
                     <SellerOrderDetails />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/points"
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerPoints />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )

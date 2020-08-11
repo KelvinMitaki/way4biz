@@ -1,6 +1,8 @@
 import React from "react";
 
 import "./SellerPoints.css";
+import SellerDashBoardHeader from "./SellerDashBoardHeader";
+import SellerDashBoardMenu from "./SellerDashBoardMenu";
 
 class SellerPoints extends React.Component {
   render() {
