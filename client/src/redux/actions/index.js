@@ -232,7 +232,9 @@ import {
   SELF_COLLECTION_STOP,
   VERIFIED_SELLER_START,
   VERIFIED_SELLER_STOP,
-  REMOVE_ADDRESS
+  REMOVE_ADDRESS,
+  COLLECTION_OPEN_ACTION,
+  COLLECTION_CLOSE_ACTION
 } from "./types";
 
 const authCheck = error => {
@@ -2246,6 +2248,7 @@ export const selfCollectionAddress = latLng => async (dispatch, getState) => {
       type: SELF_COLLECTION_ADDRESS,
       payload: latLng
     });
+    dispatch(collectionCloseAction());
   } catch (error) {
     dispatch({ type: SELF_COLLECTION_STOP });
     authCheck(error);
@@ -2256,5 +2259,16 @@ export const selfCollectionAddress = latLng => async (dispatch, getState) => {
 export const removeAddress = () => {
   return {
     type: REMOVE_ADDRESS
+  };
+};
+
+export const collectionOpenAction = () => {
+  return {
+    type: COLLECTION_OPEN_ACTION
+  };
+};
+export const collectionCloseAction = () => {
+  return {
+    type: COLLECTION_CLOSE_ACTION
   };
 };

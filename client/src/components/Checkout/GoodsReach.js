@@ -1,32 +1,25 @@
 import React from "react";
 
 import "./GoodsReach.css";
-import { Field } from "redux-form";
+import { Field, formValueSelector } from "redux-form";
 import RadioField from "./RadioField";
 import DeliveryMethods from "./DeliveryMethods";
 import PickUp from "./PickUp";
 import { connect } from "react-redux";
+import {
+  collectionOpenAction,
+  collectionCloseAction
+} from "../../redux/actions";
 
 class GoodsReach extends React.Component {
-  state = { collection: false, delivery: false };
-  componentDidUpdate() {
-    if (
-      Object.keys(this.props.address).length !== 0 &&
-      this.state.collection === true
-    ) {
-      this.setState({ collection: false });
-    }
-  }
+  state = { delivery: false };
+
   handleCollectionOpen = e => {
-    this.setState({
-      collection: true
-    });
+    this.props.collectionOpenAction();
   };
 
   handleCollectionClose = e => {
-    this.setState({
-      collection: false
-    });
+    this.props.collectionCloseAction();
   };
 
   handleDeliveryOpen = e => {
@@ -50,10 +43,10 @@ class GoodsReach extends React.Component {
             show={this.state.delivery}
           />
         ) : null}
-        {this.state.collection ? (
+        {this.props.collection ? (
           <PickUp
             collection={this.handleCollectionClose}
-            show={this.state.collection}
+            show={this.props.collection}
           />
         ) : null}
         <div className="goods-reach">
@@ -74,31 +67,35 @@ class GoodsReach extends React.Component {
             </p>
           </div>
         </div>
-        {Object.keys(this.props.address).length === 0 && (
-          <div className="goods-reach">
-            <Field
-              type="radio"
-              label="Our Delivery"
-              name="goods-reach"
-              id="radio-5500"
-              value="our-delivery"
-              component={RadioField}
-              onChange={this.handleDeliveryOpen}
-            />
-            <div>
-              <p>
-                Let our delivery personnel deliver your goods at your place.
-              </p>
-            </div>
+        <div className="goods-reach">
+          <Field
+            type="radio"
+            label="Our Delivery"
+            name="goods-reach"
+            id="radio-5500"
+            value="our-delivery"
+            component={RadioField}
+            onChange={this.handleDeliveryOpen}
+          />
+          <div>
+            <p>Let our delivery personnel deliver your goods at your place.</p>
           </div>
-        )}
+        </div>
       </div>
     );
   }
 }
+
+const selector = formValueSelector("Chekout");
 const mapStateToProps = state => {
+  const goodsReach = selector(state, "goods-reach");
   return {
-    address: state.selfCollection.address
+    address: state.selfCollection.address,
+    collection: state.selfCollection.collection,
+    goodsReach
   };
 };
-export default connect(mapStateToProps)(GoodsReach);
+export default connect(mapStateToProps, {
+  collectionOpenAction,
+  collectionCloseAction
+})(GoodsReach);

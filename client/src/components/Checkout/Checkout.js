@@ -12,10 +12,13 @@ import { connect } from "react-redux";
 import {
   fetchProducts,
   preMakeOrder,
-  removeAddress
+  removeAddress,
+  selfCollectionAddress
 } from "../../redux/actions";
 import MobileLogo from "../Header/MobileLogo";
 import GoodsReach from "./GoodsReach";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class CheckOut extends React.Component {
   componentDidMount() {
@@ -26,6 +29,19 @@ class CheckOut extends React.Component {
   componentWillUnmount() {
     this.props.removeAddress();
   }
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.goodsReach !== "self-collection" &&
+      this.props.goodsReach !== prevProps.goodsReach
+    ) {
+      this.handleSelect(this.props.user.address);
+    }
+  }
+  handleSelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.props.selfCollectionAddress(latlng);
+  };
   render() {
     if (this.props.cart.length === 0) {
       this.props.fetchProducts();
@@ -183,6 +199,7 @@ const mapStateToProps = state => {
     checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
     address: state.selfCollection.address,
+    selfCollectionLoading: state.selfCollection.selfCollectionLoading,
     payment,
     delivery,
     goodsReach
@@ -190,8 +207,11 @@ const mapStateToProps = state => {
 };
 export default withRouter(
   reduxForm({ form: "Chekout", validate, destroyOnUnmount: false })(
-    connect(mapStateToProps, { preMakeOrder, fetchProducts, removeAddress })(
-      CheckOut
-    )
+    connect(mapStateToProps, {
+      preMakeOrder,
+      fetchProducts,
+      removeAddress,
+      selfCollectionAddress
+    })(CheckOut)
   )
 );
