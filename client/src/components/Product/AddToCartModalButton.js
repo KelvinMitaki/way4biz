@@ -24,10 +24,12 @@ const Modal = (props) => {
               {props.cart.length} items in your Shopping Cart.
             </p>
             <hr className="my-2" />
-            <div className="row">
+            <div className="row" style={{ textAlign: "center" }}>
               <div className="col-md-6 my-2">
                 <div
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                  }}
                   onClick={() => props.handleClose()}
                   className="btn btn-md continue-btn "
                 >
