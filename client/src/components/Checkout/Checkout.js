@@ -10,7 +10,6 @@ import { withRouter, Redirect } from "react-router-dom";
 import { reduxForm, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
 import { fetchProducts, preMakeOrder } from "../../redux/actions";
-import DeliveryMethods from "./DeliveryMethods";
 import MobileLogo from "../Header/MobileLogo";
 import GoodsReach from "./GoodsReach";
 
@@ -29,11 +28,11 @@ class CheckOut extends React.Component {
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map(item => item.price * item.quantity)
+        .map((item) => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
     const total = this.props.cart
-      .map(item => item.price * item.quantity)
+      .map((item) => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -43,7 +42,7 @@ class CheckOut extends React.Component {
           <Header />
 
           <form
-            onSubmit={this.props.handleSubmit(formValues => {
+            onSubmit={this.props.handleSubmit((formValues) => {
               if (formValues["goods-reach"] === "self-collection") {
                 formValues.delivery = "Self-Collection";
               }
@@ -156,7 +155,7 @@ class CheckOut extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (!formValues.payment) {
     errors.payment = "Please choose a valid payment method";
@@ -167,7 +166,7 @@ const validate = formValues => {
   return errors;
 };
 const selector = formValueSelector("Chekout");
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const payment = selector(state, "payment");
   const delivery = selector(state, "delivery");
   const goodsReach = selector(state, "goods-reach");
@@ -179,7 +178,7 @@ const mapStateToProps = state => {
     address: state.selfCollection.address,
     payment,
     delivery,
-    goodsReach
+    goodsReach,
   };
 };
 export default withRouter(

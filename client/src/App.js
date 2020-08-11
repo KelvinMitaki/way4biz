@@ -72,7 +72,7 @@ import FileComplain from "./components/Account/FileComplain";
 import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
-import CardPayment from "./components/Checkout/CardPayment";
+// import CardPayment from "./components/Checkout/CardPayment";
 import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
 import StripePayment from "./components/StripePayment/StripePayment";
 import StripeError from "./components/StripePayment/StripeError";
@@ -661,7 +661,7 @@ class App extends React.Component {
                   )
                 }
               />
-              <Route
+              {/* <Route
                 path="/card-payment"
                 exact
                 render={() =>
@@ -671,7 +671,7 @@ class App extends React.Component {
                     <CardPayment />
                   )
                 }
-              />
+              /> */}
               <Route
                 path="/account"
                 exact
