@@ -226,7 +226,10 @@ import {
   SELLER_LOGIN_START,
   SELLER_LOGIN_STOP,
   REGISTER_START,
-  REGISTER_STOP
+  REGISTER_STOP,
+  SELF_COLLECTION_ADDRESS,
+  SELF_COLLECTION_START,
+  SELF_COLLECTION_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -947,21 +950,17 @@ export const addToWishlist = product => (dispatch, getState) => {
   });
 };
 
-export const removeFromWishlist = product => async dispatch => {
+export const removeFromWishlist = product => async (dispatch, getState) => {
   try {
-    dispatch({ type: SAVE_WISHLIST_START });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
-    await axios.patch("/api/delete/wishlist", { productId: product._id });
+    // await axios.patch("/api/delete/wishlist", { productId: product._id });
     dispatch({
       type: REMOVE_FROM_WISHLIST,
       payload: product
     });
-    dispatch({ type: SAVE_WISHLIST_STOP });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+    await dispatch(saveWishlistItems(getState().cartReducer.wishlist));
+    dispatch(fetchWishlistProducts());
   } catch (error) {
     authCheck(error);
-    dispatch({ type: SAVE_WISHLIST_STOP });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -1347,11 +1346,14 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
     console.log(error.response);
   }
 };
-export const handleSearchTerm = term => {
-  return {
+export const handleSearchTerm = term => dispatch => {
+  if (term.trim() === "") {
+    dispatch(clearSearchTerm());
+  }
+  dispatch({
     type: HANDLE_SEARCH_TERM,
     payload: term
-  };
+  });
 };
 
 export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
@@ -2222,5 +2224,28 @@ export const confirmDelivery = (orderId, history) => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: CONFIRM_DELIVERY_STOP });
+  }
+};
+
+export const selfCollectionAddress = latLng => async (dispatch, getState) => {
+  try {
+    const lat = latLng.lat;
+    const lng = latLng.lng;
+    const details = {
+      destination: [`${lat},${lng}`],
+      origins: [getState().selfCollection.city]
+    };
+    dispatch({ type: SELF_COLLECTION_START });
+    const res = await axios.post(`/api/buyer/destination`, details);
+    dispatch({ type: SELF_COLLECTION_STOP });
+    dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
+    dispatch({
+      type: SELF_COLLECTION_ADDRESS,
+      payload: latLng
+    });
+  } catch (error) {
+    dispatch({ type: SELF_COLLECTION_STOP });
+    authCheck(error);
+    console.log(error.response);
   }
 };

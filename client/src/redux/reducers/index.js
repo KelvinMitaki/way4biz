@@ -11,6 +11,7 @@ import filterReducer from "./filterReducer";
 import imageReducer from "./imageReducer";
 import sellerDetailsReducer from "./sellerDetailsReducer";
 import searchReducer from "./searchReducer";
+import selfCollectionReducer from "./selfCollectionReducer";
 
 const persistConfig = {
   key: "root",
@@ -34,6 +35,7 @@ const reducers = combineReducers({
   filter: filterReducer,
   image: imageReducer,
   sellerDetails: sellerDetailsReducer,
-  search: searchReducer
+  search: searchReducer,
+  selfCollection: selfCollectionReducer
 });
 export default persistReducer(persistConfig, reducers);

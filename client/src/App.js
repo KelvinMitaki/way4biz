@@ -146,7 +146,6 @@ class App extends React.Component {
             _id: i._id,
           }))
         );
-      this.props.fetchWishlistProducts();
     }
 
     if (prevState.scrolling !== this.state.scrolling) {

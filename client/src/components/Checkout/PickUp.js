@@ -1,8 +1,16 @@
 import React from "react";
-
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import "./PickUp.css";
+import { selfCollectionAddress } from "../../redux/actions";
+import { connect } from "react-redux";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class PickUp extends React.Component {
+  handleSelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.props.selfCollectionAddress(latlng);
+  };
   render() {
     const showHideClassName = this.props.show
       ? "modal display-block"
@@ -10,6 +18,7 @@ class PickUp extends React.Component {
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
+          {this.props.selfCollectionLoading && <ScreenLoader />}
           <div className="modal-header">
             <span className="close-modal-btn" onClick={this.props.collection}>
               ×
@@ -20,32 +29,12 @@ class PickUp extends React.Component {
               <h4>Available pickup points</h4>
               <div className="ml-3 mt-2">
                 <ul className="pick-up-points">
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
-                  </li>
-                  <li className="pick-up-point">
-                    <p>Ngong Road Store</p>
+                  <li
+                    onClick={() => this.handleSelect(this.props.city)}
+                    style={{ cursor: "pointer" }}
+                    className="pick-up-point"
+                  >
+                    <p>{this.props.city}</p>
                   </li>
                 </ul>
               </div>
@@ -56,5 +45,10 @@ class PickUp extends React.Component {
     );
   }
 }
-
-export default PickUp;
+const mapStateToProps = state => {
+  return {
+    city: state.selfCollection.city,
+    selfCollectionLoading: state.selfCollection.selfCollectionLoading
+  };
+};
+export default connect(mapStateToProps, { selfCollectionAddress })(PickUp);

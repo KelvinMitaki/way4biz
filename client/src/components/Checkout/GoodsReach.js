@@ -5,31 +5,39 @@ import { Field } from "redux-form";
 import RadioField from "./RadioField";
 import DeliveryMethods from "./DeliveryMethods";
 import PickUp from "./PickUp";
+import { connect } from "react-redux";
 
 class GoodsReach extends React.Component {
   state = { collection: false, delivery: false };
-
-  handleCollectionOpen = (e) => {
+  componentDidUpdate() {
+    if (
+      Object.keys(this.props.address).length !== 0 &&
+      this.state.collection === true
+    ) {
+      this.setState({ collection: false });
+    }
+  }
+  handleCollectionOpen = e => {
     this.setState({
-      collection: true,
+      collection: true
     });
   };
 
-  handleCollectionClose = (e) => {
+  handleCollectionClose = e => {
     this.setState({
-      collection: false,
+      collection: false
     });
   };
 
-  handleDeliveryOpen = (e) => {
+  handleDeliveryOpen = e => {
     this.setState({
-      delivery: true,
+      delivery: true
     });
   };
 
-  handleDeliveryClose = (e) => {
+  handleDeliveryClose = e => {
     this.setState({
-      delivery: false,
+      delivery: false
     });
   };
 
@@ -84,5 +92,9 @@ class GoodsReach extends React.Component {
     );
   }
 }
-
-export default GoodsReach;
+const mapStateToProps = state => {
+  return {
+    address: state.selfCollection.address
+  };
+};
+export default connect(mapStateToProps)(GoodsReach);
