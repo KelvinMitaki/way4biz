@@ -407,7 +407,7 @@ route.post(
         });
       });
       const price = cart
-        .map(item => item.price)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
       const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
