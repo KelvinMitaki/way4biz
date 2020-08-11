@@ -174,7 +174,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink exact to="/inbox" activeClassName="admin-active-lg-link">
+            <NavLink
+              exact
+              to="/admin-inbox"
+              activeClassName="admin-active-lg-link"
+            >
               <RiInboxArchiveLine /> <span className="ml-2">Inbox</span>
             </NavLink>
           </li>
