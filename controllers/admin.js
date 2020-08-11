@@ -1851,4 +1851,6 @@ route.post(
     }
   }
 );
+
+route.post("/api/send/refferal/code");
 module.exports = route;

@@ -206,7 +206,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout", validate, destroyOnUnmount: false })(
+  reduxForm({ form: "Chekout", validate })(
     connect(mapStateToProps, {
       preMakeOrder,
       fetchProducts,
