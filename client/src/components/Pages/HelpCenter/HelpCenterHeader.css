@@ -27,7 +27,7 @@
 }
 
 .help-center-active {
-  color: #f76b1a;
+  color: #f76b1a !important;
 }
 
 #help-center-hamburger-wrapper {
