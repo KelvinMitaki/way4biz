@@ -36,7 +36,7 @@ class SellerPoints extends React.Component {
           <div className="col-lg-9 mt-5">
             <div className="container seller-dashboard-wrapper m-0">
               <div className="row">
-                <div className="col-10 col-md-8 mx-auto my-5">
+                <div className="col-11 col-md-9 mx-auto my-5">
                   <Tabs
                     items={this.getTabs()}
                     transformWidth={100}
