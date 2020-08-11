@@ -24,7 +24,7 @@ class OrderPaymentSuccess extends React.Component {
         <div className="content">
           <MobileLogo />
           <Header />
-          <div className="container">
+          <div className="container mt-3">
             <div className="row">
               <div className="col-md-9 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1 successful-order">
@@ -53,7 +53,7 @@ class OrderPaymentSuccess extends React.Component {
                   {/* mapping here */}
                   {this.props.orderSuccess.items &&
                     this.props.orderSuccess.items.length !== 0 &&
-                    this.props.orderSuccess.items.map(item => (
+                    this.props.orderSuccess.items.map((item) => (
                       <div className="row align-items-center" key={item._id}>
                         <div className="col-3">
                           <Image
@@ -202,13 +202,13 @@ class OrderPaymentSuccess extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     orderSuccess: state.cartReducer.orderSuccess,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, {
   deleteCart,
-  removePendingAndSuccess
+  removePendingAndSuccess,
 })(OrderPaymentSuccess);

@@ -7,7 +7,7 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
 import { fetchSellerNewOrdersCount } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class SellerDashBoard extends React.Component {
   componentDidMount() {
@@ -28,67 +28,79 @@ class SellerDashBoard extends React.Component {
               </div>
               <div className="col-lg-9 mx-auto">
                 <div className="dashboard-content">
-                  <h1 style={{ textAlign: "center" }}>
-                    Welcome {this.props.user.firstName}
-                    <hr />
-                    <div className="container">
-                      <div className="row mt-5">
-                        <div>
-                          <h3 className="my-2">Store Summary</h3>
+                  <div className="mb-2 container">
+                    <div className="row align-items-center">
+                      <div className="col-8 pl-0">
+                        <h6 className="seller-welcome">
+                          Welcome {this.props.user.firstName}
+                        </h6>
+                      </div>
+                      <div className="col-4 d-flex justify-content-end">
+                        <h6 className="seller-welcome">
+                          <Link to="/points">Points:1000</Link>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr />
+                  <div className="container">
+                    <div className="row mt-5">
+                      <div>
+                        <h3 className="my-2">Store Summary</h3>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 pl-0">
+                        <div className="box-container big-number-wrapper">
+                          <h1 className="big-number">
+                            {this.props.dashboard &&
+                              this.props.dashboard.newOrders &&
+                              this.props.dashboard.newOrders.toLocaleString()}
+                          </h1>
+                          <h6>NEW ORDERS</h6>
                         </div>
                       </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">
-                              {this.props.dashboard &&
-                                this.props.dashboard.newOrders &&
-                                this.props.dashboard.newOrders.toLocaleString()}
-                            </h1>
-                            <h6>NEW ORDERS</h6>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">
-                              {this.props.dashboard &&
-                                this.props.dashboard.monthsSelling &&
-                                this.props.dashboard.monthsSelling.toLocaleString()}
-                            </h1>
-                            <h6>Months</h6>
-                            <h6>SELLING ON WAY4BIZ</h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row mt-5">
-                        <div>
-                          <h3 className="my-2">Store Performance</h3>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">
-                              {this.props.dashboard &&
-                                this.props.dashboard.successfulSales &&
-                                this.props.dashboard.successfulSales.toLocaleString()}
-                            </h1>
-                            <h6>SUCCESSFUL SALES</h6>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="box-container big-number-wrapper">
-                            <h1 className="big-number">
-                              {this.props.dashboard &&
-                                this.props.dashboard.qualityRating &&
-                                this.props.dashboard.qualityRating.toLocaleString()}
-                            </h1>
-                            <h6>QUALITY RATING</h6>
-                          </div>
+                      <div className="col-md-6 pl-0">
+                        <div className="box-container big-number-wrapper">
+                          <h1 className="big-number">
+                            {this.props.dashboard &&
+                              this.props.dashboard.monthsSelling &&
+                              this.props.dashboard.monthsSelling.toLocaleString()}
+                          </h1>
+                          <h6>Months</h6>
+                          <h6>SELLING ON WAY4BIZ</h6>
                         </div>
                       </div>
                     </div>
-                  </h1>
+                    <div className="row mt-5">
+                      <div>
+                        <h3 className="my-2">Store Performance</h3>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 pl-0">
+                        <div className="box-container big-number-wrapper">
+                          <h1 className="big-number">
+                            {this.props.dashboard &&
+                              this.props.dashboard.successfulSales &&
+                              this.props.dashboard.successfulSales.toLocaleString()}
+                          </h1>
+                          <h6>SUCCESSFUL SALES</h6>
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-0">
+                        <div className="box-container big-number-wrapper">
+                          <h1 className="big-number">
+                            {this.props.dashboard &&
+                              this.props.dashboard.qualityRating &&
+                              this.props.dashboard.qualityRating.toLocaleString()}
+                          </h1>
+                          <h6>QUALITY RATING</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,10 +110,10 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard
+    dashboard: state.detailsPersist.dashboard,
   };
 };
 export default connect(mapStateToProps, { fetchSellerNewOrdersCount })(

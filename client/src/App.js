@@ -19,7 +19,7 @@ import {
   saveWishlistItems,
   fetchCartItems,
   fetchWishlistProducts,
-  fetchAllCategories
+  fetchAllCategories,
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 import MobileLogo from "./components/Header/MobileLogo";
@@ -88,17 +88,19 @@ import HowToSell from "./components/Pages/HelpCenter/HowToSell";
 import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
 import CustomerService from "./components/Pages/HelpCenter/CustomerService";
 import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
+import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
+import SellerPoints from "./components/Seller/SellerPoints";
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const {
       fetchUser,
       fetchProducts,
       fetchCategories,
-      fetchAllCategories
+      fetchAllCategories,
     } = this.props;
     fetchUser();
     fetchProducts();
@@ -107,7 +109,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -118,7 +120,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(i => ({
+          this.props.cart.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -126,7 +128,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity
+            quantity: i.quantity,
           }))
         );
     }
@@ -136,14 +138,14 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map(i => ({
+          this.props.wishlist.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             seller: { storeName: i.seller.storeName },
             imageUrl: i.imageUrl,
-            _id: i._id
+            _id: i._id,
           }))
         );
     }
@@ -158,7 +160,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -170,23 +172,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -340,6 +342,17 @@ class App extends React.Component {
                 }
               />
               <Route
+                path="/admin-inbox"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardInbox />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
                 path="/admin/root/new-product/why-reject/:productId"
                 exact
                 render={() =>
@@ -410,6 +423,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.verifiedPhoneNumber ? (
                     <SellerOrderDetails />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/points"
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerPoints />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
@@ -797,13 +820,13 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -815,5 +838,5 @@ export default connect(mapStateToProps, {
   fetchAllCategories,
   fetchCartItems,
   fetchWishlistProducts,
-  saveWishlistItems
+  saveWishlistItems,
 })(App);
