@@ -28,10 +28,15 @@ class SellerDashBoard extends React.Component {
               </div>
               <div className="col-lg-9 mx-auto">
                 <div className="dashboard-content">
-                  <div>
-                    <h1 style={{ textAlign: "center" }}>
-                      Welcome {this.props.user.firstName}
-                    </h1>
+                  <div className="mb-2">
+                    <div className="row align-items-center">
+                      <div className="col-6">
+                        <h1>Welcome {this.props.user.firstName}</h1>
+                      </div>
+                      <div className="col-6 d-flex justify-content-end">
+                        <h4>Points:0</h4>
+                      </div>
+                    </div>
                   </div>
 
                   <hr />
