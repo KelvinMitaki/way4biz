@@ -21,16 +21,16 @@ export class SellerRegister extends Component {
     cityLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263
-    }
+      lng: 36.8263,
+    },
   };
-  handleCitySelect = async selectedCity => {
+  handleCitySelect = async (selectedCity) => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleAddressSelect = async selectedAddress => {
+  handleAddressSelect = async (selectedAddress) => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -53,7 +53,7 @@ export class SellerRegister extends Component {
           Register
         </h1>
         <form
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             const { registerSeller } = this.props;
             registerSeller(formValues);
           })}
@@ -138,7 +138,7 @@ export class SellerRegister extends Component {
             options={{
               location: new google.maps.LatLng(this.state.cityLatLng),
               radius: 1000,
-              types: ["establishment"]
+              types: ["establishment"],
             }}
             onSelect={this.handleAddressSelect}
           />
@@ -182,7 +182,7 @@ export class SellerRegister extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -248,16 +248,16 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerRegisterLoading: state.auth.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.sellerRegister.sellerRegisterError
+    sellerRegisterError: state.sellerRegister.sellerRegisterError,
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "SellerRegister"
+    form: "SellerRegister",
   })(connect(mapStateToProps, { registerSeller })(SellerRegister))
 );
