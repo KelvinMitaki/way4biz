@@ -12,7 +12,7 @@ class EarnPoints extends React.Component {
     email = this.props.email;
     phoneNumber = this.props.phoneNumber;
     return (
-      <div className="container py-2" style={{ backgroundColor: "#fff" }}>
+      <div className="container py-4" style={{ backgroundColor: "#fff" }}>
         <h6>
           You currently have 1000 points. To earn more points refer many sellers
           to sell on our platform. The more points you have, the higher the
@@ -20,36 +20,32 @@ class EarnPoints extends React.Component {
         </h6>
 
         <h6 className="my-2">
-          Lets get you more points. Key in the phone number or email of someone
-          to refer.
+          Lets get you more points. Key in the email of someone to refer. Then
+          press send to send the referral.
         </h6>
-        <div className="input-group form-group">
-          <form
-            onSubmit={this.props.handleSubmit(formValues =>
-              console.log(formValues)
-            )}
+
+        <form
+          onSubmit={this.props.handleSubmit((formValues) =>
+            console.log(formValues)
+          )}
+        >
+          <div
+            className="row no-gutters align-items-center m-0 p-0"
+            style={{ height: "30px" }}
           >
             <Field
               component={EarnPointsInput}
-              placeholder="test@gmail.com or 712345678"
+              placeholder="test@gmail.com"
               type="text"
               name="points"
             />
-            <div className="input-group-append">
-              <button
-                disabled={this.props.invalid || this.props.pristine}
-                id="referral-btn"
-              >
-                Send Referral
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (!formValues.points) {
     errors.points = "Please fill in this field";
@@ -77,10 +73,10 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     email: state.auth.user.email,
-    phoneNumber: state.auth.user.phoneNumber
+    phoneNumber: state.auth.user.phoneNumber,
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(

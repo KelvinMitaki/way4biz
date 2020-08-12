@@ -1,9 +1,13 @@
 .referral-input {
-  border: 1px solid #d4d4d4;
+  border-left: 1px solid #d4d4d4;
+  border-top: 1px solid #d4d4d4;
+  border-bottom: 1px solid #d4d4d4;
 }
 
 .referral-input:focus {
-  border: 1px solid #d4d4d4;
+  border-left: 1px solid #d4d4d4;
+  border-top: 1px solid #d4d4d4;
+  border-bottom: 1px solid #d4d4d4;
   outline: none;
   box-shadow: none;
 }
@@ -16,6 +20,7 @@
   justify-content: center;
   border: none;
   padding: 5px;
+  border-radius: 3px;
 }
 
 #referral-btn:focus {
