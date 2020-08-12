@@ -151,7 +151,9 @@
 .carousel-indicators {
   position: absolute;
   bottom: -10px;
-  /* background-c olor: red; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .carousel-indicators li {
@@ -162,10 +164,11 @@
 
 .carousel-indicators .active {
   background-color: #f76b1a !important;
+  border: 1px solid #fff;
+  border-radius: 50%;
 }
 
 .anything {
-  /* background-color: #f76b1a; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,5 +213,13 @@
 
   .random-stuff-wrapper {
     display: none;
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
