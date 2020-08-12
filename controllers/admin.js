@@ -257,26 +257,7 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
     seller.verified = true;
     seller.points = 100;
     await seller.save();
-    transporter.sendMail(
-      {
-        to: seller.email,
-        from: "kevinkhalifa911@gmail.com",
-        subject: "Award",
-        html: `<html lang="en">
-    <body>
-        <h5 style="font-family: Arial, Helvetica, sans-serif;">Receive Your Award</h5>
-        <p style="font-family: Arial, Helvetica, sans-serif;">Congratulations. You have been awarded 100 points. You can check your dashboard for your point balance and decide to redeem anytime you wish to get a discount on the platform
-        </p>
-    </body>
-    </html>`
-      },
-      (error, info) => {
-        if (error) {
-          console.log(error);
-        }
-        console.log(info);
-      }
-    );
+
     req.session.seller = seller;
     res.redirect("/confirm/phoneNumber");
   } catch (error) {
@@ -329,10 +310,30 @@ route.post("/api/twilio/verify", async (req, res) => {
     }
     const seller = await Seller.findById(req.session.seller._id);
     if (!seller) {
-      return res.redirect("/seller/redirect");
+      return res.status(404).send({ message: "Seller not found" });
     }
     seller.verifiedPhoneNumber = true;
     await seller.save();
+    transporter.sendMail(
+      {
+        to: seller.email,
+        from: "kevinkhalifa911@gmail.com",
+        subject: "Award",
+        html: `<html lang="en">
+    <body>
+        <h5 style="font-family: Arial, Helvetica, sans-serif;">Receive Your Award</h5>
+        <p style="font-family: Arial, Helvetica, sans-serif;">Congratulations. You have been awarded 100 points. You can check your dashboard for your point balance and decide to redeem anytime you wish to get a discount on the platform
+        </p>
+    </body>
+    </html>`
+      },
+      (error, info) => {
+        if (error) {
+          console.log(error);
+        }
+        console.log(info);
+      }
+    );
     res.send(data);
   } catch (error) {
     res.status(500).send(error);
