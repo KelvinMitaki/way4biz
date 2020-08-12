@@ -5,18 +5,19 @@ import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EarnPoints from "./EarnPoints";
 import RedeemPoints from "./RedeemPoints";
+import { connect } from "react-redux";
 
 class SellerPoints extends React.Component {
   getTabs() {
     const data = [
       {
         name: "Earn Points",
-        content: <EarnPoints />,
+        content: <EarnPoints />
       },
       {
         name: "Redeem Points",
-        content: <RedeemPoints />,
-      },
+        content: <RedeemPoints />
+      }
     ];
 
     return data.map((d, index) => ({
@@ -24,10 +25,12 @@ class SellerPoints extends React.Component {
       getContent: () => d.content,
       key: index,
       tabClassName: "points-tab",
-      panelClassName: "seller-db-panel",
+      panelClassName: "seller-db-panel"
     }));
   }
   render() {
+    if (this.props.user && !this.props.user.isSeller)
+      return <Redirect to="/seller/profiling" />;
     return (
       <div className="container-fluid dashboard-wrapper">
         <SellerDashBoardHeader />
@@ -55,5 +58,9 @@ class SellerPoints extends React.Component {
     );
   }
 }
-
-export default SellerPoints;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps)(SellerPoints);
