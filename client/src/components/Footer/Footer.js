@@ -54,7 +54,7 @@ class Footer extends React.Component {
                   <Link to="/about-us">About Us</Link>
                 </p>
                 <p>
-                  <Link to="/how-to-sell">Sell on Way4Biz</Link>
+                  <Link to="/seller/register">Sell on Way4Biz</Link>
                 </p>
                 <p>
                   <Link to="/how-to-sell">Terms and Conditions</Link>

@@ -11,12 +11,19 @@
 
 #seller-dashboard-menu ul {
   list-style: none;
-  padding: 50px 0px 50px 80px;
+  padding: 40px 0px 40px 80px;
   color: #fff;
   height: 80%;
   overflow-y: auto;
   position: relative;
-  /* z-index: 100; */
+}
+
+#seller-dashboard-menu ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+#seller-dashboard-menu ul::-webkit-scrollbar-thumb {
+  background-color: #f76b1a;
 }
 
 .seller-menu-active {

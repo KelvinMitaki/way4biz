@@ -24,6 +24,7 @@ export class SellerRegister extends Component {
       lng: 36.8263
     }
   };
+
   componentDidMount() {
     if (Object.keys(this.props.match.params).length !== 0) {
       this.props.checkReferral(
