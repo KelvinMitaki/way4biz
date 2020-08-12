@@ -234,7 +234,8 @@ import {
   VERIFIED_SELLER_STOP,
   REMOVE_ADDRESS,
   COLLECTION_OPEN_ACTION,
-  COLLECTION_CLOSE_ACTION
+  COLLECTION_CLOSE_ACTION,
+  CHECK_REFERRAL
 } from "./types";
 
 const authCheck = error => {
@@ -2271,4 +2272,13 @@ export const collectionCloseAction = () => {
   return {
     type: COLLECTION_CLOSE_ACTION
   };
+};
+
+export const checkReferral = (referralCode, history) => async dispatch => {
+  try {
+    await axios.post(`/api/seller/register/referral/${referralCode}`);
+    dispatch({ type: CHECK_REFERRAL });
+  } catch (error) {
+    history.push("/seller/register");
+  }
 };

@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { v1: uuidV1 } = require("uuid");
 const { check, validationResult } = require("express-validator");
+const validator = require("validator");
 const client = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
@@ -1851,6 +1852,67 @@ route.post(
     }
   }
 );
-
-route.post("/api/send/refferal/code");
+route.post(
+  "/api/send/refferal/code",
+  auth,
+  isSeller,
+  check("sellerName").not().isEmpty().withMessage("Name must not be empty"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { points, sellerName } = req.body;
+      if (!points) {
+        return res.status(401).send({ message: "Invalid" });
+      }
+      if (!validator.default.isEmail(points)) {
+        return res.status(401).send({ message: "Invalid type" });
+      }
+      if (validator.default.isEmail(points)) {
+        const sellerExists = await Seller.findOne({ email: points });
+        if (sellerExists) {
+          return res.status(401).send({ message: "Seller already exists" });
+        }
+        transporter.sendMail(
+          {
+            to: points,
+            from: "kevinkhalifa911@gmail.com",
+            subject: "Invitation Request",
+            html: `<html lang="en">
+            <body>
+        <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
+        <p style="font-family: Arial, Helvetica, sans-serif;">You have been invited by ${sellerName} to join Way4Biz as a seller. Please click
+            <a href=${process.env.SELLER_REGISTER_REFERRAL}/${req.session.user._id}>here</a> to register
+            </p>
+    </body>
+    </html>`
+          },
+          (error, info) => {
+            if (error) {
+              console.log(error);
+            }
+            console.log(info);
+          }
+        );
+        return res.send({ message: "request has been sent successfully" });
+      }
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
+  try {
+    const { referralCode } = req.body;
+    const seller = await Seller.findById(referralCode);
+    if (!seller) {
+      return res.status(401).send({ message: "No seller found" });
+    }
+    res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

@@ -8,7 +8,7 @@ import { withRouter, Link } from "react-router-dom";
 import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
-import { registerSeller } from "../../redux/actions";
+import { registerSeller, checkReferral } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
@@ -24,6 +24,14 @@ export class SellerRegister extends Component {
       lng: 36.8263
     }
   };
+  componentDidMount() {
+    if (Object.keys(this.props.match.params).length !== 0) {
+      this.props.checkReferral(
+        this.props.match.params.referralCode,
+        this.props.history
+      );
+    }
+  }
   handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
@@ -259,5 +267,7 @@ export default withRouter(
   reduxForm({
     validate,
     form: "SellerRegister"
-  })(connect(mapStateToProps, { registerSeller })(SellerRegister))
+  })(
+    connect(mapStateToProps, { registerSeller, checkReferral })(SellerRegister)
+  )
 );

@@ -26,7 +26,10 @@ class EarnPoints extends React.Component {
         <div className="input-group form-group">
           <form
             onSubmit={this.props.handleSubmit(formValues =>
-              console.log(formValues)
+              console.log({
+                ...formValues,
+                sellerName: `${this.props.firstName} ${this.props.lastName}`
+              })
             )}
           >
             <Field
@@ -80,7 +83,9 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     email: state.auth.user.email,
-    phoneNumber: state.auth.user.phoneNumber
+    phoneNumber: state.auth.user.phoneNumber,
+    firstName: state.auth.user.firstName,
+    lastName: state.auth.user.lastName
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(
