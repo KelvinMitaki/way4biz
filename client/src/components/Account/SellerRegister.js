@@ -103,12 +103,6 @@ export class SellerRegister extends Component {
             component={AuthField}
           />
           <Field
-            type="text"
-            name="referral-code"
-            label="Referral Code"
-            component={AuthField}
-          />
-          <Field
             required="*"
             type="text"
             name="storeName"
