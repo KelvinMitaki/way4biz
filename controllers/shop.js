@@ -6,6 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 const moment = require("moment");
+const { v4 } = require("uuid");
 const Mpesa = require("mpesa-node");
 
 const Product = require("../models/Product");
@@ -451,12 +452,16 @@ route.post(
       }
       // **STRIPE*/
       if (id) {
-        const charge = await stripe.charges.create({
-          amount: (price + Math.round(distance.shippingFees)) * 100,
-          currency: "kes",
-          description: `payed ${price} to account by ${req.session.user.email}`,
-          source: id
-        });
+        const idempotencyKey = v4();
+        const charge = await stripe.charges.create(
+          {
+            amount: (price + Math.round(distance.shippingFees)) * 100,
+            currency: "kes",
+            description: `payed ${price} to account by ${req.session.user.email}`,
+            source: id
+          },
+          { idempotencyKey }
+        );
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
