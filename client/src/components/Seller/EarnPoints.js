@@ -1,10 +1,11 @@
 import React from "react";
 
 import "./EarnPoints.css";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
+import { sendReferralCode } from "../../redux/actions";
 let email;
 class EarnPoints extends React.Component {
   render() {
@@ -13,8 +14,7 @@ class EarnPoints extends React.Component {
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
         <h6>
           You currently have {this.props.points} points. To earn more points
-          refer many sellers to sell on our platform. The more points you have,
-          the higher the chances of winnig a brand new suzuki porsche.
+          refer many sellers to sell on our platform.
         </h6>
 
         <h6 className="my-2">
@@ -24,10 +24,13 @@ class EarnPoints extends React.Component {
 
         <form
           onSubmit={this.props.handleSubmit(formValues =>
-            console.log({
-              ...formValues,
-              sellerName: `${this.props.firstName} ${this.props.lastName}`
-            })
+            this.props.sendReferralCode(
+              {
+                ...formValues,
+                sellerName: `${this.props.firstName} ${this.props.lastName}`
+              },
+              reset
+            )
           )}
         >
           <div
@@ -63,10 +66,11 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     email: state.auth.user.email,
-    points: state.auth.user.points,
-    phoneNumber: state.auth.user.phoneNumber
+    firstName: state.auth.user.firstName,
+    lastName: state.auth.user.lastName,
+    points: state.auth.user.points
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(
-  connect(mapStateToProps)(EarnPoints)
+  connect(mapStateToProps, { sendReferralCode })(EarnPoints)
 );
