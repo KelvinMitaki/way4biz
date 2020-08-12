@@ -16,7 +16,9 @@ class Contact extends React.Component {
             style={{ backgroundColor: "#fff" }}
           >
             <div className="container">
-              <h3 style={{ textAlign: "center" }}>Contact Us</h3>
+              <h3 style={{ textAlign: "center" }} className="mt-3">
+                Contact Us
+              </h3>
               <form className="form-group mt-4">
                 <label htmlFor="contact-reason">Reason</label>
                 <select className="form-control" id="contact-reason">

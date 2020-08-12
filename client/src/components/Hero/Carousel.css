@@ -46,6 +46,7 @@
   overflow: hidden;
   position: relative;
   z-index: 2;
+  cursor: pointer;
 }
 
 .slider img {
@@ -53,7 +54,6 @@
   width: 100%;
   position: relative;
   z-index: -1;
-  overflow: hidden;
 }
 
 .random-stuff {

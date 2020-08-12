@@ -62,10 +62,14 @@ class HeroCarousel extends React.Component {
             <div className="hero-carousel">
               <Carousel id="hero-sliders">
                 <Carousel.Item className="slider">
-                  <img className="img-fluid" src="j.jpg" alt="First slide" />
+                  <Link to="/">
+                    <img className="img-fluid" src="j.jpg" alt="First slide" />
+                  </Link>
                 </Carousel.Item>
                 <Carousel.Item className="slider">
-                  <img className="img-fluid" src="p.jpg" alt="Second slide" />
+                  <Link to="/">
+                    <img className="img-fluid" src="p.jpg" alt="Second slide" />
+                  </Link>
                 </Carousel.Item>
               </Carousel>
             </div>
