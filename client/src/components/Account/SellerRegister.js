@@ -80,9 +80,7 @@ export class SellerRegister extends Component {
             label="Email"
             component={AuthField}
           />
-          {/* <div className="form-primary-error">
-            {this.props.registerError && this.props.registerError}
-          </div> */}
+
           <Field
             required="*"
             type="text"
@@ -102,6 +100,12 @@ export class SellerRegister extends Component {
             type="password"
             name="confirmPassword"
             label="Confirm Password"
+            component={AuthField}
+          />
+          <Field
+            type="text"
+            name="referral-code"
+            label="Referral Code"
             component={AuthField}
           />
           <Field
