@@ -92,7 +92,8 @@ route.post(
         description,
         storeName,
         city,
-        address
+        address,
+        referralCode
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -109,6 +110,7 @@ route.post(
           .status(401)
           .send({ email: "A seller with that email already exists" });
       }
+
       // **TODO**  CHECK IF EMAIL IS VALID VIA SENDGRID
       const hashedPassword = await bcrypt.hash(password, 12);
       const seller = new Seller({
@@ -130,6 +132,14 @@ route.post(
         }
       );
       await seller.save();
+      if (referralCode) {
+        const referree = await Seller.findById(referralCode);
+        referree.points = referree.points + 10;
+        referree.referrals
+          ? (referree.referrals = [...referree.referrals, seller._id])
+          : (referree.referrals = [seller._id]);
+        await referree.save();
+      }
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -245,7 +255,28 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
       return res.status(401).send({ message: "No seller with that email" });
     }
     seller.verified = true;
+    seller.points = 100;
     await seller.save();
+    transporter.sendMail(
+      {
+        to: email,
+        from: "kevinkhalifa911@gmail.com",
+        subject: "Award",
+        html: `<html lang="en">
+    <body>
+        <h5 style="font-family: Arial, Helvetica, sans-serif;">Receive Your award</h5>
+        <p style="font-family: Arial, Helvetica, sans-serif;">Congratulations. You have been awarded 100 points. You can check your dashboard for your point balance and decide to redeem anytime you wish to get a discount on the platform
+        </p>
+    </body>
+    </html>`
+      },
+      (error, info) => {
+        if (error) {
+          console.log(error);
+        }
+        console.log(info);
+      }
+    );
     req.session.seller = seller;
     res.redirect("/confirm/phoneNumber");
   } catch (error) {
@@ -1905,7 +1936,7 @@ route.post(
 );
 route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
   try {
-    const { referralCode } = req.body;
+    const { referralCode } = req.params;
     const seller = await Seller.findById(referralCode);
     if (!seller) {
       return res.status(401).send({ message: "No seller found" });

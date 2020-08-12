@@ -63,7 +63,12 @@ export class SellerRegister extends Component {
         <form
           onSubmit={this.props.handleSubmit(formValues => {
             const { registerSeller } = this.props;
-            registerSeller(formValues);
+            registerSeller({
+              ...formValues,
+              ...(this.props.match.params.referralCode && {
+                referralCode: this.props.match.params.referralCode
+              })
+            });
           })}
         >
           <Field
