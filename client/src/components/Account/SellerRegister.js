@@ -125,6 +125,13 @@ export class SellerRegister extends Component {
           <Field
             required="*"
             type="text"
+            name="business-number"
+            label="Business Number"
+            component={AuthField}
+          />
+          <Field
+            required="*"
+            type="text"
             name="city"
             label="City"
             className="location-input"
