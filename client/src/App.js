@@ -228,7 +228,7 @@ class App extends React.Component {
                   !this.props.user.isSeller ? (
                     <SellerProfiling />
                   ) : (
-                    <Redirect to="/" />
+                    <Redirect to="/seller-dashboard" />
                   )
                 }
               />
