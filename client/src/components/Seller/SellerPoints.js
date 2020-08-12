@@ -6,6 +6,7 @@ import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import EarnPoints from "./EarnPoints";
 import RedeemPoints from "./RedeemPoints";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class SellerPoints extends React.Component {
   getTabs() {
