@@ -135,6 +135,13 @@ export class SellerRegister extends Component {
           <Field
             required="*"
             type="text"
+            name="businessNumber"
+            label="Business Number"
+            component={AuthField}
+          />
+          <Field
+            required="*"
+            type="text"
             name="city"
             label="City"
             className="location-input"
@@ -259,6 +266,9 @@ const validate = formValues => {
     (formValues.address && formValues.address.trim().length === 0)
   ) {
     errors.address = "Please enter a valid address";
+  }
+  if (!formValues.businessNumber) {
+    errors.businessNumber = "Please enter a valid business number";
   }
   return errors;
 };

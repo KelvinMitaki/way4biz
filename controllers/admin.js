@@ -76,6 +76,11 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("Please enter a valid street address"),
+  check("businessNumber")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("please enter a valid businessNumber"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -93,7 +98,8 @@ route.post(
         storeName,
         city,
         address,
-        referralCode
+        referralCode,
+        businessNumber
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -122,7 +128,8 @@ route.post(
         description,
         storeName: storeName.toLowerCase(),
         city,
-        address
+        address,
+        businessNumber
       });
       const token = jwt.sign(
         { _id: seller._id },
