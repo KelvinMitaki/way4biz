@@ -259,12 +259,12 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
     await seller.save();
     transporter.sendMail(
       {
-        to: email,
+        to: seller.email,
         from: "kevinkhalifa911@gmail.com",
         subject: "Award",
         html: `<html lang="en">
     <body>
-        <h5 style="font-family: Arial, Helvetica, sans-serif;">Receive Your award</h5>
+        <h5 style="font-family: Arial, Helvetica, sans-serif;">Receive Your Award</h5>
         <p style="font-family: Arial, Helvetica, sans-serif;">Congratulations. You have been awarded 100 points. You can check your dashboard for your point balance and decide to redeem anytime you wish to get a discount on the platform
         </p>
     </body>
@@ -1913,7 +1913,7 @@ route.post(
             subject: "Invitation Request",
             html: `<html lang="en">
             <body>
-        <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
+        <h5 style="font-family: Arial, Helvetica, sans-serif;">Invitation To Expand Your Business</h5>
         <p style="font-family: Arial, Helvetica, sans-serif;">You have been invited by ${sellerName} to join Way4Biz as a seller. Please click
             <a href=${process.env.SELLER_REGISTER_REFERRAL}/${req.session.user._id}>here</a> to register
             </p>
