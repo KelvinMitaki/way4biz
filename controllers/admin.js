@@ -1206,12 +1206,10 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       todayTotalPrice: todayTotalPrice[0]
         ? todayTotalPrice[0].todayTotalPrice
         : 0,
-      // monthlyPrice:
-      //   monthlyPrice[0] && monthlyPrice[0].monthlyPrice
-      //     ? monthlyPrice[0].monthlyPrice
-      //     : 0
-      //     ,
-      monthlyPrice,
+      monthlyPrice:
+        monthlyPrice[0] && monthlyPrice[0].monthlyPrice
+          ? monthlyPrice[0].monthlyPrice
+          : 0,
       totalProducts
     });
   } catch (error) {
