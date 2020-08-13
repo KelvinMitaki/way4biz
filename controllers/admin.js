@@ -451,7 +451,9 @@ route.post(
       if (freeShipping !== true) {
         freeShipping = false;
       }
-
+      const charge = await Category.findOne({
+        "category.main": category
+      }).select("category.charge");
       const product = new Product({
         name,
         freeShipping,
@@ -461,7 +463,8 @@ route.post(
         subcategory,
         seller: sellerId,
         description,
-        imageUrl
+        imageUrl,
+        charge
       });
       await product.save();
       res.status(201).send(product);
