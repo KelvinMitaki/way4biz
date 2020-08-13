@@ -1,72 +1,152 @@
 import React from "react";
 
 import "./About.css";
-import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
+import HelpCenterHeader from "./HelpCenterHeader";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
-import MobileLogo from "../../Header/MobileLogo";
+import { IoMdRocket } from "react-icons/io";
+import { GiBinoculars } from "react-icons/gi";
+import { BsGem } from "react-icons/bs";
 
 class About extends React.Component {
   render() {
     return (
       <div className="main">
-        <div className="content">
-          <Header />
-          <div className="container">
+        <div className="content white-body">
+          <HelpCenterHeader />
+          <div
+            className="container-fluid p-0"
+            style={{ backgroundColor: "#fff" }}
+          >
             <h3 style={{ textAlign: "center" }} className="my-2">
-              Our Mission and Vision
+              About Us
             </h3>
-            <p className="my-2">
-              What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an
-              unknown printer took a galley of type and scrambled it to make a
-              type specimen book. It has survived not only five centuries, but
-              also the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset sheets containing Lorem Ipsum passages, and more recently
-              with desktop publishing software like Aldus PageMaker including
-              versions of Lorem Ipsum. Why do we use it? It is a long
-              established fact that a reader will be distracted by the readable
-              content of a page when looking at its layout. The point of using
-              Lorem Ipsum is that it has a more-or-less normal distribution of
-              letters, as opposed to using 'Content here, content here', making
-              it look like readable English. Many desktop publishing packages
-              and web page editors now use Lorem Ipsum as their default model
-              text, and a search for 'lorem ipsum' will uncover many web sites
-              still in their infancy. Various versions have evolved over the
-              years, sometimes by accident, sometimes on purpose (injected
-              humour and the like). Where does it come from? Contrary to popular
-              belief, Lorem Ipsum is not simply random text. It has roots in a
-              piece of classical Latin literature from 45 BC, making it over
-              2000 years old. Richard McClintock, a Latin professor at
-              Hampden-Sydney College in Virginia, looked up one of the more
-              obscure Latin words, consectetur, from a Lorem Ipsum passage, and
-              going through the cites of the word in classical literature,
-              discovered the undoubtable source. Lorem Ipsum comes from sections
-              1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The
-              Extremes of Good and Evil) by Cicero, written in 45 BC. This book
-              is a treatise on the theory of ethics, very popular during the
-              Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit
-              amet..", comes from a line in section 1.10.32. The standard chunk
-              of Lorem Ipsum used since the 1500s is reproduced below for those
-              interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum
-              et Malorum" by Cicero are also reproduced in their exact original
-              form, accompanied by English versions from the 1914 translation by
-              H. Rackham. Where can I get some? There are many variations of
-              passages of Lorem Ipsum available, but the majority have suffered
-              alteration in some form, by injected humour, or randomised words
-              which don't look even slightly believable. If you are going to use
-              a passage of Lorem Ipsum, you need to be sure there isn't anything
-              embarrassing hidden in the middle of text. All the Lorem Ipsum
-              generators on the Internet tend to repeat predefined chunks as
-              necessary, making this the first true generator on the Internet.
-              It uses a dictionary of over 200 Latin words, combined with a
-              handful of model sentence structures, to generate Lorem Ipsum
-              which looks reasonable. The generated Lorem Ipsum is therefore
-              always free from repetition, injected humour, or
-              non-characteristic words etc.
-            </p>
+
+            <div className="row mb-3">
+              <div className="col-10 col-md-9 col-lg-8 mx-auto">
+                <div className="row">
+                  <div className="col-md-2" className="about-icon-wrapper">
+                    <div className="about-icon-container">
+                      <IoMdRocket
+                        style={{ fontSize: "60px", color: "#f76b1a" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-10 about-us-text-wrapper">
+                    <h4 style={{ textDecoration: "underline" }}>Our Mission</h4>
+                    <div>
+                      <p>
+                        <strong>Make Life Easier:</strong> Provide timely,
+                        convenient and efficient services to our customers,
+                        individuals and society to the highest moral standards
+                        of professionalism from our qualified staff using the
+                        appropriate gadgets to help people move from where they
+                        are today to a better place tomorrow.
+                      </p>
+                      <p>
+                        <strong>Corporate Client:</strong> It should be put
+                        forward as a fact that two (2) heads are better than one
+                        and as much understanding determines how much success a
+                        business will be able to actualize. Our perspective is
+                        to partner and is the leading benefits advisors in the
+                        middle market, offering independent solutions for
+                        safety, welfare, and corporate client services
+                        businesses. This is our way of helping you our potential
+                        and visionary Corporate Client actualize your dream;
+                        this also serves as an opportunity of creating an
+                        awareness of our/your suitability to our costumer.
+                      </p>
+                      <p>
+                        With the more fundamental economy backlash in the world,
+                        our aspiration is to help intensify and galvanize the
+                        backlash against trade and globalization. Our aim is to
+                        have our Company based in other parts of the world.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mb-3">
+              <div className="col-10 col-md-9 col-lg-8 mx-auto">
+                <div className="row">
+                  <div className="col-md-2" className="about-icon-wrapper">
+                    <div className="about-icon-container">
+                      <GiBinoculars
+                        style={{ fontSize: "60px", color: "#f76b1a" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-10 about-us-text-wrapper">
+                    <h4 style={{ textDecoration: "underline" }}>Our Vision</h4>
+                    <div>
+                      <p>
+                        Way4Biz Agency's goal and vision is to become the major
+                        leading and Successful company or entrepreneurs in
+                        Africa by growing too thickly and coarsely and help over
+                        million businesses rank in the world even the most
+                        competitive Industries.
+                      </p>
+                      <p>
+                        Our plan and strategy are based on being the preferred
+                        goods distributors and peripherals service rendering
+                        with high quality and innovative solutions that will
+                        help organizations and businesses increase fertility.
+                      </p>
+                      <p>
+                        The customer is the business and the success of the
+                        business relies on the loyalty of the customer.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-10 col-md-9 col-lg-8 mx-auto">
+                <div className="row">
+                  <div className="col-md-2" className="about-icon-wrapper">
+                    <div className="about-icon-container">
+                      <BsGem style={{ fontSize: "60px", color: "#f76b1a" }} />
+                    </div>
+                  </div>
+                  <div className="col-md-10 about-us-text-wrapper">
+                    <h4 style={{ textDecoration: "underline" }}>Our Values</h4>
+                    <div>
+                      <p>
+                        We insist on certain core values that not only define
+                        Way4Biz organization but also a foundation for continued
+                        growth and professional excellence:
+                      </p>
+                      <ul style={{ margin: "20px 0px 20px 30px" }}>
+                        <li>
+                          <p>
+                            We listen to our customer's needs and provide
+                            innovative, reliable services in support of their
+                            needs.
+                          </p>
+                        </li>
+                        <li>
+                          <p>
+                            We deliver definable quality and values so that our
+                            customers are proud of us and recommend us to
+                            others.
+                          </p>
+                        </li>
+                        <li>
+                          <p>
+                            We continually improve our company and services in
+                            accordance with our customers’ wishes. 
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <Footer />

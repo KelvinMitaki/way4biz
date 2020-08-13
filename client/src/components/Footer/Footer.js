@@ -11,46 +11,53 @@ class Footer extends React.Component {
         <div className="container">
           <div className="row mb-4">
             <div className="col-md-3">
-              <h6>About Way4Biz</h6>
+              <h6>Help</h6>
+              <div className="site-footer-info">
+                <p>
+                  <Link to="/help-center">Help center</Link>
+                </p>
+                <p>
+                  <Link to="/about-us">Contact Us</Link>
+                </p>
+                <p>
+                  <Link to="/terms">Return Policy</Link>
+                </p>
+                <p>
+                  <Link to="/">Suggest a Product</Link>
+                </p>
+                <p>
+                  <Link to="/">Submit an Idea</Link>
+                </p>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <h6>Account</h6>
+              <div className="site-footer-info">
+                <p>
+                  <Link to="/contact-us">My Account</Link>
+                </p>
+                <p>
+                  <Link to="/account">My Orders</Link>
+                </p>
+                {/* <p>
+                  <Link to="/account">Personal Details</Link>
+                </p> */}
+                <p>
+                  <Link to="/account">Personal Details</Link>
+                </p>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <h6>Company</h6>
               <div className="site-footer-info">
                 <p>
                   <Link to="/about-us">About Us</Link>
                 </p>
                 <p>
-                  <Link to="/terms">Terms and Conditions</Link>
+                  <Link to="/seller/register">Sell on Way4Biz</Link>
                 </p>
                 <p>
-                  <Link to="/privacy-policy">Privacy Policy</Link>
-                </p>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <h6>Help Center</h6>
-              <div className="site-footer-info">
-                <p>
-                  <Link to="/contact-us">Contact Us</Link>
-                </p>
-                {/* <p>
-                  <Link to="/how-to-shop?">How to shop on Way4Biz?</Link>
-                </p> */}
-                <p>
-                  <Link to="/how-to-sell">How to sell on Way4Biz?</Link>
-                </p>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <h6>Make Money On Way4Biz</h6>
-              <div className="site-footer-info">
-                <p>
-                  {this.props.user && this.props.user.isSeller && (
-                    <Link to="/seller/sell">Sell on Way4Biz</Link>
-                  )}
-                  {!this.props.user && (
-                    <Link to="/seller/register">Sell on Way4Biz</Link>
-                  )}
-                  {this.props.user && !this.props.user.isSeller && (
-                    <Link to="/">Sell on Way4Biz</Link>
-                  )}
+                  <Link to="/how-to-sell">Terms and Conditions</Link>
                 </p>
               </div>
             </div>
@@ -76,9 +83,9 @@ class Footer extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(Footer);

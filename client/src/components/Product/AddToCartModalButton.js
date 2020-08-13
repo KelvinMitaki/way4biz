@@ -4,10 +4,10 @@ import { Link, withRouter } from "react-router-dom";
 import "./AddToCartModalButton.css";
 import { connect } from "react-redux";
 
-const Modal = props => {
+const Modal = (props) => {
   const showHideClassName = props.show
     ? "modal display-block"
-    : "modal display-nones";
+    : "modal display-none";
 
   return (
     <div className={showHideClassName} onClick={props.handleClose}>
@@ -24,17 +24,19 @@ const Modal = props => {
               {props.cart.length} items in your Shopping Cart.
             </p>
             <hr className="my-2" />
-            <div className="row">
-              <div className="col-md-6 my-2">
+            <div className="row" style={{ textAlign: "center" }}>
+              <div className="col-sm-6 my-2">
                 <div
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                  }}
                   onClick={() => props.handleClose()}
                   className="btn btn-md continue-btn "
                 >
                   Continue Shopping
                 </div>
               </div>
-              <div className="col-md-6 my-2">
+              <div className="col-sm-6 my-2">
                 <Link className="btn btn-md shopping-btn-modal" to="/cart">
                   Proceed To Cart
                 </Link>
@@ -47,9 +49,9 @@ const Modal = props => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(connect(mapStateToProps)(Modal));

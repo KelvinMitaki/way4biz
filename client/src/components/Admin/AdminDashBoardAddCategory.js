@@ -14,30 +14,33 @@ class AdminDashBoardAddCategory extends React.Component {
     icon: "",
     subcategories: [],
     typing: "",
+    charge: null
   };
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleTypingSubmit = (e) => {
+  handleTypingSubmit = e => {
     if (this.state.typing !== "") {
       return this.setState({
         subcategories: [...this.state.subcategories, this.state.typing],
-        typing: "",
+        typing: ""
       });
     }
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     if (
       this.state.main.trim() !== "" &&
       this.state.icon.trim() !== "" &&
-      this.state.subcategories.length !== 0
+      this.state.subcategories.length !== 0 &&
+      this.state.charge
     ) {
       this.props.addNewCategory(
         {
           main: this.state.main.trim(),
           subcategories: this.state.subcategories,
           icon: this.state.icon.trim(),
+          charge: this.state.charge
         },
         this.props.history
       );
@@ -75,6 +78,16 @@ class AdminDashBoardAddCategory extends React.Component {
                     id="add-icon"
                     onChange={this.handleChange}
                     value={this.state.icon}
+                  />
+                  <label htmlFor="charge">Charge</label>
+                  <input
+                    name="charge"
+                    className="form-control"
+                    type="number"
+                    id="charge"
+                    placeholder="15"
+                    onChange={this.handleChange}
+                    value={this.state.charge || ""}
                   />
                   <label htmlFor="sub-categories">Sub Categories</label>
                   <div className="input-group">
@@ -114,7 +127,7 @@ class AdminDashBoardAddCategory extends React.Component {
                                 this.setState({
                                   subcategories: this.state.subcategories.filter(
                                     (s, i) => i !== index
-                                  ),
+                                  )
                                 })
                               }
                             >
@@ -156,9 +169,9 @@ class AdminDashBoardAddCategory extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    addCategoryLoading: state.product.addCategoryLoading,
+    addCategoryLoading: state.product.addCategoryLoading
   };
 };
 export default withRouter(

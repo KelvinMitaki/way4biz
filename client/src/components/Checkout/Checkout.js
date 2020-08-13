@@ -9,9 +9,16 @@ import Header from "../Header/Header";
 import { withRouter, Redirect } from "react-router-dom";
 import { reduxForm, formValueSelector } from "redux-form";
 import { connect } from "react-redux";
-import { fetchProducts, preMakeOrder } from "../../redux/actions";
-import DeliveryMethods from "./DeliveryMethods";
+import {
+  fetchProducts,
+  preMakeOrder,
+  removeAddress,
+  selfCollectionAddress
+} from "../../redux/actions";
 import MobileLogo from "../Header/MobileLogo";
+import GoodsReach from "./GoodsReach";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class CheckOut extends React.Component {
   componentDidMount() {
@@ -19,6 +26,22 @@ class CheckOut extends React.Component {
       return <Redirect to="/address" />;
     }
   }
+  componentWillUnmount() {
+    this.props.removeAddress();
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.goodsReach !== "self-collection" &&
+      this.props.goodsReach !== prevProps.goodsReach
+    ) {
+      this.handleSelect(this.props.user.address);
+    }
+  }
+  handleSelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.props.selfCollectionAddress(latlng);
+  };
   render() {
     if (this.props.cart.length === 0) {
       this.props.fetchProducts();
@@ -28,12 +51,11 @@ class CheckOut extends React.Component {
     const { user, cart } = this.props;
     const VAT = Math.ceil(
       this.props.cart
-        .map((item) => item.price * item.quantity)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0) * 0.01
     ).toLocaleString();
-    const shipping = Math.floor(Math.random() * 5000).toLocaleString();
     const total = this.props.cart
-      .map((item) => item.price * item.quantity)
+      .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
       .toLocaleString();
     return (
@@ -43,16 +65,19 @@ class CheckOut extends React.Component {
           <Header />
 
           <form
-            onSubmit={this.props.handleSubmit((formValues) =>
-              this.props.preMakeOrder({ formValues, cart }, this.props.history)
-            )}
+            onSubmit={this.props.handleSubmit(formValues => {
+              if (formValues["goods-reach"] === "self-collection") {
+                formValues.delivery = "Self-Collection";
+              }
+              this.props.preMakeOrder({ formValues, cart }, this.props.history);
+            })}
             className="mt-4"
           >
             <div className="container  main-checkout-wrapper">
               <div className="row">
                 <div className="col-md-8 mx-auto">
                   <div id="address-details" className="mb-3 box-container">
-                    <h3>Address Details</h3>
+                    <h4>Address Details</h4>
                     <hr />
                     <div id="current-address">
                       <h6>
@@ -67,12 +92,13 @@ class CheckOut extends React.Component {
                     <br />
                   </div>
                   <div id="delivery-details" className="mb-3 box-container">
-                    <h3>Delivery Methods</h3>
+                    <h4>How should the goods reach you?</h4>
                     <hr />
-                    <DeliveryMethods />
+                    <GoodsReach />
+                    {/* <DeliveryMethods /> */}
                   </div>
                   <div id="payment-methods" className="box-container">
-                    <h3>Payment Methods</h3>
+                    <h4>Payment Methods</h4>
                     <hr />
                     <p className="ml-3">
                       How do you want to pay for your order?
@@ -103,7 +129,7 @@ class CheckOut extends React.Component {
                           {(
                             parseInt(total.replace(",", "")) +
                             parseInt(VAT) +
-                            parseInt(shipping)
+                            Math.round(this.props.distance.shippingFees)
                           ).toLocaleString()}
                         </p>
                       </div>
@@ -115,7 +141,13 @@ class CheckOut extends React.Component {
                             !this.props.valid ||
                             this.props.checkoutUserLoading ||
                             this.props.pristine ||
-                            !this.props.payment
+                            !this.props.payment ||
+                            (!this.props.delivery &&
+                              this.props.goodsReach &&
+                              this.props.goodsReach !== "self-collection") ||
+                            (this.props.goodsReach &&
+                              this.props.goodsReach === "self-collection" &&
+                              Object.keys(this.props.address).length === 0)
                           }
                           type="submit"
                         >
@@ -146,29 +178,40 @@ class CheckOut extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (!formValues.payment) {
     errors.payment = "Please choose a valid payment method";
   }
-  if (!formValues.delivery) {
+  if (!formValues.delivery && formValues["goods-reach"] !== "self-collection") {
     errors.delivery = "Please choose a valid delivery method";
   }
   return errors;
 };
 const selector = formValueSelector("Chekout");
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const payment = selector(state, "payment");
+  const delivery = selector(state, "delivery");
+  const goodsReach = selector(state, "goods-reach");
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
     checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
+    address: state.selfCollection.address,
+    selfCollectionLoading: state.selfCollection.selfCollectionLoading,
     payment,
+    delivery,
+    goodsReach
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout", validate, destroyOnUnmount: false })(
-    connect(mapStateToProps, { preMakeOrder, fetchProducts })(CheckOut)
+  reduxForm({ form: "Chekout", validate })(
+    connect(mapStateToProps, {
+      preMakeOrder,
+      fetchProducts,
+      removeAddress,
+      selfCollectionAddress
+    })(CheckOut)
   )
 );

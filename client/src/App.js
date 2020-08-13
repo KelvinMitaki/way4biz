@@ -72,7 +72,7 @@ import FileComplain from "./components/Account/FileComplain";
 import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
-import CardPayment from "./components/Checkout/CardPayment";
+// import CardPayment from "./components/Checkout/CardPayment";
 import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
 import StripePayment from "./components/StripePayment/StripePayment";
 import StripeError from "./components/StripePayment/StripeError";
@@ -80,7 +80,6 @@ import MpesaError from "./components/Checkout/MpesaError";
 import NormalDelivery from "./components/Checkout/NormalDelivery";
 import ExpressDelivery from "./components/Checkout/ExpressDelivery";
 import Logistics from "./components/Pages/Logistics";
-import FAQS from "./components/Pages/HelpCenter/FAQS";
 import About from "./components/Pages/HelpCenter/About";
 import TermsConditions from "./components/Pages/HelpCenter/TermsConditions";
 import PrivacyPolicy from "./components/Pages/HelpCenter/PrivacyPolicy";
@@ -89,6 +88,8 @@ import HowToSell from "./components/Pages/HelpCenter/HowToSell";
 import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
 import CustomerService from "./components/Pages/HelpCenter/CustomerService";
 import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
+import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
+import SellerPoints from "./components/Seller/SellerPoints";
 
 class App extends React.Component {
   state = {
@@ -147,7 +148,6 @@ class App extends React.Component {
             _id: i._id
           }))
         );
-      this.props.fetchWishlistProducts();
     }
 
     if (prevState.scrolling !== this.state.scrolling) {
@@ -199,6 +199,7 @@ class App extends React.Component {
         <div id="main">
           {this.scrolled && this.state.scrolling ? <MoveToTop /> : null}
           {/* <MobileLogo /> */}
+
           <div>
             <Switch>
               <Route path="/" exact component={Home} />
@@ -213,7 +214,6 @@ class App extends React.Component {
               <Route path="/express-delivery" component={ExpressDelivery} />
               <Route path="/logistics" component={Logistics} />
               <Route path="/help-center" component={HelpCenter} />
-              <Route path="/faqs" component={FAQS} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
@@ -228,7 +228,7 @@ class App extends React.Component {
                   !this.props.user.isSeller ? (
                     <SellerProfiling />
                   ) : (
-                    <Redirect to="/" />
+                    <Redirect to="/seller-dashboard" />
                   )
                 }
               />
@@ -338,6 +338,17 @@ class App extends React.Component {
                 }
               />
               <Route
+                path="/admin-inbox"
+                exact
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardInbox />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
                 path="/admin/root/new-product/why-reject/:productId"
                 exact
                 render={() =>
@@ -408,6 +419,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.verifiedPhoneNumber ? (
                     <SellerOrderDetails />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/points"
+                render={() =>
+                  this.props.user && this.props.user.verifiedPhoneNumber ? (
+                    <SellerPoints />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
@@ -565,6 +586,17 @@ class App extends React.Component {
                 }
               />
               <Route
+                path="/seller/register/referral/:referralCode"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <SellerRegister />
+                  )
+                }
+              />
+              <Route
                 path="/seller/sign-in"
                 exact
                 render={() =>
@@ -664,7 +696,7 @@ class App extends React.Component {
                   )
                 }
               />
-              <Route
+              {/* <Route
                 path="/card-payment"
                 exact
                 render={() =>
@@ -674,7 +706,7 @@ class App extends React.Component {
                     <CardPayment />
                   )
                 }
-              />
+              /> */}
               <Route
                 path="/account"
                 exact

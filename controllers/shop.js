@@ -6,6 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 const moment = require("moment");
+const { v4 } = require("uuid");
 const Mpesa = require("mpesa-node");
 
 const Product = require("../models/Product");
@@ -407,7 +408,7 @@ route.post(
         });
       });
       const price = cart
-        .map(item => item.price)
+        .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
       const distance = await Distance.findById(distanceId);
       if (formValues.payment === "mpesa") {
@@ -451,12 +452,16 @@ route.post(
       }
       // **STRIPE*/
       if (id) {
-        const charge = await stripe.charges.create({
-          amount: (price + Math.round(distance.shippingFees)) * 100,
-          currency: "kes",
-          description: `payed ${price} to account by ${req.session.user.email}`,
-          source: id
-        });
+        const idempotencyKey = v4();
+        const charge = await stripe.charges.create(
+          {
+            amount: (price + Math.round(distance.shippingFees)) * 100,
+            currency: "kes",
+            description: `payed ${price} to account by ${req.session.user.email}`,
+            source: id
+          },
+          { idempotencyKey }
+        );
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
@@ -571,10 +576,6 @@ route.delete("/api/delete/whole/cart", auth, async (req, res) => {
 // FIX THIS
 route.get("/api/products/find/categories", async (req, res) => {
   try {
-    // await Product.find().distinct("category", (err, uniqueCategories) => {
-    //   if (err) return res.send(err);
-    //   res.send(uniqueCategories);
-    // });
     const category = await Product.aggregate([
       { $group: { _id: "$category" } },
       { $limit: 9 },

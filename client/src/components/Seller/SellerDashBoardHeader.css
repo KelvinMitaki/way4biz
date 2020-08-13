@@ -1,6 +1,10 @@
 #seller-dashboard-header {
   width: 100vw;
   height: 90px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  z-index: 1000;
 }
 
 #seller-logo {

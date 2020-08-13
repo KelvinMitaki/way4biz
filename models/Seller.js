@@ -58,6 +58,18 @@ const SellerSchema = new mongoose.Schema(
     },
     imageUrl: {
       type: [String]
+    },
+    points: {
+      type: Number,
+      required: true
+    },
+    businessNumber: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    referrals: {
+      type: [String]
     }
   },
   {

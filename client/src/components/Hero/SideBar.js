@@ -21,9 +21,9 @@ class SideBar extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    categories: state.product.categories
+    categories: state.product.categories,
   };
 };
 export default connect(mapStateToProps, { fetchAllCategories })(SideBar);

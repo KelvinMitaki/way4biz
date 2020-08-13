@@ -1,6 +1,6 @@
 import React from "react";
 
-const RadioField = (props) => {
+const RadioField = props => {
   return (
     <div className="radio-title-button">
       <div className="radio">

@@ -2,7 +2,7 @@ import React from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { NavLink, Link } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
-import { MdRateReview } from "react-icons/md";
+import { MdRateReview, MdControlPointDuplicate } from "react-icons/md";
 import { BsFillBagFill } from "react-icons/bs";
 import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
@@ -16,7 +16,7 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -27,9 +27,9 @@ class SellerHamburgerMenu extends React.Component {
   }
 
   handleClick(e) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   }
@@ -147,6 +147,16 @@ class SellerHamburgerMenu extends React.Component {
                   <NavLink
                     className="link"
                     activeClassName="seller-menu-acive"
+                    to="/points"
+                  >
+                    <MdControlPointDuplicate className="mr-2" />
+                    Points
+                  </NavLink>
+                </li>
+                <li className="my-4">
+                  <NavLink
+                    className="link"
+                    activeClassName="seller-menu-acive"
                     to="/seller/settings"
                   >
                     <GoSettings className="mr-2" />
@@ -188,14 +198,14 @@ class SellerHamburgerMenu extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerRejects: state.product.sellerRejects,
     sellerOrders: state.sellerRegister.sellerOrders,
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard
+    dashboard: state.detailsPersist.dashboard,
   };
 };
 export default connect(mapStateToProps, {
-  fetchRejects
+  fetchRejects,
 })(SellerHamburgerMenu);

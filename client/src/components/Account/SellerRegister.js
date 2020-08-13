@@ -4,16 +4,17 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import PhoneNumber from "./PhoneNumber";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
-import { registerSeller } from "../../redux/actions";
+import { registerSeller, checkReferral } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import SimpleMap from "./SimpleMap";
 import MobileLogo from "../Header/MobileLogo";
+import "./SellerRegister.css";
 
 export class SellerRegister extends Component {
   state = {
@@ -23,6 +24,15 @@ export class SellerRegister extends Component {
       lng: 36.8263
     }
   };
+
+  componentDidMount() {
+    if (Object.keys(this.props.match.params).length !== 0) {
+      this.props.checkReferral(
+        this.props.match.params.referralCode,
+        this.props.history
+      );
+    }
+  }
   handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
@@ -48,13 +58,18 @@ export class SellerRegister extends Component {
       <div>
         <MobileLogo />
         <AuthHeader />
-        <br />
-        <h1 style={{ textAlign: "center" }}>Register</h1>
-        <br />
+        <h1 style={{ textAlign: "center" }} className="my-2">
+          Register
+        </h1>
         <form
           onSubmit={this.props.handleSubmit(formValues => {
             const { registerSeller } = this.props;
-            registerSeller(formValues);
+            registerSeller({
+              ...formValues,
+              ...(this.props.match.params.referralCode && {
+                referralCode: this.props.match.params.referralCode
+              })
+            });
           })}
         >
           <Field
@@ -120,6 +135,13 @@ export class SellerRegister extends Component {
           <Field
             required="*"
             type="text"
+            name="businessNumber"
+            label="Business Number"
+            component={AuthField}
+          />
+          <Field
+            required="*"
+            type="text"
             name="city"
             label="City"
             className="location-input"
@@ -168,9 +190,15 @@ export class SellerRegister extends Component {
           <div className="form-primary-error">
             {this.props.sellerRegisterError && this.props.sellerRegisterError}
           </div>
-          <br />
-          <br />
         </form>
+        <p className="my-2" id="seller-register-sign-in">
+          Already have an account?{" "}
+          <Link to="/seller/sign-in" id="seller-register-sign-in-link">
+            Sign in
+          </Link>
+        </p>
+        <br />
+        <br />
       </div>
     );
   }
@@ -239,6 +267,9 @@ const validate = formValues => {
   ) {
     errors.address = "Please enter a valid address";
   }
+  if (!formValues.businessNumber) {
+    errors.businessNumber = "Please enter a valid business number";
+  }
   return errors;
 };
 const mapStateToProps = state => {
@@ -252,5 +283,7 @@ export default withRouter(
   reduxForm({
     validate,
     form: "SellerRegister"
-  })(connect(mapStateToProps, { registerSeller })(SellerRegister))
+  })(
+    connect(mapStateToProps, { registerSeller, checkReferral })(SellerRegister)
+  )
 );

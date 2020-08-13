@@ -17,7 +17,8 @@ class AdminDashBoardSeller extends React.Component {
     );
   }
   render() {
-    if (!this.props.verifiedSeller) return <ScreenLoader />;
+    if (!this.props.verifiedSeller || this.props.verifiedSellerLoading)
+      return <ScreenLoader />;
     if (this.props.verifiedSeller) {
       return (
         <div className="container-fluid p-0 mb-5">
@@ -128,7 +129,7 @@ class AdminDashBoardSeller extends React.Component {
 const mapStateToProps = state => {
   return {
     verifiedSeller: state.sellerRegister.verifiedSeller,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
+    verifiedSellerLoading: state.sellerRegister.verifiedSellerLoading
   };
 };
 export default withRouter(

@@ -20,19 +20,19 @@ class SellerProducts extends React.Component {
     const soldOut =
       this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
-      this.props.sellerProducts.filter(pro => pro.stockQuantity < 1);
+      this.props.sellerProducts.filter((pro) => pro.stockQuantity < 1);
     const onSite =
       this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
-      this.props.sellerProducts.filter(pro => pro.onSite);
+      this.props.sellerProducts.filter((pro) => pro.onSite);
     const underReview =
       this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
-      this.props.sellerProducts.filter(pro => pro.underReview);
+      this.props.sellerProducts.filter((pro) => pro.underReview);
     const rejected =
       this.props.sellerProducts &&
       this.props.sellerProducts.length !== 0 &&
-      this.props.sellerProducts.filter(pro => pro.rejected);
+      this.props.sellerProducts.filter((pro) => pro.rejected);
     let tabs = [
       {
         title: "Total Products",
@@ -41,24 +41,24 @@ class SellerProducts extends React.Component {
             products={this.props.sellerProducts}
             category="total"
           />
-        )
+        ),
       },
       {
         title: "Live On Site",
-        data: <DashBoardProduct products={onSite} category="live" />
+        data: <DashBoardProduct products={onSite} category="live" />,
       },
       {
         title: "Under Review",
-        data: <DashBoardProduct products={underReview} category="review" />
+        data: <DashBoardProduct products={underReview} category="review" />,
       },
       {
         title: "Rejected",
-        data: <DashBoardProduct products={rejected} category="rejected" />
+        data: <DashBoardProduct products={rejected} category="rejected" />,
       },
       {
         title: "Sold Out",
-        data: <DashBoardProduct products={soldOut} category="sold-out" />
-      }
+        data: <DashBoardProduct products={soldOut} category="sold-out" />,
+      },
     ];
 
     return tabs.map((tab, index) => ({
@@ -66,7 +66,7 @@ class SellerProducts extends React.Component {
       getContent: () => tab.data,
       key: index,
       tabClassName: "products-tab",
-      panelClassName: "seller-db-panel"
+      panelClassName: "seller-db-panel",
     }));
   }
   render() {
@@ -100,11 +100,11 @@ class SellerProducts extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerProducts: state.sellerRegister.sellerProducts,
     sellerProductsLoading: state.auth.sellerProductsLoading,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, { fetchSellerProducts })(

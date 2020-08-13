@@ -142,8 +142,7 @@ class Product extends React.Component {
       slidesToScroll: 1,
       infinite: false,
     };
-    if (!this.props.product || this.props.saveWishlistLoading)
-      return <ScreenLoader />;
+    if (!this.props.product) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -270,6 +269,7 @@ class Product extends React.Component {
                               cursor: "pointer",
                               display: "inline-block",
                             }}
+                            title="visit store"
                             onClick={() =>
                               this.props.history.push(
                                 `/seller/store/${this.props.product.seller._id}`

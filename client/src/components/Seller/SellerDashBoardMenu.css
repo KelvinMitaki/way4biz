@@ -1,19 +1,29 @@
 #seller-dashboard-menu {
-  height: 100vh;
+  height: calc(100vh - 90px);
+  /* height: 100vh; */
   width: 100%;
   margin: 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: 90px;
   left: 0px;
 }
 
 #seller-dashboard-menu ul {
   list-style: none;
-  padding: 50px 0px 50px 80px;
+  padding: 40px 0px 40px 80px;
   color: #fff;
   height: 80%;
   overflow-y: auto;
+  position: relative;
+}
+
+#seller-dashboard-menu ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+#seller-dashboard-menu ul::-webkit-scrollbar-thumb {
+  background-color: #f76b1a;
 }
 
 .seller-menu-active {
@@ -21,7 +31,7 @@
 }
 
 #seller-menu-items li {
-  height: 50px;
+  height: 45px;
   display: flex;
   align-items: center;
   padding-left: 10px;

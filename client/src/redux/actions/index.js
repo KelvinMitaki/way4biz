@@ -226,7 +226,19 @@ import {
   SELLER_LOGIN_START,
   SELLER_LOGIN_STOP,
   REGISTER_START,
-  REGISTER_STOP
+  REGISTER_STOP,
+  SELF_COLLECTION_ADDRESS,
+  SELF_COLLECTION_START,
+  SELF_COLLECTION_STOP,
+  VERIFIED_SELLER_START,
+  VERIFIED_SELLER_STOP,
+  REMOVE_ADDRESS,
+  COLLECTION_OPEN_ACTION,
+  COLLECTION_CLOSE_ACTION,
+  CHECK_REFERRAL,
+  SEND_REFERRAL_CODE,
+  SEND_REFERRAL_CODE_START,
+  SEND_REFERRAL_CODE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -947,21 +959,17 @@ export const addToWishlist = product => (dispatch, getState) => {
   });
 };
 
-export const removeFromWishlist = product => async dispatch => {
+export const removeFromWishlist = product => async (dispatch, getState) => {
   try {
-    dispatch({ type: SAVE_WISHLIST_START });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_START });
-    await axios.patch("/api/delete/wishlist", { productId: product._id });
+    // await axios.patch("/api/delete/wishlist", { productId: product._id });
     dispatch({
       type: REMOVE_FROM_WISHLIST,
       payload: product
     });
-    dispatch({ type: SAVE_WISHLIST_STOP });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
+    await dispatch(saveWishlistItems(getState().cartReducer.wishlist));
+    dispatch(fetchWishlistProducts());
   } catch (error) {
     authCheck(error);
-    dispatch({ type: SAVE_WISHLIST_STOP });
-    dispatch({ type: FETCH_WISHLIST_PRODUCTS_STOP });
     console.log(error.response);
   }
 };
@@ -1347,11 +1355,14 @@ export const moreSearchTermProducts = (filter, searchTerm) => async (
     console.log(error.response);
   }
 };
-export const handleSearchTerm = term => {
-  return {
+export const handleSearchTerm = term => dispatch => {
+  if (term.trim() === "") {
+    dispatch(clearSearchTerm());
+  }
+  dispatch({
     type: HANDLE_SEARCH_TERM,
     payload: term
-  };
+  });
 };
 
 export const handleUrlSearchTerm = (filter, history, term) => dispatch => {
@@ -1369,28 +1380,6 @@ export const clearSearchTerm = () => (dispatch, getState) => {
     type: CLEAR_SEARCH_TERM
   });
 };
-// export const fetchFilteredProducts = (filter, category) => async dispatch => {
-//   try {
-//     dispatch({ type: FILTERED_PRODUCTS_START });
-//     const test = {};
-
-//     if (filter.rating) {
-//       test.rating = { $gte: 4 };
-//     }
-//     if (filter.freeShipping) {
-//       test.freeShipping = true;
-//     }
-//     test.category = category;
-
-//     const res = await axios.post(`/api/products/filter`, { test });
-//     console.log(res.data);
-//     // dispatch({ type: FILTERED_PRODUCTS, payload: res.data });
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//   } catch (error) {
-//     dispatch({ type: FILTERED_PRODUCTS_STOP });
-//     console.log(error.response);
-//   }
-// };
 
 export const handleCheckboxAction = (event, category, history, searchTerm) => (
   dispatch,
@@ -1546,13 +1535,13 @@ export const fetchVerifiedSellers = () => async dispatch => {
 
 export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
   try {
-    dispatch({ type: FETCH_SELLERS_START });
+    dispatch({ type: VERIFIED_SELLER_START });
     const res = await axios.get(`/api/verified/seller/${sellerId}`);
     dispatch({ type: FETCH_VERIFIED_SELLER, payload: res.data });
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: VERIFIED_SELLER_STOP });
   } catch (error) {
     authCheck(error);
-    dispatch({ type: FETCH_SELLERS_STOP });
+    dispatch({ type: VERIFIED_SELLER_STOP });
     history.push("/");
   }
 };
@@ -2217,12 +2206,12 @@ export const deleteCart = () => async dispatch => {
 
 export const confirmDispatch = (
   orderId,
-  productId,
+  productIds,
   history
 ) => async dispatch => {
   try {
     dispatch({ type: CONFIRM_DISPATCH_START });
-    await axios.post("/api/confirm/seller/dispatch", { orderId, productId });
+    await axios.post("/api/confirm/seller/dispatch", { orderId, productIds });
     dispatch({ type: CONFIRM_DISPATCH });
     dispatch(fetchSellerNewOrdersCount());
     history.push("/seller-orders");
@@ -2244,5 +2233,69 @@ export const confirmDelivery = (orderId, history) => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: CONFIRM_DELIVERY_STOP });
+  }
+};
+
+export const selfCollectionAddress = latLng => async (dispatch, getState) => {
+  try {
+    const lat = latLng.lat;
+    const lng = latLng.lng;
+    const details = {
+      destination: [`${lat},${lng}`],
+      origins: [getState().selfCollection.city]
+    };
+    dispatch({ type: SELF_COLLECTION_START });
+    const res = await axios.post(`/api/buyer/destination`, details);
+    dispatch({ type: SELF_COLLECTION_STOP });
+    dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
+    dispatch({
+      type: SELF_COLLECTION_ADDRESS,
+      payload: latLng
+    });
+    dispatch(collectionCloseAction());
+  } catch (error) {
+    dispatch({ type: SELF_COLLECTION_STOP });
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const removeAddress = () => {
+  return {
+    type: REMOVE_ADDRESS
+  };
+};
+
+export const collectionOpenAction = () => {
+  return {
+    type: COLLECTION_OPEN_ACTION
+  };
+};
+export const collectionCloseAction = () => {
+  return {
+    type: COLLECTION_CLOSE_ACTION
+  };
+};
+export const sendReferralCode = (referralBody, reset) => async dispatch => {
+  try {
+    dispatch({ type: SEND_REFERRAL_CODE_START });
+    await axios.post("/api/send/refferal/code", referralBody);
+    dispatch(reset("EarnPoints"));
+    dispatch({ type: SEND_REFERRAL_CODE });
+    dispatch({ type: SEND_REFERRAL_CODE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch(reset("EarnPoints"));
+    dispatch({ type: SEND_REFERRAL_CODE_STOP });
+    console.log(error.response);
+  }
+};
+
+export const checkReferral = (referralCode, history) => async dispatch => {
+  try {
+    await axios.post(`/api/seller/register/referral/${referralCode}`);
+    dispatch({ type: CHECK_REFERRAL });
+  } catch (error) {
+    history.push("/seller/register");
   }
 };
