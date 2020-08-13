@@ -10,6 +10,10 @@ const CategoriesSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    charge: {
+      type: Number,
+      required: true
+    },
     subcategories: {
       type: [String],
       required: true
