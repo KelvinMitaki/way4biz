@@ -12,7 +12,8 @@ import ContactTextArea from "./ContactTextArea";
 
 class Contact extends React.Component {
   render() {
-    if (!this.props.formValues) return <Redirect to="/sign-in" />;
+    // if (!this.props.initialValues) return <Redirect to="/sign-in" />;
+    // console.log(this.props.initialValues);
     return (
       <div className="main">
         <div className="content white-body">
@@ -25,7 +26,12 @@ class Contact extends React.Component {
               <h3 style={{ textAlign: "center" }} className="mt-3">
                 Contact Us
               </h3>
-              <form className="form-group mt-4">
+              <form
+                onSubmit={this.props.handleSubmit(formValues =>
+                  console.log(formValues)
+                )}
+                className="form-group mt-4"
+              >
                 <label htmlFor="contact-reason">Reason</label>
                 <select className="form-control" id="contact-reason">
                   <option value="suggestion">Suggestion</option>
@@ -83,9 +89,9 @@ class Contact extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    formValues: state.auth.user
+    initialValues: state.auth.user
   };
 };
-export default reduxForm({ form: "Contact" })(
-  connect(mapStateToProps)(Contact)
+export default connect(mapStateToProps)(
+  reduxForm({ form: "Contact" })(Contact)
 );

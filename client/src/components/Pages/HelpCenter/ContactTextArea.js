@@ -9,6 +9,9 @@ const ContactTextArea = props => {
         id="contact-message"
         {...props.input}
       ></textarea>
+      <div style={{ color: "red" }}>
+        {props.meta.touched && props.meta.error}
+      </div>
     </React.Fragment>
   );
 };
