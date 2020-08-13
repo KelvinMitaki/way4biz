@@ -464,7 +464,7 @@ route.post(
         seller: sellerId,
         description,
         imageUrl,
-        charge
+        charge: charge.category.charge
       });
       await product.save();
       res.status(201).send(product);
@@ -519,6 +519,9 @@ route.patch(
         description,
         imageUrl
       } = req.body;
+      const charge = await Category.findOne({
+        "category.main": category
+      }).select("category.charge");
       const product = await Product.findOne({
         _id: productId,
         seller: sellerId
@@ -531,6 +534,7 @@ route.patch(
       product.imageUrl = imageUrl;
       product.stockQuantity = stockQuantity;
       product.subcategory = subcategory;
+      product.charge = charge.category.charge;
       await product.save();
       res.send(product);
     } catch (error) {
