@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import ContactInput from "./ContactInput";
+import ContactTextArea from "./ContactTextArea";
 
 class Contact extends React.Component {
   render() {
-    if (!this.props.user) return <Redirect to="/sign-in" />;
-    const { firstName, lastName } = this.props;
+    if (!this.props.formValues) return <Redirect to="/sign-in" />;
     return (
       <div className="main">
         <div className="content white-body">
@@ -33,6 +33,7 @@ class Contact extends React.Component {
                 </select>
                 <div className="row">
                   <Field
+                    name="firstName"
                     id="contact-first-name"
                     label="First Name"
                     divClassName="col-md-6"
@@ -41,6 +42,7 @@ class Contact extends React.Component {
                     component={ContactInput}
                   />
                   <Field
+                    name="lastName"
                     id="contact-last-name"
                     label="Last Name"
                     divClassName="col-md-6"
@@ -50,6 +52,7 @@ class Contact extends React.Component {
                   />
                 </div>
                 <Field
+                  name="email"
                   id="contact-email"
                   label="Email"
                   inputClassName="form-control"
@@ -57,24 +60,15 @@ class Contact extends React.Component {
                   component={ContactInput}
                 />
                 <Field
+                  name="subject"
                   id="contact-subject"
                   label="Subject"
                   inputClassName="form-control"
                   type="text"
                   component={ContactInput}
                 />
-                <Field
-                  id="contact-message"
-                  label="Message"
-                  inputClassName="form-control"
-                  type="text"
-                  component={ContactInput}
-                />
 
-                <textarea
-                  className="form-control"
-                  id="contact-message"
-                ></textarea>
+                <Field name="message" component={ContactTextArea} />
 
                 <button className="btn btn-block contact-btn my-3">Send</button>
               </form>
@@ -89,7 +83,7 @@ class Contact extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    formValues: state.auth.user
   };
 };
 export default reduxForm({ form: "Contact" })(
