@@ -519,9 +519,6 @@ route.patch(
         description,
         imageUrl
       } = req.body;
-      const charge = await Category.findOne({
-        "category.main": category
-      }).select("category.charge");
       const product = await Product.findOne({
         _id: productId,
         seller: sellerId
@@ -534,7 +531,6 @@ route.patch(
       product.imageUrl = imageUrl;
       product.stockQuantity = stockQuantity;
       product.subcategory = subcategory;
-      product.charge = charge.category.charge;
       await product.save();
       res.send(product);
     } catch (error) {
@@ -542,22 +538,7 @@ route.patch(
     }
   }
 );
-route.get("/api/test", async (req, res) => {
-  try {
-    const products = await Product.find({});
-    products.forEach(async pro => {
-      const charge = await Category.findOne({
-        "category.main": pro.category
-      }).select("category.charge");
-      pro.charge = charge.category.charge;
-      await pro.save();
-    });
-    const updatedPro = await Product.find({});
-    res.send(updatedPro);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+
 route.delete(
   "/api/product/delete/:sellerId/:productId",
   isSeller,
@@ -1156,12 +1137,36 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
         }
       },
       {
-        $project: {
-          _id: 0,
-          totalPrice: 1
+        $unwind: "$items"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "items.product"
         }
       },
-      { $group: { _id: null, monthlyPrice: { $sum: "$totalPrice" } } }
+      { $unwind: "$items.product" },
+      { $group: { _id: null, items: { $push: "$items" } } },
+      { $unwind: "$items" },
+      {
+        $project: {
+          _id: 0,
+          total: {
+            $divide: [
+              {
+                $multiply: [
+                  { $multiply: ["$items.product.price", "$items.quantity"] },
+                  "$items.product.charge"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      { $group: { _id: null, monthlyPrice: { $sum: "$total" } } }
     ]);
     const totalProducts = await Product.find({}).estimatedDocumentCount();
     res.send({
@@ -1171,10 +1176,12 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
       todayTotalPrice: todayTotalPrice[0]
         ? todayTotalPrice[0].todayTotalPrice
         : 0,
-      monthlyPrice:
-        monthlyPrice[0] && monthlyPrice[0].monthlyPrice
-          ? monthlyPrice[0].monthlyPrice
-          : 0,
+      // monthlyPrice:
+      //   monthlyPrice[0] && monthlyPrice[0].monthlyPrice
+      //     ? monthlyPrice[0].monthlyPrice
+      //     : 0
+      //     ,
+      monthlyPrice,
       totalProducts
     });
   } catch (error) {
