@@ -4,9 +4,15 @@ import "./Contact.css";
 import HelpCenterHeader from "./HelpCenterHeader";
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+import ContactInput from "./ContactInput";
 
 class Contact extends React.Component {
   render() {
+    if (!this.props.user) return <Redirect to="/sign-in" />;
+    const { firstName, lastName } = this.props;
     return (
       <div className="main">
         <div className="content white-body">
@@ -26,36 +32,45 @@ class Contact extends React.Component {
                   <option value="feedback">Feedback</option>
                 </select>
                 <div className="row">
-                  <div className="col-md-6">
-                    <label htmlFor="contact-first-name">First Name</label>
-                    <input
-                      className="form-control"
-                      id="contact-first-name"
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="contact-last-name">Last Name</label>
-                    <input
-                      className="form-control"
-                      id="contact-last-name"
-                      type="text"
-                    />
-                  </div>
+                  <Field
+                    id="contact-first-name"
+                    label="First Name"
+                    divClassName="col-md-6"
+                    inputClassName="form-control"
+                    type="text"
+                    component={ContactInput}
+                  />
+                  <Field
+                    id="contact-last-name"
+                    label="Last Name"
+                    divClassName="col-md-6"
+                    inputClassName="form-control"
+                    type="text"
+                    component={ContactInput}
+                  />
                 </div>
-                <label htmlFor="contact-email">Email</label>
-                <input
-                  className="form-control"
-                  type="text"
+                <Field
                   id="contact-email"
-                />
-                <label htmlFor="contact-subject">Subject</label>
-                <input
-                  className="form-control"
+                  label="Email"
+                  inputClassName="form-control"
                   type="text"
-                  id="contact-subject"
+                  component={ContactInput}
                 />
-                <label htmlFor="contact-message">Message</label>
+                <Field
+                  id="contact-subject"
+                  label="Subject"
+                  inputClassName="form-control"
+                  type="text"
+                  component={ContactInput}
+                />
+                <Field
+                  id="contact-message"
+                  label="Message"
+                  inputClassName="form-control"
+                  type="text"
+                  component={ContactInput}
+                />
+
                 <textarea
                   className="form-control"
                   id="contact-message"
@@ -72,5 +87,11 @@ class Contact extends React.Component {
     );
   }
 }
-
-export default Contact;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default reduxForm({ form: "Contact" })(
+  connect(mapStateToProps)(Contact)
+);
