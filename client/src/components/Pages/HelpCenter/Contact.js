@@ -5,15 +5,12 @@ import HelpCenterHeader from "./HelpCenterHeader";
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import ContactInput from "./ContactInput";
 import ContactTextArea from "./ContactTextArea";
 
 class Contact extends React.Component {
   render() {
-    // if (!this.props.initialValues) return <Redirect to="/sign-in" />;
-    // console.log(this.props.initialValues);
     return (
       <div className="main">
         <div className="content white-body">
