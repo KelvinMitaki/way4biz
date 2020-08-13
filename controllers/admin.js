@@ -542,7 +542,22 @@ route.patch(
     }
   }
 );
-
+route.get("/api/test", async (req, res) => {
+  try {
+    const products = await Product.find({});
+    products.forEach(async pro => {
+      const charge = await Category.findOne({
+        "category.main": pro.category
+      }).select("category.charge");
+      pro.charge = charge.category.charge;
+      await pro.save();
+    });
+    const updatedPro = await Product.find({});
+    res.send(updatedPro);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.delete(
   "/api/product/delete/:sellerId/:productId",
   isSeller,
