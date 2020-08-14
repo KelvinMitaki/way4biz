@@ -2284,7 +2284,7 @@ export const collectionCloseAction = () => {
 export const sendReferralCode = (referralBody, reset) => async dispatch => {
   try {
     dispatch({ type: SEND_REFERRAL_CODE_START });
-    await axios.post("/api/send/refferal/code", referralBody);
+    await axios.post("/api/send/referral/code", referralBody);
     dispatch(reset("EarnPoints"));
     dispatch({ type: SEND_REFERRAL_CODE });
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
