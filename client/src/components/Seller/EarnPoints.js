@@ -8,6 +8,7 @@ import validator from "validator";
 import { sendReferralCode } from "../../redux/actions";
 import { BsArrowLeft } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import { Link } from "react-router-dom";
 let email;
 class EarnPoints extends React.Component {
   state = { toShow: 0 };
