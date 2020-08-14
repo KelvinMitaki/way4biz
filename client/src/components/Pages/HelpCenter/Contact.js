@@ -9,6 +9,7 @@ import { Field, reduxForm } from "redux-form";
 import ContactInput from "./ContactInput";
 import ContactTextArea from "./ContactTextArea";
 import ContactSelect from "./ContactSelect";
+import { contactUs } from "../../../redux/actions";
 
 class Contact extends React.Component {
   render() {
@@ -29,8 +30,9 @@ class Contact extends React.Component {
                 Contact Us
               </h3>
               <form
-                onSubmit={this.props.handleSubmit(formValues =>
-                  console.log(formValues)
+                onSubmit={this.props.handleSubmit(
+                  formValues => console.log(formValues)
+                  // this.props. contactUs({})
                 )}
                 className="form-group mt-4"
               >
@@ -82,7 +84,18 @@ class Contact extends React.Component {
                   disabled={this.props.pristine || this.props.invalid}
                   className="btn btn-block contact-btn my-3"
                 >
-                  Send
+                  {this.props.contactUsLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.contactUsLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Send</span>
+                  )}
                 </button>
               </form>
             </div>
@@ -111,13 +124,17 @@ const validate = formValues => {
   if (!formValues.reason) {
     errors.reason = "Please choose a valid reason";
   }
+  if (formValues.reason === "choose") {
+    errors.reason = "Please choose a valid reason";
+  }
   return errors;
 };
 const mapStateToProps = state => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
+    contactUsLoading: state.auth.contactUsLoading
   };
 };
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { contactUs })(
   reduxForm({ form: "Contact", validate })(Contact)
 );
