@@ -119,7 +119,7 @@ class AdminDashBoardOrder extends React.Component {
                           : "false"}
                       </p>
                       <p>
-                        <strong className="mr-2">Total Charge:</strong>
+                        <strong className="mr-2">Total Charge:</strong>Ksh.
                         {totalCharge &&
                           Math.round(totalCharge).toLocaleString()}
                       </p>

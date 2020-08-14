@@ -57,6 +57,12 @@ class AdminDashBoardSeller extends React.Component {
                     {this.props.verifiedSeller.storeName}
                   </h5>
                 </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Business Number: </strong>
+                    {this.props.verifiedSeller.businessNumber}
+                  </h5>
+                </div>
 
                 <div className="custom-row">
                   <h5>
