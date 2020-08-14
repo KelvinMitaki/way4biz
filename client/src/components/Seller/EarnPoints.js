@@ -18,7 +18,7 @@ class EarnPoints extends React.Component {
         </h6>
 
         <h6 className="my-2">
-          Lets get you more points. Key in the email of someone to refer. Then
+          Lets get you more points. Key in the email of the person you want to refer. Then
           press send to send the referral.
         </h6>
 
