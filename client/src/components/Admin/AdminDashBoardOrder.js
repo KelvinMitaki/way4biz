@@ -21,6 +21,21 @@ class AdminDashBoardOrder extends React.Component {
     if (!this.props.adminOrder) return <ScreenLoader />;
     if (this.props.adminOrderLoading) return <ScreenLoader />;
     if (this.props.adminOrder && this.props.adminOrder["0"]._id) {
+      const totalCharge = this.props.adminOrder["0"].product
+        .map(({ _id, price, charge }) => {
+          const proExists = this.props.adminOrder["0"].items.find(
+            item => item.product === _id
+          );
+          if (proExists) {
+            return (price * charge * proExists.quantity) / 100;
+          }
+          return {
+            _id,
+            price,
+            charge
+          };
+        })
+        .reduce((acc, cur) => acc + cur, 0);
       return (
         <div className="container-fluid p-0 mb-5">
           <AdminDashBoardHeader />
@@ -102,6 +117,11 @@ class AdminDashBoardOrder extends React.Component {
                         {this.props.adminOrder["0"].paid
                           ? this.props.adminOrder["0"].paid.toString()
                           : "false"}
+                      </p>
+                      <p>
+                        <strong className="mr-2">Total Charge:</strong>
+                        {totalCharge &&
+                          Math.round(totalCharge).toLocaleString()}
                       </p>
                     </div>
                   </div>
