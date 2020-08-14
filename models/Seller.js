@@ -63,6 +63,11 @@ const SellerSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    businessNumber: {
+      type: String,
+      required: true,
+      unique: true
+    },
     referrals: {
       type: [String]
     }

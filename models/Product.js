@@ -56,6 +56,10 @@ const ProductSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
+    charge: {
+      type: Number,
+      required: true
+    },
     rejected: {
       type: Boolean,
       default: false

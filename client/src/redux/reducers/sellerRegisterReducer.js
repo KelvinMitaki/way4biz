@@ -21,7 +21,9 @@ import {
   REGISTER_SELLER_START,
   REGISTER_SELLER_STOP,
   VERIFIED_SELLER_START,
-  VERIFIED_SELLER_STOP
+  VERIFIED_SELLER_STOP,
+  SEND_REFERRAL_CODE_START,
+  SEND_REFERRAL_CODE_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -41,7 +43,8 @@ const INITIAL_STATE = {
   sellerRequestLoading: false,
   fetchSellerLoading: false,
   sellerRegisterLoading: false,
-  verifiedSellerLoading: false
+  verifiedSellerLoading: false,
+  referralCodeLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -99,6 +102,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, verifiedSellerLoading: true };
     case VERIFIED_SELLER_STOP:
       return { ...state, verifiedSellerLoading: false };
+    case SEND_REFERRAL_CODE_START:
+      return { ...state, referralCodeLoading: true };
+    case SEND_REFERRAL_CODE_STOP:
+      return { ...state, referralCodeLoading: false };
     default:
       return state;
   }

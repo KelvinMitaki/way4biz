@@ -586,6 +586,17 @@ class App extends React.Component {
                 }
               />
               <Route
+                path="/seller/register/referral/:referralCode"
+                exact
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <SellerRegister />
+                  )
+                }
+              />
+              <Route
                 path="/seller/sign-in"
                 exact
                 render={() =>

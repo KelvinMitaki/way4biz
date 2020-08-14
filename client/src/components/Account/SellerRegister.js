@@ -8,7 +8,7 @@ import { withRouter, Link } from "react-router-dom";
 import validator from "validator";
 import SellerTextArea from "./SellerTextArea";
 import EmailConfirm from "../Authenticate/EmailConfirm";
-import { registerSeller } from "../../redux/actions";
+import { registerSeller, checkReferral } from "../../redux/actions";
 import AuthHeader from "../Authenticate/AuthHeader";
 import AutoComplete from "./Autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
@@ -21,16 +21,25 @@ export class SellerRegister extends Component {
     cityLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263,
-    },
+      lng: 36.8263
+    }
   };
-  handleCitySelect = async (selectedCity) => {
+
+  componentDidMount() {
+    if (Object.keys(this.props.match.params).length !== 0) {
+      this.props.checkReferral(
+        this.props.match.params.referralCode,
+        this.props.history
+      );
+    }
+  }
+  handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleAddressSelect = async (selectedAddress) => {
+  handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -53,9 +62,14 @@ export class SellerRegister extends Component {
           Register
         </h1>
         <form
-          onSubmit={this.props.handleSubmit((formValues) => {
+          onSubmit={this.props.handleSubmit(formValues => {
             const { registerSeller } = this.props;
-            registerSeller(formValues);
+            registerSeller({
+              ...formValues,
+              ...(this.props.match.params.referralCode && {
+                referralCode: this.props.match.params.referralCode
+              })
+            });
           })}
         >
           <Field
@@ -80,7 +94,9 @@ export class SellerRegister extends Component {
             label="Email"
             component={AuthField}
           />
-
+          {/* <div className="form-primary-error">
+            {this.props.registerError && this.props.registerError}
+          </div> */}
           <Field
             required="*"
             type="text"
@@ -119,7 +135,7 @@ export class SellerRegister extends Component {
           <Field
             required="*"
             type="text"
-            name="business-number"
+            name="businessNumber"
             label="Business Number"
             component={AuthField}
           />
@@ -143,7 +159,7 @@ export class SellerRegister extends Component {
             options={{
               location: new google.maps.LatLng(this.state.cityLatLng),
               radius: 1000,
-              types: ["establishment"],
+              types: ["establishment"]
             }}
             onSelect={this.handleAddressSelect}
           />
@@ -187,7 +203,7 @@ export class SellerRegister extends Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -251,18 +267,23 @@ const validate = (formValues) => {
   ) {
     errors.address = "Please enter a valid address";
   }
+  if (!formValues.businessNumber) {
+    errors.businessNumber = "Please enter a valid business number";
+  }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sellerRegisterLoading: state.auth.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.sellerRegister.sellerRegisterError,
+    sellerRegisterError: state.sellerRegister.sellerRegisterError
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "SellerRegister",
-  })(connect(mapStateToProps, { registerSeller })(SellerRegister))
+    form: "SellerRegister"
+  })(
+    connect(mapStateToProps, { registerSeller, checkReferral })(SellerRegister)
+  )
 );

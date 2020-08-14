@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const EarnPointsInput = (props) => {
+const EarnPointsInput = props => {
   return (
     <div
       className="form-group input-group"
@@ -18,7 +19,14 @@ const EarnPointsInput = (props) => {
           id="referral-btn"
           style={{ height: "30px !important", width: "80px" }}
         >
-          Send
+          {props.referralCodeLoading && (
+            <span
+              className="spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          )}
+          {props.referralCodeLoading ? <span>...</span> : <span>Send</span>}
         </button>
       </div>
 
@@ -28,5 +36,9 @@ const EarnPointsInput = (props) => {
     </div>
   );
 };
-
-export default EarnPointsInput;
+const mapStateToProps = state => {
+  return {
+    referralCodeLoading: state.sellerRegister.referralCodeLoading
+  };
+};
+export default connect(mapStateToProps)(EarnPointsInput);
