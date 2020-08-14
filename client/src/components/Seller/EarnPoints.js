@@ -8,45 +8,60 @@ import validator from "validator";
 import { sendReferralCode } from "../../redux/actions";
 let email;
 class EarnPoints extends React.Component {
-  state={toShow:0}
+  state = { toShow: 0 };
+  components() {
+    switch (this.state.toShow) {
+      case 0:
+        return (
+          <React.Fragment>
+            {" "}
+            <h6>
+              You currently have {this.props.points} points. To earn more points
+              refer many sellers to sell on our platform.
+            </h6>
+            <h6 className="my-2">
+              Lets get you more points. Key in the email of the person you want
+              to refer. Then press send to send the referral.
+            </h6>
+            <form
+              onSubmit={this.props.handleSubmit(formValues =>
+                this.props.sendReferralCode(
+                  {
+                    ...formValues,
+                    sellerName: `${this.props.firstName} ${this.props.lastName}`
+                  },
+                  reset
+                )
+              )}
+            >
+              <div
+                className="row no-gutters align-items-center m-0 p-0"
+                style={{ height: "30px" }}
+              >
+                <Field
+                  component={EarnPointsInput}
+                  placeholder="test@gmail.com"
+                  type="text"
+                  name="points"
+                />
+              </div>
+            </form>
+          </React.Fragment>
+        );
+
+      case 1:
+        return (
+          <React.Fragment>
+            <h3>This email exists in the system.</h3>
+          </React.Fragment>
+        );
+    }
+  }
   render() {
     email = this.props.email;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
-        {/*  */}
-        <h6>
-          You currently have {this.props.points} points. To earn more points
-          refer many sellers to sell on our platform.
-        </h6>
-
-        <h6 className="my-2">
-          Lets get you more points. Key in the email of the person you want to refer. Then
-          press send to send the referral.
-        </h6>
-
-        <form
-          onSubmit={this.props.handleSubmit(formValues =>
-            this.props.sendReferralCode(
-              {
-                ...formValues,
-                sellerName: `${this.props.firstName} ${this.props.lastName}`
-              },
-              reset
-            )
-          )}
-        >
-          <div
-            className="row no-gutters align-items-center m-0 p-0"
-            style={{ height: "30px" }}
-          >
-            <Field
-              component={EarnPointsInput}
-              placeholder="test@gmail.com"
-              type="text"
-              name="points"
-            />
-          </div>
-        </form>
+        {this.component()}
       </div>
     );
   }
