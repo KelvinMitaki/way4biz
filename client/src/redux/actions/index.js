@@ -238,7 +238,9 @@ import {
   CHECK_REFERRAL,
   SEND_REFERRAL_CODE,
   SEND_REFERRAL_CODE_START,
-  SEND_REFERRAL_CODE_STOP
+  SEND_REFERRAL_CODE_STOP,
+  CONTACT_US_START,
+  CONTACT_US_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2297,5 +2299,16 @@ export const checkReferral = (referralCode, history) => async dispatch => {
     dispatch({ type: CHECK_REFERRAL });
   } catch (error) {
     history.push("/seller/register");
+  }
+};
+
+export const contactUs = formValues => async dispatch => {
+  try {
+    dispatch({ type: CONTACT_US_START });
+    await axios.post("/api/contact/admin", formValues);
+    dispatch({ type: CONTACT_US_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONTACT_US_STOP });
   }
 };

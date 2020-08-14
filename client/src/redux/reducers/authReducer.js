@@ -37,7 +37,9 @@ import {
   SELLER_LOGIN_START,
   SELLER_LOGIN_STOP,
   REGISTER_START,
-  REGISTER_STOP
+  REGISTER_STOP,
+  CONTACT_US_START,
+  CONTACT_US_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -62,7 +64,8 @@ const INITIAL_STATE = {
   checkoutUserLoading: false,
   loginLoading: false,
   sellerLoginLoading: false,
-  registerLoading: false
+  registerLoading: false,
+  contactUsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -179,6 +182,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     case FETCH_USER_STOP:
       return { ...state, loading: false };
+    case CONTACT_US_START:
+      return { ...state, contactUsLoading: true };
+    case CONTACT_US_STOP:
+      return { ...state, contactUsLoading: false };
     default:
       return state;
   }
