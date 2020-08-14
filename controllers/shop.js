@@ -64,7 +64,7 @@ route.post("/api/products/skip/category", async (req, res) => {
   try {
     const { itemsToSkip, test, sort } = req.body;
     const products = await Product.aggregate([
-      { $match: { ...test, onSite: true } },
+      { $match: { ...test, onSite: true, stockQuantity: { $gte: 1 } } },
       {
         $lookup: {
           from: "sellers",
@@ -95,7 +95,7 @@ route.post("/api/products/skip/category", async (req, res) => {
 
     const productCount = await Product.aggregate([
       {
-        $match: { ...test, onSite: true }
+        $match: { ...test, onSite: true, stockQuantity: { $gte: 1 } }
       },
       { $count: test.category }
     ]);
@@ -187,70 +187,9 @@ route.post("/api/products/filter", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.get(
-  "/api/products/category/subcategory/:subcategory",
-  async (req, res) => {
-    try {
-      const { subcategory } = req.params;
-      const products = await Product.find({ subcategory, onSite: true });
-      if (!products || products.length === 0) {
-        return res
-          .status(404)
-          .send({ message: "No products in that subcategory" });
-      }
-      res.send(products);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }
-);
-
-route.post("/api/products/category/:subcategory", async (req, res) => {
-  try {
-    const { subcategory } = req.params;
-    const { min, max, sortBy } = req.body;
-    // **TODO** RATING FREE SHIPPING SORT BY
-    if (min) {
-      const products = await Product.find({
-        subcategory,
-        price: { $gte: min },
-        onSite: true
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    if (max) {
-      const products = await Product.find({
-        subcategory,
-        price: { $lte: max },
-        onSite: true
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    if (min && max) {
-      const products = await Product.find({
-        subcategory,
-        price: { $gte: min, $lte: max },
-        onSite: true
-      }).sort(sortBy);
-      return res.send(products);
-    }
-    const products = await Product.find({ subcategory, onSite: true }).sort(
-      sortBy
-    );
-    res.send(products);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
 route.post("/api/product/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
-    // const product = await Product.find(
-    //   {
-    //     name: { $regex: searchTerm, $options: "i" }
-    //   },
-    //   "name"
-    // );
     const test = await Product.aggregate([
       {
         $search: {
