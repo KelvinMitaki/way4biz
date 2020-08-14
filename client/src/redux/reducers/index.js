@@ -13,6 +13,7 @@ import sellerDetailsReducer from "./sellerDetailsReducer";
 import searchReducer from "./searchReducer";
 import selfCollectionReducer from "./selfCollectionReducer";
 import adminReducer from "./adminReducer";
+import userReducer from "./userReducer";
 
 const persistConfig = {
   key: "root",
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   sellerDetails: sellerDetailsReducer,
   search: searchReducer,
   selfCollection: selfCollectionReducer,
-  admin: adminReducer
+  admin: adminReducer,
+  user: userReducer
 });
 export default persistReducer(persistConfig, reducers);
