@@ -1972,6 +1972,10 @@ route.post(
         if (sellerExists) {
           return res.status(401).send({ message: "Seller already exists" });
         }
+        const userExsists = await User.findOne({ email: points });
+        if (userExsists) {
+          return res.status(401).send({ message: "User already exists" });
+        }
         const token = jwt.sign(
           { _id: req.session.user._id },
           process.env.CONFIRM_EMAIL_JWT
