@@ -12,7 +12,7 @@ const contactSchema = new mongoose.Schema(
       required: true,
       ref: "Seller"
     },
-    option: {
+    reason: {
       type: String,
       required: true
     },

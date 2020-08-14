@@ -18,6 +18,7 @@ const Complaint = require("../models/Complaint");
 const Cart = require("../models/Cart");
 const Wishlist = require("../models/Wishlist");
 const Category = require("../models/Category");
+const Contact = require("../models/Contact");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -1290,29 +1291,36 @@ route.patch(
     }
   }
 );
-// route.patch(
-//   "/api/delete/cart",
-//   auth,
-//   check("productId").not().isEmpty().withMessage("Invalid Id"),
-//   async (req, res) => {
-//     try {
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(401).send({ message: errors.array()[0].msg });
-//       }
-//       const { _id } = req.session.user;
-//       const { productId } = req.body;
-//       const cart = await Cart.findOneAndUpdate(
-//         { buyer: _id },
-//         { $pull: { items: { _id: productId } } }
-//       );
-//       await cart.save();
-//       res.send(cart);
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-//   }
-// );
+route.post(
+  "/api/contact/admin",
+  auth,
+  check("reason").not().isEmpty().withMessage("reason must not be empty"),
+  check("subject").not().isEmpty().withMessage("Subject must not be empty"),
+  check("message")
+    .isLength({ min: 20 })
+    .withMessage("Message must be 20 characters minimum"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { _id } = req.session.user;
+      const { reason, subject, message } = req.body;
+      const contact = new Contact({
+        user: _id,
+        userSeller: _id,
+        reason,
+        subject,
+        message
+      });
+      await contact.save();
+      res.send({ message: "Success" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
