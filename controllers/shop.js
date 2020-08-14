@@ -1127,7 +1127,7 @@ route.post(
 route.post(
   "/api/user/new/wishlist",
   auth,
-  check("wishlist").isArray({ min: 1 }).withMessage("invalid"),
+  check("wishlist").isArray({ min: 0 }).withMessage("invalid"),
   async (req, res) => {
     try {
       const errors = validationResult(req);

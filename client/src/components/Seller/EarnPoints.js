@@ -1,22 +1,20 @@
 import React from "react";
 
 import "./EarnPoints.css";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
+import { sendReferralCode } from "../../redux/actions";
 let email;
-let phoneNumber;
 class EarnPoints extends React.Component {
   render() {
     email = this.props.email;
-    phoneNumber = this.props.phoneNumber;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
         <h6>
-          You currently have 1000 points. To earn more points refer many sellers
-          to sell on our platform. The more points you have, the higher the
-          chances of winnig a brand new suzuki porsche.
+          You currently have {this.props.points} points. To earn more points
+          refer many sellers to sell on our platform.
         </h6>
 
         <h6 className="my-2">
@@ -25,8 +23,14 @@ class EarnPoints extends React.Component {
         </h6>
 
         <form
-          onSubmit={this.props.handleSubmit((formValues) =>
-            console.log(formValues)
+          onSubmit={this.props.handleSubmit(formValues =>
+            this.props.sendReferralCode(
+              {
+                ...formValues,
+                sellerName: `${this.props.firstName} ${this.props.lastName}`
+              },
+              reset
+            )
           )}
         >
           <div
@@ -45,40 +49,28 @@ class EarnPoints extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (!formValues.points) {
     errors.points = "Please fill in this field";
   }
-  if (
-    formValues.points &&
-    !validator.isEmail(formValues.points.trim()) &&
-    formValues.points &&
-    !validator.isNumeric(formValues.points)
-  ) {
+  if (formValues.points && !validator.isEmail(formValues.points.trim())) {
     errors.points = "Please enter a valid email or phone number";
   }
   if (formValues.points && formValues.points === email) {
     errors.points = "Invalid email";
   }
-  if (formValues.points && formValues.points === phoneNumber) {
-    errors.points = "Invalid Phone Number";
-  }
-  if (
-    formValues.points &&
-    validator.isNumeric(formValues.points) &&
-    formValues.points.length !== 9
-  ) {
-    errors.points = "Please enter a 9 digit phone number";
-  }
+
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     email: state.auth.user.email,
-    phoneNumber: state.auth.user.phoneNumber,
+    firstName: state.auth.user.firstName,
+    lastName: state.auth.user.lastName,
+    points: state.auth.user.points
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(
-  connect(mapStateToProps)(EarnPoints)
+  connect(mapStateToProps, { sendReferralCode })(EarnPoints)
 );

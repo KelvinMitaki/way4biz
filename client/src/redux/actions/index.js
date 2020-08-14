@@ -234,7 +234,11 @@ import {
   VERIFIED_SELLER_STOP,
   REMOVE_ADDRESS,
   COLLECTION_OPEN_ACTION,
-  COLLECTION_CLOSE_ACTION
+  COLLECTION_CLOSE_ACTION,
+  CHECK_REFERRAL,
+  SEND_REFERRAL_CODE,
+  SEND_REFERRAL_CODE_START,
+  SEND_REFERRAL_CODE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2271,4 +2275,27 @@ export const collectionCloseAction = () => {
   return {
     type: COLLECTION_CLOSE_ACTION
   };
+};
+export const sendReferralCode = (referralBody, reset) => async dispatch => {
+  try {
+    dispatch({ type: SEND_REFERRAL_CODE_START });
+    await axios.post("/api/send/refferal/code", referralBody);
+    dispatch(reset("EarnPoints"));
+    dispatch({ type: SEND_REFERRAL_CODE });
+    dispatch({ type: SEND_REFERRAL_CODE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch(reset("EarnPoints"));
+    dispatch({ type: SEND_REFERRAL_CODE_STOP });
+    console.log(error.response);
+  }
+};
+
+export const checkReferral = (referralCode, history) => async dispatch => {
+  try {
+    await axios.post(`/api/seller/register/referral/${referralCode}`);
+    dispatch({ type: CHECK_REFERRAL });
+  } catch (error) {
+    history.push("/seller/register");
+  }
 };
