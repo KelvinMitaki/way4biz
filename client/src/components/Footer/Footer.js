@@ -34,16 +34,16 @@ class Footer extends React.Component {
               <h6>Account</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/contact-us">My Account</Link>
+                  <Link to="/account">My Account</Link>
                 </p>
                 <p>
-                  <Link to="/account">My Orders</Link>
+                  <Link to="/orders">My Orders</Link>
                 </p>
-                {/* <p>
-                  <Link to="/account">Personal Details</Link>
-                </p> */}
                 <p>
-                  <Link to="/account">Personal Details</Link>
+                  <Link to="/pending/reviews">Pending Reviews</Link>
+                </p>
+                <p>
+                  <Link to="/complaints">Complaints</Link>
                 </p>
               </div>
             </div>
@@ -83,9 +83,9 @@ class Footer extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps)(Footer);
