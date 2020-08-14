@@ -65,7 +65,7 @@ class EarnPoints extends React.Component {
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
                   <div className="d-flex align-items-center">
-                    <Link to="/orders">
+                    <Link to="/">
                       <BsArrowLeft />
                     </Link>
                   </div>
@@ -86,7 +86,7 @@ class EarnPoints extends React.Component {
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
                   <div className="d-flex align-items-center">
-                    <Link to="/orders">
+                    <Link to="/">
                       <BsArrowLeft />
                     </Link>
                   </div>
