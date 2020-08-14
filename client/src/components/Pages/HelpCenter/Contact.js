@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import ContactInput from "./ContactInput";
 import ContactTextArea from "./ContactTextArea";
+import ContactSelect from "./ContactSelect";
 
 class Contact extends React.Component {
   render() {
@@ -29,11 +30,7 @@ class Contact extends React.Component {
                 )}
                 className="form-group mt-4"
               >
-                <label htmlFor="contact-reason">Reason</label>
-                <select className="form-control" id="contact-reason">
-                  <option value="suggestion">Suggestion</option>
-                  <option value="feedback">Feedback</option>
-                </select>
+                <Field component={ContactSelect} name="reason" />
                 <div className="row">
                   <Field
                     name="firstName"
@@ -63,6 +60,7 @@ class Contact extends React.Component {
                   component={ContactInput}
                 />
                 <Field
+                  value="123"
                   name="subject"
                   id="contact-subject"
                   label="Subject"
@@ -73,7 +71,12 @@ class Contact extends React.Component {
 
                 <Field name="message" component={ContactTextArea} />
 
-                <button className="btn btn-block contact-btn my-3">Send</button>
+                <button
+                  disabled={this.props.pristine || this.props.invalid}
+                  className="btn btn-block contact-btn my-3"
+                >
+                  Send
+                </button>
               </form>
             </div>
           </div>
