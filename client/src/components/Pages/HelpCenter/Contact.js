@@ -31,8 +31,8 @@ class Contact extends React.Component {
               </h3>
               <form
                 onSubmit={this.props.handleSubmit(
-                  formValues => console.log(formValues)
-                  // this.props. contactUs({})
+                  ({ reason, subject, message }) =>
+                    this.props.contactUs({ reason, subject, message })
                 )}
                 className="form-group mt-4"
               >
