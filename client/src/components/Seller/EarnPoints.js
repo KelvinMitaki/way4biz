@@ -8,10 +8,12 @@ import validator from "validator";
 import { sendReferralCode } from "../../redux/actions";
 let email;
 class EarnPoints extends React.Component {
+  state={toShow:0}
   render() {
     email = this.props.email;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
+        {/*  */}
         <h6>
           You currently have {this.props.points} points. To earn more points
           refer many sellers to sell on our platform.
