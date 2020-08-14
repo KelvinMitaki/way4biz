@@ -2015,7 +2015,10 @@ route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
 
 route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
   try {
-    const inbox = await Contact.find({}).populate("user userSeller");
+    const inbox = await Contact.find({}).populate(
+      "userSeller user",
+      "firstName lastName email"
+    );
     res.send(inbox);
   } catch (error) {
     res.status(500).send(error);
