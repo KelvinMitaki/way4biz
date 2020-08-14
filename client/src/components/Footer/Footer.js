@@ -17,16 +17,16 @@ class Footer extends React.Component {
                   <Link to="/help-center">Help center</Link>
                 </p>
                 <p>
-                  <Link to="/about-us">Contact Us</Link>
+                  <Link to="/contact-us">Contact Us</Link>
                 </p>
                 <p>
                   <Link to="/terms">Return Policy</Link>
                 </p>
                 <p>
-                  <Link to="/">Suggest a Product</Link>
+                  <Link to="/contact-us">Suggest a Product</Link>
                 </p>
                 <p>
-                  <Link to="/">Submit an Idea</Link>
+                  <Link to="/contact-us">Submit an Idea</Link>
                 </p>
               </div>
             </div>
