@@ -55,6 +55,12 @@ class EarnPoints extends React.Component {
             <h3>This email exists in the system.</h3>
           </React.Fragment>
         );
+      case 2:
+        return (
+          <React.Fragment>
+            <h3>Success,the referral has been sent.</h3>
+          </React.Fragment>
+        );
     }
   }
   render() {
