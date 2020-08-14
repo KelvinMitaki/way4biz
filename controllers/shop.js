@@ -24,7 +24,7 @@ route.post("/api/products", async (req, res) => {
   try {
     const { itemsToSkip } = req.body;
     const products = await Product.aggregate([
-      { $match: { onSite: true } },
+      { $match: { onSite: true, stockQuantity: { $gte: 1 } } },
       {
         $lookup: {
           from: "sellers",
@@ -49,7 +49,7 @@ route.post("/api/products", async (req, res) => {
       { $limit: 6 }
     ]);
     const productCount = await Product.aggregate([
-      { $match: { onSite: true } },
+      { $match: { onSite: true, stockQuantity: { $gte: 1 } } },
       { $count: "productCount" }
     ]);
     res.send({
