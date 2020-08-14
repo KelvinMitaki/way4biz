@@ -240,7 +240,10 @@ import {
   SEND_REFERRAL_CODE_START,
   SEND_REFERRAL_CODE_STOP,
   CONTACT_US_START,
-  CONTACT_US_STOP
+  CONTACT_US_STOP,
+  FETCH_ADMIN_INBOX,
+  FETCH_ADMIN_INBOX_START,
+  FETCH_ADMIN_INBOX_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2302,13 +2305,25 @@ export const checkReferral = (referralCode, history) => async dispatch => {
   }
 };
 
-export const contactUs = formValues => async dispatch => {
+export const contactUs = (formValues, history) => async dispatch => {
   try {
     dispatch({ type: CONTACT_US_START });
     await axios.post("/api/contact/admin", formValues);
     dispatch({ type: CONTACT_US_STOP });
+    history.push("/");
   } catch (error) {
     authCheck(error);
     dispatch({ type: CONTACT_US_STOP });
+  }
+};
+export const fetchAdminInbox = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ADMIN_INBOX_START });
+    const res = await axios.get("/api/fetch/admin/inbox");
+    dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_INBOX_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   }
 };

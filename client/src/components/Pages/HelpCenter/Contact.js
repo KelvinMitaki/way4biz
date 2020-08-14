@@ -10,6 +10,7 @@ import ContactInput from "./ContactInput";
 import ContactTextArea from "./ContactTextArea";
 import ContactSelect from "./ContactSelect";
 import { contactUs } from "../../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 class Contact extends React.Component {
   render() {
@@ -32,7 +33,10 @@ class Contact extends React.Component {
               <form
                 onSubmit={this.props.handleSubmit(
                   ({ reason, subject, message }) =>
-                    this.props.contactUs({ reason, subject, message })
+                    this.props.contactUs(
+                      { reason, subject, message },
+                      this.props.hsitory
+                    )
                 )}
                 className="form-group mt-4"
               >
@@ -135,6 +139,8 @@ const mapStateToProps = state => {
     contactUsLoading: state.auth.contactUsLoading
   };
 };
-export default connect(mapStateToProps, { contactUs })(
-  reduxForm({ form: "Contact", validate })(Contact)
+export default withRouter(
+  connect(mapStateToProps, { contactUs })(
+    reduxForm({ form: "Contact", validate })(Contact)
+  )
 );

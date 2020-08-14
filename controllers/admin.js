@@ -31,6 +31,7 @@ const isAdmin = require("../middlewares/is-admin");
 const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
+const Contact = require("../models/Contact");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2007,6 +2008,15 @@ route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
       return res.status(401).send({ message: "No seller found" });
     }
     res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
+  try {
+    const inbox = await Contact.find({}).populate("user userSeller");
+    res.send(inbox);
   } catch (error) {
     res.status(500).send(error);
   }
