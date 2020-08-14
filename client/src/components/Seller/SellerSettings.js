@@ -169,7 +169,7 @@ const validate = formValues => {
     (formValues.storeName && formValues.storeName.trim().length < 3)
   ) {
     errors.storeName =
-      "Please enter a valid store name with 3 characters minimum ";
+      "Please enter a valid store name with 3 characters minimum";
   }
 
   return errors;
