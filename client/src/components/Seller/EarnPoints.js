@@ -6,9 +6,16 @@ import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
 import { sendReferralCode } from "../../redux/actions";
+import { BsArrowLeft } from "react-icons/bs";
+import { IconContext } from "react-icons";
 let email;
 class EarnPoints extends React.Component {
   state = { toShow: 0 };
+  reset() {
+    this.setState({
+      toShow: 0
+    });
+  }
   components() {
     switch (this.state.toShow) {
       case 0:
@@ -52,6 +59,21 @@ class EarnPoints extends React.Component {
       case 1:
         return (
           <React.Fragment>
+            <div className="d-flex align-items-center">
+              <div style={{ flex: "1" }}>
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div className="d-flex align-items-center">
+                    <Link to="/orders">
+                      <BsArrowLeft />
+                    </Link>
+                  </div>
+                </IconContext.Provider>
+              </div>
+
+              <div className="ml-1" style={{ flex: "2" }}></div>
+            </div>
             <h3>This email exists in the system.</h3>
           </React.Fragment>
         );
