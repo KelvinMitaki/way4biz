@@ -31,6 +31,7 @@ const isAdmin = require("../middlewares/is-admin");
 const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
+const Contact = require("../models/Contact");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -451,7 +452,9 @@ route.post(
       if (freeShipping !== true) {
         freeShipping = false;
       }
-
+      const charge = await Category.findOne({
+        "category.main": category
+      }).select("category.charge");
       const product = new Product({
         name,
         freeShipping,
@@ -461,7 +464,8 @@ route.post(
         subcategory,
         seller: sellerId,
         description,
-        imageUrl
+        imageUrl,
+        charge: charge.category.charge
       });
       await product.save();
       res.status(201).send(product);
@@ -1105,8 +1109,38 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
     // { $group: { _id: null, quantity: { $sum: "$quantity" } } },
     // { $project: { _id: 0, quantity: 1 } }
     const totalPrice = await Order.aggregate([
-      { $project: { _id: 0, totalPrice: 1 } },
-      { $group: { _id: null, totalPrice: { $sum: "$totalPrice" } } }
+      { $match: { paid: true } },
+      {
+        $unwind: "$items"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "items.product"
+        }
+      },
+      { $unwind: "$items.product" },
+      { $group: { _id: null, items: { $push: "$items" } } },
+      { $unwind: "$items" },
+      {
+        $project: {
+          _id: 0,
+          total: {
+            $divide: [
+              {
+                $multiply: [
+                  { $multiply: ["$items.product.price", "$items.quantity"] },
+                  "$items.product.charge"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      { $group: { _id: null, totalPrice: { $sum: "$total" } } }
     ]);
     const todayTotalPrice = await Order.aggregate([
       {
@@ -1134,12 +1168,36 @@ route.get("/api/root/admin/orders", auth, isAdmin, async (req, res) => {
         }
       },
       {
-        $project: {
-          _id: 0,
-          totalPrice: 1
+        $unwind: "$items"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "items.product"
         }
       },
-      { $group: { _id: null, monthlyPrice: { $sum: "$totalPrice" } } }
+      { $unwind: "$items.product" },
+      { $group: { _id: null, items: { $push: "$items" } } },
+      { $unwind: "$items" },
+      {
+        $project: {
+          _id: 0,
+          total: {
+            $divide: [
+              {
+                $multiply: [
+                  { $multiply: ["$items.product.price", "$items.quantity"] },
+                  "$items.product.charge"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      { $group: { _id: null, monthlyPrice: { $sum: "$total" } } }
     ]);
     const totalProducts = await Product.find({}).estimatedDocumentCount();
     res.send({
@@ -1950,6 +2008,18 @@ route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
       return res.status(401).send({ message: "No seller found" });
     }
     res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
+  try {
+    const inbox = await Contact.find({}).populate(
+      "userSeller user",
+      "firstName lastName email"
+    );
+    res.send(inbox);
   } catch (error) {
     res.status(500).send(error);
   }
