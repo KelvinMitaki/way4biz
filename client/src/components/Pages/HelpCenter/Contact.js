@@ -12,6 +12,10 @@ import ContactSelect from "./ContactSelect";
 
 class Contact extends React.Component {
   render() {
+    const options = [
+      { key: "suggestion", text: "Suggestion" },
+      { key: "feedback", text: "Feedback" }
+    ];
     return (
       <div className="main">
         <div className="content white-body">
@@ -30,7 +34,11 @@ class Contact extends React.Component {
                 )}
                 className="form-group mt-4"
               >
-                <Field component={ContactSelect} name="reason" />
+                <Field
+                  component={ContactSelect}
+                  options={options}
+                  name="reason"
+                />
                 <div className="row">
                   <Field
                     name="firstName"
@@ -60,7 +68,6 @@ class Contact extends React.Component {
                   component={ContactInput}
                 />
                 <Field
-                  value="123"
                   name="subject"
                   id="contact-subject"
                   label="Subject"
@@ -87,11 +94,30 @@ class Contact extends React.Component {
     );
   }
 }
+const validate = formValues => {
+  const errors = {};
+  if (
+    !formValues.subject ||
+    (formValues.subject && !formValues.subject.trim())
+  ) {
+    errors.subject = "Please add a subject";
+  }
+  if (
+    !formValues.message ||
+    (formValues.message && formValues.message.trim().length < 20)
+  ) {
+    errors.message = "Please enter a message of 20 characters or more";
+  }
+  if (!formValues.reason) {
+    errors.reason = "Please choose a valid reason";
+  }
+  return errors;
+};
 const mapStateToProps = state => {
   return {
     initialValues: state.auth.user
   };
 };
 export default connect(mapStateToProps)(
-  reduxForm({ form: "Contact" })(Contact)
+  reduxForm({ form: "Contact", validate })(Contact)
 );

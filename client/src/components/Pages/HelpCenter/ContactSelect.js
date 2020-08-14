@@ -3,16 +3,18 @@ import React from "react";
 const ContactSelect = props => {
   return (
     <div>
-      <label htmlFor="contact-reason">Reason</label>
-      <select {...props.input} className="form-control" id="contact-reason">
+      <select {...props.input} className="form-control">
         <option value="choose">------Please Choose An Option------</option>
-        <option {...props.input} value="suggestion">
-          Suggestion
-        </option>
-        <option {...props.input} value="feedback">
-          Feedback
-        </option>
+        {props.options.map(option => (
+          <option key={option.key} value={option.key}>
+            {option.text}
+          </option>
+        ))}
       </select>
+
+      <div style={{ color: "red" }}>
+        {props.meta.touched && props.meta.error}
+      </div>
     </div>
   );
 };

@@ -9,6 +9,11 @@ const ContactInput = props => {
         id={props.id}
         type={props.type}
         {...props.input}
+        readOnly={
+          props.input.name === "firstName" ||
+          props.input.name === "lastName" ||
+          props.input.name === "email"
+        }
       />
       <div style={{ color: "red" }}>
         {props.meta.touched && props.meta.error}
