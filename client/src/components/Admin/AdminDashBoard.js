@@ -434,7 +434,7 @@ const mapStateToProps = state => {
     latestRejectedProducts: state.product.latestRejectedProducts,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers
+    newSellers: state.seller.newSellers
   };
 };
 export default connect(mapStateToProps, {

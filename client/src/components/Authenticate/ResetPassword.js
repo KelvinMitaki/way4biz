@@ -86,7 +86,7 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    resetToken: state.sellerRegister.resetToken
+    resetToken: state.seller.resetToken
   };
 };
 

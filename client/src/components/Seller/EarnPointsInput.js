@@ -38,7 +38,7 @@ const EarnPointsInput = props => {
 };
 const mapStateToProps = state => {
   return {
-    referralCodeLoading: state.sellerRegister.referralCodeLoading
+    referralCodeLoading: state.seller.referralCodeLoading
   };
 };
 export default connect(mapStateToProps)(EarnPointsInput);

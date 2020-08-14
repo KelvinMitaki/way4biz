@@ -179,7 +179,7 @@ const mapStateToProps = state => {
     initialValues: state.auth.user,
     loading: state.auth.loading,
     user: state.auth.user,
-    fetchSellerLoading: state.sellerRegister.fetchSellerLoading
+    fetchSellerLoading: state.seller.fetchSellerLoading
   };
 };
 export default withRouter(

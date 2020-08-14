@@ -134,8 +134,8 @@ class AdminDashBoardSeller extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    verifiedSeller: state.sellerRegister.verifiedSeller,
-    verifiedSellerLoading: state.sellerRegister.verifiedSellerLoading
+    verifiedSeller: state.seller.verifiedSeller,
+    verifiedSellerLoading: state.seller.verifiedSellerLoading
   };
 };
 export default withRouter(

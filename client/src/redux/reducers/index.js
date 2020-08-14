@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import productReducer from "./productReducer";
-import sellerRegisterReducer from "./sellerRegisterReducer";
+import sellerReducer from "./sellerRegisterReducer";
 import cartReducer from "./cartReducer";
 import OrderDetailsPersist from "./OrderDetailsPersist";
 import filterReducer from "./filterReducer";
@@ -30,7 +30,7 @@ const reducers = combineReducers({
   form: formReducer,
   auth: authReducer,
   product: productReducer,
-  sellerRegister: sellerRegisterReducer,
+  seller: sellerReducer,
   cartReducer: cartReducer,
   detailsPersist: OrderDetailsPersist,
   filter: filterReducer,

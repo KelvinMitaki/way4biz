@@ -179,9 +179,9 @@ class AdminDashBoardSeller extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading,
-    sellerRequestLoading: state.sellerRegister.sellerRequestLoading
+    newSeller: state.seller.newSeller,
+    newSellerLoading: state.seller.newSellerLoading,
+    sellerRequestLoading: state.seller.sellerRequestLoading
   };
 };
 export default withRouter(
