@@ -80,6 +80,21 @@ class EarnPoints extends React.Component {
       case 2:
         return (
           <React.Fragment>
+            <div className="d-flex align-items-center">
+              <div style={{ flex: "1" }}>
+                <IconContext.Provider
+                  value={{ className: "arrow-icon ml-3 my-2" }}
+                >
+                  <div className="d-flex align-items-center">
+                    <Link to="/orders">
+                      <BsArrowLeft />
+                    </Link>
+                  </div>
+                </IconContext.Provider>
+              </div>
+
+              <div className="ml-1" style={{ flex: "2" }}></div>
+            </div>
             <h3>Success,the referral has been sent.</h3>
           </React.Fragment>
         );
