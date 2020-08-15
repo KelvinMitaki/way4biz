@@ -1633,7 +1633,7 @@ export const fetchAllOrders = filter => async dispatch => {
 };
 
 export const adminRadio = event => (dispatch, getState) => {
-  getState().admin.ordersToSkip = 0;
+  getState().product.ordersToSkip = 0;
   getState().admin.orderCount = 0;
   dispatch({
     type: ADMIN_RADIO,
@@ -1661,7 +1661,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
     const prodCount = getState().admin.orderCount;
-    const singleProdLength = getState().product.allAdminOrders.length;
+    const singleProdLength = getState().admin.allAdminOrders.length;
     if (singleProdLength < prodCount) {
       const res = await axios.post("/api/root/admin/all/orders", {
         itemsToSkip: singleProdLength,
@@ -1678,7 +1678,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
 };
 
 export const resetSkipAndCount = () => (dispatch, getState) => {
-  getState().admin.ordersToSkip = 0;
+  getState().product.ordersToSkip = 0;
   getState().admin.orderCount = 0;
 };
 
