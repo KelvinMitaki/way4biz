@@ -26,7 +26,7 @@ class OrderPaymentSuccess extends React.Component {
           <Header />
           <div className="container mt-3">
             <div className="row">
-              <div className="col-md-9 col-lg-8 mx-auto">
+              <div className="col-md-9 m-0 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1 successful-order">
                   <div className="d-flex align-items-center justify-content-center">
                     <BsCheckCircle
@@ -53,8 +53,11 @@ class OrderPaymentSuccess extends React.Component {
                   {/* mapping here */}
                   {this.props.orderSuccess.items &&
                     this.props.orderSuccess.items.length !== 0 &&
-                    this.props.orderSuccess.items.map((item) => (
-                      <div className="row align-items-center" key={item._id}>
+                    this.props.orderSuccess.items.map(item => (
+                      <div
+                        className="row align-items-center success-order-item"
+                        key={item._id}
+                      >
                         <div className="col-3">
                           <Image
                             width="100%"
@@ -81,7 +84,7 @@ class OrderPaymentSuccess extends React.Component {
                       </div>
                     ))}
                   {/* mapping ends here */}
-                  <div style={{ borderBottom: "1px solid #d4d4d4" }}></div>
+                  {/* <div style={{ borderBottom: "1px solid #d4d4d4" }}></div> */}
                   <div className="order-amounts mt-3">
                     <div>
                       <h5>Order Subtotal</h5>
@@ -202,13 +205,13 @@ class OrderPaymentSuccess extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     orderSuccess: state.cartReducer.orderSuccess,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps, {
   deleteCart,
-  removePendingAndSuccess,
+  removePendingAndSuccess
 })(OrderPaymentSuccess);

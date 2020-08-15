@@ -18,6 +18,7 @@ const EarnPointsInput = props => {
           disabled={props.invalid || props.pristine}
           id="referral-btn"
           style={{ height: "30px !important", width: "80px" }}
+          // onClick={props.buttonClickHandler}
         >
           {props.referralCodeLoading && (
             <span

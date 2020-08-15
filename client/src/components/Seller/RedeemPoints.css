@@ -2,3 +2,12 @@
   background-color: #f76b1a;
   color: #fff;
 }
+
+.redeem-btn:hover {
+  color: #fff;
+}
+
+.redeem-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
