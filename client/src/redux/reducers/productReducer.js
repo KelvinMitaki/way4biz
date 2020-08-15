@@ -117,11 +117,9 @@ const INITIAL_STATE = {
   storeImageLoading: false,
   stock: [],
   stockLoading: false,
-  adminOrders: null,
   adminOrdersLoading: false,
   adminOrderLoading: false,
   adminPendingOrders: null,
-  allAdminOrders: null,
   ordersToSkip: 0,
   orderCount: null,
   hasMoreOrders: true,
@@ -271,8 +269,6 @@ export default (state = INITIAL_STATE, action) => {
           { label: "Stock Out", value: action.payload.stockOut }
         ]
       };
-    case FETCH_ADMIN_ORDERS:
-      return { ...state, adminOrders: action.payload };
     case FETCH_ADMIN_ORDERS_START:
       return { ...state, adminOrdersLoading: true };
     case FETCH_ADMIN_ORDERS_STOP:
