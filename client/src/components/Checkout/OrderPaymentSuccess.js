@@ -26,7 +26,7 @@ class OrderPaymentSuccess extends React.Component {
           <Header />
           <div className="container mt-3">
             <div className="row">
-              <div className="col-md-9 col-lg-8 mx-auto">
+              <div className="col-md-9 m-0 col-lg-8 mx-auto">
                 <div className="box-container py-3 pl-2 pr-1 successful-order">
                   <div className="d-flex align-items-center justify-content-center">
                     <BsCheckCircle
