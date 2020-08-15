@@ -243,7 +243,8 @@ import {
   CONTACT_US_STOP,
   FETCH_ADMIN_INBOX,
   FETCH_ADMIN_INBOX_START,
-  FETCH_ADMIN_INBOX_STOP
+  FETCH_ADMIN_INBOX_STOP,
+  REFERRAL_CODE_ERROR
 } from "./types";
 
 const authCheck = error => {
@@ -2290,6 +2291,12 @@ export const sendReferralCode = (referralBody, reset) => async dispatch => {
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
   } catch (error) {
     authCheck(error);
+    if (error.response) {
+      dispatch({
+        type: REFERRAL_CODE_ERROR,
+        payload: error.response.data.message
+      });
+    }
     dispatch(reset("EarnPoints"));
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
     console.log(error.response);
