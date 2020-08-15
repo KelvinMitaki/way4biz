@@ -16,6 +16,14 @@ class ContactSuccess extends React.Component {
           <div className="d-flex align-items-center justify-content-center">
             <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
           </div>
+          <div>
+            <p>
+              Thank you for contacting Way4Biz. We will get back to you shortly.
+            </p>
+          </div>
+          <p>
+            <Link to="/">Home</Link>
+          </p>
         </div>
         <Footer />
         <MiniMenuWrapper />
