@@ -42,3 +42,13 @@
   border-bottom: 1px solid #d4d4d4;
   margin: 10px 0px;
 }
+
+@media screen and (max-width: 420px) {
+  .success-order-item {
+    border-bottom: 1px solid #d4d4d4;
+    margin: 15px 0px;
+  }
+  .order-item-name {
+    -webkit-line-clamp: 1;
+  }
+}
