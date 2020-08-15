@@ -289,7 +289,7 @@ function AdminDashBoardOrders(props) {
 }
 const mapStateToProps = state => {
   return {
-    allAdminOrders: state.product.allAdminOrders,
+    allAdminOrders: state.admin.allAdminOrders,
     orderCount: state.product.orderCount,
     ordersToSkip: state.product.ordersToSkip,
     ordersDate: state.product.ordersDate,
