@@ -9,104 +9,9 @@ import { sendReferralCode } from "../../redux/actions";
 import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 let email;
 class EarnPoints extends React.Component {
-  state = { toShow: 0 };
-  reset() {
-    this.setState({
-      toShow: 0
-    });
-  }
-
-  handleButtonClick(e) {
-    e.preventDefault();
-    console.log("Clicked");
-  }
-  components() {
-    switch (this.state.toShow) {
-      case 0:
-        return (
-          <React.Fragment>
-            {" "}
-            <h6>
-              You currently have {this.props.points} points. To earn more points
-              refer many sellers to sell on our platform.
-            </h6>
-            <h6 className="my-2">
-              Lets get you more points. Key in the email of the person you want
-              to refer. Then press send to send the referral.
-            </h6>
-            <form
-              onSubmit={this.props.handleSubmit(formValues =>
-                this.props.sendReferralCode(
-                  {
-                    ...formValues,
-                    sellerName: `${this.props.firstName} ${this.props.lastName}`
-                  },
-                  reset
-                )
-              )}
-            >
-              <div
-                className="row no-gutters align-items-center m-0 p-0"
-                style={{ height: "30px" }}
-              >
-                <Field
-                  component={EarnPointsInput}
-                  placeholder="test@gmail.com"
-                  type="text"
-                  name="points"
-                  buttonClickHandler={this.handleButtonClick}
-                />
-              </div>
-            </form>
-          </React.Fragment>
-        );
-
-      case 1:
-        return (
-          <React.Fragment>
-            <div className="d-flex align-items-center">
-              <div style={{ flex: "1" }}>
-                <IconContext.Provider
-                  value={{ className: "arrow-icon ml-3 my-2" }}
-                >
-                  <div className="d-flex align-items-center">
-                    <Link to="/">
-                      <BsArrowLeft />
-                    </Link>
-                  </div>
-                </IconContext.Provider>
-              </div>
-
-              <div className="ml-1" style={{ flex: "2" }}></div>
-            </div>
-            <h3>This email exists in the system.</h3>
-          </React.Fragment>
-        );
-      case 2:
-        return (
-          <React.Fragment>
-            <div className="d-flex align-items-center">
-              <div style={{ flex: "1" }}>
-                <IconContext.Provider
-                  value={{ className: "arrow-icon ml-3 my-2" }}
-                >
-                  <div className="d-flex align-items-center">
-                    <Link to="/">
-                      <BsArrowLeft />
-                    </Link>
-                  </div>
-                </IconContext.Provider>
-              </div>
-
-              <div className="ml-1" style={{ flex: "2" }}></div>
-            </div>
-            <h3>Success,the referral has been sent.</h3>
-          </React.Fragment>
-        );
-    }
-  }
   render() {
     email = this.props.email;
     return (
@@ -166,6 +71,7 @@ class EarnPoints extends React.Component {
           Congrats,the referral has been sent.
         </h6> */}
 
+        {/* show this on error */}
         <div className="d-flex align-items-center">
           <div style={{ flex: "1" }}>
             <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
@@ -179,7 +85,14 @@ class EarnPoints extends React.Component {
 
           <div className="ml-1" style={{ flex: "2" }}></div>
         </div>
-        <h3>This email exists in the system.</h3>
+        <div className="d-flex mb-3 align-items-center justify-content-center mb-3">
+          <AiOutlineExclamationCircle
+            style={{ fontSize: "100px", color: "#f76b1a" }}
+          />
+        </div>
+        <h6 style={{ textAlign: "center" }}>
+          This email exists in the system.
+        </h6>
       </div>
     );
   }
