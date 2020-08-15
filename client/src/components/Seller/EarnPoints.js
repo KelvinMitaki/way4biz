@@ -105,7 +105,7 @@ class EarnPoints extends React.Component {
     email = this.props.email;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
-        {this.component()}
+        {this.components()}
       </div>
     );
   }
