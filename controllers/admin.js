@@ -638,6 +638,45 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           }
         }
       },
+      { $unwind: "$productSellerData" },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          createdAt: 1,
+          buyerUser: 1,
+          buyerSeller: 1,
+          delivered: 1,
+          cancelled: 1,
+          dispatched: 1,
+          productSellerData: {
+            name: "$productSellerData.name",
+            price: "$productSellerData.price",
+            imageUrl: "$productSellerData.imageUrl",
+            _id: "$productSellerData._id"
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$_id",
+          items: { $first: "$items" },
+          paymentMethod: {
+            $first: "$paymentMethod"
+          },
+          cancelled: { $first: "$cancelled" },
+          delivered: { $first: "$delivered" },
+          dispatched: { $first: "$dispatched" },
+          buyerSeller: { $first: "$buyerSeller" },
+          buyerUser: { $first: "$buyerUser" },
+          buyer: { $first: "$buyer" },
+          createdAt: { $first: "$createdAt" },
+          productSellerData: {
+            $push: "$productSellerData"
+          }
+        }
+      },
       { $sort: { createdAt: -1 } }
     ]);
     res.send(test);
