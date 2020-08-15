@@ -15,7 +15,7 @@ class EarnPoints extends React.Component {
   render() {
     email = this.props.email;
     return (
-      <div className="container py-4" style={{ backgroundColor: "#fff" }}>
+      <div className="container py-2" style={{ backgroundColor: "#fff" }}>
         {/* show this first */}
         {/* <h6>
           You currently have {this.props.points} points. To earn more points
@@ -74,7 +74,7 @@ class EarnPoints extends React.Component {
         {/* show this on error */}
         <div className="d-flex align-items-center">
           <div style={{ flex: "1" }}>
-            <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+            <IconContext.Provider value={{ className: "arrow-icon ml-3 my-1" }}>
               <div className="d-flex align-items-center">
                 <Link to="/">
                   <BsArrowLeft />
