@@ -111,7 +111,7 @@ class EarnPoints extends React.Component {
     email = this.props.email;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
-        {/* {this.components()} */}
+        {/* show this first */}
         {/* <h6>
           You currently have {this.props.points} points. To earn more points
           refer many sellers to sell on our platform.
@@ -145,7 +145,8 @@ class EarnPoints extends React.Component {
           </div>
         </form> */}
 
-        <div className="d-flex align-items-center">
+        {/* show  this on success */}
+        {/* <div className="d-flex align-items-center">
           <div style={{ flex: "1" }}>
             <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
               <div className="d-flex align-items-center">
@@ -163,7 +164,22 @@ class EarnPoints extends React.Component {
         </div>
         <h6 style={{ textAlign: "center" }}>
           Congrats,the referral has been sent.
-        </h6>
+        </h6> */}
+
+        <div className="d-flex align-items-center">
+          <div style={{ flex: "1" }}>
+            <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+              <div className="d-flex align-items-center">
+                <Link to="/">
+                  <BsArrowLeft />
+                </Link>
+              </div>
+            </IconContext.Provider>
+          </div>
+
+          <div className="ml-1" style={{ flex: "2" }}></div>
+        </div>
+        <h3>This email exists in the system.</h3>
       </div>
     );
   }
