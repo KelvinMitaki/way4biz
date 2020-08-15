@@ -32,6 +32,7 @@ class AdminDashBoardSeller extends React.Component {
         town,
         address,
         email,
+        businessNumber
       } = this.props.newSeller;
       return (
         <div className="container-fluid p-0 mb-5">
@@ -67,6 +68,12 @@ class AdminDashBoardSeller extends React.Component {
                   <h5>
                     <strong>StoreName: </strong>
                     {storeName}
+                  </h5>
+                </div>
+                <div className="custom-row">
+                  <h5>
+                    <strong>Business Number: </strong>
+                    {businessNumber}
                   </h5>
                 </div>
 
@@ -170,11 +177,11 @@ class AdminDashBoardSeller extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    newSeller: state.sellerRegister.newSeller,
-    newSellerLoading: state.sellerRegister.newSellerLoading,
-    sellerRequestLoading: state.sellerRegister.sellerRequestLoading,
+    newSeller: state.seller.newSeller,
+    newSellerLoading: state.seller.newSellerLoading,
+    sellerRequestLoading: state.seller.sellerRequestLoading
   };
 };
 export default withRouter(

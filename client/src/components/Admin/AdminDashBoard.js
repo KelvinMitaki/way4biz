@@ -18,7 +18,7 @@ import {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts,
+  fetchLatestRejectedProducts
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -28,11 +28,11 @@ import MobileLogo from "../Header/MobileLogo";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
   componentDidMount() {
     this.props.getStock();
@@ -76,10 +76,39 @@ class AdminDashBoard extends React.Component {
     if (typeof pendingOrders === "object") {
       pendingOrders = 0;
     }
-    function kFormatter(num) {
-      return Math.abs(num) > 999
-        ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
-        : Math.sign(num) * Math.abs(num);
+    function kFormatter(number, decPlaces) {
+      // 2 decimal places => 100, 3 => 1000, etc
+      decPlaces = Math.pow(10, decPlaces);
+
+      // Enumerate number abbreviations
+      var abbrev = ["k", "m", "b", "t"];
+
+      // Go through the array backwards, so we do the largest first
+      for (var i = abbrev.length - 1; i >= 0; i--) {
+        // Convert array index to "1000", "1000000", etc
+        var size = Math.pow(10, (i + 1) * 3);
+
+        // If the number is bigger or equal do the abbreviation
+        if (size <= number) {
+          // Here, we multiply by decPlaces, round, and then divide by decPlaces.
+          // This gives us nice rounding to a particular decimal place.
+          number = Math.round((number * decPlaces) / size) / decPlaces;
+
+          // Handle special case where we round up to the next abbreviation
+          if (number === 1000 && i < abbrev.length - 1) {
+            number = 1;
+            i++;
+          }
+
+          // Add the letter for the abbreviation
+          number += abbrev[i];
+
+          // We are done... stop
+          break;
+        }
+      }
+
+      return number;
     }
     const todaysComplaints =
       this.props.complaintsCount && this.props.complaintsCount.todaysComplaints;
@@ -120,10 +149,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find((s) => s.label === "Stock Out")
+                      {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find((s) => s.label === "Stock Out")
+                          this.props.stock.find(s => s.label === "Stock Out")
                             .value
                         ).toLocaleString()}
                     </span>
@@ -142,7 +171,7 @@ class AdminDashBoard extends React.Component {
                       {(
                         this.props.adminOrders &&
                         this.props.adminOrders.monthlyPrice &&
-                        kFormatter(this.props.adminOrders.monthlyPrice * 0.1)
+                        kFormatter(this.props.adminOrders.monthlyPrice, 2)
                       ).toLocaleString() || 0}
                     </span>
                     <h3>
@@ -157,7 +186,7 @@ class AdminDashBoard extends React.Component {
                       {(
                         this.props.adminOrders &&
                         this.props.adminOrders.totalPrice &&
-                        kFormatter(this.props.adminOrders.totalPrice * 0.1)
+                        kFormatter(this.props.adminOrders.totalPrice, 2)
                       ).toLocaleString() || 0}
                     </span>
                     <h3>
@@ -226,7 +255,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -255,7 +284,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -311,7 +340,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysComplaints}
@@ -350,7 +379,7 @@ class AdminDashBoard extends React.Component {
                 </h5>
                 {/* mapping here */}
                 {this.props.latestRejectedProducts.length !== 0 &&
-                  this.props.latestRejectedProducts.map((p) => (
+                  this.props.latestRejectedProducts.map(p => (
                     <div key={p._id} className="rejected-product box-container">
                       <div className="rejected-product-image-wrapper">
                         <Image
@@ -396,7 +425,7 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     stock: state.product.stock,
     adminOrders: state.product.adminOrders,
@@ -405,7 +434,7 @@ const mapStateToProps = (state) => {
     latestRejectedProducts: state.product.latestRejectedProducts,
     underReview: state.product.underReview,
     weeklySales: state.product.weeklySales,
-    newSellers: state.sellerRegister.newSellers,
+    newSellers: state.seller.newSellers
   };
 };
 export default connect(mapStateToProps, {
@@ -417,5 +446,5 @@ export default connect(mapStateToProps, {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts,
+  fetchLatestRejectedProducts
 })(AdminDashBoard);

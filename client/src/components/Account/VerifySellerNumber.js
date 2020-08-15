@@ -99,8 +99,8 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    sellerNumber: state.sellerRegister.sellerNumber,
-    errorVerifying: state.sellerRegister.errorVerifying
+    sellerNumber: state.seller.sellerNumber,
+    errorVerifying: state.seller.errorVerifying
   };
 };
 export default withRouter(

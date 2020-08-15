@@ -238,7 +238,12 @@ import {
   CHECK_REFERRAL,
   SEND_REFERRAL_CODE,
   SEND_REFERRAL_CODE_START,
-  SEND_REFERRAL_CODE_STOP
+  SEND_REFERRAL_CODE_STOP,
+  CONTACT_US_START,
+  CONTACT_US_STOP,
+  FETCH_ADMIN_INBOX,
+  FETCH_ADMIN_INBOX_START,
+  FETCH_ADMIN_INBOX_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2279,7 +2284,7 @@ export const collectionCloseAction = () => {
 export const sendReferralCode = (referralBody, reset) => async dispatch => {
   try {
     dispatch({ type: SEND_REFERRAL_CODE_START });
-    await axios.post("/api/send/refferal/code", referralBody);
+    await axios.post("/api/send/referral/code", referralBody);
     dispatch(reset("EarnPoints"));
     dispatch({ type: SEND_REFERRAL_CODE });
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
@@ -2297,5 +2302,28 @@ export const checkReferral = (referralCode, history) => async dispatch => {
     dispatch({ type: CHECK_REFERRAL });
   } catch (error) {
     history.push("/seller/register");
+  }
+};
+
+export const contactUs = (formValues, history) => async dispatch => {
+  try {
+    dispatch({ type: CONTACT_US_START });
+    await axios.post("/api/contact/admin", formValues);
+    dispatch({ type: CONTACT_US_STOP });
+    history.push("/");
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: CONTACT_US_STOP });
+  }
+};
+export const fetchAdminInbox = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_ADMIN_INBOX_START });
+    const res = await axios.get("/api/fetch/admin/inbox");
+    dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
+    dispatch({ type: FETCH_ADMIN_INBOX_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   }
 };

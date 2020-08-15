@@ -276,7 +276,7 @@ const mapStateToProps = state => {
   return {
     sellerRegisterLoading: state.auth.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.sellerRegister.sellerRegisterError
+    sellerRegisterError: state.seller.sellerRegisterError
   };
 };
 export default withRouter(

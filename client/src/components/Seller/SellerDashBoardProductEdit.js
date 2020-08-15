@@ -223,13 +223,10 @@ const selector = formValueSelector("SellerEdit");
 const mapStateToProps = (state, ownProps) => {
   const category = selector(state, "category");
   let initialValues;
-  if (
-    state.sellerRegister.sellerProducts &&
-    state.sellerRegister.sellerProducts.length !== 0
-  ) {
+  if (state.seller.sellerProducts && state.seller.sellerProducts.length !== 0) {
     initialValues =
-      state.sellerRegister.sellerProducts &&
-      state.sellerRegister.sellerProducts.find(
+      state.seller.sellerProducts &&
+      state.seller.sellerProducts.find(
         p => p._id.toString() === ownProps.match.params.productId.toString()
       );
   }
@@ -241,7 +238,7 @@ const mapStateToProps = (state, ownProps) => {
     adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
     category,
-    productFound: state.sellerRegister.sellerProducts
+    productFound: state.seller.sellerProducts
   };
 };
 export default withRouter(

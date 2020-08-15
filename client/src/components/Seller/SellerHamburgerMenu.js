@@ -16,7 +16,7 @@ class SellerHamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -27,9 +27,9 @@ class SellerHamburgerMenu extends React.Component {
   }
 
   handleClick(e) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   }
@@ -198,14 +198,14 @@ class SellerHamburgerMenu extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sellerRejects: state.product.sellerRejects,
-    sellerOrders: state.sellerRegister.sellerOrders,
+    sellerOrders: state.seller.sellerOrders,
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard,
+    dashboard: state.detailsPersist.dashboard
   };
 };
 export default connect(mapStateToProps, {
-  fetchRejects,
+  fetchRejects
 })(SellerHamburgerMenu);
