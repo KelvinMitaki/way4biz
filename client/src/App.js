@@ -89,6 +89,7 @@ import CustomerService from "./components/Pages/HelpCenter/CustomerService";
 import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
 import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
 import SellerPoints from "./components/Seller/SellerPoints";
+import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
 
 class App extends React.Component {
   state = {
@@ -222,6 +223,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.isSignedIn ? (
                     <Contact />
+                  ) : (
+                    <Redirect to="/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/contact-success"
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <ContactSuccess />
                   ) : (
                     <Redirect to="/sign-in" />
                   )
