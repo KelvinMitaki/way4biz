@@ -64,8 +64,9 @@ class Review extends React.Component {
                     <h6 className="my-2">
                       By{" "}
                       {review.user.length !== 0
-                        ? review.user[0].firstName
-                        : review.userSeller[0].firstName}{" "}
+                        ? review.user[0] && review.user[0].firstName
+                        : review.userSeller[0] &&
+                          review.userSeller[0].firstName}{" "}
                       on {new Date(review.createdAt).toLocaleString()}{" "}
                     </h6>
                   </div>
