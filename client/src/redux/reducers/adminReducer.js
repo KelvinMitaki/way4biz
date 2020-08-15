@@ -31,7 +31,8 @@ const INITIAL_STATE = {
   hasMoreOrders: true,
   ordersDate: null,
   adminOrdersLoading: false,
-  adminOrderLoading: false
+  adminOrderLoading: false,
+  adminOrder: null
 };
 
 export default (state = INITIAL_STATE, action) => {

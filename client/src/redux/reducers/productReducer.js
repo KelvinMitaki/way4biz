@@ -118,7 +118,6 @@ const INITIAL_STATE = {
   stock: [],
   stockLoading: false,
   adminPendingOrders: null,
-  adminOrder: null,
   weeklySales: null,
   payments: null,
   adminCategories: null,
