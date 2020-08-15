@@ -84,7 +84,7 @@ class OrderPaymentSuccess extends React.Component {
                       </div>
                     ))}
                   {/* mapping ends here */}
-                  <div style={{ borderBottom: "1px solid #d4d4d4" }}></div>
+                  {/* <div style={{ borderBottom: "1px solid #d4d4d4" }}></div> */}
                   <div className="order-amounts mt-3">
                     <div>
                       <h5>Order Subtotal</h5>
