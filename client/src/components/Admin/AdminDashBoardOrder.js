@@ -103,8 +103,10 @@ class AdminDashBoardOrder extends React.Component {
                     <div className="col-md-6">
                       <p>
                         <strong className="mr-2">Buyer:</strong>
-                        {this.props.adminOrder.buyer.firstName}{" "}
-                        {this.props.adminOrder.buyer.lastName}
+                        {this.props.adminOrder.buyer &&
+                          this.props.adminOrder.buyer.firstName}{" "}
+                        {this.props.adminOrder.buyer &&
+                          this.props.adminOrder.buyer.lastName}
                       </p>
                       <p>
                         <strong className="mr-2">Delivery Method:</strong>
