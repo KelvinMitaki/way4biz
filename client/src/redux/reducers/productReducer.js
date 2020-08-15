@@ -143,7 +143,6 @@ const INITIAL_STATE = {
   latestRejectedProducts: null,
   fetchProductsLoading: false,
   dispatchLoading: false,
-  deliveryLoading: false,
   editCategoryLoading: false,
   addCategoryLoading: false
 };
@@ -333,10 +332,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, dispatchLoading: true };
     case CONFIRM_DISPATCH_STOP:
       return { ...state, dispatchLoading: false };
-    case CONFIRM_DELIVERY_START:
-      return { ...state, deliveryLoading: true };
-    case CONFIRM_DELIVERY_STOP:
-      return { ...state, deliveryLoading: false };
     case EDIT_CATEGORY_START:
       return { ...state, editCategoryLoading: true };
     case EDIT_CATEGORY_STOP:

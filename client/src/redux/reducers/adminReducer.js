@@ -16,7 +16,9 @@ import {
   FETCH_ADMIN_ORDER_START,
   FETCH_ADMIN_ORDER_STOP,
   FETCH_ORDER_BY_ID_START,
-  FETCH_ORDER_BY_ID_STOP
+  FETCH_ORDER_BY_ID_STOP,
+  CONFIRM_DELIVERY_START,
+  CONFIRM_DELIVERY_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -32,7 +34,8 @@ const INITIAL_STATE = {
   ordersDate: null,
   adminOrdersLoading: false,
   adminOrderLoading: false,
-  adminOrder: null
+  adminOrder: null,
+  deliveryLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -107,6 +110,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrderLoading: true };
     case FETCH_ORDER_BY_ID_STOP:
       return { ...state, adminOrderLoading: false };
+    case CONFIRM_DELIVERY_START:
+      return { ...state, deliveryLoading: true };
+    case CONFIRM_DELIVERY_STOP:
+      return { ...state, deliveryLoading: false };
     default:
       return state;
   }

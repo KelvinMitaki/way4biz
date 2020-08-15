@@ -158,8 +158,8 @@ class AdminDashBoardOrder extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
-    adminOrderLoading: state.product.adminOrderLoading
+    adminOrder: state.admin.adminOrder,
+    adminOrderLoading: state.admin.adminOrderLoading
   };
 };
 export default withRouter(
