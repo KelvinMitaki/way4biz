@@ -6,7 +6,7 @@ import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
 import { sendReferralCode } from "../../redux/actions";
-import { BsArrowLeft } from "react-icons/bs";
+import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
 let email;
@@ -16,6 +16,11 @@ class EarnPoints extends React.Component {
     this.setState({
       toShow: 0
     });
+  }
+
+  handleButtonClick(e) {
+    e.preventDefault();
+    console.log("Clicked");
   }
   components() {
     switch (this.state.toShow) {
@@ -51,6 +56,7 @@ class EarnPoints extends React.Component {
                   placeholder="test@gmail.com"
                   type="text"
                   name="points"
+                  buttonClickHandler={this.handleButtonClick}
                 />
               </div>
             </form>
@@ -105,7 +111,59 @@ class EarnPoints extends React.Component {
     email = this.props.email;
     return (
       <div className="container py-4" style={{ backgroundColor: "#fff" }}>
-        {this.components()}
+        {/* {this.components()} */}
+        {/* <h6>
+          You currently have {this.props.points} points. To earn more points
+          refer many sellers to sell on our platform.
+        </h6>
+        <h6 className="my-2">
+          Lets get you more points. Key in the email of the person you want to
+          refer. Then press send to send the referral.
+        </h6>
+        <form
+          onSubmit={this.props.handleSubmit(formValues =>
+            this.props.sendReferralCode(
+              {
+                ...formValues,
+                sellerName: `${this.props.firstName} ${this.props.lastName}`
+              },
+              reset
+            )
+          )}
+        >
+          <div
+            className="row no-gutters align-items-center m-0 p-0"
+            style={{ height: "30px" }}
+          >
+            <Field
+              component={EarnPointsInput}
+              placeholder="test@gmail.com"
+              type="text"
+              name="points"
+              buttonClickHandler={this.handleButtonClick}
+            />
+          </div>
+        </form> */}
+
+        <div className="d-flex align-items-center">
+          <div style={{ flex: "1" }}>
+            <IconContext.Provider value={{ className: "arrow-icon ml-3 my-2" }}>
+              <div className="d-flex align-items-center">
+                <Link to="/">
+                  <BsArrowLeft />
+                </Link>
+              </div>
+            </IconContext.Provider>
+          </div>
+
+          <div className="ml-1" style={{ flex: "2" }}></div>
+        </div>
+        <div className="d-flex align-items-center justify-content-center">
+          <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
+        </div>
+        <h6 style={{ textAlign: "center" }}>
+          Congrats,the referral has been sent.
+        </h6>
       </div>
     );
   }
