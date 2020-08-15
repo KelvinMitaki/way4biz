@@ -37,3 +37,8 @@
 #order-help h6 a {
   color: #f76b1a;
 }
+
+.success-order-item {
+  border-bottom: 1px solid #d4d4d4;
+  margin: 10px 0px;
+}
