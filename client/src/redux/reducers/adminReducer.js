@@ -12,7 +12,11 @@ import {
   SET_PENDING_ORDERS,
   FETCH_ADMIN_ORDER,
   FETCH_ADMIN_ORDERS_START,
-  FETCH_ADMIN_ORDERS_STOP
+  FETCH_ADMIN_ORDERS_STOP,
+  FETCH_ADMIN_ORDER_START,
+  FETCH_ADMIN_ORDER_STOP,
+  FETCH_ORDER_BY_ID_START,
+  FETCH_ORDER_BY_ID_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,7 +30,8 @@ const INITIAL_STATE = {
   orderError: null,
   hasMoreOrders: true,
   ordersDate: null,
-  adminOrdersLoading: false
+  adminOrdersLoading: false,
+  adminOrderLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -93,6 +98,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, adminOrdersLoading: true };
     case FETCH_ADMIN_ORDERS_STOP:
       return { ...state, adminOrdersLoading: false };
+    case FETCH_ADMIN_ORDER_START:
+      return { ...state, adminOrderLoading: true };
+    case FETCH_ADMIN_ORDER_STOP:
+      return { ...state, adminOrderLoading: false };
+    case FETCH_ORDER_BY_ID_START:
+      return { ...state, adminOrderLoading: true };
+    case FETCH_ORDER_BY_ID_STOP:
+      return { ...state, adminOrderLoading: false };
     default:
       return state;
   }
