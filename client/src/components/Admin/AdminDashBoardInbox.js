@@ -26,7 +26,7 @@ class AdminDashBoardInbox extends React.Component {
             </h3>
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&
-              this.props.inbox.map(contact => (
+              this.props.inbox.map((contact) => (
                 <div key={contact._id} className="box-container p-2">
                   <div className="row">
                     <div className="col-md-4">
@@ -67,10 +67,10 @@ class AdminDashBoardInbox extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     inbox: state.admin.inbox,
-    inboxLoading: state.admin.inboxLoading
+    inboxLoading: state.admin.inboxLoading,
   };
 };
 export default connect(mapStateToProps, { fetchAdminInbox })(
