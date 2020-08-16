@@ -27,7 +27,11 @@ class AdminDashBoardInbox extends React.Component {
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&
               this.props.inbox.map((contact) => (
-                <div key={contact._id} className="box-container p-2">
+                <div
+                  key={contact._id}
+                  className="box-container p-2"
+                  style={{ borderLeft: "3px solid #f76b1a" }}
+                >
                   <div className="row">
                     <div className="col-md-4">
                       <h6>
