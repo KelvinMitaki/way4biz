@@ -23,7 +23,10 @@ import {
   VERIFIED_SELLER_START,
   VERIFIED_SELLER_STOP,
   SEND_REFERRAL_CODE_START,
-  SEND_REFERRAL_CODE_STOP
+  SEND_REFERRAL_CODE_STOP,
+  REFERRAL_CODE_ERROR,
+  SEND_REFERRAL_CODE,
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -44,7 +47,9 @@ const INITIAL_STATE = {
   fetchSellerLoading: false,
   sellerRegisterLoading: false,
   verifiedSellerLoading: false,
-  referralCodeLoading: false
+  referralCodeLoading: false,
+  referralError: null,
+  referralSuccess: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -106,6 +111,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, referralCodeLoading: true };
     case SEND_REFERRAL_CODE_STOP:
       return { ...state, referralCodeLoading: false };
+    case REFERRAL_CODE_ERROR:
+      return { ...state, referralError: action.payload, referralSuccess: null };
+    case SEND_REFERRAL_CODE:
+      return { ...state, referralSuccess: "Success", referralError: null };
+    case CLEAR_REFERRAL_ERROR_AND_SUCCESS:
+      return { ...state, referralSuccess: null, referralError: null };
     default:
       return state;
   }

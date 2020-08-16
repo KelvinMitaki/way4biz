@@ -85,8 +85,8 @@ class AdminDashBoardSellers extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    verifiedSellers: state.sellerRegister.verifiedSellers,
-    fetchSellersLoading: state.sellerRegister.fetchSellersLoading
+    verifiedSellers: state.seller.verifiedSellers,
+    fetchSellersLoading: state.seller.fetchSellersLoading
   };
 };
 export default connect(mapStateToProps, { fetchVerifiedSellers })(

@@ -117,18 +117,7 @@ const INITIAL_STATE = {
   storeImageLoading: false,
   stock: [],
   stockLoading: false,
-  adminOrders: null,
-  adminOrdersLoading: false,
-  adminOrderLoading: false,
   adminPendingOrders: null,
-  allAdminOrders: null,
-  ordersToSkip: 0,
-  orderCount: null,
-  hasMoreOrders: true,
-  ordersDate: null,
-  radioLoading: false,
-  adminOrder: null,
-  orderError: null,
   weeklySales: null,
   payments: null,
   adminCategories: null,
@@ -154,7 +143,6 @@ const INITIAL_STATE = {
   latestRejectedProducts: null,
   fetchProductsLoading: false,
   dispatchLoading: false,
-  deliveryLoading: false,
   editCategoryLoading: false,
   addCategoryLoading: false
 };
@@ -271,74 +259,11 @@ export default (state = INITIAL_STATE, action) => {
           { label: "Stock Out", value: action.payload.stockOut }
         ]
       };
-    case FETCH_ADMIN_ORDERS:
-      return { ...state, adminOrders: action.payload };
-    case FETCH_ADMIN_ORDERS_START:
-      return { ...state, adminOrdersLoading: true };
-    case FETCH_ADMIN_ORDERS_STOP:
-      return { ...state, adminOrdersLoading: false };
-    case FETCH_ADMIN_ORDER_START:
-      return { ...state, adminOrderLoading: true };
-    case FETCH_ADMIN_ORDER_STOP:
-      return { ...state, adminOrderLoading: false };
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
-    case FETCH_ALL_ORDERS:
-      return {
-        ...state,
-        allAdminOrders: action.payload.orders,
-        orderCount: action.payload.ordersCount,
-        ordersToSkip: state.ordersToSkip + 5,
-        radioLoading: false,
-        orderError: null
-      };
-    case FETCH_MORE_ALL_ORDERS:
-      const orderIds = new Set(state.allAdminOrders.map(order => order._id));
-      return {
-        ...state,
-        allAdminOrders: [
-          ...state.allAdminOrders,
-          ...action.payload.orders.filter(order => !orderIds.has(order._id))
-        ],
-        ordersToSkip: state.ordersToSkip + 5,
-        orderError: null
-      };
-    case FETCH_ORDER_BY_ID:
-      return {
-        ...state,
-        allAdminOrders: [action.payload],
-        hasMoreOrders: false,
-        ordersToSkip: 2,
-        orderCount: 1,
-        orderError: null
-      };
-    case FETCH_ORDER_BY_ID_ERROR:
-      return {
-        ...state,
-        orderError: "No Order with that ID",
-        hasMoreOrders: false,
-        ordersToSkip: 2,
-        orderCount: 1,
-        allAdminOrders: []
-      };
-    case HAS_MORE_ORDERS_FALSE:
-      return { ...state, hasMoreOrders: false };
-    case ADMIN_RADIO:
-      return {
-        ...state,
-        ordersDate: action.payload.event.value,
-        radioLoading: true
-      };
-    case FETCH_ADMIN_ORDER:
-      return { ...state, adminOrder: action.payload, orderError: null };
-    case FETCH_ORDER_BY_ID_START:
-      return { ...state, adminOrderLoading: true };
-    case FETCH_ORDER_BY_ID_STOP:
-      return { ...state, adminOrderLoading: false };
+
     case FETCH_WEEKLY_SALES:
       return { ...state, weeklySales: action.payload };
-    case SET_PENDING_ORDERS:
-      return { ...state, ordersDate: "pendingOrders" };
     case FETCH_ALL_ADMIN_CATEGORIES:
       return { ...state, adminCategories: action.payload };
     case FETCH_SINGLE_CATEGORY:
@@ -407,10 +332,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, dispatchLoading: true };
     case CONFIRM_DISPATCH_STOP:
       return { ...state, dispatchLoading: false };
-    case CONFIRM_DELIVERY_START:
-      return { ...state, deliveryLoading: true };
-    case CONFIRM_DELIVERY_STOP:
-      return { ...state, deliveryLoading: false };
     case EDIT_CATEGORY_START:
       return { ...state, editCategoryLoading: true };
     case EDIT_CATEGORY_STOP:

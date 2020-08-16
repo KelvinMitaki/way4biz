@@ -638,6 +638,45 @@ route.get("/api/seller/orders", isSeller, async (req, res) => {
           }
         }
       },
+      { $unwind: "$productSellerData" },
+      {
+        $project: {
+          items: 1,
+          paymentMethod: 1,
+          buyer: 1,
+          createdAt: 1,
+          buyerUser: 1,
+          buyerSeller: 1,
+          delivered: 1,
+          cancelled: 1,
+          dispatched: 1,
+          productSellerData: {
+            name: "$productSellerData.name",
+            price: "$productSellerData.price",
+            imageUrl: "$productSellerData.imageUrl",
+            _id: "$productSellerData._id"
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$_id",
+          items: { $first: "$items" },
+          paymentMethod: {
+            $first: "$paymentMethod"
+          },
+          cancelled: { $first: "$cancelled" },
+          delivered: { $first: "$delivered" },
+          dispatched: { $first: "$dispatched" },
+          buyerSeller: { $first: "$buyerSeller" },
+          buyerUser: { $first: "$buyerUser" },
+          buyer: { $first: "$buyer" },
+          createdAt: { $first: "$createdAt" },
+          productSellerData: {
+            $push: "$productSellerData"
+          }
+        }
+      },
       { $sort: { createdAt: -1 } }
     ]);
     res.send(test);
@@ -1950,7 +1989,7 @@ route.post(
   }
 );
 route.post(
-  "/api/send/refferal/code",
+  "/api/send/referral/code",
   auth,
   isSeller,
   check("sellerName").not().isEmpty().withMessage("Name must not be empty"),
@@ -1972,6 +2011,14 @@ route.post(
         if (sellerExists) {
           return res.status(401).send({ message: "Seller already exists" });
         }
+        const userExsists = await User.findOne({ email: points });
+        if (userExsists) {
+          return res.status(401).send({ message: "User already exists" });
+        }
+        const token = jwt.sign(
+          { _id: req.session.user._id },
+          process.env.CONFIRM_EMAIL_JWT
+        );
         transporter.sendMail(
           {
             to: points,
@@ -1981,7 +2028,7 @@ route.post(
             <body>
         <h5 style="font-family: Arial, Helvetica, sans-serif;">Invitation To Expand Your Business</h5>
         <p style="font-family: Arial, Helvetica, sans-serif;">You have been invited by ${sellerName} to join Way4Biz as a seller. Please click
-            <a href=${process.env.SELLER_REGISTER_REFERRAL}/${req.session.user._id}>here</a> to register
+            <a href=${process.env.SELLER_REGISTER_REFERRAL}/${token}>here</a> to register
             </p>
     </body>
     </html>`
@@ -2003,7 +2050,11 @@ route.post(
 route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
   try {
     const { referralCode } = req.params;
-    const seller = await Seller.findById(referralCode);
+    const decoded = jwt.verify(referralCode, process.env.CONFIRM_EMAIL_JWT);
+    if (!decoded._id) {
+      return res.status(401).send({ message: "Invalid token" });
+    }
+    const seller = await Seller.findById(decoded._id);
     if (!seller) {
       return res.status(401).send({ message: "No seller found" });
     }

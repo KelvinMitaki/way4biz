@@ -5,23 +5,98 @@ import { Field, reduxForm, reset } from "redux-form";
 import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
-import { sendReferralCode } from "../../redux/actions";
+import {
+  sendReferralCode,
+  clearReferralErrorAndSuccess
+} from "../../redux/actions";
+import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
+import { IconContext } from "react-icons";
+import { Link } from "react-router-dom";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 let email;
 class EarnPoints extends React.Component {
   render() {
     email = this.props.email;
+
+    if (this.props.referralSuccess) {
+      {
+        /* show  this on success */
+      }
+
+      return (
+        <React.Fragment>
+          <div className="d-flex align-items-center">
+            <div style={{ flex: "1" }}>
+              <IconContext.Provider
+                value={{ className: "arrow-icon ml-3 my-2" }}
+              >
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => this.props.clearReferralErrorAndSuccess()}
+                  className="d-flex align-items-center"
+                >
+                  <BsArrowLeft />
+                </div>
+              </IconContext.Provider>
+            </div>
+
+            <div className="ml-1" style={{ flex: "2" }}></div>
+          </div>
+          <div className="d-flex align-items-center justify-content-center">
+            <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
+          </div>
+          <h6 style={{ textAlign: "center" }}>
+            Congrats,the referral has been sent.
+          </h6>
+        </React.Fragment>
+      );
+    }
+
+    {
+      /* show this on error */
+    }
+    if (this.props.referralError) {
+      return (
+        <React.Fragment>
+          <div className="d-flex align-items-center">
+            <div style={{ flex: "1" }}>
+              <IconContext.Provider
+                value={{ className: "arrow-icon ml-3 my-1" }}
+              >
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => this.props.clearReferralErrorAndSuccess()}
+                  className="d-flex align-items-center"
+                >
+                  <BsArrowLeft />
+                </div>
+              </IconContext.Provider>
+            </div>
+
+            <div className="ml-1" style={{ flex: "2" }}></div>
+          </div>
+          <div className="d-flex mb-3 align-items-center justify-content-center mb-3">
+            <AiOutlineExclamationCircle
+              style={{ fontSize: "100px", color: "#f76b1a" }}
+            />
+          </div>
+          <h6 style={{ textAlign: "center" }}>
+            This email exists in the system.
+          </h6>
+        </React.Fragment>
+      );
+    }
     return (
-      <div className="container py-4" style={{ backgroundColor: "#fff" }}>
+      <div className="container py-2" style={{ backgroundColor: "#fff" }}>
+        {/* show this first */}
         <h6>
           You currently have {this.props.points} points. To earn more points
           refer many sellers to sell on our platform.
         </h6>
-
         <h6 className="my-2">
-          Lets get you more points. Key in the email of someone to refer. Then
-          press send to send the referral.
+          Lets get you more points. Key in the email of the person you want to
+          refer. Then press send to send the referral.
         </h6>
-
         <form
           onSubmit={this.props.handleSubmit(formValues =>
             this.props.sendReferralCode(
@@ -42,9 +117,10 @@ class EarnPoints extends React.Component {
               placeholder="test@gmail.com"
               type="text"
               name="points"
+              buttonClickHandler={this.handleButtonClick}
             />
           </div>
-        </form>
+        </form>{" "}
       </div>
     );
   }
@@ -68,9 +144,13 @@ const mapStateToProps = state => {
     email: state.auth.user.email,
     firstName: state.auth.user.firstName,
     lastName: state.auth.user.lastName,
-    points: state.auth.user.points
+    points: state.auth.user.points,
+    referralError: state.seller.referralError,
+    referralSuccess: state.seller.referralSuccess
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(
-  connect(mapStateToProps, { sendReferralCode })(EarnPoints)
+  connect(mapStateToProps, { sendReferralCode, clearReferralErrorAndSuccess })(
+    EarnPoints
+  )
 );

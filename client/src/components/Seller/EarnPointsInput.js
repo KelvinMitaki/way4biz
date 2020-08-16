@@ -18,6 +18,7 @@ const EarnPointsInput = props => {
           disabled={props.invalid || props.pristine}
           id="referral-btn"
           style={{ height: "30px !important", width: "80px" }}
+          // onClick={props.buttonClickHandler}
         >
           {props.referralCodeLoading && (
             <span
@@ -38,7 +39,7 @@ const EarnPointsInput = props => {
 };
 const mapStateToProps = state => {
   return {
-    referralCodeLoading: state.sellerRegister.referralCodeLoading
+    referralCodeLoading: state.seller.referralCodeLoading
   };
 };
 export default connect(mapStateToProps)(EarnPointsInput);

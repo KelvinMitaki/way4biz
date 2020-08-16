@@ -17,16 +17,16 @@ class Footer extends React.Component {
                   <Link to="/help-center">Help center</Link>
                 </p>
                 <p>
-                  <Link to="/about-us">Contact Us</Link>
+                  <Link to="/contact-us">Contact Us</Link>
                 </p>
                 <p>
                   <Link to="/terms">Return Policy</Link>
                 </p>
                 <p>
-                  <Link to="/">Suggest a Product</Link>
+                  <Link to="/contact-us">Suggest a Product</Link>
                 </p>
                 <p>
-                  <Link to="/">Submit an Idea</Link>
+                  <Link to="/contact-us">Submit an Idea</Link>
                 </p>
               </div>
             </div>
@@ -34,16 +34,16 @@ class Footer extends React.Component {
               <h6>Account</h6>
               <div className="site-footer-info">
                 <p>
-                  <Link to="/contact-us">My Account</Link>
+                  <Link to="/account">My Account</Link>
                 </p>
                 <p>
-                  <Link to="/account">My Orders</Link>
+                  <Link to="/orders">My Orders</Link>
                 </p>
-                {/* <p>
-                  <Link to="/account">Personal Details</Link>
-                </p> */}
                 <p>
-                  <Link to="/account">Personal Details</Link>
+                  <Link to="/pending/reviews">Pending Reviews</Link>
+                </p>
+                <p>
+                  <Link to="/complaints">Complaints</Link>
                 </p>
               </div>
             </div>
@@ -54,7 +54,12 @@ class Footer extends React.Component {
                   <Link to="/about-us">About Us</Link>
                 </p>
                 <p>
-                  <Link to="/seller/register">Sell on Way4Biz</Link>
+                  {this.props.user && this.props.user.isSeller && (
+                    <Link to="/seller/sell">Sell on Way4Biz</Link>
+                  )}
+                  {!this.props.isSignedIn && (
+                    <Link to="/seller/register">Sell on Way4Biz</Link>
+                  )}
                 </p>
                 <p>
                   <Link to="/how-to-sell">Terms and Conditions</Link>
@@ -83,9 +88,10 @@ class Footer extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 export default connect(mapStateToProps)(Footer);

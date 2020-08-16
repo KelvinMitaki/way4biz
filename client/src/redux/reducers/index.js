@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import productReducer from "./productReducer";
-import sellerRegisterReducer from "./sellerRegisterReducer";
+import sellerReducer from "./sellerRegisterReducer";
 import cartReducer from "./cartReducer";
 import OrderDetailsPersist from "./OrderDetailsPersist";
 import filterReducer from "./filterReducer";
@@ -13,6 +13,7 @@ import sellerDetailsReducer from "./sellerDetailsReducer";
 import searchReducer from "./searchReducer";
 import selfCollectionReducer from "./selfCollectionReducer";
 import adminReducer from "./adminReducer";
+import userReducer from "./userReducer";
 
 const persistConfig = {
   key: "root",
@@ -30,7 +31,7 @@ const reducers = combineReducers({
   form: formReducer,
   auth: authReducer,
   product: productReducer,
-  sellerRegister: sellerRegisterReducer,
+  seller: sellerReducer,
   cartReducer: cartReducer,
   detailsPersist: OrderDetailsPersist,
   filter: filterReducer,
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   sellerDetails: sellerDetailsReducer,
   search: searchReducer,
   selfCollection: selfCollectionReducer,
-  admin: adminReducer
+  admin: adminReducer,
+  user: userReducer
 });
 export default persistReducer(persistConfig, reducers);

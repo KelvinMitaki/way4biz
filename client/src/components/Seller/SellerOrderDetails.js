@@ -87,7 +87,8 @@ class SellerOrderDetails extends React.Component {
                       <div className="col-md-6 col-lg-3">
                         <p id="buyer-destination">
                           <strong className="mr-2 x">Destination:</strong>
-                          {`${this.props.sellerOrderDetails.buyer[0].address}/${this.props.sellerOrderDetails.buyer[0].town}/${this.props.sellerOrderDetails.buyer[0].city}`}
+                          {this.props.sellerOrderDetails.buyer.length !== 0 &&
+                            `${this.props.sellerOrderDetails.buyer[0].address}/${this.props.sellerOrderDetails.buyer[0].town}/${this.props.sellerOrderDetails.buyer[0].city}`}
                         </p>
                       </div>
                     </div>

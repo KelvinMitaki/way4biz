@@ -243,7 +243,9 @@ import {
   CONTACT_US_STOP,
   FETCH_ADMIN_INBOX,
   FETCH_ADMIN_INBOX_START,
-  FETCH_ADMIN_INBOX_STOP
+  FETCH_ADMIN_INBOX_STOP,
+  REFERRAL_CODE_ERROR,
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS
 } from "./types";
 
 const authCheck = error => {
@@ -1634,7 +1636,7 @@ export const fetchAllOrders = filter => async dispatch => {
 
 export const adminRadio = event => (dispatch, getState) => {
   getState().product.ordersToSkip = 0;
-  getState().product.orderCount = 0;
+  getState().admin.orderCount = 0;
   dispatch({
     type: ADMIN_RADIO,
     payload: {
@@ -1660,8 +1662,8 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
       test.delivered = false;
     }
     dispatch({ type: FETCH_ADMIN_ORDERS_START });
-    const prodCount = getState().product.orderCount;
-    const singleProdLength = getState().product.allAdminOrders.length;
+    const prodCount = getState().admin.orderCount;
+    const singleProdLength = getState().admin.allAdminOrders.length;
     if (singleProdLength < prodCount) {
       const res = await axios.post("/api/root/admin/all/orders", {
         itemsToSkip: singleProdLength,
@@ -1679,7 +1681,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
 
 export const resetSkipAndCount = () => (dispatch, getState) => {
   getState().product.ordersToSkip = 0;
-  getState().product.orderCount = 0;
+  getState().admin.orderCount = 0;
 };
 
 export const hasMoreOrdersFalse = () => {
@@ -2284,12 +2286,18 @@ export const collectionCloseAction = () => {
 export const sendReferralCode = (referralBody, reset) => async dispatch => {
   try {
     dispatch({ type: SEND_REFERRAL_CODE_START });
-    await axios.post("/api/send/refferal/code", referralBody);
+    await axios.post("/api/send/referral/code", referralBody);
     dispatch(reset("EarnPoints"));
     dispatch({ type: SEND_REFERRAL_CODE });
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
   } catch (error) {
     authCheck(error);
+    if (error.response) {
+      dispatch({
+        type: REFERRAL_CODE_ERROR,
+        payload: error.response.data.message
+      });
+    }
     dispatch(reset("EarnPoints"));
     dispatch({ type: SEND_REFERRAL_CODE_STOP });
     console.log(error.response);
@@ -2326,4 +2334,10 @@ export const fetchAdminInbox = () => async dispatch => {
     authCheck(error);
     dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   }
+};
+
+export const clearReferralErrorAndSuccess = () => {
+  return {
+    type: CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  };
 };

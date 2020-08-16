@@ -5,7 +5,7 @@ import { animateScroll as scroll } from "react-scroll";
 import "./MoveToTop.css";
 
 class MoveToTop extends React.Component {
-  handleClick = (e) => {
+  handleClick = e => {
     scroll.scrollToTop();
   };
   render() {

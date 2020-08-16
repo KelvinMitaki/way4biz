@@ -289,13 +289,13 @@ function AdminDashBoardOrders(props) {
 }
 const mapStateToProps = state => {
   return {
-    allAdminOrders: state.product.allAdminOrders,
-    orderCount: state.product.orderCount,
-    ordersToSkip: state.product.ordersToSkip,
-    ordersDate: state.product.ordersDate,
-    radioLoading: state.product.radioLoading,
-    orderError: state.product.orderError,
-    adminOrderLoading: state.product.adminOrderLoading
+    allAdminOrders: state.admin.allAdminOrders,
+    orderCount: state.admin.orderCount,
+    ordersToSkip: state.admin.ordersToSkip,
+    ordersDate: state.admin.ordersDate,
+    radioLoading: state.admin.radioLoading,
+    orderError: state.admin.orderError,
+    adminOrderLoading: state.admin.adminOrderLoading
   };
 };
 export default connect(mapStateToProps, {

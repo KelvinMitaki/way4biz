@@ -94,9 +94,7 @@ export class SellerRegister extends Component {
             label="Email"
             component={AuthField}
           />
-          {/* <div className="form-primary-error">
-            {this.props.registerError && this.props.registerError}
-          </div> */}
+
           <Field
             required="*"
             type="text"
@@ -276,7 +274,7 @@ const mapStateToProps = state => {
   return {
     sellerRegisterLoading: state.auth.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.sellerRegister.sellerRegisterError
+    sellerRegisterError: state.seller.sellerRegisterError
   };
 };
 export default withRouter(

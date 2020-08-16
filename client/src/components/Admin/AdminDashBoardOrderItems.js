@@ -159,8 +159,8 @@ class AdminDashBoardOrderItems extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    adminOrder: state.product.adminOrder,
-    deliveryLoading: state.product.deliveryLoading
+    adminOrder: state.admin.adminOrder,
+    deliveryLoading: state.admin.deliveryLoading
   };
 };
 export default withRouter(
