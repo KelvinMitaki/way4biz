@@ -31,6 +31,7 @@ class EarnPoints extends React.Component {
                 value={{ className: "arrow-icon ml-3 my-2" }}
               >
                 <div
+                  style={{ cursor: "pointer" }}
                   onClick={() => this.props.clearReferralErrorAndSuccess()}
                   className="d-flex align-items-center"
                 >
@@ -63,6 +64,7 @@ class EarnPoints extends React.Component {
                 value={{ className: "arrow-icon ml-3 my-1" }}
               >
                 <div
+                  style={{ cursor: "pointer" }}
                   onClick={() => this.props.clearReferralErrorAndSuccess()}
                   className="d-flex align-items-center"
                 >
