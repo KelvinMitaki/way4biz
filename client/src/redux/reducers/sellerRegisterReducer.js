@@ -25,7 +25,8 @@ import {
   SEND_REFERRAL_CODE_START,
   SEND_REFERRAL_CODE_STOP,
   REFERRAL_CODE_ERROR,
-  SEND_REFERRAL_CODE
+  SEND_REFERRAL_CODE,
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -114,6 +115,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, referralError: action.payload, referralSuccess: null };
     case SEND_REFERRAL_CODE:
       return { ...state, referralSuccess: "Success", referralError: null };
+    case CLEAR_REFERRAL_ERROR_AND_SUCCESS:
+      return { ...state, referralSuccess: null, referralError: null };
     default:
       return state;
   }

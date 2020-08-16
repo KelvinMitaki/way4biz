@@ -5,7 +5,10 @@ import { Field, reduxForm, reset } from "redux-form";
 import EarnPointsInput from "./EarnPointsInput";
 import { connect } from "react-redux";
 import validator from "validator";
-import { sendReferralCode } from "../../redux/actions";
+import {
+  sendReferralCode,
+  clearReferralErrorAndSuccess
+} from "../../redux/actions";
 import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
@@ -27,10 +30,11 @@ class EarnPoints extends React.Component {
               <IconContext.Provider
                 value={{ className: "arrow-icon ml-3 my-2" }}
               >
-                <div className="d-flex align-items-center">
-                  <Link to="/">
-                    <BsArrowLeft />
-                  </Link>
+                <div
+                  onClick={() => this.props.clearReferralErrorAndSuccess()}
+                  className="d-flex align-items-center"
+                >
+                  <BsArrowLeft />
                 </div>
               </IconContext.Provider>
             </div>
@@ -58,10 +62,11 @@ class EarnPoints extends React.Component {
               <IconContext.Provider
                 value={{ className: "arrow-icon ml-3 my-1" }}
               >
-                <div className="d-flex align-items-center">
-                  <Link to="/">
-                    <BsArrowLeft />
-                  </Link>
+                <div
+                  onClick={() => this.props.clearReferralErrorAndSuccess()}
+                  className="d-flex align-items-center"
+                >
+                  <BsArrowLeft />
                 </div>
               </IconContext.Provider>
             </div>
@@ -143,5 +148,7 @@ const mapStateToProps = state => {
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(
-  connect(mapStateToProps, { sendReferralCode })(EarnPoints)
+  connect(mapStateToProps, { sendReferralCode, clearReferralErrorAndSuccess })(
+    EarnPoints
+  )
 );
