@@ -11,3 +11,17 @@
   box-shadow: none;
   outline: none;
 }
+
+#contact-form input,
+#contact-form select,
+#contact-form textarea {
+  border: 1px solid #d4d4d4;
+}
+
+#contact-form input:focus,
+#contact-form select:focus,
+#contact-form textarea:focus {
+  border: 1px solid #d4d4d4;
+  outline: none;
+  box-shadow: none;
+}
