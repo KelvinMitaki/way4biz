@@ -5,8 +5,8 @@ import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { connect } from "react-redux";
-import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchAdminInbox } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
