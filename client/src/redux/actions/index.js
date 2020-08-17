@@ -476,7 +476,13 @@ export const registerSeller = credentials => async (dispatch, getState) => {
     dispatch({ type: REGISTER_SELLER, payload: res.data });
     dispatch({ type: REGISTER_SELLER_STOP });
   } catch (error) {
-    if (error.response.data.email) {
+    console.log(error.response);
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.email
+    ) {
       getState().form.SellerRegister.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
@@ -499,12 +505,26 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: REGISTER_SELLER_STOP });
       return;
     }
-    getState().form.SellerRegister.values[
-      Object.keys(error.response.data.keyPattern)[0]
-    ] = "";
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.keyPattern &&
+      error.response.data.keyPattern[0]
+    ) {
+      getState().form.SellerRegister.values[
+        Object.keys(error.response.data.keyPattern)[0]
+      ] = "";
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: "That store name already exists"
+      });
+      dispatch({ type: REGISTER_SELLER_STOP });
+      return;
+    }
     dispatch({
       type: REGISTER_SELLER_FAILED,
-      payload: "That store name already exists"
+      payload: "Error Registering, Please try again or contact us"
     });
     dispatch({ type: REGISTER_SELLER_STOP });
   }

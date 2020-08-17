@@ -5,8 +5,8 @@ import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { connect } from "react-redux";
-import ScreenLoader from "../Pages/ScreenLoader";
 import { fetchAdminInbox } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
@@ -26,8 +26,12 @@ class AdminDashBoardInbox extends React.Component {
             </h3>
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&
-              this.props.inbox.map(contact => (
-                <div key={contact._id} className="box-container p-2">
+              this.props.inbox.map((contact) => (
+                <div
+                  key={contact._id}
+                  className="box-container p-2"
+                  style={{ borderLeft: "3px solid #f76b1a" }}
+                >
                   <div className="row">
                     <div className="col-md-4">
                       <h6>
@@ -67,10 +71,10 @@ class AdminDashBoardInbox extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     inbox: state.admin.inbox,
-    inboxLoading: state.admin.inboxLoading
+    inboxLoading: state.admin.inboxLoading,
   };
 };
 export default connect(mapStateToProps, { fetchAdminInbox })(

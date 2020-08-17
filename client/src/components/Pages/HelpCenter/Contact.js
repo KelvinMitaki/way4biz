@@ -16,7 +16,7 @@ class Contact extends React.Component {
   render() {
     const options = [
       { key: "suggestion", text: "Suggestion" },
-      { key: "feedback", text: "Feedback" }
+      { key: "feedback", text: "Feedback" },
     ];
     return (
       <div className="main">
@@ -39,6 +39,7 @@ class Contact extends React.Component {
                     )
                 )}
                 className="form-group mt-4"
+                id="contact-form"
               >
                 <Field
                   component={ContactSelect}
@@ -111,7 +112,7 @@ class Contact extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.subject ||
@@ -133,10 +134,10 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     initialValues: state.auth.user,
-    contactUsLoading: state.auth.contactUsLoading
+    contactUsLoading: state.auth.contactUsLoading,
   };
 };
 export default withRouter(
