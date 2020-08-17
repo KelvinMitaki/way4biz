@@ -483,7 +483,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       error.response.data &&
       error.response.data.email
     ) {
-      getState().form.SellerRegister.values.email = "";
+      getState().form.seller.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: error.response.data.email
@@ -512,7 +512,7 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       error.response.data.keyPattern &&
       error.response.data.keyPattern[0]
     ) {
-      getState().form.SellerRegister.values[
+      getState().form.seller.values[
         Object.keys(error.response.data.keyPattern)[0]
       ] = "";
       dispatch({
@@ -543,7 +543,7 @@ export const updateSeller = (credentials, history) => async (
     authCheck(error);
     console.log(error.response);
     if (error.response.data.email) {
-      getState().form.SellerRegister.values.email = "";
+      getState().form.seller.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: error.response.data.email
@@ -596,13 +596,12 @@ export const verifyCode = (formValues, history) => async (
   getState
 ) => {
   try {
-    formValues.phoneNumber = getState().sellerRegister.sellerNumber.number;
+    formValues.phoneNumber = getState().seller.sellerNumber.number;
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
     history.push("/seller/sign-in");
   } catch (error) {
-    console.log(error);
     dispatch({ type: LOADING_STOP });
     getState().form.VerifySellerNumber.values.code = "";
     dispatch({
@@ -630,10 +629,7 @@ export const forgotPassword = (formvalues, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.post(
-      `/api/reset/${getState().sellerRegister.resetToken}`,
-      formvalues
-    );
+    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
     dispatch({ type: LOADING_STOP });
     history.push("/sign-in");
   } catch (error) {
