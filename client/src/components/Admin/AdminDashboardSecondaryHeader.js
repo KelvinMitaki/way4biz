@@ -4,7 +4,7 @@ import "./AdminDashboardSecondaryHeader.css";
 import {
   RiDashboardLine,
   RiFileUserLine,
-  RiInboxArchiveLine
+  RiInboxArchiveLine,
 } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
@@ -28,19 +28,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100
-          }
-        ]
-      }
-    ]
+            num: 100,
+          },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchNewSellers();
   }
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -52,7 +52,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <div
             onClick={this.handleClick}
             className="back-shed"
-            style={{ backgroundColor: "transparent" }}
+            // style={{ backgroundColor: "transparent" }}
           ></div>
         ) : null}
         <div className="admin-hamburger-menu-wrapper">
@@ -117,7 +117,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff"
+                        color: "#fff",
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -145,7 +145,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -206,9 +206,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.seller.newSellers
+    newSellers: state.seller.newSellers,
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers })(
