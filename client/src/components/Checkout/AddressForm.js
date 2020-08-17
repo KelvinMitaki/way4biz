@@ -87,12 +87,12 @@ class AddressForm extends React.Component {
                     //       `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
                     //     ]
                     //   },
-                    //   this.props.history
+                    //
                     // );
                     this.props.storeLatLng(
                       `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
                     );
-                    this.props.checkoutUser(formValues);
+                    this.props.checkoutUser(formValues, this.props.history);
                   })}
                 >
                   <Field

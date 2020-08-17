@@ -22,7 +22,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class CheckOut extends React.Component {
   componentDidMount() {
-    if (!this.props.distance || this.props.cart.length === 0) {
+    if (this.props.cart.length === 0) {
       return <Redirect to="/address" />;
     }
   }
@@ -107,19 +107,21 @@ class CheckOut extends React.Component {
                       <div>
                         <p>Shipping</p>
                         <p>
-                          {this.props.distance &&
-                            Math.round(
-                              this.props.distance.shippingFees
-                            ).toLocaleString()}
+                          {this.props.distance
+                            ? Math.round(
+                                this.props.distance.shippingFees
+                              ).toLocaleString()
+                            : "N/A"}
                         </p>
                       </div>
                       <hr />
                       <div>
                         <p>Total</p>
                         <p>
-                          {(
-                            parseInt(total.replace(",", "")) +
-                            Math.round(this.props.distance.shippingFees)
+                          {(parseInt(total.replace(",", "")) +
+                          this.props.distance
+                            ? Math.round(this.props.distance.shippingFees)
+                            : 0
                           ).toLocaleString()}
                         </p>
                       </div>
