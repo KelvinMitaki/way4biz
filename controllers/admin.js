@@ -1109,7 +1109,10 @@ route.get("/api/verified/seller/:sellerId", auth, isAdmin, async (req, res) => {
 });
 route.get("/api/new/sellers", auth, isAdmin, async (req, res) => {
   try {
-    const sellers = await Seller.find({ isSeller: false });
+    const sellers = await Seller.find({
+      isSeller: false,
+      verifiedPhoneNumber: true
+    });
     res.send({ sellers });
   } catch (error) {
     res.status(500).send(error);
