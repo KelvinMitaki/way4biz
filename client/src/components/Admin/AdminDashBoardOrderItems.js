@@ -100,6 +100,15 @@ class AdminDashBoardOrderItems extends React.Component {
                             ).quantity
                           }
                         </p>
+                        <p>
+                          <strong>Charge: </strong>
+                          Ksh.
+                          {(
+                            this.props.adminOrder["0"].items.find(
+                              it => it.product === p._id
+                            ).quantity * p.charge
+                          ).toLocaleString()}
+                        </p>
                       </div>
                       <div className="col-md-4">
                         <p>
