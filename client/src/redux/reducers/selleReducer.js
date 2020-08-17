@@ -26,7 +26,10 @@ import {
   SEND_REFERRAL_CODE_STOP,
   REFERRAL_CODE_ERROR,
   SEND_REFERRAL_CODE,
-  CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS,
+  REDEEM_POINTS_ERROR,
+  REDEEM_POINTS_START,
+  REDEEM_POINTS_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -49,7 +52,9 @@ const INITIAL_STATE = {
   verifiedSellerLoading: false,
   referralCodeLoading: false,
   referralError: null,
-  referralSuccess: null
+  referralSuccess: null,
+  redeemPointsError: null,
+  redeemPointsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -117,6 +122,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, referralSuccess: "Success", referralError: null };
     case CLEAR_REFERRAL_ERROR_AND_SUCCESS:
       return { ...state, referralSuccess: null, referralError: null };
+    case REDEEM_POINTS_ERROR:
+      return { ...state, redeemPointsError: action.payload };
+    case REDEEM_POINTS_START:
+      return { ...state, redeemPointsLoading: true };
+    case REDEEM_POINTS_STOP:
+      return { ...state, redeemPointsLoading: false };
     default:
       return state;
   }

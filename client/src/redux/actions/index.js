@@ -246,7 +246,10 @@ import {
   FETCH_ADMIN_INBOX_STOP,
   REFERRAL_CODE_ERROR,
   CLEAR_REFERRAL_ERROR_AND_SUCCESS,
-  CLEAR_ORDER_DETAILS
+  CLEAR_ORDER_DETAILS,
+  REDEEM_POINTS_START,
+  REDEEM_POINTS_STOP,
+  REDEEM_POINTS_ERROR
 } from "./types";
 
 const authCheck = error => {
@@ -2364,4 +2367,16 @@ export const clearOrderDetails = () => {
   return {
     type: CLEAR_ORDER_DETAILS
   };
+};
+
+export const redeemPoints = () => async dispatch => {
+  try {
+    dispatch({ type: REDEEM_POINTS_START });
+    await axios.post("/api/seller/redeem/points");
+    dispatch({ type: REDEEM_POINTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REDEEM_POINTS_STOP });
+    dispatch({ type: REDEEM_POINTS_ERROR, payload: "Error redeeming points" });
+  }
 };

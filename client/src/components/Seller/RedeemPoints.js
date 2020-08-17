@@ -21,8 +21,25 @@ class RedeemPoints extends React.Component {
             disabled={this.props.points < 1000}
             className="btn btn-md redeem-btn mt-3"
           >
-            Redeem Now
+            {this.props.redeemPointsLoading && (
+              <span
+                className="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            )}
+            {this.props.redeemPointsLoading ? (
+              <span> {"  "}Loading...</span>
+            ) : (
+              <span>Redeem Now</span>
+            )}
           </button>
+          <br />
+          {this.props.redeemPointsError && (
+            <div className="form-primary-error">
+              {this.props.redeemPointsError}
+            </div>
+          )}
         </div>
 
         {/* show on successful redeeming */}
@@ -39,7 +56,9 @@ class RedeemPoints extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    points: state.auth.user.points
+    points: state.auth.user.points,
+    redeemPointsLoading: state.seller.redeemPointsLoading,
+    redeemPointsError: state.seller.redeemPointsError
   };
 };
 export default connect(mapStateToProps)(RedeemPoints);
