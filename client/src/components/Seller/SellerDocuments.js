@@ -37,27 +37,32 @@ class SellerDocuments extends React.Component {
         <SellerImage />
 
         <br />
-        <h4>Uploads</h4>
-        <div className="seller-uploads-wrapper">
-          {this.props.sellerImageUrl.length !== 0 &&
-            this.props.sellerImageUrl.map((url, i) => (
-              <div key={i}>
-                <img
-                  src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
-                  alt={url}
-                />
-                <div
-                  className="seller-uploads-trash-button-wrapper"
-                  onClick={() => this.props.deleteSellerImage(url)}
-                >
-                  <button className="btn seller-uploads-trash-button">
-                    <FaTrashAlt />
-                    <span className="ml-1">Delete</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-        </div>
+        {this.props.sellerImageUrl.length !== 0 ? (
+          <React.Fragment>
+            {" "}
+            <h4>Uploads</h4>
+            <div className="seller-uploads-wrapper">
+              {this.props.sellerImageUrl.length !== 0 &&
+                this.props.sellerImageUrl.map((url, i) => (
+                  <div key={i}>
+                    <img
+                      src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${url}`}
+                      alt={url}
+                    />
+                    <div
+                      className="seller-uploads-trash-button-wrapper"
+                      onClick={() => this.props.deleteSellerImage(url)}
+                    >
+                      <button className="btn seller-uploads-trash-button">
+                        <FaTrashAlt />
+                        <span className="ml-1">Delete</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </React.Fragment>
+        ) : null}
       </div>
     );
   }
