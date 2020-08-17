@@ -2,31 +2,44 @@ import React from "react";
 
 import "./RedeemPoints.css";
 import { BsCheckCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class RedeemPoints extends React.Component {
   render() {
     return (
       <div className="container py-2">
         {/* show this first */}
-        {/* <h6>
-          By redeeming your points you will have pricing benefits from our end.
-          Only 1000 points and above are redeemable.
+        <h6>
+          By redeeming your points, money will be sent to your mpesa account. If
+          you redeemed and have not received, please contact us{" "}
+          <Link to="/contact-us">here</Link>. Only 1000 points and above are
+          redeemable.
         </h6>
         <div className="d-flex align-items-center justify-content-center">
-          <button className="btn btn-md redeem-btn mt-3">Redeem Now</button>
-        </div> */}
+          <button
+            disabled={this.props.points < 1000}
+            className="btn btn-md redeem-btn mt-3"
+          >
+            Redeem Now
+          </button>
+        </div>
 
         {/* show on successful redeeming */}
-        <div className="d-flex align-items-center justify-content-center">
+        {/* <div className="d-flex align-items-center justify-content-center">
           <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
         </div>
         <h6 className="mt-3">
-          You successfully redeemed 2000 points. This will lower your monthly
-          fee. To earn more points navigate to earn points and do the necessary.
-        </h6>
+          You successfully redeemed 2000 points. Ksh.2000 will be sent to your
+          mpesa account within 24 hours.
+        </h6> */}
       </div>
     );
   }
 }
-
-export default RedeemPoints;
+const mapStateToProps = state => {
+  return {
+    points: state.auth.user.points
+  };
+};
+export default connect(mapStateToProps)(RedeemPoints);
