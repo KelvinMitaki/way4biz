@@ -55,8 +55,9 @@ class RedeemPoints extends React.Component {
               <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
             </div>
             <h6 className="mt-3">
-              You successfully redeemed 2000 points. Ksh.2000 will be sent to
-              your mpesa account within 24 hours.
+              You successfully redeemed {this.props.points} points. Ksh.{" "}
+              {this.props.points.toLocaleString()} will be sent to your mpesa
+              account within 24 hours.
             </h6>
           </React.Fragment>
         )}

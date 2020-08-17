@@ -5,13 +5,14 @@ import "./SellerDashBoard.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
-import { fetchSellerNewOrdersCount } from "../../redux/actions";
+import { fetchSellerNewOrdersCount, fetchUser } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { Redirect, Link } from "react-router-dom";
 
 class SellerDashBoard extends React.Component {
   componentDidMount() {
     this.props.fetchSellerNewOrdersCount();
+    this.props.fetchUser();
   }
   render() {
     if (this.props.user && !this.props.user.isSeller)
@@ -118,6 +119,7 @@ const mapStateToProps = state => {
     dashboard: state.detailsPersist.dashboard
   };
 };
-export default connect(mapStateToProps, { fetchSellerNewOrdersCount })(
-  SellerDashBoard
-);
+export default connect(mapStateToProps, {
+  fetchSellerNewOrdersCount,
+  fetchUser
+})(SellerDashBoard);
