@@ -9,7 +9,7 @@ import { deleteSellerImage } from "../../redux/actions";
 class SellerDocuments extends React.Component {
   state = {
     idUploaded: false,
-    passportUploaded: false
+    passportUploaded: false,
   };
 
   componentDidMount() {
@@ -29,10 +29,10 @@ class SellerDocuments extends React.Component {
   render() {
     return (
       <div className="container" style={{ textAlign: "center" }}>
-        <h3>
+        <h5>
           Please upload valid copies of the following documents. (National ID
           and Profile Photo)
-        </h3>
+        </h5>
 
         <SellerImage />
 
@@ -62,9 +62,9 @@ class SellerDocuments extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    sellerImageUrl: state.sellerDetails.sellerImageUrl
+    sellerImageUrl: state.sellerDetails.sellerImageUrl,
   };
 };
 export default connect(mapStateToProps, { deleteSellerImage })(SellerDocuments);
