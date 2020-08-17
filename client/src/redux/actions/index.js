@@ -1082,6 +1082,7 @@ export const fetchSingleProduct = productId => async dispatch => {
 
 export const fetchRelatedProducts = subcategory => async dispatch => {
   try {
+    console.log(subcategory);
     dispatch({ type: LOADING_START });
     const res = await axios.get(
       `/api/products/category/subcategory/${subcategory}`
