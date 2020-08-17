@@ -140,15 +140,15 @@ route.post(
           expiresIn: "1 hour"
         }
       );
-      await seller.save();
       if (referralCode) {
         const referree = await Seller.findById(referralCode);
-        referree.points = referree.points + 10;
         referree.referrals
           ? (referree.referrals = [...referree.referrals, seller._id])
           : (referree.referrals = [seller._id]);
         await referree.save();
+        seller.referree = referralCode;
       }
+      await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -266,7 +266,6 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
     seller.verified = true;
     seller.points = 100;
     await seller.save();
-
     req.session.seller = seller;
     res.redirect("/confirm/phoneNumber");
   } catch (error) {
@@ -1545,9 +1544,14 @@ route.post(
   async (req, res) => {
     try {
       const { sellerId } = req.params;
-      const seller = await Seller.findByIdAndUpdate(sellerId, {
-        isSeller: true
-      });
+      const seller = await Seller.findById(sellerId);
+      seller.isSeller = true;
+      if (seller.referree) {
+        const referree = await Seller.findById(seller.referree);
+        referree.points = referree.referrals.length * 100 + 100;
+        await referree.save();
+      }
+      await seller.save();
       res.send(seller);
     } catch (error) {
       res.status(500).send(error);
