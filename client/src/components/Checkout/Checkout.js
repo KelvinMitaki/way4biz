@@ -49,11 +49,6 @@ class CheckOut extends React.Component {
     }
     if (!this.props.distance) return <Redirect to="/address" />;
     const { user, cart } = this.props;
-    const VAT = Math.ceil(
-      this.props.cart
-        .map(item => item.price * item.quantity)
-        .reduce((acc, curr) => acc + curr, 0) * 0.01
-    ).toLocaleString();
     const total = this.props.cart
       .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
@@ -110,10 +105,6 @@ class CheckOut extends React.Component {
                         <p>{total}</p>
                       </div>
                       <div>
-                        <p>VAT</p>
-                        <p>{VAT}</p>
-                      </div>
-                      <div>
                         <p>Shipping</p>
                         <p>
                           {this.props.distance &&
@@ -128,7 +119,6 @@ class CheckOut extends React.Component {
                         <p>
                           {(
                             parseInt(total.replace(",", "")) +
-                            parseInt(VAT) +
                             Math.round(this.props.distance.shippingFees)
                           ).toLocaleString()}
                         </p>
