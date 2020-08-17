@@ -4,6 +4,7 @@ import "./RedeemPoints.css";
 import { BsCheckCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { redeemPoints } from "../../redux/actions";
 
 class RedeemPoints extends React.Component {
   render() {
@@ -14,14 +15,15 @@ class RedeemPoints extends React.Component {
           <React.Fragment>
             <h6>
               By redeeming your points, money will be sent to your mpesa
-              account. If you redeemed and have not received, please contact us{" "}
-              <Link to="/contact-us">here</Link>. Only 1000 points and above are
-              redeemable.
+              account. If you redeemed and have not received within 24 hours,
+              please contact us <Link to="/contact-us">here</Link>. Only 1000
+              points and above are redeemable.
             </h6>
             <div className="d-flex align-items-center justify-content-center">
               <button
                 disabled={this.props.points < 1000}
                 className="btn btn-md redeem-btn mt-3"
+                onClick={() => this.props.redeemPoints()}
               >
                 {this.props.redeemPointsLoading && (
                   <span
@@ -70,4 +72,4 @@ const mapStateToProps = state => {
     redeemSuccess: state.seller.redeemSuccess
   };
 };
-export default connect(mapStateToProps)(RedeemPoints);
+export default connect(mapStateToProps, { redeemPoints })(RedeemPoints);

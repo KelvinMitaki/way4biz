@@ -2101,6 +2101,7 @@ route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
       amount: seller.points
     });
     await redeem.save();
+    await Seller.findByIdAndUpdate(seller._id, { points: 0 });
     res.send({ message: "Success" });
   } catch (error) {
     res.status(500).send(error);
