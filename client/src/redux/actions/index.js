@@ -602,6 +602,7 @@ export const verifyCode = (formValues, history) => async (
     dispatch({ type: LOADING_STOP });
     history.push("/seller/sign-in");
   } catch (error) {
+    console.log(error);
     dispatch({ type: LOADING_STOP });
     getState().form.VerifySellerNumber.values.code = "";
     dispatch({
