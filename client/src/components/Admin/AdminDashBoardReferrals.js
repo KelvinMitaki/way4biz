@@ -28,7 +28,11 @@ class AdminDashBoardReferrals extends React.Component {
                 <h6>Helloo</h6>
               </div>
             </div>
-            <div className="row">
+            {/* mapping here */}
+            <div
+              className="row box-container py-2"
+              style={{ borderLeft: "3px solid #f76b1a" }}
+            >
               <div className="col-md-4">
                 <h6>
                   <strong className="x mr-1">Hey:</strong>Helloo
