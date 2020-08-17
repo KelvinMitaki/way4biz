@@ -73,9 +73,8 @@ export class AccountMenu extends Component {
             id="account-logout"
             className="account-menu-wrapper account-logout-wrapper"
             onClick={() => {
-              this.props.clearOrderDetails()(
-                (window.location.href = "/api/logout")
-              );
+              this.props.clearOrderDetails();
+              window.location.href = "/api/logout";
             }}
           >
             Logout

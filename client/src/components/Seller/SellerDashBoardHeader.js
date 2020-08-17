@@ -42,9 +42,8 @@ class SellerDashBoardHeader extends React.Component {
             style={{ cursor: "pointer" }}
             className="my-4 link logout-seller-db-header-link"
             onClick={() => {
-              this.props.clearOrderDetails()(
-                (window.location.href = "/api/logout")
-              );
+              this.props.clearOrderDetails();
+              window.location.href = "/api/logout";
             }}
           >
             Logout

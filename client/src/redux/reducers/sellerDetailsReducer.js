@@ -3,7 +3,8 @@ import {
   HANDLE_DECREMENT_ACTION,
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
-  DELETE_SELLER_IMAGE
+  DELETE_SELLER_IMAGE,
+  CLEAR_ORDER_DETAILS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -32,6 +33,8 @@ export default (state = INITIAL_STATE, action) => {
           image => image !== action.payload
         )
       };
+    case CLEAR_ORDER_DETAILS:
+      return { ...state, sellerImageUrl: [] };
     default:
       return state;
   }
