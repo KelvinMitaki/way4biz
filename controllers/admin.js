@@ -146,7 +146,10 @@ route.post(
           ? (referree.referrals = [...referree.referrals, seller._id])
           : (referree.referrals = [seller._id]);
         await referree.save();
-        seller.referree = referralCode;
+        seller.referree = jwt.verify(
+          referralCode,
+          process.env.CONFIRM_EMAIL_JWT
+        )._id;
       }
       await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
