@@ -245,7 +245,8 @@ import {
   FETCH_ADMIN_INBOX_START,
   FETCH_ADMIN_INBOX_STOP,
   REFERRAL_CODE_ERROR,
-  CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS,
+  CLEAR_ORDER_DETAILS
 } from "./types";
 
 const authCheck = error => {
@@ -2356,5 +2357,11 @@ export const fetchAdminInbox = () => async dispatch => {
 export const clearReferralErrorAndSuccess = () => {
   return {
     type: CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  };
+};
+
+export const clearOrderDetails = () => {
+  return {
+    type: CLEAR_ORDER_DETAILS
   };
 };

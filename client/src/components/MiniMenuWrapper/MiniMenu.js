@@ -6,7 +6,7 @@ import {
   AiOutlineHome,
   AiOutlineBars,
   AiOutlineUser,
-  AiOutlineHeart,
+  AiOutlineHeart
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { GoClippy } from "react-icons/go";
 import "./MiniMenu.css";
 import { BsExclamationCircle } from "react-icons/bs";
+import { clearOrderDetails } from "../../redux/actions";
 
 class MiniMenu extends React.Component {
   render() {
@@ -58,7 +59,7 @@ class MiniMenu extends React.Component {
                     <span className="badge ml-1">
                       {this.props.cart &&
                         this.props.cart
-                          .map((item) => item.quantity)
+                          .map(item => item.quantity)
                           .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -138,7 +139,11 @@ class MiniMenu extends React.Component {
                       <div
                         style={{ cursor: "pointer" }}
                         className="mini-logout-link primary-link"
-                        onClick={() => (window.location.href = "/api/logout")}
+                        onClick={() => {
+                          this.props.clearOrderDetails()(
+                            (window.location.href = "/api/logout")
+                          );
+                        }}
                       >
                         Logout
                       </div>
@@ -165,12 +170,12 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist,
+    wishlist: state.cartReducer.wishlist
   };
 };
 
-export default connect(mapStateToProps)(MiniMenu);
+export default connect(mapStateToProps, { clearOrderDetails })(MiniMenu);

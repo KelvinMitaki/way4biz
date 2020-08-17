@@ -6,6 +6,7 @@ import { GoClippy } from "react-icons/go";
 import "./User.css";
 import { connect } from "react-redux";
 import { FaStore } from "react-icons/fa";
+import { clearOrderDetails } from "../../redux/actions";
 
 class User extends React.Component {
   render() {
@@ -76,7 +77,11 @@ class User extends React.Component {
               )}
               <div
                 className="logout-link"
-                onClick={() => (window.location.href = "/api/logout")}
+                onClick={() => {
+                  this.props.clearOrderDetails()(
+                    (window.location.href = "/api/logout")
+                  );
+                }}
               >
                 Logout
               </div>
@@ -106,4 +111,4 @@ const mapStateToProps = state => {
     user: state.auth.user
   };
 };
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps, { clearOrderDetails })(User);
