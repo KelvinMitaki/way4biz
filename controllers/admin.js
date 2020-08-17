@@ -32,6 +32,7 @@ const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
+const Redeem = require("../models/Redeem");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2087,5 +2088,22 @@ route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
-
+route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
+  try {
+    const seller = req.session.user;
+    if (seller.points < 1000) {
+      return res
+        .status(401)
+        .send({ message: "You must have 1000 points and above" });
+    }
+    const redeem = new Redeem({
+      seller: seller._id,
+      amount: seller.points
+    });
+    await redeem.save();
+    res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
