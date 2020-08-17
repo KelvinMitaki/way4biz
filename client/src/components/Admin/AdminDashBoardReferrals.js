@@ -5,7 +5,7 @@ import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 
-class AdminReferrals extends React.Component {
+class AdminDashBoardReferrals extends React.Component {
   render() {
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -52,4 +52,4 @@ class AdminReferrals extends React.Component {
   }
 }
 
-export default AdminReferrals;
+export default AdminDashBoardReferrals;

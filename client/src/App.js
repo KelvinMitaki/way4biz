@@ -90,6 +90,7 @@ import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
 import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
 import SellerPoints from "./components/Seller/SellerPoints";
 import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
+import AdminDashBoardReferrals from "./components/Admin/AdminDashBoardReferrals";
 
 class App extends React.Component {
   state = {
@@ -293,16 +294,16 @@ class App extends React.Component {
                   )
                 }
               />
-              {/* <Route
+              <Route
                 path="/admin-referrals"
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
-                    <AdminDashBoardRejects />
+                    <AdminDashBoardReferrals />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
                 }
-              /> */}
+              />
               <Route
                 path="/admin-orders"
                 render={() =>
