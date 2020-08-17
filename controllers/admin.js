@@ -130,7 +130,8 @@ route.post(
         storeName: storeName.toLowerCase(),
         city,
         address,
-        businessNumber
+        businessNumber,
+        points: 0
       });
       const token = jwt.sign(
         { _id: seller._id },
@@ -2071,19 +2072,6 @@ route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
       "firstName lastName email"
     );
     res.send(inbox);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
-route.get("/api/test", async (req, res) => {
-  try {
-    const products = await Order.find({});
-    products.forEach(pro => {
-      if (pro.items.length > 7) {
-        res.send(pro);
-      }
-    });
   } catch (error) {
     res.status(500).send(error);
   }

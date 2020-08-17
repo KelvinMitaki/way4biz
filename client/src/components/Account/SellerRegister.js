@@ -272,7 +272,7 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    sellerRegisterLoading: state.auth.sellerRegisterLoading,
+    sellerRegisterLoading: state.seller.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
     sellerRegisterError: state.seller.sellerRegisterError
   };
