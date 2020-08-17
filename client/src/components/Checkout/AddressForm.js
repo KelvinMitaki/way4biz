@@ -10,7 +10,11 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
-import { checkoutUser, paymentPerDistance } from "../../redux/actions";
+import {
+  checkoutUser,
+  paymentPerDistance,
+  storeLatLng
+} from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
@@ -74,16 +78,19 @@ class AddressForm extends React.Component {
                 {/* <hr /> */}
                 <form
                   onSubmit={this.props.handleSubmit(formValues => {
-                    this.props.paymentPerDistance(
-                      {
-                        origins: [
-                          "Ngong Road Apartments, Ngong Road, Nairobi, Kenya"
-                        ],
-                        destination: [
-                          `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
-                        ]
-                      },
-                      this.props.history
+                    // this.props.paymentPerDistance(
+                    //   {
+                    //     origins: [
+                    //       "Ngong Road Apartments, Ngong Road, Nairobi, Kenya"
+                    //     ],
+                    //     destination: [
+                    //       `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
+                    //     ]
+                    //   },
+                    //   this.props.history
+                    // );
+                    this.props.storeLatLng(
+                      `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
                     );
                     this.props.checkoutUser(formValues);
                   })}
@@ -237,7 +244,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { checkoutUser, paymentPerDistance })(
+  connect(mapStateToProps, { checkoutUser, paymentPerDistance, storeLatLng })(
     reduxForm({ validate, form: "AddressForm" })(AddressForm)
   )
 );

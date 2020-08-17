@@ -250,7 +250,8 @@ import {
   REDEEM_POINTS_START,
   REDEEM_POINTS_STOP,
   REDEEM_POINTS_ERROR,
-  REDEEM_POINTS
+  REDEEM_POINTS,
+  STORE_LAT_LNG
 } from "./types";
 
 const authCheck = error => {
@@ -2382,4 +2383,11 @@ export const redeemPoints = () => async dispatch => {
     dispatch({ type: REDEEM_POINTS_STOP });
     dispatch({ type: REDEEM_POINTS_ERROR, payload: "Error redeeming points" });
   }
+};
+
+export const storeLatLng = latLng => {
+  return {
+    type: STORE_LAT_LNG,
+    payload: latLng
+  };
 };
