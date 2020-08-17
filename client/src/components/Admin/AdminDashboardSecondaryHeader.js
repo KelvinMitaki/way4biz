@@ -90,6 +90,12 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <p>
                 <NavLink to="/admin-categories">Categories</NavLink>
               </p>
+              <p>
+                <NavLink to="/admin-referrals">Referrals</NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-inbox">Inbox</NavLink>
+              </p>
             </div>
           ) : null}
         </div>
@@ -171,6 +177,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
               activeClassName="admin-active-lg-link"
             >
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              exact
+              to="/admin-referrals"
+              activeClassName="admin-active-lg-link"
+            >
+              <RiInboxArchiveLine /> <span className="ml-2">Referrals</span>
             </NavLink>
           </li>
           <li>
