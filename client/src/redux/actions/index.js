@@ -249,7 +249,8 @@ import {
   CLEAR_ORDER_DETAILS,
   REDEEM_POINTS_START,
   REDEEM_POINTS_STOP,
-  REDEEM_POINTS_ERROR
+  REDEEM_POINTS_ERROR,
+  REDEEM_POINTS
 } from "./types";
 
 const authCheck = error => {
@@ -2373,6 +2374,7 @@ export const redeemPoints = () => async dispatch => {
   try {
     dispatch({ type: REDEEM_POINTS_START });
     await axios.post("/api/seller/redeem/points");
+    dispatch({ type: REDEEM_POINTS, payload: "sucess" });
     dispatch({ type: REDEEM_POINTS_STOP });
   } catch (error) {
     authCheck(error);

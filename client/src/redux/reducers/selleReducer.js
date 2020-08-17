@@ -29,7 +29,8 @@ import {
   CLEAR_REFERRAL_ERROR_AND_SUCCESS,
   REDEEM_POINTS_ERROR,
   REDEEM_POINTS_START,
-  REDEEM_POINTS_STOP
+  REDEEM_POINTS_STOP,
+  REDEEM_POINTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -54,7 +55,8 @@ const INITIAL_STATE = {
   referralError: null,
   referralSuccess: null,
   redeemPointsError: null,
-  redeemPointsLoading: false
+  redeemPointsLoading: false,
+  redeemSuccess: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -128,6 +130,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, redeemPointsLoading: true };
     case REDEEM_POINTS_STOP:
       return { ...state, redeemPointsLoading: false };
+    case REDEEM_POINTS:
+      return { ...state, redeemSuccess: action.payload };
     default:
       return state;
   }

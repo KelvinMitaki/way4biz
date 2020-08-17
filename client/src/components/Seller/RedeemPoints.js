@@ -10,46 +10,54 @@ class RedeemPoints extends React.Component {
     return (
       <div className="container py-2">
         {/* show this first */}
-        <h6>
-          By redeeming your points, money will be sent to your mpesa account. If
-          you redeemed and have not received, please contact us{" "}
-          <Link to="/contact-us">here</Link>. Only 1000 points and above are
-          redeemable.
-        </h6>
-        <div className="d-flex align-items-center justify-content-center">
-          <button
-            disabled={this.props.points < 1000}
-            className="btn btn-md redeem-btn mt-3"
-          >
-            {this.props.redeemPointsLoading && (
-              <span
-                className="spinner-grow spinner-grow-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            )}
-            {this.props.redeemPointsLoading ? (
-              <span> {"  "}Loading...</span>
-            ) : (
-              <span>Redeem Now</span>
-            )}
-          </button>
-          <br />
-          {this.props.redeemPointsError && (
-            <div className="form-primary-error">
-              {this.props.redeemPointsError}
+        {!this.props.redeemSuccess && (
+          <React.Fragment>
+            <h6>
+              By redeeming your points, money will be sent to your mpesa
+              account. If you redeemed and have not received, please contact us{" "}
+              <Link to="/contact-us">here</Link>. Only 1000 points and above are
+              redeemable.
+            </h6>
+            <div className="d-flex align-items-center justify-content-center">
+              <button
+                disabled={this.props.points < 1000}
+                className="btn btn-md redeem-btn mt-3"
+              >
+                {this.props.redeemPointsLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                {this.props.redeemPointsLoading ? (
+                  <span> {"  "}Loading...</span>
+                ) : (
+                  <span>Redeem Now</span>
+                )}
+              </button>
+              <br />
+              {this.props.redeemPointsError && (
+                <div className="form-primary-error">
+                  {this.props.redeemPointsError}
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </React.Fragment>
+        )}
 
         {/* show on successful redeeming */}
-        {/* <div className="d-flex align-items-center justify-content-center">
-          <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
-        </div>
-        <h6 className="mt-3">
-          You successfully redeemed 2000 points. Ksh.2000 will be sent to your
-          mpesa account within 24 hours.
-        </h6> */}
+        {this.props.redeemSuccess && (
+          <React.Fragment>
+            <div className="d-flex align-items-center justify-content-center">
+              <BsCheckCircle style={{ fontSize: "100px", color: "#4BB543" }} />
+            </div>
+            <h6 className="mt-3">
+              You successfully redeemed 2000 points. Ksh.2000 will be sent to
+              your mpesa account within 24 hours.
+            </h6>
+          </React.Fragment>
+        )}
       </div>
     );
   }
@@ -58,7 +66,8 @@ const mapStateToProps = state => {
   return {
     points: state.auth.user.points,
     redeemPointsLoading: state.seller.redeemPointsLoading,
-    redeemPointsError: state.seller.redeemPointsError
+    redeemPointsError: state.seller.redeemPointsError,
+    redeemSuccess: state.seller.redeemSuccess
   };
 };
 export default connect(mapStateToProps)(RedeemPoints);
