@@ -293,6 +293,16 @@ class App extends React.Component {
                   )
                 }
               />
+              {/* <Route
+                path="/admin-referrals"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDashBoardRejects />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              /> */}
               <Route
                 path="/admin-orders"
                 render={() =>
