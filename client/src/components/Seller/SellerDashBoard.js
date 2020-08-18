@@ -39,7 +39,7 @@ class SellerDashBoard extends React.Component {
                       <div className="col-4 d-flex justify-content-end">
                         <h6 className="seller-welcome">
                           <Link to="/points">
-                            Points: {this.props.user.points}{" "}
+                            Points: {this.props.user.points}
                           </Link>
                         </h6>
                       </div>
@@ -113,13 +113,13 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard
+    dashboard: state.detailsPersist.dashboard,
   };
 };
 export default connect(mapStateToProps, {
   fetchSellerNewOrdersCount,
-  fetchUser
+  fetchUser,
 })(SellerDashBoard);
