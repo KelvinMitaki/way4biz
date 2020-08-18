@@ -38,7 +38,7 @@ class Panel extends React.Component {
           style={innerStyle}
           aria-hidden={!isActive}
         >
-          <p className="panel__content">{content}</p>
+          <section className="panel__content">{content}</section>
         </div>
       </div>
     );
