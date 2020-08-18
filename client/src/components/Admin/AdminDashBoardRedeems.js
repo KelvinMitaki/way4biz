@@ -4,6 +4,7 @@ import "./AdminDashBoardRedeems.css";
 import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
+import { Link } from "react-router-dom";
 
 class AdminDashBoardRedeems extends React.Component {
   render() {
@@ -32,22 +33,27 @@ class AdminDashBoardRedeems extends React.Component {
               </div>
               {/* mapping here */}
               <div
-                className="row box-container py-2"
+                className="row box-container py-2 redeem-wrapper"
                 style={{ borderLeft: "3px solid #f76b1a" }}
               >
                 <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Seller:</strong>Helloo
+                    <strong className="x mr-2">Seller:</strong>
+                    <span>
+                      <Link to="/" title="visit seller store">
+                        Helloo
+                      </Link>
+                    </span>
                   </h6>
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Redeem Time:</strong>Helloo
+                    <strong className="x mr-2">Redeem Time:</strong>Helloo
                   </h6>
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Amount:</strong>Helloo
+                    <strong className="x mr-2">Amount:</strong>Helloo
                   </h6>
                 </div>
                 <div className="col-md-3">
