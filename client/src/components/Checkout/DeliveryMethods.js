@@ -8,6 +8,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { css } from "@emotion/core";
 
 class DeliveryMethods extends React.Component {
+  state = { loading: true };
   render() {
     const showHideClassName = this.props.show
       ? "modal display-block"
@@ -28,7 +29,7 @@ class DeliveryMethods extends React.Component {
             {this.props.paymentPerDistanceLoading && (
               <div id="delivery-loader">
                 <HashLoader
-                  loading={this.props.paymentPerDistanceLoading}
+                  loading={this.state.loading}
                   size={40}
                   css={override}
                   color={"#f76b1a"}
