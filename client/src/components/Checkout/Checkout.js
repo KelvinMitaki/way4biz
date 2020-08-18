@@ -22,7 +22,7 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 class CheckOut extends React.Component {
   componentDidMount() {
     if (this.props.cart.length === 0) {
-      return <Redirect to="/address" />;
+      return <Redirect to="/" />;
     }
   }
   componentWillUnmount() {
@@ -38,7 +38,7 @@ class CheckOut extends React.Component {
       this.props.fetchProducts();
       return <Redirect to="/" />;
     }
-    if (!this.props.distance) return <Redirect to="/address" />;
+    if (!this.props.latLng) return <Redirect to="/address" />;
     const { user, cart } = this.props;
     const total = this.props.cart
       .map(item => item.price * item.quantity)
@@ -49,7 +49,6 @@ class CheckOut extends React.Component {
         <div className="content">
           <MobileLogo />
           <Header />
-
           <form
             onSubmit={this.props.handleSubmit(formValues => {
               if (formValues["goods-reach"] === "self-collection") {
@@ -100,7 +99,9 @@ class CheckOut extends React.Component {
                         <p>
                           {this.props.distance
                             ? Math.round(
-                                this.props.distance.shippingFees
+                                this.props.distance
+                                  ? this.props.distance.shippingFees
+                                  : 0
                               ).toLocaleString()
                             : "N/A"}
                         </p>
@@ -111,7 +112,12 @@ class CheckOut extends React.Component {
                         <p>
                           {(parseInt(total.replace(",", "")) +
                           this.props.distance
-                            ? Math.round(this.props.distance.shippingFees)
+                            ? Math.round(
+                                this.props.distance
+                                  ? this.props.distance.shippingFees +
+                                      parseInt(total.replace(",", ""))
+                                  : parseInt(total.replace(",", ""))
+                              )
                             : 0
                           ).toLocaleString()}
                         </p>
@@ -181,6 +187,7 @@ const mapStateToProps = state => {
     cart: state.cartReducer.cart,
     checkoutUserLoading: state.auth.checkoutUserLoading,
     distance: state.detailsPersist.distance,
+    latLng: state.detailsPersist.latLng,
     address: state.selfCollection.address,
     selfCollectionLoading: state.selfCollection.selfCollectionLoading,
     payment,

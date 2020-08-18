@@ -37,7 +37,7 @@ class StripeError extends React.Component {
                   <p id="stripe-payment-error-info">
                     It seems your provider has rejected the transaction. Try a
                     different payment method or contact us
-                    <Link className="mx-1" to="/">
+                    <Link className="mx-1" to="/contact-us">
                       here
                     </Link>{" "}
                     to assist you.
@@ -61,9 +61,9 @@ class StripeError extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    orderSuccess: state.cartReducer.orderSuccess,
+    orderSuccess: state.cartReducer.orderSuccess
   };
 };
 export default connect(mapStateToProps, { removePendingAndSuccess })(
