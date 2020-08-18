@@ -66,9 +66,12 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
-        label: "They Fail Poorly and Often",
-        content:
-          'When your icon font fails, the browser treats it like any other font and replaces it with a fallback. Best-case scenario, you\'ve chosen your fallback characters carefully and something weird-looking but communicative still loads. Worse-case scenario (and far more often), the user sees something completely incongruous, usually the dreaded "missing character" glyph.',
+        label: "How do I pay for products on Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>Currently Way4Biz supports mpesa and card payment.</p>
+          </div>
+        ),
       },
       {
         label: "They're a Nightmare if You're Dyslexic",

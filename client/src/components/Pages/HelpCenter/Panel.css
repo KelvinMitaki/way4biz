@@ -57,7 +57,7 @@
   background-color: #fff;
 }
 .panel__content {
-  margin: 5px 25px 25px;
+  /* margin: 20px 25px 30px 25px; */
   font-size: 14px;
   color: #000;
   opacity: 0;
