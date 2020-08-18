@@ -26,7 +26,7 @@ class DeliveryMethods extends React.Component {
           </div>
           <div className="modal-body">
             {this.props.paymentPerDistanceLoading && (
-              <div id="pick-up-loader">
+              <div id="delivery-loader">
                 <HashLoader
                   loading={this.props.paymentPerDistanceLoading}
                   size={40}
@@ -81,9 +81,9 @@ class DeliveryMethods extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    paymentPerDistanceLoading: state.user.paymentPerDistanceLoading
+    paymentPerDistanceLoading: state.user.paymentPerDistanceLoading,
   };
 };
 export default connect(mapStateToProps)(DeliveryMethods);
