@@ -1,3 +1,10 @@
 .redeem-wrapper h6 {
   display: flex;
 }
+
+.redeem-wrapper h6 span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* width: 100%; */
+}

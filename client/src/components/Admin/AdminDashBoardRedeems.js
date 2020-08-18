@@ -24,7 +24,7 @@ class AdminDashBoardRedeems extends React.Component {
                   <h6>Seller</h6>
                 </div>
                 <div className="col-md-3">
-                  <h6>Redeem Time</h6>
+                  <h6>Time</h6>
                 </div>
                 <div className="col-md-3">
                   <h6>Amount</h6>
@@ -48,17 +48,19 @@ class AdminDashBoardRedeems extends React.Component {
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-2">Redeem Time:</strong>Helloo
+                    <strong className="x mr-2">Time:</strong>
+                    <span>Hellooo</span>
                   </h6>
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-2">Amount:</strong>Helloo
+                    <strong className="x mr-2">Amount:</strong>
+                    <span>Hellooo</span>
                   </h6>
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <button>Helloo</button>
+                    <button>Hellooo</button>
                   </h6>
                 </div>
               </div>
