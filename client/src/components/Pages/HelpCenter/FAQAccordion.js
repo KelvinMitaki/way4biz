@@ -89,7 +89,7 @@ class FAQAccordion extends React.Component {
                 <p>
                   <strong>Courier - </strong>We deliver directly to your home or
                   office.This delivery however has two modes:{" "}
-                  <strong>Normal Delivery</strong>
+                  <strong>Normal Delivery </strong>
                   which takes 3-7 days and <strong>
                     Express Delivery
                   </strong>{" "}
