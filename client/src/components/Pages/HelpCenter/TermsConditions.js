@@ -3,14 +3,15 @@ import React from "react";
 import "./TermsConditions.css";
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
-import Header from "../../Header/Header";
+import HelpCenterHeader from "./HelpCenterHeader";
 
 class TermsConditions extends React.Component {
   render() {
     return (
       <div className="main">
         <div className="content white-body">
-          <Header />
+          <HelpCenterHeader />
+
           <div className="container">
             <h3 style={{ textAlign: "center" }} className="my-2">
               Terms and Conditions
