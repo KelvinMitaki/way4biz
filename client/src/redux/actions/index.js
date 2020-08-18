@@ -2438,9 +2438,10 @@ export const fetchRedeems = () => async dispatch => {
 export const payRedeem = redeemId => async dispatch => {
   try {
     dispatch({ type: PAY_REDEEM_START });
-    await axios.post("/admin/pay/redeem", { redeemId });
+    await axios.post("/api/admin/pay/redeem", { redeemId });
     dispatch({ type: PAY_REDEEM });
     dispatch(fetchRedeems());
+    dispatch(redeemCountAction());
     dispatch({ type: PAY_REDEEM_STOP });
   } catch (error) {
     authCheck(error);

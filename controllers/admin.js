@@ -2133,7 +2133,7 @@ route.get("/api/fetch/admin/redeems", auth, isAdmin, async (req, res) => {
 });
 
 route.post(
-  "/admin/pay/redeem",
+  "/api/admin/pay/redeem",
   auth,
   isAdmin,
   check("redeemId").not().isEmpty().withMessage("please input a redeem Id"),

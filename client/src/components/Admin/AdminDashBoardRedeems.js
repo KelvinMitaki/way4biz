@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDashBoardRedeems extends React.Component {
+  state = {
+    redeemId: null
+  };
   componentDidMount() {
     this.props.fetchRedeems();
   }
@@ -84,19 +87,29 @@ class AdminDashBoardRedeems extends React.Component {
                         ) : (
                           <button
                             className="redeem-pay-btn btn-md"
-                            onClick={() => this.props.payRedeem(redeem._id)}
+                            onClick={() => {
+                              this.setState({ redeemId: redeem._id });
+                              this.props.payRedeem(redeem._id);
+                            }}
                           >
-                            {this.props.payRedeemLoading && (
-                              <span
-                                className="spinner-grow spinner-grow-sm"
-                                role="status"
-                                aria-hidden="true"
-                              ></span>
-                            )}
-                            {this.props.payRedeemLoading ? (
-                              <span> {"  "}Loading...</span>
+                            {this.state.redeemId &&
+                            this.state.redeemId === redeem._id ? (
+                              <React.Fragment>
+                                {this.props.payRedeemLoading && (
+                                  <span
+                                    className="spinner-grow spinner-grow-sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  ></span>
+                                )}
+                                {this.props.payRedeemLoading ? (
+                                  <span> {"  "}Loading...</span>
+                                ) : (
+                                  <span>Pay</span>
+                                )}
+                              </React.Fragment>
                             ) : (
-                              <span>Pay</span>
+                              "Pay"
                             )}
                           </button>
                         )}
