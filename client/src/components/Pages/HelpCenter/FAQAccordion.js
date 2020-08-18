@@ -101,9 +101,20 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
-        label: "There's Already a Better Way",
-        content:
-          "SVG is awesome for icons! It's a vector image format with optional support for CSS, JavaScript, reusability, accessibility and a bunch more. It was made for this sort of thing.",
+        label: "What happens if an item is out of stock?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              If an item becomes out of stock, it will reflect as such on the
+              site.
+            </p>
+            <p>
+              If you have pre-ordered the item, we’ll let you know. You then
+              have the option to be refunded or wait until it comes into stock
+              again.
+            </p>
+          </div>
+        ),
       },
     ];
     const { activeTab } = this.state;
