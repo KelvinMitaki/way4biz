@@ -41,13 +41,19 @@ class StripePaymentButton extends Component {
           <div id="stripe-card-wrapper">
             <CardElement />
           </div>
-          <button type="submit" disabled={!stripe}>
-            Pay Ksh.
-            {amount &&
-              Math.round(
-                amount + this.props.distance.shippingFees
-              ).toLocaleString()}
-          </button>
+          <div className="d-flex align-items-center justify-content-end">
+            <button
+              type="submit"
+              className="stripe-payment-btn btn-md"
+              disabled={!stripe}
+            >
+              Pay Ksh.
+              {amount &&
+                Math.round(
+                  amount + this.props.distance.shippingFees
+                ).toLocaleString()}
+            </button>
+          </div>
         </form>
         <div style={{ color: "red", margin: "10px 0px" }}>
           {this.state.error}
