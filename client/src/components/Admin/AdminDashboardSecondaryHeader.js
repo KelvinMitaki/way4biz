@@ -91,7 +91,20 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 <NavLink to="/admin-categories">Categories</NavLink>
               </p>
               <p>
-                <NavLink to="/admin-redeems">Redeems</NavLink>
+                <NavLink to="/admin-redeems">
+                  Redeems
+                  <span
+                    className="badge ml-1"
+                    style={{
+                      position: "relative",
+                      zIndex: "32",
+                      backgroundColor: "#f76b1a",
+                      color: "#fff",
+                    }}
+                  >
+                    0
+                  </span>
+                </NavLink>
               </p>
               <p>
                 <NavLink to="/admin-inbox">Inbox</NavLink>
