@@ -20,7 +20,7 @@ class Footer extends React.Component {
                   <Link to="/contact-us">Contact Us</Link>
                 </p>
                 <p>
-                  <Link to="/terms">Return Policy</Link>
+                  <Link to="/return-policy">Return Policy</Link>
                 </p>
                 <p>
                   <Link to="/contact-us">Suggest a Product</Link>
