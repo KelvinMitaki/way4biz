@@ -3,6 +3,7 @@ import React from "react";
 // import { BsPlusCircle } from "react-icons/bs";
 import "./FAQAccordion.css";
 import Panel from "./Panel";
+import { Link } from "react-router-dom";
 
 class FAQAccordion extends React.Component {
   constructor(props) {
@@ -24,29 +25,96 @@ class FAQAccordion extends React.Component {
   render() {
     const panels = [
       {
-        label: "Seriously, Don't Use Icon Fonts",
-        content:
-          'Icons are everywhere. These "little miracle workers" (as John Hicks described them) help us reinforce meaning in the interfaces we design and build. Their popularity in web design has never been greater; the conciseness and versatility of pictograms in particular make them a lovely fit for displays large and small. But icons on the web have had their fair share of challenges.',
+        label: "How do I buy products on Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>Way4Biz sells products on its website and buying is easy:</p>
+            <p>
+              Way4Biz will indicate on the relevant product catalogues when
+              products are for sale.{" "}
+            </p>
+            <p>
+              You can simply add the products to your shopping cart and proceed
+              through checkout using any of Way4Biz’s available payment methods.
+            </p>
+            <p>
+              To buy on Way4Biz will however require you to have an account so
+              that it can be easy to identify you and process your order easily.
+            </p>
+          </div>
+        ),
       },
       {
-        label: "Screen Readers Actually Read That Stuff",
-        content:
-          'Most assistive devices will read aloud text inserted via CSS, and many of the Unicode characters icon fonts depend on are no exception. Best-case scenario, your "favorite" icon gets read aloud as "black favorite star." Worse-case scenario, it\'s read as "unpronounceable" or skipped entirely.',
+        label: "How do I register with Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              At Way4Biz, you can register as a buyer or as a seller. A seller
+              however can use the same account to buy.
+            </p>
+            <p>
+              On registering we will need your full name, e-mail address, a
+              strong password and a valid phone number.
+            </p>
+
+            <p>
+              To register as a buyer do so <Link to="/sign-in">here</Link> and
+              to register as a seller do so{" "}
+              <Link to="/seller/register">here</Link>.
+            </p>
+          </div>
+        ),
       },
       {
-        label: "They Fail Poorly and Often",
-        content:
-          'When your icon font fails, the browser treats it like any other font and replaces it with a fallback. Best-case scenario, you\'ve chosen your fallback characters carefully and something weird-looking but communicative still loads. Worse-case scenario (and far more often), the user sees something completely incongruous, usually the dreaded "missing character" glyph.',
+        label: "How do I pay for products on Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>Currently Way4Biz supports mpesa and card payment.</p>
+          </div>
+        ),
       },
       {
-        label: "They're a Nightmare if You're Dyslexic",
-        content:
-          "Many dyslexic people find it helpful to swap out a website's typeface for something like OpenDyslexic. But icon fonts get replaced as well, which makes for a frustratingly broken experience.",
+        label: "What are my delivery options?",
+        content: (
+          <div className="faq-content-section">
+            <h6>Way4Biz offers 3 convenient methods of delivery:</h6>
+            <ul>
+              <li>
+                <p>
+                  <strong>Collect - </strong>You can choose to collect from
+                  Way4Biz's pickup collection near you.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Courier - </strong>We deliver directly to your home or
+                  office.This delivery however has two modes:{" "}
+                  <strong>Normal Delivery</strong>
+                  which takes 3-7 days and <strong>
+                    Express Delivery
+                  </strong>{" "}
+                  which takes 24-48hrs.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
       },
       {
-        label: "There's Already a Better Way",
-        content:
-          "SVG is awesome for icons! It's a vector image format with optional support for CSS, JavaScript, reusability, accessibility and a bunch more. It was made for this sort of thing.",
+        label: "What happens if an item is out of stock?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              If an item becomes out of stock, it will reflect as such on the
+              site.
+            </p>
+            <p>
+              If you have pre-ordered the item, we’ll let you know. You then
+              have the option to be refunded or wait until it comes into stock
+              again.
+            </p>
+          </div>
+        ),
       },
     ];
     const { activeTab } = this.state;

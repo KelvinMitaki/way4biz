@@ -16,12 +16,25 @@
   border-radius: 4px;
 }
 
+.redeem-pay-btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
 .redeem-paid-btn {
   background-color: green;
   color: #fff;
   border: none;
   padding: 3px 5px;
   border-radius: 4px;
+}
+
+.redeem-seller {
+  color: #000;
+}
+
+.redeem-seller:hover {
+  color: #f76b1a;
 }
 
 @media screen and (max-width: 719px) {

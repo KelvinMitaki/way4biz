@@ -65,21 +65,21 @@ class StripePayment extends React.Component {
                         </strong>
                       </p>
                     </li>
-                    <Elements stripe={stripePromise}>
-                      <ElementsConsumer>
-                        {({ stripe, elements }) => (
-                          <StripePaymentButton
-                            email={this.props.user.email}
-                            cart={this.props.order.cart}
-                            order={this.props.order}
-                            distance={this.props.distance}
-                            stripe={stripe}
-                            elements={elements}
-                          />
-                        )}
-                      </ElementsConsumer>
-                    </Elements>
                   </ul>
+                  <Elements stripe={stripePromise}>
+                    <ElementsConsumer>
+                      {({ stripe, elements }) => (
+                        <StripePaymentButton
+                          email={this.props.user.email}
+                          cart={this.props.order.cart}
+                          order={this.props.order}
+                          distance={this.props.distance}
+                          stripe={stripe}
+                          elements={elements}
+                        />
+                      )}
+                    </ElementsConsumer>
+                  </Elements>
                 </div>
               </div>
             </div>
@@ -91,11 +91,11 @@ class StripePayment extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     order: state.cartReducer.order,
     distance: state.detailsPersist.distance,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, { makeOrder })(StripePayment);

@@ -20,7 +20,7 @@ class AdminDashBoardRedeems extends React.Component {
             </h3>
             <div className="container">
               <div className="row y" style={{ borderLeft: "3px solid #fff" }}>
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <h6>Seller</h6>
                 </div>
                 <div className="col-md-3">
@@ -29,18 +29,22 @@ class AdminDashBoardRedeems extends React.Component {
                 <div className="col-md-3">
                   <h6>Amount</h6>
                 </div>
-                <div className="col-md-3">{/* <h6>Helloo</h6> */}</div>
+                <div className="col-md-2">{/* <h6>Helloo</h6> */}</div>
               </div>
               {/* mapping here */}
               <div
                 className="row box-container py-2 redeem-wrapper"
                 style={{ borderLeft: "3px solid #f76b1a" }}
               >
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <h6>
                     <strong className="x mr-2">Seller:</strong>
                     <span>
-                      <Link to="/" title="visit seller store">
+                      <Link
+                        to="/"
+                        className="redeem-seller"
+                        title="visit seller store"
+                      >
                         Helloo
                       </Link>
                     </span>
@@ -58,12 +62,14 @@ class AdminDashBoardRedeems extends React.Component {
                     <span>Hellooo</span>
                   </h6>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <h6>
                     {/* show this if paid is false */}
                     <button className="redeem-pay-btn btn-md">Pay</button>
                     {/* show this if paid is true */}
-                    {/* <button className="redeem-paid-btn btn-md">Paid</button> */}
+                    {/* <button disabled className="redeem-paid-btn btn-md">
+                      Paid
+                    </button> */}
                   </h6>
                 </div>
               </div>
