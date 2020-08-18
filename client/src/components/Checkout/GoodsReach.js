@@ -89,10 +89,12 @@ class GoodsReach extends React.Component {
 const selector = formValueSelector("Chekout");
 const mapStateToProps = state => {
   const goodsReach = selector(state, "goods-reach");
+  const stateDelivery = selector(state, "delivery");
   return {
     address: state.selfCollection.address,
     collection: state.selfCollection.collection,
-    goodsReach
+    goodsReach,
+    stateDelivery
   };
 };
 export default connect(mapStateToProps, {

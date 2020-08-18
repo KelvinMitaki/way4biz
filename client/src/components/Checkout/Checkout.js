@@ -180,7 +180,7 @@ const validate = formValues => {
   }
   return errors;
 };
-const selector = formValueSelector("Chekout");
+const selector = formValueSelector("Checkout");
 const mapStateToProps = state => {
   const payment = selector(state, "payment");
   const delivery = selector(state, "delivery");
@@ -198,7 +198,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout", validate })(
+  reduxForm({ form: "Checkout", validate })(
     connect(mapStateToProps, {
       preMakeOrder,
       fetchProducts,

@@ -29,7 +29,7 @@ class DeliveryMethods extends React.Component {
                     value="Normal"
                     id="radio-1000"
                     component={RadioField}
-                    onChange={this.props.delivery}
+                    onChange={() => this.props.delivery()}
                   />
 
                   <div>
@@ -47,7 +47,7 @@ class DeliveryMethods extends React.Component {
                     value="Express"
                     id="radio-1100"
                     component={RadioField}
-                    onChange={this.props.delivery}
+                    onChange={() => this.props.delivery()}
                   />
 
                   <div>
@@ -66,5 +66,4 @@ class DeliveryMethods extends React.Component {
     );
   }
 }
-
 export default DeliveryMethods;
