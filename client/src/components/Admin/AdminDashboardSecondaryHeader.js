@@ -10,13 +10,12 @@ import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
-import { MdKeyboardArrowDown, MdArrowDropDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
 import { fetchNewSellers } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
-import { TiArrowShuffle } from "react-icons/ti";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
@@ -92,7 +91,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 <NavLink to="/admin-categories">Categories</NavLink>
               </p>
               <p>
-                <NavLink to="/admin-redeems">Referrals</NavLink>
+                <NavLink to="/admin-redeems">Redeems</NavLink>
               </p>
               <p>
                 <NavLink to="/admin-inbox">Inbox</NavLink>
@@ -186,7 +185,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               to="/admin-redeems"
               activeClassName="admin-active-lg-link"
             >
-              <TiArrowShuffle /> <span className="ml-2">Referrals</span>
+              <MdRedeem /> <span className="ml-2">Redeems</span>
             </NavLink>
           </li>
           <li>
