@@ -9,7 +9,7 @@ class TermsConditions extends React.Component {
   render() {
     return (
       <div className="main">
-        <div className="content">
+        <div className="content white-body">
           <Header />
           <div className="container">
             <h3 style={{ textAlign: "center" }} className="my-2">
