@@ -24,6 +24,14 @@
   border-radius: 4px;
 }
 
+.redeem-seller {
+  color: #000;
+}
+
+.redeem-seller:hover {
+  color: #f76b1a;
+}
+
 @media screen and (max-width: 719px) {
   .redeem-wrapper div {
     margin: 5px 0px;

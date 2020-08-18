@@ -40,7 +40,11 @@ class AdminDashBoardRedeems extends React.Component {
                   <h6>
                     <strong className="x mr-2">Seller:</strong>
                     <span>
-                      <Link to="/" title="visit seller store">
+                      <Link
+                        to="/"
+                        className="redeem-seller"
+                        title="visit seller store"
+                      >
                         Helloo
                       </Link>
                     </span>
