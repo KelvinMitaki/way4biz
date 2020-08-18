@@ -1390,7 +1390,16 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
           foreignField: "_id",
           as: "seller"
         }
-      }
+      },
+      {
+        $lookup: {
+          from: "distances",
+          localField: "distance",
+          foreignField: "_id",
+          as: "distance"
+        }
+      },
+      { $unwind: "$distance" }
     ]);
     res.send({
       ...order,
