@@ -37,14 +37,14 @@ class StripePaymentButton extends Component {
     const { stripe } = this.props;
     return (
       <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} id="stripe-payment-form">
           <div id="stripe-card-wrapper">
             <CardElement />
           </div>
           <div className="d-flex align-items-center justify-content-end">
             <button
               type="submit"
-              className="stripe-payment-btn btn-md"
+              className="stripe-payment-btn btn-block mt-3"
               disabled={!stripe}
             >
               Pay Ksh.
