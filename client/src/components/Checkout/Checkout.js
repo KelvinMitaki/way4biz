@@ -29,14 +29,6 @@ class CheckOut extends React.Component {
   componentWillUnmount() {
     this.props.removeAddress();
   }
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.goodsReach !== "self-collection" &&
-      this.props.goodsReach !== prevProps.goodsReach
-    ) {
-      this.handleSelect(this.props.user.address);
-    }
-  }
   handleSelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);

@@ -731,10 +731,6 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("You must enter the destination"),
-  check("deliveryMethod")
-    .not()
-    .isEmpty()
-    .withMessage("Please choose a valid delivery method"),
   (req, res) => {
     const { _id } = req.session.user;
     const errors = validationResult(req);
@@ -751,21 +747,23 @@ route.post(
       if (err) {
         return res.status(404).send(err);
       }
-      let shippingFees;
+      let shippingFees = 0;
       if (
+        deliveryMethod &&
         deliveryMethod === "Normal" &&
         response.rows[0].elements[0].distance.value / 1000 <= 10
       ) {
         shippingFees = 0;
       }
       if (
+        deliveryMethod &&
         deliveryMethod === "Normal" &&
         response.rows[0].elements[0].distance.value / 1000 > 10
       ) {
         shippingFees =
           (response.rows[0].elements[0].distance.value / 1000) * 10;
       }
-      if (deliveryMethod === "Express") {
+      if (deliveryMethod && deliveryMethod === "Express") {
         shippingFees =
           (response.rows[0].elements[0].distance.value / 1000) * 25;
       }

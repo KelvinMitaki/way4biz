@@ -1528,9 +1528,8 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
 export const paymentPerDistance = details => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
-    console.log(details);
-    // const res = await axios.post(`/api/buyer/destination`, details);
-    // dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
+    const res = await axios.post(`/api/buyer/destination`, details);
+    dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
   } catch (error) {
     authCheck(error);
