@@ -6,3 +6,7 @@
 .faq-content-section p {
   margin: 5px 0px;
 }
+
+.faq-content-section a {
+  color: #f76b1a;
+}

@@ -3,6 +3,7 @@ import React from "react";
 // import { BsPlusCircle } from "react-icons/bs";
 import "./FAQAccordion.css";
 import Panel from "./Panel";
+import { Link } from "react-router-dom";
 
 class FAQAccordion extends React.Component {
   constructor(props) {
@@ -44,9 +45,25 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
-        label: "Screen Readers Actually Read That Stuff",
-        content:
-          'Most assistive devices will read aloud text inserted via CSS, and many of the Unicode characters icon fonts depend on are no exception. Best-case scenario, your "favorite" icon gets read aloud as "black favorite star." Worse-case scenario, it\'s read as "unpronounceable" or skipped entirely.',
+        label: "How do i register with Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              At Way4Biz, you can register as a buyer or as a seller. A seller
+              however can use the same account to buy.
+            </p>
+            <p>
+              On registering we will need your full name, e-mail address, a
+              strong password and a valid phone number.
+            </p>
+
+            <p>
+              To register as a buyer do so <Link to="/sign-in">here</Link> and
+              to register as a seller do so{" "}
+              <Link to="/seller/register">here</Link>.
+            </p>
+          </div>
+        ),
       },
       {
         label: "They Fail Poorly and Often",
