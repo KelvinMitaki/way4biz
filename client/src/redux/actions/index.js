@@ -2435,10 +2435,10 @@ export const fetchRedeems = () => async dispatch => {
   }
 };
 
-export const payRedeem = () => async dispatch => {
+export const payRedeem = redeemId => async dispatch => {
   try {
     dispatch({ type: PAY_REDEEM_START });
-    await axios.post("/admin/pay/redeem");
+    await axios.post("/admin/pay/redeem", { redeemId });
     dispatch({ type: PAY_REDEEM });
     dispatch(fetchRedeems());
     dispatch({ type: PAY_REDEEM_STOP });

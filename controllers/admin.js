@@ -2131,4 +2131,26 @@ route.get("/api/fetch/admin/redeems", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.post(
+  "/admin/pay/redeem",
+  auth,
+  isAdmin,
+  check("redeemId").not().isEmpty().withMessage("please input a redeem Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const redeem = await Redeem.findByIdAndUpdate(req.body.redeemId, {
+        paid: true
+      });
+
+      res.send(redeem);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
