@@ -2107,4 +2107,16 @@ route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get("/api/fetch/admin/redeem/count", auth, isAdmin, async (req, res) => {
+  try {
+    const redeems = await Redeem.aggregate([
+      { $match: { paid: false } },
+      { $count: "newRedeems" }
+    ]);
+    res.send(redeems.length > 0 ? redeems[0].newRedeems : 0);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
