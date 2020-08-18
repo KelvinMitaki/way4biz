@@ -411,15 +411,19 @@ route.post(
       // **STRIPE*/
       if (id) {
         const idempotencyKey = v4();
-        const charge = await stripe.charges.create(
+        const charge = await stripe.paymentIntents.create(
           {
             amount: (price + Math.round(distance.shippingFees)) * 100,
             currency: "kes",
-            description: `payed ${price} to account by ${req.session.user.email}`,
-            source: id
+            description: `payed ${
+              price + Math.round(distance.shippingFees)
+            } to account by ${req.session.user.email}`,
+            payment_method: id,
+            confirm: true
           },
           { idempotencyKey }
         );
+        console.log(charge.charges.data);
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
@@ -429,10 +433,9 @@ route.post(
           buyerSeller: _id,
           distance: distanceId,
           paid: true,
-          brand: charge.payment_method_details.card.brand,
-          last4: charge.payment_method_details.card.last4
+          brand: charge.charges.data[0].payment_method_details.card.brand,
+          last4: charge.charges.data[0].payment_method_details.card.last4
         });
-        console.log(charge);
         await order.save();
         const orderWithDistance = await Order.findById(order._id).populate(
           "distance items.product"
