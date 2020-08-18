@@ -16,6 +16,7 @@ import { fetchNewSellers } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
+import { TiArrowShuffle } from "react-icons/ti";
 
 class AdminDashboardSecondaryHeader extends React.Component {
   state = {
@@ -91,7 +92,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                 <NavLink to="/admin-categories">Categories</NavLink>
               </p>
               <p>
-                <NavLink to="/admin-referrals">Referrals</NavLink>
+                <NavLink to="/admin-redeems">Referrals</NavLink>
               </p>
               <p>
                 <NavLink to="/admin-inbox">Inbox</NavLink>
@@ -182,10 +183,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <li>
             <NavLink
               exact
-              to="/admin-referrals"
+              to="/admin-redeems"
               activeClassName="admin-active-lg-link"
             >
-              <RiInboxArchiveLine /> <span className="ml-2">Referrals</span>
+              <TiArrowShuffle /> <span className="ml-2">Referrals</span>
             </NavLink>
           </li>
           <li>
