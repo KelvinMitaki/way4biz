@@ -1,6 +1,8 @@
 import React from "react";
 import { animateScroll as scroll } from "react-scroll";
 
+import "./SellerOrientationGuide.css";
+
 class SellerOrientationGuide extends React.Component {
   componentDidMount() {
     this.props.proceed(false);
@@ -20,9 +22,9 @@ class SellerOrientationGuide extends React.Component {
           Orientation Guide
         </h3>
         <div>
-          To proceed,please download a copy of the guide from the link.
+          <h5>Please read the seller orientation guide.</h5>
           <a
-            className="my-2"
+            className="my-2 btn btn-lg"
             href="/1.jpg"
             download
             id="download-guide-link"
