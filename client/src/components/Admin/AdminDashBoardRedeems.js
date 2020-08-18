@@ -5,7 +5,7 @@ import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { Link } from "react-router-dom";
-import { fetchRedeems } from "../../redux/actions";
+import { fetchRedeems, payRedeem } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -82,7 +82,23 @@ class AdminDashBoardRedeems extends React.Component {
                             Paid
                           </button>
                         ) : (
-                          <button className="redeem-pay-btn btn-md">Pay</button>
+                          <button
+                            className="redeem-pay-btn btn-md"
+                            onClick={() => this.props.payRedeem(redeem._id)}
+                          >
+                            {this.props.payRedeemLoading && (
+                              <span
+                                className="spinner-grow spinner-grow-sm"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                            )}
+                            {this.props.payRedeemLoading ? (
+                              <span> {"  "}Loading...</span>
+                            ) : (
+                              <span>Pay</span>
+                            )}
+                          </button>
                         )}
                         {/* show this if paid is true */}
                       </h6>
@@ -98,9 +114,10 @@ class AdminDashBoardRedeems extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    redeems: state.admin.redeems
+    redeems: state.admin.redeems,
+    payRedeemLoading: state.admin.payRedeemLoading
   };
 };
-export default connect(mapStateToProps, { fetchRedeems })(
+export default connect(mapStateToProps, { fetchRedeems, payRedeem })(
   AdminDashBoardRedeems
 );

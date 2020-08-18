@@ -20,7 +20,9 @@ import {
   CONFIRM_DELIVERY_START,
   CONFIRM_DELIVERY_STOP,
   REDEEM_COUNT,
-  FETCH_REDEEMS
+  FETCH_REDEEMS,
+  PAY_REDEEM_START,
+  PAY_REDEEM_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -39,7 +41,8 @@ const INITIAL_STATE = {
   adminOrder: null,
   deliveryLoading: false,
   redeemCount: null,
-  redeems: null
+  redeems: null,
+  payRedeemLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -122,6 +125,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, redeemCount: action.payload };
     case FETCH_REDEEMS:
       return { ...state, redeems: action.payload };
+    case PAY_REDEEM_START:
+      return { ...state, payRedeemLoading: true };
+    case PAY_REDEEM_STOP:
+      return { ...state, payRedeemLoading: false };
     default:
       return state;
   }
