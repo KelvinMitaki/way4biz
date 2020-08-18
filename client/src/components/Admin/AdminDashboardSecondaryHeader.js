@@ -10,9 +10,13 @@ import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
-import { MdKeyboardArrowDown, MdArrowDropDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
-import { fetchNewSellers } from "../../redux/actions";
+import {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+} from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
@@ -36,6 +40,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
   };
   componentDidMount() {
     this.props.fetchNewSellers();
+    this.props.redeemCountAction();
   }
   handleClick = e => {
     this.setState(prevState => {
@@ -45,7 +50,8 @@ class AdminDashboardSecondaryHeader extends React.Component {
     });
   };
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
+    if (!this.props.newSellers || !this.props.redeemCount)
+      return <ScreenLoader />;
     return (
       <div className="container-fluid admin-dashboard-secondary-header">
         {this.state.open ? (
@@ -89,6 +95,27 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </p>
               <p>
                 <NavLink to="/admin-categories">Categories</NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-redeems">
+                  Redeems
+                  {this.props.redeems !== 0 && (
+                    <span
+                      style={{
+                        position: "relative",
+                        zIndex: "32",
+                        backgroundColor: "#f76b1a",
+                        color: "#fff"
+                      }}
+                      className="ml-1 badge"
+                    >
+                      {this.props.redeems.toLocaleString()}
+                    </span>
+                  )}
+                </NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-inbox">Inbox</NavLink>
               </p>
             </div>
           ) : null}
@@ -176,6 +203,31 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <li>
             <NavLink
               exact
+              to="/admin-redeems"
+              activeClassName="admin-active-lg-link"
+            >
+              <MdRedeem />{" "}
+              <span className="ml-2">
+                Redeems
+                {this.props.redeems !== 0 && (
+                  <span
+                    style={{
+                      position: "relative",
+                      zIndex: "32",
+                      backgroundColor: "#f76b1a",
+                      color: "#fff"
+                    }}
+                    className="ml-1 badge"
+                  >
+                    {this.props.redeems.toLocaleString()}
+                  </span>
+                )}
+              </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              exact
               to="/admin-inbox"
               activeClassName="admin-active-lg-link"
             >
@@ -196,7 +248,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <div className="admin-logout-section">
             <p
               className="p-2"
-              onClick={() => (window.location.href = "/api/logout")}
+              onClick={() => {
+                this.props.clearOrderDetails()(
+                  (window.location.href = "/api/logout")
+                );
+              }}
             >
               Logout
             </p>
@@ -208,9 +264,13 @@ class AdminDashboardSecondaryHeader extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    newSellers: state.seller.newSellers
+    newSellers: state.seller.newSellers,
+    redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
+    redeemCount: state.admin.redeemCount
   };
 };
-export default connect(mapStateToProps, { fetchNewSellers })(
-  AdminDashboardSecondaryHeader
-);
+export default connect(mapStateToProps, {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+})(AdminDashboardSecondaryHeader);

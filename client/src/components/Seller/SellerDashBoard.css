@@ -12,6 +12,7 @@
 .seller-welcome a {
   color: #f76b1a;
   font-size: 30px;
+  white-space: nowrap;
 }
 
 .dashboard-content hr {
@@ -57,6 +58,6 @@
   }
 
   .seller-welcome a {
-    font-size: 20px;
+    font-size: 15px;
   }
 }

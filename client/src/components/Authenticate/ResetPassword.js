@@ -5,6 +5,7 @@ import AuthField from "./AuthField";
 import AuthHeader from "./AuthHeader";
 import { resetTokenCheck, forgotPassword } from "../../redux/actions";
 import { Redirect, withRouter } from "react-router-dom";
+import MobileLogo from "../Header/MobileLogo";
 
 export class ResetPassword extends Component {
   componentDidMount() {
@@ -20,11 +21,12 @@ export class ResetPassword extends Component {
     }
     return (
       <div>
+        <MobileLogo />
         <AuthHeader />
         <br />
         <br />
         <form
-          onSubmit={this.props.handleSubmit(formValues =>
+          onSubmit={this.props.handleSubmit((formValues) =>
             this.props.forgotPassword(formValues, this.props.history)
           )}
         >
@@ -69,7 +71,7 @@ export class ResetPassword extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.password ||
@@ -82,11 +84,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    resetToken: state.seller.resetToken
+    resetToken: state.seller.resetToken,
   };
 };
 

@@ -9,11 +9,7 @@ const AuthField = (props) => {
         {props.label} <span style={{ color: "#f76b1a" }}>{props.required}</span>
       </strong>
       <br />
-      <input
-        className="form-control authenticate-field"
-        type={props.type}
-        {...props.input}
-      />
+      <input className="form-control" type={props.type} {...props.input} />
 
       <div style={{ color: "red" }}>
         {props.meta.touched && props.meta.error}

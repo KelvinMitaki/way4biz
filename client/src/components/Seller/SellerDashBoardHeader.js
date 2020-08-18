@@ -5,6 +5,8 @@ import "./SellerDashBoardHeader.css";
 import Logo from "../Header/Logo";
 import ProfileImage from "../Header/ProfileImage";
 import SellerHamburger from "./SellerHamburgerMenu";
+import { clearOrderDetails } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class SellerDashBoardHeader extends React.Component {
   render() {
@@ -39,7 +41,10 @@ class SellerDashBoardHeader extends React.Component {
           <li
             style={{ cursor: "pointer" }}
             className="my-4 link logout-seller-db-header-link"
-            onClick={() => (window.location.href = "/api/logout")}
+            onClick={() => {
+              this.props.clearOrderDetails();
+              window.location.href = "/api/logout";
+            }}
           >
             Logout
           </li>
@@ -50,4 +55,4 @@ class SellerDashBoardHeader extends React.Component {
   }
 }
 
-export default SellerDashBoardHeader;
+export default connect(null, { clearOrderDetails })(SellerDashBoardHeader);

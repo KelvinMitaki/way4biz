@@ -101,12 +101,14 @@ class AdminDashBoardSeller extends React.Component {
                     {city}
                   </h5>
                 </div>
-                <div className="custom-row">
-                  <h5>
-                    <strong>Town: </strong>
-                    {town}
-                  </h5>
-                </div>
+                {town && (
+                  <div className="custom-row">
+                    <h5>
+                      <strong>Town: </strong>
+                      {town}
+                    </h5>
+                  </div>
+                )}
                 <div className="custom-row">
                   <h5>
                     <strong>Address: </strong>

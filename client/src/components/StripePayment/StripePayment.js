@@ -9,8 +9,10 @@ import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
 import StripePaymentButton from "./StripePaymentButton";
 import MobileLogo from "../Header/MobileLogo";
+import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
-// INCLUDE VAT
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
 class StripePayment extends React.Component {
   render() {
     if (!this.props.order) return <Redirect to="/checkout" />;
@@ -63,13 +65,21 @@ class StripePayment extends React.Component {
                         </strong>
                       </p>
                     </li>
-                    <StripePaymentButton
-                      email={this.props.user.email}
-                      cart={this.props.order.cart}
-                      order={this.props.order}
-                      distance={this.props.distance}
-                    />
                   </ul>
+                  <Elements stripe={stripePromise}>
+                    <ElementsConsumer>
+                      {({ stripe, elements }) => (
+                        <StripePaymentButton
+                          email={this.props.user.email}
+                          cart={this.props.order.cart}
+                          order={this.props.order}
+                          distance={this.props.distance}
+                          stripe={stripe}
+                          elements={elements}
+                        />
+                      )}
+                    </ElementsConsumer>
+                  </Elements>
                 </div>
               </div>
             </div>

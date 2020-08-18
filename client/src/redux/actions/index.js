@@ -245,7 +245,22 @@ import {
   FETCH_ADMIN_INBOX_START,
   FETCH_ADMIN_INBOX_STOP,
   REFERRAL_CODE_ERROR,
-  CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS,
+  CLEAR_ORDER_DETAILS,
+  REDEEM_POINTS_START,
+  REDEEM_POINTS_STOP,
+  REDEEM_POINTS_ERROR,
+  REDEEM_POINTS,
+  STORE_LAT_LNG,
+  DELIVERY_OPEN_ACTION,
+  DELIVERY_CLOSE_ACTION,
+  MAKE_ORDER_START,
+  MAKE_ORDER_STOP,
+  REDEEM_COUNT,
+  FETCH_REDEEMS,
+  PAY_REDEEM,
+  PAY_REDEEM_START,
+  PAY_REDEEM_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -411,7 +426,10 @@ export const editUser = (credentials, history) => async (
     dispatch({ type: LOADING_STOP });
   }
 };
-export const checkoutUser = credentials => async (dispatch, getState) => {
+export const checkoutUser = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
@@ -421,6 +439,7 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: CHECKOUT_USER, payload: res.data });
+    history.push("/checkout");
     dispatch({ type: CHECKOUT_USER_STOP });
   } catch (error) {
     console.log(error);
@@ -830,7 +849,7 @@ export const makeOrder = (credentials, history) => async (
   getState
 ) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: MAKE_ORDER_START });
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
@@ -852,18 +871,19 @@ export const makeOrder = (credentials, history) => async (
     if (res.paymentMethod && res.paymentMethod !== "mpesa") {
       dispatch({ type: MAKE_ORDER, payload: res });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: LOADING_STOP });
+      dispatch({ type: MAKE_ORDER_STOP });
       return history.push("/order/success");
     }
     dispatch({ type: MAKE_ORDER, payload: res });
     if (!res.paymentMethod) {
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      dispatch({ type: MAKE_ORDER_STOP });
       history.push("/stripe/error");
     }
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: MAKE_ORDER_STOP });
     history.push("/stripe/error");
     console.log(error.response);
   }
@@ -1514,13 +1534,15 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
   }
 };
 
-export const paymentPerDistance = (details, history) => async dispatch => {
+export const paymentPerDistance = details => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
-    history.push("/checkout");
     dispatch({ type: PAYMENT_DISTANCE_STOP });
+    if (details.deliveryMethod) {
+      dispatch(deliveryCloseAction());
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: PAYMENT_DISTANCE_STOP });
@@ -2300,6 +2322,16 @@ export const collectionCloseAction = () => {
     type: COLLECTION_CLOSE_ACTION
   };
 };
+export const deliveryOpenAction = () => {
+  return {
+    type: DELIVERY_OPEN_ACTION
+  };
+};
+export const deliveryCloseAction = () => {
+  return {
+    type: DELIVERY_CLOSE_ACTION
+  };
+};
 export const sendReferralCode = (referralBody, reset) => async dispatch => {
   try {
     dispatch({ type: SEND_REFERRAL_CODE_START });
@@ -2357,4 +2389,63 @@ export const clearReferralErrorAndSuccess = () => {
   return {
     type: CLEAR_REFERRAL_ERROR_AND_SUCCESS
   };
+};
+
+export const clearOrderDetails = () => {
+  return {
+    type: CLEAR_ORDER_DETAILS
+  };
+};
+
+export const redeemPoints = () => async dispatch => {
+  try {
+    dispatch({ type: REDEEM_POINTS_START });
+    await axios.post("/api/seller/redeem/points");
+    dispatch({ type: REDEEM_POINTS, payload: "sucess" });
+    dispatch({ type: REDEEM_POINTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REDEEM_POINTS_STOP });
+    dispatch({ type: REDEEM_POINTS_ERROR, payload: "Error redeeming points" });
+  }
+};
+
+export const storeLatLng = latLng => {
+  return {
+    type: STORE_LAT_LNG,
+    payload: latLng
+  };
+};
+
+export const redeemCountAction = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeem/count");
+    dispatch({ type: REDEEM_COUNT, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
+};
+
+export const fetchRedeems = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeems");
+    dispatch({ type: FETCH_REDEEMS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
+};
+
+export const payRedeem = redeemId => async dispatch => {
+  try {
+    dispatch({ type: PAY_REDEEM_START });
+    await axios.post("/api/admin/pay/redeem", { redeemId });
+    dispatch({ type: PAY_REDEEM });
+    dispatch(fetchRedeems());
+    dispatch(redeemCountAction());
+    dispatch({ type: PAY_REDEEM_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: PAY_REDEEM_STOP });
+    console.log(error.response);
+  }
 };

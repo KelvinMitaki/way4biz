@@ -68,10 +68,7 @@ class SellerProfiling extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div
-            className="col-lg-9 mx-auto py-3"
-            style={{ backgroundColor: "#fff" }}
-          >
+          <div className="col-lg-9 mx-auto py-3" id="seller-profilling-content">
             {this.setUpData()}
 
             <div className="nav-btns container my-3">

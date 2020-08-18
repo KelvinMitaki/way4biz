@@ -187,6 +187,24 @@ route.post("/api/products/filter", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get(
+  "/api/products/category/subcategory/:subcategory",
+  async (req, res) => {
+    try {
+      const { subcategory } = req.params;
+      const products = await Product.find({ subcategory, onSite: true });
+      if (!products || products.length === 0) {
+        return res
+          .status(404)
+          .send({ message: "No products in that subcategory" });
+      }
+      res.send(products);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.post("/api/product/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
@@ -393,15 +411,19 @@ route.post(
       // **STRIPE*/
       if (id) {
         const idempotencyKey = v4();
-        const charge = await stripe.charges.create(
+        const charge = await stripe.paymentIntents.create(
           {
             amount: (price + Math.round(distance.shippingFees)) * 100,
             currency: "kes",
-            description: `payed ${price} to account by ${req.session.user.email}`,
-            source: id
+            description: `payed ${
+              price + Math.round(distance.shippingFees)
+            } to account by ${req.session.user.email}`,
+            payment_method: id,
+            confirm: true
           },
           { idempotencyKey }
         );
+        console.log(charge.charges.data);
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
@@ -411,10 +433,9 @@ route.post(
           buyerSeller: _id,
           distance: distanceId,
           paid: true,
-          brand: charge.payment_method_details.card.brand,
-          last4: charge.payment_method_details.card.last4
+          brand: charge.charges.data[0].payment_method_details.card.brand,
+          last4: charge.charges.data[0].payment_method_details.card.last4
         });
-        console.log(charge);
         await order.save();
         const orderWithDistance = await Order.findById(order._id).populate(
           "distance items.product"
@@ -428,7 +449,6 @@ route.post(
     }
   }
 );
-
 route.post("/api/mpesa/paid/order", auth, async (req, res) => {
   try {
     const url =
@@ -719,7 +739,7 @@ route.post(
     if (!errors.isEmpty()) {
       return res.status(401).send({ message: errors.array()[0].msg });
     }
-    const { origins, destination } = req.body;
+    const { origins, destination, deliveryMethod } = req.body;
     // const origins = ["nairobi"];
     // const destination = ["mombasa"];
     // 1KM===3KSH
@@ -729,18 +749,37 @@ route.post(
       if (err) {
         return res.status(404).send(err);
       }
+      let shippingFees = 0;
+      if (
+        deliveryMethod &&
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 <= 10
+      ) {
+        shippingFees = 0;
+      }
+      if (
+        deliveryMethod &&
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 > 10
+      ) {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 10;
+      }
+      if (deliveryMethod && deliveryMethod === "Express") {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 25;
+      }
       const distanceExists = await Distance.findOne({
         destination: response.destination_addresses[0],
         distance: response.rows[0].elements[0].distance.value,
-        shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
+        shippingFees,
         buyer: _id
       });
       if (!distanceExists) {
         const dist = new Distance({
           destination: response.destination_addresses[0],
           distance: response.rows[0].elements[0].distance.value,
-          shippingFees:
-            (response.rows[0].elements[0].distance.value / 1000) * 3,
+          shippingFees,
           buyer: _id
         });
         await dist.save();

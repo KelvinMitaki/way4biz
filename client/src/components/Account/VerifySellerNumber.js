@@ -7,6 +7,7 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import VerificationField from "./VerificationField";
 import { fetchSellerNumber, verifyCode } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 export class VerifySellerNumber extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ export class VerifySellerNumber extends Component {
     if (this.props.sellerNumber) {
       return (
         <div style={{ textAlign: "center" }}>
+          <MobileLogo />
           <AuthHeader />
           <br />
           <br />
@@ -34,7 +36,7 @@ export class VerifySellerNumber extends Component {
           </p>
           <br />
           <form
-            onSubmit={this.props.handleSubmit(formValues =>
+            onSubmit={this.props.handleSubmit((formValues) =>
               this.props.verifyCode(formValues, this.props.history)
             )}
           >
@@ -83,7 +85,7 @@ export class VerifySellerNumber extends Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.code ||
@@ -96,11 +98,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     sellerNumber: state.seller.sellerNumber,
-    errorVerifying: state.seller.errorVerifying
+    errorVerifying: state.seller.errorVerifying,
   };
 };
 export default withRouter(

@@ -8,7 +8,7 @@ import { GoClippy, GoSettings } from "react-icons/go";
 import { GiCancel } from "react-icons/gi";
 
 import "./SellerHamburgerMenu.css";
-import { fetchRejects } from "../../redux/actions";
+import { fetchRejects, clearOrderDetails } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 
@@ -185,7 +185,11 @@ class SellerHamburgerMenu extends React.Component {
                 <li
                   style={{ cursor: "pointer" }}
                   className="my-4 link"
-                  onClick={() => (window.location.href = "/api/logout")}
+                  onClick={() => {
+                    this.props.clearOrderDetails()(
+                      (window.location.href = "/api/logout")
+                    );
+                  }}
                 >
                   Logout
                 </li>
@@ -207,5 +211,6 @@ const mapStateToProps = state => {
   };
 };
 export default connect(mapStateToProps, {
-  fetchRejects
+  fetchRejects,
+  clearOrderDetails
 })(SellerHamburgerMenu);

@@ -32,6 +32,7 @@ const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
+const Redeem = require("../models/Redeem");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2087,4 +2088,69 @@ route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
+  try {
+    const seller = req.session.user;
+    if (seller.points < 1000) {
+      return res
+        .status(401)
+        .send({ message: "You must have 1000 points and above" });
+    }
+    const redeem = new Redeem({
+      seller: seller._id,
+      amount: seller.points
+    });
+    await redeem.save();
+    await Seller.findByIdAndUpdate(seller._id, { points: 0 });
+    res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/admin/redeem/count", auth, isAdmin, async (req, res) => {
+  try {
+    const redeems = await Redeem.aggregate([
+      { $match: { paid: false } },
+      { $count: "newRedeems" }
+    ]);
+    res.send({ redeems: redeems.length > 0 ? redeems[0].newRedeems : 0 });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/admin/redeems", auth, isAdmin, async (req, res) => {
+  try {
+    const redeems = await Redeem.find({}).populate(
+      "seller",
+      "firstName lastName"
+    );
+    res.send(redeems);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post(
+  "/api/admin/pay/redeem",
+  auth,
+  isAdmin,
+  check("redeemId").not().isEmpty().withMessage("please input a redeem Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const redeem = await Redeem.findByIdAndUpdate(req.body.redeemId, {
+        paid: true
+      });
+
+      res.send(redeem);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
