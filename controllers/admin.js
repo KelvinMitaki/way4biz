@@ -2114,7 +2114,7 @@ route.get("/api/fetch/admin/redeem/count", auth, isAdmin, async (req, res) => {
       { $match: { paid: false } },
       { $count: "newRedeems" }
     ]);
-    res.send(redeems.length > 0 ? redeems[0].newRedeems : 0);
+    res.send({ redeems: redeems.length > 0 ? redeems[0].newRedeems : 0 });
   } catch (error) {
     res.status(500).send(error);
   }

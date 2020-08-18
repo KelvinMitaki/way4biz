@@ -255,7 +255,8 @@ import {
   DELIVERY_OPEN_ACTION,
   DELIVERY_CLOSE_ACTION,
   MAKE_ORDER_START,
-  MAKE_ORDER_STOP
+  MAKE_ORDER_STOP,
+  REDEEM_COUNT
 } from "./types";
 
 const authCheck = error => {
@@ -2410,4 +2411,13 @@ export const storeLatLng = latLng => {
     type: STORE_LAT_LNG,
     payload: latLng
   };
+};
+
+export const redeemCountAction = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeem/count");
+    dispatch({ type: REDEEM_COUNT, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
 };

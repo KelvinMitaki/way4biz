@@ -18,7 +18,8 @@ import {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts
+  fetchLatestRejectedProducts,
+  redeemCountAction
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -43,6 +44,7 @@ class AdminDashBoard extends React.Component {
     this.props.fetchUnderReview();
     this.props.countComplaints();
     this.props.fetchLatestRejectedProducts();
+    this.props.redeemCountAction();
   }
 
   render() {
@@ -53,7 +55,8 @@ class AdminDashBoard extends React.Component {
       !this.props.weeklySales ||
       !this.props.underReview ||
       !this.props.complaintsCount ||
-      !this.props.latestRejectedProducts
+      !this.props.latestRejectedProducts ||
+      !this.props.redeemCount
     )
       return <ScreenLoader />;
 
@@ -429,6 +432,7 @@ const mapStateToProps = state => {
   return {
     stock: state.product.stock,
     adminOrders: state.admin.adminOrders,
+    redeemCount: state.admin.redeemCount,
     adminPendingOrders: state.product.adminPendingOrders,
     complaintsCount: state.product.complaintsCount,
     latestRejectedProducts: state.product.latestRejectedProducts,
@@ -446,5 +450,6 @@ export default connect(mapStateToProps, {
   setPendingOrders,
   fetchUnderReview,
   countComplaints,
-  fetchLatestRejectedProducts
+  fetchLatestRejectedProducts,
+  redeemCountAction
 })(AdminDashBoard);

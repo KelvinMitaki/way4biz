@@ -18,7 +18,8 @@ import {
   FETCH_ORDER_BY_ID_START,
   FETCH_ORDER_BY_ID_STOP,
   CONFIRM_DELIVERY_START,
-  CONFIRM_DELIVERY_STOP
+  CONFIRM_DELIVERY_STOP,
+  REDEEM_COUNT
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -35,7 +36,8 @@ const INITIAL_STATE = {
   adminOrdersLoading: false,
   adminOrderLoading: false,
   adminOrder: null,
-  deliveryLoading: false
+  deliveryLoading: false,
+  redeemCount: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -114,6 +116,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deliveryLoading: true };
     case CONFIRM_DELIVERY_STOP:
       return { ...state, deliveryLoading: false };
+    case REDEEM_COUNT:
+      return { ...state, redeemCount: action.payload };
     default:
       return state;
   }
