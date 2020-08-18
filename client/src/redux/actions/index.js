@@ -251,7 +251,9 @@ import {
   REDEEM_POINTS_STOP,
   REDEEM_POINTS_ERROR,
   REDEEM_POINTS,
-  STORE_LAT_LNG
+  STORE_LAT_LNG,
+  DELIVERY_OPEN_ACTION,
+  DELIVERY_CLOSE_ACTION
 } from "./types";
 
 const authCheck = error => {
@@ -1531,6 +1533,9 @@ export const paymentPerDistance = details => async dispatch => {
     const res = await axios.post(`/api/buyer/destination`, details);
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
     dispatch({ type: PAYMENT_DISTANCE_STOP });
+    if (details.deliveryMethod) {
+      dispatch(deliveryCloseAction());
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: PAYMENT_DISTANCE_STOP });
@@ -2308,6 +2313,16 @@ export const collectionOpenAction = () => {
 export const collectionCloseAction = () => {
   return {
     type: COLLECTION_CLOSE_ACTION
+  };
+};
+export const deliveryOpenAction = () => {
+  return {
+    type: DELIVERY_OPEN_ACTION
+  };
+};
+export const deliveryCloseAction = () => {
+  return {
+    type: DELIVERY_CLOSE_ACTION
   };
 };
 export const sendReferralCode = (referralBody, reset) => async dispatch => {

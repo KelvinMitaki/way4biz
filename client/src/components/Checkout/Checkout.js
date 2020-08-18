@@ -18,7 +18,6 @@ import {
 import MobileLogo from "../Header/MobileLogo";
 import GoodsReach from "./GoodsReach";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import ScreenLoader from "../Pages/ScreenLoader";
 
 class CheckOut extends React.Component {
   componentDidMount() {
