@@ -52,7 +52,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <div
             onClick={this.handleClick}
             className="back-shed"
-            // style={{ backgroundColor: "transparent" }}
+            style={{ backgroundColor: "transparent" }}
           ></div>
         ) : null}
         <div className="admin-hamburger-menu-wrapper">
