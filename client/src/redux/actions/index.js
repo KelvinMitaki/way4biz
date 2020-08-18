@@ -257,7 +257,10 @@ import {
   MAKE_ORDER_START,
   MAKE_ORDER_STOP,
   REDEEM_COUNT,
-  FETCH_REDEEMS
+  FETCH_REDEEMS,
+  PAY_REDEEM,
+  PAY_REDEEM_START,
+  PAY_REDEEM_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2429,5 +2432,19 @@ export const fetchRedeems = () => async dispatch => {
     dispatch({ type: FETCH_REDEEMS, payload: res.data });
   } catch (error) {
     authCheck(error);
+  }
+};
+
+export const payRedeem = () => async dispatch => {
+  try {
+    dispatch({ type: PAY_REDEEM_START });
+    await axios.post("/admin/pay/redeem");
+    dispatch({ type: PAY_REDEEM });
+    dispatch(fetchRedeems());
+    dispatch({ type: PAY_REDEEM_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: PAY_REDEEM_STOP });
+    console.log(error.response);
   }
 };
