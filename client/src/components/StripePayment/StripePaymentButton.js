@@ -6,14 +6,11 @@ import { CardElement } from "@stripe/react-stripe-js";
 import "./StripePaymentButton.css";
 
 class StripePaymentButton extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    error: null,
+    clicked: false
+  };
 
-    this.state = {
-      error: null,
-      clicked: false
-    };
-  }
   componentDidMount() {
     if (this.state.clicked) {
       this.setState({ clicked: false });
