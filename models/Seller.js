@@ -70,6 +70,9 @@ const SellerSchema = new mongoose.Schema(
     },
     referrals: {
       type: [String]
+    },
+    referree: {
+      type: mongoose.Types.ObjectId
     }
   },
   {

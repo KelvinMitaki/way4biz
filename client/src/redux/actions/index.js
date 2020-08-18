@@ -245,7 +245,12 @@ import {
   FETCH_ADMIN_INBOX_START,
   FETCH_ADMIN_INBOX_STOP,
   REFERRAL_CODE_ERROR,
-  CLEAR_REFERRAL_ERROR_AND_SUCCESS
+  CLEAR_REFERRAL_ERROR_AND_SUCCESS,
+  CLEAR_ORDER_DETAILS,
+  REDEEM_POINTS_START,
+  REDEEM_POINTS_STOP,
+  REDEEM_POINTS_ERROR,
+  REDEEM_POINTS
 } from "./types";
 
 const authCheck = error => {
@@ -476,8 +481,14 @@ export const registerSeller = credentials => async (dispatch, getState) => {
     dispatch({ type: REGISTER_SELLER, payload: res.data });
     dispatch({ type: REGISTER_SELLER_STOP });
   } catch (error) {
-    if (error.response.data.email) {
-      getState().form.SellerRegister.values.email = "";
+    console.log(error.response);
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.email
+    ) {
+      getState().form.seller.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: error.response.data.email
@@ -499,12 +510,26 @@ export const registerSeller = credentials => async (dispatch, getState) => {
       dispatch({ type: REGISTER_SELLER_STOP });
       return;
     }
-    getState().form.SellerRegister.values[
-      Object.keys(error.response.data.keyPattern)[0]
-    ] = "";
+    if (
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.keyPattern &&
+      error.response.data.keyPattern[0]
+    ) {
+      getState().form.seller.values[
+        Object.keys(error.response.data.keyPattern)[0]
+      ] = "";
+      dispatch({
+        type: REGISTER_SELLER_FAILED,
+        payload: "That store name already exists"
+      });
+      dispatch({ type: REGISTER_SELLER_STOP });
+      return;
+    }
     dispatch({
       type: REGISTER_SELLER_FAILED,
-      payload: "That store name already exists"
+      payload: "Error Registering, Please try again or contact us"
     });
     dispatch({ type: REGISTER_SELLER_STOP });
   }
@@ -523,7 +548,7 @@ export const updateSeller = (credentials, history) => async (
     authCheck(error);
     console.log(error.response);
     if (error.response.data.email) {
-      getState().form.SellerRegister.values.email = "";
+      getState().form.seller.values.email = "";
       dispatch({
         type: REGISTER_SELLER_FAILED,
         payload: error.response.data.email
@@ -576,7 +601,7 @@ export const verifyCode = (formValues, history) => async (
   getState
 ) => {
   try {
-    formValues.phoneNumber = getState().sellerRegister.sellerNumber.number;
+    formValues.phoneNumber = getState().seller.sellerNumber.number;
     dispatch({ type: LOADING_START });
     await axios.post("/api/twilio/verify", formValues);
     dispatch({ type: LOADING_STOP });
@@ -609,10 +634,7 @@ export const forgotPassword = (formvalues, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.post(
-      `/api/reset/${getState().sellerRegister.resetToken}`,
-      formvalues
-    );
+    await axios.post(`/api/reset/${getState().seller.resetToken}`, formvalues);
     dispatch({ type: LOADING_STOP });
     history.push("/sign-in");
   } catch (error) {
@@ -2340,4 +2362,23 @@ export const clearReferralErrorAndSuccess = () => {
   return {
     type: CLEAR_REFERRAL_ERROR_AND_SUCCESS
   };
+};
+
+export const clearOrderDetails = () => {
+  return {
+    type: CLEAR_ORDER_DETAILS
+  };
+};
+
+export const redeemPoints = () => async dispatch => {
+  try {
+    dispatch({ type: REDEEM_POINTS_START });
+    await axios.post("/api/seller/redeem/points");
+    dispatch({ type: REDEEM_POINTS, payload: "sucess" });
+    dispatch({ type: REDEEM_POINTS_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REDEEM_POINTS_STOP });
+    dispatch({ type: REDEEM_POINTS_ERROR, payload: "Error redeeming points" });
+  }
 };

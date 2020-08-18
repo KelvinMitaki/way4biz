@@ -12,7 +12,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
-import { fetchNewSellers } from "../../redux/actions";
+import { fetchNewSellers, clearOrderDetails } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
@@ -238,7 +238,11 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <div className="admin-logout-section">
             <p
               className="p-2"
-              onClick={() => (window.location.href = "/api/logout")}
+              onClick={() => {
+                this.props.clearOrderDetails()(
+                  (window.location.href = "/api/logout")
+                );
+              }}
             >
               Logout
             </p>
@@ -253,6 +257,6 @@ const mapStateToProps = (state) => {
     newSellers: state.seller.newSellers,
   };
 };
-export default connect(mapStateToProps, { fetchNewSellers })(
+export default connect(mapStateToProps, { fetchNewSellers, clearOrderDetails })(
   AdminDashboardSecondaryHeader
 );

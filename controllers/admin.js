@@ -32,6 +32,7 @@ const auth = require("../middlewares/is-auth");
 const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
+const Redeem = require("../models/Redeem");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -130,7 +131,8 @@ route.post(
         storeName: storeName.toLowerCase(),
         city,
         address,
-        businessNumber
+        businessNumber,
+        points: 0
       });
       const token = jwt.sign(
         { _id: seller._id },
@@ -139,15 +141,19 @@ route.post(
           expiresIn: "1 hour"
         }
       );
-      await seller.save();
-      if (referralCode) {
-        const referree = await Seller.findById(referralCode);
-        referree.points = referree.points + 10;
+      const decodedSellerId = jwt.verify(
+        referralCode,
+        process.env.CONFIRM_EMAIL_JWT
+      )._id;
+      if (decodedSellerId) {
+        const referree = await Seller.findById(decodedSellerId);
         referree.referrals
           ? (referree.referrals = [...referree.referrals, seller._id])
           : (referree.referrals = [seller._id]);
         await referree.save();
+        seller.referree = decodedSellerId;
       }
+      await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
       transporter.sendMail(
         {
@@ -265,7 +271,6 @@ route.get("/api/confirm/email/:emailToken/seller", async (req, res) => {
     seller.verified = true;
     seller.points = 100;
     await seller.save();
-
     req.session.seller = seller;
     res.redirect("/confirm/phoneNumber");
   } catch (error) {
@@ -1109,7 +1114,10 @@ route.get("/api/verified/seller/:sellerId", auth, isAdmin, async (req, res) => {
 });
 route.get("/api/new/sellers", auth, isAdmin, async (req, res) => {
   try {
-    const sellers = await Seller.find({ isSeller: false });
+    const sellers = await Seller.find({
+      isSeller: false,
+      verifiedPhoneNumber: true
+    });
     res.send({ sellers });
   } catch (error) {
     res.status(500).send(error);
@@ -1544,9 +1552,14 @@ route.post(
   async (req, res) => {
     try {
       const { sellerId } = req.params;
-      const seller = await Seller.findByIdAndUpdate(sellerId, {
-        isSeller: true
-      });
+      const seller = await Seller.findById(sellerId);
+      seller.isSeller = true;
+      if (seller.referree) {
+        const referree = await Seller.findById(seller.referree);
+        referree.points = referree.referrals.length * 100 + 100;
+        await referree.save();
+      }
+      await seller.save();
       res.send(seller);
     } catch (error) {
       res.status(500).send(error);
@@ -2071,6 +2084,25 @@ route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
       "firstName lastName email"
     );
     res.send(inbox);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
+  try {
+    const seller = req.session.user;
+    if (seller.points < 1000) {
+      return res
+        .status(401)
+        .send({ message: "You must have 1000 points and above" });
+    }
+    const redeem = new Redeem({
+      seller: seller._id,
+      amount: seller.points
+    });
+    await redeem.save();
+    await Seller.findByIdAndUpdate(seller._id, { points: 0 });
+    res.send({ message: "Success" });
   } catch (error) {
     res.status(500).send(error);
   }

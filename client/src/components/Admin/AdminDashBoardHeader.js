@@ -5,6 +5,8 @@ import Logo from "../Header/Logo";
 import { IconContext } from "react-icons";
 import { MdArrowDropDown } from "react-icons/md";
 import AdminProfile from "./AdminProfile";
+import { clearOrderDetails } from "../../redux/actions";
+import { connect } from "react-redux";
 
 class AdminDashBoardHeader extends React.Component {
   render() {
@@ -24,7 +26,11 @@ class AdminDashBoardHeader extends React.Component {
             <div className="admin-logout-section">
               <p
                 className="p-2"
-                onClick={() => (window.location.href = "/api/logout")}
+                onClick={() => {
+                  this.props.clearOrderDetails()(
+                    (window.location.href = "/api/logout")
+                  );
+                }}
               >
                 Logout
               </p>
@@ -36,4 +42,4 @@ class AdminDashBoardHeader extends React.Component {
   }
 }
 
-export default AdminDashBoardHeader;
+export default connect(null, { clearOrderDetails })(AdminDashBoardHeader);
