@@ -731,13 +731,17 @@ route.post(
     .not()
     .isEmpty()
     .withMessage("You must enter the destination"),
+  check("deliveryMethod")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid delivery method"),
   (req, res) => {
     const { _id } = req.session.user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(401).send({ message: errors.array()[0].msg });
     }
-    const { origins, destination } = req.body;
+    const { origins, destination, deliveryMethod } = req.body;
     // const origins = ["nairobi"];
     // const destination = ["mombasa"];
     // 1KM===3KSH
@@ -747,18 +751,35 @@ route.post(
       if (err) {
         return res.status(404).send(err);
       }
+      let shippingFees;
+      if (
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 <= 10
+      ) {
+        shippingFees = 0;
+      }
+      if (
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 > 10
+      ) {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 10;
+      }
+      if (deliveryMethod === "Express") {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 25;
+      }
       const distanceExists = await Distance.findOne({
         destination: response.destination_addresses[0],
         distance: response.rows[0].elements[0].distance.value,
-        shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
+        shippingFees,
         buyer: _id
       });
       if (!distanceExists) {
         const dist = new Distance({
           destination: response.destination_addresses[0],
           distance: response.rows[0].elements[0].distance.value,
-          shippingFees:
-            (response.rows[0].elements[0].distance.value / 1000) * 3,
+          shippingFees,
           buyer: _id
         });
         await dist.save();
