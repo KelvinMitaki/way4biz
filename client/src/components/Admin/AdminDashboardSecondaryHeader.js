@@ -185,7 +185,21 @@ class AdminDashboardSecondaryHeader extends React.Component {
               to="/admin-redeems"
               activeClassName="admin-active-lg-link"
             >
-              <MdRedeem /> <span className="ml-2">Redeems</span>
+              <MdRedeem />{" "}
+              <span className="ml-2">
+                Redeems
+                <span
+                  style={{
+                    position: "relative",
+                    zIndex: "32",
+                    backgroundColor: "#f76b1a",
+                    color: "#fff",
+                  }}
+                  className="ml-1 badge"
+                >
+                  0
+                </span>
+              </span>
             </NavLink>
           </li>
           <li>
