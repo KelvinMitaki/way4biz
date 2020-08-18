@@ -12,7 +12,11 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
-import { fetchNewSellers, clearOrderDetails } from "../../redux/actions";
+import {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+} from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
@@ -36,6 +40,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
   };
   componentDidMount() {
     this.props.fetchNewSellers();
+    this.props.redeemCountAction();
   }
   handleClick = e => {
     this.setState(prevState => {
@@ -45,7 +50,8 @@ class AdminDashboardSecondaryHeader extends React.Component {
     });
   };
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
+    if (!this.props.newSellers || !this.props.redeemCount)
+      return <ScreenLoader />;
     return (
       <div className="container-fluid admin-dashboard-secondary-header">
         {this.state.open ? (
@@ -201,7 +207,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <MdRedeem />{" "}
               <span className="ml-2">
                 Redeems
-                {this.props.redeems !== 0 && (
+                {this.props.redeems && this.props.redeems !== 0 && (
                   <span
                     style={{
                       position: "relative",
@@ -257,9 +263,12 @@ class AdminDashboardSecondaryHeader extends React.Component {
 const mapStateToProps = state => {
   return {
     newSellers: state.seller.newSellers,
-    redeems: state.admin.redeemCount.redeems
+    redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
+    redeemCount: state.admin.redeemCount
   };
 };
-export default connect(mapStateToProps, { fetchNewSellers, clearOrderDetails })(
-  AdminDashboardSecondaryHeader
-);
+export default connect(mapStateToProps, {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+})(AdminDashboardSecondaryHeader);

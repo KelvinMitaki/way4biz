@@ -2122,7 +2122,10 @@ route.get("/api/fetch/admin/redeem/count", auth, isAdmin, async (req, res) => {
 
 route.get("/api/fetch/admin/redeems", auth, isAdmin, async (req, res) => {
   try {
-    const redeems = await Redeem.find({});
+    const redeems = await Redeem.find({}).populate(
+      "seller",
+      "firstName lastName"
+    );
     res.send(redeems);
   } catch (error) {
     res.status(500).send(error);
