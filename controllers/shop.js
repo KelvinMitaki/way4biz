@@ -187,6 +187,24 @@ route.post("/api/products/filter", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get(
+  "/api/products/category/subcategory/:subcategory",
+  async (req, res) => {
+    try {
+      const { subcategory } = req.params;
+      const products = await Product.find({ subcategory, onSite: true });
+      if (!products || products.length === 0) {
+        return res
+          .status(404)
+          .send({ message: "No products in that subcategory" });
+      }
+      res.send(products);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 route.post("/api/product/search", async (req, res) => {
   try {
     const { searchTerm } = req.body;
@@ -719,7 +737,7 @@ route.post(
     if (!errors.isEmpty()) {
       return res.status(401).send({ message: errors.array()[0].msg });
     }
-    const { origins, destination } = req.body;
+    const { origins, destination, deliveryMethod } = req.body;
     // const origins = ["nairobi"];
     // const destination = ["mombasa"];
     // 1KM===3KSH
@@ -729,18 +747,37 @@ route.post(
       if (err) {
         return res.status(404).send(err);
       }
+      let shippingFees = 0;
+      if (
+        deliveryMethod &&
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 <= 10
+      ) {
+        shippingFees = 0;
+      }
+      if (
+        deliveryMethod &&
+        deliveryMethod === "Normal" &&
+        response.rows[0].elements[0].distance.value / 1000 > 10
+      ) {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 10;
+      }
+      if (deliveryMethod && deliveryMethod === "Express") {
+        shippingFees =
+          (response.rows[0].elements[0].distance.value / 1000) * 25;
+      }
       const distanceExists = await Distance.findOne({
         destination: response.destination_addresses[0],
         distance: response.rows[0].elements[0].distance.value,
-        shippingFees: (response.rows[0].elements[0].distance.value / 1000) * 3,
+        shippingFees,
         buyer: _id
       });
       if (!distanceExists) {
         const dist = new Distance({
           destination: response.destination_addresses[0],
           distance: response.rows[0].elements[0].distance.value,
-          shippingFees:
-            (response.rows[0].elements[0].distance.value / 1000) * 3,
+          shippingFees,
           buyer: _id
         });
         await dist.save();

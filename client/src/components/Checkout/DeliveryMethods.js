@@ -3,12 +3,19 @@ import React from "react";
 import "./DeliveryMethods.css";
 import { Field } from "redux-form";
 import RadioField from "./RadioField";
+import { connect } from "react-redux";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/core";
 
 class DeliveryMethods extends React.Component {
   render() {
     const showHideClassName = this.props.show
       ? "modal display-block"
       : "modal display-none";
+    const override = css`
+      display: block;
+      margin: 0 auto;
+    `;
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
@@ -18,6 +25,16 @@ class DeliveryMethods extends React.Component {
             </span>
           </div>
           <div className="modal-body">
+            {this.props.paymentPerDistanceLoading && (
+              <div id="pick-up-loader">
+                <HashLoader
+                  loading={this.props.paymentPerDistanceLoading}
+                  size={40}
+                  css={override}
+                  color={"#f76b1a"}
+                />
+              </div>
+            )}
             <div className="container p-0">
               <h4>Delivery Methods</h4>
               <div className="ml-3 mt-2">
@@ -29,7 +46,6 @@ class DeliveryMethods extends React.Component {
                     value="Normal"
                     id="radio-1000"
                     component={RadioField}
-                    onChange={this.props.delivery}
                   />
 
                   <div>
@@ -47,7 +63,6 @@ class DeliveryMethods extends React.Component {
                     value="Express"
                     id="radio-1100"
                     component={RadioField}
-                    onChange={this.props.delivery}
                   />
 
                   <div>
@@ -66,5 +81,9 @@ class DeliveryMethods extends React.Component {
     );
   }
 }
-
-export default DeliveryMethods;
+const mapStateToProps = state => {
+  return {
+    paymentPerDistanceLoading: state.user.paymentPerDistanceLoading
+  };
+};
+export default connect(mapStateToProps)(DeliveryMethods);

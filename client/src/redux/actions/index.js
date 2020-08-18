@@ -250,7 +250,10 @@ import {
   REDEEM_POINTS_START,
   REDEEM_POINTS_STOP,
   REDEEM_POINTS_ERROR,
-  REDEEM_POINTS
+  REDEEM_POINTS,
+  STORE_LAT_LNG,
+  DELIVERY_OPEN_ACTION,
+  DELIVERY_CLOSE_ACTION
 } from "./types";
 
 const authCheck = error => {
@@ -416,7 +419,10 @@ export const editUser = (credentials, history) => async (
     dispatch({ type: LOADING_STOP });
   }
 };
-export const checkoutUser = credentials => async (dispatch, getState) => {
+export const checkoutUser = (credentials, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
@@ -426,6 +432,7 @@ export const checkoutUser = credentials => async (dispatch, getState) => {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: CHECKOUT_USER, payload: res.data });
+    history.push("/checkout");
     dispatch({ type: CHECKOUT_USER_STOP });
   } catch (error) {
     console.log(error);
@@ -1082,6 +1089,7 @@ export const fetchSingleProduct = productId => async dispatch => {
 
 export const fetchRelatedProducts = subcategory => async dispatch => {
   try {
+    console.log(subcategory);
     dispatch({ type: LOADING_START });
     const res = await axios.get(
       `/api/products/category/subcategory/${subcategory}`
@@ -1519,13 +1527,15 @@ export const deleteImage = (imageUrl, productId) => async dispatch => {
   }
 };
 
-export const paymentPerDistance = (details, history) => async dispatch => {
+export const paymentPerDistance = details => async dispatch => {
   try {
     dispatch({ type: PAYMENT_DISTANCE_START });
     const res = await axios.post(`/api/buyer/destination`, details);
     dispatch({ type: PAYMENT_DISTANCE, payload: res.data });
-    history.push("/checkout");
     dispatch({ type: PAYMENT_DISTANCE_STOP });
+    if (details.deliveryMethod) {
+      dispatch(deliveryCloseAction());
+    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: PAYMENT_DISTANCE_STOP });
@@ -2305,6 +2315,16 @@ export const collectionCloseAction = () => {
     type: COLLECTION_CLOSE_ACTION
   };
 };
+export const deliveryOpenAction = () => {
+  return {
+    type: DELIVERY_OPEN_ACTION
+  };
+};
+export const deliveryCloseAction = () => {
+  return {
+    type: DELIVERY_CLOSE_ACTION
+  };
+};
 export const sendReferralCode = (referralBody, reset) => async dispatch => {
   try {
     dispatch({ type: SEND_REFERRAL_CODE_START });
@@ -2381,4 +2401,11 @@ export const redeemPoints = () => async dispatch => {
     dispatch({ type: REDEEM_POINTS_STOP });
     dispatch({ type: REDEEM_POINTS_ERROR, payload: "Error redeeming points" });
   }
+};
+
+export const storeLatLng = latLng => {
+  return {
+    type: STORE_LAT_LNG,
+    payload: latLng
+  };
 };

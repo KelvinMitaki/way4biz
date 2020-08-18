@@ -8,12 +8,12 @@ import PickUp from "./PickUp";
 import { connect } from "react-redux";
 import {
   collectionOpenAction,
-  collectionCloseAction
+  collectionCloseAction,
+  deliveryOpenAction,
+  deliveryCloseAction
 } from "../../redux/actions";
 
 class GoodsReach extends React.Component {
-  state = { delivery: false };
-
   handleCollectionOpen = e => {
     this.props.collectionOpenAction();
   };
@@ -23,24 +23,20 @@ class GoodsReach extends React.Component {
   };
 
   handleDeliveryOpen = e => {
-    this.setState({
-      delivery: true
-    });
+    this.props.deliveryOpenAction();
   };
 
   handleDeliveryClose = e => {
-    this.setState({
-      delivery: false
-    });
+    this.props.deliveryCloseAction();
   };
 
   render() {
     return (
       <div className="ml-3 mt-2">
-        {this.state.delivery ? (
+        {this.props.delivery ? (
           <DeliveryMethods
             delivery={this.handleDeliveryClose}
-            show={this.state.delivery}
+            show={this.props.delivery}
           />
         ) : null}
         {this.props.collection ? (
@@ -89,13 +85,18 @@ class GoodsReach extends React.Component {
 const selector = formValueSelector("Chekout");
 const mapStateToProps = state => {
   const goodsReach = selector(state, "goods-reach");
+  const stateDelivery = selector(state, "delivery");
   return {
     address: state.selfCollection.address,
+    delivery: state.user.delivery,
     collection: state.selfCollection.collection,
-    goodsReach
+    goodsReach,
+    stateDelivery
   };
 };
 export default connect(mapStateToProps, {
   collectionOpenAction,
-  collectionCloseAction
+  collectionCloseAction,
+  deliveryCloseAction,
+  deliveryOpenAction
 })(GoodsReach);

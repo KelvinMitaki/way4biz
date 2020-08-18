@@ -18,24 +18,15 @@ import {
 import MobileLogo from "../Header/MobileLogo";
 import GoodsReach from "./GoodsReach";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import ScreenLoader from "../Pages/ScreenLoader";
 
 class CheckOut extends React.Component {
   componentDidMount() {
-    if (!this.props.distance || this.props.cart.length === 0) {
+    if (this.props.cart.length === 0) {
       return <Redirect to="/address" />;
     }
   }
   componentWillUnmount() {
     this.props.removeAddress();
-  }
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.goodsReach !== "self-collection" &&
-      this.props.goodsReach !== prevProps.goodsReach
-    ) {
-      this.handleSelect(this.props.user.address);
-    }
   }
   handleSelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
@@ -49,11 +40,6 @@ class CheckOut extends React.Component {
     }
     if (!this.props.distance) return <Redirect to="/address" />;
     const { user, cart } = this.props;
-    const VAT = Math.ceil(
-      this.props.cart
-        .map(item => item.price * item.quantity)
-        .reduce((acc, curr) => acc + curr, 0) * 0.01
-    ).toLocaleString();
     const total = this.props.cart
       .map(item => item.price * item.quantity)
       .reduce((acc, curr) => acc + curr, 0)
@@ -110,26 +96,23 @@ class CheckOut extends React.Component {
                         <p>{total}</p>
                       </div>
                       <div>
-                        <p>VAT</p>
-                        <p>{VAT}</p>
-                      </div>
-                      <div>
                         <p>Shipping</p>
                         <p>
-                          {this.props.distance &&
-                            Math.round(
-                              this.props.distance.shippingFees
-                            ).toLocaleString()}
+                          {this.props.distance
+                            ? Math.round(
+                                this.props.distance.shippingFees
+                              ).toLocaleString()
+                            : "N/A"}
                         </p>
                       </div>
                       <hr />
                       <div>
                         <p>Total</p>
                         <p>
-                          {(
-                            parseInt(total.replace(",", "")) +
-                            parseInt(VAT) +
-                            Math.round(this.props.distance.shippingFees)
+                          {(parseInt(total.replace(",", "")) +
+                          this.props.distance
+                            ? Math.round(this.props.distance.shippingFees)
+                            : 0
                           ).toLocaleString()}
                         </p>
                       </div>
@@ -188,7 +171,7 @@ const validate = formValues => {
   }
   return errors;
 };
-const selector = formValueSelector("Chekout");
+const selector = formValueSelector("Checkout");
 const mapStateToProps = state => {
   const payment = selector(state, "payment");
   const delivery = selector(state, "delivery");
@@ -206,7 +189,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  reduxForm({ form: "Chekout", validate })(
+  reduxForm({ form: "Checkout", validate })(
     connect(mapStateToProps, {
       preMakeOrder,
       fetchProducts,
