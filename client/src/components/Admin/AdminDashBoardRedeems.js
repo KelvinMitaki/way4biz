@@ -18,35 +18,41 @@ class AdminDashBoardRedeems extends React.Component {
               Redeems
             </h3>
             <div className="container">
-              <div className="row y">
-                <div className="col-md-4">
-                  <h6>Helloo</h6>
+              <div className="row y" style={{ borderLeft: "3px solid #fff" }}>
+                <div className="col-md-3">
+                  <h6>Seller</h6>
                 </div>
-                <div className="col-md-4">
-                  <h6>Helloo</h6>
+                <div className="col-md-3">
+                  <h6>Redeem Time</h6>
                 </div>
-                <div className="col-md-4">
-                  <h6>Helloo</h6>
+                <div className="col-md-3">
+                  <h6>Amount</h6>
                 </div>
+                <div className="col-md-3">{/* <h6>Helloo</h6> */}</div>
               </div>
               {/* mapping here */}
               <div
                 className="row box-container py-2"
                 style={{ borderLeft: "3px solid #f76b1a" }}
               >
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Hey:</strong>Helloo
+                    <strong className="x mr-1">Seller:</strong>Helloo
                   </h6>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Hey:</strong>Helloo
+                    <strong className="x mr-1">Redeem Time:</strong>Helloo
                   </h6>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <h6>
-                    <strong className="x mr-1">Hey:</strong>Helloo
+                    <strong className="x mr-1">Amount:</strong>Helloo
+                  </h6>
+                </div>
+                <div className="col-md-3">
+                  <h6>
+                    <button>Helloo</button>
                   </h6>
                 </div>
               </div>
