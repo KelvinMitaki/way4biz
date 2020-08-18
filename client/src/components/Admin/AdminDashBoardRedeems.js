@@ -60,7 +60,10 @@ class AdminDashBoardRedeems extends React.Component {
                 </div>
                 <div className="col-md-3">
                   <h6>
-                    <button>Hellooo</button>
+                    {/* show this if paid is false */}
+                    <button className="redeem-pay-btn btn-md">Pay</button>
+                    {/* show this if paid is true */}
+                    {/* <button className="redeem-paid-btn btn-md">Paid</button> */}
                   </h6>
                 </div>
               </div>
