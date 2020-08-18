@@ -24,9 +24,24 @@ class FAQAccordion extends React.Component {
   render() {
     const panels = [
       {
-        label: "Seriously, Don't Use Icon Fonts",
-        content:
-          'Icons are everywhere. These "little miracle workers" (as John Hicks described them) help us reinforce meaning in the interfaces we design and build. Their popularity in web design has never been greater; the conciseness and versatility of pictograms in particular make them a lovely fit for displays large and small. But icons on the web have had their fair share of challenges.',
+        label: "How do i buy products on Way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <p>Way4Biz sells products on its website and buying is easy:</p>
+            <p>
+              Way4Biz will indicate on the relevant product catalogues when
+              products are for sale.{" "}
+            </p>
+            <p>
+              You can simply add the products to your shopping cart and proceed
+              through checkout using any of Way4Biz’s available payment methods.
+            </p>
+            <p>
+              To buy on Way4Biz will however require you to have an account so
+              that it can be easy to identify you and process your order easily.
+            </p>
+          </div>
+        ),
       },
       {
         label: "Screen Readers Actually Read That Stuff",
