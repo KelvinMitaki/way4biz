@@ -25,7 +25,7 @@ class FAQAccordion extends React.Component {
   render() {
     const panels = [
       {
-        label: "How do i buy products on Way4Biz?",
+        label: "How do I buy products on Way4Biz?",
         content: (
           <div className="faq-content-section">
             <p>Way4Biz sells products on its website and buying is easy:</p>
@@ -45,7 +45,7 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
-        label: "How do i register with Way4Biz?",
+        label: "How do I register with Way4Biz?",
         content: (
           <div className="faq-content-section">
             <p>
