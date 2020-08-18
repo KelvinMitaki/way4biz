@@ -449,7 +449,6 @@ route.post(
     }
   }
 );
-
 route.post("/api/mpesa/paid/order", auth, async (req, res) => {
   try {
     const url =

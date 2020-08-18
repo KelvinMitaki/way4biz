@@ -181,7 +181,7 @@ class OrderPaymentSuccess extends React.Component {
                       >
                         here
                       </Link>{" "}
-                      or contact <Link to="/">Customer Service.</Link>
+                      or contact <Link to="/contact-us">Customer Service.</Link>
                     </h6>
                   </div>
                 </div>

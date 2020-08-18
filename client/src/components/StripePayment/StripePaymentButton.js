@@ -6,10 +6,19 @@ import { CardElement } from "@stripe/react-stripe-js";
 import "./StripePaymentButton.css";
 
 class StripePaymentButton extends Component {
-  state = {
-    error: null,
-    clicked: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: null,
+      clicked: false
+    };
+  }
+  componentDidMount() {
+    if (this.state.clicked) {
+      this.setState({ clicked: false });
+    }
+  }
   handleSubmit = async e => {
     e.preventDefault();
     const { stripe, elements } = this.props;
@@ -18,10 +27,10 @@ class StripePaymentButton extends Component {
       card: elements.getElement(CardElement)
     });
     if (error) {
-      this.setState({ error: error.message });
+      this.setState({ error: error.message, clicked: false });
     }
-    if (paymentMethod) {
-      this.setState({ error: null });
+    if (paymentMethod && !this.state.clicked) {
+      this.setState({ error: null, clicked: true });
       this.props.makeOrder(
         {
           ...this.props.order,
@@ -45,7 +54,9 @@ class StripePaymentButton extends Component {
             <button
               type="submit"
               className="stripe-payment-btn btn-block mt-3"
-              disabled={!stripe || this.props.makeOrderLoading}
+              disabled={
+                !stripe || this.props.makeOrderLoading || this.state.clicked
+              }
             >
               {this.props.makeOrderLoading && (
                 <span
