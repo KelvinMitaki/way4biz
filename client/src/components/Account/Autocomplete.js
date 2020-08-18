@@ -22,7 +22,7 @@ class AutoComplete extends React.Component {
             </strong>
 
             <input
-              className="form-control authenticate-field"
+              className="form-control"
               style={{ marginTop: "10px" }}
               type={props.type}
               {...getInputProps({ onBlur: props.input.onBlur })}
@@ -35,7 +35,7 @@ class AutoComplete extends React.Component {
               <div className="city-locations">
                 {loading && <div>Loading...</div>}
 
-                {suggestions.map(suggestion => (
+                {suggestions.map((suggestion) => (
                   <React.Fragment key={v1()}>
                     <div {...getSuggestionItemProps(suggestion)}>
                       <div className="city-name">
