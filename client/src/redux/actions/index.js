@@ -256,7 +256,8 @@ import {
   DELIVERY_CLOSE_ACTION,
   MAKE_ORDER_START,
   MAKE_ORDER_STOP,
-  REDEEM_COUNT
+  REDEEM_COUNT,
+  FETCH_REDEEMS
 } from "./types";
 
 const authCheck = error => {
@@ -2417,6 +2418,15 @@ export const redeemCountAction = () => async dispatch => {
   try {
     const res = await axios.get("/api/fetch/admin/redeem/count");
     dispatch({ type: REDEEM_COUNT, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
+};
+
+export const fetchRedeems = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeems");
+    dispatch({ type: FETCH_REDEEMS, payload: res.data });
   } catch (error) {
     authCheck(error);
   }
