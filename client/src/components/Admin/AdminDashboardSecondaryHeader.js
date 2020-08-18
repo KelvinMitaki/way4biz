@@ -99,17 +99,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <p>
                 <NavLink to="/admin-redeems">
                   Redeems
-                  <span
-                    className="badge ml-1"
-                    style={{
-                      position: "relative",
-                      zIndex: "32",
-                      backgroundColor: "#f76b1a",
-                      color: "#fff"
-                    }}
-                  >
-                    0
-                  </span>
+                  {this.props.redeems !== 0 && (
+                    <span
+                      style={{
+                        position: "relative",
+                        zIndex: "32",
+                        backgroundColor: "#f76b1a",
+                        color: "#fff"
+                      }}
+                      className="ml-1 badge"
+                    >
+                      {this.props.redeems.toLocaleString()}
+                    </span>
+                  )}
                 </NavLink>
               </p>
               <p>
@@ -207,7 +209,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <MdRedeem />{" "}
               <span className="ml-2">
                 Redeems
-                {this.props.redeems && this.props.redeems !== 0 && (
+                {this.props.redeems !== 0 && (
                   <span
                     style={{
                       position: "relative",
