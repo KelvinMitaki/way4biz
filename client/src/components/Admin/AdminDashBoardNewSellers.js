@@ -43,12 +43,15 @@ class AdminDashBoardNewSellers extends React.Component {
                     </div>
                   </div>
                   {/* mapping here */}
-                  {this.props.newSellers.sellers.map(seller => (
+                  {this.props.newSellers.sellers.map((seller) => (
                     <div
                       className="admin-new-seller container"
                       key={seller._id}
                     >
-                      <div className="row box-container">
+                      <div
+                        className="row box-container"
+                        style={{ padding: "10px 0px" }}
+                      >
                         <div className="col-md-3">
                           {/* <div className="admin-seller-name"> */}
                           <p>
@@ -98,9 +101,9 @@ class AdminDashBoardNewSellers extends React.Component {
     // }
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.seller.newSellers
+    newSellers: state.seller.newSellers,
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers })(

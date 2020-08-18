@@ -282,7 +282,6 @@
 .profile-img {
   height: 40px;
   width: 40px;
-  /* border: 1px solid #f76b1a; */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -293,6 +292,9 @@
   position: fixed;
   top: 0px;
   left: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
 }
 @media screen and (max-width: 920px) {
   .content {
@@ -306,9 +308,5 @@
   .form-primary-error {
     width: 90vw !important;
     margin: auto;
-  }
-
-  .custom-badge {
-    font-size: 9px;
   }
 }

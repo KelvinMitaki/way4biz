@@ -1,13 +1,13 @@
 import React from "react";
 
-const VerificationField = props => {
+const VerificationField = (props) => {
   return (
     <div className="form-group form-input">
       <div style={{ textAlign: "center" }}>
         <strong>{props.label}</strong>
       </div>
       <input
-        className="form-control authenticate-field"
+        className="form-control"
         type={props.type}
         {...props.input}
         placeholder="123456"

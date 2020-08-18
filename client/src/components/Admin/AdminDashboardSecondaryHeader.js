@@ -4,13 +4,13 @@ import "./AdminDashboardSecondaryHeader.css";
 import {
   RiDashboardLine,
   RiFileUserLine,
-  RiInboxArchiveLine
+  RiInboxArchiveLine,
 } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
-import { MdKeyboardArrowDown, MdArrowDropDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
 import { fetchNewSellers, clearOrderDetails } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -28,19 +28,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100
-          }
-        ]
-      }
-    ]
+            num: 100,
+          },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchNewSellers();
   }
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -52,7 +52,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
           <div
             onClick={this.handleClick}
             className="back-shed"
-            style={{ backgroundColor: "transparent" }}
+            // style={{ backgroundColor: "transparent" }}
           ></div>
         ) : null}
         <div className="admin-hamburger-menu-wrapper">
@@ -90,6 +90,25 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <p>
                 <NavLink to="/admin-categories">Categories</NavLink>
               </p>
+              <p>
+                <NavLink to="/admin-redeems">
+                  Redeems
+                  <span
+                    className="badge ml-1"
+                    style={{
+                      position: "relative",
+                      zIndex: "32",
+                      backgroundColor: "#f76b1a",
+                      color: "#fff",
+                    }}
+                  >
+                    0
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-inbox">Inbox</NavLink>
+              </p>
             </div>
           ) : null}
         </div>
@@ -117,7 +136,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff"
+                        color: "#fff",
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -145,7 +164,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -171,6 +190,29 @@ class AdminDashboardSecondaryHeader extends React.Component {
               activeClassName="admin-active-lg-link"
             >
               <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              exact
+              to="/admin-redeems"
+              activeClassName="admin-active-lg-link"
+            >
+              <MdRedeem />{" "}
+              <span className="ml-2">
+                Redeems
+                <span
+                  style={{
+                    position: "relative",
+                    zIndex: "32",
+                    backgroundColor: "#f76b1a",
+                    color: "#fff",
+                  }}
+                  className="ml-1 badge"
+                >
+                  0
+                </span>
+              </span>
             </NavLink>
           </li>
           <li>
@@ -210,9 +252,9 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    newSellers: state.seller.newSellers
+    newSellers: state.seller.newSellers,
   };
 };
 export default connect(mapStateToProps, { fetchNewSellers, clearOrderDetails })(

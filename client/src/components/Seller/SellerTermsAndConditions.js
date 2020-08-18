@@ -14,7 +14,7 @@ class SellerTermsAndConditions extends React.Component {
   render() {
     return (
       <div className="container">
-        <div style={{ height: "98vh", overflowY: "auto" }}>
+        <div style={{ overflowY: "auto" }}>
           <h3
             className="mb-3"
             style={{ textDecoration: "underline", textAlign: "center" }}
