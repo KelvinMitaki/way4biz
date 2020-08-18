@@ -15,14 +15,8 @@ class SellerOrientationGuide extends React.Component {
   render() {
     return (
       <div className="container">
-        <h3
-          className="mb-3"
-          style={{ textDecoration: "underline", textAlign: "center" }}
-        >
-          Orientation Guide
-        </h3>
-        <div>
-          <h5>Please read the seller orientation guide.</h5>
+        <div style={{ textAlign: "center" }}>
+          <h5 className="mb-5">Please read the seller orientation guide.</h5>
           <a
             className="my-2 btn btn-lg"
             href="/1.jpg"
@@ -30,7 +24,7 @@ class SellerOrientationGuide extends React.Component {
             id="download-guide-link"
             onClick={this.handleClick}
           >
-            Download PDF Guide
+            Download PDF
           </a>
         </div>
       </div>
