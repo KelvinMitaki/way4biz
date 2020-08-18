@@ -3,17 +3,19 @@ import { makeOrder } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { CardElement } from "@stripe/react-stripe-js";
+import "./StripePaymentButton.css";
+
 class StripePaymentButton extends Component {
   state = {
     error: null,
-    clicked: false
+    clicked: false,
   };
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { stripe, elements } = this.props;
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: elements.getElement(CardElement),
     });
     if (error) {
       this.setState({ error: error.message });
@@ -23,20 +25,22 @@ class StripePaymentButton extends Component {
       this.props.makeOrder(
         {
           ...this.props.order,
-          id: paymentMethod.id
+          id: paymentMethod.id,
         },
         this.props.history
       );
     }
   };
   render() {
-    const priceArr = this.props.cart.map(item => item.price * item.quantity);
+    const priceArr = this.props.cart.map((item) => item.price * item.quantity);
     const amount = priceArr.reduce((acc, cur) => acc + cur, 0);
     const { stripe } = this.props;
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <CardElement />
+          <div id="stripe-card-wrapper">
+            <CardElement />
+          </div>
           <button type="submit" disabled={!stripe}>
             Pay Ksh.
             {amount &&
@@ -52,9 +56,9 @@ class StripePaymentButton extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    distance: state.detailsPersist.distance
+    distance: state.detailsPersist.distance,
   };
 };
 export default withRouter(
