@@ -10,3 +10,7 @@
 .faq-content-section a {
   color: #f76b1a;
 }
+
+.faq-content-section ul {
+  padding-left: 20px;
+}

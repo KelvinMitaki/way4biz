@@ -74,9 +74,31 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
-        label: "They're a Nightmare if You're Dyslexic",
-        content:
-          "Many dyslexic people find it helpful to swap out a website's typeface for something like OpenDyslexic. But icon fonts get replaced as well, which makes for a frustratingly broken experience.",
+        label: "What are my delivery options?",
+        content: (
+          <div className="faq-content-section">
+            <h5>Way4Biz offers 3 convenient methods of delivery:</h5>
+            <ul>
+              <li>
+                <p>
+                  <strong>Collect - </strong>You can choose to collect from
+                  Way4Biz's pickup collection near you.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Courier - </strong>We deliver directly to your home or
+                  office.This delivery however has two modes:{" "}
+                  <strong>Normal Delivery</strong>
+                  which takes 3-7 days and <strong>
+                    Express Delivery
+                  </strong>{" "}
+                  which takes 24-48hrs.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
       },
       {
         label: "There's Already a Better Way",
