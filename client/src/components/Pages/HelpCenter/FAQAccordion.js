@@ -77,7 +77,7 @@ class FAQAccordion extends React.Component {
         label: "What are my delivery options?",
         content: (
           <div className="faq-content-section">
-            <h5>Way4Biz offers 3 convenient methods of delivery:</h5>
+            <h6>Way4Biz offers 3 convenient methods of delivery:</h6>
             <ul>
               <li>
                 <p>
