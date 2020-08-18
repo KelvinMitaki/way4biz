@@ -8,14 +8,14 @@ import "./StripePaymentButton.css";
 class StripePaymentButton extends Component {
   state = {
     error: null,
-    clicked: false,
+    clicked: false
   };
-  handleSubmit = async (e) => {
+  handleSubmit = async e => {
     e.preventDefault();
     const { stripe, elements } = this.props;
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement),
+      card: elements.getElement(CardElement)
     });
     if (error) {
       this.setState({ error: error.message });
@@ -25,14 +25,14 @@ class StripePaymentButton extends Component {
       this.props.makeOrder(
         {
           ...this.props.order,
-          id: paymentMethod.id,
+          id: paymentMethod.id
         },
         this.props.history
       );
     }
   };
   render() {
-    const priceArr = this.props.cart.map((item) => item.price * item.quantity);
+    const priceArr = this.props.cart.map(item => item.price * item.quantity);
     const amount = priceArr.reduce((acc, cur) => acc + cur, 0);
     const { stripe } = this.props;
     return (
@@ -45,13 +45,27 @@ class StripePaymentButton extends Component {
             <button
               type="submit"
               className="stripe-payment-btn btn-block mt-3"
-              disabled={!stripe}
+              disabled={!stripe || this.props.makeOrderLoading}
             >
-              Pay Ksh.
-              {amount &&
-                Math.round(
-                  amount + this.props.distance.shippingFees
-                ).toLocaleString()}
+              {this.props.makeOrderLoading && (
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {this.props.makeOrderLoading ? (
+                <span> {"  "}Loading...</span>
+              ) : (
+                <span>
+                  {" "}
+                  Pay Ksh.
+                  {amount &&
+                    Math.round(
+                      amount + this.props.distance.shippingFees
+                    ).toLocaleString()}
+                </span>
+              )}
             </button>
           </div>
         </form>
@@ -62,9 +76,10 @@ class StripePaymentButton extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     distance: state.detailsPersist.distance,
+    makeOrderLoading: state.user.makeOrderLoading
   };
 };
 export default withRouter(
