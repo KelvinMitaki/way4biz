@@ -116,6 +116,17 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Can I pay with Cash?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              We currently don't offer cash on delivery.
+            </p>
+
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
