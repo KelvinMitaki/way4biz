@@ -1674,7 +1674,7 @@ export const fetchAllOrders = filter => async dispatch => {
 };
 
 export const adminRadio = event => (dispatch, getState) => {
-  getState().product.ordersToSkip = 0;
+  getState().admin.ordersToSkip = 0;
   getState().admin.orderCount = 0;
   dispatch({
     type: ADMIN_RADIO,
@@ -1719,7 +1719,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
 };
 
 export const resetSkipAndCount = () => (dispatch, getState) => {
-  getState().product.ordersToSkip = 0;
+  getState().admin.ordersToSkip = 0;
   getState().admin.orderCount = 0;
 };
 

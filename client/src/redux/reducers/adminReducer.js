@@ -60,7 +60,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         allAdminOrders: action.payload.orders,
         orderCount: action.payload.ordersCount,
-        ordersToSkip: state.ordersToSkip + 5,
+        ordersToSkip: state.ordersToSkip + 20,
         radioLoading: false,
         orderError: null
       };
@@ -72,7 +72,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.allAdminOrders,
           ...action.payload.orders.filter(order => !orderIds.has(order._id))
         ],
-        ordersToSkip: state.ordersToSkip + 5,
+        ordersToSkip: state.ordersToSkip + 20,
         orderError: null
       };
     case FETCH_ORDER_BY_ID:

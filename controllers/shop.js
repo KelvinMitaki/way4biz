@@ -87,7 +87,7 @@ route.post("/api/products/skip/category", async (req, res) => {
       },
       { $sort: sort },
       { $skip: itemsToSkip },
-      { $limit: 6 }
+      { $limit: 20 }
     ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
