@@ -46,7 +46,7 @@ route.post("/api/products", async (req, res) => {
         }
       },
       { $skip: itemsToSkip },
-      { $limit: 6 }
+      { $limit: 20 }
     ]);
     const productCount = await Product.aggregate([
       { $match: { onSite: true, stockQuantity: { $gte: 1 } } },
