@@ -1310,7 +1310,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       const orders = await Order.aggregate([
         { $sort: { createdAt: -1 } },
         { $skip: itemsToSkip },
-        { $limit: 5 }
+        { $limit: 20 }
       ]);
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
       return res.send({
@@ -1323,7 +1323,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $match: test },
         { $sort: { createdAt: -1 } },
         { $skip: itemsToSkip },
-        { $limit: 5 }
+        { $limit: 20 }
       ]);
 
       const ordersCount = await Order.aggregate([
@@ -1345,7 +1345,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       },
       { $sort: { createdAt: -1 } },
       { $skip: itemsToSkip },
-      { $limit: 5 }
+      { $limit: 20 }
     ]);
 
     const ordersCount = await Order.aggregate([

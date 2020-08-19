@@ -164,7 +164,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         singleCategoryProducts: action.payload.products,
         categoryProductCount: action.payload.productCount,
-        itemsToSkip: state.itemsToSkip + 6
+        itemsToSkip: state.itemsToSkip + 20
       };
     case MORE_SINGLE_CATEGORY_PRODUCTS:
       const prodIds = new Set(state.singleCategoryProducts.map(pro => pro._id));
@@ -174,7 +174,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.singleCategoryProducts,
           ...action.payload.products.filter(prod => !prodIds.has(prod._id))
         ],
-        itemsToSkip: state.itemsToSkip + 6
+        itemsToSkip: state.itemsToSkip + 20
       };
 
     case FETCH_ALL_CATEGORIES:
