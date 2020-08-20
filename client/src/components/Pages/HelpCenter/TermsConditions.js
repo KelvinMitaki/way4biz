@@ -43,7 +43,10 @@ class TermsConditions extends React.Component {
               <h3>Returns and refunds</h3>
               <p>Returns of products by buyers and acceptance of returned products by sellers shall be managed by us in accordance with the returns page on the platform, as may be amended from time to time. Acceptance of returns shall be in our discretion, subject to compliance with applicable laws of the territory.</p>
               <p>Returned products shall be accepted and refunds issued by Way4Biz, for and on behalf of the seller.</p>
-              <p>. Changes to our returns page or refunds page shall be effective in respect of all purchases made from the date of publication of the change on our website.</p>
+              <p>Changes to our returns page or refunds page shall be effective in respect of all purchases made from the date of publication of the change on our website.</p>
+
+              <h3>Payments</h3>
+              <p>Any buyer must make payments due under these general terms and conditions in accordance with the Payments Information and Guidelines on the platform.</p>
             </div>
           </div>
         </div>
