@@ -18,7 +18,11 @@ import {
   FETCH_ORDER_BY_ID_START,
   FETCH_ORDER_BY_ID_STOP,
   CONFIRM_DELIVERY_START,
-  CONFIRM_DELIVERY_STOP
+  CONFIRM_DELIVERY_STOP,
+  REDEEM_COUNT,
+  FETCH_REDEEMS,
+  PAY_REDEEM_START,
+  PAY_REDEEM_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -35,7 +39,10 @@ const INITIAL_STATE = {
   adminOrdersLoading: false,
   adminOrderLoading: false,
   adminOrder: null,
-  deliveryLoading: false
+  deliveryLoading: false,
+  redeemCount: null,
+  redeems: null,
+  payRedeemLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -53,7 +60,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         allAdminOrders: action.payload.orders,
         orderCount: action.payload.ordersCount,
-        ordersToSkip: state.ordersToSkip + 5,
+        ordersToSkip: state.ordersToSkip + 20,
         radioLoading: false,
         orderError: null
       };
@@ -65,7 +72,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.allAdminOrders,
           ...action.payload.orders.filter(order => !orderIds.has(order._id))
         ],
-        ordersToSkip: state.ordersToSkip + 5,
+        ordersToSkip: state.ordersToSkip + 20,
         orderError: null
       };
     case FETCH_ORDER_BY_ID:
@@ -114,6 +121,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deliveryLoading: true };
     case CONFIRM_DELIVERY_STOP:
       return { ...state, deliveryLoading: false };
+    case REDEEM_COUNT:
+      return { ...state, redeemCount: action.payload };
+    case FETCH_REDEEMS:
+      return { ...state, redeems: action.payload };
+    case PAY_REDEEM_START:
+      return { ...state, payRedeemLoading: true };
+    case PAY_REDEEM_STOP:
+      return { ...state, payRedeemLoading: false };
     default:
       return state;
   }

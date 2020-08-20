@@ -1310,7 +1310,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       const orders = await Order.aggregate([
         { $sort: { createdAt: -1 } },
         { $skip: itemsToSkip },
-        { $limit: 5 }
+        { $limit: 20 }
       ]);
       const ordersCount = await Order.aggregate([{ $count: "ordersCount" }]);
       return res.send({
@@ -1323,7 +1323,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
         { $match: test },
         { $sort: { createdAt: -1 } },
         { $skip: itemsToSkip },
-        { $limit: 5 }
+        { $limit: 20 }
       ]);
 
       const ordersCount = await Order.aggregate([
@@ -1345,7 +1345,7 @@ route.post("/api/root/admin/all/orders", auth, isAdmin, async (req, res) => {
       },
       { $sort: { createdAt: -1 } },
       { $skip: itemsToSkip },
-      { $limit: 5 }
+      { $limit: 20 }
     ]);
 
     const ordersCount = await Order.aggregate([
@@ -1390,7 +1390,16 @@ route.get("/api/root/admin/order/:orderId", auth, isAdmin, async (req, res) => {
           foreignField: "_id",
           as: "seller"
         }
-      }
+      },
+      {
+        $lookup: {
+          from: "distances",
+          localField: "distance",
+          foreignField: "_id",
+          as: "distance"
+        }
+      },
+      { $unwind: "$distance" }
     ]);
     res.send({
       ...order,
@@ -2107,4 +2116,50 @@ route.post("/api/seller/redeem/points", auth, isSeller, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get("/api/fetch/admin/redeem/count", auth, isAdmin, async (req, res) => {
+  try {
+    const redeems = await Redeem.aggregate([
+      { $match: { paid: false } },
+      { $count: "newRedeems" }
+    ]);
+    res.send({ redeems: redeems.length > 0 ? redeems[0].newRedeems : 0 });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/admin/redeems", auth, isAdmin, async (req, res) => {
+  try {
+    const redeems = await Redeem.find({}).populate(
+      "seller",
+      "firstName lastName"
+    );
+    res.send(redeems);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post(
+  "/api/admin/pay/redeem",
+  auth,
+  isAdmin,
+  check("redeemId").not().isEmpty().withMessage("please input a redeem Id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const redeem = await Redeem.findByIdAndUpdate(req.body.redeemId, {
+        paid: true
+      });
+
+      res.send(redeem);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;

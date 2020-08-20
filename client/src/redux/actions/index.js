@@ -253,7 +253,14 @@ import {
   REDEEM_POINTS,
   STORE_LAT_LNG,
   DELIVERY_OPEN_ACTION,
-  DELIVERY_CLOSE_ACTION
+  DELIVERY_CLOSE_ACTION,
+  MAKE_ORDER_START,
+  MAKE_ORDER_STOP,
+  REDEEM_COUNT,
+  FETCH_REDEEMS,
+  PAY_REDEEM,
+  PAY_REDEEM_START,
+  PAY_REDEEM_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -842,7 +849,7 @@ export const makeOrder = (credentials, history) => async (
   getState
 ) => {
   try {
-    dispatch({ type: LOADING_START });
+    dispatch({ type: MAKE_ORDER_START });
     const distanceId =
       getState().detailsPersist.distance &&
       getState().detailsPersist.distance._id;
@@ -864,18 +871,19 @@ export const makeOrder = (credentials, history) => async (
     if (res.paymentMethod && res.paymentMethod !== "mpesa") {
       dispatch({ type: MAKE_ORDER, payload: res });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: LOADING_STOP });
+      dispatch({ type: MAKE_ORDER_STOP });
       return history.push("/order/success");
     }
     dispatch({ type: MAKE_ORDER, payload: res });
     if (!res.paymentMethod) {
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
+      dispatch({ type: MAKE_ORDER_STOP });
       history.push("/stripe/error");
     }
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
-    dispatch({ type: LOADING_STOP });
+    dispatch({ type: MAKE_ORDER_STOP });
     history.push("/stripe/error");
     console.log(error.response);
   }
@@ -1089,7 +1097,6 @@ export const fetchSingleProduct = productId => async dispatch => {
 
 export const fetchRelatedProducts = subcategory => async dispatch => {
   try {
-    console.log(subcategory);
     dispatch({ type: LOADING_START });
     const res = await axios.get(
       `/api/products/category/subcategory/${subcategory}`
@@ -1667,7 +1674,7 @@ export const fetchAllOrders = filter => async dispatch => {
 };
 
 export const adminRadio = event => (dispatch, getState) => {
-  getState().product.ordersToSkip = 0;
+  getState().admin.ordersToSkip = 0;
   getState().admin.orderCount = 0;
   dispatch({
     type: ADMIN_RADIO,
@@ -1712,7 +1719,7 @@ export const fetchMoreAllOrders = filter => async (dispatch, getState) => {
 };
 
 export const resetSkipAndCount = () => (dispatch, getState) => {
-  getState().product.ordersToSkip = 0;
+  getState().admin.ordersToSkip = 0;
   getState().admin.orderCount = 0;
 };
 
@@ -2408,4 +2415,37 @@ export const storeLatLng = latLng => {
     type: STORE_LAT_LNG,
     payload: latLng
   };
+};
+
+export const redeemCountAction = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeem/count");
+    dispatch({ type: REDEEM_COUNT, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
+};
+
+export const fetchRedeems = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/admin/redeems");
+    dispatch({ type: FETCH_REDEEMS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+  }
+};
+
+export const payRedeem = redeemId => async dispatch => {
+  try {
+    dispatch({ type: PAY_REDEEM_START });
+    await axios.post("/api/admin/pay/redeem", { redeemId });
+    dispatch({ type: PAY_REDEEM });
+    dispatch(fetchRedeems());
+    dispatch(redeemCountAction());
+    dispatch({ type: PAY_REDEEM_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: PAY_REDEEM_STOP });
+    console.log(error.response);
+  }
 };

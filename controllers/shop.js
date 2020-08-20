@@ -46,7 +46,7 @@ route.post("/api/products", async (req, res) => {
         }
       },
       { $skip: itemsToSkip },
-      { $limit: 6 }
+      { $limit: 20 }
     ]);
     const productCount = await Product.aggregate([
       { $match: { onSite: true, stockQuantity: { $gte: 1 } } },
@@ -87,7 +87,7 @@ route.post("/api/products/skip/category", async (req, res) => {
       },
       { $sort: sort },
       { $skip: itemsToSkip },
-      { $limit: 6 }
+      { $limit: 20 }
     ]);
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products in that category" });
@@ -449,7 +449,6 @@ route.post(
     }
   }
 );
-
 route.post("/api/mpesa/paid/order", auth, async (req, res) => {
   try {
     const url =

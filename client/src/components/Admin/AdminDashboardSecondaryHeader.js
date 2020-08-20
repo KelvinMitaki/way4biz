@@ -4,7 +4,7 @@ import "./AdminDashboardSecondaryHeader.css";
 import {
   RiDashboardLine,
   RiFileUserLine,
-  RiInboxArchiveLine,
+  RiInboxArchiveLine
 } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
@@ -12,7 +12,11 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import MenuDropdown from "./MenuDropdown";
 import { MdKeyboardArrowDown, MdArrowDropDown, MdRedeem } from "react-icons/md";
 import { connect } from "react-redux";
-import { fetchNewSellers, clearOrderDetails } from "../../redux/actions";
+import {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+} from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
 import { IconContext } from "react-icons";
@@ -28,24 +32,26 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100,
-          },
-        ],
-      },
-    ],
+            num: 100
+          }
+        ]
+      }
+    ]
   };
   componentDidMount() {
     this.props.fetchNewSellers();
+    this.props.redeemCountAction();
   }
-  handleClick = (e) => {
-    this.setState((prevState) => {
+  handleClick = e => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   };
   render() {
-    if (!this.props.newSellers) return <ScreenLoader />;
+    if (!this.props.newSellers || !this.props.redeemCount)
+      return <ScreenLoader />;
     return (
       <div className="container-fluid admin-dashboard-secondary-header">
         {this.state.open ? (
@@ -93,17 +99,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <p>
                 <NavLink to="/admin-redeems">
                   Redeems
-                  <span
-                    className="badge ml-1"
-                    style={{
-                      position: "relative",
-                      zIndex: "32",
-                      backgroundColor: "#f76b1a",
-                      color: "#fff",
-                    }}
-                  >
-                    0
-                  </span>
+                  {this.props.redeems !== 0 && (
+                    <span
+                      style={{
+                        position: "relative",
+                        zIndex: "32",
+                        backgroundColor: "#f76b1a",
+                        color: "#fff"
+                      }}
+                      className="ml-1 badge"
+                    >
+                      {this.props.redeems.toLocaleString()}
+                    </span>
+                  )}
                 </NavLink>
               </p>
               <p>
@@ -136,7 +144,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff",
+                        color: "#fff"
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -164,7 +172,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -201,17 +209,19 @@ class AdminDashboardSecondaryHeader extends React.Component {
               <MdRedeem />{" "}
               <span className="ml-2">
                 Redeems
-                <span
-                  style={{
-                    position: "relative",
-                    zIndex: "32",
-                    backgroundColor: "#f76b1a",
-                    color: "#fff",
-                  }}
-                  className="ml-1 badge"
-                >
-                  0
-                </span>
+                {this.props.redeems !== 0 && (
+                  <span
+                    style={{
+                      position: "relative",
+                      zIndex: "32",
+                      backgroundColor: "#f76b1a",
+                      color: "#fff"
+                    }}
+                    className="ml-1 badge"
+                  >
+                    {this.props.redeems.toLocaleString()}
+                  </span>
+                )}
               </span>
             </NavLink>
           </li>
@@ -252,11 +262,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     newSellers: state.seller.newSellers,
+    redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
+    redeemCount: state.admin.redeemCount
   };
 };
-export default connect(mapStateToProps, { fetchNewSellers, clearOrderDetails })(
-  AdminDashboardSecondaryHeader
-);
+export default connect(mapStateToProps, {
+  fetchNewSellers,
+  clearOrderDetails,
+  redeemCountAction
+})(AdminDashboardSecondaryHeader);

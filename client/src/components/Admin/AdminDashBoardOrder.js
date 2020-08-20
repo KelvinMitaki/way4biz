@@ -123,7 +123,10 @@ class AdminDashBoardOrder extends React.Component {
                       <p>
                         <strong className="mr-2">Total Charge:</strong>Ksh.
                         {totalCharge &&
-                          Math.round(totalCharge).toLocaleString()}
+                          Math.round(
+                            totalCharge +
+                              this.props.adminOrder["0"].distance.shippingFees
+                          ).toLocaleString()}
                       </p>
                     </div>
                   </div>

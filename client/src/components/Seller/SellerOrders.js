@@ -38,7 +38,10 @@ class SellerOrders extends React.Component {
         title: "All",
         data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />
       },
-      { title: "New", data: <DashBoardOrder sellerOrders={newOrders} /> },
+      {
+        title: "New",
+        data: <DashBoardOrder title="New" sellerOrders={newOrders} />
+      },
       // {
       //   title: "Dispatched",
       //   data: <DashBoardOrder sellerOrders={dispatched} />
