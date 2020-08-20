@@ -79,6 +79,23 @@ class TermsConditions extends React.Component {
                 <li><p>You grant to us a worldwide, irrevocable, non-exclusive, royalty-free license to use, reproduce, store, adapt, publish, translate and distribute your content across our marketing channels and any existing or future media.</p></li>
                 <li><p>Without prejudice to our other rights under these general terms and conditions, if you breach our rules on content in any way, or if we reasonably suspect that you have breached our rules on content, we may delete, unpublish or edit any or all of your content.</p></li>
               </ul>
+
+              <h3>Use of website and mobile applications</h3>
+              <h6>You may do the following in our applications:</h6>
+              <ul>
+                <li><p>View pages from our web application in a web browser;</p></li>
+                <li><p>Print pages from our website for your own personal and non commercial use, providing that such printing is not systematic or excessive;</p></li>
+                <li><p>Use our platform services by means of a web browser, subject to the other provisions of these general terms and conditions.</p></li><li><p></p></li><li><p></p></li><li><p></p></li>
+              </ul>
+              <p>You may only use our website for your own personal and business purposes in respect of selling, purchasing or delivering products on the platform.</p>
+              <p>We reserve the right to suspend or restrict access to our website, to areas of our website and/or to functionality upon our website. We may, for example, suspend access to the website during server maintenance or when we update the website. You must not attempt to circumvent or bypass, any access restriction measures on the website.</p>
+
+              <h6>You must not:</h6>
+              <ul>
+                <li><p>Hack or tamper with our website;</p></li>
+                <li><p>Circumvent any authentication or security systems or processes relating to our website</p></li>
+                <li><p>Do anything that interferes with the normal use of our website.</p></li>
+              </ul>
             </div>
           </div>
         </div>
