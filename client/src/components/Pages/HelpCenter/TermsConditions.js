@@ -30,7 +30,15 @@ class TermsConditions extends React.Component {
               <p>. If you register for an account with our platform as a seller, you will be asked to provide an email address which is unique ,a valid phone number , a password which should be confidential ,your storename and also its description.</p>
               <p>Any activity in your account that may not align with our terms of operation may result to immediate suspension or even deletion of your account.</p>
 
-
+              <h3>Terms and conditions of sale</h3>
+              <h6>You acknowledge that:</h6>
+              <ul>
+                <li><p>We provide an online platform for sellers to sell and buyers to purchase products;</p></li>
+                <li><p>We accept  sales  and do the delivery on behalf of the sellers to the consumers.</p></li>
+              </ul>
+              <p>The price for a product will be as stated in the relevant product catalogue;</p>
+              <p>The price for the product must include all taxes and comply with applicable laws in force from time to time;</p>
+              <p>Products must be of satisfactory quality, fit and safe for any purpose specified in, and conform in all material respects to, the product catalogue and any other description of the products supplied or made available by the seller to the buyer.</p>
             </div>
           </div>
         </div>
