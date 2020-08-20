@@ -99,6 +99,10 @@ class TermsConditions extends React.Component {
 
               <h3>Copyright and trademarks</h3>
               <p>Way4Biz’s logos and our other registered and unregistered trademarks are trademarks belonging to us; we give no permission for the use of these trademarks, and such use may constitute an infringement of our rights.</p>
+
+              <h3>Data Privacy</h3>
+              <p>Buyers agree to processing of their personal data in accordance with the terms of Way4Biz.</p>
+              <p>Way4Biz shall process all personal data obtained through the platform and related services accordingly.</p>
             </div>
           </div>
         </div>
