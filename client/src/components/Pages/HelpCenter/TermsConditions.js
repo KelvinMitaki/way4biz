@@ -39,6 +39,11 @@ class TermsConditions extends React.Component {
               <p>The price for a product will be as stated in the relevant product catalogue;</p>
               <p>The price for the product must include all taxes and comply with applicable laws in force from time to time;</p>
               <p>Products must be of satisfactory quality, fit and safe for any purpose specified in, and conform in all material respects to, the product catalogue and any other description of the products supplied or made available by the seller to the buyer.</p>
+
+              <h3>Returns and refunds</h3>
+              <p>Returns of products by buyers and acceptance of returned products by sellers shall be managed by us in accordance with the returns page on the platform, as may be amended from time to time. Acceptance of returns shall be in our discretion, subject to compliance with applicable laws of the territory.</p>
+              <p>Returned products shall be accepted and refunds issued by Way4Biz, for and on behalf of the seller.</p>
+              <p>. Changes to our returns page or refunds page shall be effective in respect of all purchases made from the date of publication of the change on our website.</p>
             </div>
           </div>
         </div>
