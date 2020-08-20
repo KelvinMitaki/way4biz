@@ -18,3 +18,6 @@
 [0730/023434.515:ERROR:exception_snapshot_win.cc(98)] thread ID 19628 not found in process
 [0730/023434.515:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
 [0801/192126.723:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0819/165341.515:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[0820/012715.631:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0820/012715.648:ERROR:exception_snapshot_win.cc(98)] thread ID 13776 not found in process
