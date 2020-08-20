@@ -22,6 +22,15 @@ class TermsConditions extends React.Component {
               <p>These Way4Biz general terms and conditions shall apply to buyers and sellers on the platforms and shall govern the use of the platform and related services.</p>
               <p>By using our platform, you accept these general terms and conditions in full. If you disagree with anything then you should not use our platform.</p>
               <p>You can only use our platform to expand your business marketing strategy or in delivering your goods if and only if you agree to this terms and conditions</p>
+
+              <h3>Registration</h3>
+              <p>You may register as a buyer or seller on our platform. A seller however can act as a buyer but a buyer cannot act as a seller.</p>
+              <p>To register for an account on our platform you need to complete the registration forms as required and submit it.</p>
+              <p>If you register for an account with our platform as a buyer, you will be asked to provide an email address which is unique ,a valid phone number and also a password which should be confidential.</p>
+              <p>. If you register for an account with our platform as a seller, you will be asked to provide an email address which is unique ,a valid phone number , a password which should be confidential ,your storename and also its description.</p>
+              <p>Any activity in your account that may not align with our terms of operation may result to immediate suspension or even deletion of your account.</p>
+
+
             </div>
           </div>
         </div>
