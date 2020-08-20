@@ -96,6 +96,9 @@ class TermsConditions extends React.Component {
                 <li><p>Circumvent any authentication or security systems or processes relating to our website</p></li>
                 <li><p>Do anything that interferes with the normal use of our website.</p></li>
               </ul>
+
+              <h3>Copyright and trademarks</h3>
+              <p>Way4Biz’s logos and our other registered and unregistered trademarks are trademarks belonging to us; we give no permission for the use of these trademarks, and such use may constitute an infringement of our rights.</p>
             </div>
           </div>
         </div>
