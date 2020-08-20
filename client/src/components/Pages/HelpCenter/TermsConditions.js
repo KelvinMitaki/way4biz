@@ -74,6 +74,11 @@ class TermsConditions extends React.Component {
               <p>The review function on the platform may be used to facilitate buyer reviews on products. You shall not use the review function or any other form of communication to provide inaccurate, inauthentic or fake reviews.</p>
               <p>We may periodically review your content and we reserve the right to remove any content in our discretion for any reason whatsoever.</p>
 
+              <h3>Our rights to use your content</h3>
+              <ul>
+                <li><p>You grant to us a worldwide, irrevocable, non-exclusive, royalty-free license to use, reproduce, store, adapt, publish, translate and distribute your content across our marketing channels and any existing or future media.</p></li>
+                <li><p>Without prejudice to our other rights under these general terms and conditions, if you breach our rules on content in any way, or if we reasonably suspect that you have breached our rules on content, we may delete, unpublish or edit any or all of your content.</p></li>
+              </ul>
             </div>
           </div>
         </div>
