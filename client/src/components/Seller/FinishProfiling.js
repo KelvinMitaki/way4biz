@@ -1,18 +1,14 @@
 import React from "react";
 
+import "./FinishProfiling.css"
+
 const FinishProfiling = () => {
   return (
     <div
-      style={{
-        height: "50vh",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}
+      id="seller-finished-profiling"
       className="container"
     >
-      <div className="box-container p-4">
+      <div className="p-4">
         <h3>
           You have successfully completed the seller profiling! Please wait for
           the admins to approve your request.
