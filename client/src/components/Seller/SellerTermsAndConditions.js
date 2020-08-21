@@ -1,5 +1,6 @@
 import React from "react";
 import { animateScroll as scroll } from "react-scroll";
+import "./SellerTermsAndConditions.css";
 
 class SellerTermsAndConditions extends React.Component {
   componentDidMount() {
@@ -13,15 +14,16 @@ class SellerTermsAndConditions extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div style={{ overflowY: "auto" }}>
+      <div className="container p-0 m-0 seller-profiling-terms-wrapper">
+        <div className="inner-seller-profiling-terms-wrapper">
           <h3
             className="mb-3"
-            style={{ textDecoration: "underline", textAlign: "center" }}
+            style={{ textDecoration: "underline", textAlign: "center", height: "5%" }}
+
           >
             Terms and Conditions
           </h3>
-          <div className="terms-content">
+          <div className="terms-content seller-profiling-terms">
             <h3>Introduction</h3>
             <p>Way4Biz is a 2 in 1 company that operates on an e-commerce platform consisting of a web application and mobile applications(Ecommerce platform application and a logistics application) ,supporting logistics and payment infrastructure, for the sale,purchase and delivery of consumer products.</p>
             <p>These Way4Biz general terms and conditions shall apply to buyers and sellers on the platforms and shall govern the use of the platform and related services.</p>
@@ -128,8 +130,8 @@ class SellerTermsAndConditions extends React.Component {
             <p>We reserve the right to discontinue or alter any or all of our platform services, and to stop publishing our platform, at any time in our sole discretion without notice or explanation; and you will not be entitled to any compensation or other payment upon the discontinuance or alteration of any platform services, or if we stop publishing the platform.</p>
           </div>
         </div>
-        <div>
-          <div className="checkbox d-flex align-items-center ml-2 my-2">
+        <div style={{ height: "5px" }}>
+          <div className="checkbox d-flex align-items-center ml-2">
             <input
               onChange={this.handleCheckbox}
               name="accept-terms-and-conditions"

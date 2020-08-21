@@ -1,0 +1,13 @@
+.seller-profiling-terms-wrapper{
+    height:calc(100vh - 140px);
+}
+
+.inner-seller-profiling-terms-wrapper{
+    height:100%;
+}
+
+.seller-profiling-terms {
+    height: 80%;
+    overflow-y: auto;
+    padding:10px;
+}
