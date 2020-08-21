@@ -28,7 +28,7 @@ class SellerDocuments extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{ textAlign: "center" }}>
+      <div className="container" style={{ textAlign: "center" }} id="seller-orientation-documents-wrapper">
         <h5>
           Please upload valid copies of the following documents. (National ID
           and Profile Photo)

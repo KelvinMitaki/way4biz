@@ -35,3 +35,7 @@
   box-shadow: none;
   outline: none;
 }
+
+#seller-orientation-documents-wrapper{
+  min-height:calc(100vh - 140px);
+}
