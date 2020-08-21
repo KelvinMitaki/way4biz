@@ -22,14 +22,14 @@
 .secondary-header-active {
   color: #f76b1a !important;
   background-color: none !important;
-  font-size: medium !important;
+  /* font-size: medium !important; */
 }
 
 .secondary-header-link,
 .secondary-header-link:hover {
   color: #f76b1a;
   text-decoration: none;
-  font-size: 16px;
+  /* font-size: 16px; */
 }
 
 #small-screen-secondary-header {
