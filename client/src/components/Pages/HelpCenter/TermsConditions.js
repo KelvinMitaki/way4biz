@@ -103,6 +103,24 @@ class TermsConditions extends React.Component {
               <h3>Data Privacy</h3>
               <p>Buyers agree to processing of their personal data in accordance with the terms of Way4Biz.</p>
               <p>Way4Biz shall process all personal data obtained through the platform and related services accordingly.</p>
+
+              <h3>Way4Biz’s role as a platform</h3>
+              <h6>You acknowledge that:</h6>
+              <ul>
+                <li><p>We do confirm the identity of all platform users, check their credit worthiness, or otherwise vet them;</p></li>
+                <li><p>We do check, audit and monitor all information contained in catalogues;</p></li>
+                <li><p>We are not the agents for any buyer or seller, and accordingly we will not be liable to any person in relation to the offer for sale, sale or purchase of any products advertised on our platform; furthermore we are not responsible for the enforcement of any contractual obligations arising out of a contract for the sale or purchase of any products and we will have no obligation to mediate between the parties to any such contract.</p></li>
+              </ul>
+
+              <h6>We do not warrant that:</h6>
+              <ul>
+                <li><p>That the platform will operate without fault;</p></li>
+                <li><p>That the platform or any service on the platform will remain available.</p></li>
+                <li><p>that the material on the platform is up to date;</p></li>
+              </ul>
+
+              <p>We do not guarantee any commercial results concerning the use of the platform.</p>
+              <p>We reserve the right to discontinue or alter any or all of our platform services, and to stop publishing our platform, at any time in our sole discretion without notice or explanation; and you will not be entitled to any compensation or other payment upon the discontinuance or alteration of any platform services, or if we stop publishing the platform.</p>
             </div>
           </div>
         </div>
