@@ -141,17 +141,19 @@ route.post(
           expiresIn: "1 hour"
         }
       );
-      const decodedSellerId = jwt.verify(
-        referralCode,
-        process.env.CONFIRM_EMAIL_JWT
-      )._id;
-      if (decodedSellerId) {
-        const referree = await Seller.findById(decodedSellerId);
-        referree.referrals
-          ? (referree.referrals = [...referree.referrals, seller._id])
-          : (referree.referrals = [seller._id]);
-        await referree.save();
-        seller.referree = decodedSellerId;
+      if (referralCode) {
+        const decodedSellerId = jwt.verify(
+          referralCode,
+          process.env.CONFIRM_EMAIL_JWT
+        )._id;
+        if (decodedSellerId) {
+          const referree = await Seller.findById(decodedSellerId);
+          referree.referrals
+            ? (referree.referrals = [...referree.referrals, seller._id])
+            : (referree.referrals = [seller._id]);
+          await referree.save();
+          seller.referree = decodedSellerId;
+        }
       }
       await seller.save();
       // **TODO** FROM EMAIL TO BE CHANGED
