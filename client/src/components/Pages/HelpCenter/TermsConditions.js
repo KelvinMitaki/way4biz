@@ -85,7 +85,7 @@ class TermsConditions extends React.Component {
               <ul>
                 <li><p>View pages from our web application in a web browser;</p></li>
                 <li><p>Print pages from our website for your own personal and non commercial use, providing that such printing is not systematic or excessive;</p></li>
-                <li><p>Use our platform services by means of a web browser, subject to the other provisions of these general terms and conditions.</p></li><li><p></p></li><li><p></p></li><li><p></p></li>
+                <li><p>Use our platform services by means of a web browser, subject to the other provisions of these general terms and conditions.</p></li>
               </ul>
               <p>You may only use our website for your own personal and business purposes in respect of selling, purchasing or delivering products on the platform.</p>
               <p>We reserve the right to suspend or restrict access to our website, to areas of our website and/or to functionality upon our website. We may, for example, suspend access to the website during server maintenance or when we update the website. You must not attempt to circumvent or bypass, any access restriction measures on the website.</p>
