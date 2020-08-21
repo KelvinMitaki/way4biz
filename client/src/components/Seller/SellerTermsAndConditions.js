@@ -17,8 +17,8 @@ class SellerTermsAndConditions extends React.Component {
       <div className="container p-0 m-0 seller-profiling-terms-wrapper">
         <div className="inner-seller-profiling-terms-wrapper">
           <h3
-            className="mb-3"
-            style={{ textDecoration: "underline", textAlign: "center", height: "5%" }}
+            className="mb-2"
+            style={{ textDecoration: "underline", textAlign: "center", height: "8%" }}
 
           >
             Terms and Conditions
@@ -130,8 +130,8 @@ class SellerTermsAndConditions extends React.Component {
             <p>We reserve the right to discontinue or alter any or all of our platform services, and to stop publishing our platform, at any time in our sole discretion without notice or explanation; and you will not be entitled to any compensation or other payment upon the discontinuance or alteration of any platform services, or if we stop publishing the platform.</p>
           </div>
         </div>
-        <div style={{ height: "5px" }}>
-          <div className="checkbox d-flex align-items-center ml-2">
+        <div style={{ height: "20px", backgroundColor: "red !important" }}>
+          <div className="checkbox d-flex align-items-center ml-3">
             <input
               onChange={this.handleCheckbox}
               name="accept-terms-and-conditions"
