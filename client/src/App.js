@@ -214,7 +214,7 @@ class App extends React.Component {
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
               {/* <Route path="/logistics" component={Logistics} /> */}
-              <Rouet path="/return-policy" component={ReturnPolicy} />
+              <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route
                 path="/product/main/reviews/:productId"
