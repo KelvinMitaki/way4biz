@@ -71,7 +71,6 @@ if (cluster.isMaster) {
           connectSrc: [
             "*",
             "'self'",
-            "'blob'",
             "'unsafe-eval'",
             "'unsafe-hashes'",
             "'unsafe-inline'",

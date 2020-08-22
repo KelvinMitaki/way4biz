@@ -125,7 +125,17 @@ export class Sell extends Component {
                       Image Upload
                     </h5>
                     <PhotosPage />
-
+                    {this.props.uploadImageError && (
+                      <div
+                        style={{
+                          color: "red",
+                          width: "90%",
+                          margin: "15px auto 0 auto"
+                        }}
+                      >
+                        {this.props.uploadImageError}
+                      </div>
+                    )}
                     <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
                       Uploaded Images
                     </h5>
@@ -209,6 +219,7 @@ const mapStateToProps = state => {
     description: state.product.description,
     adminCategories: state.product.adminCategories,
     imageUrl: state.image.imageUrl,
+    uploadImageError: state.image.uploadImageError,
     deleteImageLoading: state.image.deleteImageLoading,
     category
   };
