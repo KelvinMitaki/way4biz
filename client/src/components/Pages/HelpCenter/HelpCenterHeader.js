@@ -30,11 +30,15 @@ class HelpCenterHeader extends React.Component {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/help-center">
+              <p>FAQs</p>
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/contact-us">
               <p>Contact Us</p>
             </NavLink>
           </li>
-
         </ul>
         <div id="help-center-hamburger-wrapper">
           <div id="help-center-hamburger">
@@ -47,14 +51,14 @@ class HelpCenterHeader extends React.Component {
                 menuClicked={this.handleClick}
               />
             ) : (
-                <HamburgerMenu
-                  width={30}
-                  height={20}
-                  color="#f76b1a"
-                  isOpen={false}
-                  menuClicked={this.handleClick}
-                />
-              )}
+              <HamburgerMenu
+                width={30}
+                height={20}
+                color="#f76b1a"
+                isOpen={false}
+                menuClicked={this.handleClick}
+              />
+            )}
           </div>
           {this.state.open ? (
             <div className="help-center-sm-menu">
@@ -74,11 +78,15 @@ class HelpCenterHeader extends React.Component {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink to="/help-center">
+                    <p>FAQs</p>
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to="/contact-us">
                     <p>Contact Us</p>
                   </NavLink>
                 </li>
-
               </ul>
             </div>
           ) : null}
