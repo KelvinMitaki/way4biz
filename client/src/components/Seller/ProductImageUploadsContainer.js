@@ -25,6 +25,7 @@ class ProductImageUploadsContainer extends React.Component {
               </div>
               <div
                 onClick={() =>
+                  this.props.match.params.productId &&
                   this.props.deleteImage(url, this.props.match.params.productId)
                 }
                 className={`btn upload-image-trash-button disabled`}
@@ -50,6 +51,7 @@ class ProductImageUploadsContainer extends React.Component {
               </div>
               <div
                 onClick={() =>
+                  this.props.match.params.productId &&
                   this.props.deleteImage(url, this.props.match.params.productId)
                 }
                 className={`btn upload-image-trash-button  ${
