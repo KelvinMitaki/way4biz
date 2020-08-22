@@ -178,9 +178,7 @@ function AdminDashBoardOrders(props) {
               <div className="col-lg-2">
                 <h6>Dispatched</h6>
               </div>
-              <div className="col-lg-2">
-                <h6></h6>
-              </div>
+              <div className="col-lg-2">{/* <h6></h6> */}</div>
             </div>
             {props.allAdminOrders &&
               props.allAdminOrders.length !== 0 &&
