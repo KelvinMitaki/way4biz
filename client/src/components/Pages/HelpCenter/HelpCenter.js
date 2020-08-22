@@ -4,22 +4,22 @@ import "./HelpCenter.css";
 
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
-import { AiOutlineSearch } from "react-icons/ai";
-import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
-import { RiBookletLine } from "react-icons/ri";
-import { FiMail } from "react-icons/fi";
-import { Link } from "react-router-dom";
+// import { AiOutlineSearch } from "react-icons/ai";
+// import { BsQuestionCircle, BsArrowRight } from "react-icons/bs";
+// import { RiBookletLine } from "react-icons/ri";
+// import { FiMail } from "react-icons/fi";
+// import { Link } from "react-router-dom";
 import HelpCenterHeader from "./HelpCenterHeader";
 import FAQAccordion from "./FAQAccordion";
 
 class HelpCenter extends React.Component {
   state = {
-    open: 1,
+    open: 1
   };
 
   handleClick = (e, val) => {
     this.setState({
-      open: val,
+      open: val
     });
   };
   render() {

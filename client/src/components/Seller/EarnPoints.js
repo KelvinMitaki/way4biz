@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions";
 import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
 import { IconContext } from "react-icons";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 let email;
 class EarnPoints extends React.Component {
@@ -19,10 +19,6 @@ class EarnPoints extends React.Component {
     email = this.props.email;
 
     if (this.props.referralSuccess) {
-      {
-        /* show  this on success */
-      }
-
       return (
         <React.Fragment>
           <div className="d-flex align-items-center">
@@ -52,9 +48,6 @@ class EarnPoints extends React.Component {
       );
     }
 
-    {
-      /* show this on error */
-    }
     if (this.props.referralError) {
       return (
         <React.Fragment>
