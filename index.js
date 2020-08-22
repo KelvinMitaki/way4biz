@@ -16,6 +16,8 @@ if (cluster.isMaster) {
   const MongoStore = require("connect-mongodb-session")(session);
   const bodyParser = require("body-parser");
   const passport = require("passport");
+  const helmet = require("helmet");
+  const compression = require("compression");
 
   const adminRoutes = require("./controllers/admin");
   const authRoutes = require("./controllers/auth");
@@ -26,23 +28,26 @@ if (cluster.isMaster) {
 
   const sessionStore = new MongoStore({
     uri: process.env.MONGO_URI,
-    collection: "sessions",
+    collection: "sessions"
   });
   const mongooseConnect = async () => {
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: false,
+      useFindAndModify: false
     });
     console.log("connected to the database");
   };
   mongooseConnect();
+  if (process.env.NODE_ENV === "production") {
+    app.use(helmet());
+    app.use(compression());
+  }
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-
   app.use(
     session({
       name: process.env.SESSION_NAME,
@@ -53,8 +58,8 @@ if (cluster.isMaster) {
       cookie: {
         sameSite: true,
         maxAge: 1000 * 60 * 60 * 24,
-        secure: process.env.PRODUCTION,
-      },
+        secure: process.env.PRODUCTION
+      }
     })
   );
   app.use(authRoutes);
