@@ -5,18 +5,26 @@ import {
   DELETE_IMAGE_START,
   DELETE_IMAGE_STOP,
   DELETE_IMAGE,
-  UNPERSIST_IMAGE
+  UNPERSIST_IMAGE,
+  UPLOAD_IMAGE_ERROR
 } from "../actions/types";
 
 const INITIAL_STATE = {
   imageUrl: [],
-  deleteImageLoading: false
+  deleteImageLoading: false,
+  uploadImageError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case STORE_IMAGE:
-      return { ...state, imageUrl: [...state.imageUrl, action.payload] };
+      return {
+        ...state,
+        imageUrl: [...state.imageUrl, action.payload],
+        uploadImageError: null
+      };
+    case UPLOAD_IMAGE_ERROR:
+      return { ...state, uploadImageError: action.payload };
     case ADD_PRODUCT:
       return { ...state, imageUrl: [] };
     case EDIT_PRODUCT:
