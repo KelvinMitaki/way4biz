@@ -89,7 +89,7 @@ class FAQAccordion extends React.Component {
                 <p>
                   <strong>Courier - </strong>We deliver directly to your home or
                   office.This delivery however has two modes:{" "}
-                  <strong>Normal Delivery</strong>
+                  <strong>Normal Delivery </strong>
                   which takes 3-7 days and <strong>
                     Express Delivery
                   </strong>{" "}
@@ -113,6 +113,42 @@ class FAQAccordion extends React.Component {
               have the option to be refunded or wait until it comes into stock
               again.
             </p>
+          </div>
+        ),
+      },
+      {
+        label: "Can I pay with Cash?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              We currently don't offer cash on delivery.
+            </p>
+
+          </div>
+        ),
+      },
+      {
+        label: "What if I received a damaged product?",
+        content: (
+          <div className="faq-content-section">
+            <p>If you notify us within 7 days of damage to your goods occurring on delivery of your order, you can return it to us at no charge and, if stock is available, we will do our best to immediately arrange a replacement. If your return request falls within this policy and is deemed eligible for a return, we will:</p>
+            <ul>
+              <li>
+                <p>
+                  replace the correct product to you (if the correct product is available) or;
+                </p>
+              </li>
+              <li>
+                <p>
+                  credit your account with the purchase price of the product or;
+                </p>
+              </li>
+              <li>
+                <p>
+                  refund you with the purchase price of the product.                </p>
+              </li>
+
+            </ul>
           </div>
         ),
       },

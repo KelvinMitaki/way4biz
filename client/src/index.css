@@ -24,6 +24,7 @@ body {
 #root {
   max-width: 1500px;
   margin: 0px auto;
+  font-size: 14px !important;
 }
 
 h1,

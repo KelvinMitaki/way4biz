@@ -62,23 +62,23 @@ class SellerProfiling extends React.Component {
       );
     }
     return (
-      <div className="container-fluid dashboard-wrapper">
+      <div className="container-fluid p-0 dashboard-wrapper">
         <SellerDashBoardHeader />
         <div className="row no-gutters">
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mx-auto py-3" id="seller-profilling-content">
+          <div className="col-lg-9 white-body px-0">
             {this.setUpData()}
 
-            <div className="nav-btns container my-3">
+            <div className="nav-btns container" style={{ height: "50px" }}>
               {this.props.open === 0 ? (
                 <div></div>
               ) : (
-                <button className="btn btn-md" onClick={this.handleDecrement}>
-                  Back
-                </button>
-              )}
+                  <button className="btn btn-md" onClick={this.handleDecrement}>
+                    Back
+                  </button>
+                )}
 
               {this.props.open === 3 ? null : nextButton}
             </div>

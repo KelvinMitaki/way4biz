@@ -91,6 +91,7 @@ import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
 import SellerPoints from "./components/Seller/SellerPoints";
 import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
 import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
+import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
 
 class App extends React.Component {
   state = {
@@ -213,6 +214,7 @@ class App extends React.Component {
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
               {/* <Route path="/logistics" component={Logistics} /> */}
+              <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route
                 path="/product/main/reviews/:productId"

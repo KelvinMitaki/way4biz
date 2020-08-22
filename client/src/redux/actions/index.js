@@ -260,7 +260,8 @@ import {
   FETCH_REDEEMS,
   PAY_REDEEM,
   PAY_REDEEM_START,
-  PAY_REDEEM_STOP
+  PAY_REDEEM_STOP,
+  CLEAR_NEW_SELLER_DETAILS
 } from "./types";
 
 const authCheck = error => {
@@ -2448,4 +2449,9 @@ export const payRedeem = redeemId => async dispatch => {
     dispatch({ type: PAY_REDEEM_STOP });
     console.log(error.response);
   }
+};
+export const clearNewSellerDetails = () => {
+  return {
+    type: CLEAR_NEW_SELLER_DETAILS
+  };
 };

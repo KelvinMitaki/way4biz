@@ -15,7 +15,7 @@ class SellerOrientationGuide extends React.Component {
   render() {
     return (
       <div className="container">
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center" }} id="seller-orientation-guide-wrapper">
           <h5 className="mb-5">Please read the seller orientation guide.</h5>
           <a
             className="my-2 btn btn-lg"

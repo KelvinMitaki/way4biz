@@ -1,16 +1,18 @@
 import React from "react";
 
 import "./HowToSell.css";
-import Header from "../../Header/Header";
+
 import Footer from "../../Footer/Footer";
 import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
+import HelpCenterHeader from "./HelpCenterHeader";
 
 class HowToSell extends React.Component {
   render() {
     return (
       <div className="main">
-        <div className="content">
-          <Header />
+        <div className="content white-body">
+          <HelpCenterHeader />
+
           <div className="container">
             <h3 style={{ textAlign: "center" }} className="my-2">
               How To Sell
