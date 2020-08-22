@@ -5,7 +5,11 @@ import "./SellerDashBoard.css";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import { connect } from "react-redux";
-import { fetchSellerNewOrdersCount, fetchUser } from "../../redux/actions";
+import {
+  fetchSellerNewOrdersCount,
+  fetchUser,
+  clearNewSellerDetails
+} from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { Redirect, Link } from "react-router-dom";
 
@@ -13,6 +17,9 @@ class SellerDashBoard extends React.Component {
   componentDidMount() {
     this.props.fetchSellerNewOrdersCount();
     this.props.fetchUser();
+    if (this.props.user && this.props.user.isSeller) {
+      this.props.clearNewSellerDetails();
+    }
   }
   render() {
     if (this.props.user && !this.props.user.isSeller)
@@ -113,13 +120,14 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard,
+    dashboard: state.detailsPersist.dashboard
   };
 };
 export default connect(mapStateToProps, {
   fetchSellerNewOrdersCount,
   fetchUser,
+  clearNewSellerDetails
 })(SellerDashBoard);

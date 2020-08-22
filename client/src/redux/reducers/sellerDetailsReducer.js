@@ -4,11 +4,12 @@ import {
   HANDLE_CHECK_ACTION,
   STORE_SELLER_IMAGE,
   DELETE_SELLER_IMAGE,
-  CLEAR_ORDER_DETAILS
+  CLEAR_ORDER_DETAILS,
+  CLEAR_NEW_SELLER_DETAILS
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  open: 2,
+  open: 0,
   proceed: false,
   sellerImageUrl: []
 };
@@ -33,8 +34,8 @@ export default (state = INITIAL_STATE, action) => {
           image => image !== action.payload
         )
       };
-    case CLEAR_ORDER_DETAILS:
-      return { ...state, sellerImageUrl: [] };
+    case CLEAR_NEW_SELLER_DETAILS:
+      return { ...state, sellerImageUrl: [], open: 0, proceed: false };
     default:
       return state;
   }
