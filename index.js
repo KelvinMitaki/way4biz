@@ -44,6 +44,7 @@ if (cluster.isMaster) {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
+          defaultSrc: ["'self'", "filesystem ", "'unsafe-inline'"],
           scriptSrc: [
             "https://code.jquery.com/",
             "https://maps.googleapis.com/",
@@ -51,6 +52,19 @@ if (cluster.isMaster) {
             "'self'",
             "'unsafe-inline'",
             "https://js.stripe.com/"
+          ],
+          imgSrc: [
+            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/",
+            "'self'",
+            "https://ke.jumia.is",
+            "data: 'unsafe-eval'"
+          ],
+          objectSrc: ["data: 'unsafe-eval'"],
+          frameSrc: ["https://js.stripe.com/"],
+          styleSrc: [
+            "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/",
+            "'self'",
+            "'unsafe-inline'"
           ]
         }
       })
