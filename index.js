@@ -57,7 +57,9 @@ if (cluster.isMaster) {
             " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/",
             "'self'",
             "https://ke.jumia.is",
-            "data: 'unsafe-eval'"
+            "blob:",
+            "data:",
+            "'unsafe-eval'"
           ],
           objectSrc: ["data: 'unsafe-eval'"],
           frameSrc: ["https://js.stripe.com/"],
@@ -65,6 +67,15 @@ if (cluster.isMaster) {
             "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/",
             "'self'",
             "'unsafe-inline'"
+          ],
+          connectSrc: [
+            "*",
+            "'self'",
+            "'blob'",
+            "'unsafe-eval'",
+            "'unsafe-hashes'",
+            "'unsafe-inline'",
+            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/"
           ]
         }
       })
