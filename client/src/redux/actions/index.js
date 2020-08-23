@@ -262,7 +262,8 @@ import {
   PAY_REDEEM_START,
   PAY_REDEEM_STOP,
   CLEAR_NEW_SELLER_DETAILS,
-  UPLOAD_IMAGE_ERROR
+  UPLOAD_IMAGE_ERROR,
+  ADD_PRODUCT_ERROR
 } from "./types";
 
 const authCheck = error => {
@@ -684,6 +685,7 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
     history.push("/seller-products");
   } catch (error) {
     authCheck(error);
+    dispatch({ type: ADD_PRODUCT_ERROR, payload: error.response.data.message });
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }

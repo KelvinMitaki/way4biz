@@ -426,9 +426,7 @@ route.post(
   check("description")
     .trim()
     .isLength({ min: 20 })
-    .withMessage(
-      "Please enter a valid description with a minimum of 20 characters"
-    ),
+    .withMessage("Please enter a description with a minimum of 20 characters"),
   check("category")
     .trim()
     .not()
