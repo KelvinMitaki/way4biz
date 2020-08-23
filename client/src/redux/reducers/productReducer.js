@@ -104,7 +104,6 @@ const INITIAL_STATE = {
   adminCategories: null,
   singleCategory: null,
   dashboard: null,
-  underReview: null,
   reviewProduct: null,
   acceptProductLoading: false,
   rejectProductLoading: false,
@@ -236,8 +235,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, singleCategory: action.payload };
     case FETCH_SELLER_NEW_ORDERS_COUNT:
       return { ...state, dashboard: action.payload };
-    case FETCH_UNDER_REVIEW:
-      return { ...state, underReview: action.payload };
     case FETCH_REVIEW_PRODUCT:
       return { ...state, reviewProduct: action.payload };
     case ACCEPT_PRODUCT_START:
