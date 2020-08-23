@@ -70,7 +70,8 @@ import {
   EDIT_CATEGORY_START,
   EDIT_CATEGORY_STOP,
   ADD_NEW_CATEGORY_START,
-  ADD_NEW_CATEGORY_STOP
+  ADD_NEW_CATEGORY_STOP,
+  ADD_PRODUCT_ERROR
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -127,7 +128,8 @@ const INITIAL_STATE = {
   fetchProductsLoading: false,
   dispatchLoading: false,
   editCategoryLoading: false,
-  addCategoryLoading: false
+  addCategoryLoading: false,
+  addProductError: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -323,6 +325,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, addCategoryLoading: true };
     case ADD_NEW_CATEGORY_STOP:
       return { ...state, addCategoryLoading: false };
+    case ADD_PRODUCT_ERROR:
+      return { ...state, addProductError: action.payload };
     default:
       return state;
   }
