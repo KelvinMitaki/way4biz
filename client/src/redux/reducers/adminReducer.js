@@ -30,7 +30,8 @@ import {
   COUNT_COMPLAINTS,
   FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_UNDER_REVIEW,
-  FETCH_WEEKLY_SALES
+  FETCH_WEEKLY_SALES,
+  FETCH_NEW_SELLERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -54,6 +55,7 @@ const INITIAL_STATE = {
   stockLoading: false,
   adminPendingOrders: null,
   complaintsCount: null,
+  newSellers: null,
   latestRejectedProducts: null,
   underReview: null,
   weeklySales: null,
@@ -166,6 +168,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, underReview: action.payload };
     case FETCH_WEEKLY_SALES:
       return { ...state, weeklySales: action.payload };
+    case FETCH_NEW_SELLERS:
+      return { ...state, newSellers: action.payload };
     default:
       return state;
   }
