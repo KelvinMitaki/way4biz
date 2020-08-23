@@ -13,110 +13,105 @@ class DashBoardOrder extends React.Component {
         className="container"
         style={{ backgroundColor: "#fff", padding: "10px" }}
       >
-        {this.props.sellerOrders.length !== 0 ? (
-          <React.Fragment>
-            <div className="row no-gutters y">
-              <div className="col d-flex mb-2">
-                <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
-                  Order Info
-                </h6>
-                <h6 className="col-lg-2 p-0">Items No.</h6>
-                <h6 className="col-lg-2 p-0">Destination</h6>
-                <h6 className="col-lg-2 p-0">Total Amount</h6>
-                <h6 className="col-lg-2 p-0">Status</h6>
-              </div>
-            </div>
-            <div className="container-fluid p-0">
-              {this.props.sellerOrders &&
-                this.props.sellerOrders.length !== 0 &&
-                this.props.sellerOrders.map((order) => (
-                  <React.Fragment key={order._id}>
-                    <div className="row dashboard-order-wrapper box-container no-gutters">
-                      <div className="col-md-6 col-lg-4">
-                        <div className="id-cut">
-                          <strong className="mr-2">ID:</strong>
-                          {order._id}
-                        </div>
-                        <div>
-                          <strong className="mr-2">Date:</strong>
-                          {new Date(order.createdAt).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <div className="col-md-6 col-lg-2">
-                        <div>
-                          <strong className="x mr-2">Qty:</strong>
-                          {order.items.length}
-                        </div>
-                        <div className="view-order-details-link">
-                          <Link
-                            to={`/order/details/${order._id}`}
-                            onClick={() =>
-                              this.props.fetchSellerOrderDetails({
-                                items: order.items,
-                                productSellerData: order.productSellerData,
-                                cancelled: order.cancelled,
-                                delivered: order.delivered,
-                                dispatched: order.dispatched,
-                                orderId: order._id,
-                                buyer:
-                                  order.buyerSeller.length !== 0
-                                    ? order.buyerSeller
-                                    : order.buyerUser,
-                              })
-                            }
-                          >
-                            View Items
-                          </Link>
-                        </div>
-                      </div>
-
-                      <div className="col-md-6 col-lg-2">
-                        {order.buyerSeller.length !== 0 &&
-                          order.buyerSeller[0] && (
-                            <BuyerDestination
-                              buyerId={order.buyer}
-                              buyer={order.buyerSeller[0]}
-                            />
-                          )}
-                        {order.buyerUser.length !== 0 && order.buyerUser[0] && (
-                          <BuyerDestination
-                            buyerId={order.buyer}
-                            buyer={order.buyerUser[0]}
-                          />
-                        )}
-                      </div>
-                      <div className="col-md-6 col-lg-2">
-                        <div>
-                          <strong className="x mr-2">Amount:</strong>
-                          Ksh.
-                          {order.productSellerData
-                            .map((prod) => {
-                              const matchingProd = order.items.find(
-                                (item) => item.product === prod._id
-                              );
-                              if (matchingProd) {
-                                return prod.price * matchingProd.quantity;
-                              }
-                              return null;
-                            })
-                            .reduce((acc, curr) => acc + curr, 0)
-                            .toLocaleString()}
-                        </div>
-                      </div>
-                      <div className="col-md-6 col-lg-2">
-                        <div>
-                          <strong className="x mr-2">Status:</strong>
-                          {(order.cancelled && "Cancelled") ||
-                            (order.delivered && "Delivered") ||
-                            (!order.cancelled && !order.delivered && "Pending")}
-                        </div>
-                      </div>
+        <div className="row no-gutters y">
+          <div className="col d-flex mb-2">
+            <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
+              Order Info
+            </h6>
+            <h6 className="col-lg-2 p-0">Items No.</h6>
+            <h6 className="col-lg-2 p-0">Destination</h6>
+            <h6 className="col-lg-2 p-0">Total Amount</h6>
+            <h6 className="col-lg-2 p-0">Status</h6>
+          </div>
+        </div>
+        <div className="container-fluid p-0">
+          {this.props.sellerOrders &&
+            this.props.sellerOrders.length !== 0 &&
+            this.props.sellerOrders.map((order) => (
+              <React.Fragment key={order._id}>
+                <div className="row dashboard-order-wrapper box-container no-gutters">
+                  <div className="col-md-6 col-lg-4">
+                    <div className="id-cut">
+                      <strong className="mr-2">ID:</strong>
+                      {order._id}
                     </div>
-                  </React.Fragment>
-                ))}
-            </div>
-          </React.Fragment>
-        ) : null}
+                    <div>
+                      <strong className="mr-2">Date:</strong>
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-lg-2">
+                    <div>
+                      <strong className="x mr-2">Qty:</strong>
+                      {order.items.length}
+                    </div>
+                    <div className="view-order-details-link">
+                      <Link
+                        to={`/order/details/${order._id}`}
+                        onClick={() =>
+                          this.props.fetchSellerOrderDetails({
+                            items: order.items,
+                            productSellerData: order.productSellerData,
+                            cancelled: order.cancelled,
+                            delivered: order.delivered,
+                            dispatched: order.dispatched,
+                            orderId: order._id,
+                            buyer:
+                              order.buyerSeller.length !== 0
+                                ? order.buyerSeller
+                                : order.buyerUser,
+                          })
+                        }
+                      >
+                        View Items
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6 col-lg-2">
+                    {order.buyerSeller.length !== 0 && order.buyerSeller[0] && (
+                      <BuyerDestination
+                        buyerId={order.buyer}
+                        buyer={order.buyerSeller[0]}
+                      />
+                    )}
+                    {order.buyerUser.length !== 0 && order.buyerUser[0] && (
+                      <BuyerDestination
+                        buyerId={order.buyer}
+                        buyer={order.buyerUser[0]}
+                      />
+                    )}
+                  </div>
+                  <div className="col-md-6 col-lg-2">
+                    <div>
+                      <strong className="x mr-2">Amount:</strong>
+                      Ksh.
+                      {order.productSellerData
+                        .map((prod) => {
+                          const matchingProd = order.items.find(
+                            (item) => item.product === prod._id
+                          );
+                          if (matchingProd) {
+                            return prod.price * matchingProd.quantity;
+                          }
+                          return null;
+                        })
+                        .reduce((acc, curr) => acc + curr, 0)
+                        .toLocaleString()}
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-lg-2">
+                    <div>
+                      <strong className="x mr-2">Status:</strong>
+                      {(order.cancelled && "Cancelled") ||
+                        (order.delivered && "Delivered") ||
+                        (!order.cancelled && !order.delivered && "Pending")}
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+        </div>
       </div>
     );
   }
