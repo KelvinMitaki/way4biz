@@ -120,7 +120,6 @@ const INITIAL_STATE = {
   buyerComplaints: null,
   buyerComplaintLoading: false,
   rejectedProducts: null,
-  latestRejectedProducts: null,
   fetchProductsLoading: false,
   dispatchLoading: false,
   editCategoryLoading: false,
@@ -287,8 +286,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, subCategories: action.payload };
     case EMPTY_SUB_CATEGORIES:
       return { ...state, subCategories: null };
-    case FETCH_LATEST_REJECTED_PRODUCTS:
-      return { ...state, latestRejectedProducts: action.payload };
     case FETCH_PRODUCTS_START:
       return { ...state, fetchProductsLoading: true };
     case FETCH_PRODUCTS_STOP:
