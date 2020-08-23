@@ -180,8 +180,8 @@ class FAQAccordion extends React.Component {
         content: (
           <div className="faq-content-section">
             <p>
-              YES! We take the security of your payment and personal information
-              seriously.
+              <strong>YES! </strong>We take the security of your payment and
+              personal information seriously.
             </p>
           </div>
         ),
