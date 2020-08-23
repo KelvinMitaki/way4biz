@@ -261,7 +261,9 @@ import {
   PAY_REDEEM,
   PAY_REDEEM_START,
   PAY_REDEEM_STOP,
-  CLEAR_NEW_SELLER_DETAILS
+  CLEAR_NEW_SELLER_DETAILS,
+  UPLOAD_IMAGE_ERROR,
+  ADD_PRODUCT_ERROR
 } from "./types";
 
 const authCheck = error => {
@@ -683,6 +685,7 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
     history.push("/seller-products");
   } catch (error) {
     authCheck(error);
+    dispatch({ type: ADD_PRODUCT_ERROR, payload: error.response.data.message });
     dispatch({ type: LOADING_STOP });
     console.log(error.response);
   }
@@ -698,6 +701,14 @@ export const storeImage = image => async dispatch => {
           "Content-Type": image.type
         }
       });
+      if (!uploadConfig.data || (uploadConfig.data && !uploadConfig.data.key)) {
+        console.log(uploadConfig);
+        dispatch({
+          type: UPLOAD_IMAGE_ERROR,
+          payload:
+            "Error uploading image, please refresh the page and try again"
+        });
+      }
       dispatch({
         type: STORE_IMAGE,
         payload: uploadConfig.data.key
@@ -711,6 +722,7 @@ export const storeImage = image => async dispatch => {
   } catch (error) {
     authCheck(error);
     console.log(error.response.data);
+    console.log(error);
     dispatch({ type: STORE_IMAGE_STOP });
   }
 };

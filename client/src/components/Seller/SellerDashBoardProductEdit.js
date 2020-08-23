@@ -122,7 +122,17 @@ export class SellerEdit extends Component {
                         label="Product Subcategory"
                         component={SellerDropDown}
                       />
-
+                      {this.props.uploadImageError && (
+                        <div
+                          style={{
+                            color: "red",
+                            width: "90%",
+                            margin: "15px auto 0 auto"
+                          }}
+                        >
+                          {this.props.uploadImageError}
+                        </div>
+                      )}
                       <h5 style={{ width: "90%", margin: "15px auto 0 auto" }}>
                         Image Upload
                       </h5>
@@ -233,6 +243,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loading: state.auth.loading,
     deleteImageLoading: state.image.deleteImageLoading,
+    uploadImageError: state.image.uploadImageError,
     initialValues,
     description: state.product.description,
     adminCategories: state.product.adminCategories,

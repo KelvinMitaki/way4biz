@@ -25,7 +25,7 @@ class About extends React.Component {
             <div className="row mb-3">
               <div className="col-10 col-md-9 col-lg-8 mx-auto">
                 <div className="row">
-                  <div className="col-md-2" className="about-icon-wrapper">
+                  <div className="col-md-2 about-icon-wrapper">
                     <div className="about-icon-container">
                       <IoMdRocket
                         style={{ fontSize: "60px", color: "#f76b1a" }}
@@ -71,7 +71,7 @@ class About extends React.Component {
             <div className="row mb-3">
               <div className="col-10 col-md-9 col-lg-8 mx-auto">
                 <div className="row">
-                  <div className="col-md-2" className="about-icon-wrapper">
+                  <div className="about-icon-wrapper col-md-2">
                     <div className="about-icon-container">
                       <GiBinoculars
                         style={{ fontSize: "60px", color: "#f76b1a" }}
@@ -107,7 +107,7 @@ class About extends React.Component {
             <div className="row">
               <div className="col-10 col-md-9 col-lg-8 mx-auto">
                 <div className="row">
-                  <div className="col-md-2" className="about-icon-wrapper">
+                  <div className="about-icon-wrapper col-md-2">
                     <div className="about-icon-container">
                       <BsGem style={{ fontSize: "60px", color: "#f76b1a" }} />
                     </div>

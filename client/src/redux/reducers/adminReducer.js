@@ -22,7 +22,16 @@ import {
   REDEEM_COUNT,
   FETCH_REDEEMS,
   PAY_REDEEM_START,
-  PAY_REDEEM_STOP
+  PAY_REDEEM_STOP,
+  GET_STOCK,
+  GET_STOCK_START,
+  GET_STOCK_STOP,
+  FETCH_ADMIN_PENDING_ORDERS,
+  COUNT_COMPLAINTS,
+  FETCH_LATEST_REJECTED_PRODUCTS,
+  FETCH_UNDER_REVIEW,
+  FETCH_WEEKLY_SALES,
+  FETCH_NEW_SELLERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -42,7 +51,15 @@ const INITIAL_STATE = {
   deliveryLoading: false,
   redeemCount: null,
   redeems: null,
-  payRedeemLoading: false
+  payRedeemLoading: false,
+  stockLoading: false,
+  adminPendingOrders: null,
+  complaintsCount: null,
+  newSellers: null,
+  latestRejectedProducts: null,
+  underReview: null,
+  weeklySales: null,
+  stock: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -129,6 +146,30 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, payRedeemLoading: true };
     case PAY_REDEEM_STOP:
       return { ...state, payRedeemLoading: false };
+    case GET_STOCK_START:
+      return { ...state, stockLoading: true };
+    case GET_STOCK_STOP:
+      return { ...state, stockLoading: false };
+    case GET_STOCK:
+      return {
+        ...state,
+        stock: [
+          { label: "Stock In", value: action.payload.stockIn },
+          { label: "Stock Out", value: action.payload.stockOut }
+        ]
+      };
+    case FETCH_ADMIN_PENDING_ORDERS:
+      return { ...state, adminPendingOrders: action.payload };
+    case COUNT_COMPLAINTS:
+      return { ...state, complaintsCount: action.payload };
+    case FETCH_LATEST_REJECTED_PRODUCTS:
+      return { ...state, latestRejectedProducts: action.payload };
+    case FETCH_UNDER_REVIEW:
+      return { ...state, underReview: action.payload };
+    case FETCH_WEEKLY_SALES:
+      return { ...state, weeklySales: action.payload };
+    case FETCH_NEW_SELLERS:
+      return { ...state, newSellers: action.payload };
     default:
       return state;
   }

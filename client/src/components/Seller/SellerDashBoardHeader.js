@@ -26,7 +26,7 @@ class SellerDashBoardHeader extends React.Component {
               activeClassName="seller-menu-acive"
               to="/seller/sell"
             >
-              Sell
+              New Product
             </NavLink>
           </li>
           {/* <li className="my-4">

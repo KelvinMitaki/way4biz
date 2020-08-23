@@ -360,12 +360,34 @@ route.post(
           quantity: item.quantity
         };
       });
+      const ids = cart.map(i => i._id);
+      const pro = await Product.find({ _id: { $in: ids } }).select(
+        "price stockQuantity"
+      );
+      const verifiedProducts = pro.map(pCart => {
+        const prodExsists = cart.find(
+          i => i._id.toString() === pCart._id.toString()
+        );
+        if (prodExsists) {
+          return {
+            _id: pCart._doc._id,
+            price: pCart._doc.price,
+            stockQuantity: pCart._doc.stockQuantity,
+            quantity: prodExsists.quantity
+          };
+        }
+        return {
+          _id: pCart._doc._id,
+          price: pCart._doc.price,
+          stockQuantity: pCart._doc.stockQuantity
+        };
+      });
       cart.forEach(async item => {
         await Product.findByIdAndUpdate(item._id, {
           $inc: { stockQuantity: -item.quantity }
         });
       });
-      const price = cart
+      const price = verifiedProducts
         .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
       const distance = await Distance.findById(distanceId);

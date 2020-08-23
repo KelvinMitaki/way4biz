@@ -41,7 +41,47 @@ if (cluster.isMaster) {
   };
   mongooseConnect();
   if (process.env.NODE_ENV === "production") {
-    app.use(helmet());
+    app.use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'", "filesystem ", "'unsafe-inline'"],
+          scriptSrc: [
+            "https://code.jquery.com/",
+            "https://*.googleapis.com/",
+            "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/",
+            "'self'",
+            "'unsafe-inline'",
+            "https://js.stripe.com/"
+          ],
+          imgSrc: [
+            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/",
+            "'self'",
+            "https://ke.jumia.is",
+            "blob:",
+            "data:",
+            "'unsafe-eval'",
+            "https://*.googleapis.com/"
+          ],
+          objectSrc: ["data: 'unsafe-eval'"],
+          frameSrc: ["https://js.stripe.com/"],
+          styleSrc: [
+            "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/",
+            "https://*.googleapis.com/",
+            "'self'",
+            "'unsafe-inline'"
+          ],
+          connectSrc: [
+            "*",
+            "'self'",
+            "'unsafe-eval'",
+            "'unsafe-hashes'",
+            "'unsafe-inline'",
+            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/"
+          ],
+          fontSrc: ["*", "https://*.googleapis.com/"]
+        }
+      })
+    );
     app.use(compression());
   }
   app.use(passport.initialize());
