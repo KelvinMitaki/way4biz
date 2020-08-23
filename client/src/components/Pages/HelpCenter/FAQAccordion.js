@@ -163,6 +163,18 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Can I change my delivery address?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              We unfortunately can’t make changes to your delivery address once
+              payment has been received and you have received your Payment
+              Confirmation email.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
