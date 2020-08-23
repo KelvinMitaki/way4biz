@@ -75,7 +75,10 @@ class SellerRejects extends React.Component {
                   <GiGlassCelebration
                     style={{ fontSize: "100px", color: "#f76b1a" }}
                   />
-                  <h4 className="mt-2">Hurray! No rejected products yet.</h4>
+                  <h4 className="mt-2">
+                    Hurray! No rejected products yet.Rejected products will
+                    appear here.
+                  </h4>
                 </div>
               )}
             </div>
