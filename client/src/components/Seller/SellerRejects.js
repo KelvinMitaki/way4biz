@@ -28,7 +28,7 @@ class SellerRejects extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9">
-            <div className="container box-container m-0 mx-auto">
+            <div className="container-fluid box-container m-0 mx-auto">
               {this.props.sellerRejects.length !== 0 ? (
                 <React.Fragment>
                   <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
