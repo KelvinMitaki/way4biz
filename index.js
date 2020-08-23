@@ -28,14 +28,14 @@ if (cluster.isMaster) {
 
   const sessionStore = new MongoStore({
     uri: process.env.MONGO_URI,
-    collection: "sessions"
+    collection: "sessions",
   });
   const mongooseConnect = async () => {
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: false
+      useFindAndModify: false,
     });
     console.log("connected to the database");
   };
@@ -58,8 +58,8 @@ if (cluster.isMaster) {
       cookie: {
         sameSite: true,
         maxAge: 1000 * 60 * 60 * 24,
-        secure: process.env.PRODUCTION
-      }
+        secure: process.env.PRODUCTION,
+      },
     })
   );
   app.use(authRoutes);

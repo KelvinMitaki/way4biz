@@ -150,6 +150,19 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Can I return a product without accessories?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              Unfortunately not – the complete product has to be returned. This
+              means that if a TV remote is not working, the TV needs to be
+              returned as well, as it would need to be tested with the remote
+              once fixed.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
