@@ -153,7 +153,8 @@ class AdminDashBoard extends React.Component {
                         .value &&
                         kFormatter(
                           this.props.stock.find(s => s.label === "Stock Out")
-                            .value
+                            .value,
+                          2
                         ).toLocaleString()}
                     </span>
                     <h3>
