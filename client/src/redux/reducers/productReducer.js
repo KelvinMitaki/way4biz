@@ -113,7 +113,6 @@ const INITIAL_STATE = {
   sellerRejects: null,
   storeProducts: null,
   complaintLoading: false,
-  complaintsCount: null,
   complaints: null,
   complaint: null,
   fetchComplaintLoading: false,
@@ -266,8 +265,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, complaintLoading: true };
     case NEW_COMPLAINT_STOP:
       return { ...state, complaintLoading: false };
-    case COUNT_COMPLAINTS:
-      return { ...state, complaintsCount: action.payload };
     case FETCH_ALL_COMPLAINTS:
       return { ...state, complaints: action.payload };
     case FETCH_COMPLAINT:

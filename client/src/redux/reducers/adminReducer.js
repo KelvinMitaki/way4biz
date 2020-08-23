@@ -26,7 +26,8 @@ import {
   GET_STOCK,
   GET_STOCK_START,
   GET_STOCK_STOP,
-  FETCH_ADMIN_PENDING_ORDERS
+  FETCH_ADMIN_PENDING_ORDERS,
+  COUNT_COMPLAINTS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -49,6 +50,7 @@ const INITIAL_STATE = {
   payRedeemLoading: false,
   stockLoading: false,
   adminPendingOrders: null,
+  complaintsCount: null,
   stock: []
 };
 
@@ -150,6 +152,8 @@ export default (state = INITIAL_STATE, action) => {
       };
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
+    case COUNT_COMPLAINTS:
+      return { ...state, complaintsCount: action.payload };
     default:
       return state;
   }
