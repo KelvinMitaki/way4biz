@@ -99,7 +99,6 @@ const INITIAL_STATE = {
   description: "",
   redirectOnFailLoading: false,
   storeImageLoading: false,
-  adminPendingOrders: null,
   weeklySales: null,
   payments: null,
   adminCategories: null,
@@ -230,9 +229,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: true };
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
-
-    case FETCH_ADMIN_PENDING_ORDERS:
-      return { ...state, adminPendingOrders: action.payload };
 
     case FETCH_WEEKLY_SALES:
       return { ...state, weeklySales: action.payload };

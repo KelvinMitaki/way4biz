@@ -25,7 +25,8 @@ import {
   PAY_REDEEM_STOP,
   GET_STOCK,
   GET_STOCK_START,
-  GET_STOCK_STOP
+  GET_STOCK_STOP,
+  FETCH_ADMIN_PENDING_ORDERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -47,6 +48,7 @@ const INITIAL_STATE = {
   redeems: null,
   payRedeemLoading: false,
   stockLoading: false,
+  adminPendingOrders: null,
   stock: []
 };
 
@@ -146,6 +148,8 @@ export default (state = INITIAL_STATE, action) => {
           { label: "Stock Out", value: action.payload.stockOut }
         ]
       };
+    case FETCH_ADMIN_PENDING_ORDERS:
+      return { ...state, adminPendingOrders: action.payload };
     default:
       return state;
   }
