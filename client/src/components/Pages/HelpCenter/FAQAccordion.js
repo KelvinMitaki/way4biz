@@ -199,6 +199,16 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "What is Way4Biz’s return policy?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              View our Returns Policy <Link to="/return-policy">here</Link>.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
