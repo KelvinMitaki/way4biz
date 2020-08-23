@@ -28,14 +28,14 @@ class Review extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 reviews-wrapper m-0">
-            <div className="col-md-10  mx-auto box-container">
+          <div className="col-lg-9 reviews-wrapper m-0 p-0">
+            <div className="container-fluid  mx-auto box-container m-0">
               {/* mapping here */}
               {this.props.sellerReviews.length === 0 && (
                 <SellerDashBoardNoReviews />
               )}
               {this.props.sellerReviews.length !== 0 &&
-                this.props.sellerReviews.map(review => (
+                this.props.sellerReviews.map((review) => (
                   <div className="review-wrapper mb-3" key={review._id}>
                     <Rating clickable={false} size={15} value={4} />
                     <div className="seller-review-product-title-name">
@@ -78,11 +78,11 @@ class Review extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerReviews: state.product.sellerReviews,
     sellerReviewsLoading: state.product.sellerReviewsLoading,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(
