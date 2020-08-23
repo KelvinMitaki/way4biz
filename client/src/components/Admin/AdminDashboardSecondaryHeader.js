@@ -264,7 +264,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    newSellers: state.seller.newSellers,
+    newSellers: state.admin.newSellers,
     redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
     redeemCount: state.admin.redeemCount
   };
