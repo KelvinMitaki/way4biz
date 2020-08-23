@@ -175,6 +175,17 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Is it safe to shop with you?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              YES! We take the security of your payment and personal information
+              seriously.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
