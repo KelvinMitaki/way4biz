@@ -153,7 +153,8 @@ class AdminDashBoard extends React.Component {
                         .value &&
                         kFormatter(
                           this.props.stock.find(s => s.label === "Stock Out")
-                            .value
+                            .value,
+                          2
                         ).toLocaleString()}
                     </span>
                     <h3>
@@ -427,14 +428,14 @@ class AdminDashBoard extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    stock: state.product.stock,
+    stock: state.admin.stock,
     adminOrders: state.admin.adminOrders,
-    adminPendingOrders: state.product.adminPendingOrders,
-    complaintsCount: state.product.complaintsCount,
-    latestRejectedProducts: state.product.latestRejectedProducts,
-    underReview: state.product.underReview,
-    weeklySales: state.product.weeklySales,
-    newSellers: state.seller.newSellers
+    adminPendingOrders: state.admin.adminPendingOrders,
+    complaintsCount: state.admin.complaintsCount,
+    latestRejectedProducts: state.admin.latestRejectedProducts,
+    underReview: state.admin.underReview,
+    weeklySales: state.admin.weeklySales,
+    newSellers: state.admin.newSellers
   };
 };
 export default connect(mapStateToProps, {

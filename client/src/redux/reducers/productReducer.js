@@ -28,15 +28,9 @@ import {
   REDIRECT_ON_FAIL_STOP,
   STORE_IMAGE_START,
   STORE_IMAGE_STOP,
-  GET_STOCK_START,
-  GET_STOCK_STOP,
-  GET_STOCK,
-  FETCH_ADMIN_PENDING_ORDERS,
-  FETCH_WEEKLY_SALES,
   FETCH_ALL_ADMIN_CATEGORIES,
   FETCH_SINGLE_CATEGORY,
   FETCH_SELLER_NEW_ORDERS_COUNT,
-  FETCH_UNDER_REVIEW,
   FETCH_REVIEW_PRODUCT,
   ACCEPT_PRODUCT_START,
   ACCEPT_PRODUCT_STOP,
@@ -50,7 +44,6 @@ import {
   FETCH_STORE_PRODUCTS,
   NEW_COMPLAINT_START,
   NEW_COMPLAINT_STOP,
-  COUNT_COMPLAINTS,
   FETCH_ALL_COMPLAINTS,
   FETCH_COMPLAINT,
   FETCH_COMPLAINT_START,
@@ -62,7 +55,6 @@ import {
   FETCH_REJECTED_PRODUCTS,
   FETCH_SUB_CATEGORIES,
   EMPTY_SUB_CATEGORIES,
-  FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_PRODUCTS_START,
   FETCH_PRODUCTS_STOP,
   CONFIRM_DISPATCH_START,
@@ -99,15 +91,10 @@ const INITIAL_STATE = {
   description: "",
   redirectOnFailLoading: false,
   storeImageLoading: false,
-  stock: [],
-  stockLoading: false,
-  adminPendingOrders: null,
-  weeklySales: null,
   payments: null,
   adminCategories: null,
   singleCategory: null,
   dashboard: null,
-  underReview: null,
   reviewProduct: null,
   acceptProductLoading: false,
   rejectProductLoading: false,
@@ -116,7 +103,6 @@ const INITIAL_STATE = {
   sellerRejects: null,
   storeProducts: null,
   complaintLoading: false,
-  complaintsCount: null,
   complaints: null,
   complaint: null,
   fetchComplaintLoading: false,
@@ -124,7 +110,6 @@ const INITIAL_STATE = {
   buyerComplaints: null,
   buyerComplaintLoading: false,
   rejectedProducts: null,
-  latestRejectedProducts: null,
   fetchProductsLoading: false,
   dispatchLoading: false,
   editCategoryLoading: false,
@@ -232,31 +217,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: true };
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
-    case GET_STOCK_START:
-      return { ...state, stockLoading: true };
-    case GET_STOCK_STOP:
-      return { ...state, stockLoading: false };
-    case GET_STOCK:
-      return {
-        ...state,
-        stock: [
-          { label: "Stock In", value: action.payload.stockIn },
-          { label: "Stock Out", value: action.payload.stockOut }
-        ]
-      };
-    case FETCH_ADMIN_PENDING_ORDERS:
-      return { ...state, adminPendingOrders: action.payload };
-
-    case FETCH_WEEKLY_SALES:
-      return { ...state, weeklySales: action.payload };
     case FETCH_ALL_ADMIN_CATEGORIES:
       return { ...state, adminCategories: action.payload };
     case FETCH_SINGLE_CATEGORY:
       return { ...state, singleCategory: action.payload };
     case FETCH_SELLER_NEW_ORDERS_COUNT:
       return { ...state, dashboard: action.payload };
-    case FETCH_UNDER_REVIEW:
-      return { ...state, underReview: action.payload };
     case FETCH_REVIEW_PRODUCT:
       return { ...state, reviewProduct: action.payload };
     case ACCEPT_PRODUCT_START:
@@ -283,8 +249,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, complaintLoading: true };
     case NEW_COMPLAINT_STOP:
       return { ...state, complaintLoading: false };
-    case COUNT_COMPLAINTS:
-      return { ...state, complaintsCount: action.payload };
     case FETCH_ALL_COMPLAINTS:
       return { ...state, complaints: action.payload };
     case FETCH_COMPLAINT:
@@ -307,8 +271,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, subCategories: action.payload };
     case EMPTY_SUB_CATEGORIES:
       return { ...state, subCategories: null };
-    case FETCH_LATEST_REJECTED_PRODUCTS:
-      return { ...state, latestRejectedProducts: action.payload };
     case FETCH_PRODUCTS_START:
       return { ...state, fetchProductsLoading: true };
     case FETCH_PRODUCTS_STOP:

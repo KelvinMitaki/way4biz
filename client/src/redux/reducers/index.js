@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import productReducer from "./productReducer";
-import sellerReducer from "./selleReducer";
+import sellerReducer from "./sellerReducer";
 import cartReducer from "./cartReducer";
 import OrderDetailsPersist from "./OrderDetailsPersist";
 import filterReducer from "./filterReducer";
