@@ -27,15 +27,15 @@ class SellerRejects extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 py-3">
-            <div className="container box-container">
+          <div className="col-lg-9">
+            <div className="container box-container m-0 mx-auto">
               {this.props.sellerRejects.length !== 0 ? (
                 <React.Fragment>
                   <h3 style={{ textAlign: "center" }} className="mt-3 mb-2">
                     Rejected Products
                   </h3>
                   {this.props.sellerRejects.length !== 0 &&
-                    this.props.sellerRejects.map(rej => (
+                    this.props.sellerRejects.map((rej) => (
                       <div
                         key={rej._id}
                         className="box-container reject-info p-2"
@@ -85,10 +85,10 @@ class SellerRejects extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerRejects: state.product.sellerRejects,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default withRouter(
