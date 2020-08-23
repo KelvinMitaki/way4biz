@@ -51,7 +51,7 @@ if (cluster.isMaster) {
             "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/",
             "'self'",
             "'unsafe-inline'",
-            "https://js.stripe.com/"
+            "https://js.stripe.com/",
           ],
           imgSrc: [
             " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/",
@@ -60,7 +60,7 @@ if (cluster.isMaster) {
             "blob:",
             "data:",
             "'unsafe-eval'",
-            "https://*.googleapis.com/"
+            "https://*.googleapis.com/",
           ],
           objectSrc: ["data: 'unsafe-eval'"],
           frameSrc: ["https://js.stripe.com/"],
@@ -68,7 +68,7 @@ if (cluster.isMaster) {
             "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/",
             "https://*.googleapis.com/",
             "'self'",
-            "'unsafe-inline'"
+            "'unsafe-inline'",
           ],
           connectSrc: [
             "*",
@@ -76,10 +76,10 @@ if (cluster.isMaster) {
             "'unsafe-eval'",
             "'unsafe-hashes'",
             "'unsafe-inline'",
-            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/"
+            " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/",
           ],
-          fontSrc: ["*", "https://*.googleapis.com/"]
-        }
+          fontSrc: ["*", "https://*.googleapis.com/"],
+        },
       })
     );
     app.use(compression());
