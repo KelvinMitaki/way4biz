@@ -433,7 +433,7 @@ const mapStateToProps = state => {
     complaintsCount: state.admin.complaintsCount,
     latestRejectedProducts: state.admin.latestRejectedProducts,
     underReview: state.admin.underReview,
-    weeklySales: state.product.weeklySales,
+    weeklySales: state.admin.weeklySales,
     newSellers: state.seller.newSellers
   };
 };
