@@ -427,7 +427,7 @@ class AdminDashBoard extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    stock: state.product.stock,
+    stock: state.admin.stock,
     adminOrders: state.admin.adminOrders,
     adminPendingOrders: state.product.adminPendingOrders,
     complaintsCount: state.product.complaintsCount,

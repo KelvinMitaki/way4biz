@@ -22,7 +22,10 @@ import {
   REDEEM_COUNT,
   FETCH_REDEEMS,
   PAY_REDEEM_START,
-  PAY_REDEEM_STOP
+  PAY_REDEEM_STOP,
+  GET_STOCK,
+  GET_STOCK_START,
+  GET_STOCK_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -42,7 +45,9 @@ const INITIAL_STATE = {
   deliveryLoading: false,
   redeemCount: null,
   redeems: null,
-  payRedeemLoading: false
+  payRedeemLoading: false,
+  stockLoading: false,
+  stock: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -129,6 +134,18 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, payRedeemLoading: true };
     case PAY_REDEEM_STOP:
       return { ...state, payRedeemLoading: false };
+    case GET_STOCK_START:
+      return { ...state, stockLoading: true };
+    case GET_STOCK_STOP:
+      return { ...state, stockLoading: false };
+    case GET_STOCK:
+      return {
+        ...state,
+        stock: [
+          { label: "Stock In", value: action.payload.stockIn },
+          { label: "Stock Out", value: action.payload.stockOut }
+        ]
+      };
     default:
       return state;
   }

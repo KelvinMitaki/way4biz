@@ -99,8 +99,6 @@ const INITIAL_STATE = {
   description: "",
   redirectOnFailLoading: false,
   storeImageLoading: false,
-  stock: [],
-  stockLoading: false,
   adminPendingOrders: null,
   weeklySales: null,
   payments: null,
@@ -232,18 +230,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, storeImageLoading: true };
     case STORE_IMAGE_STOP:
       return { ...state, storeImageLoading: false };
-    case GET_STOCK_START:
-      return { ...state, stockLoading: true };
-    case GET_STOCK_STOP:
-      return { ...state, stockLoading: false };
-    case GET_STOCK:
-      return {
-        ...state,
-        stock: [
-          { label: "Stock In", value: action.payload.stockIn },
-          { label: "Stock Out", value: action.payload.stockOut }
-        ]
-      };
+
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
 
