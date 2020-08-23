@@ -186,6 +186,19 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "What do I do if I forgot my password?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              On the Login page click on the link next to ‘Forgot password?’ and
+              enter the email address that you account was registered with and
+              click ‘Submit‘. We will email you a link to this email address
+              which you can click on to reset your password.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
