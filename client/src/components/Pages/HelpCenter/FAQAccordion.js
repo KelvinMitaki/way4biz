@@ -209,6 +209,17 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Still struggling? Contact Us",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              You can contact us <Link to="/contact-us">here</Link> and our
+              friendly customer service team will get back to you shortly.
+            </p>
+          </div>
+        ),
+      },
     ];
     const { activeTab } = this.state;
     return (
