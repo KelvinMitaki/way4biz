@@ -47,7 +47,7 @@ if (cluster.isMaster) {
           defaultSrc: ["'self'", "filesystem ", "'unsafe-inline'"],
           scriptSrc: [
             "https://code.jquery.com/",
-            "https://maps.googleapis.com/",
+            "https://*.googleapis.com/",
             "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/",
             "'self'",
             "'unsafe-inline'",
@@ -59,12 +59,14 @@ if (cluster.isMaster) {
             "https://ke.jumia.is",
             "blob:",
             "data:",
-            "'unsafe-eval'"
+            "'unsafe-eval'",
+            "https://*.googleapis.com/"
           ],
           objectSrc: ["data: 'unsafe-eval'"],
           frameSrc: ["https://js.stripe.com/"],
           styleSrc: [
             "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/",
+            "https://*.googleapis.com/",
             "'self'",
             "'unsafe-inline'"
           ],
@@ -75,7 +77,8 @@ if (cluster.isMaster) {
             "'unsafe-hashes'",
             "'unsafe-inline'",
             " https://e-commerce-gig.s3.eu-west-2.amazonaws.com/"
-          ]
+          ],
+          fontSrc: ["*", "https://*.googleapis.com/"]
         }
       })
     );
