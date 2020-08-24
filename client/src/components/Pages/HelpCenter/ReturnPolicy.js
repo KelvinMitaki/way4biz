@@ -79,6 +79,20 @@ class ReturnPolicy extends React.Component {
                   </p>
                 </li>
               </ul>
+              <h6>Changed your mind?</h6>
+              <p>Where you have changed your mind and would like a credit for a product, you can return it – provided the product is not:</p>
+              <ul>
+              <li><p>a digital product such as an eBook, electronic voucher, gaming code or other digital download;</p></li> 
+              <li><p>an audio or video recording or computer software that has been unsealed;</p></li> 
+              <li><p>a newspaper, periodical or magazine;</p></li> 
+              <li><p>a foodstuff, beverage or other product intended for everyday consumption;</p></li> 
+              <li><p>a nursing or maternity product, an infant bottle, infant feeding product or bottle accessory that has been unsealed, including (but not limited to) breast pumps, bottles, </p></li> 
+              <li><p>a beauty product or fragrance which has been used;</p></li> 
+              <li><p>an intimate product, lingerie, swimwear, bodysuit, underwear or jewellery for piercings, which for hygienic and public health reasons may not be returned; or</p></li> 
+              <li><p>a product which has been personalised for you or made to your specifications; or</p></li> 
+              <li><p>a flatpack furniture product that has been assembled after delivery.</p></li>
+              </ul>
+              <p>We will collect the product from you at no charge. Once we have inspected the product and validated your return, we will credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
             </div>
           </div>
         </div>
