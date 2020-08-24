@@ -54,6 +54,31 @@ class ReturnPolicy extends React.Component {
                 Failure to adhere to any of these requirements could delay the
                 processing of your request or result in its decline altogether.
               </h6>
+
+              <h4>Unwanted Products</h4>
+              <h6>You can return an unwanted product to us at no charge, provided:</h6>
+              <ul>
+                <li>
+                  <p>
+                  it is undamaged and unused, with the original labels and stickers still attached;
+                  </p>
+                </li>
+                <li>
+                  <p>
+                  it is not missing any accessories or parts;
+                  </p>
+                </li>
+                <li>
+                  <p>
+                  you log a return on the Website within <strong>15 days after delivery</strong> to you or collection by you of the unwanted product.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                  it is not one of the products listed below.
+                  </p>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
