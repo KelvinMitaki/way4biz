@@ -1,6 +1,8 @@
 import React from "react";
 import HelpCenterHeader from "./HelpCenterHeader";
 import "./ReturnPolicy.css";
+import Footer from "../../Footer/Footer";
+import MiniMenuWrapper from "../../MiniMenuWrapper/MiniMenuWrapper";
 
 class ReturnPolicy extends React.Component {
   render() {
@@ -124,6 +126,8 @@ We will arrange to collect the product from you at no charge. Once we have inspe
             </div>
           </div>
         </div>
+        <Footer />
+        <MiniMenuWrapper />
       </div>
     );
   }
