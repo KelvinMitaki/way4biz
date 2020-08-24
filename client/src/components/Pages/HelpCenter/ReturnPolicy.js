@@ -104,6 +104,20 @@ class ReturnPolicy extends React.Component {
               <p>Should a product be damaged or missing any parts or accessories at the time of delivery / collection, please notify us within <strong>7 days </strong>of such delivery / collection by logging a return on the Website.
 We will arrange to collect the product from you at no charge. Once we have inspected the product and validated your return, we will at your choice repair / replace the product as soon as possible (if such repair is possible/ we have the same product in stock to use as a replacement) or credit your account with the purchase price of the product (or refund you if that is your preference).
 </p>
+
+              <h4>Defective products</h4>
+              <p>We do our best to ensure that the products we deliver to you are of a high quality,  and in good working order and without defects.</p>
+              <p><strong>A defect is a material imperfection in the manufacture of a product or any characteristic of a product, which makes the product less acceptable than one would reasonably be entitled to expect in the circumstances.</strong></p>
+              <p>The following will NOT be regarded as defects and will not entitle you to a return:</p>
+              <ul>
+              <li><p>faults resulting from normal wear and tear;</p></li> 
+              <li><p>damage arising from negligence, user abuse or incorrect usage of the product;</p></li> 
+              <li><p>damage arising from electrical surges or sea air corrosion;</p></li> 
+              <li><p>damage arising from a failure to adequately care for the product;</p></li> 
+              <li><p>damage arising from unauthorized alterations to the product;</p></li> 
+              <li><p>where the specifications of a product, although accurately described on the Website and generally fit for its intended purpose, do not suit you.</p></li>
+              </ul>
+              
             </div>
           </div>
         </div>
