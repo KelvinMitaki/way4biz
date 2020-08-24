@@ -99,6 +99,11 @@ class ReturnPolicy extends React.Component {
 
               <h4>Not what you ordered?</h4>
               <p>If we accidentally deliver the wrong product to you, or if the product is not as described on the Website, please notify us and we will collect the product from you at no charge. If the product is missing any accessories or parts, you will need to follow the process set out in section 2 below. Once we have inspected the product and validated your return, we will at your choice deliver the correct product to you as soon as possible (if the correct product is available); or credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
+
+              <h4>Products damaged on delivery</h4>
+              <p>Should a product be damaged or missing any parts or accessories at the time of delivery / collection, please notify us within <strong>7 days </strong>of such delivery / collection by logging a return on the Website.
+We will arrange to collect the product from you at no charge. Once we have inspected the product and validated your return, we will at your choice repair / replace the product as soon as possible (if such repair is possible/ we have the same product in stock to use as a replacement) or credit your account with the purchase price of the product (or refund you if that is your preference).
+</p>
             </div>
           </div>
         </div>
