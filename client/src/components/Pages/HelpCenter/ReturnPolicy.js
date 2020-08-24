@@ -93,6 +93,9 @@ class ReturnPolicy extends React.Component {
               <li><p>a flatpack furniture product that has been assembled after delivery.</p></li>
               </ul>
               <p>We will collect the product from you at no charge. Once we have inspected the product and validated your return, we will credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
+
+              <h4>Want to exchange?</h4>
+              <p>Fashion and sportswear products can be exchanged for a different size or colour variation, provided that such variation is available. In such a case, we will collect the product from you and deliver the requested product to you at no charge. If such variation is not available, we will credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
             </div>
           </div>
         </div>
