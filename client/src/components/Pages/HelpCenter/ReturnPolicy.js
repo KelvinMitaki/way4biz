@@ -96,6 +96,9 @@ class ReturnPolicy extends React.Component {
 
               <h4>Want to exchange?</h4>
               <p>Fashion and sportswear products can be exchanged for a different size or colour variation, provided that such variation is available. In such a case, we will collect the product from you and deliver the requested product to you at no charge. If such variation is not available, we will credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
+
+              <h4>Not what you ordered?</h4>
+              <p>If we accidentally deliver the wrong product to you, or if the product is not as described on the Website, please notify us and we will collect the product from you at no charge. If the product is missing any accessories or parts, you will need to follow the process set out in section 2 below. Once we have inspected the product and validated your return, we will at your choice deliver the correct product to you as soon as possible (if the correct product is available); or credit your account with the purchase price of the product within 10 days of the return (or refund you if that is your preference).</p>
             </div>
           </div>
         </div>
