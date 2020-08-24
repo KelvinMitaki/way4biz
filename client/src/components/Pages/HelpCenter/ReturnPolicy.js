@@ -117,7 +117,10 @@ We will arrange to collect the product from you at no charge. Once we have inspe
               <li><p>damage arising from unauthorized alterations to the product;</p></li> 
               <li><p>where the specifications of a product, although accurately described on the Website and generally fit for its intended purpose, do not suit you.</p></li>
               </ul>
-              
+              <h4>Charges and refunds</h4>
+              <h6>If you return a defective to us, but you fail to return all of the accessories and parts that were sold with that product, we are entitled to (subject to applicable law)  refuse the return,  or only to replace the item that you did return; or to estimate the value of the missing accessories and parts and to credit or refund you in respect of the returned item only.</h6>
+              <p>If you return a product that does not comply with this Policy, you may be liable to reimburse Way4Biz for the cost of collecting the product from you and the cost of having the product returned to you.</p>
+              <p><strong>Please note that we only refund to the payment method that you originally used –</strong> i.e. payment by credit card will be refunded to the same credit card, m-pesa payment to the same m-pesa account that made the payment.</p>
             </div>
           </div>
         </div>
