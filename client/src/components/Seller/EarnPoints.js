@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import validator from "validator";
 import {
   sendReferralCode,
-  clearReferralErrorAndSuccess
+  clearReferralErrorAndSuccess,
 } from "../../redux/actions";
 import { BsArrowLeft, BsCheckCircle } from "react-icons/bs";
 import { IconContext } from "react-icons";
@@ -87,15 +87,15 @@ class EarnPoints extends React.Component {
           refer many sellers to sell on our platform.
         </h6>
         <h6 className="my-2">
-          Lets get you more points. Key in the email of the person you want to
+          Lets get you more points. Key in the email of the seller you want to
           refer. Then press send to send the referral.
         </h6>
         <form
-          onSubmit={this.props.handleSubmit(formValues =>
+          onSubmit={this.props.handleSubmit((formValues) =>
             this.props.sendReferralCode(
               {
                 ...formValues,
-                sellerName: `${this.props.firstName} ${this.props.lastName}`
+                sellerName: `${this.props.firstName} ${this.props.lastName}`,
               },
               reset
             )
@@ -118,7 +118,7 @@ class EarnPoints extends React.Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (!formValues.points) {
     errors.points = "Please fill in this field";
@@ -132,14 +132,14 @@ const validate = formValues => {
 
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     email: state.auth.user.email,
     firstName: state.auth.user.firstName,
     lastName: state.auth.user.lastName,
     points: state.auth.user.points,
     referralError: state.seller.referralError,
-    referralSuccess: state.seller.referralSuccess
+    referralSuccess: state.seller.referralSuccess,
   };
 };
 export default reduxForm({ form: "EarnPoints", validate })(

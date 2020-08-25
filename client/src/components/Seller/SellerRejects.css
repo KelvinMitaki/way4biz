@@ -20,7 +20,7 @@
 
 .no-seller-products-rejects {
   display: flex;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 90px);
   justify-content: center;
   align-items: center;
   flex-direction: column;

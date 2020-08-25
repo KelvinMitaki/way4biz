@@ -7,7 +7,7 @@ import {
   addProduct,
   unpersistImage,
   fetchAllAdminCategories,
-  fetchAllSellerCategories
+  fetchAllSellerCategories,
 } from "../../redux/actions";
 import SellerDashBoardHeader from "./SellerDashBoardHeader";
 import SellerDashBoardMenu from "./SellerDashBoardMenu";
@@ -34,23 +34,23 @@ export class Sell extends Component {
       return <ScreenLoader />;
     const adminCategories =
       this.props.adminCategories.length !== 0 &&
-      this.props.adminCategories.map(cat => ({
+      this.props.adminCategories.map((cat) => ({
         key: cat.category.main,
         text: cat.category.main,
-        value: cat.category.main
+        value: cat.category.main,
       }));
     const adminSubCategories =
       this.props.adminCategories.length !== 0 &&
       this.props.adminCategories.find(
-        cat => cat.category.main === this.props.category
+        (cat) => cat.category.main === this.props.category
       );
     const subcategories =
       adminSubCategories &&
       adminSubCategories.category &&
-      adminSubCategories.category.subcategories.map(sub => ({
+      adminSubCategories.category.subcategories.map((sub) => ({
         key: sub,
         text: sub,
-        value: sub
+        value: sub,
       }));
     return (
       <div className="container-fluid dashboard-wrapper">
@@ -69,12 +69,12 @@ export class Sell extends Component {
               <div className="row">
                 <div id="dashboard-new-lg-screen" className="col p-0">
                   <form
-                    onSubmit={this.props.handleSubmit(formValues =>
+                    onSubmit={this.props.handleSubmit((formValues) =>
                       this.props.addProduct(
                         {
                           ...formValues,
                           description: this.props.description,
-                          imageUrl: this.props.imageUrl
+                          imageUrl: this.props.imageUrl,
                         },
                         this.props.history
                       )
@@ -130,7 +130,7 @@ export class Sell extends Component {
                         style={{
                           color: "red",
                           width: "90%",
-                          margin: "15px auto 0 auto"
+                          margin: "15px auto 0 auto",
                         }}
                       >
                         {this.props.uploadImageError}
@@ -146,6 +146,17 @@ export class Sell extends Component {
                     </h5>
 
                     <ControlledEditor />
+                    {this.props.addProductError && (
+                      <div
+                        style={{
+                          color: "red",
+                          width: "90%",
+                          margin: "1px auto 0 auto",
+                        }}
+                      >
+                        <h5>{this.props.addProductError}</h5>
+                      </div>
+                    )}
                     <button
                       style={{ cursor: "pointer", width: "90%" }}
                       className="btn btn-md btn-block primary-button my-5"
@@ -169,20 +180,6 @@ export class Sell extends Component {
                         <span>Add Product</span>
                       )}
                     </button>
-                    {this.props.addProductError && (
-                      <div
-                        style={{
-                          color: "red",
-                          width: "90%",
-                          margin: "1px auto 0 auto"
-                        }}
-                      >
-                        <h5>{this.props.addProductError}</h5>
-                        <br />
-                        <br />
-                        <br />
-                      </div>
-                    )}
                   </form>
                 </div>
               </div>
@@ -193,7 +190,7 @@ export class Sell extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.name ||
@@ -225,7 +222,7 @@ const validate = formValues => {
   return errors;
 };
 const selector = formValueSelector("Sell");
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const category = selector(state, "category");
   return {
     loading: state.auth.loading,
@@ -236,19 +233,19 @@ const mapStateToProps = state => {
     imageUrl: state.image.imageUrl,
     uploadImageError: state.image.uploadImageError,
     deleteImageLoading: state.image.deleteImageLoading,
-    category
+    category,
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "Sell"
+    form: "Sell",
   })(
     connect(mapStateToProps, {
       addProduct,
       unpersistImage,
       fetchAllAdminCategories,
-      fetchAllSellerCategories
+      fetchAllSellerCategories,
     })(Sell)
   )
 );

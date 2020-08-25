@@ -25,9 +25,7 @@ class DashBoardOrder extends React.Component {
           </div>
         </div>
         <div className="container-fluid p-0">
-          {/* mapping here */}
-          {this.props.sellerOrders &&
-            this.props.sellerOrders.length !== 0 &&
+          {this.props.sellerOrders && this.props.sellerOrders.length !== 0 ? (
             this.props.sellerOrders.map(order => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
@@ -68,11 +66,7 @@ class DashBoardOrder extends React.Component {
                       </Link>
                     </div>
                   </div>
-                  {/* <div className="col-md-6 col-lg-3">
-                    <div>
-                      Rongai
-                    </div>
-                    </div> */}
+
                   <div className="col-md-6 col-lg-2">
                     {order.buyerSeller.length !== 0 && order.buyerSeller[0] && (
                       <BuyerDestination
@@ -115,7 +109,10 @@ class DashBoardOrder extends React.Component {
                   </div>
                 </div>
               </React.Fragment>
-            ))}
+            ))
+          ) : (
+            <div>You currently don't have any orders yet</div>
+          )}
         </div>
       </div>
     );

@@ -120,10 +120,7 @@ class FAQAccordion extends React.Component {
         label: "Can I pay with Cash?",
         content: (
           <div className="faq-content-section">
-            <p>
-              We currently don't offer cash on delivery.
-            </p>
-
+            <p>We currently don't offer cash on delivery.</p>
           </div>
         ),
       },
@@ -131,24 +128,95 @@ class FAQAccordion extends React.Component {
         label: "What if I received a damaged product?",
         content: (
           <div className="faq-content-section">
-            <p>If you notify us within 7 days of damage to your goods occurring on delivery of your order, you can return it to us at no charge and, if stock is available, we will do our best to immediately arrange a replacement. If your return request falls within this policy and is deemed eligible for a return, we will:</p>
+            <p>
+              If you notify us within 7 days of damage to your goods occurring
+              on delivery of your order, you can return it to us at no charge
+              and, if stock is available, we will do our best to immediately
+              arrange a replacement. If your return request falls within this
+              policy and is deemed eligible for a return, we will:
+            </p>
             <ul>
               <li>
                 <p>
-                  replace the correct product to you (if the correct product is available) or;
+                  replace the correct product to you (if the correct product is
+                  available) or;
                 </p>
-              </li>
-              <li>
-                <p>
-                  credit your account with the purchase price of the product or;
-                </p>
-              </li>
-              <li>
-                <p>
-                  refund you with the purchase price of the product.                </p>
               </li>
 
+              <li>
+                <p>refund you with the purchase price of the product. </p>
+              </li>
             </ul>
+          </div>
+        ),
+      },
+      {
+        label: "Can I return a product without accessories?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              Unfortunately not – the complete product has to be returned. This
+              means that if a TV remote is not working, the TV needs to be
+              returned as well, as it would need to be tested with the remote
+              once fixed.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "Can I change my delivery address?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              We unfortunately can’t make changes to your delivery address once
+              payment has been received and you have received your Payment
+              Confirmation email.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "Is it safe to shop with you?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              <strong>YES! </strong>We take the security of your payment and
+              personal information seriously.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "What do I do if I forgot my password?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              On the Login page click on the link next to ‘Forgot password?’ and
+              enter the email address that you account was registered with and
+              click ‘Submit‘. We will email you a link to this email address
+              which you can click on to reset your password.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "What is Way4Biz’s return policy?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              View our Returns Policy <Link to="/return-policy">here</Link>.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "Still struggling? Contact Us",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              You can contact us <Link to="/contact-us">here</Link> and our
+              friendly customer service team will get back to you shortly.
+            </p>
           </div>
         ),
       },

@@ -10,7 +10,10 @@ class SellerDashBoardNoReviews extends React.Component {
         <IconContext.Provider value={{ className: "seller-no-reviews" }}>
           <MdRateReview />
         </IconContext.Provider>
-        <h4 className="mt-2">Your products have no reviews yet.</h4>
+        <h4 className="mt-2">
+          Your products have no reviews yet.Reviews of your products will appear
+          here.
+        </h4>
       </div>
     );
   }
