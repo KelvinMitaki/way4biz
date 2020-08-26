@@ -422,7 +422,11 @@ class AdminDashBoard extends React.Component {
               <div className="admin-hero-upload-section">
                  <input type="file" className="btn btn-block" />  
               </div>
-
+              
+              <div className="admin-hero-uploads">
+                {/* mapping here */}
+                <img src="/1.jpg"/>
+              </div>
 
             </div>
           </div>

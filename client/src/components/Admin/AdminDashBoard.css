@@ -166,3 +166,8 @@
 .all-rejects a:hover {
   color: #f76b1a;
 }
+
+
+.admin-hero-uploads img{
+  width:100%;
+}
