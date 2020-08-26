@@ -419,7 +419,7 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              <div className="admin-dashboard-bottom">
+              <div className="row admin-dashboard-bottom">
                 <div className="admin-hero-upload-section">
                   <input type="file" className="btn btn-block" />
                 </div>
