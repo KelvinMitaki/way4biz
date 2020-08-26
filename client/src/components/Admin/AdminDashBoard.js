@@ -418,6 +418,12 @@ class AdminDashBoard extends React.Component {
                   <Link to="/admin/rejects">View All</Link>
                 </div>
               </div>
+
+              <div className="admin-hero-upload-section">
+                 <input type="file" className="btn btn-block" />  
+              </div>
+
+
             </div>
           </div>
         </div>
