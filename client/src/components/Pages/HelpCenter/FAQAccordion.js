@@ -211,6 +211,37 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I earn points as a seller?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  Login <Link to="/seller/sign-in">here</Link> to your account
+                  and navigate to you seller dashboard.
+                </p>
+              </li>
+
+              <li>
+                <p>Click the "Points" link on the left menu.</p>
+              </li>
+              <li>
+                <p>
+                  In the Earnpoints tab,key in the email of the seller you want
+                  to refer.
+                </p>
+              </li>
+              <li>
+                <p>
+                  When the seller you referred accepts your referral and creates
+                  a seller account with us,you will be awarded more points.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
         label: "What is Way4Biz’s return policy?",
         content: (
           <div className="faq-content-section">
