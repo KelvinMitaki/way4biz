@@ -242,6 +242,34 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I redeem points as a seller?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  Login <Link to="/seller/sign-in">here</Link> to your account
+                  and navigate to you seller dashboard.
+                </p>
+              </li>
+
+              <li>
+                <p>Click the "Points" link on the left menu.</p>
+              </li>
+              <li>
+                <p>In the Redeem Points tab,click the redeem now button.</p>
+              </li>
+              <li>
+                <p>
+                  <strong>Note: You can only at least 1000 points.</strong>
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+
+      {
         label: "What is Way4Biz’s return policy?",
         content: (
           <div className="faq-content-section">
