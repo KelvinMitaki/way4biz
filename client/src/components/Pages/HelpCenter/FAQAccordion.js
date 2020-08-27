@@ -200,6 +200,17 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "Does Way4Biz ship internationally?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              Currently, Way4Biz does local shipping only but later on
+              international shipping will be available.
+            </p>
+          </div>
+        ),
+      },
+      {
         label: "What is Way4Biz’s return policy?",
         content: (
           <div className="faq-content-section">
