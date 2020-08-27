@@ -227,7 +227,7 @@ class FAQAccordion extends React.Component {
               </li>
               <li>
                 <p>
-                  In the Earnpoints tab,key in the email of the seller you want
+                  In the Earn Points tab,key in the email of the seller you want
                   to refer.
                 </p>
               </li>
