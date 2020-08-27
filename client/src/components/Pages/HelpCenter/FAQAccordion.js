@@ -261,14 +261,23 @@ class FAQAccordion extends React.Component {
               </li>
               <li>
                 <p>
-                  <strong>Note: You can only at least 1000 points.</strong>
+                  <strong>
+                    Note: You can only redeem at least 1000 points.
+                  </strong>
                 </p>
               </li>
             </ul>
           </div>
         ),
       },
-
+      {
+        label: "What do I get when I redeem points?",
+        content: (
+          <div className="faq-content-section">
+            <p>We will reward you Ksh.1000 for each 1000 points redeemed.</p>
+          </div>
+        ),
+      },
       {
         label: "What is Way4Biz’s return policy?",
         content: (
