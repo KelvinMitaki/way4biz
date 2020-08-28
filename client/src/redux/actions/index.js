@@ -263,7 +263,10 @@ import {
   PAY_REDEEM_STOP,
   CLEAR_NEW_SELLER_DETAILS,
   UPLOAD_IMAGE_ERROR,
-  ADD_PRODUCT_ERROR
+  ADD_PRODUCT_ERROR,
+  HERO_IMAGE_START,
+  HERO_IMAGE_STOP,
+  HERO_IMAGE
 } from "./types";
 
 const authCheck = error => {
@@ -2466,4 +2469,41 @@ export const clearNewSellerDetails = () => {
   return {
     type: CLEAR_NEW_SELLER_DETAILS
   };
+};
+
+export const uploadHeroImage = image => async dispatch => {
+  try {
+    dispatch({ type: HERO_IMAGE_START });
+    const uploadConfig = await axios.get("/api/image/upload");
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      if (!uploadConfig.data || (uploadConfig.data && !uploadConfig.data.key)) {
+        console.log(uploadConfig);
+        dispatch({
+          type: UPLOAD_IMAGE_ERROR,
+          payload:
+            "Error uploading image, please refresh the page and try again"
+        });
+        dispatch({ type: HERO_IMAGE_STOP });
+        return;
+      }
+      await axios.post("/api/admin/add/hero/photo", {
+        photoUrl: uploadConfig.data.key
+      });
+      dispatch({ type: HERO_IMAGE_STOP });
+      return;
+    }
+    dispatch({
+      type: UPLOAD_IMAGE_ERROR,
+      payload: "Error uploading image, please refresh the page and try again"
+    });
+    dispatch({ type: HERO_IMAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: HERO_IMAGE_STOP });
+  }
 };
