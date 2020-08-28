@@ -421,13 +421,13 @@ class AdminDashBoard extends React.Component {
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
-                <AdminHeroImages />
+
                 <AdminHeroImagesContainer />
               </div>
 
               <div className="row admin-dashboard-bottom">
                 <div className="admin-hero-upload-section">
-                  <input type="file" className="btn btn-block" />
+                  <AdminHeroImages />
                 </div>
 
                 <div className="admin-hero-uploads">
