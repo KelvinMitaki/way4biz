@@ -263,7 +263,14 @@ import {
   PAY_REDEEM_STOP,
   CLEAR_NEW_SELLER_DETAILS,
   UPLOAD_IMAGE_ERROR,
-  ADD_PRODUCT_ERROR
+  ADD_PRODUCT_ERROR,
+  HERO_IMAGE_START,
+  HERO_IMAGE_STOP,
+  HERO_IMAGES,
+  FETCH_HERO_START,
+  FETCH_HERO_STOP,
+  DELETE_HERO_IMAGE_START,
+  DELETE_HERO_IMAGE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2466,4 +2473,66 @@ export const clearNewSellerDetails = () => {
   return {
     type: CLEAR_NEW_SELLER_DETAILS
   };
+};
+
+export const uploadHeroImage = image => async dispatch => {
+  try {
+    dispatch({ type: HERO_IMAGE_START });
+    const uploadConfig = await axios.get("/api/admin/image/upload");
+    if (uploadConfig.data.url) {
+      await axios.put(uploadConfig.data.url, image, {
+        headers: {
+          "Content-Type": image.type
+        }
+      });
+      if (!uploadConfig.data || (uploadConfig.data && !uploadConfig.data.key)) {
+        console.log(uploadConfig);
+        dispatch({
+          type: UPLOAD_IMAGE_ERROR,
+          payload:
+            "Error uploading image, please refresh the page and try again"
+        });
+        dispatch({ type: HERO_IMAGE_STOP });
+        return;
+      }
+      await axios.post("/api/admin/add/hero/image", {
+        imageUrl: uploadConfig.data.key
+      });
+      dispatch(fetchHeroImages());
+      dispatch({ type: HERO_IMAGE_STOP });
+      return;
+    }
+    dispatch({
+      type: UPLOAD_IMAGE_ERROR,
+      payload: "Error uploading image, please refresh the page and try again"
+    });
+    dispatch({ type: HERO_IMAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: HERO_IMAGE_STOP });
+  }
+};
+
+export const fetchHeroImages = () => async dispatch => {
+  try {
+    dispatch({ type: FETCH_HERO_START });
+    const res = await axios.get("/api/fetch/hero/images");
+    dispatch({ type: HERO_IMAGES, payload: res.data });
+    dispatch({ type: FETCH_HERO_STOP });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({ type: FETCH_HERO_STOP });
+  }
+};
+
+export const deleteHeroImage = imageUrl => async dispatch => {
+  try {
+    dispatch({ type: DELETE_HERO_IMAGE_START });
+    await axios.post("api/admin/delete/hero/image", { imageUrl });
+    dispatch(fetchHeroImages());
+    dispatch({ type: DELETE_HERO_IMAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: DELETE_HERO_IMAGE_STOP });
+  }
 };

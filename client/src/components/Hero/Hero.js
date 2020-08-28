@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 class Hero extends React.Component {
   handleMouseLeave = () => {
-    this.props.emptySubCategories();
+    // this.props.emptySubCategories();
   };
   render() {
     return (

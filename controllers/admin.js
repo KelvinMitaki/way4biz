@@ -33,6 +33,7 @@ const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
 const Redeem = require("../models/Redeem");
+const HeroImage = require("../models/HeroImages");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2157,6 +2158,80 @@ route.post(
       });
 
       res.send(redeem);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+route.get("/api/admin/image/upload", auth, isAdmin, async (req, res) => {
+  try {
+    const key = `${req.session.user._id}/${uuidV1()}.jpeg`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: "e-commerce-gig",
+        ContentType: "image/jpeg",
+        Key: key
+      },
+      (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
+    );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post(
+  "/api/admin/add/hero/image",
+  auth,
+  isAdmin,
+  check("imageUrl").not().isEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { imageUrl } = req.body;
+      const photo = new HeroImage({
+        imageUrl
+      });
+      await photo.save();
+      res.send(photo);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+route.get("/api/fetch/hero/images", async (req, res) => {
+  try {
+    const images = await HeroImage.find({});
+    res.send(images);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.post(
+  "/api/admin/delete/hero/image",
+  auth,
+  isAdmin,
+  check("imageUrl").notEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: "no image url" });
+      }
+      const { imageUrl } = req.body;
+      await HeroImage.findOneAndDelete({ imageUrl });
+      s3.deleteObject(
+        {
+          Bucket: "e-commerce-gig",
+          Key: imageUrl
+        },
+        (err, data) => (err ? res.status(400).send(err) : console.log(data))
+      );
+      res.send({ message: "success deleting image" });
     } catch (error) {
       res.status(500).send(error);
     }

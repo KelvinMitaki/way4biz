@@ -19,11 +19,14 @@ import {
   fetchUnderReview,
   countComplaints,
   fetchLatestRejectedProducts,
+  fetchHeroImages,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
 import MobileLogo from "../Header/MobileLogo";
+import AdminHeroImages from "../Seller/AdminHeroImages";
+import AdminHeroImagesContainer from "../Seller/AdminHeroImagesContainer";
 
 class AdminDashBoard extends React.Component {
   state = {
@@ -43,6 +46,7 @@ class AdminDashBoard extends React.Component {
     this.props.fetchUnderReview();
     this.props.countComplaints();
     this.props.fetchLatestRejectedProducts();
+    this.props.fetchHeroImages();
   }
 
   render() {
@@ -417,6 +421,8 @@ class AdminDashBoard extends React.Component {
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
+                <AdminHeroImages />
+                <AdminHeroImagesContainer />
               </div>
 
               <div className="row admin-dashboard-bottom">
@@ -459,4 +465,5 @@ export default connect(mapStateToProps, {
   fetchUnderReview,
   countComplaints,
   fetchLatestRejectedProducts,
+  fetchHeroImages,
 })(AdminDashBoard);

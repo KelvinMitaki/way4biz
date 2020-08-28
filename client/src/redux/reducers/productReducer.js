@@ -63,7 +63,10 @@ import {
   EDIT_CATEGORY_STOP,
   ADD_NEW_CATEGORY_START,
   ADD_NEW_CATEGORY_STOP,
-  ADD_PRODUCT_ERROR
+  ADD_PRODUCT_ERROR,
+  HERO_IMAGES,
+  HERO_IMAGE_START,
+  HERO_IMAGE_STOP
 } from "../actions/types";
 const INITIAL_STATE = {
   searchedProducts: [],
@@ -114,7 +117,9 @@ const INITIAL_STATE = {
   dispatchLoading: false,
   editCategoryLoading: false,
   addCategoryLoading: false,
-  addProductError: null
+  addProductError: null,
+  heroImages: null,
+  heroImageLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -289,6 +294,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, addCategoryLoading: false };
     case ADD_PRODUCT_ERROR:
       return { ...state, addProductError: action.payload };
+    case HERO_IMAGES:
+      return { ...state, heroImages: action.payload };
+    case HERO_IMAGE_START:
+      return { ...state, heroImageLoading: true };
+    case HERO_IMAGE_STOP:
+      return { ...state, heroImageLoading: false };
     default:
       return state;
   }
