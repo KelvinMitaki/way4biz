@@ -4,10 +4,13 @@ import { FaTrashAlt } from "react-icons/fa";
 import "./ProductImageUploadsContainer.css";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteImage } from "../../redux/actions";
+import { deleteHeroImage } from "../../redux/actions";
 
 // **TODO** MAP IMAGES FROM THE DB AND FROM S3
 class ProductImageUploadsContainer extends React.Component {
+  state = {
+    imageId: null
+  };
   render() {
     const imageLength = this.props.heroImages && this.props.heroImages.length;
 
@@ -25,14 +28,39 @@ class ProductImageUploadsContainer extends React.Component {
                 />
               </div>
               <div
-                // onClick={() =>
-                // }
+                onClick={() => {
+                  this.setState({ imageId: image._id });
+                  this.props.deleteHeroImage(image.imageUrl);
+                }}
                 className={`btn upload-image-trash-button  ${
                   imageLength === 1 && `disable-trash disabled`
                 }`}
               >
-                <FaTrashAlt className="m-0 p-0" />{" "}
-                <span className="ml-2">Delete</span>
+                {this.state.imageId &&
+                this.state.imageId.toString() === image._id ? (
+                  this.props.deleteHeroImageLoading && (
+                    <React.Fragment>
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      {this.props.deleteHeroImageLoading ? (
+                        <span> {"  "}Loading...</span>
+                      ) : (
+                        <span>
+                          <FaTrashAlt className="m-0 p-0" />{" "}
+                          <span className="ml-2">Delete</span>
+                        </span>
+                      )}
+                    </React.Fragment>
+                  )
+                ) : (
+                  <span>
+                    <FaTrashAlt className="m-0 p-0" />{" "}
+                    <span className="ml-2">Delete</span>
+                  </span>
+                )}
               </div>
             </div>
           ))}
@@ -43,9 +71,9 @@ class ProductImageUploadsContainer extends React.Component {
 const mapStateToProps = state => {
   return {
     heroImages: state.product.heroImages,
-    deleteImageLoading: state.image.deleteImageLoading
+    deleteHeroImageLoading: state.admin.deleteHeroImageLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { deleteImage })(ProductImageUploadsContainer)
+  connect(mapStateToProps, { deleteHeroImage })(ProductImageUploadsContainer)
 );

@@ -268,7 +268,9 @@ import {
   HERO_IMAGE_STOP,
   HERO_IMAGES,
   FETCH_HERO_START,
-  FETCH_HERO_STOP
+  FETCH_HERO_STOP,
+  DELETE_HERO_IMAGE_START,
+  DELETE_HERO_IMAGE_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2525,12 +2527,12 @@ export const fetchHeroImages = () => async dispatch => {
 
 export const deleteHeroImage = imageUrl => async dispatch => {
   try {
-    dispatch({ type: HERO_IMAGE_START });
+    dispatch({ type: DELETE_HERO_IMAGE_START });
     await axios.post("api/admin/delete/hero/image", { imageUrl });
     dispatch(fetchHeroImages());
-    dispatch({ type: HERO_IMAGE_STOP });
+    dispatch({ type: DELETE_HERO_IMAGE_STOP });
   } catch (error) {
     authCheck(error);
-    dispatch({ type: HERO_IMAGE_STOP });
+    dispatch({ type: DELETE_HERO_IMAGE_STOP });
   }
 };

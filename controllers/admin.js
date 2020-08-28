@@ -2212,7 +2212,7 @@ route.get("/api/fetch/hero/images", async (req, res) => {
 });
 
 route.post(
-  "api/admin/delete/hero/image",
+  "/api/admin/delete/hero/image",
   auth,
   isAdmin,
   check("imageUrl").notEmpty(),
@@ -2223,7 +2223,7 @@ route.post(
         return res.status(401).send({ message: "no image url" });
       }
       const { imageUrl } = req.body;
-      await HeroImage.findByIdAndDelete(imageUrl);
+      await HeroImage.findOneAndDelete({ imageUrl });
       s3.deleteObject(
         {
           Bucket: "e-commerce-gig",
