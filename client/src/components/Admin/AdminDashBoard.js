@@ -423,7 +423,7 @@ class AdminDashBoard extends React.Component {
                 </div>
               </div>
 
-              <div className="row admin-dashboard-bottom">
+              <div className="row admin-dashboard-bottom py-2">
                 <div className="admin-hero-upload-section">
                   <AdminHeroImages />
                 </div>

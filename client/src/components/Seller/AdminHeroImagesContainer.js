@@ -9,7 +9,7 @@ import { deleteHeroImage } from "../../redux/actions";
 // **TODO** MAP IMAGES FROM THE DB AND FROM S3
 class ProductImageUploadsContainer extends React.Component {
   state = {
-    imageId: null
+    imageId: null,
   };
   render() {
     const imageLength = this.props.heroImages && this.props.heroImages.length;
@@ -19,7 +19,7 @@ class ProductImageUploadsContainer extends React.Component {
         {/* mapping here */}
         {this.props.heroImages &&
           this.props.heroImages.length !== 0 &&
-          this.props.heroImages.map(image => (
+          this.props.heroImages.map((image) => (
             <div key={image._id} className="uploaded-product-image-wrapper">
               <div className="uploaded-product-image">
                 <img
@@ -68,10 +68,10 @@ class ProductImageUploadsContainer extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     heroImages: state.product.heroImages,
-    deleteHeroImageLoading: state.admin.deleteHeroImageLoading
+    deleteHeroImageLoading: state.admin.deleteHeroImageLoading,
   };
 };
 export default withRouter(
