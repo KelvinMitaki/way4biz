@@ -424,6 +424,9 @@ class AdminDashBoard extends React.Component {
               </div>
 
               <div className="row admin-dashboard-bottom py-2">
+                <h5 style={{ textAlign: "center" }} className="my-2">
+                  Hero Images
+                </h5>
                 <div className="admin-hero-upload-section">
                   <AdminHeroImages />
                 </div>
