@@ -421,8 +421,6 @@ class AdminDashBoard extends React.Component {
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
-
-                <AdminHeroImagesContainer />
               </div>
 
               <div className="row admin-dashboard-bottom">
@@ -431,8 +429,7 @@ class AdminDashBoard extends React.Component {
                 </div>
 
                 <div className="admin-hero-uploads">
-                  {/* mapping here */}
-                  <img src="/1.jpg" alt="test" />
+                  <AdminHeroImagesContainer />
                 </div>
               </div>
             </div>
