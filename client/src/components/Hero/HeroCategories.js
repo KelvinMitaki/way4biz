@@ -17,7 +17,7 @@ import MainIcons from "../MainCategories/MainIcons";
 
 class HeroCategories extends React.Component {
   handleEmptyArray = () => {
-    this.props.emptySubCategories();
+    // this.props.emptySubCategories();
   };
 
   handleMouseOver = (e, category) => {
