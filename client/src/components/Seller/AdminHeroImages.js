@@ -7,7 +7,7 @@ import "./PhotosPage.css";
 import { uploadHeroImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const PhotosPage = ({ uploadHeroImage, heroImageLoading }, props) => {
+const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   useEffect(() => {
@@ -93,4 +93,4 @@ const mapStateToProps = state => {
     heroImageLoading: state.product.heroImageLoading
   };
 };
-export default connect(mapStateToProps, { uploadHeroImage })(PhotosPage);
+export default connect(mapStateToProps, { uploadHeroImage })(AdminHeroImages);

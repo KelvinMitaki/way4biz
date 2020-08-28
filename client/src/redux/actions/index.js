@@ -2522,3 +2522,15 @@ export const fetchHeroImages = () => async dispatch => {
     dispatch({ type: FETCH_HERO_STOP });
   }
 };
+
+export const deleteHeroImage = imageUrl => async dispatch => {
+  try {
+    dispatch({ type: HERO_IMAGE_START });
+    await axios.post("api/admin/delete/hero/image", { imageUrl });
+    dispatch(fetchHeroImages());
+    dispatch({ type: HERO_IMAGE_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: HERO_IMAGE_STOP });
+  }
+};

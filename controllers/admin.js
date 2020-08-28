@@ -2211,8 +2211,8 @@ route.get("/api/fetch/hero/images", async (req, res) => {
   }
 });
 
-route.delete(
-  "api/admin/hero/image",
+route.post(
+  "api/admin/delete/hero/image",
   auth,
   isAdmin,
   check("imageUrl").notEmpty(),
