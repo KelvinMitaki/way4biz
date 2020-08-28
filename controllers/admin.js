@@ -33,7 +33,7 @@ const Reject = require("../models/Reject");
 const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
 const Redeem = require("../models/Redeem");
-const HeroPhoto = require("../models/HeroPhotos");
+const HeroImage = require("../models/HeroImages");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2165,19 +2165,19 @@ route.post(
 );
 
 route.post(
-  "/api/admin/add/hero/photo",
+  "/api/admin/add/hero/image",
   auth,
   isAdmin,
-  check("photoUrl").not().isEmpty(),
+  check("imageUrl").not().isEmpty(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const { photoUrl } = req.body;
-      const photo = new HeroPhoto({
-        photoUrl
+      const { imageUrl } = req.body;
+      const photo = new HeroImage({
+        imageUrl
       });
       await photo.save();
       res.send(photo);
@@ -2186,4 +2186,6 @@ route.post(
     }
   }
 );
+
+route.get("/api/fetch/hero/photos");
 module.exports = route;

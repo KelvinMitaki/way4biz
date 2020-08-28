@@ -2491,8 +2491,8 @@ export const uploadHeroImage = image => async dispatch => {
         dispatch({ type: HERO_IMAGE_STOP });
         return;
       }
-      await axios.post("/api/admin/add/hero/photo", {
-        photoUrl: uploadConfig.data.key
+      await axios.post("/api/admin/add/hero/image", {
+        imageUrl: uploadConfig.data.key
       });
       dispatch({ type: HERO_IMAGE_STOP });
       return;
