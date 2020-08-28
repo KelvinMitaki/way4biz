@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 class CategoryHoverPopup extends React.Component {
   handleCleanArray = () => {
-    this.props.emptySubCategories();
+    // this.props.emptySubCategories();
   };
   render() {
     return (

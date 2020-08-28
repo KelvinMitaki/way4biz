@@ -19,7 +19,8 @@ import {
   saveWishlistItems,
   fetchCartItems,
   fetchWishlistProducts,
-  fetchAllCategories
+  fetchAllCategories,
+  fetchHeroImages
 } from "./redux/actions";
 import ForgotPassword from "./components/Authenticate/ForgotPassword";
 // import MobileLogo from "./components/Header/MobileLogo";
@@ -102,12 +103,14 @@ class App extends React.Component {
       fetchUser,
       fetchProducts,
       fetchCategories,
-      fetchAllCategories
+      fetchAllCategories,
+      fetchHeroImages
     } = this.props;
     fetchUser();
     fetchProducts();
     fetchCategories();
     fetchAllCategories();
+    fetchHeroImages();
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
@@ -877,5 +880,6 @@ export default connect(mapStateToProps, {
   fetchAllCategories,
   fetchCartItems,
   fetchWishlistProducts,
-  saveWishlistItems
+  saveWishlistItems,
+  fetchHeroImages
 })(App);

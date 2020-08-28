@@ -31,7 +31,9 @@ import {
   FETCH_LATEST_REJECTED_PRODUCTS,
   FETCH_UNDER_REVIEW,
   FETCH_WEEKLY_SALES,
-  FETCH_NEW_SELLERS
+  FETCH_NEW_SELLERS,
+  DELETE_HERO_IMAGE_START,
+  DELETE_HERO_IMAGE_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -59,7 +61,8 @@ const INITIAL_STATE = {
   latestRejectedProducts: null,
   underReview: null,
   weeklySales: null,
-  stock: []
+  stock: [],
+  deleteHeroImageLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -170,6 +173,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, weeklySales: action.payload };
     case FETCH_NEW_SELLERS:
       return { ...state, newSellers: action.payload };
+    case DELETE_HERO_IMAGE_START:
+      return { ...state, deleteHeroImageLoading: true };
+    case DELETE_HERO_IMAGE_STOP:
+      return { ...state, deleteHeroImageLoading: false };
     default:
       return state;
   }

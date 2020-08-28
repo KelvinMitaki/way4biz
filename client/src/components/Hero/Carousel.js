@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import {
   signInClick,
   registerClick,
-  emptySubCategories,
+  emptySubCategories
 } from "../../redux/actions";
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
@@ -45,7 +45,7 @@ class HeroCarousel extends React.Component {
         ...this.props.products.slice(
           randomStop,
           randomStop > this.props.products.length ? randomStop - 4 : +1
-        ),
+        )
       ];
     }
 
@@ -61,16 +61,19 @@ class HeroCarousel extends React.Component {
           <div className="hero-carousel-wrapper">
             <div className="hero-carousel">
               <Carousel id="hero-sliders">
-                <Carousel.Item className="slider">
-                  <Link to="/">
-                    <img className="img-fluid" src="j.jpg" alt="First slide" />
-                  </Link>
-                </Carousel.Item>
-                <Carousel.Item className="slider">
-                  <Link to="/">
-                    <img className="img-fluid" src="p.jpg" alt="Second slide" />
-                  </Link>
-                </Carousel.Item>
+                {this.props.heroImages &&
+                  this.props.heroImages.length !== 0 &&
+                  this.props.heroImages.map(image => (
+                    <Carousel.Item key={image._id} className="slider">
+                      <Link to="/">
+                        <img
+                          className="img-fluid"
+                          src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl}`}
+                          alt={image.imageUrl}
+                        />
+                      </Link>
+                    </Carousel.Item>
+                  ))}
               </Carousel>
             </div>
           </div>
@@ -78,7 +81,7 @@ class HeroCarousel extends React.Component {
           <div className="random-stuff-wrapper">
             <div className="random-stuff">
               {trimmedProducts &&
-                trimmedProducts.map((prod) => (
+                trimmedProducts.map(prod => (
                   <div
                     key={prod._id}
                     style={{ cursor: "pointer" }}
@@ -131,7 +134,7 @@ class HeroCarousel extends React.Component {
                     display: "flex",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    width: "100%",
+                    width: "100%"
                   }}
                   className="mt-4"
                 >
@@ -139,7 +142,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/account" className="hero-account-link">
@@ -154,7 +157,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/orders" className="hero-account-link">
@@ -168,7 +171,7 @@ class HeroCarousel extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Link to="/pending/reviews" className="hero-account-link">
@@ -212,11 +215,12 @@ class HeroCarousel extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     products: state.product.products,
     subCategories: state.product.subCategories,
-    user: state.auth.user,
+    heroImages: state.product.heroImages,
+    user: state.auth.user
   };
 };
 export default withRouter(
