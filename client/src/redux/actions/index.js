@@ -2476,7 +2476,7 @@ export const clearNewSellerDetails = () => {
 export const uploadHeroImage = image => async dispatch => {
   try {
     dispatch({ type: HERO_IMAGE_START });
-    const uploadConfig = await axios.get("/api/image/upload");
+    const uploadConfig = await axios.get("/api/admin/image/upload");
     if (uploadConfig.data.url) {
       await axios.put(uploadConfig.data.url, image, {
         headers: {

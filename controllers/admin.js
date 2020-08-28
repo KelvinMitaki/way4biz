@@ -2163,7 +2163,22 @@ route.post(
     }
   }
 );
-
+route.get("/api/admin/image/upload", auth, isAdmin, async (req, res) => {
+  try {
+    const key = `${req.session.user._id}/${uuidV1()}.jpeg`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: "e-commerce-gig",
+        ContentType: "image/jpeg",
+        Key: key
+      },
+      (err, url) => (err ? res.status(401).send(err) : res.send({ key, url }))
+    );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.post(
   "/api/admin/add/hero/image",
   auth,
