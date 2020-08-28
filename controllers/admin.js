@@ -2210,4 +2210,31 @@ route.get("/api/fetch/hero/images", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.delete(
+  "api/admin/hero/image",
+  auth,
+  isAdmin,
+  check("imageUrl").notEmpty(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: "no image url" });
+      }
+      const { imageUrl } = req.body;
+      await HeroImage.findByIdAndDelete(imageUrl);
+      s3.deleteObject(
+        {
+          Bucket: "e-commerce-gig",
+          Key: imageUrl
+        },
+        (err, data) => (err ? res.status(400).send(err) : console.log(data))
+      );
+      res.send({ message: "success deleting image" });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 module.exports = route;
