@@ -114,6 +114,7 @@ class AdminDashBoard extends React.Component {
 
       return number;
     }
+    // console.log("Data is", this.state.lineData.data);
     const todaysComplaints =
       this.props.complaintsCount && this.props.complaintsCount.todaysComplaints;
     const totalComplaints =
