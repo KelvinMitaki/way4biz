@@ -266,7 +266,7 @@ import {
   ADD_PRODUCT_ERROR,
   HERO_IMAGE_START,
   HERO_IMAGE_STOP,
-  HERO_IMAGE,
+  HERO_IMAGES,
   FETCH_HERO_START,
   FETCH_HERO_STOP
 } from "./types";
@@ -2496,6 +2496,7 @@ export const uploadHeroImage = image => async dispatch => {
       await axios.post("/api/admin/add/hero/image", {
         imageUrl: uploadConfig.data.key
       });
+      dispatch(fetchHeroImages());
       dispatch({ type: HERO_IMAGE_STOP });
       return;
     }
@@ -2514,7 +2515,7 @@ export const fetchHeroImages = () => async dispatch => {
   try {
     dispatch({ type: FETCH_HERO_START });
     const res = await axios.get("/api/fetch/hero/images");
-    dispatch({ type: HERO_IMAGE, payload: res.data });
+    dispatch({ type: HERO_IMAGES, payload: res.data });
     dispatch({ type: FETCH_HERO_STOP });
   } catch (error) {
     console.log(error.response);
