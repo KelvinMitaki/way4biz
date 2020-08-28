@@ -47,7 +47,11 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
         </div>
         <div className="col-xl-4">
           {files.length > 0 && (
-            <ReactCropper setImage={setImage} imagePreview={files[0].preview} />
+            <ReactCropper
+              setImage={setImage}
+              admin={16 / 9}
+              imagePreview={files[0].preview}
+            />
           )}
         </div>
         <div className="col-xl-4">

@@ -22,7 +22,7 @@ export class ReactCropper extends Component {
         src={imagePreview}
         style={{ height: "250px", width: "100%" }}
         preview=".img-preview"
-        aspectRatio={2 / 1}
+        aspectRatio={this.props.admin || 1}
         viewMode={1}
         dragMode="move"
         guides={false}
