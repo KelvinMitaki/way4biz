@@ -24,6 +24,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
 import MobileLogo from "../Header/MobileLogo";
+import PhotosPage from "../Seller/PhotosPage";
 
 class AdminDashBoard extends React.Component {
   state = {
@@ -417,6 +418,7 @@ class AdminDashBoard extends React.Component {
                 <div className="all-rejects">
                   <Link to="/admin/rejects">View All</Link>
                 </div>
+                <PhotosPage />
               </div>
             </div>
           </div>
