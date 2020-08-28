@@ -2187,5 +2187,12 @@ route.post(
   }
 );
 
-route.get("/api/fetch/hero/photos");
+route.get("/api/fetch/hero/images", async (req, res) => {
+  try {
+    const images = await HeroImage.find({});
+    res.send(images);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const heroImageSchema = new mongoose.Schema(
+const HeroImageSchema = new mongoose.Schema(
   {
     imageUrl: {
       type: String,
@@ -10,5 +10,5 @@ const heroImageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const heroImage = mongoose.model("heroImage", heroImageSchema);
-module.exports = heroImage;
+const HeroImage = mongoose.model("HeroImage", HeroImageSchema);
+module.exports = HeroImage;
