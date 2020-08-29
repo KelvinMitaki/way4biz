@@ -279,6 +279,14 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I become a partner?",
+        content: (
+          <div className="faq-content-section">
+            <p>We will reward you Ksh.1000 for each 1000 points redeemed.</p>
+          </div>
+        ),
+      },
+      {
         label: "What is Way4Biz’s return policy?",
         content: (
           <div className="faq-content-section">
