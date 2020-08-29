@@ -66,6 +66,42 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I become a seller at way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  To be a <strong>seller</strong> create an account with us{" "}
+                  <Link to="/seller/register">here</Link>. Confirm your phone
+                  number and email address and also provide a name and
+                  description of your store in the register form.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Read and understand our terms,download and read the seller
+                  orientation guide,upload the necessary documents.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Your request will be reviewed by the administrators after
+                  which your application will be accepted or rejected.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Your will be sent a message later which will guide you on the
+                  next step. On rejection you will be given an opportunity to
+                  correct your application and resend it.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
         label: "How do I pay for products on Way4Biz?",
         content: (
           <div className="faq-content-section">
@@ -278,14 +314,7 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
-      {
-        label: "How do I become a partner?",
-        content: (
-          <div className="faq-content-section">
-            <p>We will reward you Ksh.1000 for each 1000 points redeemed.</p>
-          </div>
-        ),
-      },
+
       {
         label: "What is Way4Biz’s return policy?",
         content: (
