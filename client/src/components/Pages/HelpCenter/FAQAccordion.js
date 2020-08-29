@@ -74,8 +74,8 @@ class FAQAccordion extends React.Component {
                 <p>
                   To be a <strong>seller</strong> create an account with us{" "}
                   <Link to="/seller/register">here</Link>. Confirm your phone
-                  number and email address and also provide a name and
-                  description of your store in the register form.
+                  number, email address and also provide a name and description
+                  of your store in the register form.
                 </p>
               </li>
               <li>
