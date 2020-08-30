@@ -257,6 +257,11 @@ class FAQAccordion extends React.Component {
                   us on our <Link to="/">logistics page</Link>.
                 </p>
               </li>
+              <li>
+                <p>
+                  Download our mobile app to inquire for logistics services.
+                </p>
+              </li>
             </ul>
           </div>
         ),
