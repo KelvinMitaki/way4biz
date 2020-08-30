@@ -186,7 +186,7 @@ class LineGraph extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    weeklySales: state.product.weeklySales,
+    weeklySales: state.admin.weeklySales,
   };
 };
 export default connect(mapStateToProps)(LineGraph);
