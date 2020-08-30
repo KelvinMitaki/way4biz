@@ -253,8 +253,8 @@ class FAQAccordion extends React.Component {
             <ul>
               <li>
                 <p>
-                  To have access to our logistics services creates account with
-                  us on our <Link to="/">logistics page</Link>.
+                  To have access to our logistics services visit our{" "}
+                  <Link>logistics page</Link> for more information.
                 </p>
               </li>
               <li>
