@@ -247,6 +247,17 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I get access to your logistics services?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              To have access to our logistics services creates account with us
+              on our <Link to="/">logistics page</Link>.
+            </p>
+          </div>
+        ),
+      },
+      {
         label: "How do I earn points as a seller?",
         content: (
           <div className="faq-content-section">
