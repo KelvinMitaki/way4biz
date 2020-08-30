@@ -369,6 +369,8 @@ route.post("/api/twilio/verify", async (req, res) => {
               #mail-body {
                 width: 90%;
                 margin: auto;
+                text-align: center;
+                padding: 30px 0px;
               }
         
               #mail-footer {
