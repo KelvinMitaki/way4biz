@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import ReactDropzone from "./ReactDropzone";
 import ReactCropper from "./ReactCropper";
 import "./PhotosPage.css";
+import "./AdminHeroImages.css";
 import { uploadHeroImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
@@ -12,7 +13,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -31,8 +32,8 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     <div
       className="container-v p-0 box-container"
       style={{
-        width: "90%",
-        margin: "0px auto 10px auto"
+        width: "100%",
+        // margin: "0px auto 10px auto",
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
@@ -62,13 +63,14 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
                 style={{
                   minHeight: "200px",
                   width: "1200px",
-                  overflow: "hidden"
+                  overflow: "hidden",
+                  zIndex: "-1",
                 }}
               />
               <div
                 style={{ cursor: "pointer" }}
                 onClick={handleUploadImage}
-                className="mt-3 product-upload-btn-wrapper"
+                className="mt-3 admin-product-upload-btn-wrapper"
               >
                 <div style={{ textAlign: "center" }}>
                   {heroImageLoading && (
@@ -92,9 +94,9 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    heroImageLoading: state.product.heroImageLoading
+    heroImageLoading: state.product.heroImageLoading,
   };
 };
 export default connect(mapStateToProps, { uploadHeroImage })(AdminHeroImages);

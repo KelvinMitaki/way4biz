@@ -35,6 +35,11 @@ class HelpCenterHeader extends React.Component {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/return-policy">
+              <p>Return Policy</p>
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/contact-us">
               <p>Contact Us</p>
             </NavLink>
@@ -80,6 +85,11 @@ class HelpCenterHeader extends React.Component {
                 <li>
                   <NavLink to="/help-center">
                     <p>FAQs</p>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/return-policy">
+                    <p>Return Policy</p>
                   </NavLink>
                 </li>
                 <li>

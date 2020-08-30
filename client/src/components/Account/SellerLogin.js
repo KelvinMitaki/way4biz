@@ -22,7 +22,7 @@ export class SellerLogin extends Component {
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             return this.props.sellerLogIn(formValues, this.props.history);
           })}
         >
@@ -53,19 +53,27 @@ export class SellerLogin extends Component {
           </button>
         </form>
         <br />
-        <p
-          style={{ textAlign: "center" }}
-          className="forgot-password-link-wrapper"
-        >
-          <Link style={{ color: "#f76b1a" }} to="/password/reset">
-            Forgot password?
-          </Link>
-        </p>
+        <div className="seller-login-auth-links-wrapper mx-auto">
+          <p className="forgot-password-link-wrapper">
+            <Link style={{ color: "#f76b1a" }} to="/password/reset">
+              Forgot password?
+            </Link>
+          </p>
+          <p className="forgot-password-link-wrapper">
+            <Link
+              style={{ color: "#f76b1a" }}
+              className="float-right"
+              to="/seller/register"
+            >
+              Register Today
+            </Link>
+          </p>
+        </div>
       </div>
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.email ||
@@ -82,10 +90,10 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     error: state.auth.error,
-    sellerLoginLoading: state.auth.sellerLoginLoading
+    sellerLoginLoading: state.auth.sellerLoginLoading,
   };
 };
 export default withRouter(

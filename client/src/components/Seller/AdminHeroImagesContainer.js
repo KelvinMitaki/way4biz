@@ -2,6 +2,7 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 import "./ProductImageUploadsContainer.css";
+import "./AdminHeroImagesContainer.css";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteHeroImage } from "../../redux/actions";
@@ -9,22 +10,26 @@ import { deleteHeroImage } from "../../redux/actions";
 // **TODO** MAP IMAGES FROM THE DB AND FROM S3
 class ProductImageUploadsContainer extends React.Component {
   state = {
-    imageId: null
+    imageId: null,
   };
   render() {
     const imageLength = this.props.heroImages && this.props.heroImages.length;
 
     return (
-      <div className="uploads-container box-container">
+      <div className="admin-uploads-container box-container">
         {/* mapping here */}
         {this.props.heroImages &&
           this.props.heroImages.length !== 0 &&
-          this.props.heroImages.map(image => (
-            <div key={image._id} className="uploaded-product-image-wrapper">
-              <div className="uploaded-product-image">
+          this.props.heroImages.map((image) => (
+            <div
+              key={image._id}
+              className="admin-uploaded-product-image-wrapper"
+            >
+              <div className="admin-hero-uploaded-image">
                 <img
                   src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl} `}
                   alt={image.imageUrl}
+                  width="100%"
                 />
               </div>
               <div
@@ -32,7 +37,7 @@ class ProductImageUploadsContainer extends React.Component {
                   this.setState({ imageId: image._id });
                   this.props.deleteHeroImage(image.imageUrl);
                 }}
-                className={`btn upload-image-trash-button  ${
+                className={`btn admin-upload-image-trash-button  ${
                   imageLength === 1 && `disable-trash disabled`
                 }`}
               >
@@ -68,10 +73,10 @@ class ProductImageUploadsContainer extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     heroImages: state.product.heroImages,
-    deleteHeroImageLoading: state.admin.deleteHeroImageLoading
+    deleteHeroImageLoading: state.admin.deleteHeroImageLoading,
   };
 };
 export default withRouter(

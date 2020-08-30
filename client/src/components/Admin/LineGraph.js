@@ -7,7 +7,7 @@ class LineGraph extends React.Component {
     super(props);
     this.canvasRef = React.createRef();
     this.state = {
-      data: []
+      data: [],
     };
   }
 
@@ -15,9 +15,9 @@ class LineGraph extends React.Component {
     const test =
       this.props.weeklySales &&
       typeof this.props.weeklySales !== "string" &&
-      this.props.weeklySales.map(sale => ({
+      this.props.weeklySales.map((sale) => ({
         day: new Date(sale.createdAt).getDay(),
-        items: sale.items
+        items: sale.items,
       }));
     if (test) {
       const possibleWeekArrangements = [
@@ -27,25 +27,25 @@ class LineGraph extends React.Component {
         ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"],
         ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"],
         ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"],
-        ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
+        ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
       ];
       const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      const d = test.map(t => {
+      const d = test.map((t) => {
         const te = days.filter((day, index) => index === t.day);
         return {
           ...te,
           items: t.items
-            .map(ite => ite.quantity)
-            .reduce((acc, cur) => acc + cur, 0)
+            .map((ite) => ite.quantity)
+            .reduce((acc, cur) => acc + cur, 0),
         };
       });
       const lookup = d.reduce((acc, cur) => {
         acc[cur["0"]] = ++acc[cur["0"]] || 0;
         return acc;
       }, {});
-      const duplicates = d.filter(e => lookup[e["0"]]);
+      const duplicates = d.filter((e) => lookup[e["0"]]);
       const result = [];
-      duplicates.forEach(d => {
+      duplicates.forEach((d) => {
         if (!this[d["0"]]) {
           this[d["0"]] = { 0: d["0"], items: 0 };
           result.push(this[d["0"]]);
@@ -54,10 +54,10 @@ class LineGraph extends React.Component {
       }, Object.create(null));
       if (result.length !== 0) {
         let withoutDup = d.filter(
-          (i, index, self) => self.findIndex(t => t["0"] === i["0"]) === index
+          (i, index, self) => self.findIndex((t) => t["0"] === i["0"]) === index
         );
         withoutDup = withoutDup.map(
-          it => result.find(o => o["0"] === it["0"]) || it
+          (it) => result.find((o) => o["0"] === it["0"]) || it
         );
         // console.log("withoutDup", withoutDup);
         const newArr = [...withoutDup];
@@ -85,11 +85,12 @@ class LineGraph extends React.Component {
         }
         // console.log("desiredArray", desiredArray);
 
-        const desiredData = desiredArray.map(data => ({
+        const desiredData = desiredArray.map((data) => ({
           day: data[0],
-          items: data[1]
+          items: data[1],
         }));
         this.setState({ data: desiredData });
+
         // take the desired array to the linegraph.
         // const daysWithoutOrders = days.filter(day => {
         //   const dayFound = newArr.find(d => d["0"] === day);
@@ -126,9 +127,9 @@ class LineGraph extends React.Component {
           }
         }
 
-        const desiredData = desiredArray.map(data => ({
+        const desiredData = desiredArray.map((data) => ({
           day: data[0],
-          items: data[1]
+          items: data[1],
         }));
         this.setState({ data: desiredData });
       }
@@ -146,7 +147,7 @@ class LineGraph extends React.Component {
           responsive: true,
           title: {
             display: true,
-            text: "Daily Sales"
+            text: "Daily Sales",
           },
           scales: {
             yAxes: [
@@ -155,23 +156,23 @@ class LineGraph extends React.Component {
                   min,
                   max,
                   stepSize:
-                    max % 2 === 0 ? Math.floor(max / 4) : Math.round(max / 3)
-                }
-              }
-            ]
-          }
+                    max % 2 === 0 ? Math.floor(max / 4) : Math.round(max / 3),
+                },
+              },
+            ],
+          },
         },
         data: {
-          labels: this.state.data.map(d => d.day),
+          labels: this.state.data.map((d) => d.day),
           datasets: [
             {
-              data: this.state.data.map(d => d.items),
+              data: this.state.data.map((d) => d.items),
               label: "Sales",
               borderColor: "#f76b1a",
-              fill: false
-            }
-          ]
-        }
+              fill: false,
+            },
+          ],
+        },
       });
     }
   }
@@ -183,9 +184,9 @@ class LineGraph extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    weeklySales: state.product.weeklySales
+    weeklySales: state.admin.weeklySales,
   };
 };
 export default connect(mapStateToProps)(LineGraph);

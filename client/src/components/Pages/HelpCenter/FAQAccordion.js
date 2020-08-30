@@ -66,6 +66,42 @@ class FAQAccordion extends React.Component {
         ),
       },
       {
+        label: "How do I become a seller at way4Biz?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  To be a <strong>seller</strong> create an account with us{" "}
+                  <Link to="/seller/register">here</Link>. Confirm your phone
+                  number, email address and also provide a name and description
+                  of your store in the register form.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Read and understand our terms,download and read the seller
+                  orientation guide,upload the necessary documents.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Your request will be reviewed by the administrators after
+                  which your application will be accepted or rejected.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Your will be sent a message later which will guide you on the
+                  next step. On rejection you will be given an opportunity to
+                  correct your application and resend it.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
         label: "How do I pay for products on Way4Biz?",
         content: (
           <div className="faq-content-section">
@@ -199,6 +235,86 @@ class FAQAccordion extends React.Component {
           </div>
         ),
       },
+      {
+        label: "Does Way4Biz ship internationally?",
+        content: (
+          <div className="faq-content-section">
+            <p>
+              Currently, Way4Biz does local shipping only but later on
+              international shipping will be available.
+            </p>
+          </div>
+        ),
+      },
+      {
+        label: "How do I earn points as a seller?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  Login <Link to="/seller/sign-in">here</Link> to your account
+                  and navigate to you seller dashboard.
+                </p>
+              </li>
+
+              <li>
+                <p>Click the "Points" link on the left menu.</p>
+              </li>
+              <li>
+                <p>
+                  In the Earn Points tab,key in the email of the seller you want
+                  to refer.
+                </p>
+              </li>
+              <li>
+                <p>
+                  When the seller you referred accepts your referral and creates
+                  a seller account with us,you will be awarded more points.
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        label: "How do I redeem points as a seller?",
+        content: (
+          <div className="faq-content-section">
+            <ul>
+              <li>
+                <p>
+                  Login <Link to="/seller/sign-in">here</Link> to your account
+                  and navigate to you seller dashboard.
+                </p>
+              </li>
+
+              <li>
+                <p>Click the "Points" link on the left menu.</p>
+              </li>
+              <li>
+                <p>In the Redeem Points tab,click the redeem now button.</p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Note: You can only redeem at least 1000 points.
+                  </strong>
+                </p>
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        label: "What do I get when I redeem points?",
+        content: (
+          <div className="faq-content-section">
+            <p>We will reward you Ksh.1000 for each 1000 points redeemed.</p>
+          </div>
+        ),
+      },
+
       {
         label: "What is Way4Biz’s return policy?",
         content: (
