@@ -266,7 +266,7 @@ class FAQAccordion extends React.Component {
                 <p>
                   <strong>Note:</strong>If you already have an active seller
                   account with us just login with your details in the logistics
-                  app.
+                  app. This will make you a <strong>partner</strong>
                 </p>
               </li>
             </ul>
