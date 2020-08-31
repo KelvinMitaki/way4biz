@@ -140,9 +140,8 @@ class MiniMenu extends React.Component {
                         style={{ cursor: "pointer" }}
                         className="mini-logout-link primary-link"
                         onClick={() => {
-                          this.props.clearOrderDetails()(
-                            (window.location.href = "/api/logout")
-                          );
+                          this.props.clearOrderDetails();
+                          window.location.href = "/api/logout";
                         }}
                       >
                         Logout

@@ -186,9 +186,8 @@ class SellerHamburgerMenu extends React.Component {
                   style={{ cursor: "pointer" }}
                   className="my-4 link"
                   onClick={() => {
-                    this.props.clearOrderDetails()(
-                      (window.location.href = "/api/logout")
-                    );
+                    this.props.clearOrderDetails();
+                    window.location.href = "/api/logout";
                   }}
                 >
                   Logout

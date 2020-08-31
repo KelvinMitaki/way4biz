@@ -27,9 +27,8 @@ class AdminDashBoardHeader extends React.Component {
               <p
                 className="p-2"
                 onClick={() => {
-                  this.props.clearOrderDetails()(
-                    (window.location.href = "/api/logout")
-                  );
+                  this.props.clearOrderDetails();
+                  window.location.href = "/api/logout";
                 }}
               >
                 Logout
