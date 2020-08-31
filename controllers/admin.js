@@ -163,14 +163,67 @@ route.post(
           to: email,
           from: "kevinkhalifa911@gmail.com",
           subject: "Email Confirmation",
-          html: `<html lang="en">
-      <body>
-          <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
-          <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
-              <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller>here</a> to confirm your email
-          </p>
-      </body>
-      </html>`,
+          html: `<!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Way4Biz</title>
+              <style>
+                * {
+                  padding: 0px;
+                  margin: 0px;
+                  box-sizing: border-box;
+                }
+                body {
+                  font-family: Arial, Helvetica, sans-serif;
+                  min-height: 100vh;
+                  display: flex;
+                  flex-direction: column;
+                }
+          
+                #content {
+                  flex: 1 0 auto;
+                }
+                #mail-header {
+                  background-color: #00001e;
+                  height: 80px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #f76b1a;
+                }
+          
+                #mail-body {
+                  width: 90%;
+                  margin: auto;
+                  text-align: center;
+                  padding: 30px 0px;
+                }
+          
+                #mail-footer {
+                  height: 100px;
+                  background-color: #00001e;
+                  flex-shrink: 0;
+                }
+              </style>
+            </head>
+            <body>
+              <div id="content">
+                <section id="mail-header">
+                  <!-- mail subject here -->
+                  <h1>Confirm Your Email</h1>
+                </section>
+                <section id="mail-body">
+                  <!-- mail content here -->
+                  <p>Please Click
+                  <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller>here</a> to confirm your email.</p>
+                </section>
+              </div>
+              <section id="mail-footer"></section>
+            </body>
+          </html>
+          `,
         },
         (error, info) => {
           if (error) {
