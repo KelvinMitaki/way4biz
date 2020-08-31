@@ -78,9 +78,8 @@ class User extends React.Component {
               <div
                 className="logout-link"
                 onClick={() => {
-                  this.props.clearOrderDetails()(
-                    (window.location.href = "/api/logout")
-                  );
+                  this.props.clearOrderDetails();
+                  window.location.href = "/api/logout";
                 }}
               >
                 Logout
