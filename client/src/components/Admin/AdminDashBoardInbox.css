@@ -6,4 +6,5 @@
 
 .mark-as-read {
   color: #f76b1a;
+  cursor: pointer;
 }

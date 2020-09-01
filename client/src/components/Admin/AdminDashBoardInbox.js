@@ -70,7 +70,9 @@ class AdminDashBoardInbox extends React.Component {
                     <strong>Subject: </strong>
                     {contact.subject}
                   </h6>
-                  <p className="my-2">{contact.message}</p>
+                  <p className="mt-2" style={{ marginBottom: "15px" }}>
+                    {contact.message}
+                  </p>
                   <div className="read-unread">
                     {/* if unread show this */}
                     <p
@@ -80,7 +82,7 @@ class AdminDashBoardInbox extends React.Component {
                       Mark as read
                     </p>
                     {/* if read */}
-                    <p
+                    {/* <p
                       style={{
                         color: "green",
                         display: "flex",
@@ -91,7 +93,7 @@ class AdminDashBoardInbox extends React.Component {
                       <span>
                         <TiTick />
                       </span>
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               ))}
