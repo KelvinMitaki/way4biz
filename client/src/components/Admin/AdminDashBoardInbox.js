@@ -13,6 +13,10 @@ class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
     this.props.fetchAdminInbox();
   }
+
+  readHandler = (e, id) => {
+    // wow
+  };
   render() {
     if (this.props.inboxLoading) return <ScreenLoader />;
     return (
@@ -69,7 +73,12 @@ class AdminDashBoardInbox extends React.Component {
                   <p className="my-2">{contact.message}</p>
                   <div className="read-unread">
                     {/* if unread show this */}
-                    <button>Mark as read</button>
+                    <p
+                      className="mark-as-read"
+                      onClick={(e) => this.readHandler(e, contact._id)}
+                    >
+                      Mark as read
+                    </p>
                     {/* if read */}
                     <p>
                       Read
