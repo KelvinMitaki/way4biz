@@ -4,6 +4,6 @@
   bottom: 5px;
 }
 
-/* .mark-as-read {
-  background-color: red;
-} */
+.mark-as-read {
+  color: #f76b1a;
+}

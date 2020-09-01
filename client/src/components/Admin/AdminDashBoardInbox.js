@@ -80,8 +80,14 @@ class AdminDashBoardInbox extends React.Component {
                       Mark as read
                     </p>
                     {/* if read */}
-                    <p>
-                      Read
+                    <p
+                      style={{
+                        color: "green",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span>Read</span>
                       <span>
                         <TiTick />
                       </span>
