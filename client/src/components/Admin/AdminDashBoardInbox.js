@@ -30,7 +30,10 @@ class AdminDashBoardInbox extends React.Component {
                 <div
                   key={contact._id}
                   className="box-container p-2"
-                  style={{ borderLeft: "3px solid #f76b1a" }}
+                  style={{
+                    borderLeft: "3px solid #f76b1a",
+                    position: "relative",
+                  }}
                 >
                   <div className="row">
                     <div className="col-md-4">
