@@ -52,10 +52,11 @@ class StripePayment extends React.Component {
                       </p>
                     </li>
                     <li>
-                      <p>
-                        We recommend you disable ad blocker in your browser if
-                        you have it enabled.
-                      </p>
+                      <strong>Note: </strong>Payment is still in test mode, no
+                      valid cards are being accepted currently. To initiate
+                      payment, please use the number{" "}
+                      <strong>4242 4242 4242 4242</strong> with any future date
+                      and any CVC
                     </li>
                     <li>
                       <p>
@@ -91,11 +92,11 @@ class StripePayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     order: state.cartReducer.order,
     distance: state.detailsPersist.distance,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 export default connect(mapStateToProps, { makeOrder })(StripePayment);
