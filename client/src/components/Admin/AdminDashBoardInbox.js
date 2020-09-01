@@ -29,6 +29,14 @@ class AdminDashBoardInbox extends React.Component {
             <h3 style={{ textAlign: "center" }} className="my-2">
               Inbox
             </h3>
+            <div
+              style={{ display: "flex", justifyContent: "flex-end" }}
+              className="mb-2 inbox-filter-wrapper"
+            >
+              <strong className="mr-1">Filter:</strong>
+              <p className="mr-1">All</p> |<p className="mx-1">Read</p> |
+              <p className="ml-1">Unread</p>
+            </div>
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&
               this.props.inbox.map((contact) => (
