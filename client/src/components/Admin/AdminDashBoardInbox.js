@@ -7,6 +7,7 @@ import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { connect } from "react-redux";
 import { fetchAdminInbox } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { TiTick } from "react-icons/ti";
 
 class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
@@ -66,6 +67,17 @@ class AdminDashBoardInbox extends React.Component {
                     {contact.subject}
                   </h6>
                   <p className="my-2">{contact.message}</p>
+                  <div className="read-unread">
+                    {/* if unread show this */}
+                    <button>Mark as read</button>
+                    {/* if read */}
+                    <p>
+                      Read
+                      <span>
+                        <TiTick />
+                      </span>
+                    </p>
+                  </div>
                 </div>
               ))}
           </div>
