@@ -61,9 +61,10 @@ export class SellerRegister extends Component {
         <h1 style={{ textAlign: "center" }} className="my-2">
           Register
         </h1>
-        <div style={{ color: "red", textALign: "center" }}>
-          <p>We are currently accepting sellers from within Nairobi ONLY.</p>
-        </div>
+
+        <p className="form-input" style={{ color: "red" }}>
+          We are currently accepting sellers from within Nairobi ONLY.
+        </p>
 
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
