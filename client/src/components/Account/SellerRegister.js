@@ -21,8 +21,8 @@ export class SellerRegister extends Component {
     cityLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263
-    }
+      lng: 36.8263,
+    },
   };
 
   componentDidMount() {
@@ -33,13 +33,13 @@ export class SellerRegister extends Component {
       );
     }
   }
-  handleCitySelect = async selectedCity => {
+  handleCitySelect = async (selectedCity) => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleAddressSelect = async selectedAddress => {
+  handleAddressSelect = async (selectedAddress) => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -61,14 +61,19 @@ export class SellerRegister extends Component {
         <h1 style={{ textAlign: "center" }} className="my-2">
           Register
         </h1>
+
+        <p className="form-input" style={{ color: "red" }}>
+          We are currently accepting sellers from within Nairobi ONLY.
+        </p>
+
         <form
-          onSubmit={this.props.handleSubmit(formValues => {
+          onSubmit={this.props.handleSubmit((formValues) => {
             const { registerSeller } = this.props;
             registerSeller({
               ...formValues,
               ...(this.props.match.params.referralCode && {
-                referralCode: this.props.match.params.referralCode
-              })
+                referralCode: this.props.match.params.referralCode,
+              }),
             });
           })}
         >
@@ -157,7 +162,7 @@ export class SellerRegister extends Component {
             options={{
               location: new google.maps.LatLng(this.state.cityLatLng),
               radius: 1000,
-              types: ["establishment"]
+              types: ["establishment"],
             }}
             onSelect={this.handleAddressSelect}
           />
@@ -201,7 +206,7 @@ export class SellerRegister extends Component {
     );
   }
 }
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -270,17 +275,17 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerRegisterLoading: state.seller.sellerRegisterLoading,
     showEmailConfirm: state.auth.showEmailConfirm,
-    sellerRegisterError: state.seller.sellerRegisterError
+    sellerRegisterError: state.seller.sellerRegisterError,
   };
 };
 export default withRouter(
   reduxForm({
     validate,
-    form: "SellerRegister"
+    form: "SellerRegister",
   })(
     connect(mapStateToProps, { registerSeller, checkReferral })(SellerRegister)
   )
