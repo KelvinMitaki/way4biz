@@ -2,7 +2,6 @@ const request = require("request");
 
 const mongoose = require("mongoose");
 const route = require("express").Router();
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 const moment = require("moment");
@@ -265,6 +264,85 @@ route.get("/api/orders", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.post(
+  "/api/save/card/order",
+  auth,
+  check("formValues.payment")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid payment method"),
+  check("formValues.delivery")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid delivery method"),
+  check("distanceId")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid location"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { formValues, cart, distanceId } = req.body;
+      const { _id } = req.session.user;
+      const test = cart.map(item => {
+        return {
+          product: item._id,
+          quantity: item.quantity
+        };
+      });
+      const ids = cart.map(i => i._id);
+      const pro = await Product.find({ _id: { $in: ids } }).select(
+        "price stockQuantity"
+      );
+      const verifiedProducts = pro.map(pCart => {
+        const prodExsists = cart.find(
+          i => i._id.toString() === pCart._id.toString()
+        );
+        if (prodExsists) {
+          return {
+            _id: pCart._doc._id,
+            price: pCart._doc.price,
+            stockQuantity: pCart._doc.stockQuantity,
+            quantity: prodExsists.quantity
+          };
+        }
+        return {
+          _id: pCart._doc._id,
+          price: pCart._doc.price,
+          stockQuantity: pCart._doc.stockQuantity
+        };
+      });
+      cart.forEach(async item => {
+        await Product.findByIdAndUpdate(item._id, {
+          $inc: { stockQuantity: -item.quantity }
+        });
+      });
+      const price = verifiedProducts
+        .map(item => item.price * item.quantity)
+        .reduce((acc, curr) => acc + curr, 0);
+      const distance = await Distance.findById(distanceId);
+      const order = new Order({
+        items: test,
+        paymentMethod: formValues.payment,
+        deliveryMethod: formValues.delivery,
+        totalPrice: price + Math.round(distance.shippingFees),
+        buyer: _id,
+        buyerSeller: _id,
+        distance: distanceId
+      });
+      await order.save();
+      orderId = order._id;
+      const orderWithDistance = await Order.findById(order._id).populate(
+        "distance"
+      );
+      return res.send(orderWithDistance);
+    } catch (error) {}
+  }
+);
 
 let checkoutRequestId;
 let orderId;

@@ -2528,35 +2528,49 @@ export const deleteHeroImage = imageUrl => async dispatch => {
   }
 };
 
-export const saveOrder = () => async dispatch => {
+export const saveOrder = () => async (dispatch, getState) => {
   try {
     dispatch({ type: SAVE_ORDER_START });
+    const cart = getState().cartReducer.order.cart;
+    const distanceId = getState().detailsPersist.distance._id;
+    const formValues = getState().cartReducer.order.formValues;
+    const email = getState().auth.user.email;
+    const phoneNumber = getState().auth.user.phoneNumber;
+    const firstName = getState().auth.user.firstName;
+    const lastName = getState().auth.user.lastName;
+    const res = await axios.post("/api/save/card/order", {
+      cart,
+      distanceId,
+      formValues
+    });
+    console.log(res.data);
     // SAVE ORDER FIRST
     window.FlutterwaveCheckout({
       public_key: "FLWPUBK_TEST-889190263261a396bbf7c25822758bb9-X",
-      tx_ref: "hooli-tx-1920bbtyt",
-      amount: 54600,
+      tx_ref: res.data._id,
+      amount: res.data.totalPrice,
       currency: "KES",
       country: "KE",
       payment_options: "card",
       customer: {
-        email: "user@gmail.com",
-        phone_number: "0721559392",
-        name: "yemi desola"
+        email,
+        phone_number: `0${phoneNumber}`,
+        name: `${firstName} ${lastName}`
       },
       callback: function (data) {
         // specified callback function
         console.log(data);
       },
       customizations: {
-        title: "My store",
-        description: "Payment for items in cart",
-        logo: "https://assets.piedpiper.com/logo.png"
+        title: "Way4Biz",
+        description: `Payment for items in cart for ${firstName} ${lastName}`,
+        logo:
+          "https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/fav.jpg"
       }
     });
     dispatch({ type: SAVE_ORDER_STOP });
   } catch (error) {
-    authCheck(error);
+    authCheck(error.response);
     dispatch({ type: SAVE_ORDER_STOP });
   }
 };
