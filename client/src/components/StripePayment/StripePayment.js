@@ -9,10 +9,6 @@ import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
 import StripePaymentButton from "./StripePaymentButton";
 import MobileLogo from "../Header/MobileLogo";
-import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
 class StripePayment extends React.Component {
   render() {
     if (!this.props.order) return <Redirect to="/checkout" />;
@@ -51,13 +47,7 @@ class StripePayment extends React.Component {
                         make payment for your order.
                       </p>
                     </li>
-                    <li>
-                      <strong>Note: </strong>Payment is still in test mode, no
-                      valid cards are being accepted currently. To initiate
-                      payment, please use the number{" "}
-                      <strong>4242 4242 4242 4242</strong> with any future date
-                      and any CVC
-                    </li>
+
                     <li>
                       <p>
                         <strong>
@@ -67,20 +57,7 @@ class StripePayment extends React.Component {
                       </p>
                     </li>
                   </ul>
-                  <Elements stripe={stripePromise}>
-                    <ElementsConsumer>
-                      {({ stripe, elements }) => (
-                        <StripePaymentButton
-                          email={this.props.user.email}
-                          cart={this.props.order.cart}
-                          order={this.props.order}
-                          distance={this.props.distance}
-                          stripe={stripe}
-                          elements={elements}
-                        />
-                      )}
-                    </ElementsConsumer>
-                  </Elements>
+                  <StripePaymentButton />
                 </div>
               </div>
             </div>

@@ -5,7 +5,6 @@ const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 const moment = require("moment");
-const { v4 } = require("uuid");
 const Mpesa = require("mpesa-node");
 
 const Product = require("../models/Product");
@@ -343,6 +342,35 @@ route.post(
     } catch (error) {}
   }
 );
+
+route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
+  try {
+    const { transaction_id, amount, currency, tx_ref } = req.body;
+    var options = {
+      method: "GET",
+      url: `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.FLUTTER_WAVE_SEC_KEY}`
+      }
+    };
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      response.body = JSON.parse(response.body);
+      if (
+        tx_ref === response.body.data.tx_ref &&
+        amount >= response.body.data.amount &&
+        response.body.data.status === "successful" &&
+        response.body.data.currency === "KES"
+      ) {
+        return res.send(response.body);
+      }
+      throw new Error("Error when processing your transaction");
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 let checkoutRequestId;
 let orderId;

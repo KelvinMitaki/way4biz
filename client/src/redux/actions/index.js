@@ -2544,6 +2544,8 @@ export const saveOrder = () => async (dispatch, getState) => {
       formValues
     });
     console.log(res.data);
+
+    dispatch({ type: SAVE_ORDER_STOP });
     // SAVE ORDER FIRST
     window.FlutterwaveCheckout({
       public_key: "FLWPUBK_TEST-889190263261a396bbf7c25822758bb9-X",
@@ -2557,9 +2559,15 @@ export const saveOrder = () => async (dispatch, getState) => {
         phone_number: `0${phoneNumber}`,
         name: `${firstName} ${lastName}`
       },
-      callback: function (data) {
+      callback: async function (data) {
         // specified callback function
-        console.log(data);
+        try {
+          console.log(data);
+          const res = await axios.post("/api/verify/flutterwave/payment", data);
+          console.log(res.data);
+        } catch (error) {
+          console.log(error.response);
+        }
       },
       customizations: {
         title: "Way4Biz",
@@ -2568,7 +2576,6 @@ export const saveOrder = () => async (dispatch, getState) => {
           "https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/fav.jpg"
       }
     });
-    dispatch({ type: SAVE_ORDER_STOP });
   } catch (error) {
     authCheck(error.response);
     dispatch({ type: SAVE_ORDER_STOP });
