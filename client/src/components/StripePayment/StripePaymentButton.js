@@ -12,16 +12,16 @@ const StripePaymentButton = ({ saveOrder, history }) => {
   };
   return (
     <div>
-      <button ref={paypal} onClick={makePayment}>
+      <button ref={paypal} onClick={makePayment} id="card-pay-button">
         Pay
       </button>
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     distance: state.detailsPersist.distance,
-    makeOrderLoading: state.user.makeOrderLoading
+    makeOrderLoading: state.user.makeOrderLoading,
   };
 };
 export default withRouter(
