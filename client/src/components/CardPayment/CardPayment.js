@@ -7,9 +7,9 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeOrder } from "../../redux/actions";
-import StripePaymentButton from "./StripePaymentButton";
+import CardPaymentButton from "./CardPaymentButton";
 import MobileLogo from "../Header/MobileLogo";
-class StripePayment extends React.Component {
+class CardPayment extends React.Component {
   render() {
     if (!this.props.order) return <Redirect to="/checkout" />;
     if (this.props.order && !this.props.order.formValues)
@@ -57,7 +57,7 @@ class StripePayment extends React.Component {
                       </p>
                     </li>
                   </ul>
-                  <StripePaymentButton />
+                  <CardPaymentButton />
                 </div>
               </div>
             </div>
@@ -76,4 +76,4 @@ const mapStateToProps = state => {
     user: state.auth.user
   };
 };
-export default connect(mapStateToProps, { makeOrder })(StripePayment);
+export default connect(mapStateToProps, { makeOrder })(CardPayment);

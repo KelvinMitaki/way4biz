@@ -864,7 +864,7 @@ export const preMakeOrder = (credentials, history) => dispatch => {
   if (credentials.formValues.payment === "mpesa") {
     return history.push("/mpesa-payment");
   }
-  history.push("/stripe/payment");
+  history.push("/card/payment");
 };
 
 export const makeOrder = (credentials, history) => async (

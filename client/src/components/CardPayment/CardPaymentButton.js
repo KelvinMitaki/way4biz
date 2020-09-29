@@ -2,18 +2,18 @@ import React from "react";
 import { saveOrder } from "../../redux/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import "./StripePaymentButton.css";
+import "./CardPaymentButton.css";
 import { useRef } from "react";
 
-const StripePaymentButton = ({ saveOrder, history }) => {
-  const paypal = useRef();
+const CardPaymentButton = ({ saveOrder, history }) => {
+  const payment = useRef();
   const makePayment = () => {
     saveOrder(history);
   };
   return (
     <div>
       <button
-        ref={paypal}
+        ref={payment}
         onClick={makePayment}
         className="secondary-button card-pay-button btn btn-block"
       >
@@ -22,12 +22,12 @@ const StripePaymentButton = ({ saveOrder, history }) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     distance: state.detailsPersist.distance,
-    makeOrderLoading: state.user.makeOrderLoading,
+    makeOrderLoading: state.user.makeOrderLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { saveOrder })(StripePaymentButton)
+  connect(mapStateToProps, { saveOrder })(CardPaymentButton)
 );
