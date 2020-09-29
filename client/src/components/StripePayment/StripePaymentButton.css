@@ -23,11 +23,20 @@
 
 .card-pay-button {
   background-color: #f76b1a;
-  width: 70%;
+  height: 40px;
+  width: 100%;
+  margin: 0;
+  border: none !important;
+  color: #fff;
 }
 
-@media screen and (max-width: 767px) {
+.card-pay-button:hover {
+  width: 100% !important;
+  height: 40px !important;
+}
+
+/* @media screen and (max-width: 767px) {
   .card-pay-button {
     width: 100%;
   }
-}
+} */

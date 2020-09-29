@@ -12,7 +12,11 @@ const StripePaymentButton = ({ saveOrder, history }) => {
   };
   return (
     <div>
-      <button ref={paypal} onClick={makePayment} className="card-pay-button">
+      <button
+        ref={paypal}
+        onClick={makePayment}
+        className="secondary-button card-pay-button btn btn-block"
+      >
         Pay
       </button>
     </div>
