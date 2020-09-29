@@ -46,7 +46,14 @@ const UserSchema = new mongoose.Schema(
       ref: "Cart"
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.password;
+      }
+    }
+  }
 );
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
