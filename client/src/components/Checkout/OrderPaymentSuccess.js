@@ -90,12 +90,14 @@ class OrderPaymentSuccess extends React.Component {
                       <h5>Order Subtotal</h5>
                       <p>
                         Ksh.
-                        {this.props.orderSuccess.totalPrice &&
-                          this.props.orderSuccess.distance.shippingFees &&
-                          Math.round(
-                            this.props.orderSuccess.totalPrice -
-                              this.props.orderSuccess.distance.shippingFees
-                          ).toLocaleString()}{" "}
+                        {(this.props.orderSuccess.totalPrice &&
+                          this.props.orderSuccess.distance.shippingFees) ||
+                          (this.props.orderSuccess.distance.shippingFees ===
+                            0 &&
+                            Math.round(
+                              this.props.orderSuccess.totalPrice -
+                                this.props.orderSuccess.distance.shippingFees
+                            ).toLocaleString())}{" "}
                       </p>
                     </div>
                     <div>
