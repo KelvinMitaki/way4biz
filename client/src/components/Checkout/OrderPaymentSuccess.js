@@ -135,7 +135,14 @@ class OrderPaymentSuccess extends React.Component {
                           <h5>Phone Number</h5>0{this.props.user.phoneNumber}
                         </React.Fragment>
                       ) : (
-                        <React.Fragment>{null}</React.Fragment>
+                        <React.Fragment>
+                          <h5>
+                            {`${this.props.orderSuccess.brand[0].toUpperCase()}${this.props.orderSuccess.brand.substring(
+                              1
+                            )}`}
+                          </h5>
+                          <p>***********{this.props.orderSuccess.last4}</p>
+                        </React.Fragment>
                       )}
                     </div>
                     <div>

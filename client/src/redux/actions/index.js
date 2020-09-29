@@ -272,7 +272,8 @@ import {
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
   SAVE_ORDER_START,
-  SAVE_ORDER_STOP
+  SAVE_ORDER_STOP,
+  SAVE_ORDER
 } from "./types";
 
 const authCheck = error => {
@@ -884,13 +885,6 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-
-    if (res.paymentMethod && res.paymentMethod !== "mpesa") {
-      dispatch({ type: MAKE_ORDER, payload: res });
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: MAKE_ORDER_STOP });
-      return history.push("/order/success");
-    }
     dispatch({ type: MAKE_ORDER, payload: res });
   } catch (error) {
     authCheck(error);
@@ -2528,7 +2522,7 @@ export const deleteHeroImage = imageUrl => async dispatch => {
   }
 };
 
-export const saveOrder = () => async (dispatch, getState) => {
+export const saveOrder = history => async (dispatch, getState) => {
   try {
     dispatch({ type: SAVE_ORDER_START });
     const cart = getState().cartReducer.order.cart;
@@ -2565,6 +2559,12 @@ export const saveOrder = () => async (dispatch, getState) => {
           console.log(data);
           const res = await axios.post("/api/verify/flutterwave/payment", data);
           console.log(res.data);
+          dispatch({
+            type: FETCH_ORDER_SUCCESS,
+            payload: { ...res.data.data, ...res.data.order }
+          });
+          history.push("/order/success");
+          dispatch({ type: SAVE_ORDER });
         } catch (error) {
           console.log(error.response);
         }
@@ -2577,7 +2577,7 @@ export const saveOrder = () => async (dispatch, getState) => {
       }
     });
   } catch (error) {
-    authCheck(error.response);
+    authCheck(error);
     dispatch({ type: SAVE_ORDER_STOP });
   }
 };

@@ -354,8 +354,8 @@ route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
         Authorization: `Bearer ${process.env.FLUTTER_WAVE_SEC_KEY}`
       }
     };
-    request(options, function (error, response) {
-      if (error) throw new Error(error);
+    request(options, async function (error, response) {
+      if (error) res.status(500).send(error);
       response.body = JSON.parse(response.body);
       if (
         tx_ref === response.body.data.tx_ref &&
@@ -363,9 +363,16 @@ route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
         response.body.data.status === "successful" &&
         response.body.data.currency === "KES"
       ) {
-        return res.send(response.body);
+        const order = await Order.findById(tx_ref).populate(
+          "items.product distance"
+        );
+        order.paid = true;
+        order.last4 = response.body.data.card.last_4digits;
+        order.brand = response.body.data.card.type;
+        await order.save();
+        return res.send({ ...response.body, order });
       }
-      throw new Error("Error when processing your transaction");
+      res.send(500).send({ error: "error validating the request" });
     });
   } catch (error) {
     res.status(500).send(error);

@@ -63,6 +63,12 @@ const OrderSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    brand: {
+      type: String
+    },
+    last4: {
+      type: String
+    },
     deliveryMethod: {
       type: String,
       required: true

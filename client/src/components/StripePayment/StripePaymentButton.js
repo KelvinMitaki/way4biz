@@ -5,10 +5,10 @@ import { withRouter } from "react-router-dom";
 import "./StripePaymentButton.css";
 import { useRef } from "react";
 
-const StripePaymentButton = ({ saveOrder }) => {
+const StripePaymentButton = ({ saveOrder, history }) => {
   const paypal = useRef();
   const makePayment = () => {
-    saveOrder();
+    saveOrder(history);
   };
   return (
     <div>
