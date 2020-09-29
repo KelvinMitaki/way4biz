@@ -352,7 +352,6 @@ route.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { formValues, cart, distanceId } = req.body;
-      const id = req.body.id;
       const { _id } = req.session.user;
       const test = cart.map(item => {
         return {
@@ -430,40 +429,7 @@ route.post(
         );
         return res.send(orderWithDistance);
       }
-      // **STRIPE*/
-      if (id) {
-        const idempotencyKey = v4();
-        const charge = await stripe.paymentIntents.create(
-          {
-            amount: (price + Math.round(distance.shippingFees)) * 100,
-            currency: "kes",
-            description: `payed ${
-              price + Math.round(distance.shippingFees)
-            } to account by ${req.session.user.email}`,
-            payment_method: id,
-            confirm: true
-          },
-          { idempotencyKey }
-        );
-        console.log(charge.charges.data);
-        const order = new Order({
-          items: test,
-          paymentMethod: formValues.payment,
-          deliveryMethod: formValues.delivery,
-          totalPrice: price + Math.round(distance.shippingFees),
-          buyer: _id,
-          buyerSeller: _id,
-          distance: distanceId,
-          paid: true,
-          brand: charge.charges.data[0].payment_method_details.card.brand,
-          last4: charge.charges.data[0].payment_method_details.card.last4
-        });
-        await order.save();
-        const orderWithDistance = await Order.findById(order._id).populate(
-          "distance items.product"
-        );
-        return res.send(orderWithDistance);
-      }
+
       res.status(401).send({ message: "Invalid ID" });
     } catch (error) {
       console.log(error);

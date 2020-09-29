@@ -270,7 +270,9 @@ import {
   FETCH_HERO_START,
   FETCH_HERO_STOP,
   DELETE_HERO_IMAGE_START,
-  DELETE_HERO_IMAGE_STOP
+  DELETE_HERO_IMAGE_STOP,
+  SAVE_ORDER_START,
+  SAVE_ORDER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -882,11 +884,6 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    if (response.status === "500") {
-      dispatch({ type: MAKE_ORDER, payload: res });
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      return history.push("/stripe/error");
-    }
 
     if (res.paymentMethod && res.paymentMethod !== "mpesa") {
       dispatch({ type: MAKE_ORDER, payload: res });
@@ -895,16 +892,10 @@ export const makeOrder = (credentials, history) => async (
       return history.push("/order/success");
     }
     dispatch({ type: MAKE_ORDER, payload: res });
-    if (!res.paymentMethod) {
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: MAKE_ORDER_STOP });
-      history.push("/stripe/error");
-    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
     dispatch({ type: MAKE_ORDER_STOP });
-    history.push("/stripe/error");
     console.log(error.response);
   }
 };
@@ -2534,5 +2525,38 @@ export const deleteHeroImage = imageUrl => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: DELETE_HERO_IMAGE_STOP });
+  }
+};
+
+export const saveOrder = () => async dispatch => {
+  try {
+    dispatch({ type: SAVE_ORDER_START });
+    // SAVE ORDER FIRST
+    window.FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-889190263261a396bbf7c25822758bb9-X",
+      tx_ref: "hooli-tx-1920bbtyt",
+      amount: 54600,
+      currency: "KES",
+      country: "KE",
+      payment_options: "card",
+      customer: {
+        email: "user@gmail.com",
+        phone_number: "0721559392",
+        name: "yemi desola"
+      },
+      callback: function (data) {
+        // specified callback function
+        console.log(data);
+      },
+      customizations: {
+        title: "My store",
+        description: "Payment for items in cart",
+        logo: "https://assets.piedpiper.com/logo.png"
+      }
+    });
+    dispatch({ type: SAVE_ORDER_STOP });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: SAVE_ORDER_STOP });
   }
 };

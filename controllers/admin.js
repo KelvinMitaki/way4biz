@@ -163,16 +163,6 @@ route.post(
           to: email,
           from: "kevinkhalifa911@gmail.com",
           subject: "Email Confirmation",
-<<<<<<< HEAD
-          html: `<html lang="en">
-      <body>
-          <h5 style="font-family: Arial, Helvetica, sans-serif;">Confirming Your Email</h5>
-          <p style="font-family: Arial, Helvetica, sans-serif;">Please Click
-              <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller>here</a> to confirm your email
-          </p>
-      </body>
-      </html>`
-=======
           html: `<!DOCTYPE html>
           <html lang="en">
             <head>
@@ -233,8 +223,7 @@ route.post(
               <section id="mail-footer"></section>
             </body>
           </html>
-          `,
->>>>>>> a38f78dd250e2a1c51fdec3b616853e2785ac288
+          `
         },
         (error, info) => {
           if (error) {
@@ -2225,7 +2214,7 @@ route.post(
                 <section id="mail-footer"></section>
               </body>
             </html>
-            `,
+            `
           },
           (error, info) => {
             if (error) {

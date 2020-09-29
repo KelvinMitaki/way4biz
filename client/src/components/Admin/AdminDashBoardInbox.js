@@ -7,7 +7,6 @@ import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { connect } from "react-redux";
 import { fetchAdminInbox } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
-import { TiTick } from "react-icons/ti";
 
 class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
@@ -39,13 +38,13 @@ class AdminDashBoardInbox extends React.Component {
             </div>
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&
-              this.props.inbox.map((contact) => (
+              this.props.inbox.map(contact => (
                 <div
                   key={contact._id}
                   className="box-container p-2"
                   style={{
                     borderLeft: "3px solid #f76b1a",
-                    position: "relative",
+                    position: "relative"
                   }}
                 >
                   <div className="row">
@@ -85,7 +84,7 @@ class AdminDashBoardInbox extends React.Component {
                     {/* if unread show this */}
                     <p
                       className="mark-as-read"
-                      onClick={(e) => this.readHandler(e, contact._id)}
+                      onClick={e => this.readHandler(e, contact._id)}
                     >
                       Mark as read
                     </p>
@@ -111,10 +110,10 @@ class AdminDashBoardInbox extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     inbox: state.admin.inbox,
-    inboxLoading: state.admin.inboxLoading,
+    inboxLoading: state.admin.inboxLoading
   };
 };
 export default connect(mapStateToProps, { fetchAdminInbox })(
