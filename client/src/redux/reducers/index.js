@@ -23,8 +23,8 @@ const persistConfig = {
     "detailsPersist",
     "filter",
     "image",
-    "sellerDetails"
-  ]
+    "sellerDetails",
+  ],
 };
 
 const reducers = combineReducers({
@@ -40,6 +40,6 @@ const reducers = combineReducers({
   search: searchReducer,
   selfCollection: selfCollectionReducer,
   admin: adminReducer,
-  user: userReducer
+  user: userReducer,
 });
 export default persistReducer(persistConfig, reducers);
