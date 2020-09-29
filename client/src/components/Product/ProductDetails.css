@@ -5,5 +5,5 @@
 
 .dangerous-stuff {
   /* font-size: 20px; */
-  padding: 10px;
+  padding: 0px !important;
 }

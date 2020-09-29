@@ -214,7 +214,7 @@ class Product extends React.Component {
                         )}
                       </div>
                     </div>
-                    <div className="col-md-7 product-info pt-2">
+                    <div className="col-md-7 product-info p-2">
                       {stockQuantity >= 1 ? (
                         <span className="badge stock-badge in-stock-badge">
                           In Stock
