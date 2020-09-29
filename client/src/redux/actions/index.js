@@ -272,8 +272,7 @@ import {
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
   SAVE_ORDER_START,
-  SAVE_ORDER_STOP,
-  SAVE_ORDER
+  SAVE_ORDER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -2560,7 +2559,6 @@ export const saveOrder = history => async (dispatch, getState) => {
             payload: { ...res.data.data, ...res.data.order }
           });
           history.push("/order/success");
-          dispatch({ type: SAVE_ORDER });
         } catch (error) {
           console.log(error.response);
         }

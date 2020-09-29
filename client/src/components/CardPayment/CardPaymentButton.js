@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./CardPaymentButton.css";
 
-const CardPaymentButton = ({ saveOrder, history }) => {
+const CardPaymentButton = ({
+  saveOrder,
+  history,
+  saveOrderLoading,
+  cart,
+  distance
+}) => {
   const [clicked, setClicked] = useState(false);
   const payment = useRef();
   const makePayment = () => {
@@ -13,6 +19,10 @@ const CardPaymentButton = ({ saveOrder, history }) => {
       saveOrder(history);
     }
   };
+  const shippingFees = Math.round(distance.shippingFees);
+  const total = cart
+    .map(item => item.price * item.quantity)
+    .reduce((acc, curr) => acc + curr, 0);
   return (
     <div>
       <button
@@ -21,7 +31,18 @@ const CardPaymentButton = ({ saveOrder, history }) => {
         onClick={makePayment}
         className="secondary-button card-pay-button btn btn-block"
       >
-        Pay
+        {saveOrderLoading && (
+          <span
+            className="spinner-grow spinner-grow-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        )}
+        {saveOrderLoading ? (
+          <span> {"  "}Loading...</span>
+        ) : (
+          <span>Pay Ksh.{(total + shippingFees).toLocaleString()}</span>
+        )}
       </button>
     </div>
   );
@@ -29,7 +50,9 @@ const CardPaymentButton = ({ saveOrder, history }) => {
 const mapStateToProps = state => {
   return {
     distance: state.detailsPersist.distance,
-    makeOrderLoading: state.user.makeOrderLoading
+    cart: state.cartReducer.cart,
+    makeOrderLoading: state.user.makeOrderLoading,
+    saveOrderLoading: state.product.saveOrderLoading
   };
 };
 export default withRouter(
