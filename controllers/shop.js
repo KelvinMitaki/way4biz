@@ -2,11 +2,9 @@ const request = require("request");
 
 const mongoose = require("mongoose");
 const route = require("express").Router();
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { check, validationResult } = require("express-validator");
 const distance = require("google-distance-matrix");
 const moment = require("moment");
-const { v4 } = require("uuid");
 const Mpesa = require("mpesa-node");
 
 const Product = require("../models/Product");
@@ -266,67 +264,120 @@ route.get("/api/orders", auth, async (req, res) => {
   }
 });
 
-route.get("/api/checkout", auth, (req, res) => {
-  try {
-    const { firstName, lastName, number } = req.session.user;
-    if (!number) {
-      return res.send({ firstName, lastName });
-    }
-    res.send({ firstName, lastName, number });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
 route.post(
-  "/api/checkout",
+  "/api/save/card/order",
   auth,
-  check("firstName")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("Please enter your name with a minimum of three characters"),
-  check("lastName")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("Please enter your name with a minimum of three characters"),
-  check("number")
-    .isNumeric()
-    .isLength({ min: 12 })
-    .withMessage("Invalid Number"),
-  check("deliveryAddress")
-    .trim()
-    .isLength({ min: 2 })
-    .withMessage("Please enter a valid delivery address"),
-  check("city").trim().isLength({ min: 2 }).withMessage("Choose a valid city"),
+  check("formValues.payment")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid payment method"),
+  check("formValues.delivery")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid delivery method"),
+  check("distanceId")
+    .not()
+    .isEmpty()
+    .withMessage("Please choose a valid location"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const {
-        firstName,
-        lastName,
-        number,
-        deliveryAddress,
-        region,
-        city
-      } = req.body;
-      // CALCULATE DISTANCE AND DISTANCE CHARGES BASED ON REGION/CITY AND INCLUDE IT IN THE REQ.DELIVERY
-      req.delivery = {
-        firstName,
-        lastName,
-        number,
-        deliveryAddress,
-        region,
-        city
-      };
-      res.send({ price: 50000 });
-    } catch (error) {
-      res.status(500).send(error);
-    }
+      const { formValues, cart, distanceId } = req.body;
+      const { _id } = req.session.user;
+      const test = cart.map(item => {
+        return {
+          product: item._id,
+          quantity: item.quantity
+        };
+      });
+      const ids = cart.map(i => i._id);
+      const pro = await Product.find({ _id: { $in: ids } }).select(
+        "price stockQuantity"
+      );
+      const verifiedProducts = pro.map(pCart => {
+        const prodExsists = cart.find(
+          i => i._id.toString() === pCart._id.toString()
+        );
+        if (prodExsists) {
+          return {
+            _id: pCart._doc._id,
+            price: pCart._doc.price,
+            stockQuantity: pCart._doc.stockQuantity,
+            quantity: prodExsists.quantity
+          };
+        }
+        return {
+          _id: pCart._doc._id,
+          price: pCart._doc.price,
+          stockQuantity: pCart._doc.stockQuantity
+        };
+      });
+      cart.forEach(async item => {
+        await Product.findByIdAndUpdate(item._id, {
+          $inc: { stockQuantity: -item.quantity }
+        });
+      });
+      const price = verifiedProducts
+        .map(item => item.price * item.quantity)
+        .reduce((acc, curr) => acc + curr, 0);
+      const distance = await Distance.findById(distanceId);
+      const order = new Order({
+        items: test,
+        paymentMethod: formValues.payment,
+        deliveryMethod: formValues.delivery,
+        totalPrice: price + Math.round(distance.shippingFees),
+        buyer: _id,
+        buyerSeller: _id,
+        distance: distanceId
+      });
+      await order.save();
+      orderId = order._id;
+      const orderWithDistance = await Order.findById(order._id).populate(
+        "distance"
+      );
+      return res.send(orderWithDistance);
+    } catch (error) {}
   }
 );
+
+route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
+  try {
+    const { transaction_id, amount, tx_ref } = req.body;
+    var options = {
+      method: "GET",
+      url: `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.FLUTTER_WAVE_SEC_KEY}`
+      }
+    };
+    request(options, async function (error, response) {
+      if (error) res.status(500).send(error);
+      response.body = JSON.parse(response.body);
+      if (
+        tx_ref === response.body.data.tx_ref &&
+        amount >= response.body.data.amount &&
+        response.body.data.status === "successful" &&
+        response.body.data.currency === "KES"
+      ) {
+        const order = await Order.findById(tx_ref).populate(
+          "items.product distance"
+        );
+        order.paid = true;
+        order.last4 = response.body.data.card.last_4digits;
+        order.brand = response.body.data.card.type;
+        await order.save();
+        return res.send({ ...response.body, order });
+      }
+      res.send(500).send({ error: "error validating the request" });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 let checkoutRequestId;
 let orderId;
@@ -352,7 +403,6 @@ route.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { formValues, cart, distanceId } = req.body;
-      const id = req.body.id;
       const { _id } = req.session.user;
       const test = cart.map(item => {
         return {
@@ -430,40 +480,7 @@ route.post(
         );
         return res.send(orderWithDistance);
       }
-      // **STRIPE*/
-      if (id) {
-        const idempotencyKey = v4();
-        const charge = await stripe.paymentIntents.create(
-          {
-            amount: (price + Math.round(distance.shippingFees)) * 100,
-            currency: "kes",
-            description: `payed ${
-              price + Math.round(distance.shippingFees)
-            } to account by ${req.session.user.email}`,
-            payment_method: id,
-            confirm: true
-          },
-          { idempotencyKey }
-        );
-        console.log(charge.charges.data);
-        const order = new Order({
-          items: test,
-          paymentMethod: formValues.payment,
-          deliveryMethod: formValues.delivery,
-          totalPrice: price + Math.round(distance.shippingFees),
-          buyer: _id,
-          buyerSeller: _id,
-          distance: distanceId,
-          paid: true,
-          brand: charge.charges.data[0].payment_method_details.card.brand,
-          last4: charge.charges.data[0].payment_method_details.card.last4
-        });
-        await order.save();
-        const orderWithDistance = await Order.findById(order._id).populate(
-          "distance items.product"
-        );
-        return res.send(orderWithDistance);
-      }
+
       res.status(401).send({ message: "Invalid ID" });
     } catch (error) {
       console.log(error);

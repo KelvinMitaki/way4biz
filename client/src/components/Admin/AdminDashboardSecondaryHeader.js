@@ -4,7 +4,7 @@ import "./AdminDashboardSecondaryHeader.css";
 import {
   RiDashboardLine,
   RiFileUserLine,
-  RiInboxArchiveLine
+  RiInboxArchiveLine,
 } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import {
   fetchNewSellers,
   clearOrderDetails,
-  redeemCountAction
+  redeemCountAction,
 } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
@@ -32,20 +32,20 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100
-          }
-        ]
-      }
-    ]
+            num: 100,
+          },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchNewSellers();
     this.props.redeemCountAction();
   }
-  handleClick = e => {
-    this.setState(prevState => {
+  handleClick = (e) => {
+    this.setState((prevState) => {
       return {
-        open: !prevState.open
+        open: !prevState.open,
       };
     });
   };
@@ -105,7 +105,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff"
+                        color: "#fff",
                       }}
                       className="ml-1 badge"
                     >
@@ -144,7 +144,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff"
+                        color: "#fff",
                       }}
                     >
                       {this.props.newSellers.sellers.length.toLocaleString()}
@@ -172,7 +172,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       >
                         {this.props.newSellers.sellers.length}
@@ -215,7 +215,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                       position: "relative",
                       zIndex: "32",
                       backgroundColor: "#f76b1a",
-                      color: "#fff"
+                      color: "#fff",
                     }}
                     className="ml-1 badge"
                   >
@@ -231,7 +231,21 @@ class AdminDashboardSecondaryHeader extends React.Component {
               to="/admin-inbox"
               activeClassName="admin-active-lg-link"
             >
-              <RiInboxArchiveLine /> <span className="ml-2">Inbox</span>
+              <RiInboxArchiveLine />{" "}
+              <span className="ml-2">
+                Inbox
+                <span
+                  className="ml-1 badge"
+                  style={{
+                    position: "relative",
+                    zIndex: "32",
+                    backgroundColor: "#f76b1a",
+                    color: "#fff",
+                  }}
+                >
+                  0
+                </span>
+              </span>
             </NavLink>
           </li>
         </ul>
@@ -261,15 +275,15 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     newSellers: state.admin.newSellers,
     redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
-    redeemCount: state.admin.redeemCount
+    redeemCount: state.admin.redeemCount,
   };
 };
 export default connect(mapStateToProps, {
   fetchNewSellers,
   clearOrderDetails,
-  redeemCountAction
+  redeemCountAction,
 })(AdminDashboardSecondaryHeader);

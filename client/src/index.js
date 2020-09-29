@@ -15,7 +15,14 @@ import ScrollToTop from "./ScrollToTop";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+let arg;
+if (process.env.NODE_ENV === "development") {
+  arg = composeEnhancers(applyMiddleware(thunk));
+} else {
+  arg = applyMiddleware(thunk);
+}
+
+const store = createStore(reducers, arg);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -270,7 +270,9 @@ import {
   FETCH_HERO_START,
   FETCH_HERO_STOP,
   DELETE_HERO_IMAGE_START,
-  DELETE_HERO_IMAGE_STOP
+  DELETE_HERO_IMAGE_STOP,
+  SAVE_ORDER_START,
+  SAVE_ORDER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -861,7 +863,7 @@ export const preMakeOrder = (credentials, history) => dispatch => {
   if (credentials.formValues.payment === "mpesa") {
     return history.push("/mpesa-payment");
   }
-  history.push("/stripe/payment");
+  history.push("/card/payment");
 };
 
 export const makeOrder = (credentials, history) => async (
@@ -882,29 +884,11 @@ export const makeOrder = (credentials, history) => async (
       headers: { "Content-Type": "application/json" }
     });
     const res = await response.json();
-    if (response.status === "500") {
-      dispatch({ type: MAKE_ORDER, payload: res });
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      return history.push("/stripe/error");
-    }
-
-    if (res.paymentMethod && res.paymentMethod !== "mpesa") {
-      dispatch({ type: MAKE_ORDER, payload: res });
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: MAKE_ORDER_STOP });
-      return history.push("/order/success");
-    }
     dispatch({ type: MAKE_ORDER, payload: res });
-    if (!res.paymentMethod) {
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: res });
-      dispatch({ type: MAKE_ORDER_STOP });
-      history.push("/stripe/error");
-    }
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_ORDER_SUCCESS, payload: error });
     dispatch({ type: MAKE_ORDER_STOP });
-    history.push("/stripe/error");
     console.log(error.response);
   }
 };
@@ -2534,5 +2518,60 @@ export const deleteHeroImage = imageUrl => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: DELETE_HERO_IMAGE_STOP });
+  }
+};
+
+export const saveOrder = history => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SAVE_ORDER_START });
+    const cart = getState().cartReducer.order.cart;
+    const distanceId = getState().detailsPersist.distance._id;
+    const formValues = getState().cartReducer.order.formValues;
+    const email = getState().auth.user.email;
+    const phoneNumber = getState().auth.user.phoneNumber;
+    const firstName = getState().auth.user.firstName;
+    const lastName = getState().auth.user.lastName;
+    const res = await axios.post("/api/save/card/order", {
+      cart,
+      distanceId,
+      formValues
+    });
+    dispatch({ type: SAVE_ORDER_STOP });
+    // SAVE ORDER FIRST
+    window.FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-889190263261a396bbf7c25822758bb9-X",
+      tx_ref: res.data._id,
+      amount: res.data.totalPrice,
+      currency: "KES",
+      country: "KE",
+      payment_options: "card",
+      customer: {
+        email,
+        phone_number: `0${phoneNumber}`,
+        name: `${firstName} ${lastName}`
+      },
+      callback: async function (data) {
+        // specified callback function
+        try {
+          const res = await axios.post("/api/verify/flutterwave/payment", data);
+          dispatch({
+            type: FETCH_ORDER_SUCCESS,
+            payload: { ...res.data.data, ...res.data.order }
+          });
+          history.push("/order/success");
+        } catch (error) {
+          console.log(error.response);
+        }
+      },
+      customizations: {
+        title: "Way4Biz",
+        description: `Payment for items in cart for ${firstName} ${lastName}`,
+        logo:
+          "https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/fav.jpg"
+      }
+    });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: SAVE_ORDER_STOP });
   }
 };

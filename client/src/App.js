@@ -74,8 +74,8 @@ import AccountComplaints from "./components/Account/AccountComplaints";
 import AccountComplaint from "./components/Account/AccountComplaint";
 import MpesaPayment from "./components/Checkout/MpesaPayment";
 import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
-import StripePayment from "./components/StripePayment/StripePayment";
-import StripeError from "./components/StripePayment/StripeError";
+import CardPayment from "./components/CardPayment/CardPayment";
+import CardPaymentError from "./components/CardPayment/CardPaymentError";
 import MpesaError from "./components/Checkout/MpesaError";
 import NormalDelivery from "./components/Checkout/NormalDelivery";
 import ExpressDelivery from "./components/Checkout/ExpressDelivery";
@@ -800,13 +800,13 @@ class App extends React.Component {
                 }
               />
               <Route
-                path="/stripe/payment"
+                path="/card/payment"
                 exact
                 render={() =>
                   this.props.isSignedIn === false ? (
                     <Redirect to="/sign-in" />
                   ) : (
-                    <StripePayment />
+                    <CardPayment />
                   )
                 }
               />
@@ -847,10 +847,14 @@ class App extends React.Component {
                 }
               />
               <Route
-                path="/stripe/error"
+                path="/card/error"
                 exact
                 render={() =>
-                  this.props.isSignedIn ? <StripeError /> : <Redirect to="/" />
+                  this.props.isSignedIn ? (
+                    <CardPaymentError />
+                  ) : (
+                    <Redirect to="/" />
+                  )
                 }
               />
               <Route component={NotFound} />

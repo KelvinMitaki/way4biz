@@ -1,11 +1,10 @@
 import React from "react";
-
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { Link, Redirect } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import "./StripeError.css";
+import "./CardPaymentError.css";
 import { connect } from "react-redux";
 import { removePendingAndSuccess } from "../../redux/actions";
 import MobileLogo from "../Header/MobileLogo";
