@@ -2537,8 +2537,6 @@ export const saveOrder = history => async (dispatch, getState) => {
       distanceId,
       formValues
     });
-    console.log(res.data);
-
     dispatch({ type: SAVE_ORDER_STOP });
     // SAVE ORDER FIRST
     window.FlutterwaveCheckout({
@@ -2556,9 +2554,7 @@ export const saveOrder = history => async (dispatch, getState) => {
       callback: async function (data) {
         // specified callback function
         try {
-          console.log(data);
           const res = await axios.post("/api/verify/flutterwave/payment", data);
-          console.log(res.data);
           dispatch({
             type: FETCH_ORDER_SUCCESS,
             payload: { ...res.data.data, ...res.data.order }

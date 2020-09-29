@@ -345,7 +345,7 @@ route.post(
 
 route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
   try {
-    const { transaction_id, amount, currency, tx_ref } = req.body;
+    const { transaction_id, amount, tx_ref } = req.body;
     var options = {
       method: "GET",
       url: `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`,
