@@ -198,7 +198,14 @@ class App extends React.Component {
       this.scrolled = false;
     }
   };
+
   render() {
+    let path = window.location.href.split(":");
+    if (process.env.NODE_ENV === "production" && path[0] === "http") {
+      path[0] = "https";
+      path = path.join();
+      return <Redirect to={path} />;
+    }
     if (this.props.isSignedIn !== null) {
       return (
         <div id="main">
