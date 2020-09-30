@@ -200,11 +200,10 @@ class App extends React.Component {
   };
 
   render() {
-    let path = window.location.href.split(":");
-    if (process.env.NODE_ENV === "production" && path[0] === "http") {
-      path[0] = "https";
-      path = path.join();
-      window.location.replace(path);
+    if (location.protocol !== "https:") {
+      location.replace(
+        `https:${location.href.substring(location.protocol.length)}`
+      );
     }
     if (this.props.isSignedIn !== null) {
       return (
