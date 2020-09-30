@@ -205,6 +205,7 @@ class App extends React.Component {
         `https:${location.href.substring(location.protocol.length)}`
       );
     }
+
     if (this.props.isSignedIn !== null) {
       return (
         <div id="main">
