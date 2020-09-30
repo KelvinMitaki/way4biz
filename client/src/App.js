@@ -204,7 +204,7 @@ class App extends React.Component {
     if (process.env.NODE_ENV === "production" && path[0] === "http") {
       path[0] = "https";
       path = path.join();
-      return <Redirect to={path} />;
+      window.location.href = path;
     }
     if (this.props.isSignedIn !== null) {
       return (
