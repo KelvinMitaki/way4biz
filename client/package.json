@@ -32,7 +32,6 @@
     "react-png-tooltip": "^1.2.0",
     "react-rating-stars-component": "^1.1.0",
     "react-redux": "^7.2.0",
-    "react-render-html": "^0.6.0",
     "react-responsive-tabs": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
@@ -47,8 +46,7 @@
     "slick-carousel": "^1.8.1",
     "uuid": "^8.2.0",
     "validator": "^13.1.1",
-    "waypoints": "^4.0.1",
-    "websocket": "^1.0.31"
+    "waypoints": "^4.0.1"
   },
   "scripts": {
     "start": "env-cmd -f ./config/keys.env react-scripts start",

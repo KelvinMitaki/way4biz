@@ -272,8 +272,7 @@ import {
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
   SAVE_ORDER_START,
-  SAVE_ORDER_STOP,
-  SAVE_ORDER
+  SAVE_ORDER_STOP
 } from "./types";
 
 const authCheck = error => {
@@ -864,7 +863,7 @@ export const preMakeOrder = (credentials, history) => dispatch => {
   if (credentials.formValues.payment === "mpesa") {
     return history.push("/mpesa-payment");
   }
-  history.push("/stripe/payment");
+  history.push("/card/payment");
 };
 
 export const makeOrder = (credentials, history) => async (
@@ -2537,8 +2536,6 @@ export const saveOrder = history => async (dispatch, getState) => {
       distanceId,
       formValues
     });
-    console.log(res.data);
-
     dispatch({ type: SAVE_ORDER_STOP });
     // SAVE ORDER FIRST
     window.FlutterwaveCheckout({
@@ -2556,15 +2553,12 @@ export const saveOrder = history => async (dispatch, getState) => {
       callback: async function (data) {
         // specified callback function
         try {
-          console.log(data);
           const res = await axios.post("/api/verify/flutterwave/payment", data);
-          console.log(res.data);
           dispatch({
             type: FETCH_ORDER_SUCCESS,
             payload: { ...res.data.data, ...res.data.order }
           });
           history.push("/order/success");
-          dispatch({ type: SAVE_ORDER });
         } catch (error) {
           console.log(error.response);
         }
