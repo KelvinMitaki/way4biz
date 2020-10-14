@@ -4,7 +4,11 @@ import "./Riders.css";
 
 class Riders extends React.Component {
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <div id="rider-header"></div>
+      </div>
+    );
   }
 }
 
