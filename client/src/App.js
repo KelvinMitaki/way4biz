@@ -200,7 +200,10 @@ class App extends React.Component {
   };
 
   render() {
-    if (window.location.protocol !== "https:") {
+    if (
+      window.location.protocol !== "https:" &&
+      process.env.NODE_ENV === "production"
+    ) {
       window.location.replace(
         `https:${window.location.href.substring(
           window.location.protocol.length

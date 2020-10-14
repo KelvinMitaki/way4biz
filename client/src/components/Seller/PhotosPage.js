@@ -12,7 +12,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      files.forEach(file => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -32,7 +32,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
       className="container-v p-0 box-container"
       style={{
         width: "90%",
-        margin: "0px auto 10px auto",
+        margin: "0px auto 10px auto"
       }}
     >
       <div className="row product-image-upload-hero no-gutters">
@@ -58,7 +58,7 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
                 style={{
                   minHeight: "200px",
                   width: "1200px",
-                  overflow: "hidden",
+                  overflow: "hidden"
                 }}
               />
               <div
@@ -88,9 +88,9 @@ const PhotosPage = ({ storeImage, storeImageLoading }, props) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    storeImageLoading: state.product.storeImageLoading,
+    storeImageLoading: state.product.storeImageLoading
   };
 };
 export default connect(mapStateToProps, { storeImage })(PhotosPage);
