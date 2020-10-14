@@ -2,4 +2,7 @@
   height: 80px;
   background-color: #00001e;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
