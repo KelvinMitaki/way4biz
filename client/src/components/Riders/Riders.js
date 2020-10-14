@@ -11,6 +11,7 @@ class Riders extends React.Component {
           <div className="container">
             <Logo />
           </div>
+          <div className="white-body"></div>
         </div>
       </div>
     );
