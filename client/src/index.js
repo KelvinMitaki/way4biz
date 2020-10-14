@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -12,6 +12,7 @@ import { createStore, compose, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
 import thunk from "redux-thunk";
 import ScrollToTop from "./ScrollToTop";
+import ScreenLoader from "./components/Pages/ScreenLoader";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -27,11 +28,13 @@ const store = createStore(reducers, arg);
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ScrollToTop>
-        <PersistGate persistor={persistStore(store)}>
-          <App />
-        </PersistGate>
-      </ScrollToTop>
+      <Suspense fallback={<ScreenLoader />}>
+        <ScrollToTop>
+          <PersistGate persistor={persistStore(store)}>
+            <App />
+          </PersistGate>
+        </ScrollToTop>
+      </Suspense>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
