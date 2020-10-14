@@ -28,7 +28,7 @@ const store = createStore(reducers, arg);
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Suspense fallback={ScreenLoader}>
+      <Suspense fallback={<ScreenLoader />}>
         <ScrollToTop>
           <PersistGate persistor={persistStore(store)}>
             <App />
