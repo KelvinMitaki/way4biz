@@ -8,7 +8,9 @@ class Riders extends React.Component {
     return (
       <div>
         <div id="rider-header">
-          <Logo />
+          <div className="container">
+            <Logo />
+          </div>
         </div>
       </div>
     );
