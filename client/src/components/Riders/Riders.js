@@ -12,7 +12,7 @@ class Riders extends React.Component {
             <Logo />
           </div>
         </div>
-        <div className="white-body">
+        <div className="white-body rider-body">
           <div className="container">
             <h4>Helloo</h4>
           </div>
