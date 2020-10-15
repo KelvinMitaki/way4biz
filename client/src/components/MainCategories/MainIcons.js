@@ -1,7 +1,7 @@
 import React from "react";
 
 const MainIcons = ({ icon }) => {
-  const Icon = () => ({});
+  const Icon = () => null;
   return <Icon />;
 };
 
