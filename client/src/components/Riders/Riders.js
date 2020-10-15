@@ -4,6 +4,7 @@ import Tabs from "react-responsive-tabs";
 import "./Riders.css";
 import Logo from "../Header/Logo";
 import SuccessfulDeliveries from "./SuccessfulDeliveries";
+import PendingDeliveries from "./PendingDeliveries";
 
 class Riders extends React.Component {
   getTabs() {
@@ -14,7 +15,7 @@ class Riders extends React.Component {
       },
       {
         name: "Pending Deliveries",
-        content: "World",
+        content: <PendingDeliveries />,
       },
     ];
 
