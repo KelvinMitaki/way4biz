@@ -8,7 +8,7 @@ class Riders extends React.Component {
   getTabs() {
     const data = [
       {
-        name: "SUccessful Deliveries",
+        name: "Successful Deliveries",
         content: "Helloo",
       },
       {
