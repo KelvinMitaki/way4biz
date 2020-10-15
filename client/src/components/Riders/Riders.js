@@ -5,6 +5,7 @@ import "./Riders.css";
 import Logo from "../Header/Logo";
 import SuccessfulDeliveries from "./SuccessfulDeliveries";
 import PendingDeliveries from "./PendingDeliveries";
+import ProfileImage from "../Header/ProfileImage";
 
 class Riders extends React.Component {
   getTabs() {
@@ -33,6 +34,7 @@ class Riders extends React.Component {
         <div id="rider-header">
           <div className="container">
             <Logo />
+            <ProfileImage size={"50px"} />
           </div>
         </div>
         <div className="white-body rider-body">
