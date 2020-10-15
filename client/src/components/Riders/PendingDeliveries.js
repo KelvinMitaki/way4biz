@@ -6,7 +6,12 @@ class PendingDeliveries extends React.Component {
   render() {
     return (
       <div className="pending-deliveries">
-        <h3>Helloo World</h3>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
       </div>
     );
   }
