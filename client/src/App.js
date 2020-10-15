@@ -94,6 +94,7 @@ import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
 import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
 import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
 import Riders from "./components/Riders/Riders";
+import RiderLogin from "./components/Riders/RiderLogin";
 
 class App extends React.Component {
   state = {
@@ -233,6 +234,7 @@ class App extends React.Component {
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
+              <Route path="/rider/sign-in" component={RiderLogin} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact

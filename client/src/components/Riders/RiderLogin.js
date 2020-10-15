@@ -1,16 +1,20 @@
 import React from "react";
 import "./RiderLogin.css";
 import { reduxForm, Field } from "redux-form";
-import AuthField from "./AuthField";
+import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions";
 import { withRouter, Link } from "react-router-dom";
+import MobileLogo from "../Header/MobileLogo";
+import AuthHeader from "../Authenticate/AuthHeader";
 
 class RiderLogin extends React.Component {
   render() {
     return (
       <div>
+        <MobileLogo />
+        <AuthHeader />
         <div className="form-primary-error">
           {this.props.error && this.props.error}
         </div>
@@ -47,13 +51,13 @@ class RiderLogin extends React.Component {
           </button>
         </form>
         <br />
-        <div id="login-auth-links-wrapper">
+        <div className="login-auth-links-wrapper">
           <p className="forgot-password-link-wrapper">
             <Link style={{ color: "#f76b1a" }} to="/password/reset">
               Forgot password?
             </Link>
           </p>
-          <p className="forgot-password-link-wrapper">
+          {/* <p className="forgot-password-link-wrapper">
             <Link
               style={{ color: "#f76b1a" }}
               className="float-right"
@@ -61,15 +65,15 @@ class RiderLogin extends React.Component {
             >
               Sign In As A Seller
             </Link>
-          </p>
+          </p> */}
         </div>
-        <a
+        {/* <a
           href="/auth/google"
           className="btn btn-md btn-block mt-3 secondary-google"
           type="submit"
         >
           Sign In With Google
-        </a>
+        </a> */}
       </div>
     );
   }
