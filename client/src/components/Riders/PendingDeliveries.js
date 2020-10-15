@@ -12,6 +12,60 @@ class PendingDeliveries extends React.Component {
           <p>Contact:0712345678</p>
           <p>Status:Pending</p>
         </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
+        <div>
+          <p>Deliver to Rongai</p>
+          <p>Owner: Swapo</p>
+          <p>Contact:0712345678</p>
+          <p>Status:Pending</p>
+        </div>
       </div>
     );
   }
