@@ -14,7 +14,7 @@ import searchReducer from "./searchReducer";
 import selfCollectionReducer from "./selfCollectionReducer";
 import adminReducer from "./adminReducer";
 import userReducer from "./userReducer";
-import ridersReducer from "./ridersReducers";
+import ridersReducer from "./ridersReducer";
 
 const persistConfig = {
   key: "root",
