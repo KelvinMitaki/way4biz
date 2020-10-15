@@ -14,13 +14,23 @@ const DriverSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    verified: {
+      type: Boolean,
+      default: false
+    },
     password: {
       type: String,
       required: true
     },
     imageUrl: {
       type: [String]
-    }
+    },
+    clients: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+      }
+    ]
   },
   {
     timestamps: true,
