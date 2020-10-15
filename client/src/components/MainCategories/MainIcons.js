@@ -1,8 +1,7 @@
 import React from "react";
-import * as AllIcons from "react-icons/all";
 
 const MainIcons = ({ icon }) => {
-  const Icon = AllIcons[icon];
+  const Icon = () => null;
   return <Icon />;
 };
 
