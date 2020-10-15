@@ -17,6 +17,7 @@ class Riders extends React.Component {
             <div>
               <h3>Welcome Driver</h3>
             </div>
+            <div></div>
           </div>
         </div>
       </div>
