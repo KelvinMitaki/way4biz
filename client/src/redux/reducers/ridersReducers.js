@@ -9,7 +9,7 @@ const initialState = {
   successfulDeliveriesFetched: false,
 };
 
-export default ridersReducer = (state = initialsState, action) => {
+export default ridersReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_SUCCESSFUL_DELIVERIES_START:
       return { ...state, fetchingSuccessfulDeliveries: true };
