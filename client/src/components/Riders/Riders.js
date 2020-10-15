@@ -3,13 +3,14 @@ import Tabs from "react-responsive-tabs";
 
 import "./Riders.css";
 import Logo from "../Header/Logo";
+import SuccessfulDeliveries from "./SuccessfulDeliveries";
 
 class Riders extends React.Component {
   getTabs() {
     const data = [
       {
         name: "Successful Deliveries",
-        content: "Helloo",
+        content: <SuccessfulDeliveries />,
       },
       {
         name: "Pending Deliveries",

@@ -4,7 +4,11 @@ import "./SuccessfulDeliveries.css";
 
 class SuccessfulDeliveries extends React.Component {
   render() {
-    return <div></div>;
+    return (
+      <div className="successful-deliveries">
+        <h3>Helloo World</h3>
+      </div>
+    );
   }
 }
 
