@@ -14,6 +14,7 @@ import searchReducer from "./searchReducer";
 import selfCollectionReducer from "./selfCollectionReducer";
 import adminReducer from "./adminReducer";
 import userReducer from "./userReducer";
+import ridersReducer from "./ridersReducers";
 
 const persistConfig = {
   key: "root",
@@ -41,5 +42,6 @@ const reducers = combineReducers({
   selfCollection: selfCollectionReducer,
   admin: adminReducer,
   user: userReducer,
+  riders: ridersReducer,
 });
 export default persistReducer(persistConfig, reducers);
