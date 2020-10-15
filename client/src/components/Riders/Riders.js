@@ -38,7 +38,7 @@ class Riders extends React.Component {
         <div className="white-body rider-body">
           <div className="container">
             <div>
-              <h3>Welcome Rider,</h3>
+              <h3 className="mb-3">Welcome Rider,</h3>
             </div>
             <div>
               <Tabs
