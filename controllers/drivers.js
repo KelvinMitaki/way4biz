@@ -141,7 +141,7 @@ router.post(
   }
 );
 
-router.post("/api/confirm/driver/:driverToken", async (req, res) => {
+router.get("/api/confirm/driver/:driverToken", async (req, res) => {
   try {
     const { driverToken } = req.params;
     const decoded = jwt.verify(driverToken, process.env.CONFIRM_EMAIL_JWT);
@@ -160,5 +160,33 @@ router.post("/api/confirm/driver/:driverToken", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+router.post(
+  "/api/driver/login",
+  check("email").trim().isEmail().withMessage("please enter a valid email"),
+  check("password").trim().withMessage("password cannot be empty"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+      const { email, password } = req.body;
+      const driver = await Driver.findOne({ email: email.toLowerCase() });
+      if (!driver) {
+        return res.status(401).send({ message: "Invalid email or password" });
+      }
+      const isMatch = await bcrypt.compare(password, driver.password);
+      if (!isMatch) {
+        return res.status(401).send({ message: "Invalid email or password" });
+      }
+      req.session.driver = driver;
+      req.session.isLoggedIn = true;
+      res.send(driver);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 module.exports = router;
