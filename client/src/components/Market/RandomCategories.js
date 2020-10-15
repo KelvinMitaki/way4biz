@@ -38,7 +38,7 @@ class RandomCategories extends React.Component {
                   </div>
                 </div>
               </div>
-              {firstRow.map(cat => (
+              {firstRow.map((cat) => (
                 <div key={cat._id} className="col-3">
                   <div className="random-category-container">
                     <Link to={`/products/category/${cat._id}`}>
@@ -46,7 +46,7 @@ class RandomCategories extends React.Component {
                         <IconContext.Provider
                           value={{ className: "random-category-inner-icon" }}
                         >
-                          <MainIcons icon={cat.icon} />
+                          {MainIcons[cat.icon]}
                         </IconContext.Provider>
                       </div>
                     </Link>
@@ -68,7 +68,7 @@ class RandomCategories extends React.Component {
                         <IconContext.Provider
                           value={{ className: "random-category-inner-icon" }}
                         >
-                          <MainIcons icon={cat.icon} />
+                          {MainIcons[cat.icon]}
                         </IconContext.Provider>
                       </div>
                     </Link>
@@ -85,9 +85,9 @@ class RandomCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    categories: state.product.categories
+    categories: state.product.categories,
   };
 };
 export default connect(mapStateToProps)(RandomCategories);

@@ -6,3 +6,8 @@
   align-items: center;
   justify-content: space-between;
 }
+
+
+.rider-body{
+  min-height:calc(100vh - 80px)
+}
