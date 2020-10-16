@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { IconContext } from "react-icons/lib";
 import { GoClippy } from "react-icons/go";
+import MobileLogo from "../Header/MobileLogo";
 
 export class Orders extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ export class Orders extends Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container">
             <div className="row">

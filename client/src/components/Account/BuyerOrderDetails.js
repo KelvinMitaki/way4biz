@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
+import MobileLogo from "../Header/MobileLogo";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class BuyerOrderDetails extends Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container">
             <div className="row">

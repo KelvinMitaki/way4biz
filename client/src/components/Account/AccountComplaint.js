@@ -11,6 +11,7 @@ import { fetchBuyerComplaint } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
+import MobileLogo from "../Header/MobileLogo";
 
 class AccountComplaint extends React.Component {
   componentDidMount() {
@@ -36,6 +37,7 @@ class AccountComplaint extends React.Component {
       return (
         <div className="main">
           <div className="content">
+            <MobileLogo />
             <AccountHeader />
             <div className="container pending-reviews-wrapper">
               <div className="row">
