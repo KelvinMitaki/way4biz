@@ -913,9 +913,9 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     const orderId =
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
-
+    const cart = getState().cartReducer.cart;
     if (orderId) {
-      const res = await axios.post(`/api/mpesa/paid/order`);
+      const res = await axios.post(`/api/mpesa/paid/order`, { cart });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
@@ -2578,7 +2578,10 @@ export const saveOrder = history => async (dispatch, getState) => {
       callback: async function (data) {
         // specified callback function
         try {
-          const res = await axios.post("/api/verify/flutterwave/payment", data);
+          const res = await axios.post("/api/verify/flutterwave/payment", {
+            ...data,
+            cart
+          });
           dispatch({
             type: FETCH_ORDER_SUCCESS,
             payload: { ...res.data.data, ...res.data.order }
