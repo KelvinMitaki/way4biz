@@ -156,7 +156,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
               </span>
             </a>
 
-            <div className="sellers-dropdown">
+            <div className="members-dropdown">
               <p>
                 <NavLink to="/admin-sellers">Active Sellers</NavLink>
               </p>
