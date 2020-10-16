@@ -275,7 +275,6 @@ import {
   SAVE_ORDER_STOP,
   RIDER_REGISTER_START,
   RIDER_REGISTERED,
-  RIDER_REGISTER_STOP,
   RIDER_REGISTER_ERROR,
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
@@ -2590,11 +2589,11 @@ const riderRegistered = () => {
   };
 };
 
-const riderRegisterStop = () => {
-  return {
-    type: RIDER_REGISTER_STOP,
-  };
-};
+// const riderRegisterStop = () => {
+//   return {
+//     type: RIDER_REGISTER_STOP,
+//   };
+// };
 
 const riderRegisterError = () => {
   return {
@@ -2604,13 +2603,13 @@ const riderRegisterError = () => {
 
 export const riderRegister = (data) => {
   return (dispatch, getState) => {
-    disptach(riderRegisterStart());
+    dispatch(riderRegisterStart());
     axios
       .post("/api/rider/register", data)
       .then((res) => {
         console.log(res.data);
         dispatch(riderRegistered());
-        dispatch(riderRegisterStop());
+        // dispatch(riderRegisterStop());
       })
       .catch((error) => {
         console.log((error) => {
