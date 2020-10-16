@@ -20,6 +20,7 @@ import {
   countComplaints,
   fetchLatestRejectedProducts,
   fetchHeroImages,
+  adminInboxCount
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -31,11 +32,11 @@ import AdminHeroImagesContainer from "../Seller/AdminHeroImagesContainer";
 class AdminDashBoard extends React.Component {
   state = {
     doughnatData: {
-      title: "test",
+      title: "test"
     },
     lineData: {
-      data: [20, 10],
-    },
+      data: [20, 10]
+    }
   };
   componentDidMount() {
     this.props.getStock();
@@ -47,6 +48,7 @@ class AdminDashBoard extends React.Component {
     this.props.countComplaints();
     this.props.fetchLatestRejectedProducts();
     this.props.fetchHeroImages();
+    this.props.adminInboxCount();
   }
 
   render() {
@@ -154,10 +156,10 @@ class AdminDashBoard extends React.Component {
                 >
                   <div className="admin-big-number">
                     <span>
-                      {this.props.stock.find((s) => s.label === "Stock Out")
+                      {this.props.stock.find(s => s.label === "Stock Out")
                         .value &&
                         kFormatter(
-                          this.props.stock.find((s) => s.label === "Stock Out")
+                          this.props.stock.find(s => s.label === "Stock Out")
                             .value,
                           2
                         ).toLocaleString()}
@@ -261,7 +263,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysPendingOrders}
@@ -290,7 +292,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {this.props.underReview.length}
@@ -346,7 +348,7 @@ class AdminDashBoard extends React.Component {
                                       className="badge"
                                       style={{
                                         color: "#fff",
-                                        backgroundColor: "#f76b1a",
+                                        backgroundColor: "#f76b1a"
                                       }}
                                     >
                                       {todaysComplaints}
@@ -385,7 +387,7 @@ class AdminDashBoard extends React.Component {
                 </h5>
                 {/* mapping here */}
                 {this.props.latestRejectedProducts.length !== 0 &&
-                  this.props.latestRejectedProducts.map((p) => (
+                  this.props.latestRejectedProducts.map(p => (
                     <div key={p._id} className="rejected-product box-container">
                       <div className="rejected-product-image-wrapper">
                         <Image
@@ -444,7 +446,7 @@ class AdminDashBoard extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     stock: state.admin.stock,
     adminOrders: state.admin.adminOrders,
@@ -453,7 +455,7 @@ const mapStateToProps = (state) => {
     latestRejectedProducts: state.admin.latestRejectedProducts,
     underReview: state.admin.underReview,
     weeklySales: state.admin.weeklySales,
-    newSellers: state.admin.newSellers,
+    newSellers: state.admin.newSellers
   };
 };
 export default connect(mapStateToProps, {
@@ -467,4 +469,5 @@ export default connect(mapStateToProps, {
   countComplaints,
   fetchLatestRejectedProducts,
   fetchHeroImages,
+  adminInboxCount
 })(AdminDashBoard);

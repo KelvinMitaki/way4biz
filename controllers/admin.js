@@ -2399,4 +2399,13 @@ route.post(
     }
   }
 );
+
+route.get("/api/admin/inbox/count", auth, isAdmin, async (req, res) => {
+  try {
+    const contacts = await Contact.find({ read: false }).countDocuments();
+    res.send({ count: contacts });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

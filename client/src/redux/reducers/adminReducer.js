@@ -33,7 +33,8 @@ import {
   FETCH_WEEKLY_SALES,
   FETCH_NEW_SELLERS,
   DELETE_HERO_IMAGE_START,
-  DELETE_HERO_IMAGE_STOP
+  DELETE_HERO_IMAGE_STOP,
+  ADMIN_INBOX_COUNT
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -62,7 +63,8 @@ const INITIAL_STATE = {
   underReview: null,
   weeklySales: null,
   stock: [],
-  deleteHeroImageLoading: false
+  deleteHeroImageLoading: false,
+  inboxCount: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -177,6 +179,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deleteHeroImageLoading: true };
     case DELETE_HERO_IMAGE_STOP:
       return { ...state, deleteHeroImageLoading: false };
+    case ADMIN_INBOX_COUNT:
+      return { ...state, inboxCount: action.payload };
     default:
       return state;
   }
