@@ -21,6 +21,9 @@ class AdminAddDriver extends React.Component {
         <MobileLogo />
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
+        <h3 style={{ textAlign: "center" }} className="my-2">
+          Driver Form
+        </h3>
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             this.props.riderRegister(formValues);
