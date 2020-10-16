@@ -79,7 +79,7 @@ import CardPaymentError from "./components/CardPayment/CardPaymentError";
 import MpesaError from "./components/Checkout/MpesaError";
 import NormalDelivery from "./components/Checkout/NormalDelivery";
 import ExpressDelivery from "./components/Checkout/ExpressDelivery";
-// import Logistics from "./components/Pages/Logistics";
+import Logistics from "./components/Pages/Logistics";
 import About from "./components/Pages/HelpCenter/About";
 import TermsConditions from "./components/Pages/HelpCenter/TermsConditions";
 import PrivacyPolicy from "./components/Pages/HelpCenter/PrivacyPolicy";
@@ -231,7 +231,7 @@ class App extends React.Component {
               <Route path="/customer-service" component={CustomerService} />
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
-              {/* <Route path="/logistics" component={Logistics} /> */}
+              <Route path="/logistics" component={Logistics} />
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
