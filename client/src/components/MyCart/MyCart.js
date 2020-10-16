@@ -3,7 +3,11 @@ import "./MyCart.css";
 import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteFromCart, fetchCartItems } from "../../redux/actions";
+import {
+  deleteFromCart,
+  fetchCartItems,
+  proceedToCheckout
+} from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -111,7 +115,7 @@ class MyCart extends React.Component {
                 </div>
               </div>
               <button
-                onClick={() => this.props.history.push("/address")}
+                onClick={() => this.props.proceedToCheckout(this.props.history)}
                 className="btn checkout-button mb-3 btn-md btn-block"
               >
                 Proceed To Checkout
@@ -152,5 +156,9 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { deleteFromCart, fetchCartItems })(MyCart)
+  connect(mapStateToProps, {
+    deleteFromCart,
+    fetchCartItems,
+    proceedToCheckout
+  })(MyCart)
 );

@@ -1,16 +1,8 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./components/Pages/Home";
-import Cart from "./components/Pages/Cart";
-import Authenticate from "./components/Authenticate/Authenticate";
-import AddressForm from "./components/Checkout/AddressForm";
-import CheckOut from "./components/Checkout/Checkout";
 import { connect } from "react-redux";
 import "./App.css";
-import Account from "./components/Account/Account";
-import ChangePassword from "./components/Account/changePassword";
-import Orders from "./components/Account/Orders";
-import Wishlist from "./components/Account/Wishlist";
+import MoveToTop from "./MoveToTop";
+import "react-responsive-tabs/styles.css";
+import React, { lazy } from "react";
 import {
   fetchUser,
   fetchProducts,
@@ -20,84 +12,189 @@ import {
   fetchCartItems,
   fetchWishlistProducts,
   fetchAllCategories,
-  fetchHeroImages,
+  fetchHeroImages
 } from "./redux/actions";
-import ForgotPassword from "./components/Authenticate/ForgotPassword";
-// import MobileLogo from "./components/Header/MobileLogo";
-import NotFound from "./components/Pages/NotFound";
-import MainCategories from "./components/MainCategories/MainCategories";
-import SellerDashBoard from "./components/Seller/SellerDashBoard";
-import SellerRegister from "./components/Account/SellerRegister";
-import SellerPhoneNumber from "./components/Account/SellerPhoneNumber";
-import VerifySellerNumber from "./components/Account/VerifySellerNumber";
-import SellerLogin from "./components/Account/SellerLogin";
-import ResetPassword from "./components/Authenticate/ResetPassword";
-import AdminDashBoard from "./components/Admin/AdminDashBoard";
-import SellerOrders from "./components/Seller/SellerOrders";
-import Review from "./components/Seller/SellerDashBoardReviews";
-import SellerProducts from "./components/Seller/SellerProducts";
-import SellerDashBoardNewProduct from "./components/Seller/SellerDashBoardNewProduct";
-import SellerDashBoardProductEdit from "./components/Seller/SellerDashBoardProductEdit";
-import SellerOrderDetails from "./components/Seller/SellerOrderDetails";
-import "react-responsive-tabs/styles.css";
-import BuyerOrderDetails from "./components/Account/BuyerOrderDetails";
-import ProductParent from "./components/Products/ProductParent";
-import PendingReviews from "./components/Account/PendingReviews";
-import ProductReviewsWrapper from "./components/Product/ProductReviewsWrapper";
-import ParentProduct from "./components/Product/ParentProduct";
-import AddReview from "./components/Account/AddReview";
-import ScreenLoader from "./components/Pages/ScreenLoader";
-import AdminDashBoardSellers from "./components/Admin/AdminDashBoardSellers";
-import AdminDashBoardSeller from "./components/Admin/AdminDashBoardSeller";
-import AdminDashBoardNewSellers from "./components/Admin/AdminDashBoardNewSellers";
-import AdminDashBoardNewSeller from "./components/Admin/AdminDashBoardNewSeller";
-import SellerProfiling from "./components/Seller/SellerProfiling";
-import AdminDashBoardOrders from "./components/Admin/AdminDashBoardOrders";
-import AdminDashBoardOrder from "./components/Admin/AdminDashBoardOrder";
-import AdminDashBoardCategories from "./components/Admin/AdminDashBoardCategories";
-import AdminDashBoardAddCategory from "./components/Admin/AdminDashBoardAddCategory";
-import MoveToTop from "./MoveToTop";
-import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
-import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
-import Store from "./components/Store/Store";
-import SearchResults from "./components/Header/SearchResults";
-import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProducts";
-import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
-import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
-import SellerSettings from "./components/Seller/SellerSettings";
-import SellerRejects from "./components/Seller/SellerRejects";
-import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
-import AdminDashBoardComplaint from "./components/Admin/AdminDashBoardComplaint";
-import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
-import FileComplain from "./components/Account/FileComplain";
-import AccountComplaints from "./components/Account/AccountComplaints";
-import AccountComplaint from "./components/Account/AccountComplaint";
-import MpesaPayment from "./components/Checkout/MpesaPayment";
-import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
-import CardPayment from "./components/CardPayment/CardPayment";
-import CardPaymentError from "./components/CardPayment/CardPaymentError";
-import MpesaError from "./components/Checkout/MpesaError";
-import NormalDelivery from "./components/Checkout/NormalDelivery";
-import ExpressDelivery from "./components/Checkout/ExpressDelivery";
-// import Logistics from "./components/Pages/Logistics";
-import About from "./components/Pages/HelpCenter/About";
-import TermsConditions from "./components/Pages/HelpCenter/TermsConditions";
-import PrivacyPolicy from "./components/Pages/HelpCenter/PrivacyPolicy";
-import Contact from "./components/Pages/HelpCenter/Contact";
-import HowToSell from "./components/Pages/HelpCenter/HowToSell";
-import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
-import CustomerService from "./components/Pages/HelpCenter/CustomerService";
-import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
-import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
-import SellerPoints from "./components/Seller/SellerPoints";
-import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
-import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
-import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
-import Riders from "./components/Riders/Riders";
+import { Route, Switch, Redirect } from "react-router-dom";
+const Home = lazy(() => import("./components/Pages/Home"));
+const Cart = lazy(() => import("./components/Pages/Cart"));
+const Authenticate = lazy(() =>
+  import("./components/Authenticate/Authenticate")
+);
+const AddressForm = lazy(() => import("./components/Checkout/AddressForm"));
+const CheckOut = lazy(() => import("./components/Checkout/Checkout"));
+const Account = lazy(() => import("./components/Account/Account"));
+const ChangePassword = lazy(() =>
+  import("./components/Account/changePassword")
+);
+const Orders = lazy(() => import("./components/Account/Orders"));
+const Wishlist = lazy(() => import("./components/Account/Wishlist"));
+const ForgotPassword = lazy(() =>
+  import("./components/Authenticate/ForgotPassword")
+);
+// const MobileLogo =lazy(()=> import("./components/Header/MobileLogo"));
+const NotFound = lazy(() => import("./components/Pages/NotFound"));
+const MainCategories = lazy(() =>
+  import("./components/MainCategories/MainCategories")
+);
+const SellerDashBoard = lazy(() =>
+  import("./components/Seller/SellerDashBoard")
+);
+const SellerRegister = lazy(() =>
+  import("./components/Account/SellerRegister")
+);
+const SellerPhoneNumber = lazy(() =>
+  import("./components/Account/SellerPhoneNumber")
+);
+const VerifySellerNumber = lazy(() =>
+  import("./components/Account/VerifySellerNumber")
+);
+const SellerLogin = lazy(() => import("./components/Account/SellerLogin"));
+const ResetPassword = lazy(() =>
+  import("./components/Authenticate/ResetPassword")
+);
+const AdminDashBoard = lazy(() => import("./components/Admin/AdminDashBoard"));
+const SellerOrders = lazy(() => import("./components/Seller/SellerOrders"));
+const Review = lazy(() => import("./components/Seller/SellerDashBoardReviews"));
+const SellerProducts = lazy(() => import("./components/Seller/SellerProducts"));
+const SellerDashBoardNewProduct = lazy(() =>
+  import("./components/Seller/SellerDashBoardNewProduct")
+);
+const SellerDashBoardProductEdit = lazy(() =>
+  import("./components/Seller/SellerDashBoardProductEdit")
+);
+const SellerOrderDetails = lazy(() =>
+  import("./components/Seller/SellerOrderDetails")
+);
+const BuyerOrderDetails = lazy(() =>
+  import("./components/Account/BuyerOrderDetails")
+);
+const ProductParent = lazy(() => import("./components/Products/ProductParent"));
+const PendingReviews = lazy(() =>
+  import("./components/Account/PendingReviews")
+);
+const ProductReviewsWrapper = lazy(() =>
+  import("./components/Product/ProductReviewsWrapper")
+);
+const ParentProduct = lazy(() => import("./components/Product/ParentProduct"));
+const AddReview = lazy(() => import("./components/Account/AddReview"));
+const ScreenLoader = lazy(() => import("./components/Pages/ScreenLoader"));
+const AdminDashBoardSellers = lazy(() =>
+  import("./components/Admin/AdminDashBoardSellers")
+);
+const AdminDashBoardSeller = lazy(() =>
+  import("./components/Admin/AdminDashBoardSeller")
+);
+const AdminDashBoardNewSellers = lazy(() =>
+  import("./components/Admin/AdminDashBoardNewSellers")
+);
+const AdminDashBoardNewSeller = lazy(() =>
+  import("./components/Admin/AdminDashBoardNewSeller")
+);
+const SellerProfiling = lazy(() =>
+  import("./components/Seller/SellerProfiling")
+);
+const AdminDashBoardOrders = lazy(() =>
+  import("./components/Admin/AdminDashBoardOrders")
+);
+const AdminDashBoardOrder = lazy(() =>
+  import("./components/Admin/AdminDashBoardOrder")
+);
+const AdminDashBoardCategories = lazy(() =>
+  import("./components/Admin/AdminDashBoardCategories")
+);
+const AdminDashBoardAddCategory = lazy(() =>
+  import("./components/Admin/AdminDashBoardAddCategory")
+);
+const AdminDashBoardEditCategory = lazy(() =>
+  import("./components/Admin/AdminDashBoardEditCategory")
+);
+const AdminDashBoardOrderItems = lazy(() =>
+  import("./components/Admin/AdminDashBoardOrderItems")
+);
+const Store = lazy(() => import("./components/Store/Store"));
+const SearchResults = lazy(() => import("./components/Header/SearchResults"));
+const AdminDashBoardNewProducts = lazy(() =>
+  import("./components/Admin/AdminDashBoardNewProducts")
+);
+const AdminDashBoardNewProduct = lazy(() =>
+  import("./components/Admin/AdminDashBoardNewProduct")
+);
+const AdminDashBoardNewProductReject = lazy(() =>
+  import("./components/Admin/AdminDashBoardNewProductReject")
+);
+const SellerSettings = lazy(() => import("./components/Seller/SellerSettings"));
+const SellerRejects = lazy(() => import("./components/Seller/SellerRejects"));
+const AdminDashBoardComplaints = lazy(() =>
+  import("./components/Admin/AdminDashBoardComplaints")
+);
+const AdminDashBoardComplaint = lazy(() =>
+  import("./components/Admin/AdminDashBoardComplaint")
+);
+const AdminDashBoardRejects = lazy(() =>
+  import("./components/Admin/AdminDashBoardRejects")
+);
+const FileComplain = lazy(() => import("./components/Account/FileComplain"));
+const AccountComplaints = lazy(() =>
+  import("./components/Account/AccountComplaints")
+);
+const AccountComplaint = lazy(() =>
+  import("./components/Account/AccountComplaint")
+);
+const MpesaPayment = lazy(() => import("./components/Checkout/MpesaPayment"));
+const OrderPaymentSuccess = lazy(() =>
+  import("./components/Checkout/OrderPaymentSuccess")
+);
+const CardPayment = lazy(() => import("./components/CardPayment/CardPayment"));
+const CardPaymentError = lazy(() =>
+  import("./components/CardPayment/CardPaymentError")
+);
+const MpesaError = lazy(() => import("./components/Checkout/MpesaError"));
+const NormalDelivery = lazy(() =>
+  import("./components/Checkout/NormalDelivery")
+);
+const ExpressDelivery = lazy(() =>
+  import("./components/Checkout/ExpressDelivery")
+);
+const Logistics = lazy(() => import("./components/Pages/Logistics"));
+const About = lazy(() => import("./components/Pages/HelpCenter/About"));
+const TermsConditions = lazy(() =>
+  import("./components/Pages/HelpCenter/TermsConditions")
+);
+const PrivacyPolicy = lazy(() =>
+  import("./components/Pages/HelpCenter/PrivacyPolicy")
+);
+const Contact = lazy(() => import("./components/Pages/HelpCenter/Contact"));
+const HowToSell = lazy(() => import("./components/Pages/HelpCenter/HowToSell"));
+const SupportCenter = lazy(() =>
+  import("./components/Pages/HelpCenter/SupportCenter")
+);
+const CustomerService = lazy(() =>
+  import("./components/Pages/HelpCenter/CustomerService")
+);
+const HelpCenter = lazy(() =>
+  import("./components/Pages/HelpCenter/HelpCenter")
+);
+const AdminDashBoardInbox = lazy(() =>
+  import("./components/Admin/AdminDashBoardInbox")
+);
+const SellerPoints = lazy(() => import("./components/Seller/SellerPoints"));
+const ContactSuccess = lazy(() =>
+  import("./components/Pages/HelpCenter/ContactSuccess")
+);
+const AdminDashBoardRedeems = lazy(() =>
+  import("./components/Admin/AdminDashBoardRedeems")
+);
+const ReturnPolicy = lazy(() =>
+  import("./components/Pages/HelpCenter/ReturnPolicy")
+);
+const Riders = lazy(() => import("./components/Riders/Riders"));
+const RiderLogin = lazy(() => import("./components/Riders/RiderLogin"));
+// const RidersRegister =lazy(()=> import("./components/Riders/RidersRegister"));
+const AdminAddDriver = lazy(() => import("./components/Admin/AdminAddDriver"));
 
 class App extends React.Component {
   state = {
-    scrolling: false,
+    scrolling: false
   };
   componentDidMount() {
     const {
@@ -105,7 +202,7 @@ class App extends React.Component {
       fetchProducts,
       fetchCategories,
       fetchAllCategories,
-      fetchHeroImages,
+      fetchHeroImages
     } = this.props;
     fetchUser();
     fetchProducts();
@@ -115,7 +212,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false,
+      scrolling: false
     });
   }
 
@@ -126,7 +223,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map((i) => ({
+          this.props.cart.map(i => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -134,7 +231,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity,
+            quantity: i.quantity
           }))
         );
     }
@@ -144,14 +241,14 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map((i) => ({
+          this.props.wishlist.map(i => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             seller: { storeName: i.seller.storeName },
             imageUrl: i.imageUrl,
-            _id: i._id,
+            _id: i._id
           }))
         );
     }
@@ -166,7 +263,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true,
+        scrolling: true
       });
 
       this.scrolled = true;
@@ -178,23 +275,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false,
+        scrolling: false
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = (e) => {
+  handleScroll = e => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true,
+        scrolling: true
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false,
+        scrolling: false
       });
       this.scrolled = false;
     }
@@ -229,10 +326,12 @@ class App extends React.Component {
               <Route path="/customer-service" component={CustomerService} />
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
-              {/* <Route path="/logistics" component={Logistics} /> */}
+              <Route path="/logistics" component={Logistics} />
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
+              <Route path="/rider/sign-in" component={RiderLogin} />
+              {/* <Route path="/rider/register" component={RidersRegister} /> */}
               <Route
                 path="/product/main/reviews/:productId"
                 exact
@@ -278,6 +377,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
                     <AdminDashBoardSellers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/add-driver"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminAddDriver />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
@@ -880,13 +989,13 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist,
+    wishlist: state.cartReducer.wishlist
   };
 };
 
@@ -899,5 +1008,5 @@ export default connect(mapStateToProps, {
   fetchCartItems,
   fetchWishlistProducts,
   saveWishlistItems,
-  fetchHeroImages,
+  fetchHeroImages
 })(App);
