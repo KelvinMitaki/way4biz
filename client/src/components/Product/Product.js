@@ -362,7 +362,7 @@ class Product extends React.Component {
                           // justifyContent: "space-between",
                         }}
                       >
-                        <span>Share</span>
+                        <span>SHARE</span>
                         <IoMdShare
                           className="mx-2"
                           style={{ fontSize: "30px", flex: "1" }}
@@ -377,9 +377,9 @@ class Product extends React.Component {
                             fontSize: "35px",
                           }}
                         >
-                          <TiSocialFacebookCircular />
-                          <TiSocialTwitterCircular />
-                          <TiSocialInstagramCircular />
+                          <TiSocialFacebookCircular className="product-share-icon" />
+                          <TiSocialTwitterCircular className="product-share-icon" />
+                          <TiSocialInstagramCircular className="product-share-icon" />
                         </div>
                       </div>
                     </div>

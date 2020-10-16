@@ -41,6 +41,14 @@
   min-height: 350px;
 }
 
+.product-share-icon {
+  cursor: pointer;
+}
+
+.product-share-icon:hover {
+  color: #f76b1a;
+}
+
 .product-info,
 .product-delivery-return {
   background-color: #fff;
