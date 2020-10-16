@@ -5,12 +5,13 @@ import DashBoardHeader from "./AdminDashBoardHeader";
 import SecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-// import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDrivers extends React.Component {
   render() {
     return (
       <div className="container-fluid p-0 mb-5">
+        <MobileLogo />
         <DashBoardHeader />
         <SecondaryHeader />
         <div className="container box-container mt-4">
