@@ -23,7 +23,9 @@ import {
   FETCH_ORDER_SUCCESS_STOP,
   DELETE_CART,
   DELETE_CART_START,
-  DELETE_CART_STOP
+  DELETE_CART_STOP,
+  P_TO_CHECKOUT_START,
+  P_TO_CHECKOUT_STOP
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -37,7 +39,8 @@ const INITIAL_STATE = {
   pendingOrder: null,
   orderSuccess: null,
   orderSuccessLoading: false,
-  deleteCartLoading: false
+  deleteCartLoading: false,
+  pToCheckoutLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -147,6 +150,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deleteCartLoading: true };
     case DELETE_CART_STOP:
       return { ...state, deleteCartLoading: false };
+    case P_TO_CHECKOUT_START:
+      return { ...state, pToCheckoutLoading: true };
+    case P_TO_CHECKOUT_STOP:
+      return { ...state, pToCheckoutLoading: false };
     default:
       return state;
   }

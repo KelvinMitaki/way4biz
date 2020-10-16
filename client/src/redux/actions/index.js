@@ -278,7 +278,9 @@ import {
   RIDER_REGISTER_ERROR,
   RIDER_LOGIN_START,
   RIDER_LOGGED_IN,
-  RIDER_LOGIN_ERROR
+  RIDER_LOGIN_ERROR,
+  P_TO_CHECKOUT_START,
+  P_TO_CHECKOUT_STOP
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2669,12 +2671,15 @@ export const riderLogIn = data => {
 
 export const proceedToCheckout = history => async (dispatch, getState) => {
   try {
+    dispatch({ type: P_TO_CHECKOUT_START });
     let cart = getState().cartReducer.cart;
     cart = cart.map(item => ({ _id: item._id, quantity: item.quantity }));
     const { data } = await axios.post("/api/proceed/to/checkout", { cart });
     console.log(data);
     history.push("/address");
+    dispatch({ type: P_TO_CHECKOUT_STOP });
   } catch (error) {
     console.log(error.response);
+    dispatch({ type: P_TO_CHECKOUT_STOP });
   }
 };
