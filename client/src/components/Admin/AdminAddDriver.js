@@ -9,16 +9,19 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
-import MobileLogo from "../Header/MobileLogo";
-import AuthHeader from "../Authenticate/AuthHeader";
+// import MobileLogo from "../Header/MobileLogo";
+// import AuthHeader from "../Authenticate/AuthHeader";
+// import SecondaryHeader from "../Header/SecondaryHeader";
+import AdminDashBoardHeader from "./AdminDashBoardHeader";
+import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 
 class AdminAddDriver extends React.Component {
   render() {
     if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
-        <MobileLogo />
-        <AuthHeader />
+        <AdminDashBoardHeader />
+        <AdminDashboardSecondaryHeader />
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             this.props.riderRegister(formValues);

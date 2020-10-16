@@ -182,7 +182,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   </NavLink>
                 </p>
                 <p>
-                  <NavLink to="/new-drivers">Add Driver</NavLink>
+                  <NavLink to="/admin/add-driver">Add Driver</NavLink>
                 </p>
                 <p>
                   <NavLink to="/admin-drivers">Active Drivers</NavLink>
