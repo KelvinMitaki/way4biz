@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import {
   fetchProducts,
   preMakeOrder,
+  proceedToCheckout,
   removeAddress,
   selfCollectionAddress
 } from "../../redux/actions";
@@ -24,6 +25,7 @@ class CheckOut extends React.Component {
     if (this.props.cart.length === 0) {
       return <Redirect to="/" />;
     }
+    this.props.proceedToCheckout(this.props.history, "/checkout");
   }
   componentWillUnmount() {
     this.props.removeAddress();
@@ -201,7 +203,8 @@ export default withRouter(
       preMakeOrder,
       fetchProducts,
       removeAddress,
-      selfCollectionAddress
+      selfCollectionAddress,
+      proceedToCheckout
     })(CheckOut)
   )
 );
