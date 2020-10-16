@@ -8,6 +8,7 @@ import "./AdminDashBoardSeller.css";
 import { connect } from "react-redux";
 import { fetchVerifiedSeller } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoardSeller extends React.Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class AdminDashBoardSeller extends React.Component {
     if (this.props.verifiedSeller) {
       return (
         <div className="container-fluid p-0 mb-5">
+          <MobileLogo />
           <DashBoardHeader />
           <SecondaryHeader />
           <div className="mt-4 container">
@@ -45,7 +47,7 @@ class AdminDashBoardSeller extends React.Component {
               </div>
               <div className="admin-individual-seller-details">
                 <div className="custom-row">
-                  <h5 className>
+                  <h5>
                     <strong>Name: </strong>
                     {this.props.verifiedSeller.firstName}{" "}
                     {this.props.verifiedSeller.lastName}
