@@ -95,7 +95,8 @@ import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
 import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
 import Riders from "./components/Riders/Riders";
 import RiderLogin from "./components/Riders/RiderLogin";
-import RidersRegister from "./components/Riders/RidersRegister";
+// import RidersRegister from "./components/Riders/RidersRegister";
+import AdminAddDriver from "./components/Admin/AdminAddDriver";
 
 class App extends React.Component {
   state = {
@@ -236,7 +237,7 @@ class App extends React.Component {
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
               <Route path="/rider/sign-in" component={RiderLogin} />
-              <Route path="/rider/register" component={RidersRegister} />
+              {/* <Route path="/rider/register" component={RidersRegister} /> */}
               <Route
                 path="/product/main/reviews/:productId"
                 exact
@@ -282,6 +283,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
                     <AdminDashBoardSellers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/add-driver"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminAddDriver />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )

@@ -1,8 +1,10 @@
-#address-form {
+#address-form,
+#logistics-for {
   padding: 15px 10px;
 }
 
-#address-form h3 {
+#address-form h3,
+#logistics-form h3 {
   margin: 20px 10px;
 }
 
