@@ -59,16 +59,16 @@ class AdminAddDriver extends React.Component {
           />
           <Field
             required="*"
-            type="password"
-            name="password"
-            label="Password"
+            type="text"
+            name="idNumber"
+            label="ID No."
             component={AuthField}
           />
           <Field
             required="*"
-            type="password"
-            name="confirmPassword"
-            label="Confirm Password"
+            type="text"
+            name="vehicleNumber"
+            label="Vehicle No."
             component={AuthField}
           />
           {/* <strong>* is required</strong> */}
