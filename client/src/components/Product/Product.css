@@ -37,6 +37,10 @@
   justify-content: center;
 }
 
+.product-info {
+  min-height: 350px;
+}
+
 .product-info,
 .product-delivery-return {
   background-color: #fff;
