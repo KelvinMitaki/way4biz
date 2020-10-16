@@ -1687,6 +1687,7 @@ route.get("/api/root/admin/new/products", auth, isAdmin, async (req, res) => {
   try {
     const products = await Product.find({ underReview: true })
       .populate("seller")
+      .select({ description: 0 })
       .exec();
     res.send(products);
   } catch (error) {
@@ -1701,6 +1702,7 @@ route.get(
     try {
       const product = await Product.findById(req.params.productId)
         .populate("seller")
+        .select({ description: 0 })
         .exec();
       res.send(product);
     } catch (error) {
