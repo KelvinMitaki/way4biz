@@ -9,9 +9,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
-// import MobileLogo from "../Header/MobileLogo";
-// import AuthHeader from "../Authenticate/AuthHeader";
-// import SecondaryHeader from "../Header/SecondaryHeader";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 

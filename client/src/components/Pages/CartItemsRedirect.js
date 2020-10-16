@@ -28,7 +28,7 @@ class CartItemsRedirect extends React.Component {
                 {/* mapping here */}
                 <div className="row">
                   <div className="col-6">
-                    <img src="/1.jpg" height="100px" />
+                    <img src="/1.jpg" alt="hellooo" height="100px" />
                   </div>
                   <div className="col-6">
                     <h3>Great Beer</h3>

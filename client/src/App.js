@@ -196,7 +196,9 @@ const AdminDashBoardRedeems = lazy(() =>
 const ReturnPolicy = lazy(() =>
   import("./components/Pages/HelpCenter/ReturnPolicy")
 );
-// const RidersRegister= lazy(()=> import("./components/Riders/RidersRegister"))
+const CartItemsRedirect = lazy(() =>
+  import("./components/Pages/CartItemsRedirect")
+);
 
 class App extends React.Component {
   state = {
