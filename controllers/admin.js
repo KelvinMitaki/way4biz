@@ -2249,8 +2249,16 @@ route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
   }
 });
 
-route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
+route.post("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
   try {
+    const { filter } = req.body;
+    if (filter) {
+      const inbox = await Contact.find(filter).populate(
+        "userSeller user",
+        "firstName lastName email"
+      );
+      return res.send(inbox);
+    }
     const inbox = await Contact.find({}).populate(
       "userSeller user",
       "firstName lastName email"

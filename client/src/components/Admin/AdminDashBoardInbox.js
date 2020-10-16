@@ -40,8 +40,23 @@ class AdminDashBoardInbox extends React.Component {
               className="mb-2 inbox-filter-wrapper"
             >
               <strong className="mr-1">Filter:</strong>
-              <p className="mr-1">All</p> |<p className="mx-1">Read</p> |
-              <p className="ml-1">Unread</p>
+              <p onClick={() => this.props.fetchAdminInbox()} className="mr-1">
+                All
+              </p>{" "}
+              |
+              <p
+                className="mx-1"
+                onClick={() => this.props.fetchAdminInbox({ read: true })}
+              >
+                Read
+              </p>{" "}
+              |
+              <p
+                className="ml-1"
+                onClick={() => this.props.fetchAdminInbox({ read: false })}
+              >
+                Unread
+              </p>
             </div>
             {this.props.inbox &&
               this.props.inbox.length !== 0 &&

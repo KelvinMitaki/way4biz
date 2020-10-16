@@ -2392,10 +2392,18 @@ export const contactUs = (formValues, history) => async dispatch => {
     dispatch({ type: CONTACT_US_STOP });
   }
 };
-export const fetchAdminInbox = () => async dispatch => {
+export const fetchAdminInbox = optional => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_INBOX_START });
-    const res = await axios.get("/api/fetch/admin/inbox");
+    if (optional) {
+      const res = await axios.post("/api/fetch/admin/inbox", {
+        filter: optional
+      });
+      dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
+      dispatch({ type: FETCH_ADMIN_INBOX_STOP });
+      return;
+    }
+    const res = await axios.post("/api/fetch/admin/inbox");
     dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
     dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   } catch (error) {
