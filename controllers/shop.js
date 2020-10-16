@@ -315,21 +315,7 @@ route.post(
           stockQuantity: pCart._doc.stockQuantity
         };
       });
-      await Promise.all(
-        cart.map(async item => {
-          // const pro=await Product.findById(item._id)
-          // if(pro.stockQuantity<item.quantity){
 
-          // }
-          await Product.findByIdAndUpdate(
-            item._id,
-            {
-              $inc: { stockQuantity: -item.quantity }
-            },
-            { runValidators: true }
-          );
-        })
-      );
       const price = verifiedProducts
         .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
@@ -349,13 +335,15 @@ route.post(
         "distance"
       );
       return res.send(orderWithDistance);
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
 );
 
 route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
   try {
-    const { transaction_id, amount, tx_ref } = req.body;
+    const { transaction_id, amount, tx_ref, cart } = req.body;
     var options = {
       method: "GET",
       url: `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`,
@@ -380,6 +368,22 @@ route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
         order.last4 = response.body.data.card.last_4digits;
         order.brand = response.body.data.card.type;
         await order.save();
+
+        await Promise.all(
+          cart.map(async item => {
+            // const pro=await Product.findById(item._id)
+            // if(pro.stockQuantity<item.quantity){
+
+            // }
+            await Product.findByIdAndUpdate(
+              item._id,
+              {
+                $inc: { stockQuantity: -item.quantity }
+              },
+              { runValidators: true }
+            );
+          })
+        );
         return res.send({ ...response.body, order });
       }
       res.send(500).send({ error: "error validating the request" });
@@ -442,17 +446,7 @@ route.post(
           stockQuantity: pCart._doc.stockQuantity
         };
       });
-      await Promise.all(
-        cart.map(async item => {
-          await Product.findByIdAndUpdate(
-            item._id,
-            {
-              $inc: { stockQuantity: -item.quantity }
-            },
-            { runValidators: true }
-          );
-        })
-      );
+
       const price = verifiedProducts
         .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
@@ -506,6 +500,7 @@ route.post(
 );
 route.post("/api/mpesa/paid/order", auth, async (req, res) => {
   try {
+    const { cart } = req.body;
     const url =
       "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
     const auth = Buffer.from(
@@ -564,6 +559,21 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               });
               const savedOrder = await Order.findById(orderId).populate(
                 "distance items.product"
+              );
+              await Promise.all(
+                cart.map(async item => {
+                  // const pro=await Product.findById(item._id)
+                  // if(pro.stockQuantity<item.quantity){
+
+                  // }
+                  await Product.findByIdAndUpdate(
+                    item._id,
+                    {
+                      $inc: { stockQuantity: -item.quantity }
+                    },
+                    { runValidators: true }
+                  );
+                })
               );
 
               return res.send(savedOrder);
