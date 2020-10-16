@@ -75,7 +75,7 @@ class AdminAddDriver extends React.Component {
           {/* <strong>* is required</strong> */}
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block primary-button mt-3"
+            className="btn btn-md btn-block primary-button my-3"
             disabled={!this.props.valid || this.props.riderRegisterLoading}
             type="submit"
           >
