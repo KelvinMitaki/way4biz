@@ -26,7 +26,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
     open: false,
     keys: [
       {
-        parentKey: ["Sellers", 100],
+        parentKey: ["Members", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
           {
@@ -134,7 +134,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
             <a href="/" className="admin-menu-dropdown-main">
               <RiFileUserLine />{" "}
               <span style={{ cursor: "pointer" }} className="ml-1">
-                Sellers{" "}
+                Members
                 {this.props.newSellers &&
                   this.props.newSellers.sellers &&
                   this.props.newSellers.sellers.length !== 0 && (
@@ -179,6 +179,12 @@ class AdminDashboardSecondaryHeader extends React.Component {
                       </span>
                     )}
                 </NavLink>
+              </p>
+              <p>
+                <NavLink to="/admin-drivers">Active Drivers</NavLink>
+              </p>
+              <p>
+                <NavLink to="/new-drivers">New Drivers</NavLink>
               </p>
             </div>
           </li>
