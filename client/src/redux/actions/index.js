@@ -280,7 +280,8 @@ import {
   RIDER_LOGGED_IN,
   RIDER_LOGIN_ERROR,
   P_TO_CHECKOUT_START,
-  P_TO_CHECKOUT_STOP
+  P_TO_CHECKOUT_STOP,
+  ADMIN_INBOX_COUNT
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2653,20 +2654,17 @@ const riderLoginError = error => {
   };
 };
 
-export const riderLogIn = data => {
-  return (dispatch, getState) => {
+export const riderLogIn = data => async (dispatch, getState) => {
+  try {
     dispatch(riderLoginLoading());
-    axios
-      .post("/api/driver/sign-in", data)
-      .then(res => {
-        console.log(res.data);
-        dispatch(riderLoggedIn());
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(riderLoginError(error));
-      });
-  };
+    const res = await axios.post("/api/driver/sign-in", data);
+
+    console.log(res.data);
+    dispatch(riderLoggedIn());
+  } catch (error) {
+    console.log(error);
+    dispatch(riderLoginError(error.response));
+  }
 };
 
 export const proceedToCheckout = history => async (dispatch, getState) => {
@@ -2681,5 +2679,14 @@ export const proceedToCheckout = history => async (dispatch, getState) => {
   } catch (error) {
     console.log(error.response);
     dispatch({ type: P_TO_CHECKOUT_STOP });
+  }
+};
+
+export const adminInboxCount = () => async dispatch => {
+  try {
+    const { data } = await axios.get("/api/admin/inbox/count");
+    dispatch({ type: ADMIN_INBOX_COUNT, payload: data });
+  } catch (error) {
+    console.log(error.response);
   }
 };
