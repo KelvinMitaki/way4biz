@@ -49,11 +49,12 @@
   padding: 5px 0px;
 }
 
-.admin-dashboard-menu-lg-items {
+.admin-dashboard-menu-lg-items ul {
   display: flex;
   align-items: center;
   list-style: none;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: 100%;
   flex: 1;
   margin: 0;
 }
