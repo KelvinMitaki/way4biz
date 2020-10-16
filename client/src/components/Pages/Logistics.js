@@ -86,9 +86,9 @@ class Logistics extends React.Component {
                 </p>
                 <form
                   onSubmit={this.props.handleSubmit((formValues) => {
-                    this.props.storeLatLng(
-                      `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
-                    );
+                    // this.props.storeLatLng(
+                    //   `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
+                    // );
                     // this.props.checkoutUser(formValues, this.props.history);
                     console.log(formValues);
                   })}
