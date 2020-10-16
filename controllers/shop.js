@@ -1365,6 +1365,20 @@ route.post("/api/proceed/to/checkout", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.post("/api/fetch/items/in/cart", async (req, res) => {
+  try {
+    const { cart } = req.body;
+    const cartIds = cart.map(item => item._id);
+    const products = await Product.find({ _id: { $in: cartIds } }).select({
+      description: 0
+    });
+    res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
