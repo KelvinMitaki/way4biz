@@ -1,8 +1,8 @@
+import React, { lazy } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./App.css";
-import MoveToTop from "./MoveToTop";
-import "react-responsive-tabs/styles.css";
-import React, { lazy } from "react";
+import ProductParent from "./components/Products/ProductParent";
 import {
   fetchUser,
   fetchProducts,
@@ -14,25 +14,56 @@ import {
   fetchAllCategories,
   fetchHeroImages
 } from "./redux/actions";
-import { Route, Switch, Redirect } from "react-router-dom";
+
+import MoveToTop from "./MoveToTop";
+import "react-responsive-tabs/styles.css";
+
 const Home = lazy(() => import("./components/Pages/Home"));
 const Cart = lazy(() => import("./components/Pages/Cart"));
+
+const ScreenLoader = lazy(() => import("./components/Pages/ScreenLoader"));
+const Store = lazy(() => import("./components/Store/Store"));
+const SearchResults = lazy(() => import("./components/Header/SearchResults"));
+const SellerSettings = lazy(() => import("./components/Seller/SellerSettings"));
+const SellerRejects = lazy(() => import("./components/Seller/SellerRejects"));
+const FileComplain = lazy(() => import("./components/Account/FileComplain"));
+const MpesaPayment = lazy(() => import("./components/Checkout/MpesaPayment"));
+const CardPayment = lazy(() => import("./components/CardPayment/CardPayment"));
+const MpesaError = lazy(() => import("./components/Checkout/MpesaError"));
+const Logistics = lazy(() => import("./components/Pages/Logistics"));
+const About = lazy(() => import("./components/Pages/HelpCenter/About"));
+const Contact = lazy(() => import("./components/Pages/HelpCenter/Contact"));
+const HowToSell = lazy(() => import("./components/Pages/HelpCenter/HowToSell"));
+const AdminAddDriver = lazy(() => import("./components/Admin/AdminAddDriver"));
+const Riders = lazy(() => import("./components/Riders/Riders"));
+const RiderLogin = lazy(() => import("./components/Riders/RiderLogin"));
+const SellerPoints = lazy(() => import("./components/Seller/SellerPoints"));
+
+const Account = lazy(() => import("./components/Account/Account"));
+
+const AddressForm = lazy(() => import("./components/Checkout/AddressForm"));
+const CheckOut = lazy(() => import("./components/Checkout/Checkout"));
+const Orders = lazy(() => import("./components/Account/Orders"));
+const Wishlist = lazy(() => import("./components/Account/Wishlist"));
+const NotFound = lazy(() => import("./components/Pages/NotFound"));
+const AdminDashBoard = lazy(() => import("./components/Admin/AdminDashBoard"));
+const SellerOrders = lazy(() => import("./components/Seller/SellerOrders"));
+const Review = lazy(() => import("./components/Seller/SellerDashBoardReviews"));
+const SellerProducts = lazy(() => import("./components/Seller/SellerProducts"));
+const ParentProduct = lazy(() => import("./components/Product/ParentProduct"));
+const SellerLogin = lazy(() => import("./components/Account/SellerLogin"));
+const AddReview = lazy(() => import("./components/Account/AddReview"));
 const Authenticate = lazy(() =>
   import("./components/Authenticate/Authenticate")
 );
-const AddressForm = lazy(() => import("./components/Checkout/AddressForm"));
-const CheckOut = lazy(() => import("./components/Checkout/Checkout"));
-const Account = lazy(() => import("./components/Account/Account"));
 const ChangePassword = lazy(() =>
   import("./components/Account/changePassword")
 );
-const Orders = lazy(() => import("./components/Account/Orders"));
-const Wishlist = lazy(() => import("./components/Account/Wishlist"));
+
 const ForgotPassword = lazy(() =>
   import("./components/Authenticate/ForgotPassword")
 );
-// const MobileLogo =lazy(()=> import("./components/Header/MobileLogo"));
-const NotFound = lazy(() => import("./components/Pages/NotFound"));
+// const MobileLogo= lazy(()=> import("./components/Header/MobileLogo"))
 const MainCategories = lazy(() =>
   import("./components/MainCategories/MainCategories")
 );
@@ -48,14 +79,9 @@ const SellerPhoneNumber = lazy(() =>
 const VerifySellerNumber = lazy(() =>
   import("./components/Account/VerifySellerNumber")
 );
-const SellerLogin = lazy(() => import("./components/Account/SellerLogin"));
 const ResetPassword = lazy(() =>
   import("./components/Authenticate/ResetPassword")
 );
-const AdminDashBoard = lazy(() => import("./components/Admin/AdminDashBoard"));
-const SellerOrders = lazy(() => import("./components/Seller/SellerOrders"));
-const Review = lazy(() => import("./components/Seller/SellerDashBoardReviews"));
-const SellerProducts = lazy(() => import("./components/Seller/SellerProducts"));
 const SellerDashBoardNewProduct = lazy(() =>
   import("./components/Seller/SellerDashBoardNewProduct")
 );
@@ -68,16 +94,12 @@ const SellerOrderDetails = lazy(() =>
 const BuyerOrderDetails = lazy(() =>
   import("./components/Account/BuyerOrderDetails")
 );
-const ProductParent = lazy(() => import("./components/Products/ProductParent"));
 const PendingReviews = lazy(() =>
   import("./components/Account/PendingReviews")
 );
 const ProductReviewsWrapper = lazy(() =>
   import("./components/Product/ProductReviewsWrapper")
 );
-const ParentProduct = lazy(() => import("./components/Product/ParentProduct"));
-const AddReview = lazy(() => import("./components/Account/AddReview"));
-const ScreenLoader = lazy(() => import("./components/Pages/ScreenLoader"));
 const AdminDashBoardSellers = lazy(() =>
   import("./components/Admin/AdminDashBoardSellers")
 );
@@ -111,8 +133,6 @@ const AdminDashBoardEditCategory = lazy(() =>
 const AdminDashBoardOrderItems = lazy(() =>
   import("./components/Admin/AdminDashBoardOrderItems")
 );
-const Store = lazy(() => import("./components/Store/Store"));
-const SearchResults = lazy(() => import("./components/Header/SearchResults"));
 const AdminDashBoardNewProducts = lazy(() =>
   import("./components/Admin/AdminDashBoardNewProducts")
 );
@@ -122,8 +142,6 @@ const AdminDashBoardNewProduct = lazy(() =>
 const AdminDashBoardNewProductReject = lazy(() =>
   import("./components/Admin/AdminDashBoardNewProductReject")
 );
-const SellerSettings = lazy(() => import("./components/Seller/SellerSettings"));
-const SellerRejects = lazy(() => import("./components/Seller/SellerRejects"));
 const AdminDashBoardComplaints = lazy(() =>
   import("./components/Admin/AdminDashBoardComplaints")
 );
@@ -133,38 +151,30 @@ const AdminDashBoardComplaint = lazy(() =>
 const AdminDashBoardRejects = lazy(() =>
   import("./components/Admin/AdminDashBoardRejects")
 );
-const FileComplain = lazy(() => import("./components/Account/FileComplain"));
 const AccountComplaints = lazy(() =>
   import("./components/Account/AccountComplaints")
 );
 const AccountComplaint = lazy(() =>
   import("./components/Account/AccountComplaint")
 );
-const MpesaPayment = lazy(() => import("./components/Checkout/MpesaPayment"));
 const OrderPaymentSuccess = lazy(() =>
   import("./components/Checkout/OrderPaymentSuccess")
 );
-const CardPayment = lazy(() => import("./components/CardPayment/CardPayment"));
 const CardPaymentError = lazy(() =>
   import("./components/CardPayment/CardPaymentError")
 );
-const MpesaError = lazy(() => import("./components/Checkout/MpesaError"));
 const NormalDelivery = lazy(() =>
   import("./components/Checkout/NormalDelivery")
 );
 const ExpressDelivery = lazy(() =>
   import("./components/Checkout/ExpressDelivery")
 );
-const Logistics = lazy(() => import("./components/Pages/Logistics"));
-const About = lazy(() => import("./components/Pages/HelpCenter/About"));
 const TermsConditions = lazy(() =>
   import("./components/Pages/HelpCenter/TermsConditions")
 );
 const PrivacyPolicy = lazy(() =>
   import("./components/Pages/HelpCenter/PrivacyPolicy")
 );
-const Contact = lazy(() => import("./components/Pages/HelpCenter/Contact"));
-const HowToSell = lazy(() => import("./components/Pages/HelpCenter/HowToSell"));
 const SupportCenter = lazy(() =>
   import("./components/Pages/HelpCenter/SupportCenter")
 );
@@ -177,7 +187,6 @@ const HelpCenter = lazy(() =>
 const AdminDashBoardInbox = lazy(() =>
   import("./components/Admin/AdminDashBoardInbox")
 );
-const SellerPoints = lazy(() => import("./components/Seller/SellerPoints"));
 const ContactSuccess = lazy(() =>
   import("./components/Pages/HelpCenter/ContactSuccess")
 );
@@ -187,10 +196,7 @@ const AdminDashBoardRedeems = lazy(() =>
 const ReturnPolicy = lazy(() =>
   import("./components/Pages/HelpCenter/ReturnPolicy")
 );
-const Riders = lazy(() => import("./components/Riders/Riders"));
-const RiderLogin = lazy(() => import("./components/Riders/RiderLogin"));
-// const RidersRegister =lazy(()=> import("./components/Riders/RidersRegister"));
-const AdminAddDriver = lazy(() => import("./components/Admin/AdminAddDriver"));
+// const RidersRegister= lazy(()=> import("./components/Riders/RidersRegister"))
 
 class App extends React.Component {
   state = {
