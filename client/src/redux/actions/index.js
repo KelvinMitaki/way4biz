@@ -2392,10 +2392,18 @@ export const contactUs = (formValues, history) => async dispatch => {
     dispatch({ type: CONTACT_US_STOP });
   }
 };
-export const fetchAdminInbox = () => async dispatch => {
+export const fetchAdminInbox = optional => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_INBOX_START });
-    const res = await axios.get("/api/fetch/admin/inbox");
+    if (optional) {
+      const res = await axios.post("/api/fetch/admin/inbox", {
+        filter: optional
+      });
+      dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
+      dispatch({ type: FETCH_ADMIN_INBOX_STOP });
+      return;
+    }
+    const res = await axios.post("/api/fetch/admin/inbox");
     dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
     dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   } catch (error) {
@@ -2687,6 +2695,17 @@ export const adminInboxCount = () => async dispatch => {
     const { data } = await axios.get("/api/admin/inbox/count");
     dispatch({ type: ADMIN_INBOX_COUNT, payload: data });
   } catch (error) {
+    console.log(error.response);
+  }
+};
+
+export const markAsRead = (id, history) => async dispatch => {
+  try {
+    await axios.post("/api/mark/as/read", { _id: id });
+    await dispatch(fetchAdminInbox());
+    history.push("/admin-inbox");
+  } catch (error) {
+    authCheck(error);
     console.log(error.response);
   }
 };
