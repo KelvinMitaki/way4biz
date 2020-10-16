@@ -43,7 +43,7 @@ class RidersRegister extends React.Component {
             component={AuthField}
           />
           <div className="form-primary-error">
-            {this.props.registerError && this.props.registerError}
+            {this.props.riderRegisterError && this.props.riderRegisterError}
           </div>
           <Field
             type="text"
