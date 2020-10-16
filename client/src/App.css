@@ -295,6 +295,11 @@
   height: 100%;
   width: 100%;
 }
+
+.x {
+  display: none;
+}
+
 @media screen and (max-width: 920px) {
   .content {
     margin-bottom: 65px;
@@ -307,5 +312,15 @@
   .form-primary-error {
     width: 90vw !important;
     margin: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .x {
+    display: block;
+  }
+
+  .y {
+    display: none;
   }
 }

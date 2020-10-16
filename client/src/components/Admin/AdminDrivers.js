@@ -37,18 +37,18 @@ class AdminDrivers extends React.Component {
                 <div className="row box-container py-2">
                   <div className="col-md-3">
                     {/* <div className="admin-seller-details"> */}
-                    <p>
+                    <p className="d-flex m-1">
                       <strong className="mr-2 x">Name:</strong>James Mbuthia
                     </p>
                     {/* </div> */}
                   </div>
                   <div className="col-md-3 d-flex align-items-center">
-                    <p>
+                    <p className="d-flex m-1">
                       <strong className="mr-2 x">Phone:</strong> 0712345678
                     </p>
                   </div>
                   <div className="col-md-3 d-flex align-items-center">
-                    <p>
+                    <p className="d-flex m-1">
                       <strong className="x mr-2">Status</strong>
                       <span className="badge bg-success p-2 text-white">
                         Free
