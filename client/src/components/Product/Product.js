@@ -1,6 +1,6 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart, IoMdHeartEmpty, IoMdShare } from "react-icons/io";
 import { FaStore } from "react-icons/fa";
 import "./Product.css";
 import Footer from "../Footer/Footer";
@@ -28,7 +28,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { RiMotorbikeLine } from "react-icons/ri";
 import { FiTruck } from "react-icons/fi";
 import MobileLogo from "../Header/MobileLogo";
-import { ImShare2 } from "react-icons/im";
 
 class Product extends React.Component {
   constructor(props) {
@@ -338,6 +337,7 @@ class Product extends React.Component {
                           Add to Cart
                         </button>
                       </div>
+                      <h3>Helloo</h3>
                     </div>
                   </div>
                 </div>
