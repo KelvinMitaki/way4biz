@@ -28,6 +28,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { RiMotorbikeLine } from "react-icons/ri";
 import { FiTruck } from "react-icons/fi";
 import MobileLogo from "../Header/MobileLogo";
+import { ImShare2 } from "react-icons/im";
 
 class Product extends React.Component {
   constructor(props) {
