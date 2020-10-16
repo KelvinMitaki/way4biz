@@ -4,7 +4,7 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { connect } from "react-redux";
-import { logIn } from "../../redux/actions";
+import { riderLogIn } from "../../redux/actions";
 import { withRouter, Link } from "react-router-dom";
 import MobileLogo from "../Header/MobileLogo";
 import AuthHeader from "../Authenticate/AuthHeader";
@@ -104,6 +104,6 @@ const mapStateToProps = (state) => {
 };
 export default withRouter(
   reduxForm({ validate, destroyOnUnmount: false, form: "RiderLogin" })(
-    connect(mapStateToProps, { logIn })(RiderLogin)
+    connect(mapStateToProps, { riderLogIn })(RiderLogin)
   )
 );

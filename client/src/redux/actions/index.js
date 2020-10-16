@@ -2619,3 +2619,19 @@ export const riderRegister = (data) => {
       });
   };
 };
+
+export const riderLogIn = (data) => {
+  return (dispatch, getState) => {
+    dispatch(riderLoginLoading());
+    axios
+      .post("/api/driver/sign-in", data)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(riderLoggedIn());
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(riderLoginError(error));
+      });
+  };
+};
