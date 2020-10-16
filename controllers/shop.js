@@ -316,7 +316,7 @@ route.post(
         };
       });
       await Promise.all(
-        cart.forEach(async item => {
+        cart.map(async item => {
           // const pro=await Product.findById(item._id)
           // if(pro.stockQuantity<item.quantity){
 
@@ -443,7 +443,7 @@ route.post(
         };
       });
       await Promise.all(
-        cart.forEach(async item => {
+        cart.map(async item => {
           await Product.findByIdAndUpdate(
             item._id,
             {
