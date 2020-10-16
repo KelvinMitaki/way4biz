@@ -34,7 +34,10 @@ import {
   FETCH_NEW_SELLERS,
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
-  ADMIN_INBOX_COUNT
+  ADMIN_INBOX_COUNT,
+  ADDING_DRIVER,
+  DRIVER_ADDED,
+  ADDING_DRIVER_ERROR,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -64,7 +67,8 @@ const INITIAL_STATE = {
   weeklySales: null,
   stock: [],
   deleteHeroImageLoading: false,
-  inboxCount: null
+  inboxCount: null,
+  addingDriver: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -84,18 +88,18 @@ export default (state = INITIAL_STATE, action) => {
         orderCount: action.payload.ordersCount,
         ordersToSkip: state.ordersToSkip + 20,
         radioLoading: false,
-        orderError: null
+        orderError: null,
       };
     case FETCH_MORE_ALL_ORDERS:
-      const orderIds = new Set(state.allAdminOrders.map(order => order._id));
+      const orderIds = new Set(state.allAdminOrders.map((order) => order._id));
       return {
         ...state,
         allAdminOrders: [
           ...state.allAdminOrders,
-          ...action.payload.orders.filter(order => !orderIds.has(order._id))
+          ...action.payload.orders.filter((order) => !orderIds.has(order._id)),
         ],
         ordersToSkip: state.ordersToSkip + 20,
-        orderError: null
+        orderError: null,
       };
     case FETCH_ORDER_BY_ID:
       return {
@@ -104,7 +108,7 @@ export default (state = INITIAL_STATE, action) => {
         hasMoreOrders: false,
         ordersToSkip: 2,
         orderCount: 1,
-        orderError: null
+        orderError: null,
       };
     case FETCH_ORDER_BY_ID_ERROR:
       return {
@@ -113,7 +117,7 @@ export default (state = INITIAL_STATE, action) => {
         hasMoreOrders: false,
         ordersToSkip: 2,
         orderCount: 1,
-        allAdminOrders: []
+        allAdminOrders: [],
       };
     case HAS_MORE_ORDERS_FALSE:
       return { ...state, hasMoreOrders: false };
@@ -121,7 +125,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ordersDate: action.payload.event.value,
-        radioLoading: true
+        radioLoading: true,
       };
     case SET_PENDING_ORDERS:
       return { ...state, ordersDate: "pendingOrders" };
@@ -160,8 +164,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         stock: [
           { label: "Stock In", value: action.payload.stockIn },
-          { label: "Stock Out", value: action.payload.stockOut }
-        ]
+          { label: "Stock Out", value: action.payload.stockOut },
+        ],
       };
     case FETCH_ADMIN_PENDING_ORDERS:
       return { ...state, adminPendingOrders: action.payload };
