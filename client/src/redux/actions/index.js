@@ -2677,14 +2677,18 @@ export const riderLogIn = data => async (dispatch, getState) => {
   }
 };
 
-export const proceedToCheckout = history => async (dispatch, getState) => {
+export const proceedToCheckout = (history, location) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: P_TO_CHECKOUT_START });
     let cart = getState().cartReducer.cart;
     cart = cart.map(item => ({ _id: item._id, quantity: item.quantity }));
-    const { data } = await axios.post("/api/proceed/to/checkout", { cart });
-    console.log(data);
-    history.push("/address");
+    await axios.post("/api/proceed/to/checkout", { cart });
+
+    history.push(location);
+
     dispatch({ type: P_TO_CHECKOUT_STOP });
   } catch (error) {
     console.log(error.response);
@@ -2729,6 +2733,7 @@ export const fetchItemsInCart = history => async (dispatch, getState) => {
         if (cartItem.quantity > item.stockQuantity) {
           return item;
         }
+        return undefined;
       });
     test = test.filter(it => it !== undefined);
     if (!test || (test && test.length === 0)) {

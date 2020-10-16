@@ -61,7 +61,7 @@ class CartItemsRedirect extends React.Component {
                             : "item out of stock"}
                         </p>
                         <p>
-                          Change <Link to="/">here</Link>
+                          Change <Link to="/cart">here</Link>
                         </p>
                       </div>
                     </div>
