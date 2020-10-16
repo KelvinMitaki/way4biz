@@ -315,15 +315,21 @@ route.post(
           stockQuantity: pCart._doc.stockQuantity
         };
       });
-      cart.forEach(async item => {
-        // const pro=await Product.findById(item._id)
-        // if(pro.stockQuantity<item.quantity){
+      await Promise.all(
+        cart.forEach(async item => {
+          // const pro=await Product.findById(item._id)
+          // if(pro.stockQuantity<item.quantity){
 
-        // }
-        await Product.findByIdAndUpdate(item._id, {
-          $inc: { stockQuantity: -item.quantity }
-        });
-      });
+          // }
+          await Product.findByIdAndUpdate(
+            item._id,
+            {
+              $inc: { stockQuantity: -item.quantity }
+            },
+            { runValidators: true }
+          );
+        })
+      );
       const price = verifiedProducts
         .map(item => item.price * item.quantity)
         .reduce((acc, curr) => acc + curr, 0);
