@@ -305,6 +305,10 @@
   color: #f76b1a !important;
 }
 
+.RRT__inkbar {
+  background-color: #f76b1a !important;
+}
+
 @media screen and (max-width: 920px) {
   .content {
     margin-bottom: 65px;
