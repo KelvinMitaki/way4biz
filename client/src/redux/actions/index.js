@@ -2601,7 +2601,7 @@ const riderRegistered = () => {
 const riderRegisterError = (error) => {
   return {
     type: RIDER_REGISTER_ERROR,
-    data:error
+    data: error,
   };
 };
 
@@ -2621,12 +2621,6 @@ export const riderRegister = (data) => {
           dispatch(riderRegisterError(error));
         });
       });
-  };
-};
-
-const riderLoginLoading = () => {
-  return {
-    type: RIDER_LOGIN_START,
   };
 };
 
