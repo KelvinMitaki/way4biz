@@ -2573,3 +2573,22 @@ export const saveOrder = (history) => async (dispatch, getState) => {
     dispatch({ type: SAVE_ORDER_STOP });
   }
 };
+
+export const riderRegister = (data) => {
+  return (dispatch, getState) => {
+    disptach(riderRegisterStart());
+    axios
+      .post("/api/rider/register", data)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(riderRegisterSuccess());
+        dispatch(riderRegisterStop());
+      })
+      .catch((error) => {
+        console.log((error) => {
+          console.log(error);
+          dispatch(riderRegisterError());
+        });
+      });
+  };
+};
