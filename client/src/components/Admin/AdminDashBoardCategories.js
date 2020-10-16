@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { fetchAllAdminCategories } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoardCategories extends React.Component {
   componentDidMount() {
@@ -16,6 +17,7 @@ class AdminDashBoardCategories extends React.Component {
     if (!this.props.adminCategories) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
+        <MobileLogo />
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div className="mt-4 mb-5">

@@ -9,6 +9,7 @@ import { Link, withRouter, Redirect } from "react-router-dom";
 import { fetchAdminOrder } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoardOrder extends React.Component {
   componentDidMount() {
@@ -24,7 +25,7 @@ class AdminDashBoardOrder extends React.Component {
       const totalCharge = this.props.adminOrder["0"].product
         .map(({ _id, price, charge }) => {
           const proExists = this.props.adminOrder["0"].items.find(
-            item => item.product === _id
+            (item) => item.product === _id
           );
           if (proExists) {
             return (price * charge * proExists.quantity) / 100;
@@ -32,12 +33,13 @@ class AdminDashBoardOrder extends React.Component {
           return {
             _id,
             price,
-            charge
+            charge,
           };
         })
         .reduce((acc, cur) => acc + cur, 0);
       return (
         <div className="container-fluid p-0 mb-5">
+          <MobileLogo />
           <AdminDashBoardHeader />
           <AdminDashboardSecondaryHeader />
           <div className="container mt-4">
@@ -141,7 +143,7 @@ class AdminDashBoardOrder extends React.Component {
                       alignItems: "center",
                       justifyContent: "center",
                       borderTop: "1px solid #d4d4d4",
-                      padding: "20px"
+                      padding: "20px",
                     }}
                   >
                     <Link
@@ -161,10 +163,10 @@ class AdminDashBoardOrder extends React.Component {
     return <Redirect to="/" />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     adminOrder: state.admin.adminOrder,
-    adminOrderLoading: state.admin.adminOrderLoading
+    adminOrderLoading: state.admin.adminOrderLoading,
   };
 };
 export default withRouter(

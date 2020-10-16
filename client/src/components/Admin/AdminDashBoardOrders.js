@@ -13,7 +13,7 @@ import {
   adminRadio,
   fetchMoreAllOrders,
   fetchOrderById,
-  resetSkipAndCount
+  resetSkipAndCount,
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -21,6 +21,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import BottomPageLoader from "../Pages/BottomPageLoader";
 import { useState } from "react";
+import MobileLogo from "../Header/MobileLogo";
 
 function AdminDashBoardOrders(props) {
   const [orderId, setOrderId] = useState({ orderId: null });
@@ -35,7 +36,7 @@ function AdminDashBoardOrders(props) {
   }, [fetchAllOrders, ordersDate]);
   const observer = useRef();
   const lastOrderRef = useCallback(
-    node => {
+    (node) => {
       const fetchMoreData = () => {
         if (props.allAdminOrders.length < props.orderCount) {
           return props.fetchMoreAllOrders(props.ordersDate);
@@ -43,7 +44,7 @@ function AdminDashBoardOrders(props) {
         props.hasMoreOrdersFalse();
       };
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           fetchMoreData();
         }
@@ -53,11 +54,11 @@ function AdminDashBoardOrders(props) {
     },
     [props]
   );
-  const handleRadioButton = event => {
+  const handleRadioButton = (event) => {
     const { name, value } = event.target;
     props.adminRadio({ name, value });
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     props.fetchOrderById(orderId.orderId.trim());
     setOrderId({ orderId: null });
@@ -67,6 +68,7 @@ function AdminDashBoardOrders(props) {
 
   return (
     <div className="container-fluid  p-0 mb-5">
+      <MobileLogo />
       <AdminDashBoardHeader />
       <AdminDashboardSecondaryHeader />
       <div
@@ -82,7 +84,7 @@ function AdminDashBoardOrders(props) {
               <form onSubmit={handleSubmit} className="search">
                 <div className="form-group input-group">
                   <input
-                    onChange={e => setOrderId({ orderId: e.target.value })}
+                    onChange={(e) => setOrderId({ orderId: e.target.value })}
                     className="form-control"
                     type="text"
                     placeholder="Search order ID..."
@@ -285,7 +287,7 @@ function AdminDashBoardOrders(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     allAdminOrders: state.admin.allAdminOrders,
     orderCount: state.admin.orderCount,
@@ -293,7 +295,7 @@ const mapStateToProps = state => {
     ordersDate: state.admin.ordersDate,
     radioLoading: state.admin.radioLoading,
     orderError: state.admin.orderError,
-    adminOrderLoading: state.admin.adminOrderLoading
+    adminOrderLoading: state.admin.adminOrderLoading,
   };
 };
 export default connect(mapStateToProps, {
@@ -302,5 +304,5 @@ export default connect(mapStateToProps, {
   adminRadio,
   fetchMoreAllOrders,
   resetSkipAndCount,
-  fetchOrderById
+  fetchOrderById,
 })(AdminDashBoardOrders);

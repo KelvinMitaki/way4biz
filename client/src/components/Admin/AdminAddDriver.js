@@ -9,8 +9,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
+import AdminDashBoardHeader from "./AdminDashBoardHeader";
+import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import MobileLogo from "../Header/MobileLogo";
-import AuthHeader from "../Authenticate/AuthHeader";
 
 class AdminAddDriver extends React.Component {
   render() {
@@ -18,7 +19,8 @@ class AdminAddDriver extends React.Component {
     return (
       <div>
         <MobileLogo />
-        <AuthHeader />
+        <AdminDashBoardHeader />
+        <AdminDashboardSecondaryHeader />
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             this.props.riderRegister(formValues);
@@ -72,7 +74,7 @@ class AdminAddDriver extends React.Component {
           {/* <strong>* is required</strong> */}
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block primary-button mt-3"
+            className="btn btn-md btn-block primary-button my-3"
             disabled={!this.props.valid || this.props.riderRegisterLoading}
             type="submit"
           >
