@@ -61,9 +61,9 @@ class RiderLogin extends React.Component {
             <Link
               style={{ color: "#f76b1a" }}
               className="float-right"
-              to="/seller/sign-in"
+              to="/rider/register"
             >
-              Sign In
+              Sign Up
             </Link>
           </p>
         </div>
