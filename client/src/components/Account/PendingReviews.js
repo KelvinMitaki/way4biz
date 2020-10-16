@@ -10,6 +10,7 @@ import { MdRateReview } from "react-icons/md";
 import { fetchPendingReviews } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class PendingReviews extends React.Component {
   componentDidMount() {
@@ -37,6 +38,7 @@ class PendingReviews extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container pending-reviews-wrapper">
             <div className="row">
