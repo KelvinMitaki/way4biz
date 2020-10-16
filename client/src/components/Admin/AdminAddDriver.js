@@ -11,12 +11,14 @@ import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminAddDriver extends React.Component {
   render() {
     if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
+        <MobileLogo />
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <form
