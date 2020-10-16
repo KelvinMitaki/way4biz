@@ -220,7 +220,7 @@ class Product extends React.Component {
                       </div>
                     </div>
                     <div
-                      className="col-md-7 product-info p-2"
+                      className="col-md-7 product-info"
                       style={{ position: "relative" }}
                     >
                       {stockQuantity >= 1 ? (
