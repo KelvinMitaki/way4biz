@@ -97,6 +97,7 @@ import Riders from "./components/Riders/Riders";
 import RiderLogin from "./components/Riders/RiderLogin";
 // import RidersRegister from "./components/Riders/RidersRegister";
 import AdminAddDriver from "./components/Admin/AdminAddDriver";
+import CartItemsRedirect from "./components/Pages/CartItemsRedirect";
 
 class App extends React.Component {
   state = {
@@ -237,7 +238,7 @@ class App extends React.Component {
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
               <Route path="/rider/sign-in" component={RiderLogin} />
-              {/* <Route path="/rider/register" component={RidersRegister} /> */}
+              <Route path="/cart/redirect" component={CartItemsRedirect} />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
