@@ -16,12 +16,12 @@ class RiderLogin extends React.Component {
         <MobileLogo />
         <AuthHeader />
         <div className="form-primary-error">
-          {this.props.error && this.props.error}
+          {this.props.riderLoginError && this.props.riderLoginError}
         </div>
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit((formValues) => {
-            return this.props.logIn(formValues, this.props.history);
+            return this.props.riderLogIn(formValues, this.props.history);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -33,17 +33,17 @@ class RiderLogin extends React.Component {
           />
           <button
             className="btn btn-md btn-block auth-btn mt-3 primary-button"
-            disabled={!this.props.valid || this.props.loginLoading}
+            disabled={!this.props.valid || this.props.riderLoginLoading}
             type="submit"
           >
-            {this.props.loginLoading && (
+            {this.props.riderLoginLoading && (
               <span
                 className="spinner-grow spinner-grow-sm"
                 role="status"
                 aria-hidden="true"
               ></span>
             )}
-            {this.props.loginLoading ? (
+            {this.props.riderLoginLoading ? (
               <span> {"  "}Loading...</span>
             ) : (
               <span>Login</span>
@@ -98,8 +98,8 @@ const validate = (formValues) => {
 };
 const mapStateToProps = (state) => {
   return {
-    error: state.auth.error,
-    loginLoading: state.auth.loginLoading,
+    riderLoginError: state.rider.riderLoginError,
+    riderLoginLoading: state.riders.riderLoginLoading,
   };
 };
 export default withRouter(
