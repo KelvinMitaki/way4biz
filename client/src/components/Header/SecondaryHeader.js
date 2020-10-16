@@ -18,7 +18,7 @@ class SecondaryHeader extends React.Component {
                 Sell with us
               </Link>
             )}
-            <Link className="mx-4 secondary-header-link" to="/">
+            <Link className="mx-4 secondary-header-link" to="/logistics">
               Logistics Services
             </Link>
             <Link className="mx-4 secondary-header-link" to="/help-center">

@@ -26,7 +26,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
     open: false,
     keys: [
       {
-        parentKey: ["Sellers", 100],
+        parentKey: ["Members", 100],
         childKeys: [
           { name: "Active Sellers", url: "/admin-sellers" },
           {
@@ -120,49 +120,22 @@ class AdminDashboardSecondaryHeader extends React.Component {
             </div>
           ) : null}
         </div>
-        <ul className="admin-dashboard-menu-lg-items">
-          <li>
-            <NavLink
-              to="/admin-dashboard"
-              activeClassName="admin-active-lg-link"
-              exact
-            >
-              <RiDashboardLine /> <span className="ml-2">Dashboard</span>
-            </NavLink>
-          </li>
-          <li style={{ cursor: "pointer" }}>
-            <a href="/" className="admin-menu-dropdown-main">
-              <RiFileUserLine />{" "}
-              <span style={{ cursor: "pointer" }} className="ml-1">
-                Sellers{" "}
-                {this.props.newSellers &&
-                  this.props.newSellers.sellers &&
-                  this.props.newSellers.sellers.length !== 0 && (
-                    <span
-                      className="ml-1 badge"
-                      style={{
-                        position: "relative",
-                        zIndex: "32",
-                        backgroundColor: "#f76b1a",
-                        color: "#fff",
-                      }}
-                    >
-                      {this.props.newSellers.sellers.length.toLocaleString()}
-                    </span>
-                  )}
-              </span>
-              <span className="ml-1">
-                <MdKeyboardArrowDown />
-              </span>
-            </a>
-
-            <div className="sellers-dropdown">
-              <p>
-                <NavLink to="/admin-sellers">Active Sellers</NavLink>
-              </p>
-              <p>
-                <NavLink to="/admin-new-sellers">
-                  New Sellers
+        <div className="container admin-dashboard-menu-lg-items">
+          <ul>
+            <li>
+              <NavLink
+                to="/admin-dashboard"
+                activeClassName="admin-active-lg-link"
+                exact
+              >
+                <RiDashboardLine /> <span className="ml-2">Dashboard</span>
+              </NavLink>
+            </li>
+            <li style={{ cursor: "pointer" }}>
+              <a href="/" className="admin-menu-dropdown-main">
+                <RiFileUserLine />{" "}
+                <span style={{ cursor: "pointer" }} className="ml-1">
+                  Members
                   {this.props.newSellers &&
                     this.props.newSellers.sellers &&
                     this.props.newSellers.sellers.length !== 0 && (
@@ -175,80 +148,116 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           color: "#fff",
                         }}
                       >
-                        {this.props.newSellers.sellers.length}
+                        {this.props.newSellers.sellers.length.toLocaleString()}
                       </span>
                     )}
-                </NavLink>
-              </p>
-            </div>
-          </li>
-          <li>
-            <NavLink
-              exact
-              to="/admin-orders"
-              activeClassName="admin-active-lg-link"
-            >
-              <GoClippy /> <span className="ml-2">Orders</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              exact
-              to="/admin-categories"
-              activeClassName="admin-active-lg-link"
-            >
-              <IoIosAddCircleOutline /> <span className="ml-2">Categories</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              exact
-              to="/admin-redeems"
-              activeClassName="admin-active-lg-link"
-            >
-              <MdRedeem />{" "}
-              <span className="ml-2">
-                Redeems
-                {this.props.redeems !== 0 && (
+                </span>
+                <span className="ml-1">
+                  <MdKeyboardArrowDown />
+                </span>
+              </a>
+
+              <div className="members-dropdown">
+                <p>
+                  <NavLink to="/admin-sellers">Active Sellers</NavLink>
+                </p>
+                <p>
+                  <NavLink to="/admin-new-sellers">
+                    New Sellers
+                    {this.props.newSellers &&
+                      this.props.newSellers.sellers &&
+                      this.props.newSellers.sellers.length !== 0 && (
+                        <span
+                          className="ml-1 badge"
+                          style={{
+                            position: "relative",
+                            zIndex: "32",
+                            backgroundColor: "#f76b1a",
+                            color: "#fff",
+                          }}
+                        >
+                          {this.props.newSellers.sellers.length}
+                        </span>
+                      )}
+                  </NavLink>
+                </p>
+                <p>
+                  <NavLink to="/admin-drivers">Active Drivers</NavLink>
+                </p>
+                <p>
+                  <NavLink to="/new-drivers">New Drivers</NavLink>
+                </p>
+              </div>
+            </li>
+            <li>
+              <NavLink
+                exact
+                to="/admin-orders"
+                activeClassName="admin-active-lg-link"
+              >
+                <GoClippy /> <span className="ml-2">Orders</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                exact
+                to="/admin-categories"
+                activeClassName="admin-active-lg-link"
+              >
+                <IoIosAddCircleOutline />{" "}
+                <span className="ml-2">Categories</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                exact
+                to="/admin-redeems"
+                activeClassName="admin-active-lg-link"
+              >
+                <MdRedeem />{" "}
+                <span className="ml-2">
+                  Redeems
+                  {this.props.redeems !== 0 && (
+                    <span
+                      style={{
+                        position: "relative",
+                        zIndex: "32",
+                        backgroundColor: "#f76b1a",
+                        color: "#fff",
+                      }}
+                      className="ml-1 badge"
+                    >
+                      {this.props.redeems.toLocaleString()}
+                    </span>
+                  )}
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                exact
+                to="/admin-inbox"
+                activeClassName="admin-active-lg-link"
+              >
+                <RiInboxArchiveLine />{" "}
+                <span className="ml-2">
+                  Inbox
                   <span
+                    className="ml-1 badge"
                     style={{
                       position: "relative",
                       zIndex: "32",
                       backgroundColor: "#f76b1a",
                       color: "#fff",
                     }}
-                    className="ml-1 badge"
                   >
-                    {this.props.redeems.toLocaleString()}
+                    0
                   </span>
-                )}
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              exact
-              to="/admin-inbox"
-              activeClassName="admin-active-lg-link"
-            >
-              <RiInboxArchiveLine />{" "}
-              <span className="ml-2">
-                Inbox
-                <span
-                  className="ml-1 badge"
-                  style={{
-                    position: "relative",
-                    zIndex: "32",
-                    backgroundColor: "#f76b1a",
-                    color: "#fff",
-                  }}
-                >
-                  0
                 </span>
-              </span>
-            </NavLink>
-          </li>
-        </ul>
+              </NavLink>
+            </li>
+          </ul>
+        </div>
         {/* <AdminProfile  /> */}
         <div id="admin-profile-section">
           <div className="d-flex align-items-center">

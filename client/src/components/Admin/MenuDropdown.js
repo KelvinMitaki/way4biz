@@ -24,7 +24,7 @@ class MenuDropdown extends React.Component {
   }
 
   showSmMenuItemBadges(name, props) {
-    if (name === "New Sellers") {
+    if (name === "Members") {
       if (props.newSellers > 0) {
         return (
           <span

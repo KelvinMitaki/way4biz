@@ -273,6 +273,12 @@ import {
   DELETE_HERO_IMAGE_STOP,
   SAVE_ORDER_START,
   SAVE_ORDER_STOP,
+  RIDER_REGISTER_START,
+  RIDER_REGISTERED,
+  RIDER_REGISTER_ERROR,
+  RIDER_LOGIN_START,
+  RIDER_LOGGED_IN,
+  RIDER_LOGIN_ERROR,
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2572,4 +2578,83 @@ export const saveOrder = (history) => async (dispatch, getState) => {
     authCheck(error);
     dispatch({ type: SAVE_ORDER_STOP });
   }
+};
+
+const riderRegisterStart = () => {
+  return {
+    type: RIDER_REGISTER_START,
+  };
+};
+
+const riderRegistered = () => {
+  return {
+    type: RIDER_REGISTERED,
+  };
+};
+
+// const riderRegisterStop = () => {
+//   return {
+//     type: RIDER_REGISTER_STOP,
+//   };
+// };
+
+const riderRegisterError = (error) => {
+  return {
+    type: RIDER_REGISTER_ERROR,
+    data: error,
+  };
+};
+
+export const riderRegister = (data) => {
+  return (dispatch, getState) => {
+    dispatch(riderRegisterStart());
+    axios
+      .post("/api/rider/register", data)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(riderRegistered());
+        // dispatch(riderRegisterStop());
+      })
+      .catch((error) => {
+        console.log((error) => {
+          console.log(error);
+          dispatch(riderRegisterError(error));
+        });
+      });
+  };
+};
+
+const riderLoginLoading = () => {
+  return {
+    type: RIDER_LOGIN_START,
+  };
+};
+
+const riderLoggedIn = () => {
+  return {
+    type: RIDER_LOGGED_IN,
+  };
+};
+
+const riderLoginError = (error) => {
+  return {
+    type: RIDER_LOGIN_ERROR,
+    data: error,
+  };
+};
+
+export const riderLogIn = (data) => {
+  return (dispatch, getState) => {
+    dispatch(riderLoginLoading());
+    axios
+      .post("/api/driver/sign-in", data)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(riderLoggedIn());
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(riderLoginError(error));
+      });
+  };
 };
