@@ -13,6 +13,7 @@ class AdminDashBoardNewProducts extends React.Component {
     this.props.fetchUnderReview();
   }
   render() {
+    console.log(this.props.underReview);
     if (!this.props.underReview) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0">
@@ -89,7 +90,7 @@ class AdminDashBoardNewProducts extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    underReview: state.product.underReview
+    underReview: state.admin.underReview
   };
 };
 

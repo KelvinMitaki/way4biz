@@ -5,7 +5,7 @@ export class Image extends Component {
   text = React.createRef();
   componentDidMount() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;
@@ -18,7 +18,7 @@ export class Image extends Component {
   }
   componentDidUpdate() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;

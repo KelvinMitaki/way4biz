@@ -3,7 +3,11 @@ import "./MyCart.css";
 import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteFromCart, fetchCartItems } from "../../redux/actions";
+import {
+  deleteFromCart,
+  fetchCartItems,
+  proceedToCheckout
+} from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -111,10 +115,21 @@ class MyCart extends React.Component {
                 </div>
               </div>
               <button
-                onClick={() => this.props.history.push("/address")}
+                onClick={() => this.props.proceedToCheckout(this.props.history)}
                 className="btn checkout-button mb-3 btn-md btn-block"
               >
-                Proceed To Checkout
+                {this.props.pToCheckoutLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                {this.props.pToCheckoutLoading ? (
+                  <span> {"  "}Loading...</span>
+                ) : (
+                  <span>Proceed To Checkout</span>
+                )}
               </button>
               <button
                 onClick={() => this.props.history.goBack()}
@@ -148,9 +163,14 @@ const mapStateToProps = state => {
     cart: state.cartReducer.cart,
     isSignedIn: state.auth.isSignedIn,
     cartLoading: state.cartReducer.cartLoading,
+    pToCheckoutLoading: state.cartReducer.pToCheckoutLoading,
     deleteCartLoading: state.cartReducer.deleteCartLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { deleteFromCart, fetchCartItems })(MyCart)
+  connect(mapStateToProps, {
+    deleteFromCart,
+    fetchCartItems,
+    proceedToCheckout
+  })(MyCart)
 );
