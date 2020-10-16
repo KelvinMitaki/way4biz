@@ -131,7 +131,7 @@ const mapStateToProps = (state) => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
     riderRegisterLoading: state.riders.riderRegisterLoading,
-    riderRegistered: state.riders.riderRegistered,
+    riderRegisterError: state.riders.riderRegisterError,
   };
 };
 export default withRouter(

@@ -2615,7 +2615,7 @@ export const riderRegister = (data) => {
       .catch((error) => {
         console.log((error) => {
           console.log(error);
-          dispatch(riderRegisterError());
+          dispatch(riderRegisterError(error));
         });
       });
   };

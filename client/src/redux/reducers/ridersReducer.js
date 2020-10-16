@@ -12,8 +12,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  riderRegisterLoading:false,
-  riderRegistered:false,
+  riderRegisterLoading: false,
+  riderRegisterError: null,
   fetchingSuccessfulDeliveries: false,
   successfulDeliveriesFetched: false,
   fetchingPendingDeliveries: false,
@@ -23,11 +23,15 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case RIDER_REGISTER_START:
-      return {...state,riderRegisterLoading:true}
+      return { ...state, riderRegisterLoading: true };
     case RIDER_REGISTERED:
-      return {...state,riderRegisterLoading:false,riderRegistered:true}
+      return { ...state, riderRegisterLoading: false, riderRegistered: true };
     case RIDER_REGISTER_ERROR:
-      return {...state,riderRegisterLoading:false}
+      return {
+        ...state,
+        riderRegisterLoading: false,
+        riderRegisterError: action.data,
+      };
     case FETCH_SUCCESSFUL_DELIVERIES_START:
       return { ...state, fetchingSuccessfulDeliveries: true };
     case SUCCESSFUL_DELIVERIES_FETCHED:
