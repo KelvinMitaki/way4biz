@@ -12,53 +12,10 @@ import {
   fetchCartItems,
   fetchWishlistProducts,
   fetchAllCategories,
-  fetchHeroImages
+  fetchHeroImages,
 } from "./redux/actions";
 
 import MoveToTop from "./MoveToTop";
-<<<<<<< HEAD
-import AdminDashBoardEditCategory from "./components/Admin/AdminDashBoardEditCategory";
-import AdminDashBoardOrderItems from "./components/Admin/AdminDashBoardOrderItems";
-import Store from "./components/Store/Store";
-import SearchResults from "./components/Header/SearchResults";
-import AdminDashBoardNewProducts from "./components/Admin/AdminDashBoardNewProducts";
-import AdminDashBoardNewProduct from "./components/Admin/AdminDashBoardNewProduct";
-import AdminDashBoardNewProductReject from "./components/Admin/AdminDashBoardNewProductReject";
-import SellerSettings from "./components/Seller/SellerSettings";
-import SellerRejects from "./components/Seller/SellerRejects";
-import AdminDashBoardComplaints from "./components/Admin/AdminDashBoardComplaints";
-import AdminDashBoardComplaint from "./components/Admin/AdminDashBoardComplaint";
-import AdminDashBoardRejects from "./components/Admin/AdminDashBoardRejects";
-import FileComplain from "./components/Account/FileComplain";
-import AccountComplaints from "./components/Account/AccountComplaints";
-import AccountComplaint from "./components/Account/AccountComplaint";
-import MpesaPayment from "./components/Checkout/MpesaPayment";
-import OrderPaymentSuccess from "./components/Checkout/OrderPaymentSuccess";
-import CardPayment from "./components/CardPayment/CardPayment";
-import CardPaymentError from "./components/CardPayment/CardPaymentError";
-import MpesaError from "./components/Checkout/MpesaError";
-import NormalDelivery from "./components/Checkout/NormalDelivery";
-import ExpressDelivery from "./components/Checkout/ExpressDelivery";
-import Logistics from "./components/Pages/Logistics";
-import About from "./components/Pages/HelpCenter/About";
-import TermsConditions from "./components/Pages/HelpCenter/TermsConditions";
-import PrivacyPolicy from "./components/Pages/HelpCenter/PrivacyPolicy";
-import Contact from "./components/Pages/HelpCenter/Contact";
-import HowToSell from "./components/Pages/HelpCenter/HowToSell";
-import SupportCenter from "./components/Pages/HelpCenter/SupportCenter";
-import CustomerService from "./components/Pages/HelpCenter/CustomerService";
-import HelpCenter from "./components/Pages/HelpCenter/HelpCenter";
-import AdminDashBoardInbox from "./components/Admin/AdminDashBoardInbox";
-import SellerPoints from "./components/Seller/SellerPoints";
-import ContactSuccess from "./components/Pages/HelpCenter/ContactSuccess";
-import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
-import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
-import Riders from "./components/Riders/Riders";
-import RiderLogin from "./components/Riders/RiderLogin";
-// import RidersRegister from "./components/Riders/RidersRegister";
-import AdminAddDriver from "./components/Admin/AdminAddDriver";
-import CartItemsRedirect from "./components/Pages/CartItemsRedirect";
-=======
 import "react-responsive-tabs/styles.css";
 
 const Home = lazy(() => import("./components/Pages/Home"));
@@ -240,11 +197,10 @@ const ReturnPolicy = lazy(() =>
   import("./components/Pages/HelpCenter/ReturnPolicy")
 );
 // const RidersRegister= lazy(()=> import("./components/Riders/RidersRegister"))
->>>>>>> fe0fab02478a667afd3ddb0083a981173aeb397f
 
 class App extends React.Component {
   state = {
-    scrolling: false
+    scrolling: false,
   };
   componentDidMount() {
     const {
@@ -252,7 +208,7 @@ class App extends React.Component {
       fetchProducts,
       fetchCategories,
       fetchAllCategories,
-      fetchHeroImages
+      fetchHeroImages,
     } = this.props;
     fetchUser();
     fetchProducts();
@@ -262,7 +218,7 @@ class App extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
     this.scrolled = false;
     this.setState({
-      scrolling: false
+      scrolling: false,
     });
   }
 
@@ -273,7 +229,7 @@ class App extends React.Component {
     ) {
       this.props.cart.length !== 0 &&
         this.props.saveCartItems(
-          this.props.cart.map(i => ({
+          this.props.cart.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
@@ -281,7 +237,7 @@ class App extends React.Component {
             imageUrl: i.imageUrl,
             seller: { storeName: i.seller.storeName },
             _id: i._id,
-            quantity: i.quantity
+            quantity: i.quantity,
           }))
         );
     }
@@ -291,14 +247,14 @@ class App extends React.Component {
     ) {
       this.props.wishlist.length !== 0 &&
         this.props.saveWishlistItems(
-          this.props.wishlist.map(i => ({
+          this.props.wishlist.map((i) => ({
             freeShipping: i.freeShipping,
             name: i.name,
             price: i.price,
             stockQuantity: i.stockQuantity,
             seller: { storeName: i.seller.storeName },
             imageUrl: i.imageUrl,
-            _id: i._id
+            _id: i._id,
           }))
         );
     }
@@ -313,7 +269,7 @@ class App extends React.Component {
       prevState.scrolling !== this.state.scrolling
     ) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
@@ -325,23 +281,23 @@ class App extends React.Component {
       scrollTopDistance > 700
     ) {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
   }
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     let scrollTopDistance = window.pageYOffset;
     if (scrollTopDistance > 700) {
       this.setState({
-        scrolling: true
+        scrolling: true,
       });
 
       this.scrolled = true;
     } else {
       this.setState({
-        scrolling: false
+        scrolling: false,
       });
       this.scrolled = false;
     }
@@ -1039,13 +995,13 @@ class App extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     user: state.auth.user,
     loading: state.auth.loading,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
@@ -1058,5 +1014,5 @@ export default connect(mapStateToProps, {
   fetchCartItems,
   fetchWishlistProducts,
   saveWishlistItems,
-  fetchHeroImages
+  fetchHeroImages,
 })(App);
