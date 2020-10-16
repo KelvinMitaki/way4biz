@@ -273,6 +273,10 @@ import {
   DELETE_HERO_IMAGE_STOP,
   SAVE_ORDER_START,
   SAVE_ORDER_STOP,
+  RIDER_REGISTER_START,
+  RIDER_REGISTERED,
+  RIDER_REGISTER_STOP,
+  RIDER_REGISTER_ERROR,
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2574,6 +2578,30 @@ export const saveOrder = (history) => async (dispatch, getState) => {
   }
 };
 
+const riderRegisterStart = () => {
+  return {
+    type: RIDER_REGISTER_START,
+  };
+};
+
+const riderRegistered = () => {
+  return {
+    type: RIDER_REGISTERED,
+  };
+};
+
+const riderRegisterStop = () => {
+  return {
+    type: RIDER_REGISTER_STOP,
+  };
+};
+
+const riderRegisterError = () => {
+  return {
+    type: RIDER_REGISTER_ERROR,
+  };
+};
+
 export const riderRegister = (data) => {
   return (dispatch, getState) => {
     disptach(riderRegisterStart());
@@ -2581,7 +2609,7 @@ export const riderRegister = (data) => {
       .post("/api/rider/register", data)
       .then((res) => {
         console.log(res.data);
-        dispatch(riderRegisterSuccess());
+        dispatch(riderRegistered());
         dispatch(riderRegisterStop());
       })
       .catch((error) => {
