@@ -5,7 +5,7 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { riderRegister } from "../../redux/actions";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
