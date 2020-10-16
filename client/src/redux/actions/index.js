@@ -2688,6 +2688,7 @@ export const proceedToCheckout = history => async (dispatch, getState) => {
     dispatch({ type: P_TO_CHECKOUT_STOP });
   } catch (error) {
     console.log(error.response);
+    history.push("/cart/redirect");
     dispatch({ type: P_TO_CHECKOUT_STOP });
   }
 };

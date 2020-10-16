@@ -8,6 +8,7 @@ import MobileLogo from "../Header/MobileLogo";
 import { Link, withRouter } from "react-router-dom";
 import { emptyItemsInCart, fetchItemsInCart } from "../../redux/actions";
 import Image from "../Market/Image";
+import ScreenLoader from "./ScreenLoader";
 
 class CartItemsRedirect extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class CartItemsRedirect extends React.Component {
   }
 
   render() {
+    if (!this.props.fetchedItems) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
