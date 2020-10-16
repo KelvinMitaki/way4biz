@@ -34,7 +34,7 @@ class AdminDrivers extends React.Component {
               {/* mapping here */}
 
               <div className="admin-seller container">
-                <div className="row box-container">
+                <div className="row box-container py-2">
                   <div className="col-md-3">
                     {/* <div className="admin-seller-details"> */}
                     <p>
@@ -49,7 +49,10 @@ class AdminDrivers extends React.Component {
                   </div>
                   <div className="col-md-3 d-flex align-items-center">
                     <p>
-                      <strong className="x mr-2">Status</strong>Free
+                      <strong className="x mr-2">Status</strong>
+                      <span className="badge bg-success p-2 text-white">
+                        Free
+                      </span>
                     </p>
                   </div>
                   <div className="col-md-3 d-flex align-items-center">

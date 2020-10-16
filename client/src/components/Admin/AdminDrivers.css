@@ -1,0 +1,13 @@
+.x {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .x {
+    display: block;
+  }
+
+  .y {
+    display: none;
+  }
+}
