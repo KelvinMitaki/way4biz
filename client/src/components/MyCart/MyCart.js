@@ -118,7 +118,18 @@ class MyCart extends React.Component {
                 onClick={() => this.props.proceedToCheckout(this.props.history)}
                 className="btn checkout-button mb-3 btn-md btn-block"
               >
-                Proceed To Checkout
+                {this.props.pToCheckoutLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                {this.props.pToCheckoutLoading ? (
+                  <span> {"  "}Loading...</span>
+                ) : (
+                  <span>Proceed To Checkout</span>
+                )}
               </button>
               <button
                 onClick={() => this.props.history.goBack()}
@@ -152,6 +163,7 @@ const mapStateToProps = state => {
     cart: state.cartReducer.cart,
     isSignedIn: state.auth.isSignedIn,
     cartLoading: state.cartReducer.cartLoading,
+    pToCheckoutLoading: state.cartReducer.pToCheckoutLoading,
     deleteCartLoading: state.cartReducer.deleteCartLoading
   };
 };
