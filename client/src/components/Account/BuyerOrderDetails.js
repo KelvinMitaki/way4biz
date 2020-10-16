@@ -50,7 +50,9 @@ class BuyerOrderDetails extends Component {
                     >
                       <div className="d-flex align-items-center">
                         <Link to="/orders">
-                          <BsArrowLeft />
+                          <BsArrowLeft
+                            style={{ color: "#f76b1a", fontSize: "35px" }}
+                          />
                         </Link>
                       </div>
                     </IconContext.Provider>
@@ -115,7 +117,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map(item => {
+                      buyerOrderDetails.items.map((item) => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -193,10 +195,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default withRouter(
