@@ -2690,3 +2690,14 @@ export const adminInboxCount = () => async dispatch => {
     console.log(error.response);
   }
 };
+
+export const markAsRead = (id, history) => async dispatch => {
+  try {
+    await axios.post("/api/mark/as/read", { _id: id });
+    await dispatch(fetchAdminInbox());
+    history.push("/admin-inbox");
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};

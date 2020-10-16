@@ -5,16 +5,23 @@ import MobileLogo from "../Header/MobileLogo";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import { connect } from "react-redux";
-import { fetchAdminInbox } from "../../redux/actions";
+import {
+  adminInboxCount,
+  fetchAdminInbox,
+  markAsRead
+} from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
+import { withRouter } from "react-router-dom";
+import { TiTick } from "react-icons/ti";
 
 class AdminDashBoardInbox extends React.Component {
   componentDidMount() {
     this.props.fetchAdminInbox();
+    this.props.adminInboxCount();
   }
 
   readHandler = (e, id) => {
-    // wow
+    this.props.markAsRead(id, this.props.history);
   };
   render() {
     if (this.props.inboxLoading) return <ScreenLoader />;
@@ -82,25 +89,28 @@ class AdminDashBoardInbox extends React.Component {
                   </p>
                   <div className="read-unread">
                     {/* if unread show this */}
-                    <p
-                      className="mark-as-read"
-                      onClick={e => this.readHandler(e, contact._id)}
-                    >
-                      Mark as read
-                    </p>
+                    {!contact.read ? (
+                      <p
+                        className="mark-as-read"
+                        onClick={e => this.readHandler(e, contact._id)}
+                      >
+                        Mark as read
+                      </p>
+                    ) : (
+                      <p
+                        style={{
+                          color: "green",
+                          display: "flex",
+                          alignItems: "center"
+                        }}
+                      >
+                        <span>Read</span>
+                        <span>
+                          <TiTick />
+                        </span>
+                      </p>
+                    )}
                     {/* if read */}
-                    {/* <p
-                      style={{
-                        color: "green",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <span>Read</span>
-                      <span>
-                        <TiTick />
-                      </span>
-                    </p> */}
                   </div>
                 </div>
               ))}
@@ -116,6 +126,8 @@ const mapStateToProps = state => {
     inboxLoading: state.admin.inboxLoading
   };
 };
-export default connect(mapStateToProps, { fetchAdminInbox })(
-  AdminDashBoardInbox
+export default withRouter(
+  connect(mapStateToProps, { fetchAdminInbox, markAsRead, adminInboxCount })(
+    AdminDashBoardInbox
+  )
 );

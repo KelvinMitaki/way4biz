@@ -2408,4 +2408,13 @@ route.get("/api/admin/inbox/count", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.post("/api/mark/as/read", auth, isAdmin, async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const contact = await Contact.findByIdAndUpdate(_id, { read: true });
+    res.send(contact);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;
