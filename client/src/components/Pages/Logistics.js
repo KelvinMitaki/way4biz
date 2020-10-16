@@ -57,6 +57,13 @@ class Logistics extends React.Component {
     this.setState({ addressLatLng: latlng });
     this.props.change("address", selectedAddress);
   };
+
+  handleToAddressSelect = async (selectedAddress) => {
+    const results = await geocodeByAddress(selectedAddress);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ addressLatLng: latlng });
+    this.props.change("address", selectedAddress);
+  };
   render() {
     if (this.props.cart.length === 0) return <Redirect to="/" />;
     return (
@@ -71,12 +78,19 @@ class Logistics extends React.Component {
                 id="logistics-form"
               >
                 <h3 className="legend text-center">Logistics</h3>
+                <p className="my-2">
+                  Our logistics team will collect your goods from your current
+                  location to your desired location. Fill the form below and
+                  click request service{" "}
+                  <b>Note: The service is operational only within Nairobi.</b>.
+                </p>
                 <form
                   onSubmit={this.props.handleSubmit((formValues) => {
                     this.props.storeLatLng(
                       `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
                     );
-                    this.props.checkoutUser(formValues, this.props.history);
+                    // this.props.checkoutUser(formValues, this.props.history);
+                    console.log(formValues);
                   })}
                 >
                   <Field
@@ -94,13 +108,13 @@ class Logistics extends React.Component {
                   <Field
                     type="text"
                     name="phoneNumber"
-                    label="Phone Number"
+                    label="Phone"
                     component={AddressPhoneNumber}
                   />
                   <Field
                     type="text"
                     name="city"
-                    label="City"
+                    label="From City"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
@@ -109,7 +123,7 @@ class Logistics extends React.Component {
                   <Field
                     type="text"
                     name="town"
-                    label="Town"
+                    label="From Town"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
@@ -118,7 +132,61 @@ class Logistics extends React.Component {
                   <Field
                     type="text"
                     name="address"
-                    label="Street Address"
+                    label="From Street Address"
+                    className="address-location-input"
+                    component={AutoComplete}
+                    options={{
+                      location: new google.maps.LatLng(this.state.cityLatLng),
+                      radius: 1000,
+                      types: ["establishment"],
+                    }}
+                    onSelect={this.handleToAddressSelect}
+                  />
+                  <SimpleMap
+                    key={this.state.addressLatLng.lat}
+                    addressLatLng={this.state.addressLatLng}
+                    className="address-map"
+                  />
+                  <Field
+                    type="text"
+                    name="firstName"
+                    label="Receiver First Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="lastName"
+                    label="Receiver Last Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
+                    name="phoneNumber"
+                    label="Receiver Phone"
+                    component={AddressPhoneNumber}
+                  />
+                  <Field
+                    type="text"
+                    name="city"
+                    label="To City"
+                    className="address-location-input"
+                    component={AutoComplete}
+                    options={{ types: ["(cities)"] }}
+                    onSelect={this.handleCitySelect}
+                  />
+                  <Field
+                    type="text"
+                    name="town"
+                    label="To Town"
+                    className="address-location-input"
+                    component={AutoComplete}
+                    options={{ types: ["(cities)"] }}
+                    onSelect={this.handleTownSelect}
+                  />
+                  <Field
+                    type="text"
+                    name="address"
+                    label="To Street Address"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{
