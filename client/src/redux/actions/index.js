@@ -276,6 +276,9 @@ import {
   RIDER_REGISTER_START,
   RIDER_REGISTERED,
   RIDER_REGISTER_ERROR,
+  RIDER_LOGIN_START,
+  RIDER_LOGGED_IN,
+  RIDER_LOGIN_ERROR,
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2595,9 +2598,10 @@ const riderRegistered = () => {
 //   };
 // };
 
-const riderRegisterError = () => {
+const riderRegisterError = (error) => {
   return {
     type: RIDER_REGISTER_ERROR,
+    data:error
   };
 };
 
@@ -2617,6 +2621,31 @@ export const riderRegister = (data) => {
           dispatch(riderRegisterError(error));
         });
       });
+  };
+};
+
+const riderLoginLoading = () => {
+  return {
+    type: RIDER_LOGIN_START,
+  };
+};
+
+const riderLoginLoading = () => {
+  return {
+    type: RIDER_LOGIN_START,
+  };
+};
+
+const riderLoggedIn = () => {
+  return {
+    type: RIDER_LOGGED_IN,
+  };
+};
+
+const riderLoginError = (error) => {
+  return {
+    type: RIDER_LOGIN_ERROR,
+    data: error,
   };
 };
 
