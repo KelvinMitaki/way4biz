@@ -69,17 +69,17 @@ class RidersRegister extends React.Component {
           <button
             style={{ cursor: "pointer" }}
             className="btn btn-md btn-block primary-button mt-3"
-            disabled={!this.props.valid || this.props.registerLoading}
+            disabled={!this.props.valid || this.props.riderRegisterLoading}
             type="submit"
           >
-            {this.props.registerLoading && (
+            {this.props.riderRegisterLoading && (
               <span
                 className="spinner-grow spinner-grow-sm"
                 role="status"
                 aria-hidden="true"
               ></span>
             )}
-            {this.props.registerLoading ? (
+            {this.props.riderRegisterLoading ? (
               <span> {"  "}Loading...</span>
             ) : (
               <span>Register</span>
@@ -130,8 +130,8 @@ const validate = (formValues) => {
 const mapStateToProps = (state) => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
-    registerLoading: state.auth.registerLoading,
-    registerError: state.auth.registerError,
+    riderRegisterLoading: state.riders.riderRegisterLoading,
+    riderRegistered: state.riders.riderRegistered,
   };
 };
 export default withRouter(
