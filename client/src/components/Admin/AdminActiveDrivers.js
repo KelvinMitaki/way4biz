@@ -82,6 +82,4 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-export default connect(mapStateToProps, { fetchVerifiedSellers })(
-  AdminActiveDrivers
-);
+export default connect(mapStateToProps)(AdminActiveDrivers);

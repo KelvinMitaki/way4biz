@@ -17,6 +17,9 @@ import {
 
 import MoveToTop from "./MoveToTop";
 import "react-responsive-tabs/styles.css";
+const AdminActiveDrivers = lazy(() =>
+  import("./components/Admin/AdminActiveDrivers")
+);
 
 const Home = lazy(() => import("./components/Pages/Home"));
 const Cart = lazy(() => import("./components/Pages/Cart"));
@@ -385,6 +388,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
                     <AdminDashBoardSellers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/new-drivers"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminActiveDrivers />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
