@@ -57,15 +57,15 @@ class RiderLogin extends React.Component {
               Forgot password?
             </Link>
           </p>
-          {/* <p className="forgot-password-link-wrapper">
+          <p className="forgot-password-link-wrapper">
             <Link
               style={{ color: "#f76b1a" }}
               className="float-right"
               to="/seller/sign-in"
             >
-              Sign In As A Seller
+              Sign In
             </Link>
-          </p> */}
+          </p>
         </div>
         {/* <a
           href="/auth/google"
@@ -98,7 +98,7 @@ const validate = (formValues) => {
 };
 const mapStateToProps = (state) => {
   return {
-    riderLoginError: state.rider.riderLoginError,
+    riderLoginError: state.riders.riderLoginError,
     riderLoginLoading: state.riders.riderLoginLoading,
   };
 };
