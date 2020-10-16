@@ -26,6 +26,10 @@ const DriverSchema = new mongoose.Schema(
     imageUrl: {
       type: [String]
     },
+    free: {
+      type: Boolean,
+      default: true
+    },
     clients: [
       {
         type: mongoose.Types.ObjectId,

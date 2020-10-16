@@ -3,6 +3,7 @@ const Driver = require("../models/Driver");
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const isDriver = require("../middlewares/is-driver");
 
 router.post(
   "/api/driver/register",
@@ -180,7 +181,10 @@ router.post(
       if (!isMatch) {
         return res.status(401).send({ message: "Invalid email or password" });
       }
-      req.session.driver = driver;
+      if (!driver.verified) {
+        return res.status(401).send({ message: "Email not verified" });
+      }
+      req.session.driver = { _id: driver._id };
       req.session.isLoggedIn = true;
       res.send(driver);
     } catch (error) {
@@ -188,5 +192,20 @@ router.post(
     }
   }
 );
+
+router.get("/api/driver/clients", isDriver, async (req, res) => {
+  try {
+    const { _id } = req.session.driver;
+    const driver = await Driver.findById(_id).populate(
+      "clients",
+      "firstName lastName phoneNumber"
+    );
+    if (!driver) {
+      return res.status(401).send({ message: "Not found" });
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 module.exports = router;
