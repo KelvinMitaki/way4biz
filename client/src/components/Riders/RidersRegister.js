@@ -5,7 +5,7 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { riderRegister } from "../../redux/actions";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
@@ -90,6 +90,11 @@ class RidersRegister extends React.Component {
             )}
           </button>
         </form>
+        <div className="mb-4 mt-2 rider-secondary-info">
+          <p>
+            <Link to="/rider/sign-in">Sign In</Link>
+          </p>
+        </div>
       </div>
     );
   }
