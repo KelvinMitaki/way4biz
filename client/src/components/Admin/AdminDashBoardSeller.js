@@ -45,7 +45,7 @@ class AdminDashBoardSeller extends React.Component {
               </div>
               <div className="admin-individual-seller-details">
                 <div className="custom-row">
-                  <h5>
+                  <h5 className="d-flex m-1">
                     <strong>Name: </strong>
                     {this.props.verifiedSeller.firstName}{" "}
                     {this.props.verifiedSeller.lastName}
@@ -53,7 +53,7 @@ class AdminDashBoardSeller extends React.Component {
                 </div>
                 <div className="custom-row">
                   <h5>
-                    <strong>StoreName: </strong>
+                    <strong>Store Name: </strong>
                     {this.props.verifiedSeller.storeName}
                   </h5>
                 </div>
@@ -132,10 +132,10 @@ class AdminDashBoardSeller extends React.Component {
     return <ScreenLoader />;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verifiedSeller: state.seller.verifiedSeller,
-    verifiedSellerLoading: state.seller.verifiedSellerLoading
+    verifiedSellerLoading: state.seller.verifiedSellerLoading,
   };
 };
 export default withRouter(
