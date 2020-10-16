@@ -9,12 +9,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
+import MobileLogo from "../Header/MobileLogo";
+import AuthHeader from "../Authenticate/AuthHeader";
 
 class RidersRegister extends React.Component {
   render() {
     if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
+        <MobileLogo />
+        <AuthHeader />
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             this.props.riderRegister(formValues);
