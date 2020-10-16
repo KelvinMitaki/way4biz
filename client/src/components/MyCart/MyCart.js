@@ -115,7 +115,9 @@ class MyCart extends React.Component {
                 </div>
               </div>
               <button
-                onClick={() => this.props.proceedToCheckout(this.props.history)}
+                onClick={() =>
+                  this.props.proceedToCheckout(this.props.history, "/address")
+                }
                 className="btn checkout-button mb-3 btn-md btn-block"
               >
                 {this.props.pToCheckoutLoading && (

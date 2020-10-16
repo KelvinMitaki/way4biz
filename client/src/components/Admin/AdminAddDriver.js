@@ -9,8 +9,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
 import EmailConfirm from "../Authenticate/EmailConfirm";
+import AdminDashBoardHeader from "./AdminDashBoardHeader";
+import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import MobileLogo from "../Header/MobileLogo";
-import AuthHeader from "../Authenticate/AuthHeader";
 
 class AdminAddDriver extends React.Component {
   render() {
@@ -18,7 +19,11 @@ class AdminAddDriver extends React.Component {
     return (
       <div>
         <MobileLogo />
-        <AuthHeader />
+        <AdminDashBoardHeader />
+        <AdminDashboardSecondaryHeader />
+        <h3 style={{ textAlign: "center" }} className="my-2">
+          Driver Form
+        </h3>
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
             this.props.riderRegister(formValues);
@@ -57,22 +62,22 @@ class AdminAddDriver extends React.Component {
           />
           <Field
             required="*"
-            type="password"
-            name="password"
-            label="Password"
+            type="text"
+            name="idNumber"
+            label="ID No."
             component={AuthField}
           />
           <Field
             required="*"
-            type="password"
-            name="confirmPassword"
-            label="Confirm Password"
+            type="text"
+            name="vehicleNumber"
+            label="Vehicle No."
             component={AuthField}
           />
           {/* <strong>* is required</strong> */}
           <button
             style={{ cursor: "pointer" }}
-            className="btn btn-md btn-block primary-button mt-3"
+            className="btn btn-md btn-block primary-button my-3"
             disabled={!this.props.valid || this.props.riderRegisterLoading}
             type="submit"
           >

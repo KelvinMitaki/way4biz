@@ -9,6 +9,7 @@ import ScreenLoader from "../Pages/ScreenLoader";
 import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import Image from "../Market/Image";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoardOrderItems extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class AdminDashBoardOrderItems extends React.Component {
     if (!this.props.adminOrder) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0 mb-5">
+        <MobileLogo />
         <AdminDashBoardHeader />
         <AdminDashboardSecondaryHeader />
         <div className="container mt-4">
@@ -61,7 +63,7 @@ class AdminDashBoardOrderItems extends React.Component {
               <div className="admin-order-items-wrapper">
                 {/* mapping here */}
                 {this.props.adminOrder["0"].product.length !== 0 &&
-                  this.props.adminOrder["0"].product.map(p => (
+                  this.props.adminOrder["0"].product.map((p) => (
                     <div
                       key={p._id}
                       className="box-container row align-items-center"
@@ -96,7 +98,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           <strong>Qty: </strong>
                           {
                             this.props.adminOrder["0"].items.find(
-                              it => it.product === p._id
+                              (it) => it.product === p._id
                             ).quantity
                           }
                         </p>
@@ -105,7 +107,7 @@ class AdminDashBoardOrderItems extends React.Component {
                           Ksh.
                           {(
                             this.props.adminOrder["0"].items.find(
-                              it => it.product === p._id
+                              (it) => it.product === p._id
                             ).quantity * p.charge
                           ).toLocaleString()}
                         </p>
@@ -166,10 +168,10 @@ class AdminDashBoardOrderItems extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     adminOrder: state.admin.adminOrder,
-    deliveryLoading: state.admin.deliveryLoading
+    deliveryLoading: state.admin.deliveryLoading,
   };
 };
 export default withRouter(

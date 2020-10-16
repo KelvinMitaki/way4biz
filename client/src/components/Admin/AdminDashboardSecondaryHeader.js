@@ -4,7 +4,7 @@ import "./AdminDashboardSecondaryHeader.css";
 import {
   RiDashboardLine,
   RiFileUserLine,
-  RiInboxArchiveLine,
+  RiInboxArchiveLine
 } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { GoClippy } from "react-icons/go";
@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import {
   fetchNewSellers,
   clearOrderDetails,
-  redeemCountAction,
+  redeemCountAction
 } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import AdminProfile from "./AdminProfile";
@@ -32,20 +32,20 @@ class AdminDashboardSecondaryHeader extends React.Component {
           {
             name: "New Sellers",
             url: "/admin-new-sellers",
-            num: 100,
-          },
-        ],
-      },
-    ],
+            num: 100
+          }
+        ]
+      }
+    ]
   };
   componentDidMount() {
     this.props.fetchNewSellers();
     this.props.redeemCountAction();
   }
-  handleClick = (e) => {
-    this.setState((prevState) => {
+  handleClick = e => {
+    this.setState(prevState => {
       return {
-        open: !prevState.open,
+        open: !prevState.open
       };
     });
   };
@@ -105,7 +105,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff",
+                        color: "#fff"
                       }}
                       className="ml-1 badge"
                     >
@@ -145,7 +145,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                           position: "relative",
                           zIndex: "32",
                           backgroundColor: "#f76b1a",
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       >
                         {this.props.newSellers.sellers.length.toLocaleString()}
@@ -173,7 +173,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                             position: "relative",
                             zIndex: "32",
                             backgroundColor: "#f76b1a",
-                            color: "#fff",
+                            color: "#fff"
                           }}
                         >
                           {this.props.newSellers.sellers.length}
@@ -182,10 +182,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   </NavLink>
                 </p>
                 <p>
-                  <NavLink to="/new-drivers">Add Driver</NavLink>
+                  <NavLink to="/admin/add-driver">Add Driver</NavLink>
                 </p>
                 <p>
-                  <NavLink to="/admin-drivers">Active Drivers</NavLink>
+                  <NavLink to="/admin/active-drivers">Active Drivers</NavLink>
                 </p>
               </div>
             </li>
@@ -223,7 +223,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                         position: "relative",
                         zIndex: "32",
                         backgroundColor: "#f76b1a",
-                        color: "#fff",
+                        color: "#fff"
                       }}
                       className="ml-1 badge"
                     >
@@ -248,10 +248,10 @@ class AdminDashboardSecondaryHeader extends React.Component {
                       position: "relative",
                       zIndex: "32",
                       backgroundColor: "#f76b1a",
-                      color: "#fff",
+                      color: "#fff"
                     }}
                   >
-                    0
+                    {this.props.inboxCount && this.props.inboxCount.count}
                   </span>
                 </span>
               </NavLink>
@@ -284,15 +284,16 @@ class AdminDashboardSecondaryHeader extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     newSellers: state.admin.newSellers,
     redeems: state.admin.redeemCount && state.admin.redeemCount.redeems,
     redeemCount: state.admin.redeemCount,
+    inboxCount: state.admin.inboxCount
   };
 };
 export default connect(mapStateToProps, {
   fetchNewSellers,
   clearOrderDetails,
-  redeemCountAction,
+  redeemCountAction
 })(AdminDashboardSecondaryHeader);

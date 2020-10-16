@@ -280,7 +280,10 @@ import {
   RIDER_LOGGED_IN,
   RIDER_LOGIN_ERROR,
   P_TO_CHECKOUT_START,
-  P_TO_CHECKOUT_STOP
+  P_TO_CHECKOUT_STOP,
+  ADMIN_INBOX_COUNT,
+  FETCH_ITEMS_IN_CART,
+  EMPTY_ITEMS_IN_CART
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -910,9 +913,9 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
     const orderId =
       getState().cartReducer.pendingOrder &&
       getState().cartReducer.pendingOrder._id;
-
+    const cart = getState().cartReducer.cart;
     if (orderId) {
-      const res = await axios.post(`/api/mpesa/paid/order`);
+      const res = await axios.post(`/api/mpesa/paid/order`, { cart });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
@@ -2391,10 +2394,18 @@ export const contactUs = (formValues, history) => async dispatch => {
     dispatch({ type: CONTACT_US_STOP });
   }
 };
-export const fetchAdminInbox = () => async dispatch => {
+export const fetchAdminInbox = optional => async dispatch => {
   try {
     dispatch({ type: FETCH_ADMIN_INBOX_START });
-    const res = await axios.get("/api/fetch/admin/inbox");
+    if (optional) {
+      const res = await axios.post("/api/fetch/admin/inbox", {
+        filter: optional
+      });
+      dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
+      dispatch({ type: FETCH_ADMIN_INBOX_STOP });
+      return;
+    }
+    const res = await axios.post("/api/fetch/admin/inbox");
     dispatch({ type: FETCH_ADMIN_INBOX, payload: res.data });
     dispatch({ type: FETCH_ADMIN_INBOX_STOP });
   } catch (error) {
@@ -2567,7 +2578,10 @@ export const saveOrder = history => async (dispatch, getState) => {
       callback: async function (data) {
         // specified callback function
         try {
-          const res = await axios.post("/api/verify/flutterwave/payment", data);
+          const res = await axios.post("/api/verify/flutterwave/payment", {
+            ...data,
+            cart
+          });
           dispatch({
             type: FETCH_ORDER_SUCCESS,
             payload: { ...res.data.data, ...res.data.order }
@@ -2653,33 +2667,90 @@ const riderLoginError = error => {
   };
 };
 
-export const riderLogIn = data => {
-  return (dispatch, getState) => {
+export const riderLogIn = data => async (dispatch, getState) => {
+  try {
     dispatch(riderLoginLoading());
-    axios
-      .post("/api/driver/sign-in", data)
-      .then(res => {
-        console.log(res.data);
-        dispatch(riderLoggedIn());
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(riderLoginError(error));
-      });
-  };
+    const res = await axios.post("/api/driver/sign-in", data);
+
+    console.log(res.data);
+    dispatch(riderLoggedIn());
+  } catch (error) {
+    console.log(error);
+    dispatch(riderLoginError(error.response));
+  }
 };
 
-export const proceedToCheckout = history => async (dispatch, getState) => {
+export const proceedToCheckout = (history, location) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: P_TO_CHECKOUT_START });
     let cart = getState().cartReducer.cart;
     cart = cart.map(item => ({ _id: item._id, quantity: item.quantity }));
-    const { data } = await axios.post("/api/proceed/to/checkout", { cart });
-    console.log(data);
-    history.push("/address");
+    await axios.post("/api/proceed/to/checkout", { cart });
+
+    history.push(location);
+
     dispatch({ type: P_TO_CHECKOUT_STOP });
   } catch (error) {
     console.log(error.response);
+    history.push("/cart/redirect");
     dispatch({ type: P_TO_CHECKOUT_STOP });
   }
+};
+
+export const adminInboxCount = () => async dispatch => {
+  try {
+    const { data } = await axios.get("/api/admin/inbox/count");
+    dispatch({ type: ADMIN_INBOX_COUNT, payload: data });
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
+export const markAsRead = (id, history) => async dispatch => {
+  try {
+    await axios.post("/api/mark/as/read", { _id: id });
+    await dispatch(fetchAdminInbox());
+    history.push("/admin-inbox");
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const fetchItemsInCart = history => async (dispatch, getState) => {
+  try {
+    let cart = getState().cartReducer.cart;
+    if (cart.length !== 0) {
+      cart = cart.map(item => ({ _id: item._id, quantity: item.quantity }));
+    }
+    const res = await axios.post("/api/fetch/items/in/cart", { cart });
+    let test =
+      res.data.length !== 0 &&
+      res.data.map(item => {
+        const cartItem = cart.find(
+          it => it._id.toString() === item._id.toString()
+        );
+        if (cartItem.quantity > item.stockQuantity) {
+          return item;
+        }
+        return undefined;
+      });
+    test = test.filter(it => it !== undefined);
+    if (!test || (test && test.length === 0)) {
+      return history.goBack();
+    }
+    dispatch({ type: FETCH_ITEMS_IN_CART, payload: test });
+  } catch (error) {
+    console.log(error.response);
+    console.log(error);
+  }
+};
+
+export const emptyItemsInCart = () => {
+  return {
+    type: EMPTY_ITEMS_IN_CART
+  };
 };

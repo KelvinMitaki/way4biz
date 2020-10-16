@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { fetchVerifiedSellers } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
 
 class AdminDashBoardSellers extends React.Component {
   componentDidMount() {
@@ -16,6 +17,7 @@ class AdminDashBoardSellers extends React.Component {
     if (!this.props.verifiedSellers) return <ScreenLoader />;
     return (
       <div className="container-fluid p-0 mb-5">
+        <MobileLogo />
         <DashBoardHeader />
         <SecondaryHeader />
         <div className="container box-container mt-4">
@@ -40,31 +42,31 @@ class AdminDashBoardSellers extends React.Component {
               </div>
               {/* mapping here */}
               {this.props.verifiedSellers.length !== 0 &&
-                this.props.verifiedSellers.map(seller => (
+                this.props.verifiedSellers.map((seller) => (
                   <div key={seller._id} className="admin-seller container">
                     <div className="row box-container">
                       <div className="col-md-3">
                         {/* <div className="admin-seller-details"> */}
-                        <p>
+                        <p className="d-flex m-1">
                           <strong className="mr-2 x">Name:</strong>
                           {seller.firstName} {seller.lastName}
                         </p>
                         {/* </div> */}
                       </div>
                       <div className="col-md-3 d-flex align-items-center">
-                        <p>
+                        <p className="d-flex m-1">
                           <strong className="mr-2 x">StoreName:</strong>
                           {seller.storeName}
                         </p>
                       </div>
                       <div className="col-md-3 d-flex align-items-center">
-                        <p>
+                        <p className="d-flex m-1">
                           <strong className="x mr-2">Date Joined</strong>
                           {new Date(seller.createdAt).toLocaleString()}
                         </p>
                       </div>
                       <div className="col-md-3 d-flex align-items-center">
-                        <p>
+                        <p className="d-flex m-1">
                           <Link
                             to={`/admin-seller/${seller._id}`}
                             className="admin-seller-view-more"
@@ -83,10 +85,10 @@ class AdminDashBoardSellers extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verifiedSellers: state.seller.verifiedSellers,
-    fetchSellersLoading: state.seller.fetchSellersLoading
+    fetchSellersLoading: state.seller.fetchSellersLoading,
   };
 };
 export default connect(mapStateToProps, { fetchVerifiedSellers })(

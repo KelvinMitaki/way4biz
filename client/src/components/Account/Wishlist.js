@@ -12,14 +12,16 @@ import { connect } from "react-redux";
 import {
   addToCart,
   removeFromWishlist,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 } from "../../redux/actions";
+import MobileLogo from "../Header/MobileLogo";
 
 // DECREASE FROM BOTH CART AND WISHLIST
 export class Wishlist extends Component {
   render() {
     return (
       <React.Fragment>
+        <MobileLogo />
         <AccountHeader />
         <div className="container">
           <div className="row">
@@ -55,7 +57,7 @@ export class Wishlist extends Component {
               <div className="container-fluid wishlist-saved-items">
                 {/* mapping here */}
                 {this.props.wishlist.length !== 0 &&
-                  this.props.wishlist.map(item => (
+                  this.props.wishlist.map((item) => (
                     <div
                       className="wishlist-product-wrapper box-container"
                       key={item._id}
@@ -125,15 +127,15 @@ export class Wishlist extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     wishlist: state.cartReducer.wishlist,
     wishlistLoading: state.cartReducer.wishlistLoading,
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default connect(mapStateToProps, {
   addToCart,
   removeFromWishlist,
-  fetchWishlistProducts
+  fetchWishlistProducts,
 })(Wishlist);

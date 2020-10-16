@@ -36,11 +36,6 @@
   border-radius: 10px;
 }
 
-.arrow-icon {
-  font-size: 35px;
-  color: #f76b1a;
-}
-
 @media screen and (max-width: 960px) {
   .seller-order-wrapper div {
     margin-bottom: 10px;

@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { fetchBuyerOrderDetails, addToCart } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import Image from "../Market/Image";
+import MobileLogo from "../Header/MobileLogo";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class BuyerOrderDetails extends Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container">
             <div className="row">
@@ -50,7 +52,9 @@ class BuyerOrderDetails extends Component {
                     >
                       <div className="d-flex align-items-center">
                         <Link to="/orders">
-                          <BsArrowLeft />
+                          <BsArrowLeft
+                            style={{ color: "#f76b1a", fontSize: "35px" }}
+                          />
                         </Link>
                       </div>
                     </IconContext.Provider>
@@ -115,7 +119,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map(item => {
+                      buyerOrderDetails.items.map((item) => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -193,10 +197,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading
+    fetchOrdersLoading: state.auth.fetchOrdersLoading,
   };
 };
 export default withRouter(

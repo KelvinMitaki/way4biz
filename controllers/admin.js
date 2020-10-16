@@ -1687,6 +1687,7 @@ route.get("/api/root/admin/new/products", auth, isAdmin, async (req, res) => {
   try {
     const products = await Product.find({ underReview: true })
       .populate("seller")
+      .select({ description: 0 })
       .exec();
     res.send(products);
   } catch (error) {
@@ -1701,6 +1702,7 @@ route.get(
     try {
       const product = await Product.findById(req.params.productId)
         .populate("seller")
+        .select({ description: 0 })
         .exec();
       res.send(product);
     } catch (error) {
@@ -2247,8 +2249,16 @@ route.post("/api/seller/register/referral/:referralCode", async (req, res) => {
   }
 });
 
-route.get("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
+route.post("/api/fetch/admin/inbox", auth, isAdmin, async (req, res) => {
   try {
+    const { filter } = req.body;
+    if (filter) {
+      const inbox = await Contact.find(filter).populate(
+        "userSeller user",
+        "firstName lastName email"
+      );
+      return res.send(inbox);
+    }
     const inbox = await Contact.find({}).populate(
       "userSeller user",
       "firstName lastName email"
@@ -2397,4 +2407,22 @@ route.post(
     }
   }
 );
+
+route.get("/api/admin/inbox/count", auth, isAdmin, async (req, res) => {
+  try {
+    const contacts = await Contact.find({ read: false }).countDocuments();
+    res.send({ count: contacts });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+route.post("/api/mark/as/read", auth, isAdmin, async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const contact = await Contact.findByIdAndUpdate(_id, { read: true });
+    res.send(contact);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 module.exports = route;

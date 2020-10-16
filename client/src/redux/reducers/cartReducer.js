@@ -25,7 +25,9 @@ import {
   DELETE_CART_START,
   DELETE_CART_STOP,
   P_TO_CHECKOUT_START,
-  P_TO_CHECKOUT_STOP
+  P_TO_CHECKOUT_STOP,
+  FETCH_ITEMS_IN_CART,
+  EMPTY_ITEMS_IN_CART
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -40,7 +42,8 @@ const INITIAL_STATE = {
   orderSuccess: null,
   orderSuccessLoading: false,
   deleteCartLoading: false,
-  pToCheckoutLoading: false
+  pToCheckoutLoading: false,
+  fetchedItems: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -154,6 +157,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, pToCheckoutLoading: true };
     case P_TO_CHECKOUT_STOP:
       return { ...state, pToCheckoutLoading: false };
+    case FETCH_ITEMS_IN_CART:
+      return { ...state, fetchedItems: action.payload };
+    case EMPTY_ITEMS_IN_CART:
+      return { ...state, fetchedItems: null };
     default:
       return state;
   }

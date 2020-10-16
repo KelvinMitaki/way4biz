@@ -10,7 +10,11 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
-import { checkoutUser, storeLatLng } from "../../redux/actions";
+import {
+  checkoutUser,
+  proceedToCheckout,
+  storeLatLng
+} from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
@@ -26,6 +30,7 @@ class AddressForm extends React.Component {
     }
   };
   componentDidMount() {
+    this.props.proceedToCheckout(this.props.history, "/address");
     if (this.props.initialValues.city) {
       const { city } = this.props.initialValues;
       this.handleCitySelect(city);
@@ -229,7 +234,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { checkoutUser, storeLatLng })(
+  connect(mapStateToProps, { checkoutUser, storeLatLng, proceedToCheckout })(
     reduxForm({ validate, form: "AddressForm" })(AddressForm)
   )
 );
