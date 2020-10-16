@@ -1345,18 +1345,21 @@ route.post(
 route.post("/api/proceed/to/checkout", async (req, res) => {
   try {
     const { cart } = req.body;
-    cart.forEach(async item => {
-      const prod = await Product.findById(item._id).select(
-        "stockQuantity name"
-      );
-      if (prod.stockQuantity < item.quantity) {
-        return res
-          .status(401)
-          .send({
-            message: `the available stock for ${prod.name} is ${prod.stockQuantity}`
-          });
-      }
-    });
+    const test = await Promise.all(
+      cart.map(async item => {
+        const prod = await Product.findById(item._id).select(
+          "stockQuantity name"
+        );
+        if (prod.stockQuantity < item.quantity) {
+          return `the available stock for ${prod.name} is ${prod.stockQuantity}`;
+        }
+        return;
+      })
+    );
+    const message = test.find(item => typeof item === "string");
+    if (message) {
+      return res.status(401).send({ message });
+    }
     res.send({ message: "Success" });
   } catch (error) {
     res.status(500).send(error);

@@ -2671,9 +2671,9 @@ export const proceedToCheckout = history => async (dispatch, getState) => {
   try {
     let cart = getState().cartReducer.cart;
     cart = cart.map(item => ({ _id: item._id, quantity: item.quantity }));
-    console.log(cart);
-
-    // history.push("/address")
+    const { data } = await axios.post("/api/proceed/to/checkout", { cart });
+    console.log(data);
+    history.push("/address");
   } catch (error) {
     console.log(error.response);
   }
