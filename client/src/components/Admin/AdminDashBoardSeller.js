@@ -45,7 +45,7 @@ class AdminDashBoardSeller extends React.Component {
               </div>
               <div className="admin-individual-seller-details">
                 <div className="custom-row">
-                  <h5 className="d-flex m-1">
+                  <h5 className>
                     <strong>Name: </strong>
                     {this.props.verifiedSeller.firstName}{" "}
                     {this.props.verifiedSeller.lastName}
