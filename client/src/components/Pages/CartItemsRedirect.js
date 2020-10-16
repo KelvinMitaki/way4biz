@@ -17,24 +17,26 @@ class CartItemsRedirect extends React.Component {
         <div className="content">
           <MobileLogo />
           <Header />
-          <div className="container">
-            <p>
-              It appears your greed won't work here! The following items stock
-              quantity is less than what you are requesting. Please make the
-              corrections"
-            </p>
-            <div>
-              {/* mapping here */}
-              <div className="row">
-                <div className="col-6">
-                  <img src="/1.jpg" height="90px" />
-                </div>
-                <div className="col-6">
-                  <h3>Great Beer</h3>
-                  <p>20 in stock</p>
-                  <p>
-                    Change <Link to="/">here</Link>
-                  </p>
+          <div className="white-body">
+            {" "}
+            <div className="container cart-redirect-body">
+              <p className="my-2">
+                The following items stock quantity is less than what you are
+                requesting. Please make the corrections.
+              </p>
+              <div>
+                {/* mapping here */}
+                <div className="row">
+                  <div className="col-6">
+                    <img src="/1.jpg" height="100px" />
+                  </div>
+                  <div className="col-6">
+                    <h3>Great Beer</h3>
+                    <p>20 in stock</p>
+                    <p>
+                      Change <Link to="/">here</Link>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
