@@ -36,6 +36,7 @@ import {
   DELETE_HERO_IMAGE_STOP,
   ADMIN_INBOX_COUNT,
   ADDING_DRIVER,
+  DRIVER_ADDED,
   ADDING_DRIVER_ERROR,
 } from "../actions/types";
 
