@@ -9,6 +9,7 @@ import { fetchBuyerComplaints } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { BsExclamationCircle } from "react-icons/bs";
+import MobileLogo from "../Header/MobileLogo";
 // import { IconContext } from "react-icons";
 // import { BsArrowLeft } from "react-icons/bs";
 // import ScreenLoader from "../Pages/ScreenLoader";
@@ -22,6 +23,7 @@ class AccountComplaints extends React.Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container pending-reviews-wrapper">
             <div className="row">

@@ -14,6 +14,8 @@ import { reduxForm, Field } from "redux-form";
 import AddReviewForm from "./AddReviewForm";
 import BeautyStars from "beauty-stars";
 import ScreenLoader from "../Pages/ScreenLoader";
+import MobileLogo from "../Header/MobileLogo";
+
 class AddReview extends Component {
   state = {
     value: 0,
@@ -37,6 +39,7 @@ class AddReview extends Component {
     return (
       <div className="main">
         <div className="content">
+          <MobileLogo />
           <AccountHeader />
           <div className="container">
             <div className="row">

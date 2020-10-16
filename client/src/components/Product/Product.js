@@ -1,6 +1,6 @@
 import React from "react";
 import ReactImageMagnify from "react-image-magnify";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart, IoMdHeartEmpty, IoMdShare } from "react-icons/io";
 import { FaStore } from "react-icons/fa";
 import "./Product.css";
 import Footer from "../Footer/Footer";
@@ -28,6 +28,11 @@ import "slick-carousel/slick/slick-theme.css";
 import { RiMotorbikeLine } from "react-icons/ri";
 import { FiTruck } from "react-icons/fi";
 import MobileLogo from "../Header/MobileLogo";
+import {
+  TiSocialInstagramCircular,
+  TiSocialTwitterCircular,
+  TiSocialFacebookCircular,
+} from "react-icons/ti";
 
 class Product extends React.Component {
   constructor(props) {
@@ -214,7 +219,10 @@ class Product extends React.Component {
                         )}
                       </div>
                     </div>
-                    <div className="col-md-7 product-info p-2">
+                    <div
+                      className="col-md-7 product-info"
+                      style={{ position: "relative" }}
+                    >
                       {stockQuantity >= 1 ? (
                         <span className="badge stock-badge in-stock-badge">
                           In Stock
@@ -336,6 +344,43 @@ class Product extends React.Component {
                         >
                           Add to Cart
                         </button>
+                      </div>
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "0px",
+                          left: "0px",
+                          right: "0px",
+                          width: "90%",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                          display: "flex",
+                          height: "60px",
+                          alignItems: "center",
+                          fontSize: "1.5rem",
+                          padding: "0px 8px",
+                          // justifyContent: "space-between",
+                        }}
+                      >
+                        <span>SHARE</span>
+                        <IoMdShare
+                          className="mx-2"
+                          style={{ fontSize: "30px", flex: "1" }}
+                        />
+                        <div
+                          style={{
+                            flex: "2",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            height: "100%",
+                            fontSize: "35px",
+                          }}
+                        >
+                          <TiSocialFacebookCircular className="product-share-icon" />
+                          <TiSocialTwitterCircular className="product-share-icon" />
+                          <TiSocialInstagramCircular className="product-share-icon" />
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -57,7 +57,7 @@ class RiderLogin extends React.Component {
               Forgot password?
             </Link>
           </p>
-          <p className="forgot-password-link-wrapper">
+          {/* <p className="forgot-password-link-wrapper">
             <Link
               style={{ color: "#f76b1a" }}
               className="float-right"
@@ -65,7 +65,7 @@ class RiderLogin extends React.Component {
             >
               Sign Up
             </Link>
-          </p>
+          </p> */}
         </div>
         {/* <a
           href="/auth/google"
