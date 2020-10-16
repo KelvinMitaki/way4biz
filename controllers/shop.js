@@ -316,6 +316,10 @@ route.post(
         };
       });
       cart.forEach(async item => {
+        // const pro=await Product.findById(item._id)
+        // if(pro.stockQuantity<item.quantity){
+
+        // }
         await Product.findByIdAndUpdate(item._id, {
           $inc: { stockQuantity: -item.quantity }
         });
@@ -1338,6 +1342,26 @@ route.post(
     }
   }
 );
+route.post("/api/proceed/to/checkout", async (req, res) => {
+  try {
+    const { cart } = req.body;
+    cart.forEach(async item => {
+      const prod = await Product.findById(item._id).select(
+        "stockQuantity name"
+      );
+      if (prod.stockQuantity < item.quantity) {
+        return res
+          .status(401)
+          .send({
+            message: `the available stock for ${prod.name} is ${prod.stockQuantity}`
+          });
+      }
+    });
+    res.send({ message: "Success" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
 });
