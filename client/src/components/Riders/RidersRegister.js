@@ -4,7 +4,7 @@ import "./RidersRegister.css";
 import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
-import { register } from "../../redux/actions";
+import { riderRegister } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
@@ -17,7 +17,7 @@ class RidersRegister extends React.Component {
       <div>
         <form
           onSubmit={this.props.handleSubmit((formValues) => {
-            this.props.register(formValues);
+            this.props.riderRegister(formValues);
           })}
         >
           <Field
@@ -86,14 +86,6 @@ class RidersRegister extends React.Component {
             )}
           </button>
         </form>
-        <br />
-        <a
-          href="/auth/google"
-          className="btn btn-md btn-block mt-3 secondary-google"
-          type="submit"
-        >
-          Sign In With Google
-        </a>
       </div>
     );
   }
@@ -144,6 +136,6 @@ const mapStateToProps = (state) => {
 };
 export default withRouter(
   reduxForm({ validate, form: "RidersRegister" })(
-    connect(mapStateToProps, { register })(RidersRegister)
+    connect(mapStateToProps, { riderRegister })(RidersRegister)
   )
 );
