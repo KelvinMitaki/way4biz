@@ -37,7 +37,14 @@ class Riders extends React.Component {
             <Logo />
             <div className="rider-profile">
               <ProfileImage size={"50px"} />
-              <MdArrowDropDown style={{ fontSize: "30px", color: "#f76b1a" }} />
+              <div className="rider-logout-wrapper">
+                <MdArrowDropDown
+                  style={{ fontSize: "30px", color: "#f76b1a" }}
+                />
+                <div className="rider-logout">
+                  <p>Logout</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
