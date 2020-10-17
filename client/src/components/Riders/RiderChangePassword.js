@@ -65,7 +65,7 @@ export class RiderChangePassword extends Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
 
   if (
@@ -85,7 +85,7 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
