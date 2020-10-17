@@ -15,3 +15,8 @@
 .rider-body {
   min-height: calc(100vh - 80px);
 }
+
+.rider-profile {
+  display: flex;
+  align-items: flex-end;
+}

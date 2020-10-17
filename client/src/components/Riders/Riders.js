@@ -35,9 +35,9 @@ class Riders extends React.Component {
         <div id="rider-header">
           <div className="container">
             <Logo />
-            <div>
+            <div className="rider-profile">
               <ProfileImage size={"50px"} />
-              <MdArrowDropDown />
+              <MdArrowDropDown style={{ fontSize: "30px", color: "#f76b1a" }} />
             </div>
           </div>
         </div>
