@@ -25,20 +25,7 @@ class Logistics extends React.Component {
       lng: 36.8263,
     },
   };
-  componentDidMount() {
-    if (this.props.initialValues.city) {
-      const { city } = this.props.initialValues;
-      this.handleCitySelect(city);
-    }
-    if (this.props.initialValues.town) {
-      const { town } = this.props.initialValues;
-      this.handleTownSelect(town);
-    }
-    if (this.props.initialValues.address) {
-      const { address } = this.props.initialValues;
-      this.handleAddressSelect(address);
-    }
-  }
+  componentDidMount() {}
   handleCitySelect = async (selectedCity) => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
@@ -65,7 +52,6 @@ class Logistics extends React.Component {
     this.props.change("address", selectedAddress);
   };
   render() {
-    if (this.props.cart.length === 0) return <Redirect to="/" />;
     return (
       <div className="main">
         <div className="content">
@@ -86,10 +72,6 @@ class Logistics extends React.Component {
                 </p>
                 <form
                   onSubmit={this.props.handleSubmit((formValues) => {
-                    // this.props.storeLatLng(
-                    //   `${this.state.addressLatLng.lat.toString()},${this.state.addressLatLng.lng.toString()}`
-                    // );
-                    // this.props.checkoutUser(formValues, this.props.history);
                     console.log(formValues);
                   })}
                 >
@@ -296,15 +278,10 @@ const validate = (formValues) => {
   return errors;
 };
 const mapStateToProps = (state) => {
-  return {
-    initialValues: state.auth.user,
-    checkoutUserLoading: state.auth.checkoutUserLoading,
-    checkoutUserError: state.auth.checkoutUserError,
-    cart: state.cartReducer.cart,
-  };
+  return {};
 };
 export default withRouter(
-  connect(mapStateToProps, { checkoutUser, storeLatLng })(
+  connect(mapStateToProps)(
     reduxForm({ validate, form: "Logistics" })(Logistics)
   )
 );
