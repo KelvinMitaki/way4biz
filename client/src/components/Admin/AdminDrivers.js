@@ -25,10 +25,10 @@ class AdminDrivers extends React.Component {
                   <h6 style={{ paddingLeft: "15px" }}>Driver Name</h6>
                 </div>
                 <div className="col-md-3">
-                  <h6>Phone</h6>
+                  <h6 style={{ paddingLeft: "15px" }}>Phone</h6>
                 </div>
                 <div className="col-md-3">
-                  <h6>Status</h6>
+                  <h6>ID No.</h6>
                 </div>
                 <div className="col-md-3"></div>
               </div>
@@ -50,16 +50,14 @@ class AdminDrivers extends React.Component {
                   </div>
                   <div className="col-md-3 d-flex align-items-center">
                     <p className="d-flex m-1">
-                      <strong className="x mr-2">Status</strong>
-                      <span className="badge bg-success p-2 text-white">
-                        Free
-                      </span>
+                      <strong className="x mr-2">ID No.</strong>
+                      12345678
                     </p>
                   </div>
                   <div className="col-md-3 d-flex align-items-center">
                     <p>
                       <Link
-                        to={`/admin-seller/`}
+                        to={`/admin/driver`}
                         className="admin-seller-view-more"
                       >
                         View More

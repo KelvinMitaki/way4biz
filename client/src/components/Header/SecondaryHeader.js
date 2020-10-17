@@ -7,9 +7,9 @@ class SecondaryHeader extends React.Component {
   render() {
     return (
       <div className="secondary-header d-flex primary-background">
-        <div id="large-screen-secondary-header" className="d-flex">
+        <div id="large-screen-secondary-header">
           <div id="secondary-header-side" style={{ flex: "1" }}></div>
-          <div className="d-flex" style={{ flex: "7" }}>
+          <div className="secondary-lg-menu" style={{ flex: "7" }}>
             {!this.props.isSignedIn && (
               <Link
                 className="mx-4 secondary-header-link"

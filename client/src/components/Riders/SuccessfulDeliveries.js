@@ -7,46 +7,9 @@ class SuccessfulDeliveries extends React.Component {
     return (
       <div className="successful-deliveries">
         <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>{" "}
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>{" "}
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>{" "}
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>{" "}
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
-        </div>{" "}
-        <div>
-          <p>Delivered to Rongai on 15/10/2020</p>
-          <p>Owner: Swapo</p>
-          <p>Contact:0712345678</p>
-          <p>Status:Delivered</p>
+          <p>Delivered Pizza from TRM to Rongai on 15/10/2020</p>
+          <p>Sender Phone: 0799999999</p>
+          <p>Recipient Phone: 0799999999</p>
         </div>
       </div>
     );

@@ -15,3 +15,32 @@
 .rider-body {
   min-height: calc(100vh - 80px);
 }
+
+.rider-profile {
+  display: flex;
+  align-items: flex-end;
+}
+
+.rider-logout-wrapper {
+  position: relative;
+}
+
+.rider-logout {
+  display: none;
+}
+
+.rider-logout-wrapper:hover .rider-logout {
+  display: block;
+  background-color: #fff;
+  color: #000;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 10px 0px 10px 5px;
+}
+
+.rider-logout p {
+  cursor: pointer;
+}

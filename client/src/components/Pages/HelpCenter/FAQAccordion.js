@@ -254,21 +254,22 @@ class FAQAccordion extends React.Component {
               <li>
                 <p>
                   To have access to our logistics services visit our{" "}
-                  <Link>logistics page</Link> for more information.
+                  <Link to="/logistics">logistics page</Link> for more
+                  information.
                 </p>
               </li>
-              <li>
+              {/* <li>
                 <p>
                   Download our mobile app to inquire for logistics services.
                 </p>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <p>
                   <strong>Note:</strong>If you already have an active seller
                   account with us just login with your details in the logistics
                   app. This will make you a <strong>partner</strong>
                 </p>
-              </li>
+              </li> */}
             </ul>
           </div>
         ),

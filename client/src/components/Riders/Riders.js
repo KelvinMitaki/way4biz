@@ -4,20 +4,21 @@ import Tabs from "react-responsive-tabs";
 import "./Riders.css";
 import Logo from "../Header/Logo";
 import SuccessfulDeliveries from "./SuccessfulDeliveries";
-import PendingDeliveries from "./PendingDeliveries";
+// import PendingDeliveries from "./PendingDeliveries";
+import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
 
 class Riders extends React.Component {
   getTabs() {
     const data = [
       {
-        name: "Successful Deliveries",
+        name: "Deliveries",
         content: <SuccessfulDeliveries />,
       },
-      {
-        name: "Pending Deliveries",
-        content: <PendingDeliveries />,
-      },
+      // {
+      //   name: "Pending Deliveries",
+      //   content: <PendingDeliveries />,
+      // },
     ];
 
     return data.map((d, index) => ({
@@ -34,7 +35,17 @@ class Riders extends React.Component {
         <div id="rider-header">
           <div className="container">
             <Logo />
-            <ProfileImage size={"50px"} />
+            <div className="rider-profile">
+              <ProfileImage size={"50px"} />
+              <div className="rider-logout-wrapper">
+                <MdArrowDropDown
+                  style={{ fontSize: "30px", color: "#f76b1a" }}
+                />
+                <div className="rider-logout">
+                  <p>Logout</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="white-body rider-body">
