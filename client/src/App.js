@@ -98,6 +98,7 @@ import RiderLogin from "./components/Riders/RiderLogin";
 // import RidersRegister from "./components/Riders/RidersRegister";
 import AdminAddDriver from "./components/Admin/AdminAddDriver";
 import AdminDrivers from "./components/Admin/AdminDrivers";
+import AdminDriver from "./components/Admin/AdminDriver";
 
 class App extends React.Component {
   state = {
@@ -304,6 +305,16 @@ class App extends React.Component {
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
                     <AdminDrivers />
+                  ) : (
+                    <Redirect to="/seller/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/admin/driver"
+                render={() =>
+                  this.props.user && this.props.user.isAdmin ? (
+                    <AdminDriver />
                   ) : (
                     <Redirect to="/seller/sign-in" />
                   )
