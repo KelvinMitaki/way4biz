@@ -4,7 +4,6 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { connect } from "react-redux";
-import { riderLogIn } from "../../redux/actions";
 import { withRouter, Link } from "react-router-dom";
 import MobileLogo from "../Header/MobileLogo";
 import AuthHeader from "../Authenticate/AuthHeader";
@@ -21,7 +20,7 @@ class RiderLogin extends React.Component {
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit((formValues) => {
-            return this.props.riderLogIn(formValues, this.props.history);
+            console.log(formValues);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -57,23 +56,7 @@ class RiderLogin extends React.Component {
               Forgot password?
             </Link>
           </p>
-          {/* <p className="forgot-password-link-wrapper">
-            <Link
-              style={{ color: "#f76b1a" }}
-              className="float-right"
-              to="/rider/register"
-            >
-              Sign Up
-            </Link>
-          </p> */}
         </div>
-        {/* <a
-          href="/auth/google"
-          className="btn btn-md btn-block mt-3 secondary-google"
-          type="submit"
-        >
-          Sign In With Google
-        </a> */}
       </div>
     );
   }
@@ -104,6 +87,6 @@ const mapStateToProps = (state) => {
 };
 export default withRouter(
   reduxForm({ validate, destroyOnUnmount: false, form: "RiderLogin" })(
-    connect(mapStateToProps, { riderLogIn })(RiderLogin)
+    connect(mapStateToProps)(RiderLogin)
   )
 );
