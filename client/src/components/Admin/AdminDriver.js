@@ -47,7 +47,23 @@ class AdminDriver extends React.Component {
               </div>
             </div>
             <h4 className="pl-3 mt-2 mb-1">Deliveries Made</h4>
-            <div style={{ borderTop: "1px solid #d4d4d4" }}></div>
+            <div className="mx-3" style={{ borderTop: "1px solid #d4d4d4" }}>
+              <div className="my-1 driver-delivery">
+                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
+                <p>Sender Phone: 0799999999</p>
+                <p>Recipient Phone: 0799999999</p>
+              </div>
+              <div className="my-1 driver-delivery">
+                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
+                <p>Sender Phone: 0799999999</p>
+                <p>Recipient Phone: 0799999999</p>
+              </div>
+              <div className="my-1 driver-delivery">
+                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
+                <p>Sender Phone: 0799999999</p>
+                <p>Recipient Phone: 0799999999</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
