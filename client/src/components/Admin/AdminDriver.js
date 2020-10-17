@@ -36,16 +36,18 @@ class AdminDriver extends React.Component {
             </div>
             <div className="row p-3">
               <div className="col-md-6">
-                <h6>Name: Mike Mikey</h6>
-                <h6>Id No. 12345678</h6>
-                <h6>Phone: 0799999999</h6>
+                <h6 className="my-1">Name: Mike Mikey</h6>
+                <h6 className="my-1">Id No. 12345678</h6>
+                <h6 className="my-1">Phone: 0799999999</h6>
               </div>
               <div className="col-md-6">
-                <h6>Email: pikipiki@gmail.com</h6>
-                <h6>Vehicle No. KMCD 411M</h6>
-                <h6>Status: Free</h6>
+                <h6 className="my-1">Email: pikipiki@gmail.com</h6>
+                <h6 className="my-1">Vehicle No. KMCD 411M</h6>
+                <h6 className="my-1">Status: Free</h6>
               </div>
             </div>
+            <h4 className="pl-3 mt-2 mb-1">Deliveries Made</h4>
+            <div style={{ borderTop: "1px solid #d4d4d4" }}></div>
           </div>
         </div>
       </div>
