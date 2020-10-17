@@ -34,6 +34,14 @@ class AdminDriver extends React.Component {
                 Driver Details
               </h3>
             </div>
+            <div>
+              <h6>Name: Mike Mikey</h6>
+              <h6>Id No. 12345678</h6>
+              <h6>Phone: 0799999999</h6>
+              <h6>Email: pikipiki@gmail.com</h6>
+              <h6>Vehicle No. KMCD 411M</h6>
+              <h6>Status: Free</h6>
+            </div>
           </div>
         </div>
       </div>
