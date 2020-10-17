@@ -13,7 +13,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      files.forEach(file => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -32,7 +32,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     <div
       className="container-v p-0 box-container"
       style={{
-        width: "100%",
+        width: "100%"
         // margin: "0px auto 10px auto",
       }}
     >
@@ -50,7 +50,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
           {files.length > 0 && (
             <ReactCropper
               setImage={setImage}
-              admin={16 / 9}
+              admin={16 / 11}
               imagePreview={files[0].preview}
             />
           )}
@@ -64,7 +64,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
                   minHeight: "200px",
                   width: "1200px",
                   overflow: "hidden",
-                  zIndex: "-1",
+                  zIndex: "-1"
                 }}
               />
               <div
@@ -94,9 +94,9 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    heroImageLoading: state.product.heroImageLoading,
+    heroImageLoading: state.product.heroImageLoading
   };
 };
 export default connect(mapStateToProps, { uploadHeroImage })(AdminHeroImages);
