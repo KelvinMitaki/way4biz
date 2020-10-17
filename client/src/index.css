@@ -12,6 +12,7 @@
   }
 }
 
+html,
 body {
   background-color: #eaecee;
   overflow-x: hidden;
@@ -22,7 +23,6 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-  /* color: #f76b1a !important; */
   background-color: #f76b1a !important;
   border-radius: 3px;
 }
