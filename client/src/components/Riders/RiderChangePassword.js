@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -10,6 +10,7 @@ import MobileLogo from "../Header/MobileLogo";
 
 export class RiderChangePassword extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="main">
         <div className="content">
@@ -24,9 +25,9 @@ export class RiderChangePassword extends Component {
                 <h3 className="legend">Change Password</h3>
                 {/* <hr /> */}
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) => {
-                    console.log(formValues);
-                  })}
+                //   onSubmit={this.props.handleSubmit((formValues) => {
+                //     console.log(formValues);
+                //   })}
                 >
                   <Field
                     type="password"
@@ -87,8 +88,7 @@ const validate = (formValues) => {
 const mapStateToProps = (state) => {
   return {};
 };
-export default withRouter(
-  reduxForm({ validate, form: "RiderChangePassword" })(
-    connect(mapStateToProps)(RiderChangePassword)
-  )
+
+export default reduxForm({ validate, form: "RiderChangePassword" })(
+  RiderChangePassword
 );
