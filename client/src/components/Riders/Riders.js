@@ -4,7 +4,8 @@ import Tabs from "react-responsive-tabs";
 import "./Riders.css";
 import Logo from "../Header/Logo";
 import SuccessfulDeliveries from "./SuccessfulDeliveries";
-import PendingDeliveries from "./PendingDeliveries";
+// import PendingDeliveries from "./PendingDeliveries";
+import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
 
 class Riders extends React.Component {
@@ -34,7 +35,10 @@ class Riders extends React.Component {
         <div id="rider-header">
           <div className="container">
             <Logo />
-            <ProfileImage size={"50px"} />
+            <div>
+              <ProfileImage size={"50px"} />
+              <MdArrowDropDown />
+            </div>
           </div>
         </div>
         <div className="white-body rider-body">
