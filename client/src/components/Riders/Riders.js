@@ -11,13 +11,13 @@ class Riders extends React.Component {
   getTabs() {
     const data = [
       {
-        name: "Successful Deliveries",
+        name: "Deliveries",
         content: <SuccessfulDeliveries />,
       },
-      {
-        name: "Pending Deliveries",
-        content: <PendingDeliveries />,
-      },
+      // {
+      //   name: "Pending Deliveries",
+      //   content: <PendingDeliveries />,
+      // },
     ];
 
     return data.map((d, index) => ({
