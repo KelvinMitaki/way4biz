@@ -3,6 +3,9 @@ import React from "react";
 import "./SuccessfulDeliveries.css";
 
 class SuccessfulDeliveries extends React.Component {
+  componentDidMount(){
+    // fetch deliveries for this driver
+  }
   render() {
     return (
       <div className="successful-deliveries">
