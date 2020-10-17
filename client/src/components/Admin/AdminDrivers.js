@@ -25,7 +25,7 @@ class AdminDrivers extends React.Component {
                   <h6 style={{ paddingLeft: "15px" }}>Driver Name</h6>
                 </div>
                 <div className="col-md-3">
-                  <h6>Phone</h6>
+                  <h6 style={{ paddingLeft: "15px" }}>Phone</h6>
                 </div>
                 <div className="col-md-3">
                   <h6>Status</h6>
