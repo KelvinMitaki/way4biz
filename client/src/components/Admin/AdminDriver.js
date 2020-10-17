@@ -23,7 +23,7 @@ class AdminDriver extends React.Component {
                   value={{ className: "arrow-icon ml-3 my-2" }}
                 >
                   <div className="d-flex align-items-center">
-                    <Link to="/admin/divers">
+                    <Link to="/admin/drivers">
                       <BsArrowLeft />
                     </Link>
                   </div>
