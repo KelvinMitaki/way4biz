@@ -7,6 +7,7 @@ import SuccessfulDeliveries from "./SuccessfulDeliveries";
 // import PendingDeliveries from "./PendingDeliveries";
 import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
+import { Link } from "react-router-dom";
 
 class Riders extends React.Component {
   getTabs() {
@@ -42,6 +43,9 @@ class Riders extends React.Component {
                   style={{ fontSize: "30px", color: "#f76b1a" }}
                 />
                 <div className="rider-logout">
+                  <p>
+                    <Link to="/rider/change/password">Change Password</Link>
+                  </p>
                   <p>Logout</p>
                 </div>
               </div>

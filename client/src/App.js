@@ -99,6 +99,7 @@ import RiderLogin from "./components/Riders/RiderLogin";
 import AdminAddDriver from "./components/Admin/AdminAddDriver";
 import AdminDrivers from "./components/Admin/AdminDrivers";
 import AdminDriver from "./components/Admin/AdminDriver";
+import { RiderChangePassword } from "./components/Riders/RiderChangePassword";
 
 class App extends React.Component {
   state = {
@@ -239,7 +240,10 @@ class App extends React.Component {
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
               <Route path="/rider/sign-in" component={RiderLogin} />
-              {/* <Route path="/rider/register" component={RidersRegister} /> */}
+              <Route
+                path="/rider/change/password"
+                component={RiderChangePassword}
+              />
               <Route
                 path="/product/main/reviews/:productId"
                 exact
