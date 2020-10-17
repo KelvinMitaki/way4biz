@@ -18,6 +18,7 @@ if (cluster.isMaster) {
   const passport = require("passport");
   const helmet = require("helmet");
   const compression = require("compression");
+  const cors = require("cors");
 
   const adminRoutes = require("./controllers/admin");
   const authRoutes = require("./controllers/auth");
@@ -25,6 +26,8 @@ if (cluster.isMaster) {
   require("./services/passport");
 
   const app = express();
+
+  app.use(cors({ origin: "https://way4biz.com" }));
 
   const sessionStore = new MongoStore({
     uri: process.env.MONGO_URI,
