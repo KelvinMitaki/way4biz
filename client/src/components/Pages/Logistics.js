@@ -113,6 +113,18 @@ class Logistics extends React.Component {
                   />
                   <Field
                     type="text"
+                    name="itemName"
+                    label="Item Name"
+                    component={FormField}
+                  />
+                  <Field
+                    type="number"
+                    name="itemQuantity"
+                    label="Item Quantity"
+                    component={FormField}
+                  />
+                  <Field
+                    type="text"
                     name="city"
                     label="From City"
                     className="address-location-input"
