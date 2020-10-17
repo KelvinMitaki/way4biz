@@ -1,17 +1,18 @@
 const { check, validationResult } = require("express-validator");
 const Driver = require("../models/Driver");
-const router = require("express").Router();
+const route = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const isDriver = require("../middlewares/is-driver");
+const auth = require("../middlewares/is-auth");
+const isAdmin = require("../middlewares/is-admin");
+const crypto = require("crypto");
 
-router.post(
+route.post(
   "/api/driver/register",
+  auth,
+  isAdmin,
   check("email").trim().isEmail().withMessage("Please enter a valid email"),
-  check("password")
-    .trim()
-    .isLength({ min: 6 })
-    .withMessage("password must be at least 6 characters long"),
   check("firstName")
     .trim()
     .notEmpty()
@@ -20,7 +21,13 @@ router.post(
     .trim()
     .notEmpty()
     .withMessage("please provide a valid last name"),
-  check("confirmPassword").trim().notEmpty(),
+  check("phoneNumber")
+    .isNumeric()
+    .withMessage("please enter a valid phone number"),
+  check("vehicleNo")
+    .isNumeric()
+    .withMessage("please enter a valid vehicle number"),
+  check("IdNumber").isNumeric().withMessage("please enter a valid Id number"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -28,27 +35,30 @@ router.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       const {
-        password,
-        confirmPassword,
         email,
         firstName,
-        lastName
+        lastName,
+        phoneNumber,
+        IdNumber,
+        vehicleNo
       } = req.body;
-      if (password.trim() !== confirmPassword.trim()) {
-        return res.status(401).send({ message: "passwords do not match" });
-      }
+      const password = crypto.randomBytes(6).toString("base64");
       const driverExists = await Driver.findOne({ email });
       if (driverExists) {
         return res
           .status(401)
           .send({ message: "a driver with that email already exists" });
       }
+
       const hashedPass = await bcrypt.hash(password, 12);
       const driver = new Driver({
         firstName,
         lastName,
         email: email.toLowerCase(),
-        password: hashedPass
+        password: hashedPass,
+        phoneNumber,
+        IdNumber,
+        vehicleNo
       });
       const token = jwt.sign(
         { _id: driver._id },
@@ -118,6 +128,12 @@ router.post(
                   <!-- mail content here -->
                   <p>Please Click
                   <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token}>here</a> to confirm your email.</p>
+                  <p>
+                  after verification use this password to log in. 
+                  <b> 
+                  ${password}
+                  </b>
+                  </p>
                 </section>
               </div>
               <section id="mail-footer"></section>
@@ -142,7 +158,7 @@ router.post(
   }
 );
 
-router.get("/api/confirm/driver/:driverToken", async (req, res) => {
+route.get("/api/confirm/driver/:driverToken", async (req, res) => {
   try {
     const { driverToken } = req.params;
     const decoded = jwt.verify(driverToken, process.env.CONFIRM_EMAIL_JWT);
@@ -162,10 +178,13 @@ router.get("/api/confirm/driver/:driverToken", async (req, res) => {
   }
 });
 
-router.post(
+route.post(
   "/api/driver/login",
   check("email").trim().isEmail().withMessage("please enter a valid email"),
-  check("password").trim().withMessage("password cannot be empty"),
+  check("password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("password must be 6 characters min"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -193,7 +212,7 @@ router.post(
   }
 );
 
-router.get("/api/driver/clients", isDriver, async (req, res) => {
+route.get("/api/driver/clients", isDriver, async (req, res) => {
   try {
     const { _id } = req.session.driver;
     const driver = await Driver.findById(_id).populate(
@@ -208,4 +227,4 @@ router.get("/api/driver/clients", isDriver, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = route;

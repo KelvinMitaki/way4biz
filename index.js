@@ -23,6 +23,7 @@ if (cluster.isMaster) {
   const adminRoutes = require("./controllers/admin");
   const authRoutes = require("./controllers/auth");
   const shopRoutes = require("./controllers/shop");
+  const driversRoutes = require("./controllers/drivers");
   require("./services/passport");
 
   const app = express();
@@ -108,6 +109,7 @@ if (cluster.isMaster) {
   app.use(authRoutes);
   app.use(shopRoutes);
   app.use(adminRoutes);
+  app.use(driversRoutes);
 
   if (process.env.NODE_ENV === "production") {
     // SERVING STATIC FILES

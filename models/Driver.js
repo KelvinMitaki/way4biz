@@ -19,12 +19,21 @@ const DriverSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    phoneNumber: {
+      type: Number,
+      required: true
+    },
     password: {
       type: String,
       required: true
     },
-    imageUrl: {
-      type: [String]
+    IdNumber: {
+      type: String,
+      required: true
+    },
+    vehicleNo: {
+      type: Number,
+      required: true
     },
     free: {
       type: Boolean,
