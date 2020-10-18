@@ -15,6 +15,7 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
 import MobileLogo from "../Header/MobileLogo";
+import Axios from "axios";
 
 class Logistics extends React.Component {
   state = {
@@ -87,8 +88,9 @@ class Logistics extends React.Component {
                   <b>Note: The service is operational only within Nairobi.</b>
                 </p>
                 <form
-                  onSubmit={this.props.handleSubmit(formValues => {
-                    console.log(formValues);
+                  onSubmit={this.props.handleSubmit(async formValues => {
+                    const { data } = await Axios.post("/api/request/service");
+                    console.log(data);
                   })}
                 >
                   <Field
@@ -209,12 +211,12 @@ class Logistics extends React.Component {
                   />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
-                    disabled={
-                      !this.props.valid ||
-                      this.props.checkoutUserLoading ||
-                      Object.keys(this.state.townLatLng).length === 0 ||
-                      Object.keys(this.state.cityLatLng).length === 0
-                    }
+                    // disabled={
+                    //   !this.props.valid ||
+                    //   this.props.checkoutUserLoading ||
+                    //   Object.keys(this.state.townLatLng).length === 0 ||
+                    //   Object.keys(this.state.cityLatLng).length === 0
+                    // }
                     type="submit"
                   >
                     {this.props.checkoutUserLoading && (

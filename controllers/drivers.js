@@ -238,33 +238,33 @@ route.post(
 route.post(
   "/api/request/service",
   auth,
-  check("itemName").trim().notEmpty().withMessage("please enter item name"),
-  check("itemQuantity")
-    .isNumeric()
-    .withMessage("please enter a valid item quantity"),
-  check("receiverFirstName")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's name"),
-  check("receiverLastName")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's name"),
-  check("receiverPhoneNumber")
-    .isNumeric()
-    .withMessage("enter a valid phone number"),
-  check("receiverCity")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's city"),
-  check("receiverTown")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's town"),
-  check("receiverAddress")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's town"),
+  // check("itemName").trim().notEmpty().withMessage("please enter item name"),
+  // check("itemQuantity")
+  //   .isNumeric()
+  //   .withMessage("please enter a valid item quantity"),
+  // check("receiverFirstName")
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage("enter a valid receiver's name"),
+  // check("receiverLastName")
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage("enter a valid receiver's name"),
+  // check("receiverPhoneNumber")
+  //   .isNumeric()
+  //   .withMessage("enter a valid phone number"),
+  // check("receiverCity")
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage("enter a valid receiver's city"),
+  // check("receiverTown")
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage("enter a valid receiver's town"),
+  // check("receiverAddress")
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage("enter a valid receiver's town"),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -272,31 +272,39 @@ route.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       // **TODO** LOGIC TO OBTAIN NEAREST DRIVER
+      const driver = await Driver.geoNear(
+        {
+          type: "Point",
+          coordinates: [36.8934912, -1.2812287999999998]
+        },
+        { spherical: true, maxDistance: 20000 }
+      );
 
-      const {
-        itemName,
-        itemQuantity,
-        receiverFirstName,
-        receiverLastName,
-        receiverPhoneNumber,
-        receiverCity,
-        receiverTown,
-        receiverAddress
-      } = req.body;
-      const delivery = new Delivery({
-        itemName,
-        itemQuantity,
-        receiverFirstName,
-        receiverLastName,
-        receiverPhoneNumber,
-        receiverTown,
-        receiverCity,
-        receiverAddress,
-        user: req.session.user._id
-      });
-      await delivery.save();
-      res.send(delivery);
+      // const {
+      //   itemName,
+      //   itemQuantity,
+      //   receiverFirstName,
+      //   receiverLastName,
+      //   receiverPhoneNumber,
+      //   receiverCity,
+      //   receiverTown,
+      //   receiverAddress
+      // } = req.body;
+      // const delivery = new Delivery({
+      //   itemName,
+      //   itemQuantity,
+      //   receiverFirstName,
+      //   receiverLastName,
+      //   receiverPhoneNumber,
+      //   receiverTown,
+      //   receiverCity,
+      //   receiverAddress,
+      //   user: req.session.user._id
+      // });
+      // await delivery.save();
+      res.send(driver);
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }

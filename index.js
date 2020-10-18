@@ -29,7 +29,14 @@ if (cluster.isMaster) {
   const app = express();
 
   app.use(cors({ origin: "https://way4biz.com" }));
-
+  app.all(/.*/, function (req, res, next) {
+    const host = req.header("host");
+    if (host.match(/^herokuapp\..*/i)) {
+      res.redirect(301, "https://www." + host + req.url);
+    } else {
+      next();
+    }
+  });
   const sessionStore = new MongoStore({
     uri: process.env.MONGO_URI,
     collection: "sessions"
