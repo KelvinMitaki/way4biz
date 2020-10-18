@@ -16,6 +16,7 @@ class LogisticsPayment extends React.Component {
         <div className="content">
           <MobileLogo />
           <Header />
+          <div className="container-fluid white-body logistics-payment-wrapper"></div>
         </div>
         <Footer />
         <MiniMenuWrapper />
