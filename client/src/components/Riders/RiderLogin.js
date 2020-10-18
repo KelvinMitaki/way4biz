@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import MobileLogo from "../Header/MobileLogo";
 import AuthHeader from "../Authenticate/AuthHeader";
+import { riderLogIn } from "../../redux/actions";
 
 class RiderLogin extends React.Component {
   render() {
@@ -19,8 +20,8 @@ class RiderLogin extends React.Component {
         </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit((formValues) => {
-            console.log(formValues);
+          onSubmit={this.props.handleSubmit(formValues => {
+            this.props.riderLogIn(formValues);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -62,7 +63,7 @@ class RiderLogin extends React.Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
@@ -79,14 +80,14 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     riderLoginError: state.riders.riderLoginError,
-    riderLoginLoading: state.riders.riderLoginLoading,
+    riderLoginLoading: state.riders.riderLoginLoading
   };
 };
 export default withRouter(
   reduxForm({ validate, destroyOnUnmount: false, form: "RiderLogin" })(
-    connect(mapStateToProps)(RiderLogin)
+    connect(mapStateToProps, { riderLogIn })(RiderLogin)
   )
 );

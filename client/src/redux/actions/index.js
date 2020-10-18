@@ -2662,12 +2662,11 @@ const riderLoginError = error => {
   };
 };
 
-export const riderLogIn = data => async (dispatch, getState) => {
+export const riderLogIn = (data, history) => async dispatch => {
   try {
     dispatch(riderLoginLoading());
-    const res = await axios.post("/api/driver/sign-in", data);
-
-    console.log(res.data);
+    const res = await axios.post("/api/driver/login", data);
+    history.push("/riders");
     dispatch(riderLoggedIn());
   } catch (error) {
     console.log(error);

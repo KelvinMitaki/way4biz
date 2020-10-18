@@ -215,7 +215,7 @@ route.post(
       if (!driver.verified) {
         return res.status(401).send({ message: "Email not verified" });
       }
-      req.session.driver = { _id: driver._id };
+      req.session.user = { _id: driver._id };
       req.session.isLoggedIn = true;
       res.send(driver);
     } catch (error) {
