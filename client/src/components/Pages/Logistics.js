@@ -200,7 +200,7 @@ class Logistics extends React.Component {
                       radius: 1000,
                       types: ["establishment"]
                     }}
-                    onSelect={this.handleReceiverTownSelect}
+                    onSelect={this.handleReceiverAddressSelect}
                   />
                   <SimpleMap
                     key={this.state.addressLatLng.lat}
