@@ -39,9 +39,9 @@ class CartItemsRedirect extends React.Component {
                 {/* mapping here */}
                 {this.props.fetchedItems &&
                   this.props.fetchedItems.length !== 0 &&
-                  this.props.fetchedItems.map(item => (
+                  this.props.fetchedItems.map((item) => (
                     <div className="row" key={item._id}>
-                      <div className="col-6">
+                      <div className="col-6 text-center">
                         <Image
                           height="100px"
                           width="100px"
@@ -53,7 +53,7 @@ class CartItemsRedirect extends React.Component {
                           alt={item.name}
                         />
                       </div>
-                      <div className="col-6">
+                      <div className="col-6 text-left">
                         <h3>{item.name}</h3>
                         <p>
                           {item.stockQuantity > 0
@@ -76,10 +76,10 @@ class CartItemsRedirect extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     fetchedItems: state.cartReducer.fetchedItems,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 export default withRouter(
