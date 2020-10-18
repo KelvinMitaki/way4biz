@@ -11,18 +11,19 @@ const passport = require("passport");
 const User = require("../models/User");
 const auth = require("../middlewares/is-auth");
 const Seller = require("../models/Seller");
+const Driver = require("../models/Driver");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY,
-    },
+      api_key: process.env.SENDGRID_API_KEY
+    }
   })
 );
 route.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"]
   })
 );
 route.get(
@@ -50,6 +51,13 @@ route.get("/api/current_user", async (req, res) => {
       const isLoggedIn = req.session.isLoggedIn;
       const Cpus = os.cpus().length;
       return res.send({ user, isLoggedIn, Cpus });
+    }
+    const driver = await Driver.findById(req.session.user._id);
+    if (driver) {
+      req.session.user = driver;
+      const isLoggedIn = req.session.isLoggedIn;
+      const Cpus = os.cpus().length;
+      return res.send({ user: driver, isLoggedIn, Cpus });
     }
     const seller = await Seller.findById(req.session.user._id);
     req.session.user = seller;
@@ -124,7 +132,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -142,10 +150,10 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
-        expiresIn: "1 hour",
+        expiresIn: "1 hour"
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
@@ -214,7 +222,7 @@ route.post(
               <section id="mail-footer"></section>
             </body>
           </html>
-          `,
+          `
         },
         (error, info) => {
           if (error) {
@@ -225,7 +233,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account",
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       res.status(500).send(error);
@@ -251,25 +259,33 @@ route.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { currentPassword, newPassword, confirmNewPassword } = req.body;
-      const isMatch = await bcrypt.compare(
-        currentPassword,
-        req.session.user.password
-      );
+      let user;
+
+      if (req.session.user.isSeller) {
+        user = await Seller.findById(req.session.user._id);
+      }
+      if (req.session.user.IdNumber) {
+        user = await Driver.findById(req.session.user._id);
+      }
+      if (!req.session.user.isSeller && !req.session.user.IdNumber) {
+        user = await User.findById(req.session.user._id);
+      }
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(401).send({
-          message: "Your current password does not match with the provided one",
+          message: "Your current password does not match with the provided one"
         });
       }
       if (newPassword !== confirmNewPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
       }
       const hashedPassword = await bcrypt.hash(newPassword, 12);
-      const updatedUser = await User.findByIdAndUpdate(req.session.user._id, {
-        password: hashedPassword,
-      });
+      user.password = hashedPassword;
+      await user.save();
 
-      res.send(updatedUser);
+      res.send(user);
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }
@@ -296,7 +312,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
 
 route.get("/api/logout", auth, (req, res) => {
   try {
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) {
         return res.redirect("/");
       }
@@ -317,7 +333,7 @@ route.post("/api/reset", async (req, res) => {
     const seller = await Seller.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -385,7 +401,7 @@ route.post("/api/reset", async (req, res) => {
               <section id="mail-footer"></section>
             </body>
           </html>
-          `,
+          `
         },
         (error, info) => {
           if (error) console.log(error);
@@ -394,12 +410,12 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     if (seller) {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -467,7 +483,7 @@ route.post("/api/reset", async (req, res) => {
               <section id="mail-footer"></section>
             </body>
           </html>
-          `,
+          `
         },
         (error, info) => {
           if (error) console.log(error);
@@ -476,7 +492,7 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     return res.status(401).send({ message: "No user with that email found" });
@@ -541,7 +557,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
       await seller.save();
       return res.send({
         user: seller,
-        message: "Password updated successfully",
+        message: "Password updated successfully"
       });
     }
     return res.status(404).send({ message: "No user found" });

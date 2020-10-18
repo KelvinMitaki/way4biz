@@ -15,6 +15,7 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
 import MobileLogo from "../Header/MobileLogo";
+import Axios from "axios";
 
 class Logistics extends React.Component {
   state = {
@@ -22,35 +23,51 @@ class Logistics extends React.Component {
     townLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263,
-    },
+      lng: 36.8263
+    }
   };
-  componentDidMount() {}
-  handleCitySelect = async (selectedCity) => {
+  componentDidMount() {
+    if (!this.props.user) {
+      return <Redirect to="/login" />;
+    }
+  }
+  handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleTownSelect = async (selectedTown) => {
+  handleTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
     this.setState({ townLatLng: latlng });
     this.props.change("town", selectedTown);
   };
-  handleAddressSelect = async (selectedAddress) => {
+  handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
     this.props.change("address", selectedAddress);
+  };
+  handleReceiverCitySelect = async selectedCity => {
+    const results = await geocodeByAddress(selectedCity);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ cityLatLng: latlng });
+    this.props.change("receiverCity", selectedCity);
+  };
+  handleReceiverTownSelect = async selectedTown => {
+    const results = await geocodeByAddress(selectedTown);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ townLatLng: latlng });
+    this.props.change("receiverTown", selectedTown);
+  };
+  handleReceiverAddressSelect = async selectedAddress => {
+    const results = await geocodeByAddress(selectedAddress);
+    const latlng = await getLatLng(results[0]);
+    this.setState({ addressLatLng: latlng });
+    this.props.change("receiverAddress", selectedAddress);
   };
 
-  handleToAddressSelect = async (selectedAddress) => {
-    const results = await geocodeByAddress(selectedAddress);
-    const latlng = await getLatLng(results[0]);
-    this.setState({ addressLatLng: latlng });
-    this.props.change("address", selectedAddress);
-  };
   render() {
     return (
       <div className="main">
@@ -71,8 +88,9 @@ class Logistics extends React.Component {
                   <b>Note: The service is operational only within Nairobi.</b>
                 </p>
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) => {
-                    console.log(formValues);
+                  onSubmit={this.props.handleSubmit(async formValues => {
+                    const { data } = await Axios.post("/api/request/service");
+                    console.log(data);
                   })}
                 >
                   <Field
@@ -132,59 +150,59 @@ class Logistics extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
                     onSelect={this.handleToAddressSelect}
                   />
 
                   <Field
                     type="text"
-                    name="firstName"
+                    name="receiverFirstName"
                     label="Receiver First Name"
                     component={FormField}
                   />
                   <Field
                     type="text"
-                    name="lastName"
+                    name="receiverLastName"
                     label="Receiver Last Name"
                     component={FormField}
                   />
                   <Field
                     type="text"
-                    name="phoneNumber"
+                    name="receiverPhoneNumber"
                     label="Receiver Phone"
                     component={AddressPhoneNumber}
                   />
                   <Field
                     type="text"
-                    name="city"
+                    name="receiverCity"
                     label="To City"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
-                    onSelect={this.handleCitySelect}
+                    onSelect={this.handleReceiverCitySelect}
                   />
                   <Field
                     type="text"
-                    name="town"
+                    name="receiverTown"
                     label="To Town"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{ types: ["(cities)"] }}
-                    onSelect={this.handleTownSelect}
+                    onSelect={this.handleReceiverTownSelect}
                   />
                   <Field
                     type="text"
-                    name="address"
+                    name="receiverAddress"
                     label="To Street Address"
                     className="address-location-input"
                     component={AutoComplete}
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
-                    onSelect={this.handleAddressSelect}
+                    onSelect={this.handleReceiverAddressSelect}
                   />
                   <SimpleMap
                     key={this.state.addressLatLng.lat}
@@ -193,12 +211,12 @@ class Logistics extends React.Component {
                   />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
-                    disabled={
-                      !this.props.valid ||
-                      this.props.checkoutUserLoading ||
-                      Object.keys(this.state.townLatLng).length === 0 ||
-                      Object.keys(this.state.cityLatLng).length === 0
-                    }
+                    // disabled={
+                    //   !this.props.valid ||
+                    //   this.props.checkoutUserLoading ||
+                    //   Object.keys(this.state.townLatLng).length === 0 ||
+                    //   Object.keys(this.state.cityLatLng).length === 0
+                    // }
                     type="submit"
                   >
                     {this.props.checkoutUserLoading && (
@@ -237,7 +255,7 @@ class Logistics extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -246,10 +264,24 @@ const validate = (formValues) => {
     errors.firstName = "Please enter a valid first name";
   }
   if (
+    !formValues.receiverFirstName ||
+    (formValues.receiverFirstName &&
+      formValues.receiverFirstName.trim().length < 2)
+  ) {
+    errors.receiverFirstName = "Please enter a valid first name";
+  }
+  if (
     !formValues.lastName ||
     (formValues.lastName && formValues.lastName.trim().length < 2)
   ) {
     errors.lastName = "Please enter a valid last name";
+  }
+  if (
+    !formValues.receiverLastName ||
+    (formValues.receiverLastName &&
+      formValues.receiverLastName.trim().length < 2)
+  ) {
+    errors.receiverLastName = "Please enter a valid last name";
   }
   if (
     !formValues.phoneNumber ||
@@ -258,10 +290,24 @@ const validate = (formValues) => {
     errors.phoneNumber = "Please enter a valid phone number";
   }
   if (
+    !formValues.receiverPhoneNumber ||
+    (formValues.receiverPhoneNumber &&
+      !validator.isNumeric(formValues.receiverPhoneNumber))
+  ) {
+    errors.receiverPhoneNumber = "Please enter a valid phone number";
+  }
+  if (
     !formValues.phoneNumber ||
     (formValues.phoneNumber && formValues.phoneNumber.length !== 9)
   ) {
     errors.phoneNumber = "Please enter a valid phone number";
+  }
+  if (
+    !formValues.receiverPhoneNumber ||
+    (formValues.receiverPhoneNumber &&
+      formValues.receiverPhoneNumber.length !== 9)
+  ) {
+    errors.receiverPhoneNumber = "Please enter a valid phone number";
   }
   if (
     !formValues.address ||
@@ -269,16 +315,36 @@ const validate = (formValues) => {
   ) {
     errors.address = "Please enter a valid address";
   }
+  if (
+    !formValues.receiverAddress ||
+    (formValues.receiverAddress && formValues.receiverAddress.trim().length < 2)
+  ) {
+    errors.receiverAddress = "Please enter a valid address";
+  }
   if (!formValues.city || (formValues.city && formValues.city === "choose")) {
-    errors.city = "Please choose a city";
+    errors.city = "Please enter a valid city";
+  }
+  if (
+    !formValues.receiverCity ||
+    (formValues.receiverCity && formValues.receiverCity === "choose")
+  ) {
+    errors.receiverCity = "Please enter a valid city";
   }
   if (!formValues.town || (formValues.town && formValues.town === "choose")) {
-    errors.town = "Please choose a town";
+    errors.town = "Please enter a valid town";
+  }
+  if (
+    !formValues.receiverTown ||
+    (formValues.receiverTown && formValues.receiverTown === "choose")
+  ) {
+    errors.receiverTown = "Please enter a valid town";
   }
   return errors;
 };
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user
+  };
 };
 export default withRouter(
   connect(mapStateToProps)(

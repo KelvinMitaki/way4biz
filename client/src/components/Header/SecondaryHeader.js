@@ -30,9 +30,16 @@ class SecondaryHeader extends React.Component {
             <Link className="mx-4 secondary-header-link" to="/about-us">
               About Us
             </Link>
-            <Link className="mx-4 secondary-header-link" to="/riders">
-              Riders
-            </Link>
+            {this.props.isSignedIn && this.props.user.IdNumber && (
+              <Link className="mx-4 secondary-header-link" to="/riders">
+                Riders
+              </Link>
+            )}
+            {!this.props.isSignedIn && (
+              <Link className="mx-4 secondary-header-link" to="/driver/sign-in">
+                Rider Login
+              </Link>
+            )}
           </div>
         </div>
         <div id="small-screen-secondary-header">
@@ -61,18 +68,26 @@ class SecondaryHeader extends React.Component {
             <Link className="mx-4 secondary-header-link" to="/about-us">
               About Us
             </Link>
-            <Link className="mx-4 secondary-header-link" to="/riders">
-              Riders
-            </Link>
+            {this.props.isSignedIn && this.props.user.IdNumber && (
+              <Link className="mx-4 secondary-header-link" to="/riders">
+                Riders
+              </Link>
+            )}
+            {!this.props.isSignedIn && (
+              <Link className="mx-4 secondary-header-link" to="/driver/sign-in">
+                Rider Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isSignedIn: state.auth.isSignedIn,
+    user: state.auth.user
   };
 };
 

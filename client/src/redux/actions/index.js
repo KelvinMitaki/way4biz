@@ -283,7 +283,9 @@ import {
   P_TO_CHECKOUT_STOP,
   ADMIN_INBOX_COUNT,
   FETCH_ITEMS_IN_CART,
-  EMPTY_ITEMS_IN_CART
+  EMPTY_ITEMS_IN_CART,
+  RIDER_CHANGE_PASSWORD_START,
+  RIDER_CHANGE_PASSWORD_STOP
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2629,23 +2631,18 @@ const riderRegisterError = error => {
   };
 };
 
-export const riderRegister = data => {
-  return (dispatch, getState) => {
-    dispatch(riderRegisterStart());
-    axios
-      .post("/api/rider/register", data)
-      .then(res => {
-        console.log(res.data);
-        dispatch(riderRegistered());
-        // dispatch(riderRegisterStop());
-      })
-      .catch(error => {
-        console.log(error => {
-          console.log(error);
-          dispatch(riderRegisterError(error));
-        });
-      });
-  };
+export const riderRegister = (data, history) => async dispatch => {
+  dispatch(riderRegisterStart());
+  try {
+    const res = await axios.post("/api/driver/register", data);
+    console.log(res.data);
+    history.push("/admin-dashboard");
+    dispatch(riderRegistered());
+  } catch (error) {
+    console.log(error.response);
+    authCheck(error);
+    dispatch(riderRegisterError(error.response.message));
+  }
 };
 
 const riderLoginLoading = () => {
@@ -2667,16 +2664,18 @@ const riderLoginError = error => {
   };
 };
 
-export const riderLogIn = data => async (dispatch, getState) => {
+export const riderLogIn = (data, history) => async dispatch => {
   try {
     dispatch(riderLoginLoading());
-    const res = await axios.post("/api/driver/sign-in", data);
-
-    console.log(res.data);
+    await axios.post("/api/driver/login", data);
+    await dispatch(fetchUser());
+    history.push("/riders");
     dispatch(riderLoggedIn());
   } catch (error) {
     console.log(error);
-    dispatch(riderLoginError(error.response));
+    if (error.response) {
+      dispatch(riderLoginError(error.response.data.message));
+    }
   }
 };
 
@@ -2753,4 +2752,22 @@ export const emptyItemsInCart = () => {
   return {
     type: EMPTY_ITEMS_IN_CART
   };
+};
+
+export const riderChangePassword = (formValues, history) => async dispatch => {
+  try {
+    dispatch({ type: RIDER_CHANGE_PASSWORD_START });
+    await axios.post("/api/change/password", formValues);
+    history.push("/riders");
+    dispatch({ type: RIDER_CHANGE_PASSWORD_STOP, payload: null });
+  } catch (error) {
+    authCheck(error);
+    if (error.response) {
+      dispatch({
+        type: RIDER_CHANGE_PASSWORD_STOP,
+        payload: error.response.data.message
+      });
+    }
+    console.log(error.response);
+  }
 };

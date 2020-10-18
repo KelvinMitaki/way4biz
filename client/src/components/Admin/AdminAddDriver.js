@@ -8,14 +8,12 @@ import { riderRegister } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PhoneNumber from "../Account/PhoneNumber";
-import EmailConfirm from "../Authenticate/EmailConfirm";
 import AdminDashBoardHeader from "./AdminDashBoardHeader";
 import AdminDashboardSecondaryHeader from "./AdminDashboardSecondaryHeader";
 import MobileLogo from "../Header/MobileLogo";
 
 class AdminAddDriver extends React.Component {
   render() {
-    if (this.props.showEmailConfirm) return <EmailConfirm />;
     return (
       <div>
         <MobileLogo />
@@ -25,8 +23,8 @@ class AdminAddDriver extends React.Component {
           Driver Form
         </h3>
         <form
-          onSubmit={this.props.handleSubmit((formValues) => {
-            this.props.riderRegister(formValues);
+          onSubmit={this.props.handleSubmit(formValues => {
+            this.props.riderRegister(formValues, this.props.history);
           })}
         >
           <Field
@@ -63,14 +61,14 @@ class AdminAddDriver extends React.Component {
           <Field
             required="*"
             type="text"
-            name="idNumber"
+            name="IdNumber"
             label="ID No."
             component={AuthField}
           />
           <Field
             required="*"
             type="text"
-            name="vehicleNumber"
+            name="vehicleNo"
             label="Vehicle No."
             component={AuthField}
           />
@@ -99,7 +97,7 @@ class AdminAddDriver extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -126,21 +124,24 @@ const validate = (formValues) => {
     errors.phoneNumber = "Please enter a valid phone number";
   }
   if (
-    !formValues.password ||
-    (formValues.password && formValues.password.trim().length < 6)
+    !formValues.IdNumber ||
+    (formValues.IdNumber && !validator.isNumeric(formValues.IdNumber))
   ) {
-    errors.password = "Your password must be atleast six characters";
+    errors.IdNumber = "Please enter a valid ID number";
   }
-  if (formValues.confirmPassword !== formValues.password) {
-    errors.confirmPassword = "Passwords do not match";
+  if (
+    !formValues.vehicleNo ||
+    (formValues.vehicleNo && !formValues.vehicleNo.trim().length === 0)
+  ) {
+    errors.vehicleNo = "Please enter a valid vehicle number";
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     showEmailConfirm: state.auth.showEmailConfirm,
     riderRegisterLoading: state.riders.riderRegisterLoading,
-    riderRegisterError: state.riders.riderRegisterError,
+    riderRegisterError: state.riders.riderRegisterError
   };
 };
 export default withRouter(

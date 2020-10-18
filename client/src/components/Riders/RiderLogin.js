@@ -4,10 +4,10 @@ import { reduxForm, Field } from "redux-form";
 import AuthField from "../Authenticate/AuthField";
 import validator from "validator";
 import { connect } from "react-redux";
-import { riderLogIn } from "../../redux/actions";
 import { withRouter, Link } from "react-router-dom";
 import MobileLogo from "../Header/MobileLogo";
 import AuthHeader from "../Authenticate/AuthHeader";
+import { riderLogIn } from "../../redux/actions";
 
 class RiderLogin extends React.Component {
   render() {
@@ -15,13 +15,21 @@ class RiderLogin extends React.Component {
       <div>
         <MobileLogo />
         <AuthHeader />
-        <div className="form-primary-error">
-          {this.props.riderLoginError && this.props.riderLoginError}
-        </div>
         <form
           className="login-form"
-          onSubmit={this.props.handleSubmit((formValues) => {
-            return this.props.riderLogIn(formValues, this.props.history);
+          onSubmit={this.props.handleSubmit(formValues => {
+            window.navigator.geolocation.getCurrentPosition(pos => {
+              this.props.riderLogIn(
+                {
+                  ...formValues,
+                  location: {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                  }
+                },
+                this.props.history
+              );
+            });
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -49,6 +57,9 @@ class RiderLogin extends React.Component {
               <span>Login</span>
             )}
           </button>
+          <div className="form-primary-error">
+            {this.props.riderLoginError && this.props.riderLoginError}
+          </div>
         </form>
         <br />
         <div className="login-auth-links-wrapper">
@@ -57,29 +68,13 @@ class RiderLogin extends React.Component {
               Forgot password?
             </Link>
           </p>
-          {/* <p className="forgot-password-link-wrapper">
-            <Link
-              style={{ color: "#f76b1a" }}
-              className="float-right"
-              to="/rider/register"
-            >
-              Sign Up
-            </Link>
-          </p> */}
         </div>
-        {/* <a
-          href="/auth/google"
-          className="btn btn-md btn-block mt-3 secondary-google"
-          type="submit"
-        >
-          Sign In With Google
-        </a> */}
       </div>
     );
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.email ||
@@ -96,10 +91,10 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     riderLoginError: state.riders.riderLoginError,
-    riderLoginLoading: state.riders.riderLoginLoading,
+    riderLoginLoading: state.riders.riderLoginLoading
   };
 };
 export default withRouter(

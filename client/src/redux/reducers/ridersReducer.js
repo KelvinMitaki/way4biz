@@ -11,6 +11,8 @@ import {
   FETCH_PENDING_DELIVERIES_START,
   FETCH_PENDING_DELIVERIES_STOP,
   PENDING_DELIVERIES_FETCHED,
+  RIDER_CHANGE_PASSWORD_START,
+  RIDER_CHANGE_PASSWORD_STOP
 } from "../actions/types";
 
 const initialState = {
@@ -22,6 +24,8 @@ const initialState = {
   successfulDeliveriesFetched: false,
   fetchingPendingDeliveries: false,
   pendingDeliveriesDetched: false,
+  riderChangePasswordLoading: false,
+  riderChangePasswordError: null
 };
 
 export default (state = initialState, action) => {
@@ -34,7 +38,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         riderRegisterLoading: false,
-        riderRegisterError: action.data,
+        riderRegisterError: action.data
       };
     case RIDER_LOGIN_START:
       return { ...state, riderLoginLoading: true };
@@ -44,7 +48,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         riderLoginLoading: false,
-        riderLoginError: action.data,
+        riderLoginError: action.data
       };
     case FETCH_SUCCESSFUL_DELIVERIES_START:
       return { ...state, fetchingSuccessfulDeliveries: true };
@@ -52,7 +56,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingSuccessfulDeliveries: false,
-        successfulDeliveriesFetched: true,
+        successfulDeliveriesFetched: true
       };
     case FETCH_SUCCESSFUL_DELIVERIES_STOP:
       return { ...state, fetchingSuccessfulDeliveries: false };
@@ -62,10 +66,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingPendingDeliveries: false,
-        pendingDeliveriesDetched: true,
+        pendingDeliveriesDetched: true
       };
     case FETCH_PENDING_DELIVERIES_STOP:
       return { ...state, fetchingPendingDeliveries: false };
+    case RIDER_CHANGE_PASSWORD_START:
+      return { ...state, riderChangePasswordLoading: true };
+    case RIDER_CHANGE_PASSWORD_STOP:
+      return {
+        ...state,
+        riderChangePasswordLoading: false,
+        riderChangePasswordError: action.payload
+      };
     default:
       return state;
   }

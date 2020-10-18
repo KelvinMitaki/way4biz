@@ -99,6 +99,9 @@ import RiderLogin from "./components/Riders/RiderLogin";
 import AdminAddDriver from "./components/Admin/AdminAddDriver";
 import AdminDrivers from "./components/Admin/AdminDrivers";
 import AdminDriver from "./components/Admin/AdminDriver";
+import RiderChangePassword from "./components/Riders/RiderChangePassword";
+import LogisticsPayment from "./components/Pages/LogisticsPayment";
+import Logistics404 from "./components/Pages/Logistics404";
 
 class App extends React.Component {
   state = {
@@ -235,11 +238,37 @@ class App extends React.Component {
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
               <Route path="/logistics" component={Logistics} />
+              <Route path="/logistics-payment" component={LogisticsPayment} />
+              <Route path="/logistics-404" component={Logistics404} />
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
-              <Route path="/riders" component={Riders} />
-              <Route path="/rider/sign-in" component={RiderLogin} />
-              {/* <Route path="/rider/register" component={RidersRegister} /> */}
+              <Route
+                path="/riders"
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Riders />
+                  ) : (
+                    <Redirect to="/driver/sign-in" />
+                  )
+                }
+              />
+
+              <Route
+                path="/driver/sign-in"
+                render={() =>
+                  !this.props.isSignedIn ? <RiderLogin /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/rider/change/password"
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <RiderChangePassword />
+                  ) : (
+                    <Redirect to="/driver/sign-in" />
+                  )
+                }
+              />
               <Route
                 path="/product/main/reviews/:productId"
                 exact

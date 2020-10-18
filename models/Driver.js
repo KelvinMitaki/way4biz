@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const locationSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    default: "Point"
+  },
+  coordinates: {
+    type: [Number],
+    index: "2dsphere"
+  }
+});
+
 const DriverSchema = new mongoose.Schema(
   {
     firstName: {
@@ -19,13 +30,25 @@ const DriverSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    phoneNumber: {
+      type: Number,
+      required: true
+    },
     password: {
       type: String,
       required: true
     },
-    imageUrl: {
-      type: [String]
+    IdNumber: {
+      type: Number,
+      required: true,
+      unique: true
     },
+    vehicleNo: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    location: locationSchema,
     free: {
       type: Boolean,
       default: true

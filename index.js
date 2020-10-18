@@ -23,12 +23,20 @@ if (cluster.isMaster) {
   const adminRoutes = require("./controllers/admin");
   const authRoutes = require("./controllers/auth");
   const shopRoutes = require("./controllers/shop");
+  const driversRoutes = require("./controllers/drivers");
   require("./services/passport");
 
   const app = express();
 
   app.use(cors({ origin: "https://way4biz.com" }));
-
+  app.all(/.*/, function (req, res, next) {
+    const host = req.header("host");
+    if (host.match(/^herokuapp\..*/i)) {
+      res.redirect(301, "https://www." + host + req.url);
+    } else {
+      next();
+    }
+  });
   const sessionStore = new MongoStore({
     uri: process.env.MONGO_URI,
     collection: "sessions"
@@ -108,6 +116,7 @@ if (cluster.isMaster) {
   app.use(authRoutes);
   app.use(shopRoutes);
   app.use(adminRoutes);
+  app.use(driversRoutes);
 
   if (process.env.NODE_ENV === "production") {
     // SERVING STATIC FILES
