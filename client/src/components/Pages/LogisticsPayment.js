@@ -16,7 +16,19 @@ class LogisticsPayment extends React.Component {
         <div className="content">
           <MobileLogo />
           <Header />
-          <div className="container-fluid white-body logistics-payment-wrapper"></div>
+          <div className="container-fluid white-body logistics-payment-wrapper">
+            <div className="container text-center pt-5">
+              <h4>You are almost done!</h4>
+              <p>The service will cost you ksh.500</p>
+              <p>
+                Please confirm payment and we will have someone come pick your
+                item for delivery.
+              </p>
+              <button className="btn btn-md secondary-btn">
+                Confirm Payment
+              </button>
+            </div>
+          </div>
         </div>
         <Footer />
         <MiniMenuWrapper />
