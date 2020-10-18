@@ -101,6 +101,7 @@ import AdminDrivers from "./components/Admin/AdminDrivers";
 import AdminDriver from "./components/Admin/AdminDriver";
 import RiderChangePassword from "./components/Riders/RiderChangePassword";
 import LogisticsPayment from "./components/Pages/LogisticsPayment";
+import Logistics404 from "./components/Pages/Logistics404";
 
 class App extends React.Component {
   state = {
@@ -238,6 +239,7 @@ class App extends React.Component {
               <Route path="/express-delivery" component={ExpressDelivery} />
               <Route path="/logistics" component={Logistics} />
               <Route path="/logistics-payment" component={LogisticsPayment} />
+              <Route path="/logistics-404" component={Logistics404} />
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route
