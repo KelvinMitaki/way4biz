@@ -10,12 +10,10 @@ import MobileLogo from "../Header/MobileLogo";
 import { riderChangePassword } from "../../redux/actions";
 
 export class RiderChangePassword extends Component {
-  componentDidMount() {
+  render() {
     if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
       return <Redirect to="/driver/sign-in" />;
     }
-  }
-  render() {
     return (
       <div className="main">
         <div className="content">
