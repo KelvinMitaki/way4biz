@@ -22,30 +22,34 @@ class Logistics extends React.Component {
     townLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263,
-    },
+      lng: 36.8263
+    }
   };
-  componentDidMount() {}
-  handleCitySelect = async (selectedCity) => {
+  componentDidMount() {
+    if (!this.props.user) {
+      return <Redirect to="/login" />;
+    }
+  }
+  handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleTownSelect = async (selectedTown) => {
+  handleTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
     this.setState({ townLatLng: latlng });
     this.props.change("town", selectedTown);
   };
-  handleAddressSelect = async (selectedAddress) => {
+  handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
     this.props.change("address", selectedAddress);
   };
 
-  handleToAddressSelect = async (selectedAddress) => {
+  handleToAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -71,7 +75,7 @@ class Logistics extends React.Component {
                   <b>Note: The service is operational only within Nairobi.</b>
                 </p>
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) => {
+                  onSubmit={this.props.handleSubmit(formValues => {
                     console.log(formValues);
                   })}
                 >
@@ -132,7 +136,7 @@ class Logistics extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
                     onSelect={this.handleToAddressSelect}
                   />
@@ -182,7 +186,7 @@ class Logistics extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
                     onSelect={this.handleAddressSelect}
                   />
@@ -237,7 +241,7 @@ class Logistics extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -277,8 +281,10 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    initialValues: state.auth.user
+  };
 };
 export default withRouter(
   connect(mapStateToProps)(
