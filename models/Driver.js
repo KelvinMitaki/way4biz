@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const locationSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    default: "Point"
+  },
+  coordinates: {
+    type: [Number],
+    index: "2dsphere"
+  }
+});
+
 const DriverSchema = new mongoose.Schema(
   {
     firstName: {
@@ -37,6 +48,7 @@ const DriverSchema = new mongoose.Schema(
       required: true,
       unique: true
     },
+    location: locationSchema,
     free: {
       type: Boolean,
       default: true

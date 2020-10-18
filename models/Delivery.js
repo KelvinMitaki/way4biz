@@ -4,11 +4,13 @@ const DeliverySchema = new mongoose.Schema(
   {
     driver: {
       type: mongoose.Types.ObjectId,
-      ref: "Driver"
+      ref: "Driver",
+      required: true
     },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     },
     itemName: {
       type: String,
