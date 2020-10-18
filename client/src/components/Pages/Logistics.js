@@ -24,6 +24,12 @@ class Logistics extends React.Component {
     addressLatLng: {
       lat: -1.28585,
       lng: 36.8263
+    },
+    receiverCityLatLng: {},
+    receiverTownLatLng: {},
+    receiverAddressLatLng: {
+      lat: -1.28585,
+      lng: 36.8263
     }
   };
   componentDidMount() {
@@ -52,19 +58,19 @@ class Logistics extends React.Component {
   handleReceiverCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
-    this.setState({ cityLatLng: latlng });
+    this.setState({ receiverCityLatLng: latlng });
     this.props.change("receiverCity", selectedCity);
   };
   handleReceiverTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
-    this.setState({ townLatLng: latlng });
+    this.setState({ receiverTownLatLng: latlng });
     this.props.change("receiverTown", selectedTown);
   };
   handleReceiverAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
-    this.setState({ addressLatLng: latlng });
+    this.setState({ receiverAddressLatLng: latlng });
     this.props.change("receiverAddress", selectedAddress);
   };
 
@@ -89,8 +95,12 @@ class Logistics extends React.Component {
                 </p>
                 <form
                   onSubmit={this.props.handleSubmit(async formValues => {
-                    const { data } = await Axios.post("/api/request/service");
-                    console.log(data);
+                    const origins = this.state.addressLatLng;
+                    const destination = this.state.receiverAddressLatLng;
+                    console.log("origins", origins);
+                    console.log("destination", destination);
+                    // const { data } = await Axios.post("/api/request/service");
+                    // console.log(data);
                   })}
                 >
                   <Field
@@ -198,7 +208,9 @@ class Logistics extends React.Component {
                     className="address-location-input"
                     component={AutoComplete}
                     options={{
-                      location: new google.maps.LatLng(this.state.cityLatLng),
+                      location: new google.maps.LatLng(
+                        this.state.receiverCityLatLng
+                      ),
                       radius: 1000,
                       types: ["establishment"]
                     }}
@@ -237,12 +249,16 @@ class Logistics extends React.Component {
                       this.props.checkoutUserError}
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
-                      (Object.keys(this.state.cityLatLng).length === 0 && (
-                        <p>
-                          Please choose a valid destination or wait for the map
-                          to load if you have already chosen.
-                        </p>
-                      ))}
+                      (Object.keys(this.state.cityLatLng).length === 0 &&
+                        Object.keys(this.state.receiverCityLatLng).length ===
+                          0 &&
+                        Object.keys(this.state.receiverTownLatLng).length ===
+                          0 && (
+                          <p>
+                            Please choose a valid destination or wait for the
+                            map to load if you have already chosen.
+                          </p>
+                        ))}
                   </div>
                 </form>
               </div>

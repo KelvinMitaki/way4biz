@@ -10,6 +10,7 @@ const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const Delivery = require("../models/Delivery");
+const distance = require("google-distance-matrix");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -238,71 +239,111 @@ route.post(
 route.post(
   "/api/request/service",
   auth,
-  // check("itemName").trim().notEmpty().withMessage("please enter item name"),
-  // check("itemQuantity")
-  //   .isNumeric()
-  //   .withMessage("please enter a valid item quantity"),
-  // check("receiverFirstName")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("enter a valid receiver's name"),
-  // check("receiverLastName")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("enter a valid receiver's name"),
-  // check("receiverPhoneNumber")
-  //   .isNumeric()
-  //   .withMessage("enter a valid phone number"),
-  // check("receiverCity")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("enter a valid receiver's city"),
-  // check("receiverTown")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("enter a valid receiver's town"),
-  // check("receiverAddress")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("enter a valid receiver's town"),
+  check("itemName").trim().notEmpty().withMessage("please enter item name"),
+  check("itemQuantity")
+    .isNumeric()
+    .withMessage("please enter a valid item quantity"),
+  check("receiverFirstName")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a valid receiver's name"),
+  check("receiverLastName")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a valid receiver's name"),
+  check("receiverPhoneNumber")
+    .isNumeric()
+    .withMessage("enter a valid phone number"),
+  check("receiverCity")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a valid receiver's city"),
+  check("receiverTown")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a valid receiver's town"),
+  check("receiverAddress")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a valid receiver's town"),
+  check("origins.Lat").isNumeric(),
+  check("origins.Lng").isNumeric(),
+  check("destination.Lat").isNumeric(),
+  check("destination.Lng").isNumeric(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      // **TODO** LOGIC TO OBTAIN NEAREST DRIVER
-      const driver = await Driver.geoNear(
-        {
-          type: "Point",
-          coordinates: [36.8934912, -1.2812287999999998]
-        },
-        { spherical: true, maxDistance: 20000 }
-      );
 
-      // const {
-      //   itemName,
-      //   itemQuantity,
-      //   receiverFirstName,
-      //   receiverLastName,
-      //   receiverPhoneNumber,
-      //   receiverCity,
-      //   receiverTown,
-      //   receiverAddress
-      // } = req.body;
-      // const delivery = new Delivery({
-      //   itemName,
-      //   itemQuantity,
-      //   receiverFirstName,
-      //   receiverLastName,
-      //   receiverPhoneNumber,
-      //   receiverTown,
-      //   receiverCity,
-      //   receiverAddress,
-      //   user: req.session.user._id
-      // });
-      // await delivery.save();
-      res.send(driver);
+      // **TODO** LOGIC TO OBTAIN NEAREST DRIVER
+      // const driver = await Driver.geoNear(
+      //   {
+      //     type: "Point",
+      //     coordinates: [36.8934912, -1.2812287999999998]
+      //   },
+      //   { spherical: true, maxDistance: 20000 }
+      // );
+      const {
+        itemName,
+        itemQuantity,
+        receiverFirstName,
+        receiverLastName,
+        receiverPhoneNumber,
+        receiverCity,
+        receiverTown,
+        receiverAddress,
+        origins,
+        destination
+      } = req.body;
+
+      const mode = "DRIVING";
+      distance.key(process.env.MATRIX);
+      distance.matrix(
+        [`${origins.Lat},${origins.Lng}`],
+        [`${destination.Lat},${destination.Lng}`],
+        mode,
+        async (err, response) => {
+          if (err) return res.status(404).send(err);
+          const charge =
+            (response.rows[0].elements[0].distance.value / 1000) * 10;
+
+          const driver = await Driver.aggregate([
+            {
+              $geoNear: {
+                near: {
+                  type: "Point",
+                  coordinates: [origins.Lng, origins.Lat]
+                },
+                maxDistance: 4000,
+                spherical: true,
+                distanceField: "dist.calculated",
+                includeLocs: "dist.location"
+              }
+            }
+          ]);
+
+          const delivery = new Delivery({
+            itemName,
+            itemQuantity,
+            receiverFirstName,
+            receiverLastName,
+            receiverPhoneNumber,
+            receiverTown,
+            receiverCity,
+            receiverAddress,
+            user: req.session.user._id,
+            driver: driver._id,
+            charge
+          });
+          await delivery.save();
+          if (!driver) {
+            return res.send([]);
+          }
+          res.send({ ...delivery, ...driver });
+        }
+      );
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

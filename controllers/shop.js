@@ -809,6 +809,9 @@ route.post(
     // const destination = ["mombasa"];
     // 1KM===3KSH
     const mode = "DRIVING";
+    console.log("origins", origins);
+    console.log("destination", destination);
+    console.log("deliveryMethod", deliveryMethod);
     distance.key(process.env.MATRIX);
     distance.matrix(origins, destination, mode, async (err, response) => {
       if (err) {
