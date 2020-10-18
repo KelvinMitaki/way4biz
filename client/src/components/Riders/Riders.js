@@ -4,7 +4,6 @@ import Tabs from "react-responsive-tabs";
 import "./Riders.css";
 import Logo from "../Header/Logo";
 import SuccessfulDeliveries from "./SuccessfulDeliveries";
-// import PendingDeliveries from "./PendingDeliveries";
 import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
 import { Link, Redirect } from "react-router-dom";
@@ -42,8 +41,13 @@ class Riders extends React.Component {
         <div id="rider-header">
           <div className="container">
             <Logo />
-            <div>
-              <div></div>
+            <div className="d-flex align-items-center">
+              <div className="rider-logout-wrapper-md">
+                <p>
+                  <Link to="/rider/change/password">Change Password</Link>
+                </p>
+                <p>Logout</p>
+              </div>
               <div className="rider-profile-sm">
                 <ProfileImage size={"50px"} />
                 <div className="rider-logout-wrapper">
@@ -86,4 +90,4 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
   };
 };
-export default connect(mapStateToProps)(Riders)
+export default connect(mapStateToProps)(Riders);

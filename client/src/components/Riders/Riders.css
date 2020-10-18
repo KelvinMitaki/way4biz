@@ -25,7 +25,21 @@
   display: none;
 }
 
+.rider-logout-wrapper-md,
+.rider-logout-wrapper-md a {
+  color: #f76b1a !important;
+  text-decoration: none;
+  display: flex;
+}
+
+.rider-logout-wrapper-md p {
+  margin: 0px 10px;
+}
+
 @media screen and (max-width: 540px) {
+  .rider-logout-wrapper-md {
+    display: none;
+  }
   .rider-logout-wrapper {
     position: relative;
     display: block;
