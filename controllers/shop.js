@@ -17,6 +17,7 @@ const Cart = require("../models/Cart");
 const Wishlist = require("../models/Wishlist");
 const Category = require("../models/Category");
 const Contact = require("../models/Contact");
+const Delivery = require("../models/Delivery");
 
 route.post("/api/products", async (req, res) => {
   try {
@@ -809,9 +810,6 @@ route.post(
     // const destination = ["mombasa"];
     // 1KM===3KSH
     const mode = "DRIVING";
-    console.log("origins", origins);
-    console.log("destination", destination);
-    console.log("deliveryMethod", deliveryMethod);
     distance.key(process.env.MATRIX);
     distance.matrix(origins, destination, mode, async (err, response) => {
       if (err) {
@@ -1399,6 +1397,20 @@ route.post("/api/fetch/items/in/cart", async (req, res) => {
       description: 0
     });
     res.send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/delivery/:deliveryId", auth, async (req, res) => {
+  try {
+    const delivery = await Delivery.findById(req.params.deliveryId).populate(
+      "driver"
+    );
+    if (!delivery) {
+      return res.status(401).send({ message: "delivery not found" });
+    }
+    res.send(delivery);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -6,12 +6,29 @@ import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
 import { BsCheckCircle } from "react-icons/bs";
+import { Redirect } from "react-router-dom";
+import { fetchDelivery } from "../../redux/actions";
+import ScreenLoader from "./ScreenLoader";
+import NotFound from "./NotFound";
 
 class LogisticsPayment extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.props.fetchDelivery(this.props.match.params.deliveryId);
   }
   render() {
+    if (!this.props.delivery) {
+      return <ScreenLoader />;
+    }
+    if (this.props.delivery === "") {
+      return <NotFound />;
+    }
+    if (
+      !this.props.user ||
+      (this.props.user && this.props.user._id !== this.props.delivery.user)
+    ) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="main">
         <div className="content">
@@ -22,9 +39,10 @@ class LogisticsPayment extends React.Component {
             <div className="container text-center pt-5">
               <h4 className="mb-3">You are almost done!</h4>
               <p>
-                The service will cost you ksh.500. You will be required to pay
-                the payment to the delivery guy together with the item to
-                deliver.
+                The service will cost you ksh.{" "}
+                {Math.round(this.props.delivery.charge).toLocaleString()}. You
+                will be required to pay the payment to the delivery guy together
+                with the item to deliver.
               </p>
               <p>
                 Please confirm payment and we will have someone come pick your
@@ -52,7 +70,10 @@ class LogisticsPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    delivery: state.user.delivery
+  };
 };
-export default connect(mapStateToProps)(LogisticsPayment);
+export default connect(mapStateToProps, { fetchDelivery })(LogisticsPayment);

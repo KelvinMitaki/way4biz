@@ -266,10 +266,10 @@ route.post(
     .trim()
     .notEmpty()
     .withMessage("enter a valid receiver's town"),
-  check("origins.Lat").isNumeric(),
-  check("origins.Lng").isNumeric(),
-  check("destination.Lat").isNumeric(),
-  check("destination.Lng").isNumeric(),
+  check("origins.lat").isNumeric(),
+  check("origins.lng").isNumeric(),
+  check("destination.lat").isNumeric(),
+  check("destination.lng").isNumeric(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -301,8 +301,8 @@ route.post(
       const mode = "DRIVING";
       distance.key(process.env.MATRIX);
       distance.matrix(
-        [`${origins.Lat},${origins.Lng}`],
-        [`${destination.Lat},${destination.Lng}`],
+        [`${origins.lat},${origins.lng}`],
+        [`${destination.lat},${destination.lng}`],
         mode,
         async (err, response) => {
           if (err) return res.status(404).send(err);
@@ -314,16 +314,18 @@ route.post(
               $geoNear: {
                 near: {
                   type: "Point",
-                  coordinates: [origins.Lng, origins.Lat]
+                  coordinates: [origins.lng, origins.lat]
                 },
-                maxDistance: 4000,
+                maxDistance: 4000000,
                 spherical: true,
                 distanceField: "dist.calculated",
                 includeLocs: "dist.location"
               }
             }
           ]);
-
+          if (!driver || (driver && driver.length === 0)) {
+            return res.send([]);
+          }
           const delivery = new Delivery({
             itemName,
             itemQuantity,
@@ -334,14 +336,12 @@ route.post(
             receiverCity,
             receiverAddress,
             user: req.session.user._id,
-            driver: driver._id,
+            driver: driver[0]._id,
             charge
           });
           await delivery.save();
-          if (!driver) {
-            return res.send([]);
-          }
-          res.send({ ...delivery, ...driver });
+
+          res.send({ delivery, driver: driver[0] });
         }
       );
     } catch (error) {
