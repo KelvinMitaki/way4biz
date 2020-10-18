@@ -1,3 +1,7 @@
 .logistics-payment-wrapper {
   min-height: 50vh;
 }
+
+.logistics-confirm-payment {
+  width: 200px !important;
+}
