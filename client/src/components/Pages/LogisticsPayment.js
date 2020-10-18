@@ -17,6 +17,7 @@ class LogisticsPayment extends React.Component {
           <MobileLogo />
           <Header />
           <div className="container-fluid white-body logistics-payment-wrapper">
+            {/* show this before payment */}
             <div className="container text-center pt-5">
               <h4 className="mb-3">You are almost done!</h4>
               <p>
@@ -31,6 +32,10 @@ class LogisticsPayment extends React.Component {
               <button className="btn btn-md mt-3 secondary-button logistics-confirm-payment">
                 Confirm Payment
               </button>
+            </div>
+            {/* show this after payment */}
+            <div className="container text-center pt-5">
+              <h4 className="mb-3">He is on the way!</h4>
             </div>
           </div>
         </div>
