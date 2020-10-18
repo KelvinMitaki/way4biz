@@ -5,6 +5,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
 import "./Logistics404.css";
 import MobileLogo from "../Header/MobileLogo";
+import { Link } from "react-router-dom";
 
 class Logistics404 extends React.Component {
   componentDidMount() {
@@ -18,9 +19,16 @@ class Logistics404 extends React.Component {
           <Header />
           <div className="container-fluid white-body logistics-404">
             <div className="container text-center pt-5">
-              <div className="d-flex align-items-center justify-content-center"></div>
-              <h4 className="mb-3">The driver is on the way!</h4>
-              <p>You will be notified when he arrives.</p>
+              <h4 className="mb-3">
+                Ooops! It seems our delivery personnel is occupied.
+              </h4>
+              <p>
+                Please{" "}
+                <Link to="/logistics" style={{ color: "#f76b1a" }}>
+                  try again
+                </Link>{" "}
+                after 30 minutes.
+              </p>
             </div>
           </div>
         </div>
