@@ -14,8 +14,8 @@ class Riders extends React.Component {
     const data = [
       {
         name: "Deliveries",
-        content: <SuccessfulDeliveries />,
-      },
+        content: <SuccessfulDeliveries />
+      }
       // {
       //   name: "Pending Deliveries",
       //   content: <PendingDeliveries />,
@@ -27,7 +27,7 @@ class Riders extends React.Component {
       getContent: () => d.content,
       key: index,
       tabClassName: "rider-tab",
-      panelClassName: "seller-db-panel",
+      panelClassName: "seller-db-panel"
     }));
   }
   render() {
@@ -68,6 +68,7 @@ class Riders extends React.Component {
             <div>
               <h3 className="mb-3">Welcome {this.props.user.firstName},</h3>
             </div>
+            {console.log(this.props.clients)}
             <div>
               <Tabs
                 items={this.getTabs()}
@@ -83,9 +84,10 @@ class Riders extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    clients: state.riders.clients
   };
 };
 export default connect(mapStateToProps)(Riders);

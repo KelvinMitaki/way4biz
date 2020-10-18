@@ -12,7 +12,8 @@ import {
   FETCH_PENDING_DELIVERIES_STOP,
   PENDING_DELIVERIES_FETCHED,
   RIDER_CHANGE_PASSWORD_START,
-  RIDER_CHANGE_PASSWORD_STOP
+  RIDER_CHANGE_PASSWORD_STOP,
+  FETCH_CLIENTS
 } from "../actions/types";
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
   fetchingPendingDeliveries: false,
   pendingDeliveriesDetched: false,
   riderChangePasswordLoading: false,
-  riderChangePasswordError: null
+  riderChangePasswordError: null,
+  clients: null
 };
 
 export default (state = initialState, action) => {
@@ -78,6 +80,8 @@ export default (state = initialState, action) => {
         riderChangePasswordLoading: false,
         riderChangePasswordError: action.payload
       };
+    case FETCH_CLIENTS:
+      return { ...state, clients: action.payload };
     default:
       return state;
   }

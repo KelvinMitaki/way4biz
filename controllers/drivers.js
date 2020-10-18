@@ -323,6 +323,7 @@ route.post(
               }
             }
           ]);
+
           if (!driver || (driver && driver.length === 0)) {
             return res.send([]);
           }
@@ -353,14 +354,12 @@ route.post(
 
 route.get("/api/driver/clients", isDriver, async (req, res) => {
   try {
-    const { _id } = req.session.driver;
-    const driver = await Driver.findById(_id).populate(
-      "clients",
+    const { _id } = req.session.user;
+    const deliveries = await Delivery.find({ driver: _id }).populate(
+      "user",
       "firstName lastName phoneNumber"
     );
-    if (!driver) {
-      return res.status(401).send({ message: "Not found" });
-    }
+    res.send(deliveries);
   } catch (error) {
     res.status(500).send(error);
   }

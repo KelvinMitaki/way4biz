@@ -288,7 +288,8 @@ import {
   RIDER_CHANGE_PASSWORD_STOP,
   REQUEST_SERVICE_START,
   REQUEST_SERVICE_STOP,
-  FETCH_DELIVERY
+  FETCH_DELIVERY,
+  FETCH_CLIENTS
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2800,6 +2801,15 @@ export const fetchDelivery = deliveryId => async dispatch => {
     dispatch({ type: FETCH_DELIVERY, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_DELIVERY, payload: "" });
+    authCheck(error);
+  }
+};
+
+export const fetchClients = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/driver/clients");
+    dispatch({ type: FETCH_CLIENTS, payload: res.data });
+  } catch (error) {
     authCheck(error);
   }
 };
