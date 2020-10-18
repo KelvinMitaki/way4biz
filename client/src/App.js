@@ -238,11 +238,31 @@ class App extends React.Component {
               <Route path="/logistics" component={Logistics} />
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
-              <Route path="/riders" component={Riders} />
-              <Route path="/rider/sign-in" component={RiderLogin} />
+              <Route
+                path="/riders"
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <Riders />
+                  ) : (
+                    <Redirect to="/driver/sign-in" />
+                  )
+                }
+              />
+              <Route
+                path="/driver/sign-in"
+                render={() =>
+                  !this.props.isSignedIn ? <RiderLogin /> : <Redirect to="/" />
+                }
+              />
               <Route
                 path="/rider/change/password"
-                component={RiderChangePassword}
+                render={() =>
+                  this.props.isSignedIn ? (
+                    <RiderChangePassword />
+                  ) : (
+                    <Redirect to="/driver/sign-in" />
+                  )
+                }
               />
               <Route
                 path="/product/main/reviews/:productId"

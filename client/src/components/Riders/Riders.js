@@ -7,15 +7,21 @@ import SuccessfulDeliveries from "./SuccessfulDeliveries";
 // import PendingDeliveries from "./PendingDeliveries";
 import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Riders extends React.Component {
+  componentDidMount() {
+    if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
+      return <Redirect to="/driver/sign-in" />;
+    }
+  }
   getTabs() {
     const data = [
       {
         name: "Deliveries",
-        content: <SuccessfulDeliveries />,
-      },
+        content: <SuccessfulDeliveries />
+      }
       // {
       //   name: "Pending Deliveries",
       //   content: <PendingDeliveries />,
@@ -27,7 +33,7 @@ class Riders extends React.Component {
       getContent: () => d.content,
       key: index,
       tabClassName: "rider-tab",
-      panelClassName: "seller-db-panel",
+      panelClassName: "seller-db-panel"
     }));
   }
   render() {
@@ -55,7 +61,7 @@ class Riders extends React.Component {
         <div className="white-body rider-body">
           <div className="container">
             <div>
-              <h3 className="mb-3">Welcome Rider,</h3>
+              <h3 className="mb-3">Welcome {this.props.user.firstName},</h3>
             </div>
             <div>
               <Tabs
@@ -72,5 +78,9 @@ class Riders extends React.Component {
     );
   }
 }
-
-export default Riders;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default connect(mapStateToProps)(Riders);

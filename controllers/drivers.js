@@ -7,6 +7,16 @@ const isDriver = require("../middlewares/is-driver");
 const auth = require("../middlewares/is-auth");
 const isAdmin = require("../middlewares/is-admin");
 const crypto = require("crypto");
+const nodeMailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
+const transporter = nodeMailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY
+    }
+  })
+);
 
 route.post(
   "/api/driver/register",
@@ -25,7 +35,8 @@ route.post(
     .isNumeric()
     .withMessage("please enter a valid phone number"),
   check("vehicleNo")
-    .isNumeric()
+    .trim()
+    .isLength({ min: 1 })
     .withMessage("please enter a valid vehicle number"),
   check("IdNumber").isNumeric().withMessage("please enter a valid Id number"),
   async (req, res) => {
@@ -153,6 +164,7 @@ route.post(
           "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }
@@ -203,7 +215,7 @@ route.post(
       if (!driver.verified) {
         return res.status(401).send({ message: "Email not verified" });
       }
-      req.session.driver = { _id: driver._id };
+      req.session.user = driver;
       req.session.isLoggedIn = true;
       res.send(driver);
     } catch (error) {

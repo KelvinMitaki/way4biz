@@ -28,12 +28,14 @@ const DriverSchema = new mongoose.Schema(
       required: true
     },
     IdNumber: {
-      type: String,
-      required: true
+      type: Number,
+      required: true,
+      unique: true
     },
     vehicleNo: {
-      type: Number,
-      required: true
+      type: String,
+      required: true,
+      unique: true
     },
     free: {
       type: Boolean,
