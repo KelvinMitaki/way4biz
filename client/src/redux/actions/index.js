@@ -2629,23 +2629,18 @@ const riderRegisterError = error => {
   };
 };
 
-export const riderRegister = data => {
-  return (dispatch, getState) => {
-    dispatch(riderRegisterStart());
-    axios
-      .post("/api/rider/register", data)
-      .then(res => {
-        console.log(res.data);
-        dispatch(riderRegistered());
-        // dispatch(riderRegisterStop());
-      })
-      .catch(error => {
-        console.log(error => {
-          console.log(error);
-          dispatch(riderRegisterError(error));
-        });
-      });
-  };
+export const riderRegister = (data, history) => async dispatch => {
+  dispatch(riderRegisterStart());
+  try {
+    const res = await axios.post("/api/driver/register", data);
+    console.log(res.data);
+    history.push("/admin-dashboard");
+    dispatch(riderRegistered());
+  } catch (error) {
+    console.log(error.response);
+    authCheck(error);
+    dispatch(riderRegisterError(error.response.message));
+  }
 };
 
 const riderLoginLoading = () => {

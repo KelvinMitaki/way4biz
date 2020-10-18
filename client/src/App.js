@@ -239,7 +239,7 @@ class App extends React.Component {
               <Route path="/return-policy" component={ReturnPolicy} />
               <Route path="/help-center" component={HelpCenter} />
               <Route path="/riders" component={Riders} />
-              <Route path="/rider/sign-in" component={RiderLogin} />
+              <Route path="/driver/sign-in" component={RiderLogin} />
               <Route
                 path="/rider/change/password"
                 component={RiderChangePassword}

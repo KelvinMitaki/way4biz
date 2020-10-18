@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Field.css";
 
-const AuthField = (props) => {
+const AuthField = props => {
   return (
     <div className="form-group form-input mt-3">
       <strong>

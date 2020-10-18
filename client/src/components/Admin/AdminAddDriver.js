@@ -24,7 +24,7 @@ class AdminAddDriver extends React.Component {
         </h3>
         <form
           onSubmit={this.props.handleSubmit(formValues => {
-            this.props.riderRegister(formValues);
+            this.props.riderRegister(formValues, this.props.history);
           })}
         >
           <Field
@@ -61,7 +61,7 @@ class AdminAddDriver extends React.Component {
           <Field
             required="*"
             type="text"
-            name="idNumber"
+            name="IdNumber"
             label="ID No."
             component={AuthField}
           />
@@ -123,7 +123,6 @@ const validate = formValues => {
   ) {
     errors.phoneNumber = "Please enter a valid phone number";
   }
-
   if (
     !formValues.IdNumber ||
     (formValues.IdNumber && !validator.isNumeric(formValues.IdNumber))
@@ -132,7 +131,7 @@ const validate = formValues => {
   }
   if (
     !formValues.vehicleNo ||
-    (formValues.vehicleNo && !validator.isNumeric(formValues.vehicleNo))
+    (formValues.vehicleNo && !formValues.vehicleNo.trim().length === 0)
   ) {
     errors.vehicleNo = "Please enter a valid vehicle number";
   }
