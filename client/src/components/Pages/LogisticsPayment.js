@@ -5,6 +5,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
+import { BsCheckCircle } from "react-icons/bs";
 
 class LogisticsPayment extends React.Component {
   componentDidMount() {
@@ -35,6 +36,11 @@ class LogisticsPayment extends React.Component {
             </div>
             {/* show this after payment */}
             <div className="container text-center pt-5">
+              <div className="d-flex align-items-center justify-content-center">
+                <BsCheckCircle
+                  style={{ fontSize: "100px", color: "#4BB543" }}
+                />
+              </div>
               <h4 className="mb-3">He is on the way!</h4>
             </div>
           </div>
