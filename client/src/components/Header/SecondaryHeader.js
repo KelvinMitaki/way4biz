@@ -33,6 +33,9 @@ class SecondaryHeader extends React.Component {
             <Link className="mx-4 secondary-header-link" to="/riders">
               Riders
             </Link>
+            <Link className="mx-4 secondary-header-link" to="/rider/sign-in">
+              Rider Login
+            </Link>
           </div>
         </div>
         <div id="small-screen-secondary-header">
@@ -63,6 +66,9 @@ class SecondaryHeader extends React.Component {
             </Link>
             <Link className="mx-4 secondary-header-link" to="/riders">
               Riders
+            </Link>
+            <Link className="mx-4 secondary-header-link" to="/rider/sign-in">
+              Rider Login
             </Link>
           </div>
         </div>
