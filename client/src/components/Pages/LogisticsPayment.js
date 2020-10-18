@@ -35,14 +35,15 @@ class LogisticsPayment extends React.Component {
               </button>
             </div>
             {/* show this after payment */}
-            <div className="container text-center pt-5">
+            {/* <div className="container text-center pt-5">
               <div className="d-flex align-items-center justify-content-center">
                 <BsCheckCircle
                   style={{ fontSize: "100px", color: "#4BB543" }}
                 />
               </div>
-              <h4 className="mb-3">He is on the way!</h4>
-            </div>
+              <h4 className="mb-3">The driver is on the way!</h4>
+              <p>You will be notified when he arrives.</p>
+            </div> */}
           </div>
         </div>
         <Footer />
