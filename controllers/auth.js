@@ -54,7 +54,7 @@ route.get("/api/current_user", async (req, res) => {
     }
     const driver = await Driver.findById(req.session.user._id);
     if (driver) {
-      req.session.user = driver._id;
+      req.session.user = driver;
       const isLoggedIn = req.session.isLoggedIn;
       const Cpus = os.cpus().length;
       return res.send({ user: driver, isLoggedIn, Cpus });
@@ -259,10 +259,18 @@ route.post(
         return res.status(401).send({ message: errors.array()[0].msg });
       }
       const { currentPassword, newPassword, confirmNewPassword } = req.body;
-      const isMatch = await bcrypt.compare(
-        currentPassword,
-        req.session.user.password
-      );
+      let user;
+
+      if (req.session.user.isSeller) {
+        user = await Seller.findById(req.session.user._id);
+      }
+      if (req.session.user.IdNumber) {
+        user = await Driver.findById(req.session.user._id);
+      }
+      if (!req.session.user.isSeller && !req.session.user.IdNumber) {
+        user = await User.findById(req.session.user._id);
+      }
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(401).send({
           message: "Your current password does not match with the provided one"
@@ -272,12 +280,12 @@ route.post(
         return res.status(401).send({ message: "Passwords do not match" });
       }
       const hashedPassword = await bcrypt.hash(newPassword, 12);
-      const updatedUser = await User.findByIdAndUpdate(req.session.user._id, {
-        password: hashedPassword
-      });
+      user.password = hashedPassword;
+      await user.save();
 
-      res.send(updatedUser);
+      res.send(user);
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }

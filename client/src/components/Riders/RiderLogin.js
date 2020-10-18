@@ -15,13 +15,10 @@ class RiderLogin extends React.Component {
       <div>
         <MobileLogo />
         <AuthHeader />
-        <div className="form-primary-error">
-          {this.props.riderLoginError && this.props.riderLoginError}
-        </div>
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit(formValues => {
-            this.props.riderLogIn(formValues);
+            this.props.riderLogIn(formValues, this.props.history);
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
@@ -49,6 +46,9 @@ class RiderLogin extends React.Component {
               <span>Login</span>
             )}
           </button>
+          <div className="form-primary-error">
+            {this.props.riderLoginError && this.props.riderLoginError}
+          </div>
         </form>
         <br />
         <div className="login-auth-links-wrapper">

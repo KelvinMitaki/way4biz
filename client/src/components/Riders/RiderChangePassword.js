@@ -5,10 +5,16 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import FormField from "../Checkout/FormField";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import MobileLogo from "../Header/MobileLogo";
+import { riderChangePassword } from "../../redux/actions";
 
 export class RiderChangePassword extends Component {
+  componentDidMount() {
+    if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
+      return <Redirect to="/driver/sign-in" />;
+    }
+  }
   render() {
     return (
       <div className="main">
@@ -24,8 +30,11 @@ export class RiderChangePassword extends Component {
                 <h3 className="legend">Change Password</h3>
                 {/* <hr /> */}
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) => {
-                    console.log(formValues);
+                  onSubmit={this.props.handleSubmit(formValues => {
+                    this.props.riderChangePassword(
+                      formValues,
+                      this.props.history
+                    );
                   })}
                 >
                   <Field
@@ -49,9 +58,27 @@ export class RiderChangePassword extends Component {
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
                     type="submit"
+                    disabled={
+                      this.props.invalid ||
+                      this.props.riderChangePasswordLoading
+                    }
                   >
-                    <span>Save</span>
+                    {this.props.riderChangePasswordLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    {this.props.riderChangePasswordLoading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Save</span>
+                    )}
                   </button>
+                  <div style={{ color: "red", margin: "10px 0px" }}>
+                    {this.props.riderChangePasswordError}
+                  </div>
                 </form>
               </div>
             </div>
@@ -64,7 +91,7 @@ export class RiderChangePassword extends Component {
   }
 }
 
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
 
   if (
@@ -84,11 +111,15 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    riderChangePasswordLoading: state.riders.riderChangePasswordLoading,
+    riderChangePasswordError: state.riders.riderChangePasswordError,
+    user: state.auth.user
+  };
 };
 export default withRouter(
   reduxForm({ validate, form: "RiderChangePassword" })(
-    connect(mapStateToProps)(RiderChangePassword)
+    connect(mapStateToProps, { riderChangePassword })(RiderChangePassword)
   )
 );
