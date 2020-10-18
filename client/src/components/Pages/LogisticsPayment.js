@@ -24,7 +24,7 @@ class LogisticsPayment extends React.Component {
                 Please confirm payment and we will have someone come pick your
                 item for delivery.
               </p>
-              <button className="btn btn-md secondary-btn">
+              <button className="btn btn-md secondary-button">
                 Confirm Payment
               </button>
             </div>
