@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { reduxForm, Field } from "redux-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
@@ -10,7 +10,6 @@ import MobileLogo from "../Header/MobileLogo";
 
 export class RiderChangePassword extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="main">
         <div className="content">
@@ -25,9 +24,9 @@ export class RiderChangePassword extends Component {
                 <h3 className="legend">Change Password</h3>
                 {/* <hr /> */}
                 <form
-                //   onSubmit={this.props.handleSubmit((formValues) => {
-                //     console.log(formValues);
-                //   })}
+                  onSubmit={this.props.handleSubmit((formValues) => {
+                    console.log(formValues);
+                  })}
                 >
                   <Field
                     type="password"
@@ -51,7 +50,7 @@ export class RiderChangePassword extends Component {
                     className="btn btn-md btn-block address-btn mt-3 "
                     type="submit"
                   >
-                    <span>Save And Continue</span>
+                    <span>Save</span>
                   </button>
                 </form>
               </div>
@@ -65,7 +64,7 @@ export class RiderChangePassword extends Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues) => {
   const errors = {};
 
   if (
@@ -85,10 +84,11 @@ const validate = formValues => {
   }
   return errors;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
-
-export default reduxForm({ validate, form: "RiderChangePassword" })(
-  RiderChangePassword
+export default withRouter(
+  reduxForm({ validate, form: "RiderChangePassword" })(
+    connect(mapStateToProps)(RiderChangePassword)
+  )
 );
