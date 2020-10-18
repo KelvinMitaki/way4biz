@@ -38,7 +38,7 @@
 }
 
 #small-screen-secondary-header {
-  display: none !important;
+  display: none;
 }
 
 .small-screen-secondary-header-items {
