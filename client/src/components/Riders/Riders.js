@@ -10,11 +10,6 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Riders extends React.Component {
-  componentDidMount() {
-    if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
-      return <Redirect to="/driver/sign-in" />;
-    }
-  }
   getTabs() {
     const data = [
       {
@@ -36,6 +31,9 @@ class Riders extends React.Component {
     }));
   }
   render() {
+    if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
+      return <Redirect to="/driver/sign-in" />;
+    }
     return (
       <div>
         <div id="rider-header">
