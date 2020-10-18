@@ -22,34 +22,55 @@
 }
 
 .rider-logout-wrapper {
-  position: relative;
-}
-
-.rider-logout {
   display: none;
 }
 
-.rider-logout-wrapper:hover .rider-logout {
-  display: block;
-  background-color: #fff;
-  color: #000;
-  position: absolute;
-  top: 100%;
-  right: 0px;
-  min-width: 150px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 10px 0px 10px 5px;
-}
-
-.rider-logout a {
-  color: #000;
-}
-
-.rider-logout a:hover {
+.rider-logout-wrapper-md,
+.rider-logout-wrapper-md a {
+  color: #f76b1a !important;
   text-decoration: none;
-  color: #f76b1a;
+  display: flex;
 }
 
-.rider-logout p {
-  cursor: pointer;
+.rider-logout-wrapper-md p {
+  margin: 0px 10px;
+}
+
+@media screen and (max-width: 540px) {
+  .rider-logout-wrapper-md {
+    display: none;
+  }
+  .rider-logout-wrapper {
+    position: relative;
+    display: block;
+  }
+
+  .rider-logout {
+    display: none;
+  }
+
+  .rider-logout-wrapper:hover .rider-logout {
+    display: block;
+    background-color: #fff;
+    color: #000;
+    position: absolute;
+    top: 100%;
+    right: 0px;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 10px 0px 10px 5px;
+  }
+
+  .rider-logout a {
+    color: #000;
+  }
+
+  .rider-logout a:hover {
+    text-decoration: none;
+    color: #f76b1a;
+  }
+
+  .rider-logout p {
+    cursor: pointer;
+  }
 }
