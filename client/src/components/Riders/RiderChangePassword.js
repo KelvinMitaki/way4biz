@@ -50,7 +50,7 @@ export class RiderChangePassword extends Component {
                     className="btn btn-md btn-block address-btn mt-3 "
                     type="submit"
                   >
-                    <span>Save And Continue</span>
+                    <span>Save</span>
                   </button>
                 </form>
               </div>
