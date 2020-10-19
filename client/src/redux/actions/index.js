@@ -449,8 +449,10 @@ export const editUser = (credentials, history) => async (
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
     dispatch({ type: EDIT_USER, payload: res.data });
+    if (history) {
+      history.push("/");
+    }
     dispatch({ type: LOADING_STOP });
-    history.push("/");
   } catch (error) {
     console.log(error);
     dispatch({ type: EDIT_USER_FAILED });
@@ -2779,6 +2781,17 @@ export const riderChangePassword = (formValues, history) => async dispatch => {
 export const requestService = (formValues, history) => async dispatch => {
   try {
     dispatch({ type: REQUEST_SERVICE_START });
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      town,
+      city,
+      address
+    } = formValues;
+    await dispatch(
+      editUser({ firstName, lastName, phoneNumber, town, city, address })
+    );
     const res = await axios.post("/api/request/service", formValues);
     if (res.data.delivery) {
       history.push(`/logistics/confirm/${res.data.delivery._id}`);
