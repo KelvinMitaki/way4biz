@@ -103,7 +103,10 @@ class BuyerOrderDetails extends Component {
                             (buyerOrderDetails.delivered && "Delivered") ||
                             (buyerOrderDetails.paid &&
                               !buyerOrderDetails.delivered &&
-                              "Pending")}
+                              "Pending") ||
+                            (!buyerOrderDetails.paid &&
+                              !buyerOrderDetails.cancelled &&
+                              "Cancelled")}
                         </p>
                       )}
                   </div>
@@ -119,7 +122,7 @@ class BuyerOrderDetails extends Component {
                     {buyerOrderDetails &&
                       Object.keys(buyerOrderDetails).length !== 0 &&
                       buyerOrderDetails.items.length !== 0 &&
-                      buyerOrderDetails.items.map((item) => {
+                      buyerOrderDetails.items.map(item => {
                         return (
                           <div
                             className="buyer-order-detail-wrapper box-container"
@@ -197,10 +200,10 @@ class BuyerOrderDetails extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     buyerOrderDetails: state.product.buyerOrderDetails,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default withRouter(

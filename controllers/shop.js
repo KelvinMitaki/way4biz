@@ -328,7 +328,8 @@ route.post(
         totalPrice: price + Math.round(distance.shippingFees),
         buyer: _id,
         buyerSeller: _id,
-        distance: distanceId
+        distance: distanceId,
+        cancelled: true
       });
       await order.save();
       orderId = order._id;
@@ -366,6 +367,7 @@ route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
           "items.product distance"
         );
         order.paid = true;
+        order.cancelled = false;
         order.last4 = response.body.data.card.last_4digits;
         order.brand = response.body.data.card.type;
         await order.save();
@@ -482,7 +484,8 @@ route.post(
           totalPrice: price + Math.round(distance.shippingFees),
           buyer: _id,
           buyerSeller: _id,
-          distance: distanceId
+          distance: distanceId,
+          cancelled: true
         });
         await order.save();
         orderId = order._id;
@@ -544,7 +547,8 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
               await Order.findByIdAndUpdate(orderId, {
                 mpesaCode: body2.ResultCode,
                 mpesaDesc: body2.ResultDesc,
-                paid: true
+                paid: true,
+                cancelled: false
               });
               const savedOrder = await Order.findById(orderId).populate(
                 "distance items.product"
