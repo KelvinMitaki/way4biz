@@ -97,7 +97,7 @@ class SellerProducts extends React.Component {
                   <div className="col-lg-12 p-0">
                     <Tabs
                       items={this.getTabs()}
-                      transformWidth={720}
+                      transformWidth={767}
                       transform={true}
                       showMoreLabel={"More..."}
                       showInkBar={true}
