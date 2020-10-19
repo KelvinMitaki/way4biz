@@ -444,8 +444,7 @@ export const editUser = (credentials, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    const userId = getState().auth.user._id;
-    const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
+    const res = await axios.patch(`/api/user/edit`, credentials);
     if (res.data.user.phoneNumber) {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
