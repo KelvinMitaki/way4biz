@@ -102,6 +102,7 @@ import AdminDriver from "./components/Admin/AdminDriver";
 import RiderChangePassword from "./components/Riders/RiderChangePassword";
 import LogisticsPayment from "./components/Pages/LogisticsPayment";
 import Logistics404 from "./components/Pages/Logistics404";
+import CartItemsRedirect from "./components/Pages/CartItemsRedirect";
 
 class App extends React.Component {
   state = {
@@ -241,6 +242,11 @@ class App extends React.Component {
               <Route
                 path="/logistics/confirm/:deliveryId"
                 component={LogisticsPayment}
+              />
+              <Route
+                path="/cart/redirect"
+                exact
+                component={CartItemsRedirect}
               />
               <Route path="/logistics-404" component={Logistics404} />
               <Route path="/return-policy" component={ReturnPolicy} />
