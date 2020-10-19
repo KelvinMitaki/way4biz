@@ -1,5 +1,7 @@
 function processMore(more) {
   if (!more) {
+    return null;
+  } else {
     return `<p class="text-center">
         After confirmation use the password
         <strong
@@ -8,8 +10,6 @@ function processMore(more) {
         >
         to login.
       </p>`;
-  } else {
-    return null;
   }
 }
 
