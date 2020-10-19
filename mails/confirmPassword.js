@@ -1,4 +1,19 @@
-export function ResetPassword(link) {
+function processMore(more) {
+  if (!more) {
+    return `<p class="text-center">
+        After confirmation use the password
+        <strong
+          style="font-weight: bolder !important"
+          >${more["password"]}</strong
+        >
+        to login.
+      </p>`;
+  } else {
+    return null;
+  }
+}
+
+export function confirmPassword(link, more) {
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
@@ -1749,7 +1764,7 @@ export function ResetPassword(link) {
                                         </tbody>
                                       </table>
                                       <h1 class="text-center">
-                                        Forgot Your Password?
+                                        Email Confirmation
                                       </h1>
                                       <table class="spacer">
                                         <tbody>
@@ -1767,8 +1782,7 @@ export function ResetPassword(link) {
                                         </tbody>
                                       </table>
                                       <p class="text-center">
-                                        It happens. Click the link below to reset
-                                        your password.
+                                        Please click the link below to confirm your email.
                                       </p>
                                       <table class="button large expand">
                                         <tr>
@@ -1782,7 +1796,7 @@ export function ResetPassword(link) {
                                                       align="center"
                                                       class="float-center"
                                                       style="color: #fff !important"
-                                                      >Reset Password</a
+                                                      >Confirm Password</a
                                                     >
                                                   </center>
                                                 </td>
@@ -1792,15 +1806,8 @@ export function ResetPassword(link) {
                                           <td class="expander"></td>
                                         </tr>
                                       </table>
-                                      <!-- <hr /> -->
-                                      <!-- <p>
-                                        <small
-                                          >You're getting this email because you've
-                                          signed up for email updates. If you want
-                                          to opt-out of future emails,
-                                          <a href="#">unsubscribe here</a>.</small
-                                        >
-                                      </p> -->
+
+                                        ${processMore(more)}
                                     </th>
                                     <th class="expander"></th>
                                   </tr>
@@ -1848,6 +1855,5 @@ export function ResetPassword(link) {
         </table>
       </body>
     </html>
-    
     `;
 }
