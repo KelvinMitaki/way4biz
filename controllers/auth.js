@@ -271,8 +271,9 @@ route.post(
                 <section id="mail-body">
                   <div class="container">
                     <!-- subject here -->
-                    <h1>Please confirm your email</h1>
+                    <h1>Email Confirmation</h1>
                     <!-- use this link to create other links -->
+                    <p style="margin-top:10px">Please confirm your email by clicking the link below.</p>
                     <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token} class="action-link">Confirm Email</a>
                     <!-- <p>Do something</p> -->
                   </div>
@@ -524,6 +525,7 @@ route.post("/api/reset", async (req, res) => {
                     <!-- subject here -->
                     <h1>Password Reset</h1>
                     <!-- use this link to create other links -->
+                    <p style="margin-top:10px">Use the link below to reset your password.</p>
                     <a href=${process.env.RESET_REDIRECT}/${token} class="action-link">Reset Password</a>
                     <!-- <p>Do something</p> -->
                   </div>
@@ -679,6 +681,7 @@ route.post("/api/reset", async (req, res) => {
                     <!-- subject here -->
                     <h1>Password Reset</h1>
                     <!-- use this link to create other links -->
+                    <p style="margin-top:10px">Use the link below to reset your password.</p>
                     <a href=${process.env.RESET_REDIRECT}/${token} class="action-link">Reset Password</a>
                     <!-- <p>Do something</p> -->
                   </div>

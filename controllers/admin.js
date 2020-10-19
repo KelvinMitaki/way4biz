@@ -274,6 +274,9 @@ route.post(
                     <!-- subject here -->
                     <h1>Email Confirmation</h1>
                     <!-- use this link to create other links -->
+                    <p style="margin-top: 10px">
+            Please confirm your email by clicking the link below.
+          </p>
                     <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}/seller class="action-link">Confirm Email</a>
                     <!-- <p>Do something</p> -->
                   </div>

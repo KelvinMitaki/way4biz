@@ -196,7 +196,10 @@ route.post(
                 <section id="mail-body">
                   <div class="container">
                     <!-- subject here -->
-                    <h1>Please confirm your email</h1>
+                    <h1>Email Confirmation</h1> 
+                    <p style="margin-top: 10px">
+                    Please confirm your email by clicking the link below.
+                  </p>
                     <!-- use this link to create other links -->
                     <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link">Confirm Email</a>
                     <p style="margin-top:10px">After confirming your email, use this password <b>${password}</b> to login.</p>
