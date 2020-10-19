@@ -35,6 +35,7 @@ const Contact = require("../models/Contact");
 const Redeem = require("../models/Redeem");
 const HeroImage = require("../models/HeroImages");
 const Driver = require("../models/Driver");
+const Delivery = require("../models/Delivery");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2579,5 +2580,26 @@ route.get("/api/fetch/all/drivers", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get(
+  "/api/fetch/driver/details/:driverId",
+  auth,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const driver = await Driver.findById(req.params.driverId);
+      if (!driver) {
+        return res.status(404).send({ message: "No driver with that ID" });
+      }
+      const deliveries = await Delivery.find({ driver: driver._id }).populate(
+        "user userSeller",
+        "phoneNumber town address"
+      );
+      res.send({ driver, deliveries });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
 
 module.exports = route;

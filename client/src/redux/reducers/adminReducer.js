@@ -35,7 +35,8 @@ import {
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
   ADMIN_INBOX_COUNT,
-  FETCH_ALL_DRIVERS
+  FETCH_ALL_DRIVERS,
+  FETCH_DRIVER_DETAILS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -67,7 +68,8 @@ const INITIAL_STATE = {
   deleteHeroImageLoading: false,
   inboxCount: null,
   addingDriver: false,
-  drivers: null
+  drivers: null,
+  driverDetails: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -186,6 +188,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, inboxCount: action.payload };
     case FETCH_ALL_DRIVERS:
       return { ...state, drivers: action.payload };
+    case FETCH_DRIVER_DETAILS:
+      return { ...state, driverDetails: action.payload };
     default:
       return state;
   }
