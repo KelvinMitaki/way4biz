@@ -19,8 +19,8 @@ class Riders extends React.Component {
     const data = [
       {
         name: "Deliveries",
-        content: <SuccessfulDeliveries />
-      }
+        content: <SuccessfulDeliveries />,
+      },
       // {
       //   name: "Pending Deliveries",
       //   content: <PendingDeliveries />,
@@ -32,7 +32,7 @@ class Riders extends React.Component {
       getContent: () => d.content,
       key: index,
       tabClassName: "rider-tab",
-      panelClassName: "seller-db-panel"
+      panelClassName: "seller-db-panel",
     }));
   }
   render() {
@@ -52,9 +52,15 @@ class Riders extends React.Component {
                 <p>
                   <Link to="/rider/change/password">Change Password</Link>
                 </p>
-                <p>Logout</p>
+                <p
+                  onClick={() => {
+                    window.location.href = "/api/logout";
+                  }}
+                >
+                  Logout
+                </p>
               </div>
-              <div className="rider-profile-sm">
+              <div className="rider-profile">
                 <ProfileImage size={"50px"} />
                 <div className="rider-logout-wrapper">
                   <MdArrowDropDown
@@ -64,7 +70,13 @@ class Riders extends React.Component {
                     <p>
                       <Link to="/rider/change/password">Change Password</Link>
                     </p>
-                    <p>Logout</p>
+                    <p
+                      onClick={() => {
+                        window.location.href = "/api/logout";
+                      }}
+                    >
+                      Logout
+                    </p>
                   </div>
                 </div>
               </div>
@@ -91,10 +103,10 @@ class Riders extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    clients: state.riders.clients
+    clients: state.riders.clients,
   };
 };
 export default connect(mapStateToProps, { fetchClients })(Riders);

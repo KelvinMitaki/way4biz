@@ -19,28 +19,28 @@ class SellerOrders extends React.Component {
     const newOrders =
       this.props.sellerOrders.length !== 0 &&
       this.props.sellerOrders.filter(
-        order =>
+        (order) =>
           !order.delivered &&
           !order.cancelled &&
-          (order.items.find(item => !item.sellerDispatched) ? true : false)
+          (order.items.find((item) => !item.sellerDispatched) ? true : false)
       );
     const delivered =
       this.props.sellerOrders.length !== 0 &&
-      this.props.sellerOrders.filter(order => order.delivered);
+      this.props.sellerOrders.filter((order) => order.delivered);
     const cancelled =
       this.props.sellerOrders.length !== 0 &&
-      this.props.sellerOrders.filter(order => order.cancelled);
+      this.props.sellerOrders.filter((order) => order.cancelled);
     // const dispatched =
     //   this.props.sellerOrders.length !== 0 &&
     //   this.props.sellerOrders.filter(order => order.dispatched);
     let tabs = [
       {
         title: "All",
-        data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />
+        data: <DashBoardOrder sellerOrders={this.props.sellerOrders} />,
       },
       {
         title: "New",
-        data: <DashBoardOrder title="New" sellerOrders={newOrders} />
+        data: <DashBoardOrder title="New" sellerOrders={newOrders} />,
       },
       // {
       //   title: "Dispatched",
@@ -49,7 +49,7 @@ class SellerOrders extends React.Component {
 
       { title: "Delivered", data: <DashBoardOrder sellerOrders={delivered} /> },
 
-      { title: "Cancelled", data: <DashBoardOrder sellerOrders={cancelled} /> }
+      { title: "Cancelled", data: <DashBoardOrder sellerOrders={cancelled} /> },
     ];
 
     return tabs.map((tab, index) => ({
@@ -57,7 +57,7 @@ class SellerOrders extends React.Component {
       getContent: () => tab.data,
       key: index,
       tabClassName: "order-tab",
-      panelClassName: "order-db-panel"
+      panelClassName: "order-db-panel",
     }));
   }
   render() {
@@ -71,27 +71,30 @@ class SellerOrders extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
+
           <div className="col-lg-9">
-            <div className="container seller-dashboard-wrapper m-0">
-              <div className="row">
-                <div className="col">
-                  <h3
-                    className="seller-orders-title"
-                    style={{ textAlign: "center" }}
-                  >
-                    Orders
-                  </h3>
+            <div className="dashboard-content">
+              <div className="container mx-auto m-0">
+                <div className="row">
+                  <div className="col">
+                    <h3
+                      className="seller-orders-title"
+                      style={{ textAlign: "center", margin: "10px 0px" }}
+                    >
+                      Orders
+                    </h3>
+                  </div>
                 </div>
-              </div>
-              <div className="row  my-4">
-                <div className="col p-0">
-                  <Tabs
-                    items={this.getTabs()}
-                    transformWidth={720}
-                    transform={true}
-                    showMoreLabel={"More..."}
-                    showInkBar={true}
-                  />
+                <div className="row my-3">
+                  <div className="col p-0">
+                    <Tabs
+                      items={this.getTabs()}
+                      transformWidth={720}
+                      transform={true}
+                      showMoreLabel={"More..."}
+                      showInkBar={true}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,11 +104,11 @@ class SellerOrders extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     sellerOrders: state.seller.sellerOrders,
     sellerOrdersLoading: state.auth.sellerOrdersLoading,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps, { fetchSellerOrders })(SellerOrders);

@@ -10,8 +10,10 @@ class DashBoardOrder extends React.Component {
   render() {
     return (
       <div
-        className="container"
-        style={{ backgroundColor: "#fff", padding: "10px" }}
+        className="container m-0 mx-auto"
+        style={{
+          backgroundColor: "#fff",
+        }}
       >
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
@@ -26,7 +28,7 @@ class DashBoardOrder extends React.Component {
         </div>
         <div className="container-fluid p-0">
           {this.props.sellerOrders && this.props.sellerOrders.length !== 0 ? (
-            this.props.sellerOrders.map(order => (
+            this.props.sellerOrders.map((order) => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
                   <div className="col-md-6 col-lg-4">
@@ -58,7 +60,7 @@ class DashBoardOrder extends React.Component {
                             buyer:
                               order.buyerSeller.length !== 0
                                 ? order.buyerSeller
-                                : order.buyerUser
+                                : order.buyerUser,
                           })
                         }
                       >
@@ -86,9 +88,9 @@ class DashBoardOrder extends React.Component {
                       <strong className="x mr-2">Amount:</strong>
                       Ksh.
                       {order.productSellerData
-                        .map(prod => {
+                        .map((prod) => {
                           const matchingProd = order.items.find(
-                            item => item.product === prod._id
+                            (item) => item.product === prod._id
                           );
                           if (matchingProd) {
                             return prod.price * matchingProd.quantity;
@@ -111,7 +113,9 @@ class DashBoardOrder extends React.Component {
               </React.Fragment>
             ))
           ) : (
-            <div>You currently don't have any orders yet</div>
+            <div style={{ width: "100%" }}>
+              You currently don't have any orders yet.
+            </div>
           )}
         </div>
       </div>
