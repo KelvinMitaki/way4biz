@@ -5,7 +5,6 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
-import { BsCheckCircle } from "react-icons/bs";
 import { Redirect } from "react-router-dom";
 import { fetchDelivery } from "../../redux/actions";
 import ScreenLoader from "./ScreenLoader";
