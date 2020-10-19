@@ -12,6 +12,8 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const Delivery = require("../models/Delivery");
 const distance = require("google-distance-matrix");
 
+const confirmEmailTemplate = require("../mails/confirmEmail");
+
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
@@ -82,147 +84,13 @@ route.post(
         }
       );
       await driver.save();
+      const url = `${process.env.DRIVER_CONFIRM_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
           from: "kevinkhalifa911@gmail.com",
           subject: "Email Confirmation",
-          html: `
-          <!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Way4Biz</title>
-              <link rel="stylesheet" />
-              <style>
-                * {
-                  padding: 0px;
-                  margin: 0px;
-                  box-sizing: border-box;
-                }
-                html,
-                body {
-                  overflow-x: hidden;
-                }
-                body {
-                  font-family: Arial, Helvetica, sans-serif;
-                  min-height: 100vh;
-                  display: flex;
-                  flex-direction: column;
-                }
-          
-                #content {
-                  flex: 1 0 auto;
-                }
-          
-                a {
-                  text-decoration: none;
-                }
-          
-                a:hover {
-                  text-decoration: underline;
-                }
-          
-                #mail-header {
-                  background-color: #00001e;
-                  height: 80px;
-                  display: flex;
-                  align-items: center;
-                  width: 100%;
-                  justify-content: center;
-                  color: #f76b1a;
-                  border-bottom: 3px solid #f76b1a;
-                }
-          
-                #mail-body {
-                  width: 90%;
-                  margin: auto;
-                  text-align: center;
-                  padding: 30px 0px;
-                }
-          
-                .container {
-                  width: 60%;
-                  display: flex;
-                  flex-direction: column;
-                  margin: auto;
-                  align-items: center;
-                }
-          
-                .action-link {
-                  background-color: #f76b1a;
-                  color: #fff;
-                  min-width: 150px;
-                  padding: 10px;
-                  border-radius: 4px;
-                  width: 150px;
-                  margin: 10px 0px;
-                }
-          
-                #mail-footer {
-                  padding: 20px 10px;
-                  border-top: 1px solid #d4d4d4;
-                  flex-shrink: 0;
-                  color: #f76b1a;
-                  display: flex;
-                  width: 100%;
-                  align-items: center;
-                  justify-content: center;
-                  flex-direction: column;
-                }
-          
-                #mail-footer a {
-                  color: #f76b1a;
-                }
-          
-                @media screen and (max-width: 768px) {
-                  .container {
-                    width: 90%;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div id="content">
-                <section id="mail-header">
-                  <!-- mail subject here -->
-                  <img
-                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
-                    height="100%"
-                    alt="mail-logo"
-                  />
-                </section>
-                <section id="mail-body">
-                  <div class="container">
-                    <!-- subject here -->
-                    <h1>Email Confirmation</h1> 
-                    <p style="margin-top: 10px">
-                    Please confirm your email by clicking the link below.
-                  </p>
-                    <!-- use this link to create other links -->
-                    <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link">Confirm Email</a>
-                    <p style="margin-top:10px">After confirming your email, use this password <b>${password}</b> to login.</p>
-                  </div>
-                </section>
-              </div>
-              <section id="mail-footer">
-                <div style="margin: 10px 0px">
-                  <a href="http://google.com">Home</a> |
-                  <a href="http://google.com">Support Center</a> |
-                  <a href="http://google.com">FAQs</a>
-                </div>
-          
-                <div class="copyright">
-                  <p>
-                    &copy;<span id="currentYear">2020</span>
-                    <span style="margin-left: 5px">All Rights Reserved.</span>
-                  </p>
-                </div>
-              </section>
-            </body>
-          </html>
-          `,
+          html: confirmEmailTemplate(url, { password: password }),
         },
         (error, info) => {
           if (error) {
