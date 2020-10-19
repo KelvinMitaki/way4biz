@@ -177,7 +177,7 @@ route.post(
                     <!-- subject here -->
                     <h1 class="mb-2">Confirm your email.</h1>
                     <!-- use this link to create other links -->
-                    <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link my-2">Confirm Email/a>
+                    <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link my-2">Confirm Email</a>
                     <p class="mt-2">After confirming your email, use this password <b>${password}</b> to login.</p>
                   </div>
                 </section>
