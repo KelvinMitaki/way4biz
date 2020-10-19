@@ -204,9 +204,9 @@ route.post(
                   }
 
                   #mail-body {
+                    text-align: center;
                     width: 90%;
                     margin: auto;
-                    text-align: left;
                     padding: 30px 0px;
                   }
 
@@ -439,9 +439,9 @@ route.post("/api/reset", async (req, res) => {
                 }
 
                 #mail-body {
+                  text-align: center;
                   width: 90%;
                   margin: auto;
-                  text-align: left;
                   padding: 30px 0px;
                 }
 
@@ -576,9 +576,9 @@ route.post("/api/reset", async (req, res) => {
                 }
 
                 #mail-body {
+                  text-align: center;
                   width: 90%;
                   margin: auto;
-                  text-align: left;
                   padding: 30px 0px;
                 }
 

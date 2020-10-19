@@ -131,7 +131,7 @@ route.post(
                 #mail-body {
                   width: 90%;
                   margin: auto;
-                  text-align: left;
+                  text-align: center;
                   padding: 30px 0px;
                 }
 
