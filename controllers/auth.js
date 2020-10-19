@@ -278,6 +278,20 @@ route.post(
                     <!-- <p>Do something</p> -->
                   </div>
                 </section>
+                <section id="mail-footer">
+                  <div style="margin: 10px 0px">
+                    <a href="https://way4biz.com/">Home</a> |
+                    <a href="https://way4biz.com/contact-us">Support Center</a> |
+                    <a href="https://way4biz.com/help-center">FAQs</a>
+                  </div>
+
+                  <div class="copyright">
+                    <p>
+                      &copy;<span id="currentYear">2020</span>
+                      <span style="margin-left: 5px">All Rights Reserved.</span>
+                    </p>
+                  </div>
+                </section>
               </body>
             </html>
           `
@@ -518,11 +532,11 @@ route.post("/api/reset", async (req, res) => {
               </div>
               <section id="mail-footer">
                 <div style="margin: 10px 0px">
-                  <a href="http://google.com">Home</a> |
-                  <a href="http://google.com">Support Center</a> |
-                  <a href="http://google.com">FAQs</a>
+                  <a href="https://way4biz.com/">Home</a> |
+                  <a href="https://way4biz.com/contact-us">Support Center</a> |
+                  <a href="https://way4biz.com/help-center">FAQs</a>
                 </div>
-          
+
                 <div class="copyright">
                   <p>
                     &copy;<span id="currentYear">2020</span>
@@ -674,11 +688,11 @@ route.post("/api/reset", async (req, res) => {
               </div>
               <section id="mail-footer">
                 <div style="margin: 10px 0px">
-                  <a href="http://google.com">Home</a> |
-                  <a href="http://google.com">Support Center</a> |
-                  <a href="http://google.com">FAQs</a>
+                  <a href="https://way4biz.com/">Home</a> |
+                  <a href="https://way4biz.com/contact-us">Support Center</a> |
+                  <a href="https://way4biz.com/help-center">FAQs</a>
                 </div>
-          
+
                 <div class="copyright">
                   <p>
                     &copy;<span id="currentYear">2020</span>
