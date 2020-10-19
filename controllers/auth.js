@@ -19,14 +19,14 @@ const resetPasswordTemplate = require("../mails/resetPassword");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY,
-    },
+      api_key: process.env.SENDGRID_API_KEY
+    }
   })
 );
 route.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"]
   })
 );
 route.get(
@@ -135,7 +135,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -153,10 +153,10 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
-        expiresIn: "1 hour",
+        expiresIn: "1 hour"
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
@@ -164,9 +164,9 @@ route.post(
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Email Confirmation",
-          html: confirmEmailTemplate(url),
+          html: confirmEmailTemplate(url)
         },
         (error, info) => {
           if (error) {
@@ -177,7 +177,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account",
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       res.status(500).send(error);
@@ -217,7 +217,7 @@ route.post(
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(401).send({
-          message: "Your current password does not match with the provided one",
+          message: "Your current password does not match with the provided one"
         });
       }
       if (newPassword !== confirmNewPassword) {
@@ -256,7 +256,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
 
 route.get("/api/logout", auth, (req, res) => {
   try {
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) {
         return res.redirect("/");
       }
@@ -277,16 +277,16 @@ route.post("/api/reset", async (req, res) => {
     const seller = await Seller.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
       const url = `${process.env.RESET_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
-          html: resetPasswordTemplate(url),
+          html: resetPasswordTemplate(url)
         },
         (error, info) => {
           if (error) console.log(error);
@@ -295,21 +295,21 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     if (seller) {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       const url = `${process.env.RESET_REDIRECT}/${token}`;
       // **TODO** from email address to be fixed
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
-          html: resetPasswordTemplate(url),
+          html: resetPasswordTemplate(url)
         },
         (error, info) => {
           if (error) console.log(error);
@@ -318,7 +318,7 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     return res.status(401).send({ message: "No user with that email found" });
@@ -383,7 +383,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
       await seller.save();
       return res.send({
         user: seller,
-        message: "Password updated successfully",
+        message: "Password updated successfully"
       });
     }
     return res.status(404).send({ message: "No user found" });

@@ -17,8 +17,8 @@ const confirmEmailTemplate = require("../mails/confirmEmail");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY,
-    },
+      api_key: process.env.SENDGRID_API_KEY
+    }
   })
 );
 
@@ -55,7 +55,7 @@ route.post(
         lastName,
         phoneNumber,
         IdNumber,
-        vehicleNo,
+        vehicleNo
       } = req.body;
       const password = crypto.randomBytes(6).toString("base64");
       const driverExists = await Driver.findOne({ email });
@@ -74,13 +74,13 @@ route.post(
         phoneNumber,
         IdNumber,
         vehicleNo,
-        location: { type: "Point", coordinates: [0, 0] },
+        location: { type: "Point", coordinates: [0, 0] }
       });
       const token = jwt.sign(
         { _id: driver._id },
         process.env.CONFIRM_EMAIL_JWT,
         {
-          expiresIn: "1 hour",
+          expiresIn: "1 hour"
         }
       );
       await driver.save();
@@ -88,9 +88,9 @@ route.post(
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Email Confirmation",
-          html: confirmEmailTemplate(url, { password: password }),
+          html: confirmEmailTemplate(url, { password: password })
         },
         (error, info) => {
           if (error) {
@@ -101,7 +101,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account",
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       console.log(error);
@@ -146,7 +146,7 @@ route.post(
       const {
         email,
         password,
-        location: { lat, lng },
+        location: { lat, lng }
       } = req.body;
       const driver = await Driver.findOne({ email: email.toLowerCase() });
       if (!driver) {
@@ -232,7 +232,7 @@ route.post(
         receiverTown,
         receiverAddress,
         origins,
-        destination,
+        destination
       } = req.body;
 
       const mode = "DRIVING";
@@ -251,14 +251,14 @@ route.post(
               $geoNear: {
                 near: {
                   type: "Point",
-                  coordinates: [origins.lng, origins.lat],
+                  coordinates: [origins.lng, origins.lat]
                 },
                 maxDistance: 4000000,
                 spherical: true,
                 distanceField: "dist.calculated",
-                includeLocs: "dist.location",
-              },
-            },
+                includeLocs: "dist.location"
+              }
+            }
           ]);
 
           if (!driver || (driver && driver.length === 0)) {
@@ -276,7 +276,7 @@ route.post(
             user: req.session.user._id,
             driver: driver[0]._id,
             charge,
-            userSeller: req.session.user._id,
+            userSeller: req.session.user._id
           });
           await delivery.save();
 
