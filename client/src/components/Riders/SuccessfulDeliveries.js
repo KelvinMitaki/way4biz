@@ -1,5 +1,4 @@
 import React from "react";
-import { TiDownload } from "react-icons/ti";
 import { connect } from "react-redux";
 
 import "./SuccessfulDeliveries.css";
@@ -18,18 +17,23 @@ class SuccessfulDeliveries extends React.Component {
                 receiverPhoneNumber,
                 itemName
               } = client;
+              let user;
+              if (client.userSeller) {
+                user = client.userSeller;
+              }
+              if (client.user) {
+                user = client.user;
+              }
+              const { town, address, phoneNumber } = user;
               return (
                 <div key={client._id}>
                   <p>
-                    Delivered {itemName} from Kajiado, Ongata rongai to{" "}
+                    Delivered {itemName} <strong>FROM </strong>
+                    {town}, {address}
+                    <strong> TO </strong>
                     {receiverTown}, {receiverAddress} on 15/10/2020
                   </p>
-                  <p>
-                    Sender Phone: 0
-                    {client.user &&
-                      client.user.phoneNumber &&
-                      client.user.phoneNumber}
-                  </p>
+                  <p>Sender Phone: 0{phoneNumber}</p>
                   <p>Recipient Phone: 0{receiverPhoneNumber}</p>
                 </div>
               );

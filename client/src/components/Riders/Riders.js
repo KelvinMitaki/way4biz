@@ -9,6 +9,7 @@ import ProfileImage from "../Header/ProfileImage";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchClients } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class Riders extends React.Component {
   componentDidMount() {
@@ -37,6 +38,9 @@ class Riders extends React.Component {
   render() {
     if (!this.props.user || (this.props.user && !this.props.user.IdNumber)) {
       return <Redirect to="/driver/sign-in" />;
+    }
+    if (!this.props.clients) {
+      return <ScreenLoader />;
     }
     return (
       <div>
@@ -84,7 +88,6 @@ class Riders extends React.Component {
             <div>
               <h3 className="mb-3">Welcome {this.props.user.firstName},</h3>
             </div>
-            {console.log(this.props.clients)}
             <div>
               <Tabs
                 items={this.getTabs()}
