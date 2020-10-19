@@ -45,7 +45,7 @@ class Riders extends React.Component {
     return (
       <div>
         <div id="rider-header">
-          <div className="container">
+          <div className="container p-0">
             <Logo />
             <div className="d-flex align-items-center">
               <div className="rider-logout-wrapper-md">
