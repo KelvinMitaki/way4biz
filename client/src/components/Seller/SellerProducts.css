@@ -34,8 +34,9 @@
   #dashboard-products-sm-screen {
     display: block;
   }
-  .products-tab {
-    width: 100vw !important;
+  .products-tab,
+  .orders-tab {
+    width: 100% !important;
   }
 }
 

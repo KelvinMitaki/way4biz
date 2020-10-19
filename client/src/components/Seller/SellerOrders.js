@@ -56,7 +56,7 @@ class SellerOrders extends React.Component {
       title: tab.title,
       getContent: () => tab.data,
       key: index,
-      tabClassName: "order-tab",
+      tabClassName: "orders-tab",
       panelClassName: "order-db-panel",
     }));
   }
@@ -73,13 +73,16 @@ class SellerOrders extends React.Component {
           </div>
 
           <div className="col-lg-9">
-            <div className="dashboard-content">
+            <div className="dashboard-content" style={{ overflowX: "hidden" }}>
               <div className="container mx-auto m-0">
                 <div className="row">
                   <div className="col">
                     <h3
                       className="seller-orders-title"
-                      style={{ textAlign: "center", margin: "10px 0px" }}
+                      style={{
+                        textAlign: "center",
+                        margin: "10px 0px",
+                      }}
                     >
                       Orders
                     </h3>
@@ -89,7 +92,7 @@ class SellerOrders extends React.Component {
                   <div className="col p-0">
                     <Tabs
                       items={this.getTabs()}
-                      transformWidth={720}
+                      transformWidth={767}
                       transform={true}
                       showMoreLabel={"More..."}
                       showInkBar={true}
