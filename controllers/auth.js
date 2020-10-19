@@ -278,10 +278,6 @@ route.post(
                     <!-- <p>Do something</p> -->
                   </div>
                 </section>
-                <script>
-                  let elem = document.getElementById("currentYear");
-                  elem.innerHTML = new Date().getFullYear();
-                </script>
               </body>
             </html>
           `
