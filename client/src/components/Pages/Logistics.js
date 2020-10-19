@@ -87,6 +87,9 @@ class Logistics extends React.Component {
     if (!this.props.user) {
       return <Redirect to="/sign-in" />;
     }
+    if (this.props.user && this.props.user.IdNumber) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="main">
         <div className="content">
