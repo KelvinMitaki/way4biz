@@ -16,14 +16,14 @@ const Driver = require("../models/Driver");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY,
-    },
+      api_key: process.env.SENDGRID_API_KEY
+    }
   })
 );
 route.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"]
   })
 );
 route.get(
@@ -132,7 +132,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -150,10 +150,10 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        phoneNumber,
+        phoneNumber
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
-        expiresIn: "1 hour",
+        expiresIn: "1 hour"
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
@@ -278,24 +278,13 @@ route.post(
                     <!-- <p>Do something</p> -->
                   </div>
                 </section>
-              </div>
-              <section id="mail-footer">
-                <div style="margin: 10px 0px">
-                  <a href="http://google.com">Home</a> |
-                  <a href="http://google.com">Support Center</a> |
-                  <a href="http://google.com">FAQs</a>
-                </div>
-          
-                <div class="copyright">
-                  <p>
-                    &copy;<span id="currentYear">2020</span>
-                    <span style="margin-left: 5px">All Rights Reserved.</span>
-                  </p>
-                </div>
-              </section>
-            </body>
-          </html>
-          `,
+                <script>
+                  let elem = document.getElementById("currentYear");
+                  elem.innerHTML = new Date().getFullYear();
+                </script>
+              </body>
+            </html>
+          `
         },
         (error, info) => {
           if (error) {
@@ -306,7 +295,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account",
+          "An email has been sent to your email address, please check it to confirm your account"
       });
     } catch (error) {
       res.status(500).send(error);
@@ -346,7 +335,7 @@ route.post(
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(401).send({
-          message: "Your current password does not match with the provided one",
+          message: "Your current password does not match with the provided one"
         });
       }
       if (newPassword !== confirmNewPassword) {
@@ -385,7 +374,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
 
 route.get("/api/logout", auth, (req, res) => {
   try {
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) {
         return res.redirect("/");
       }
@@ -406,7 +395,7 @@ route.post("/api/reset", async (req, res) => {
     const seller = await Seller.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -548,7 +537,7 @@ route.post("/api/reset", async (req, res) => {
               
             </body>
           </html>
-          `,
+          `
         },
         (error, info) => {
           if (error) console.log(error);
@@ -557,12 +546,12 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     if (seller) {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes",
+        expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -703,7 +692,7 @@ route.post("/api/reset", async (req, res) => {
               </section>
             </body>
           </html>
-          `,
+          `
         },
         (error, info) => {
           if (error) console.log(error);
@@ -712,7 +701,7 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password.",
+          "Check your email inbox for instructions from us on how to reset your password."
       });
     }
     return res.status(401).send({ message: "No user with that email found" });
@@ -777,7 +766,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
       await seller.save();
       return res.send({
         user: seller,
-        message: "Password updated successfully",
+        message: "Password updated successfully"
       });
     }
     return res.status(404).send({ message: "No user found" });
@@ -785,12 +774,11 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.patch("/api/user/edit/:userId", auth, async (req, res) => {
+route.patch("/api/user/edit", auth, async (req, res) => {
   try {
-    const { userId } = req.params;
     const { firstName, lastName, address, city, town, phoneNumber } = req.body;
-    const user = await User.findById(userId);
-    const seller = await Seller.findById(userId);
+    const user = await User.findById(req.session.user._id);
+    const seller = await Seller.findById(req.session.user._id);
     if (user) {
       user.firstName = firstName;
       user.lastName = lastName;

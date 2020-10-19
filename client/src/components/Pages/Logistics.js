@@ -10,12 +10,11 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
-import { checkoutUser, requestService, storeLatLng } from "../../redux/actions";
+import { requestService } from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
 import MobileLogo from "../Header/MobileLogo";
-import Axios from "axios";
 
 class Logistics extends React.Component {
   state = {
