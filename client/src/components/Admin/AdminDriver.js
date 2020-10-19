@@ -7,12 +7,15 @@ import { Link, withRouter } from "react-router-dom";
 import "./AdminDriver.css";
 import { connect } from "react-redux";
 import MobileLogo from "../Header/MobileLogo";
-import { fetchDriverDetails } from "../../redux/actions";
+import { emptyDriverDetails, fetchDriverDetails } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDriver extends React.Component {
   componentDidMount() {
     this.props.fetchDriverDetails(this.props.match.params.driverId);
+  }
+  componentWillUnmount() {
+    this.props.emptyDriverDetails();
   }
   render() {
     if (!this.props.driverDetails) {
@@ -24,7 +27,7 @@ class AdminDriver extends React.Component {
         lastName,
         IdNumber,
         phoneNumber,
-        vehicleNO,
+        vehicleNo,
         free,
         email
       },
@@ -64,7 +67,7 @@ class AdminDriver extends React.Component {
               </div>
               <div className="col-md-6">
                 <h6 className="my-1">Email: {email}</h6>
-                <h6 className="my-1">Vehicle No. {vehicleNO}</h6>
+                <h6 className="my-1">Vehicle No. {vehicleNo}</h6>
                 <h6 className="my-1">Status: {free ? "free" : "occupied"}</h6>
               </div>
             </div>
@@ -113,5 +116,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { fetchDriverDetails })(AdminDriver)
+  connect(mapStateToProps, { fetchDriverDetails, emptyDriverDetails })(
+    AdminDriver
+  )
 );

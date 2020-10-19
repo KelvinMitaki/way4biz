@@ -291,7 +291,9 @@ import {
   FETCH_DELIVERY,
   FETCH_CLIENTS,
   P_TO_CHECKOUT_CLEAR,
-  FETCH_ALL_DRIVERS,FETCH_DRIVER_DETAILS
+  FETCH_ALL_DRIVERS,
+  FETCH_DRIVER_DETAILS,
+  EMPTY_DRIVER_DETAILS
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2841,12 +2843,18 @@ export const fetchAllDrivers = () => async dispatch => {
   }
 };
 
-export const fetchDriverDetails=(driverId)=>async dispatch=>{
+export const fetchDriverDetails = driverId => async dispatch => {
   try {
-    const res=await axios.get(`/api/fetch/driver/details/${driverId}`)
-    dispatch({type:FETCH_DRIVER_DETAILS,payload:res.data})
+    const res = await axios.get(`/api/fetch/driver/details/${driverId}`);
+    dispatch({ type: FETCH_DRIVER_DETAILS, payload: res.data });
   } catch (error) {
-    authCheck(error)
-    console.log(error.response)
+    authCheck(error);
+    console.log(error.response);
   }
-}
+};
+
+export const emptyDriverDetails = () => {
+  return {
+    type: EMPTY_DRIVER_DETAILS
+  };
+};
