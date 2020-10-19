@@ -56,7 +56,7 @@ class Riders extends React.Component {
                   Logout
                 </p>
               </div>
-              <div className="rider-profile-sm">
+              <div className="rider-profile">
                 <ProfileImage size={"50px"} />
                 <div className="rider-logout-wrapper">
                   <MdArrowDropDown
