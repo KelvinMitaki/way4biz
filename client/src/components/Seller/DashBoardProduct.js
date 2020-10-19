@@ -22,10 +22,7 @@ class DashBoardProduct extends React.Component {
           .includes(this.state.search && this.state.search.toLowerCase());
       });
     return (
-      <div
-        className="container m-0 w-100"
-        style={{ backgroundColor: "white", padding: "10px" }}
-      >
+      <div className="container m-0" style={{ backgroundColor: "white" }}>
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
             <h6 className="col-lg-5 p-0" style={{ textAlign: "left" }}>

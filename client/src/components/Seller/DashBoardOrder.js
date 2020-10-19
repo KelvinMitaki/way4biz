@@ -10,10 +10,9 @@ class DashBoardOrder extends React.Component {
   render() {
     return (
       <div
-        className="container m-0 w-100"
+        className="container m-0 mx-auto"
         style={{
           backgroundColor: "#fff",
-          padding: "10px",
         }}
       >
         <div className="row no-gutters y">
