@@ -6,9 +6,9 @@ import Image from "../Market/Image";
 
 class DashBoardProduct extends React.Component {
   state = {
-    search: null
+    search: null,
   };
-  onSearchChange = event => {
+  onSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -16,14 +16,14 @@ class DashBoardProduct extends React.Component {
     const test =
       this.props.products &&
       this.props.products.length !== 0 &&
-      this.props.products.filter(product => {
+      this.props.products.filter((product) => {
         return product.name
           .toLowerCase()
           .includes(this.state.search && this.state.search.toLowerCase());
       });
     return (
       <div
-        className="container"
+        className="container m-0 w-100"
         style={{ backgroundColor: "white", padding: "10px" }}
       >
         <div className="row no-gutters y">
@@ -51,7 +51,7 @@ class DashBoardProduct extends React.Component {
           {this.props.products &&
           !this.state.search &&
           this.props.products.length !== 0 ? (
-            this.props.products.map(product => (
+            this.props.products.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
@@ -122,7 +122,7 @@ class DashBoardProduct extends React.Component {
           )}
           {test &&
             test.length !== 0 &&
-            test.map(product => (
+            test.map((product) => (
               <div
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"

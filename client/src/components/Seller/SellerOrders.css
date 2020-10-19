@@ -11,11 +11,11 @@
     display: block;
   }
 
-  .seller-dashboard-wrapper {
+  /* .seller-dashboard-wrapper {
     width: 100vw !important;
-    /* margin: auto; */
-    /* text-align: center; */
-  }
+    margin: auto;
+    text-align: center;
+  } */
 
   .seller-orders-title {
     width: 100vw !important;

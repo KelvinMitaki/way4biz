@@ -8,14 +8,14 @@
   html,
   body,
   #root {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
   }
 }
 
 html,
 body {
   background-color: #eaecee;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 body::-webkit-scrollbar {
