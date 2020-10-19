@@ -34,6 +34,8 @@ class AdminDashboardSecondaryHeader extends React.Component {
             url: "/admin-new-sellers",
             num: 100,
           },
+          { name: "Add Driver", url: "/admin/add-driver" },
+          { name: "Drivers", url: "/admin/drivers" },
         ],
       },
     ],
@@ -185,7 +187,7 @@ class AdminDashboardSecondaryHeader extends React.Component {
                   <NavLink to="/admin/add-driver">Add Driver</NavLink>
                 </p>
                 <p>
-                  <NavLink to="/admin/drivers">Active Drivers</NavLink>
+                  <NavLink to="/admin/drivers">Drivers</NavLink>
                 </p>
               </div>
             </li>
