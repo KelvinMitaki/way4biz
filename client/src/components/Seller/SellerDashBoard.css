@@ -1,8 +1,17 @@
 .dashboard-content {
-  padding: 20px;
+  /* padding: 20px; */
   height: calc(100vh - 90px);
   overflow-y: auto;
   position: relative;
+}
+
+.dashboard-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb {
+  background-color: #f76b1a;
+  border-radius: 3px;
 }
 
 .seller-welcome {

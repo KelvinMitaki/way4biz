@@ -17,7 +17,7 @@
 }
 
 .rider-profile {
-  display: flex;
+  display: flex !important;
   align-items: flex-end;
 }
 
