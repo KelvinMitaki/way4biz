@@ -34,6 +34,7 @@
 
 .rider-logout-wrapper-md p {
   margin: 0px 10px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 540px) {
