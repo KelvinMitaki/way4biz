@@ -160,7 +160,7 @@ route.post(
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Email Confirmation",
           html: `
           <!DOCTYPE html>
@@ -411,7 +411,7 @@ route.post("/api/reset", async (req, res) => {
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
           html: `
           <!DOCTYPE html>
@@ -567,7 +567,7 @@ route.post("/api/reset", async (req, res) => {
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
           html: `
           <!DOCTYPE html>
