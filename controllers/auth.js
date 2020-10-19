@@ -541,11 +541,19 @@ route.post("/api/reset", async (req, res) => {
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
               <title>Way4Biz</title>
+              <link
+                rel="stylesheet"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              />
               <style>
                 * {
                   padding: 0px;
                   margin: 0px;
                   box-sizing: border-box;
+                }
+                html,
+                body {
+                  overflow-x: hidden;
                 }
                 body {
                   font-family: Arial, Helvetica, sans-serif;
@@ -553,7 +561,7 @@ route.post("/api/reset", async (req, res) => {
                   display: flex;
                   flex-direction: column;
                 }
-          
+
                 #content {
                   flex: 1 0 auto;
                 }
@@ -564,19 +572,38 @@ route.post("/api/reset", async (req, res) => {
                   align-items: center;
                   justify-content: center;
                   color: #f76b1a;
+                  border-bottom: 3px solid #f76b1a;
                 }
-          
+
                 #mail-body {
                   width: 90%;
                   margin: auto;
-                  text-align: center;
+                  text-align: left;
                   padding: 30px 0px;
                 }
-          
+
+                .action-link {
+                  background-color: #f76b1a;
+                  color: #fff;
+                  min-width: 150px;
+                  padding: 10px;
+                  border-radius: 4px;
+                }
+
+                .action-link:hover {
+                  color: #fff;
+                  text-decoration: none;
+                }
+
                 #mail-footer {
-                  height: 100px;
+                  padding: 20px 10px;
                   background-color: #00001e;
                   flex-shrink: 0;
+                  color: #f76b1a;
+                }
+
+                #mail-footer a {
+                  color: #f76b1a;
                 }
               </style>
             </head>
@@ -584,15 +611,43 @@ route.post("/api/reset", async (req, res) => {
               <div id="content">
                 <section id="mail-header">
                   <!-- mail subject here -->
-                  <h1>You requested for password reset</h1>
+                  <img
+                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
+                    height="100%"
+                    alt="mail-logo"
+                  />
                 </section>
                 <section id="mail-body">
                   <!-- mail content here -->
-                  <p>Please Click
-                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password.</p>
+
+                  <div class="container">
+                    <!-- subject here -->
+                    <h1 class="mb-2">Password Reset.</h1>
+                    <!-- use this link to create other links -->
+                    <a href=${process.env.RESET_REDIRECT}/${token} class="action-link my-2">Reset Password</a>
+                    
+                  </div>
                 </section>
               </div>
-              <section id="mail-footer"></section>
+              <section id="mail-footer">
+                <div class="row">
+                  <div class="col-md-5 mx-auto text-center">
+                    <a href="http://google.com">Home</a> |
+                    <a href="http://google.com">Support Center</a> |
+                    <a href="http://google.com">FAQs</a>
+                  </div>
+                </div>
+                <div class="copyright text-center mt-1">
+                  <p>
+                    &copy;<span id="currentYear" class="ml-2"></span>
+                    <span class="ml-2">All Rights Reserved.</span>
+                  </p>
+                </div>
+              </section>
+              <script>
+                let elem = document.getElementById("currentYear");
+                elem.innerHTML = new Date().getFullYear();
+              </script>
             </body>
           </html>
           `,
