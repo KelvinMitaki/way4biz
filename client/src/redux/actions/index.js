@@ -770,10 +770,7 @@ export const editProduct = (formvalues, productId, history) => async (
 ) => {
   try {
     dispatch({ type: LOADING_START });
-    await axios.patch(
-      `/api/product/edit/${getState().auth.user._id}/${productId}`,
-      formvalues
-    );
+    await axios.patch(`/api/product/edit/${productId}`, formvalues);
     dispatch({ type: EDIT_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
