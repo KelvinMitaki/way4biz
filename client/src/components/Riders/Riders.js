@@ -8,8 +8,12 @@ import { MdArrowDropDown } from "react-icons/md";
 import ProfileImage from "../Header/ProfileImage";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { fetchClients } from "../../redux/actions";
 
 class Riders extends React.Component {
+  componentDidMount() {
+    this.props.fetchClients();
+  }
   getTabs() {
     const data = [
       {
@@ -90,4 +94,4 @@ const mapStateToProps = state => {
     clients: state.riders.clients
   };
 };
-export default connect(mapStateToProps)(Riders);
+export default connect(mapStateToProps, { fetchClients })(Riders);

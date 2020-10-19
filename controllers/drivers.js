@@ -357,7 +357,7 @@ route.get("/api/driver/clients", isDriver, async (req, res) => {
     const { _id } = req.session.user;
     const deliveries = await Delivery.find({ driver: _id }).populate(
       "user",
-      "firstName lastName phoneNumber"
+      "firstName lastName phoneNumber address town phoneNumber"
     );
     res.send(deliveries);
   } catch (error) {
