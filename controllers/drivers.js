@@ -338,7 +338,8 @@ route.post(
             receiverAddress,
             user: req.session.user._id,
             driver: driver[0]._id,
-            charge
+            charge,
+            userSeller: req.session.user._id
           });
           await delivery.save();
 
@@ -356,7 +357,7 @@ route.get("/api/driver/clients", isDriver, async (req, res) => {
   try {
     const { _id } = req.session.user;
     const deliveries = await Delivery.find({ driver: _id }).populate(
-      "user",
+      "user userSeller",
       "firstName lastName phoneNumber address town phoneNumber"
     );
     res.send(deliveries);

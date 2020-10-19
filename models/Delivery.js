@@ -12,6 +12,11 @@ const DeliverySchema = new mongoose.Schema(
       ref: "User",
       required: true
     },
+    userSeller: {
+      type: mongoose.Types.ObjectId,
+      ref: "Seller",
+      required: true
+    },
     itemName: {
       type: String,
       required: true
