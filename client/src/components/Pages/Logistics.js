@@ -241,7 +241,7 @@ class Logistics extends React.Component {
                     className="btn btn-md btn-block address-btn mt-3 "
                     disabled={
                       !this.props.valid ||
-                      this.props.checkoutUserLoading ||
+                      this.props.requestServiceLoading ||
                       Object.keys(this.state.townLatLng).length === 0 ||
                       Object.keys(this.state.cityLatLng).length === 0 ||
                       Object.keys(this.state.receiverCityLatLng).length === 0 ||
@@ -249,14 +249,14 @@ class Logistics extends React.Component {
                     }
                     type="submit"
                   >
-                    {this.props.checkoutUserLoading && (
+                    {this.props.requestServiceLoading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
                         role="status"
                         aria-hidden="true"
                       ></span>
                     )}
-                    {this.props.checkoutUserLoading ? (
+                    {this.props.requestServiceLoading ? (
                       <span> {"  "}Loading...</span>
                     ) : (
                       <span>Request Service</span>
