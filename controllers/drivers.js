@@ -94,10 +94,7 @@ route.post(
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
               <title>Way4Biz</title>
-              <link
-                rel="stylesheet"
-                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-              />
+              <link rel="stylesheet" />
               <style>
                 * {
                   padding: 0px;
@@ -114,49 +111,75 @@ route.post(
                   display: flex;
                   flex-direction: column;
                 }
-
+          
                 #content {
                   flex: 1 0 auto;
                 }
+          
+                a {
+                  text-decoration: none;
+                }
+          
+                a:hover {
+                  text-decoration: underline;
+                }
+          
                 #mail-header {
                   background-color: #00001e;
                   height: 80px;
                   display: flex;
                   align-items: center;
+                  width: 100%;
                   justify-content: center;
                   color: #f76b1a;
                   border-bottom: 3px solid #f76b1a;
                 }
-
+          
                 #mail-body {
                   width: 90%;
                   margin: auto;
                   text-align: center;
                   padding: 30px 0px;
                 }
-
+          
+                .container {
+                  width: 60%;
+                  display: flex;
+                  flex-direction: column;
+                  margin: auto;
+                  align-items: center;
+                }
+          
                 .action-link {
                   background-color: #f76b1a;
                   color: #fff;
                   min-width: 150px;
                   padding: 10px;
                   border-radius: 4px;
+                  width: 150px;
+                  margin: 10px 0px;
                 }
-
-                .action-link:hover {
-                  color: #fff;
-                  text-decoration: none;
-                }
-
+          
                 #mail-footer {
                   padding: 20px 10px;
-                  background-color: #00001e;
+                  border-top: 1px solid #d4d4d4;
                   flex-shrink: 0;
                   color: #f76b1a;
+                  display: flex;
+                  width: 100%;
+                  align-items: center;
+                  justify-content: center;
+                  flex-direction: column;
                 }
-
+          
                 #mail-footer a {
                   color: #f76b1a;
+                }
+          
+                @media screen and (max-width: 768px) {
+                  .container {
+                    width: 90%;
+                  }
                 }
               </style>
             </head>
@@ -171,36 +194,32 @@ route.post(
                   />
                 </section>
                 <section id="mail-body">
-                  <!-- mail content here -->
-
                   <div class="container">
                     <!-- subject here -->
-                    <h1 class="mb-2">Confirm your email.</h1>
+                    <h1>Email Confirmation</h1> 
+                    <p style="margin-top: 10px">
+                    Please confirm your email by clicking the link below.
+                  </p>
                     <!-- use this link to create other links -->
-                    <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link my-2">Confirm Email/a>
-                    <p class="mt-2">After confirming your email, use this password <b>${password}</b> to login.</p>
+                    <a href=${process.env.DRIVER_CONFIRM_REDIRECT}/${token} class="action-link">Confirm Email</a>
+                    <p style="margin-top:10px">After confirming your email, use this password <b>${password}</b> to login.</p>
                   </div>
                 </section>
               </div>
               <section id="mail-footer">
-                <div class="row">
-                  <div class="col-md-5 mx-auto text-center">
-                    <a href="http://google.com">Home</a> |
-                    <a href="http://google.com">Support Center</a> |
-                    <a href="http://google.com">FAQs</a>
-                  </div>
+                <div style="margin: 10px 0px">
+                  <a href="http://google.com">Home</a> |
+                  <a href="http://google.com">Support Center</a> |
+                  <a href="http://google.com">FAQs</a>
                 </div>
-                <div class="copyright text-center mt-1">
+          
+                <div class="copyright">
                   <p>
-                    &copy;<span id="currentYear" class="ml-2"></span>
-                    <span class="ml-2">All Rights Reserved.</span>
+                    &copy;<span id="currentYear">2020</span>
+                    <span style="margin-left: 5px">All Rights Reserved.</span>
                   </p>
                 </div>
               </section>
-              <script>
-                let elem = document.getElementById("currentYear");
-                elem.innerHTML = new Date().getFullYear();
-              </script>
             </body>
           </html>
           `,
