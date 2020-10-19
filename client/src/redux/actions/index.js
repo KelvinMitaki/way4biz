@@ -831,7 +831,10 @@ export const deleteFromCart = product => async (dispatch, getState) => {
       type: DELETE_FROM_CART,
       payload: product
     });
-    if (getState().cartReducer.cart.length === 0) {
+    if (
+      getState().cartReducer.cart.length === 0 &&
+      getState().auth.isSignedIn
+    ) {
       dispatch(saveCartItems(getState().cartReducer.cart));
     }
   } catch (error) {
