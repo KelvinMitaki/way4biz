@@ -73,13 +73,16 @@ class SellerOrders extends React.Component {
           </div>
 
           <div className="col-lg-9">
-            <div className="dashboard-content">
+            <div className="dashboard-content" style={{ overflowX: "hidden" }}>
               <div className="container mx-auto m-0">
                 <div className="row">
                   <div className="col">
                     <h3
                       className="seller-orders-title"
-                      style={{ textAlign: "center", margin: "10px 0px" }}
+                      style={{
+                        textAlign: "center",
+                        margin: "10px 0px",
+                      }}
                     >
                       Orders
                     </h3>

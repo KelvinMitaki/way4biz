@@ -81,7 +81,7 @@ class SellerProducts extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9">
-            <div className="dashboard-content">
+            <div className="dashboard-content" style={{ overflowX: "hidden" }}>
               <div className="container mx-auto m-0">
                 <div className="row">
                   <div className="col">
