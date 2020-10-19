@@ -349,7 +349,7 @@ class App extends React.Component {
                 }
               />
               <Route
-                path="/admin/driver"
+                path="/admin/driver/:driverId"
                 render={() =>
                   this.props.user && this.props.user.isAdmin ? (
                     <AdminDriver />

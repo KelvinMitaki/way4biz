@@ -290,7 +290,8 @@ import {
   REQUEST_SERVICE_STOP,
   FETCH_DELIVERY,
   FETCH_CLIENTS,
-  P_TO_CHECKOUT_CLEAR
+  P_TO_CHECKOUT_CLEAR,
+  FETCH_ALL_DRIVERS
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2828,4 +2829,14 @@ export const pToCheckoutClear = () => {
   return {
     type: P_TO_CHECKOUT_CLEAR
   };
+};
+
+export const fetchAllDrivers = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/all/drivers");
+    dispatch({ type: FETCH_ALL_DRIVERS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };

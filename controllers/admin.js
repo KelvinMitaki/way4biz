@@ -34,6 +34,7 @@ const Complaint = require("../models/Complaint");
 const Contact = require("../models/Contact");
 const Redeem = require("../models/Redeem");
 const HeroImage = require("../models/HeroImages");
+const Driver = require("../models/Driver");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -2569,4 +2570,14 @@ route.post("/api/mark/as/read", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+route.get("/api/fetch/all/drivers", auth, isAdmin, async (req, res) => {
+  try {
+    const drivers = await Driver.find({});
+    res.send(drivers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = route;

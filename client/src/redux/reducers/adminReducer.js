@@ -34,7 +34,8 @@ import {
   FETCH_NEW_SELLERS,
   DELETE_HERO_IMAGE_START,
   DELETE_HERO_IMAGE_STOP,
-  ADMIN_INBOX_COUNT
+  ADMIN_INBOX_COUNT,
+  FETCH_ALL_DRIVERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -65,7 +66,8 @@ const INITIAL_STATE = {
   stock: [],
   deleteHeroImageLoading: false,
   inboxCount: null,
-  addingDriver: false
+  addingDriver: false,
+  drivers: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -182,6 +184,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, deleteHeroImageLoading: false };
     case ADMIN_INBOX_COUNT:
       return { ...state, inboxCount: action.payload };
+    case FETCH_ALL_DRIVERS:
+      return { ...state, drivers: action.payload };
     default:
       return state;
   }
