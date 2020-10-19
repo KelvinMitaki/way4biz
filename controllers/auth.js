@@ -16,14 +16,14 @@ const Driver = require("../models/Driver");
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY
-    }
+      api_key: process.env.SENDGRID_API_KEY,
+    },
   })
 );
 route.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
   })
 );
 route.get(
@@ -132,7 +132,7 @@ route.post(
         confirmPassword,
         firstName,
         lastName,
-        phoneNumber
+        phoneNumber,
       } = req.body;
       if (password !== confirmPassword) {
         return res.status(401).send({ message: "Passwords do not match" });
@@ -150,10 +150,10 @@ route.post(
         password: hashedPassword,
         firstName,
         lastName,
-        phoneNumber
+        phoneNumber,
       });
       const token = jwt.sign({ _id: user._id }, process.env.CONFIRM_EMAIL_JWT, {
-        expiresIn: "1 hour"
+        expiresIn: "1 hour",
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
@@ -162,67 +162,123 @@ route.post(
           to: email,
           from: "kevinkhalifa911@gmail.com",
           subject: "Email Confirmation",
-          html: `<!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Way4Biz</title>
-              <style>
-                * {
-                  padding: 0px;
-                  margin: 0px;
-                  box-sizing: border-box;
-                }
-                body {
-                  font-family: Arial, Helvetica, sans-serif;
-                  min-height: 100vh;
-                  display: flex;
-                  flex-direction: column;
-                }
-          
-                #content {
-                  flex: 1 0 auto;
-                }
-                #mail-header {
-                  background-color: #00001e;
-                  height: 80px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  color: #f76b1a;
-                }
-          
-                #mail-body {
-                  width: 90%;
-                  margin: auto;
-                  text-align: center;
-                  padding: 30px 0px;
-                }
-          
-                #mail-footer {
-                  height: 100px;
-                  background-color: #00001e;
-                  flex-shrink: 0;
-                }
-              </style>
-            </head>
-            <body>
-              <div id="content">
-                <section id="mail-header">
-                  <!-- mail subject here -->
-                  <h1>Confirm Your Email</h1>
+          html: `
+          <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Way4Biz</title>
+                <link
+                  rel="stylesheet"
+                  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+                />
+                <style>
+                  * {
+                    padding: 0px;
+                    margin: 0px;
+                    box-sizing: border-box;
+                  }
+                  html,
+                  body {
+                    overflow-x: hidden;
+                  }
+                  body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                  }
+
+                  #content {
+                    flex: 1 0 auto;
+                  }
+                  #mail-header {
+                    background-color: #00001e;
+                    height: 80px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #f76b1a;
+                    border-bottom: 3px solid #f76b1a;
+                  }
+
+                  #mail-body {
+                    text-align: center;
+                    width: 90%;
+                    margin: auto;
+                    padding: 30px 0px;
+                  }
+
+                  .action-link {
+                    background-color: #f76b1a;
+                    color: #fff;
+                    min-width: 150px;
+                    padding: 10px;
+                    border-radius: 4px;
+                  }
+
+                  .action-link:hover {
+                    color: #fff;
+                    text-decoration: none;
+                  }
+
+                  #mail-footer {
+                    padding: 20px 10px;
+                    background-color: #00001e;
+                    flex-shrink: 0;
+                    color: #f76b1a;
+                  }
+
+                  #mail-footer a {
+                    color: #f76b1a;
+                  }
+                </style>
+              </head>
+              <body>
+                <div id="content">
+                  <section id="mail-header">
+                    <!-- mail subject here -->
+                    <img
+                      src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
+                      height="100%"
+                      alt="mail-logo"
+                    />
+                  </section>
+                  <section id="mail-body">
+                    <!-- mail content here -->
+
+                    <div class="container">
+                      <!-- subject here -->
+                      <h1 class="mb-2">Confirm your email.</h1>
+                      <!-- use this link to create other links -->
+                      <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token} class="action-link my-2">Confirm Email</a>
+                      
+                    </div>
+                  </section>
+                </div>
+                <section id="mail-footer">
+                  <div class="row">
+                    <div class="col-md-5 mx-auto text-center">
+                      <a href="http://google.com">Home</a> |
+                      <a href="http://google.com">Support Center</a> |
+                      <a href="http://google.com">FAQs</a>
+                    </div>
+                  </div>
+                  <div class="copyright text-center mt-1">
+                    <p>
+                      &copy;<span id="currentYear" class="ml-2"></span>
+                      <span class="ml-2">All Rights Reserved.</span>
+                    </p>
+                  </div>
                 </section>
-                <section id="mail-body">
-                  <!-- mail content here -->
-                  <p>Please Click
-                  <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token}>here</a> to confirm your email.</p>
-                </section>
-              </div>
-              <section id="mail-footer"></section>
-            </body>
-          </html>
-          `
+                <script>
+                  let elem = document.getElementById("currentYear");
+                  elem.innerHTML = new Date().getFullYear();
+                </script>
+              </body>
+            </html>
+          `,
         },
         (error, info) => {
           if (error) {
@@ -233,7 +289,7 @@ route.post(
       );
       res.status(201).send({
         message:
-          "An email has been sent to your email address, please check it to confirm your account"
+          "An email has been sent to your email address, please check it to confirm your account",
       });
     } catch (error) {
       res.status(500).send(error);
@@ -273,7 +329,7 @@ route.post(
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(401).send({
-          message: "Your current password does not match with the provided one"
+          message: "Your current password does not match with the provided one",
         });
       }
       if (newPassword !== confirmNewPassword) {
@@ -312,7 +368,7 @@ route.get("/api/confirm/email/:emailToken", async (req, res) => {
 
 route.get("/api/logout", auth, (req, res) => {
   try {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         return res.redirect("/");
       }
@@ -333,7 +389,7 @@ route.post("/api/reset", async (req, res) => {
     const seller = await Seller.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes"
+        expiresIn: "30 minutes",
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -341,17 +397,26 @@ route.post("/api/reset", async (req, res) => {
           to: email,
           from: "kevinkhalifa911@gmail.com",
           subject: "Password Resetting",
-          html: `<!DOCTYPE html>
+          html: `
+          <!DOCTYPE html>
           <html lang="en">
             <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
               <title>Way4Biz</title>
+              <link
+                rel="stylesheet"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              />
               <style>
                 * {
                   padding: 0px;
                   margin: 0px;
                   box-sizing: border-box;
+                }
+                html,
+                body {
+                  overflow-x: hidden;
                 }
                 body {
                   font-family: Arial, Helvetica, sans-serif;
@@ -359,7 +424,7 @@ route.post("/api/reset", async (req, res) => {
                   display: flex;
                   flex-direction: column;
                 }
-          
+
                 #content {
                   flex: 1 0 auto;
                 }
@@ -370,19 +435,38 @@ route.post("/api/reset", async (req, res) => {
                   align-items: center;
                   justify-content: center;
                   color: #f76b1a;
+                  border-bottom: 3px solid #f76b1a;
                 }
-          
+
                 #mail-body {
+                  text-align: center;
                   width: 90%;
                   margin: auto;
-                  text-align: center;
                   padding: 30px 0px;
                 }
-          
+
+                .action-link {
+                  background-color: #f76b1a;
+                  color: #fff;
+                  min-width: 150px;
+                  padding: 10px;
+                  border-radius: 4px;
+                }
+
+                .action-link:hover {
+                  color: #fff;
+                  text-decoration: none;
+                }
+
                 #mail-footer {
-                  height: 100px;
+                  padding: 20px 10px;
                   background-color: #00001e;
                   flex-shrink: 0;
+                  color: #f76b1a;
+                }
+
+                #mail-footer a {
+                  color: #f76b1a;
                 }
               </style>
             </head>
@@ -390,18 +474,46 @@ route.post("/api/reset", async (req, res) => {
               <div id="content">
                 <section id="mail-header">
                   <!-- mail subject here -->
-                  <h1>You requested for password reset</h1>
+                  <img
+                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
+                    height="100%"
+                    alt="mail-logo"
+                  />
                 </section>
                 <section id="mail-body">
                   <!-- mail content here -->
-                  <p>Please Click
-                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password.</p>
+
+                  <div class="container">
+                    <!-- subject here -->
+                    <h1 class="mb-2">Password Reset.</h1>
+                    <!-- use this link to create other links -->
+                    <a href=${process.env.RESET_REDIRECT}/${token} class="action-link my-2">Reset Password</a>
+                    
+                  </div>
                 </section>
               </div>
-              <section id="mail-footer"></section>
+              <section id="mail-footer">
+                <div class="row">
+                  <div class="col-md-5 mx-auto text-center">
+                    <a href="http://google.com">Home</a> |
+                    <a href="http://google.com">Support Center</a> |
+                    <a href="http://google.com">FAQs</a>
+                  </div>
+                </div>
+                <div class="copyright text-center mt-1">
+                  <p>
+                    &copy;<span id="currentYear" class="ml-2"></span>
+                    <span class="ml-2">All Rights Reserved.</span>
+                  </p>
+                </div>
+              </section>
+              <script>
+                let elem = document.getElementById("currentYear");
+                elem.innerHTML = new Date().getFullYear();
+              </script>
             </body>
           </html>
-          `
+          `,
         },
         (error, info) => {
           if (error) console.log(error);
@@ -410,12 +522,12 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password."
+          "Check your email inbox for instructions from us on how to reset your password.",
       });
     }
     if (seller) {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
-        expiresIn: "30 minutes"
+        expiresIn: "30 minutes",
       });
       // **TODO** from email address to be fixed
       transporter.sendMail(
@@ -429,11 +541,19 @@ route.post("/api/reset", async (req, res) => {
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
               <title>Way4Biz</title>
+              <link
+                rel="stylesheet"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              />
               <style>
                 * {
                   padding: 0px;
                   margin: 0px;
                   box-sizing: border-box;
+                }
+                html,
+                body {
+                  overflow-x: hidden;
                 }
                 body {
                   font-family: Arial, Helvetica, sans-serif;
@@ -441,7 +561,7 @@ route.post("/api/reset", async (req, res) => {
                   display: flex;
                   flex-direction: column;
                 }
-          
+
                 #content {
                   flex: 1 0 auto;
                 }
@@ -452,19 +572,38 @@ route.post("/api/reset", async (req, res) => {
                   align-items: center;
                   justify-content: center;
                   color: #f76b1a;
+                  border-bottom: 3px solid #f76b1a;
                 }
-          
+
                 #mail-body {
+                  text-align: center;
                   width: 90%;
                   margin: auto;
-                  text-align: center;
                   padding: 30px 0px;
                 }
-          
+
+                .action-link {
+                  background-color: #f76b1a;
+                  color: #fff;
+                  min-width: 150px;
+                  padding: 10px;
+                  border-radius: 4px;
+                }
+
+                .action-link:hover {
+                  color: #fff;
+                  text-decoration: none;
+                }
+
                 #mail-footer {
-                  height: 100px;
+                  padding: 20px 10px;
                   background-color: #00001e;
                   flex-shrink: 0;
+                  color: #f76b1a;
+                }
+
+                #mail-footer a {
+                  color: #f76b1a;
                 }
               </style>
             </head>
@@ -472,18 +611,46 @@ route.post("/api/reset", async (req, res) => {
               <div id="content">
                 <section id="mail-header">
                   <!-- mail subject here -->
-                  <h1>You requested for password reset</h1>
+                  <img
+                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
+                    height="100%"
+                    alt="mail-logo"
+                  />
                 </section>
                 <section id="mail-body">
                   <!-- mail content here -->
-                  <p>Please Click
-                  <a href=${process.env.RESET_REDIRECT}/${token}>here</a> to reset your password.</p>
+
+                  <div class="container">
+                    <!-- subject here -->
+                    <h1 class="mb-2">Password Reset.</h1>
+                    <!-- use this link to create other links -->
+                    <a href=${process.env.RESET_REDIRECT}/${token} class="action-link my-2">Reset Password</a>
+                    
+                  </div>
                 </section>
               </div>
-              <section id="mail-footer"></section>
+              <section id="mail-footer">
+                <div class="row">
+                  <div class="col-md-5 mx-auto text-center">
+                    <a href="http://google.com">Home</a> |
+                    <a href="http://google.com">Support Center</a> |
+                    <a href="http://google.com">FAQs</a>
+                  </div>
+                </div>
+                <div class="copyright text-center mt-1">
+                  <p>
+                    &copy;<span id="currentYear" class="ml-2"></span>
+                    <span class="ml-2">All Rights Reserved.</span>
+                  </p>
+                </div>
+              </section>
+              <script>
+                let elem = document.getElementById("currentYear");
+                elem.innerHTML = new Date().getFullYear();
+              </script>
             </body>
           </html>
-          `
+          `,
         },
         (error, info) => {
           if (error) console.log(error);
@@ -492,7 +659,7 @@ route.post("/api/reset", async (req, res) => {
       );
       return res.send({
         message:
-          "Check your email inbox for instructions from us on how to reset your password."
+          "Check your email inbox for instructions from us on how to reset your password.",
       });
     }
     return res.status(401).send({ message: "No user with that email found" });
@@ -557,7 +724,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
       await seller.save();
       return res.send({
         user: seller,
-        message: "Password updated successfully"
+        message: "Password updated successfully",
       });
     }
     return res.status(404).send({ message: "No user found" });

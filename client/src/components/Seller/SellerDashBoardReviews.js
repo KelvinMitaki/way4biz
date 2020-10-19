@@ -29,48 +29,50 @@ class Review extends React.Component {
             <SellerDashBoardMenu />
           </div>
           <div className="col-lg-9 reviews-wrapper m-0 p-0">
-            <div className="container-fluid  mx-auto box-container m-0">
-              {/* mapping here */}
-              {this.props.sellerReviews.length === 0 && (
-                <SellerDashBoardNoReviews />
-              )}
-              {this.props.sellerReviews.length !== 0 &&
-                this.props.sellerReviews.map((review) => (
-                  <div className="review-wrapper mb-3" key={review._id}>
-                    <Rating clickable={false} size={15} value={4} />
-                    <div className="seller-review-product-title-name">
+            <div className="dashboard-content">
+              <div className="container-fluid  mx-auto box-container m-0">
+                {/* mapping here */}
+                {this.props.sellerReviews.length === 0 && (
+                  <SellerDashBoardNoReviews />
+                )}
+                {this.props.sellerReviews.length !== 0 &&
+                  this.props.sellerReviews.map((review) => (
+                    <div className="review-wrapper mb-3" key={review._id}>
+                      <Rating clickable={false} size={15} value={4} />
+                      <div className="seller-review-product-title-name">
+                        <h6 className="my-2">
+                          {review.title}{" "}
+                          <IconContext.Provider
+                            value={{ className: "seller-review-title-arrow" }}
+                          >
+                            <BsArrowRight />
+                          </IconContext.Provider>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              this.props.history.push(
+                                `/product/${review.productData._id}`
+                              )
+                            }
+                            title={review.productData.name}
+                          >
+                            {review.productData.name}
+                          </span>
+                        </h6>
+                      </div>
+
+                      <p className="">{review.body}</p>
                       <h6 className="my-2">
-                        {review.title}{" "}
-                        <IconContext.Provider
-                          value={{ className: "seller-review-title-arrow" }}
-                        >
-                          <BsArrowRight />
-                        </IconContext.Provider>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() =>
-                            this.props.history.push(
-                              `/product/${review.productData._id}`
-                            )
-                          }
-                          title={review.productData.name}
-                        >
-                          {review.productData.name}
-                        </span>
+                        By{" "}
+                        {review.user.length !== 0
+                          ? review.user[0] && review.user[0].firstName
+                          : review.userSeller[0] &&
+                            review.userSeller[0].firstName}{" "}
+                        on {new Date(review.createdAt).toLocaleString()}{" "}
                       </h6>
                     </div>
-
-                    <p className="">{review.body}</p>
-                    <h6 className="my-2">
-                      By{" "}
-                      {review.user.length !== 0
-                        ? review.user[0] && review.user[0].firstName
-                        : review.userSeller[0] &&
-                          review.userSeller[0].firstName}{" "}
-                      on {new Date(review.createdAt).toLocaleString()}{" "}
-                    </h6>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
           </div>
         </div>

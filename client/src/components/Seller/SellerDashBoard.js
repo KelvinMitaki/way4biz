@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {
   fetchSellerNewOrdersCount,
   fetchUser,
-  clearNewSellerDetails
+  clearNewSellerDetails,
 } from "../../redux/actions";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { Redirect, Link } from "react-router-dom";
@@ -39,7 +39,10 @@ class SellerDashBoard extends React.Component {
                   <div className="mb-2 container">
                     <div className="row align-items-center">
                       <div className="col-8 pl-0">
-                        <h6 className="seller-welcome">
+                        <h6
+                          className="seller-welcome"
+                          style={{ paddingLeft: "15px" }}
+                        >
                           Welcome {this.props.user.firstName}
                         </h6>
                       </div>
@@ -57,11 +60,13 @@ class SellerDashBoard extends React.Component {
                   <div className="container">
                     <div className="row mt-5">
                       <div>
-                        <h3 className="my-2">Store Summary</h3>
+                        <h3 className="my-2" style={{ paddingLeft: "15px" }}>
+                          Store Summary
+                        </h3>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6 pl-0">
+                      <div className="col-md-6">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -71,7 +76,7 @@ class SellerDashBoard extends React.Component {
                           <h6>NEW ORDERS</h6>
                         </div>
                       </div>
-                      <div className="col-md-6 pl-0">
+                      <div className="col-md-6">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -85,11 +90,13 @@ class SellerDashBoard extends React.Component {
                     </div>
                     <div className="row mt-5">
                       <div>
-                        <h3 className="my-2">Store Performance</h3>
+                        <h3 className="my-2" style={{ paddingLeft: "15px" }}>
+                          Store Performance
+                        </h3>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6 pl-0">
+                      <div className="col-md-6">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -99,7 +106,7 @@ class SellerDashBoard extends React.Component {
                           <h6>SUCCESSFUL SALES</h6>
                         </div>
                       </div>
-                      <div className="col-md-6 pl-0">
+                      <div className="col-md-6">
                         <div className="box-container big-number-wrapper">
                           <h1 className="big-number">
                             {this.props.dashboard &&
@@ -120,14 +127,14 @@ class SellerDashBoard extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    dashboard: state.detailsPersist.dashboard
+    dashboard: state.detailsPersist.dashboard,
   };
 };
 export default connect(mapStateToProps, {
   fetchSellerNewOrdersCount,
   fetchUser,
-  clearNewSellerDetails
+  clearNewSellerDetails,
 })(SellerDashBoard);

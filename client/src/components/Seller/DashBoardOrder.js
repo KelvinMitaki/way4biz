@@ -17,13 +17,13 @@ class DashBoardOrder extends React.Component {
       >
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
-            <h6 className="col-lg-4 p-0" style={{ textAlign: "left" }}>
+            <h6 className="col-md-4 p-0" style={{ textAlign: "left" }}>
               Order Info
             </h6>
-            <h6 className="col-lg-2 p-0">Items No.</h6>
-            <h6 className="col-lg-2 p-0">Destination</h6>
-            <h6 className="col-lg-2 p-0">Total Amount</h6>
-            <h6 className="col-lg-2 p-0">Status</h6>
+            <h6 className="col-md-2 p-0">Items No.</h6>
+            <h6 className="col-md-2 p-0">Destination</h6>
+            <h6 className="col-md-2 p-0">Total Amount</h6>
+            <h6 className="col-md-2 p-0">Status</h6>
           </div>
         </div>
         <div className="container-fluid p-0">
@@ -31,7 +31,7 @@ class DashBoardOrder extends React.Component {
             this.props.sellerOrders.map((order) => (
               <React.Fragment key={order._id}>
                 <div className="row dashboard-order-wrapper box-container no-gutters">
-                  <div className="col-md-6 col-lg-4">
+                  <div className="col-md-4">
                     <div className="id-cut">
                       <strong className="mr-2">ID:</strong>
                       {order._id}
@@ -41,7 +41,7 @@ class DashBoardOrder extends React.Component {
                       {new Date(order.createdAt).toLocaleDateString()}
                     </div>
                   </div>
-                  <div className="col-md-6 col-lg-2">
+                  <div className="col-md-2">
                     <div>
                       <strong className="x mr-2">Qty:</strong>
                       {order.items.length}
@@ -69,7 +69,7 @@ class DashBoardOrder extends React.Component {
                     </div>
                   </div>
 
-                  <div className="col-md-6 col-lg-2">
+                  <div className="col-md-2">
                     {order.buyerSeller.length !== 0 && order.buyerSeller[0] && (
                       <BuyerDestination
                         buyerId={order.buyer}
@@ -83,7 +83,7 @@ class DashBoardOrder extends React.Component {
                       />
                     )}
                   </div>
-                  <div className="col-md-6 col-lg-2">
+                  <div className="col-md-2">
                     <div>
                       <strong className="x mr-2">Amount:</strong>
                       Ksh.
@@ -101,7 +101,7 @@ class DashBoardOrder extends React.Component {
                         .toLocaleString()}
                     </div>
                   </div>
-                  <div className="col-md-6 col-lg-2">
+                  <div className="col-md-2">
                     <div>
                       <strong className="x mr-2">Status:</strong>
                       {(order.cancelled && "Cancelled") ||
