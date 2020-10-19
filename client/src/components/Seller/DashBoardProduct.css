@@ -75,6 +75,7 @@
 .order-db-panel {
   background-color: #fff !important;
   padding: 4px !important;
+  width: 100%;
 }
 
 .search-2:focus {

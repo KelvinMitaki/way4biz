@@ -56,7 +56,7 @@ class SellerOrders extends React.Component {
       title: tab.title,
       getContent: () => tab.data,
       key: index,
-      tabClassName: "order-tab",
+      tabClassName: "orders-tab",
       panelClassName: "order-db-panel",
     }));
   }
