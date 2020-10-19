@@ -5,13 +5,17 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
 import "./Logistics404.css";
 import MobileLogo from "../Header/MobileLogo";
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 
 class Logistics404 extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
+
   render() {
+    if (!this.props.requestServiceError) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="main">
         <div className="content">
@@ -38,7 +42,9 @@ class Logistics404 extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    requestServiceError: state.user.requestServiceError
+  };
 };
-export default connect(mapStateToProps)(Logistics404);
+export default withRouter(connect(mapStateToProps)(Logistics404));

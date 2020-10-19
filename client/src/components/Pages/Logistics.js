@@ -10,7 +10,7 @@ import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import Header from "../Header/Header";
 import { connect } from "react-redux";
-import { checkoutUser, storeLatLng } from "../../redux/actions";
+import { checkoutUser, requestService, storeLatLng } from "../../redux/actions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AutoComplete from "../Account/Autocomplete";
 import SimpleMap from "../Account/SimpleMap";
@@ -24,11 +24,26 @@ class Logistics extends React.Component {
     addressLatLng: {
       lat: -1.28585,
       lng: 36.8263
+    },
+    receiverCityLatLng: {},
+    receiverTownLatLng: {},
+    receiverAddressLatLng: {
+      lat: -1.28585,
+      lng: 36.8263
     }
   };
-  componentDidMount() {
-    if (!this.props.user) {
-      return <Redirect to="/login" />;
+  async componentDidUpdate() {
+    if (!this.state.cityLatLng.lat || !this.state.townLatLng.lat) {
+      if (this.props.user.city) {
+        const results = await geocodeByAddress(this.props.user.city);
+        const latlng = await getLatLng(results[0]);
+        this.setState({ cityLatLng: latlng });
+      }
+      if (this.props.user.town) {
+        const results = await geocodeByAddress(this.props.user.town);
+        const latlng = await getLatLng(results[0]);
+        this.setState({ townLatLng: latlng });
+      }
     }
   }
   handleCitySelect = async selectedCity => {
@@ -52,23 +67,26 @@ class Logistics extends React.Component {
   handleReceiverCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
-    this.setState({ cityLatLng: latlng });
+    this.setState({ receiverCityLatLng: latlng });
     this.props.change("receiverCity", selectedCity);
   };
   handleReceiverTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
-    this.setState({ townLatLng: latlng });
+    this.setState({ receiverTownLatLng: latlng });
     this.props.change("receiverTown", selectedTown);
   };
   handleReceiverAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
-    this.setState({ addressLatLng: latlng });
+    this.setState({ receiverAddressLatLng: latlng });
     this.props.change("receiverAddress", selectedAddress);
   };
 
   render() {
+    if (!this.props.user) {
+      return <Redirect to="/sign-in" />;
+    }
     return (
       <div className="main">
         <div className="content">
@@ -89,8 +107,16 @@ class Logistics extends React.Component {
                 </p>
                 <form
                   onSubmit={this.props.handleSubmit(async formValues => {
-                    const { data } = await Axios.post("/api/request/service");
-                    console.log(data);
+                    const origins = this.state.addressLatLng;
+                    const destination = this.state.receiverAddressLatLng;
+                    this.props.requestService(
+                      {
+                        ...formValues,
+                        origins,
+                        destination
+                      },
+                      this.props.history
+                    );
                   })}
                 >
                   <Field
@@ -198,25 +224,29 @@ class Logistics extends React.Component {
                     className="address-location-input"
                     component={AutoComplete}
                     options={{
-                      location: new google.maps.LatLng(this.state.cityLatLng),
+                      location: new google.maps.LatLng(
+                        this.state.receiverCityLatLng
+                      ),
                       radius: 1000,
                       types: ["establishment"]
                     }}
                     onSelect={this.handleReceiverAddressSelect}
                   />
                   <SimpleMap
-                    key={this.state.addressLatLng.lat}
-                    addressLatLng={this.state.addressLatLng}
+                    key={this.state.receiverAddressLatLng.lat}
+                    addressLatLng={this.state.receiverAddressLatLng}
                     className="address-map"
                   />
                   <button
                     className="btn btn-md btn-block address-btn mt-3 "
-                    // disabled={
-                    //   !this.props.valid ||
-                    //   this.props.checkoutUserLoading ||
-                    //   Object.keys(this.state.townLatLng).length === 0 ||
-                    //   Object.keys(this.state.cityLatLng).length === 0
-                    // }
+                    disabled={
+                      !this.props.valid ||
+                      this.props.checkoutUserLoading ||
+                      Object.keys(this.state.townLatLng).length === 0 ||
+                      Object.keys(this.state.cityLatLng).length === 0 ||
+                      Object.keys(this.state.receiverCityLatLng).length === 0 ||
+                      Object.keys(this.state.receiverTownLatLng).length === 0
+                    }
                     type="submit"
                   >
                     {this.props.checkoutUserLoading && (
@@ -237,7 +267,10 @@ class Logistics extends React.Component {
                       this.props.checkoutUserError}
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
-                      (Object.keys(this.state.cityLatLng).length === 0 && (
+                      Object.keys(this.state.cityLatLng).length === 0 ||
+                      Object.keys(this.state.receiverCityLatLng).length === 0 ||
+                      (Object.keys(this.state.receiverTownLatLng).length ===
+                        0 && (
                         <p>
                           Please choose a valid destination or wait for the map
                           to load if you have already chosen.
@@ -324,6 +357,9 @@ const validate = formValues => {
   if (!formValues.city || (formValues.city && formValues.city === "choose")) {
     errors.city = "Please enter a valid city";
   }
+  if (!formValues.itemQuantity || formValues.itemQuantity < 1) {
+    errors.itemQuantity = "Enter a valid item quantity";
+  }
   if (
     !formValues.receiverCity ||
     (formValues.receiverCity && formValues.receiverCity === "choose")
@@ -343,11 +379,13 @@ const validate = formValues => {
 };
 const mapStateToProps = state => {
   return {
-    initialValues: state.auth.user
+    initialValues: state.auth.user,
+    user: state.auth.user,
+    requestServiceLoading: state.user.requestServiceLoading
   };
 };
 export default withRouter(
-  connect(mapStateToProps)(
+  connect(mapStateToProps, { requestService })(
     reduxForm({ validate, form: "Logistics" })(Logistics)
   )
 );

@@ -285,7 +285,11 @@ import {
   FETCH_ITEMS_IN_CART,
   EMPTY_ITEMS_IN_CART,
   RIDER_CHANGE_PASSWORD_START,
-  RIDER_CHANGE_PASSWORD_STOP
+  RIDER_CHANGE_PASSWORD_STOP,
+  REQUEST_SERVICE_START,
+  REQUEST_SERVICE_STOP,
+  FETCH_DELIVERY,
+  FETCH_CLIENTS
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2769,5 +2773,43 @@ export const riderChangePassword = (formValues, history) => async dispatch => {
       });
     }
     console.log(error.response);
+  }
+};
+
+export const requestService = (formValues, history) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_SERVICE_START });
+    const res = await axios.post("/api/request/service", formValues);
+    if (res.data.delivery) {
+      history.push(`/logistics/confirm/${res.data.delivery._id}`);
+      dispatch({ type: REQUEST_SERVICE_STOP, payload: null });
+      return;
+    }
+    history.push("/logistics-404");
+    dispatch({ type: REQUEST_SERVICE_STOP, payload: {} });
+  } catch (error) {
+    authCheck(error);
+    dispatch({ type: REQUEST_SERVICE_STOP, payload: {} });
+    history.push("/logistics-404");
+    console.log(error.response);
+  }
+};
+
+export const fetchDelivery = deliveryId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/fetch/delivery/${deliveryId}`);
+    dispatch({ type: FETCH_DELIVERY, payload: res.data });
+  } catch (error) {
+    dispatch({ type: FETCH_DELIVERY, payload: "" });
+    authCheck(error);
+  }
+};
+
+export const fetchClients = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/driver/clients");
+    dispatch({ type: FETCH_CLIENTS, payload: res.data });
+  } catch (error) {
+    authCheck(error);
   }
 };
