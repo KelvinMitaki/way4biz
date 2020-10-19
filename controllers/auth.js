@@ -157,6 +157,7 @@ route.post(
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
+      const url = `${process.env.EMAIL_CONFIRM_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
@@ -408,6 +409,7 @@ route.post("/api/reset", async (req, res) => {
         expiresIn: "30 minutes",
       });
       // **TODO** from email address to be fixed
+      const url = `${process.env.RESET_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
@@ -532,9 +534,7 @@ route.post("/api/reset", async (req, res) => {
               </div>
               <section id="mail-footer">
                 <div style="margin: 10px 0px">
-                  <a href="https://way4biz.com/">Home</a> |
-                  <a href="https://way4biz.com/contact-us">Support Center</a> |
-                  <a href="https://way4biz.com/help-center">FAQs</a>
+                  
                 </div>
 
                 <div class="copyright">
@@ -563,6 +563,7 @@ route.post("/api/reset", async (req, res) => {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
         expiresIn: "30 minutes",
       });
+      const url = `${process.env.RESET_REDIRECT}/${token}`;
       // **TODO** from email address to be fixed
       transporter.sendMail(
         {
