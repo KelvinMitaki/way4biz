@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import {
   deleteFromCart,
   fetchCartItems,
-  proceedToCheckout
+  proceedToCheckout,
+  pToCheckoutClear
 } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { FaTrashAlt, FaOpencart } from "react-icons/fa";
@@ -15,6 +16,9 @@ import Image from "../Market/Image";
 import ScreenLoader from "../Pages/ScreenLoader";
 
 class MyCart extends React.Component {
+  componentDidMount() {
+    this.props.pToCheckoutClear();
+  }
   render() {
     if (this.props.deleteCartLoading) return <ScreenLoader />;
     if (this.props.cart && this.props.cart.length !== 0) {
@@ -173,6 +177,7 @@ export default withRouter(
   connect(mapStateToProps, {
     deleteFromCart,
     fetchCartItems,
-    proceedToCheckout
+    proceedToCheckout,
+    pToCheckoutClear
   })(MyCart)
 );

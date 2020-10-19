@@ -27,7 +27,8 @@ import {
   P_TO_CHECKOUT_START,
   P_TO_CHECKOUT_STOP,
   FETCH_ITEMS_IN_CART,
-  EMPTY_ITEMS_IN_CART
+  EMPTY_ITEMS_IN_CART,
+  P_TO_CHECKOUT_CLEAR
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -161,6 +162,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchedItems: action.payload };
     case EMPTY_ITEMS_IN_CART:
       return { ...state, fetchedItems: null };
+    case P_TO_CHECKOUT_CLEAR:
+      return { ...state, pToCheckoutLoading: false };
     default:
       return state;
   }
