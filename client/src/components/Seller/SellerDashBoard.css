@@ -3,7 +3,6 @@
   height: calc(100vh - 90px);
   overflow-y: auto;
   position: relative;
-  /* overflow: hidden; */
 }
 
 .dashboard-content::-webkit-scrollbar {

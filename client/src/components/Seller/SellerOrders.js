@@ -71,28 +71,33 @@ class SellerOrders extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mt-3">
-            <div className="row">
-              <div className="col">
-                <h3
-                  className="seller-orders-title"
-                  style={{ textAlign: "center" }}
-                >
-                  Orders
-                </h3>
+
+          <div className="col-lg-9">
+            <div className="dashboard-content">
+              <div className="container mx-auto m-0">
+                <div className="row">
+                  <div className="col">
+                    <h3
+                      className="seller-orders-title"
+                      style={{ textAlign: "center" }}
+                    >
+                      Orders
+                    </h3>
+                  </div>
+                </div>
+                <div className="row my-3">
+                  <div className="col p-0">
+                    <Tabs
+                      items={this.getTabs()}
+                      transformWidth={720}
+                      transform={true}
+                      showMoreLabel={"More..."}
+                      showInkBar={true}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            {/* <div className="row my-3"> */}
-            <div className="col p-0">
-              <Tabs
-                items={this.getTabs()}
-                transformWidth={720}
-                transform={true}
-                showMoreLabel={"More..."}
-                showInkBar={true}
-              />
-            </div>
-            {/* </div> */}
           </div>
         </div>
       </div>
