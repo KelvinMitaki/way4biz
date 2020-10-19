@@ -384,14 +384,6 @@ textarea::-webkit-scrollbar {
   /* border-radius: 40px; */
 }
 
-/* .RRT__container {
-  width: 100vw !important;
-}
-
-.RRT__tabs.RRT__accordion {
-  width: 100vw !important;
-} */
-
 @media screen and (max-width: 920px) {
   .content {
     margin-bottom: 65px;

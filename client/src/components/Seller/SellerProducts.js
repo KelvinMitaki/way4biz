@@ -80,14 +80,14 @@ class SellerProducts extends React.Component {
           <div className="col-lg-3">
             <SellerDashBoardMenu />
           </div>
-          <div className="col-lg-9 mt-3">
+          <div className="col-lg-9">
             <div className="dashboard-content">
-              <div className="container">
+              <div className="container mx-auto m-0">
                 <div className="row">
                   <div className="col">
                     <h3
                       className="seller-orders-title"
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", margin: "10px 0px" }}
                     >
                       Products
                     </h3>

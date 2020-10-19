@@ -79,7 +79,7 @@ class SellerOrders extends React.Component {
                   <div className="col">
                     <h3
                       className="seller-orders-title"
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", margin: "10px 0px" }}
                     >
                       Orders
                     </h3>
