@@ -561,10 +561,9 @@ route.post(
   }
 );
 
-route.get("/api/products/seller/:sellerId", isSeller, async (req, res) => {
+route.get("/api/products/seller", isSeller, async (req, res) => {
   try {
-    const { sellerId } = req.params;
-    const products = await Product.find({ seller: sellerId }).sort({
+    const products = await Product.find({ seller: req.session.user._id }).sort({
       createdAt: -1
     });
     res.send(products);

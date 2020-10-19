@@ -468,8 +468,7 @@ export const checkoutUser = (credentials, history) => async (
   try {
     dispatch({ type: CHECKOUT_USER_START });
     dispatch({ type: LOADING_START });
-    const userId = getState().auth.user._id;
-    const res = await axios.patch(`/api/user/edit/${userId}`, credentials);
+    const res = await axios.patch(`/api/user/edit`, credentials);
     if (res.data.user.phoneNumber) {
       res.data.user.phoneNumber = res.data.user.phoneNumber.toString();
     }
@@ -695,9 +694,7 @@ export const forgotPassword = (formvalues, history) => async (
 export const fetchSellerProducts = () => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_SELLER_PRODUCTS_START });
-    const res = await axios.get(
-      `/api/products/seller/${getState().auth.user._id}`
-    );
+    const res = await axios.get(`/api/products/seller`);
     dispatch({ type: FETCH_SELLER_PRODUCTS, payload: res.data });
     dispatch({ type: FETCH_SELLER_PRODUCTS_STOP });
   } catch (error) {

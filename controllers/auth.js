@@ -732,7 +732,7 @@ route.post("/api/reset/:resetToken", async (req, res) => {
     res.status(500).send(error);
   }
 });
-route.patch("/api/user/edit/:userId", auth, async (req, res) => {
+route.patch("/api/user/edit", auth, async (req, res) => {
   try {
     const { firstName, lastName, address, city, town, phoneNumber } = req.body;
     const user = await User.findById(req.session.user._id);
