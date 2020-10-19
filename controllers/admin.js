@@ -573,7 +573,7 @@ route.get("/api/products/seller", isSeller, async (req, res) => {
 });
 
 route.post(
-  "/api/product/add/:sellerId",
+  "/api/product/add",
   check("name").trim().not().isEmpty().withMessage("Please enter a valid name"),
   check("price").isFloat().withMessage("please enter a valid price"),
   check("stockQuantity")
@@ -603,7 +603,6 @@ route.post(
       return res.status(401).send({ message: errors.array()[0].msg });
     }
     try {
-      const { sellerId } = req.params;
       const {
         name,
         price,
@@ -628,7 +627,7 @@ route.post(
         stockQuantity,
         category,
         subcategory,
-        seller: sellerId,
+        seller: req.session.user._id,
         description,
         imageUrl,
         charge: charge.category.charge

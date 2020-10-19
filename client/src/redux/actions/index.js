@@ -708,7 +708,7 @@ export const addProduct = (product, history) => async (dispatch, getState) => {
   try {
     dispatch({ type: LOADING_START });
 
-    await axios.post(`/api/product/add/${getState().auth.user._id}`, product);
+    await axios.post(`/api/product/add`, product);
     dispatch({ type: ADD_PRODUCT });
     dispatch({ type: LOADING_STOP });
     history.push("/seller-products");
