@@ -124,7 +124,7 @@ class DashBoardProduct extends React.Component {
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
-                <div className="col-md-12 col-lg-5 dashboard-product-image">
+                <div className="col-md-5 dashboard-product-image">
                   <Image
                     height="120vh"
                     width="120vw"
@@ -141,25 +141,25 @@ class DashBoardProduct extends React.Component {
                     </Link>
                   </p>
                 </div>
-                <div className="col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Qty:</strong>
                   </p>
                   <p>{product.stockQuantity}</p>
                 </div>
-                <div className="col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Price:</strong>
                   </p>
                   <p>Ksh.{product.price.toLocaleString()} </p>
                 </div>
-                <div className="col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Status:</strong>
                   </p>
                   <p className="live">Live</p>
                 </div>
-                <div className="col-lg-1">
+                <div className="col-md-1">
                   <Link
                     to={`/seller/edit/${product._id}`}
                     className="btn btn-sm btn-danger"
