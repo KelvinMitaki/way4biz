@@ -25,13 +25,13 @@ class DashBoardProduct extends React.Component {
       <div className="container m-0" style={{ backgroundColor: "white" }}>
         <div className="row no-gutters y">
           <div className="col d-flex mb-2">
-            <h6 className="col-lg-5 p-0" style={{ textAlign: "left" }}>
+            <h6 className="col-md-5 p-0" style={{ textAlign: "left" }}>
               Item
             </h6>
-            <h6 className="col-lg-2 p-0">Quantity</h6>
-            <h6 className="col-lg-2 p-0">Price</h6>
-            <h6 className="col-lg-2 p-0">Status</h6>
-            <h6 className="col-lg-1 p-0"> </h6>
+            <h6 className="col-md-2 p-0">Quantity</h6>
+            <h6 className="col-md-2 p-0">Price</h6>
+            <h6 className="col-md-2 p-0">Status</h6>
+            <h6 className="col-md-1 p-0"> </h6>
           </div>
         </div>
         <div className="container-fluid p-0">
@@ -53,7 +53,7 @@ class DashBoardProduct extends React.Component {
                 key={product._id}
                 className="row no-gutters dashboard-product-wrapper box-container"
               >
-                <div className="col-md-12 col-lg-5 dashboard-product-image">
+                <div className="col-md-5 dashboard-product-image">
                   <Image
                     height="120vh"
                     width="120vw"
@@ -70,19 +70,19 @@ class DashBoardProduct extends React.Component {
                     </Link>
                   </p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Qty:</strong>
                   </p>
                   <p>{product.stockQuantity}</p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Price:</strong>
                   </p>
                   <p>Ksh.{product.price.toLocaleString()} </p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-md-2">
                   <p className="x mr-2">
                     <strong>Status:</strong>
                   </p>
@@ -104,7 +104,7 @@ class DashBoardProduct extends React.Component {
                       (product.underReview && "Under Review")}
                   </p> */}
                 </div>
-                <div className="col-md-6 col-lg-1">
+                <div className="col-md-1">
                   <Link
                     to={`/seller/edit/${product._id}`}
                     className="btn btn-sm btn-danger"
@@ -141,25 +141,25 @@ class DashBoardProduct extends React.Component {
                     </Link>
                   </p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-lg-2">
                   <p className="x mr-2">
                     <strong>Qty:</strong>
                   </p>
                   <p>{product.stockQuantity}</p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-lg-2">
                   <p className="x mr-2">
                     <strong>Price:</strong>
                   </p>
                   <p>Ksh.{product.price.toLocaleString()} </p>
                 </div>
-                <div className="col-md-6 col-lg-2">
+                <div className="col-lg-2">
                   <p className="x mr-2">
                     <strong>Status:</strong>
                   </p>
                   <p className="live">Live</p>
                 </div>
-                <div className="col-md-6 col-lg-1">
+                <div className="col-lg-1">
                   <Link
                     to={`/seller/edit/${product._id}`}
                     className="btn btn-sm btn-danger"
