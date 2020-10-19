@@ -1,22 +1,47 @@
 import React from "react";
+import { TiDownload } from "react-icons/ti";
+import { connect } from "react-redux";
 
 import "./SuccessfulDeliveries.css";
 
 class SuccessfulDeliveries extends React.Component {
-  componentDidMount(){
-    // fetch deliveries for this driver
-  }
   render() {
     return (
       <div className="successful-deliveries">
         <div>
-          <p>Delivered Pizza from TRM to Rongai on 15/10/2020</p>
-          <p>Sender Phone: 0799999999</p>
-          <p>Recipient Phone: 0799999999</p>
+          {this.props.clients &&
+            this.props.clients.length !== 0 &&
+            this.props.clients.map(client => {
+              const {
+                receiverAddress,
+                receiverTown,
+                receiverPhoneNumber,
+                itemName
+              } = client;
+              return (
+                <div key={client._id}>
+                  <p>
+                    Delivered {itemName} from Kajiado, Ongata rongai to{" "}
+                    {receiverTown}, {receiverAddress} on 15/10/2020
+                  </p>
+                  <p>
+                    Sender Phone: 0
+                    {client.user &&
+                      client.user.phoneNumber &&
+                      client.user.phoneNumber}
+                  </p>
+                  <p>Recipient Phone: 0{receiverPhoneNumber}</p>
+                </div>
+              );
+            })}
         </div>
       </div>
     );
   }
 }
-
-export default SuccessfulDeliveries;
+const mapStateToProps = state => {
+  return {
+    clients: state.riders.clients
+  };
+};
+export default connect(mapStateToProps)(SuccessfulDeliveries);

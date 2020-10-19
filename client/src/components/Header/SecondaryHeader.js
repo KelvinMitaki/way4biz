@@ -52,7 +52,10 @@ class SecondaryHeader extends React.Component {
                 Sell with us
               </Link>
             )}
-            <Link className="small-screen-secondary-header-link" to="/">
+            <Link
+              className="small-screen-secondary-header-link"
+              to="/logistics"
+            >
               Logistics Services
             </Link>
             <Link

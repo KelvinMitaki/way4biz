@@ -18,7 +18,18 @@ class RiderLogin extends React.Component {
         <form
           className="login-form"
           onSubmit={this.props.handleSubmit(formValues => {
-            this.props.riderLogIn(formValues, this.props.history);
+            window.navigator.geolocation.getCurrentPosition(pos => {
+              this.props.riderLogIn(
+                {
+                  ...formValues,
+                  location: {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                  }
+                },
+                this.props.history
+              );
+            });
           })}
         >
           <Field type="text" name="email" label="Email" component={AuthField} />
