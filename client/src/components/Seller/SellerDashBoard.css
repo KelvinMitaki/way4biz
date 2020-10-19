@@ -5,6 +5,15 @@
   position: relative;
 }
 
+.dashboard-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb {
+  background-color: #f76b1a;
+  border-radius: 3px;
+}
+
 .seller-welcome {
   font-size: 40px;
 }
