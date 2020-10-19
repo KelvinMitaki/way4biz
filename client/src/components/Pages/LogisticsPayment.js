@@ -17,15 +17,16 @@ class LogisticsPayment extends React.Component {
     this.props.fetchDelivery(this.props.match.params.deliveryId);
   }
   render() {
-    if (!this.props.delivery) {
+    if (!this.props.fetchedDelivery) {
       return <ScreenLoader />;
     }
-    if (this.props.delivery === "") {
+    if (this.props.fetchedDelivery === "") {
       return <NotFound />;
     }
     if (
       !this.props.user ||
-      (this.props.user && this.props.user._id !== this.props.delivery.user)
+      (this.props.user &&
+        this.props.user._id !== this.props.fetchedDelivery.user)
     ) {
       return <Redirect to="/" />;
     }
@@ -40,9 +41,9 @@ class LogisticsPayment extends React.Component {
               <h4 className="mb-3">You are almost done!</h4>
               <p>
                 The service will cost you ksh.{" "}
-                {Math.round(this.props.delivery.charge).toLocaleString()}. You
-                will be required to pay the payment to the delivery guy together
-                with the item to deliver.
+                {Math.round(this.props.fetchedDelivery.charge).toLocaleString()}
+                . You will be required to pay the payment to the delivery guy
+                together with the item to deliver.
               </p>
               <p>
                 Please confirm payment and we will have someone come pick your
@@ -73,7 +74,7 @@ class LogisticsPayment extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    delivery: state.user.delivery
+    fetchedDelivery: state.user.fetchedDelivery
   };
 };
 export default connect(mapStateToProps, { fetchDelivery })(LogisticsPayment);

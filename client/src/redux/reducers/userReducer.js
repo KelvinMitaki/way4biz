@@ -16,7 +16,7 @@ const INITIAL_VALUES = {
   makeOrderLoading: false,
   requestServiceLoading: false,
   requestServiceError: null,
-  delivery: null
+  fetchedDelivery: null
 };
 
 export default (state = INITIAL_VALUES, action) => {
@@ -42,7 +42,7 @@ export default (state = INITIAL_VALUES, action) => {
         requestServiceError: action.payload
       };
     case FETCH_DELIVERY:
-      return { ...state, delivery: action.payload };
+      return { ...state, fetchedDelivery: action.payload };
     default:
       return state;
   }
