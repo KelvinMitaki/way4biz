@@ -62,6 +62,9 @@ class AccountLogistic extends React.Component {
                     <p>
                       <b>Delivery Date: </b>1/1/2000
                     </p>
+                    <p>
+                      <b>Status: </b>Delivered
+                    </p>
                   </div>
                 </div>
               </div>
