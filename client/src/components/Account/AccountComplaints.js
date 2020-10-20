@@ -10,9 +10,6 @@ import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { BsExclamationCircle } from "react-icons/bs";
 import MobileLogo from "../Header/MobileLogo";
-// import { IconContext } from "react-icons";
-// import { BsArrowLeft } from "react-icons/bs";
-// import ScreenLoader from "../Pages/ScreenLoader";
 
 class AccountComplaints extends React.Component {
   componentDidMount() {
@@ -82,25 +79,6 @@ class AccountComplaints extends React.Component {
                             </div>
                           </div>
                         ))}
-
-                      {/*                       
-                      {this.props.buyerComplaints.length !== 0 &&
-                        this.props.buyerComplaints.map((comp) => (
-                          <div
-                            key={comp._id}
-                            className="box-container account-complain"
-                          >
-                            <p>{comp.body}</p>
-                            <p className="d-flex justify-content-end">
-                              <Link
-                                to={`/complaint/${comp._id}`}
-                                className="complaint-more-link"
-                              >
-                                More
-                              </Link>
-                            </p>
-                          </div>
-                        ))} */}
                     </div>
                   </React.Fragment>
                 ) : (
