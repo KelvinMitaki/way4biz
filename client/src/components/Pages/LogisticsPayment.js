@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
 import { Link, Redirect } from "react-router-dom";
-import { fetchDelivery } from "../../redux/actions";
+import { confirmLogisticsDelivery, fetchDelivery } from "../../redux/actions";
 import ScreenLoader from "./ScreenLoader";
 import NotFound from "./NotFound";
 import { BsCheckCircle } from "react-icons/bs";
@@ -30,6 +30,7 @@ class LogisticsPayment extends React.Component {
     ) {
       return <Redirect to="/" />;
     }
+    console.log(this.props.driver);
     return (
       <div className="main">
         <div className="content">
@@ -37,7 +38,7 @@ class LogisticsPayment extends React.Component {
           <Header />
           <div className="container-fluid white-body logistics-payment-wrapper">
             {/* show this before payment */}
-            {/* <div className="col-md-7 col-lg-5 mx-auto text-left pt-5">
+            <div className="col-md-7 col-lg-5 mx-auto text-left pt-5">
               <h4 className="mb-3">You are almost done!</h4>
               <p className="mb-1">
                 The service will cost you ksh.{" "}
@@ -80,12 +81,20 @@ class LogisticsPayment extends React.Component {
                 Please confirm payment and we will have someone come pick your
                 item for delivery.
               </p>
-              <button className="btn btn-md my-3 secondary-button logistics-confirm-payment">
+              <button
+                onClick={() => {
+                  this.props.confirmLogisticsDelivery(
+                    this.props.match.params.deliveryId
+                  );
+                }}
+                className="btn btn-md my-3 secondary-button logistics-confirm-payment"
+                disabled={this.props.fetchedDelivery.confirmed}
+              >
                 Confirm Payment
               </button>
-            </div> */}
+            </div>
             {/* show this after payment */}
-            <div className="col-md-7 col-lg-5 mx-auto text-center pt-5">
+            {/* <div className="col-md-7 col-lg-5 mx-auto text-center pt-5">
               <div className="d-flex align-items-center justify-content-center">
                 <BsCheckCircle
                   style={{ fontSize: "100px", color: "#4BB543" }}
@@ -102,7 +111,7 @@ class LogisticsPayment extends React.Component {
                 </p>
               </div>
               <p>You will be notified when he arrives.</p>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer />
@@ -111,10 +120,14 @@ class LogisticsPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     fetchedDelivery: state.user.fetchedDelivery,
+    driver: state.user.driver
   };
 };
-export default connect(mapStateToProps, { fetchDelivery })(LogisticsPayment);
+export default connect(mapStateToProps, {
+  fetchDelivery,
+  confirmLogisticsDelivery
+})(LogisticsPayment);

@@ -293,7 +293,8 @@ import {
   P_TO_CHECKOUT_CLEAR,
   FETCH_ALL_DRIVERS,
   FETCH_DRIVER_DETAILS,
-  EMPTY_DRIVER_DETAILS
+  EMPTY_DRIVER_DETAILS,
+  CONFIRM_LOGISTICS_DELIVERY
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2857,4 +2858,16 @@ export const emptyDriverDetails = () => {
   return {
     type: EMPTY_DRIVER_DETAILS
   };
+};
+
+export const confirmLogisticsDelivery = deliveryId => async dispatch => {
+  try {
+    const res = await axios.post("/api/confirm/delivery", { deliveryId });
+
+    dispatch({ type: CONFIRM_LOGISTICS_DELIVERY, payload: res.data });
+    await dispatch(fetchDelivery(deliveryId));
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };
