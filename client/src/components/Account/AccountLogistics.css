@@ -1,0 +1,10 @@
+.no-account-deliveries {
+  height: 100%;
+  width: 90%;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
