@@ -6,7 +6,7 @@ import {
   AiOutlineHome,
   AiOutlineBars,
   AiOutlineUser,
-  AiOutlineHeart
+  AiOutlineHeart,
 } from "react-icons/ai";
 import { FaOpencart, FaStore } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
@@ -15,6 +15,7 @@ import { GoClippy } from "react-icons/go";
 import "./MiniMenu.css";
 import { BsExclamationCircle } from "react-icons/bs";
 import { clearOrderDetails } from "../../redux/actions";
+import { RiMotorbikeLine } from "react-icons/ri";
 
 class MiniMenu extends React.Component {
   render() {
@@ -59,7 +60,7 @@ class MiniMenu extends React.Component {
                     <span className="badge ml-1">
                       {this.props.cart &&
                         this.props.cart
-                          .map(item => item.quantity)
+                          .map((item) => item.quantity)
                           .reduce((cur, acc) => cur + acc, 0)}
                     </span>
                   </div>
@@ -123,6 +124,13 @@ class MiniMenu extends React.Component {
                       <BsExclamationCircle />
                       <span className="ml-2">Complaints</span>
                     </NavLink>
+                    {this.props.user && !this.props.user.isAdmin && (
+                      <NavLink className="primary-link" to="/account-logistics">
+                        <RiMotorbikeLine />
+                        <span className="ml-2">Logistics</span>
+                      </NavLink>
+                    )}
+
                     {this.props.user && this.props.user.storeName && (
                       <NavLink className="primary-link" to="/seller-dashboard">
                         <FaStore />
@@ -169,11 +177,11 @@ class MiniMenu extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     cart: state.cartReducer.cart,
-    wishlist: state.cartReducer.wishlist
+    wishlist: state.cartReducer.wishlist,
   };
 };
 
