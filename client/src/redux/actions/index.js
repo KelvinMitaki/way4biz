@@ -296,7 +296,9 @@ import {
   EMPTY_FETCHED_DELIVERY,
   CONFIRM_LOGISTICS_START,
   CONFIRM_LOGISTICS_STOP,
-  FETCH_CLIENT_DELIVERIES
+  FETCH_CLIENT_DELIVERIES,
+  FETCH_SINGLE_DELIVERY,
+  CLEAR_SINGLE_CATEGORY
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2889,4 +2891,20 @@ export const fetchClientDeliveries = () => async dispatch => {
     authCheck(error);
     console.log(error.response);
   }
+};
+
+export const fetchSingleDelivery = deliveryId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/fetch/single/delivery/${deliveryId}`);
+    dispatch({ type: FETCH_SINGLE_DELIVERY, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
+};
+
+export const clearSingleCategory = () => {
+  return {
+    type: CLEAR_SINGLE_CATEGORY
+  };
 };

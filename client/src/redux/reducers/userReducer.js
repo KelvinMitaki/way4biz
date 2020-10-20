@@ -11,7 +11,9 @@ import {
   EMPTY_FETCHED_DELIVERY,
   CONFIRM_LOGISTICS_START,
   CONFIRM_LOGISTICS_STOP,
-  FETCH_CLIENT_DELIVERIES
+  FETCH_CLIENT_DELIVERIES,
+  FETCH_SINGLE_DELIVERY,
+  CLEAR_SINGLE_CATEGORY
 } from "../actions/types";
 
 const INITIAL_VALUES = {
@@ -22,7 +24,8 @@ const INITIAL_VALUES = {
   requestServiceError: null,
   fetchedDelivery: null,
   logisticsLoading: false,
-  deliveries: null
+  deliveries: null,
+  userDelivery: null
 };
 
 export default (state = INITIAL_VALUES, action) => {
@@ -57,6 +60,10 @@ export default (state = INITIAL_VALUES, action) => {
       return { ...state, logisticsLoading: false };
     case FETCH_CLIENT_DELIVERIES:
       return { ...state, deliveries: action.payload };
+    case FETCH_SINGLE_DELIVERY:
+      return { ...state, userDelivery: action.payload };
+    case CLEAR_SINGLE_CATEGORY:
+      return { ...state, userDelivery: null };
     default:
       return state;
   }

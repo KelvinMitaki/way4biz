@@ -94,7 +94,7 @@ class AccountLogistics extends React.Component {
                             <div className="col-md-3">
                               <p>
                                 <Link
-                                  to={`/logistic`}
+                                  to={`/logistic/${del._id}`}
                                   className="account-complaint-view-more"
                                 >
                                   View More

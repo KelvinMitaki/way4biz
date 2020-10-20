@@ -1422,6 +1422,32 @@ route.get("/api/fetch/delivery/:deliveryId", auth, async (req, res) => {
     res.status(500).send(error);
   }
 });
+route.get("/api/fetch/single/delivery/:deliveryId", auth, async (req, res) => {
+  try {
+    const delivery = await Delivery.findById(req.params.deliveryId).populate(
+      "user userSeller",
+      "address"
+    );
+    if (!delivery) {
+      return res.status(404).send({ message: "No delivery with that ID" });
+    }
+    if (
+      delivery.user &&
+      delivery.user._id.toString() !== req.session.user._id.toString()
+    ) {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+    if (
+      delivery.userSeller &&
+      delivery.userSeller._id.toString() !== req.session.user._id.toString()
+    ) {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+    res.send(delivery);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 route.get("/api/current_user/hey", (req, res) => {
   res.send({ message: "Hey there" });
