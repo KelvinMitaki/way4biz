@@ -8,7 +8,6 @@ import { IconContext } from "react-icons";
 import { BsArrowLeft } from "react-icons/bs";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import ScreenLoader from "../Pages/ScreenLoader";
 import MobileLogo from "../Header/MobileLogo";
 
 class AccountLogistic extends React.Component {
@@ -48,6 +47,14 @@ class AccountLogistic extends React.Component {
                 <div className="box-container p-2 account-logistic">
                   <div className="container">
                     <p>
+                      <b>Recipient: </b>Mike
+                    </p>
+                    <p>
+                      <b>Phone: </b>0799000000
+                    </p>
+                    <p>
+                      {/* if not delivered */}
+                      {/* <b>Item To Deliver: </b> Pizza */}
                       <b>Item Delivered: </b>Pizza
                     </p>
                     <p>
