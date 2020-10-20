@@ -113,7 +113,10 @@ class LogisticsPayment extends React.Component {
                     );
                   }}
                   className="btn btn-md my-3 secondary-button logistics-confirm-payment"
-                  disabled={this.props.fetchedDelivery.confirmed}
+                  disabled={
+                    this.props.fetchedDelivery.confirmed ||
+                    this.props.logisticsLoading
+                  }
                 >
                   {this.props.logisticsLoading && (
                     <span

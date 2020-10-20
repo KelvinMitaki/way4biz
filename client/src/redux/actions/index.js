@@ -2867,8 +2867,8 @@ export const confirmLogisticsDelivery = deliveryId => async dispatch => {
     dispatch({ type: CONFIRM_LOGISTICS_START });
     await axios.post("/api/confirm/delivery", { deliveryId });
 
-    dispatch({ type: CONFIRM_LOGISTICS_STOP });
     await dispatch(fetchDelivery(deliveryId));
+    dispatch({ type: CONFIRM_LOGISTICS_STOP });
   } catch (error) {
     dispatch({ type: CONFIRM_LOGISTICS_STOP });
     authCheck(error);
