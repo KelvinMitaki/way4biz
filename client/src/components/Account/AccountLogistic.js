@@ -41,70 +41,27 @@ class AccountLogistic extends React.Component {
                   </div>
 
                   <h3 className="ml-1" style={{ flex: "2" }}>
-                    Delivery
+                    Delivery Details
                   </h3>
                 </div>
 
-                <div className="box-container p-2 account-complain">
+                <div className="box-container p-2 account-logistic">
                   <div className="container">
-                    <h4 className="my-1">Store</h4>
-                    <div className="row box-container p-2 m-0">
-                      <div className="col-md-6 my-1 p-0">
-                        <h6>
-                          <strong className="mr-1">Name:</strong>
-                          {storeName}
-                        </h6>
-                      </div>
-
-                      <div className="col-md-6 my-1 p-0">
-                        <h6>
-                          <Link
-                            to={`/seller/store/${sellerId}`}
-                            className="account-visit-store"
-                          >
-                            Visit Store
-                          </Link>
-                        </h6>
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="mt-3 mb-1">Complaint</h4>
-                      <div className="box-container p-2">
-                        <p style={{ fontSize: "17px" }}>{body}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="my-1">Product Details</h4>
-                      <div className="box-container">
-                        <div className="row m-0 ">
-                          <div className="col-md-6">
-                            <h6 className="my-1">
-                              <strong className="mr-2">Name:</strong>
-                              {productName}
-                            </h6>
-                            <h6 className="my-1">
-                              <strong className="mr-2">Unit Price:</strong>
-                              ksh.{productPrice.toLocaleString()}
-                            </h6>
-                          </div>
-                          <div className="col-md-6">
-                            <h6 className="my-1">
-                              <strong className="mr-2">
-                                Quantity Ordered:
-                              </strong>
-                              {quantityOrdered}
-                            </h6>
-                            <h6 className="my-1">
-                              <strong className="mr-2">Total Price:</strong>
-                              ksh.
-                              {(
-                                quantityOrdered * productPrice
-                              ).toLocaleString()}
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <p>
+                      <b>Item Delivered: </b>Pizza
+                    </p>
+                    <p>
+                      <b>Item Quantity: </b>2
+                    </p>
+                    <p>
+                      <b>From: </b>TRM
+                    </p>
+                    <p>
+                      <b>To: </b>Revlon Plaza
+                    </p>
+                    <p>
+                      <b>Delivery Date: </b>1/1/2000
+                    </p>
                   </div>
                 </div>
               </div>
