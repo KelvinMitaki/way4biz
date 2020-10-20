@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
 import { Link, Redirect } from "react-router-dom";
-import { confirmLogisticsDelivery, fetchDelivery } from "../../redux/actions";
+import {
+  confirmLogisticsDelivery,
+  emptyFetchedDelivery,
+  fetchDelivery
+} from "../../redux/actions";
 import ScreenLoader from "./ScreenLoader";
 import NotFound from "./NotFound";
 import { BsCheckCircle } from "react-icons/bs";
@@ -15,6 +19,9 @@ class LogisticsPayment extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.fetchDelivery(this.props.match.params.deliveryId);
+  }
+  componentWillUnmount() {
+    this.props.emptyFetchedDelivery();
   }
   render() {
     if (!this.props.fetchedDelivery) {
@@ -152,5 +159,6 @@ const mapStateToProps = state => {
 };
 export default connect(mapStateToProps, {
   fetchDelivery,
-  confirmLogisticsDelivery
+  confirmLogisticsDelivery,
+  emptyFetchedDelivery
 })(LogisticsPayment);

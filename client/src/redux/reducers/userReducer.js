@@ -8,7 +8,8 @@ import {
   REQUEST_SERVICE_START,
   REQUEST_SERVICE_STOP,
   FETCH_DELIVERY,
-  CONFIRM_LOGISTICS_DELIVERY
+  CONFIRM_LOGISTICS_DELIVERY,
+  EMPTY_FETCHED_DELIVERY
 } from "../actions/types";
 
 const INITIAL_VALUES = {
@@ -44,6 +45,8 @@ export default (state = INITIAL_VALUES, action) => {
       };
     case FETCH_DELIVERY:
       return { ...state, fetchedDelivery: action.payload };
+    case EMPTY_FETCHED_DELIVERY:
+      return { ...state, fetchedDelivery: null };
     default:
       return state;
   }

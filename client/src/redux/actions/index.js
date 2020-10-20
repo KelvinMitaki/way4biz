@@ -294,7 +294,8 @@ import {
   FETCH_ALL_DRIVERS,
   FETCH_DRIVER_DETAILS,
   EMPTY_DRIVER_DETAILS,
-  CONFIRM_LOGISTICS_DELIVERY
+  CONFIRM_LOGISTICS_DELIVERY,
+  EMPTY_FETCHED_DELIVERY
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2870,4 +2871,9 @@ export const confirmLogisticsDelivery = deliveryId => async dispatch => {
     authCheck(error);
     console.log(error.response);
   }
+};
+export const emptyFetchedDelivery = () => {
+  return {
+    type: EMPTY_FETCHED_DELIVERY
+  };
 };
