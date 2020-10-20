@@ -456,8 +456,8 @@ module.exports = function resetPassword(url) {
                                                             role="social-icon-link"
                                                             href="https://www.way4biz.com/"
                                                             target="_blank"
-                                                            alt="Facebook"
-                                                            title="Facebook"
+                                                            alt="Home"
+                                                            title="Home"
                                                             style="
                                                               display: inline-block;
                                                               color: #f76b1a;
@@ -473,8 +473,8 @@ module.exports = function resetPassword(url) {
                                                             role="social-icon-link"
                                                             href="https://way4biz.com/help-center"
                                                             target="_blank"
-                                                            alt="Twitter"
-                                                            title="Twitter"
+                                                            alt="Help Center"
+                                                            title="Help Center"
                                                             style="
                                                               display: inline-block;
                                                               color: #f76b1a;
@@ -490,8 +490,8 @@ module.exports = function resetPassword(url) {
                                                             role="social-icon-link"
                                                             href="https://www.way4biz.com/terms"
                                                             target="_blank"
-                                                            alt="Pinterest"
-                                                            title="Pinterest"
+                                                            alt="Terms"
+                                                            title="Terms"
                                                             style="
                                                               display: inline-block;
                                                               color: #f76b1a;
@@ -507,8 +507,8 @@ module.exports = function resetPassword(url) {
                                                             role="social-icon-link"
                                                             href="https://www.way4biz.com/contact-us"
                                                             target="_blank"
-                                                            alt="contact"
-                                                            title="contact"
+                                                            alt="Contact"
+                                                            title="Contact"
                                                             style="
                                                               display: inline-block;
                                                               color: #f76b1a;
