@@ -27,7 +27,7 @@ class AccountLogistics extends React.Component {
                   {" "}
                   <div className="container mb-3">
                     <h3 className="mt-2" style={{ textAlign: "center" }}>
-                      Logistics Services
+                      Delivery Services
                     </h3>
                   </div>
                   <div className="container y">

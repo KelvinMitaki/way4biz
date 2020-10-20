@@ -41,7 +41,7 @@ class AccountLogistic extends React.Component {
                   </div>
 
                   <h3 className="ml-1" style={{ flex: "2" }}>
-                    Complaint
+                    Delivery
                   </h3>
                 </div>
 
