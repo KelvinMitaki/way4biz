@@ -295,7 +295,8 @@ import {
   EMPTY_DRIVER_DETAILS,
   EMPTY_FETCHED_DELIVERY,
   CONFIRM_LOGISTICS_START,
-  CONFIRM_LOGISTICS_STOP
+  CONFIRM_LOGISTICS_STOP,
+  FETCH_CLIENT_DELIVERIES
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2878,4 +2879,14 @@ export const emptyFetchedDelivery = () => {
   return {
     type: EMPTY_FETCHED_DELIVERY
   };
+};
+
+export const fetchClientDeliveries = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/fetch/client/deliveries");
+    dispatch({ type: FETCH_CLIENT_DELIVERIES, payload: res.data });
+  } catch (error) {
+    authCheck(error);
+    console.log(error.response);
+  }
 };

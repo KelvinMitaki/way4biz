@@ -8,9 +8,17 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { RiMotorbikeLine } from "react-icons/ri";
 import MobileLogo from "../Header/MobileLogo";
+import { fetchClientDeliveries } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AccountLogistics extends React.Component {
+  componentDidMount() {
+    this.props.fetchClientDeliveries();
+  }
   render() {
+    if (!this.props.deliveries) {
+      return <ScreenLoader />;
+    }
     return (
       <div className="main">
         <div className="content">
@@ -46,55 +54,77 @@ class AccountLogistics extends React.Component {
                   </div>
                   <div className="container">
                     {/* mapping here */}
-                    <div className="row box-container account-complaint-wrapper">
-                      <div className="col-md-3">
-                        <p>
-                          <strong className="mr-2 x">Item: </strong>
-                          <span>Pizza</span>
-                        </p>
-                      </div>
-                      <div className="col-md-3">
-                        <p>
-                          <strong className="mr-2 x">Delivered From: </strong>
-                          <span>Zimmerman</span>
-                        </p>
-                      </div>
-                      <div className="col-md-3">
-                        <p>
-                          <strong className="mr-2 x">Delivered To:</strong>
-                          <span>Nairobi CBD</span>
-                        </p>
-                      </div>
-                      <div className="col-md-3">
-                        <p>
-                          <Link
-                            to={`/logistic`}
-                            className="account-complaint-view-more"
+                    {this.props.deliveries &&
+                      this.props.deliveries.length !== 0 &&
+                      this.props.deliveries.map(del => {
+                        let user;
+                        if (del.user) {
+                          user = del.user;
+                        }
+                        if (user.sellerUser) {
+                          user = del.sellerUser;
+                        }
+                        return (
+                          <div
+                            key={del._id}
+                            className="row box-container account-complaint-wrapper"
                           >
-                            View More
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
+                            <div className="col-md-3">
+                              <p>
+                                <strong className="mr-2 x">Item: </strong>
+                                <span>{del.itemName}</span>
+                              </p>
+                            </div>
+                            <div className="col-md-3">
+                              <p>
+                                <strong className="mr-2 x">
+                                  Delivered From:{" "}
+                                </strong>
+                                <span>{user.address}</span>
+                              </p>
+                            </div>
+                            <div className="col-md-3">
+                              <p>
+                                <strong className="mr-2 x">
+                                  Delivered To:
+                                </strong>
+                                <span>{del.receiverAddress}</span>
+                              </p>
+                            </div>
+                            <div className="col-md-3">
+                              <p>
+                                <Link
+                                  to={`/logistic`}
+                                  className="account-complaint-view-more"
+                                >
+                                  View More
+                                </Link>
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
                   </div>
                 </React.Fragment>
                 {/* No deliveries */}
-                {/* <div className="no-account-deliveries">
-                  <RiMotorbikeLine
-                    style={{ fontSize: "100px", color: "#f76b1a" }}
-                  />
-                  <p className="mt-3">
-                    You haven't requested any delivery service yet.You have an
-                    item to be delivered from point A to point B ? Click the Get
-                    Started button.
-                  </p>
-                  <Link
-                    to="/logistics"
-                    className="btn d-flex align-items-center justify-content-center secondary-button"
-                  >
-                    Get Started
-                  </Link>
-                </div> */}
+                {this.props.deliveries.length === 0 && (
+                  <div className="no-account-deliveries">
+                    <RiMotorbikeLine
+                      style={{ fontSize: "100px", color: "#f76b1a" }}
+                    />
+                    <p className="mt-3">
+                      You haven't requested any delivery service yet.You have an
+                      item to be delivered from point A to point B ? Click the
+                      Get Started button.
+                    </p>
+                    <Link
+                      to="/logistics"
+                      className="btn d-flex align-items-center justify-content-center secondary-button"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -105,7 +135,11 @@ class AccountLogistics extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    deliveries: state.user.deliveries
+  };
 };
-export default connect(mapStateToProps)(AccountLogistics);
+export default connect(mapStateToProps, { fetchClientDeliveries })(
+  AccountLogistics
+);
