@@ -8,6 +8,7 @@ import { GoClippy } from "react-icons/go";
 import { BsExclamationCircle } from "react-icons/bs";
 import { connect } from "react-redux";
 import { clearOrderDetails } from "../../redux/actions";
+import { RiMotorbikeLine } from "react-icons/ri";
 
 export class AccountMenu extends Component {
   render() {
@@ -69,6 +70,17 @@ export class AccountMenu extends Component {
             </NavLink>
           </div>
 
+          <div className="account-menu-wrapper">
+            <NavLink
+              activeClassName="account-active"
+              to="/account-logistics"
+              className="navlink"
+            >
+              <RiMotorbikeLine />
+              <span className="ml-2">Logistics</span>
+            </NavLink>
+          </div>
+
           <div
             id="account-logout"
             className="account-menu-wrapper account-logout-wrapper"
@@ -87,9 +99,9 @@ export class AccountMenu extends Component {
     return null;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 export default connect(mapStateToProps, { clearOrderDetails })(AccountMenu);
