@@ -52,7 +52,8 @@ class LogisticsPayment extends React.Component {
       itemQuantity,
       receiverPhoneNumber,
       receiverAddress,
-      confirmed
+      confirmed,
+      _id
     } = this.props.fetchedDelivery;
     return (
       <div className="main">
@@ -164,7 +165,7 @@ class LogisticsPayment extends React.Component {
                   You will be notified when he arrives. View your delivery
                   details{" "}
                   <Link
-                    to="/logistic"
+                    to={`/logistic/${_id}`}
                     style={{ color: "#f76b1a", textDecoration: "none" }}
                   >
                     here
