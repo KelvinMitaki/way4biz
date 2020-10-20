@@ -388,6 +388,13 @@ const mapStateToProps = state => {
 };
 export default withRouter(
   connect(mapStateToProps, { requestService })(
-    reduxForm({ validate, form: "Logistics" })(Logistics)
+    reduxForm({
+      validate,
+      form: "Logistics",
+      keepDirtyOnReinitialize: true,
+      forceUnregisterOnUnmount: false,
+      destroyOnUnmount: false,
+      enableReinitialize: true
+    })(Logistics)
   )
 );

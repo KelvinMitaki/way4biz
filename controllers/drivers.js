@@ -290,10 +290,39 @@ route.post(
   }
 );
 
+route.post(
+  "/api/confirm/delivery",
+  auth,
+  check("deliveryId").trim().notEmpty().withMessage("enter a delivery ID"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
+      }
+
+      const { deliveryId } = req.body;
+      const updatedDel = await Delivery.findByIdAndUpdate(deliveryId, {
+        confirmed: true
+      })
+        .populate("driver", "phoneNumber vehicleNo")
+        .select("driver");
+      // **TODO**  ALERT DRIVER VIA FIREBASE
+
+      res.send(updatedDel);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 route.get("/api/driver/clients", isDriver, async (req, res) => {
   try {
     const { _id } = req.session.user;
-    const deliveries = await Delivery.find({ driver: _id }).populate(
+    const deliveries = await Delivery.find({
+      driver: _id,
+      confirmed: true
+    }).populate(
       "user userSeller",
       "firstName lastName phoneNumber address town phoneNumber"
     );
