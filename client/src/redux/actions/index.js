@@ -2862,9 +2862,9 @@ export const emptyDriverDetails = () => {
 
 export const confirmLogisticsDelivery = deliveryId => async dispatch => {
   try {
-    const res = await axios.post("/api/confirm/delivery", { deliveryId });
+    await axios.post("/api/confirm/delivery", { deliveryId });
 
-    dispatch({ type: CONFIRM_LOGISTICS_DELIVERY, payload: res.data });
+    dispatch({ type: CONFIRM_LOGISTICS_DELIVERY });
     await dispatch(fetchDelivery(deliveryId));
   } catch (error) {
     authCheck(error);
