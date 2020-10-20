@@ -103,6 +103,7 @@ import LogisticsPayment from "./components/Pages/LogisticsPayment";
 import Logistics404 from "./components/Pages/Logistics404";
 import CartItemsRedirect from "./components/Pages/CartItemsRedirect";
 import AccountLogistics from "./components/Account/AccountLogistics";
+import AccountLogistic from "./components/Account/AccountLogistic";
 
 class App extends React.Component {
   state = {
@@ -757,6 +758,18 @@ class App extends React.Component {
                     <Redirect to="/sign-in" />
                   ) : (
                     <AccountLogistics />
+                  )
+                }
+              />
+
+              <Route
+                path="/logistic"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AccountLogistic />
                   )
                 }
               />
