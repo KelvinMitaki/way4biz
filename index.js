@@ -30,7 +30,7 @@ if (cluster.isMaster) {
 
   app.use(cors({ origin: "https://way4biz.com" }));
   app.all("*", (req, res, next) => {
-    if (req.get("host").includes("localhost")) {
+    if (req.get("host").includes("herokuapp")) {
       return res.redirect(301, "https://way4biz.com" + req.path);
     }
     next();
