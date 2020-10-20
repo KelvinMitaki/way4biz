@@ -33,10 +33,10 @@ class AccountLogistics extends React.Component {
                   <div className="container y">
                     <div className="row">
                       <div className="col-md-5">
-                        <h6>Deliver From</h6>
+                        <h6>Delivered From</h6>
                       </div>
                       <div className="col-md-4">
-                        <h6>Deliver To</h6>
+                        <h6>Delivered To</h6>
                       </div>
                       <div className="col-md-3"></div>
                     </div>
@@ -47,13 +47,13 @@ class AccountLogistics extends React.Component {
                     <div className="row box-container account-complaint-wrapper">
                       <div className="col-md-5">
                         <p>
-                          <strong className="mr-2 x">Deliver From: </strong>
+                          <strong className="mr-2 x">Delivered From: </strong>
                           <span>Zimmerman</span>
                         </p>
                       </div>
                       <div className="col-md-4">
                         <p>
-                          <strong className="mr-2 x">Deliver To:</strong>
+                          <strong className="mr-2 x">Delivered To:</strong>
                           <span>Nairobi CBD</span>
                         </p>
                       </div>
