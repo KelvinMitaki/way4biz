@@ -9,7 +9,7 @@ import { Link, Redirect } from "react-router-dom";
 import {
   confirmLogisticsDelivery,
   emptyFetchedDelivery,
-  fetchDelivery,
+  fetchDelivery
 } from "../../redux/actions";
 import ScreenLoader from "./ScreenLoader";
 import NotFound from "./NotFound";
@@ -37,15 +37,22 @@ class LogisticsPayment extends React.Component {
     ) {
       return <Redirect to="/" />;
     }
+    let user;
+    if (this.props.fetchedDelivery.user) {
+      user = this.props.fetchedDelivery.user;
+    }
+    if (this.props.fetchedDelivery.userSeller) {
+      user = this.props.fetchedDelivery.userSeller;
+    }
+    const { firstName, lastName, phoneNumber, address } = user;
     const {
-      user: { firstName, lastName, phoneNumber, address },
       receiverFirstName,
       receiverLastName,
       itemName,
       itemQuantity,
       receiverPhoneNumber,
       receiverAddress,
-      confirmed,
+      confirmed
     } = this.props.fetchedDelivery;
     return (
       <div className="main">
@@ -174,16 +181,16 @@ class LogisticsPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     fetchedDelivery: state.user.fetchedDelivery,
     driver: state.user.driver,
-    logisticsLoading: state.user.logisticsLoading,
+    logisticsLoading: state.user.logisticsLoading
   };
 };
 export default connect(mapStateToProps, {
   fetchDelivery,
   confirmLogisticsDelivery,
-  emptyFetchedDelivery,
+  emptyFetchedDelivery
 })(LogisticsPayment);

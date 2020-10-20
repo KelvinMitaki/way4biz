@@ -1413,7 +1413,7 @@ route.get("/api/fetch/delivery/:deliveryId", auth, async (req, res) => {
   try {
     const delivery = await Delivery.findById(req.params.deliveryId)
       .populate("driver", "phoneNumber vehicleNo")
-      .populate("user", "firstName lastName phoneNumber address");
+      .populate("user userSeller", "firstName lastName phoneNumber address");
     if (!delivery) {
       return res.status(401).send({ message: "delivery not found" });
     }
