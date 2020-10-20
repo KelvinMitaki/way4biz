@@ -6,7 +6,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { BsExclamationCircle } from "react-icons/bs";
+import { RiMotorbikeLine } from "react-icons/ri";
 import MobileLogo from "../Header/MobileLogo";
 
 class AccountLogistics extends React.Component {
@@ -71,12 +71,19 @@ class AccountLogistics extends React.Component {
                   </div>
                 </React.Fragment>
                 {/* No deliveries */}
-                {/* <div className="no-buyer-complaints">
-                  <BsExclamationCircle
+                <div className="no-buyer-complaints">
+                  <RiMotorbikeLine
                     style={{ fontSize: "100px", color: "#f76b1a" }}
                   />
-                  <h5 className="mt-3">No complaints filed yet.</h5>
-                </div> */}
+                  <h5 className="mt-3">
+                    You haven't requested any delivery service yet.You have an
+                    item to be delivered from point A to point B ? Click the Get
+                    Started button.
+                  </h5>
+                  <Link to="/logistics" className="secondary-button">
+                    Get Started
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
