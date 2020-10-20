@@ -7,9 +7,32 @@ import { Link, withRouter } from "react-router-dom";
 import "./AdminDriver.css";
 import { connect } from "react-redux";
 import MobileLogo from "../Header/MobileLogo";
+import { emptyDriverDetails, fetchDriverDetails } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDriver extends React.Component {
+  componentDidMount() {
+    this.props.fetchDriverDetails(this.props.match.params.driverId);
+  }
+  componentWillUnmount() {
+    this.props.emptyDriverDetails();
+  }
   render() {
+    if (!this.props.driverDetails) {
+      return <ScreenLoader />;
+    }
+    const {
+      driver: {
+        firstName,
+        lastName,
+        IdNumber,
+        phoneNumber,
+        vehicleNo,
+        free,
+        email
+      },
+      deliveries
+    } = this.props.driverDetails;
     return (
       <div className="container-fluid p-0 mb-5">
         <MobileLogo />
@@ -36,33 +59,50 @@ class AdminDriver extends React.Component {
             </div>
             <div className="row p-3">
               <div className="col-md-6">
-                <h6 className="my-1">Name: Mike Mikey</h6>
-                <h6 className="my-1">Id No. 12345678</h6>
-                <h6 className="my-1">Phone: 0799999999</h6>
+                <h6 className="my-1">
+                  Name: {firstName} {lastName}{" "}
+                </h6>
+                <h6 className="my-1">Id No. {IdNumber}</h6>
+                <h6 className="my-1">Phone: 0{phoneNumber}</h6>
               </div>
               <div className="col-md-6">
-                <h6 className="my-1">Email: pikipiki@gmail.com</h6>
-                <h6 className="my-1">Vehicle No. KMCD 411M</h6>
-                <h6 className="my-1">Status: Free</h6>
+                <h6 className="my-1">Email: {email}</h6>
+                <h6 className="my-1">Vehicle No. {vehicleNo}</h6>
+                <h6 className="my-1">Status: {free ? "free" : "occupied"}</h6>
               </div>
             </div>
             <h4 className="pl-3 mt-2 mb-1">Deliveries Made</h4>
             <div className="mx-3" style={{ borderTop: "1px solid #d4d4d4" }}>
-              <div className="my-1 driver-delivery">
-                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
-                <p>Sender Phone: 0799999999</p>
-                <p>Recipient Phone: 0799999999</p>
-              </div>
-              <div className="my-1 driver-delivery">
-                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
-                <p>Sender Phone: 0799999999</p>
-                <p>Recipient Phone: 0799999999</p>
-              </div>
-              <div className="my-1 driver-delivery">
-                <p>Delivered Pizza from TRM to Kileleshwa on 1/1/2000.</p>
-                <p>Sender Phone: 0799999999</p>
-                <p>Recipient Phone: 0799999999</p>
-              </div>
+              {deliveries &&
+                deliveries.length !== 0 &&
+                deliveries.map(del => {
+                  const {
+                    itemName,
+                    receiverPhoneNumber,
+                    receiverTown,
+                    receiverAddress
+                  } = del;
+                  let user;
+                  if (del.user) {
+                    user = del.user;
+                  }
+                  if (del.userSeller) {
+                    user = del.userSeller;
+                  }
+                  const { phoneNumber, town, address } = user;
+                  return (
+                    <div key={del._id} className="my-1 driver-delivery">
+                      <p>
+                        Delivered {itemName}
+                        <strong> FROM </strong>
+                        {town}, {address} <strong> TO </strong>
+                        {receiverTown}, {receiverAddress} on 1/1/2000.
+                      </p>
+                      <p>Sender Phone: 0{phoneNumber}</p>
+                      <p>Recipient Phone: 0{receiverPhoneNumber}</p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -70,7 +110,13 @@ class AdminDriver extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    driverDetails: state.admin.driverDetails
+  };
 };
-export default withRouter(connect(mapStateToProps)(AdminDriver));
+export default withRouter(
+  connect(mapStateToProps, { fetchDriverDetails, emptyDriverDetails })(
+    AdminDriver
+  )
+);

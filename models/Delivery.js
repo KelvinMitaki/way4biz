@@ -57,6 +57,10 @@ const DeliverySchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    confirmed: {
+      type: Boolean,
+      default: false
+    },
     deliveryDate: {
       type: Date
     }

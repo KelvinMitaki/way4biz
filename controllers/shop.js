@@ -1411,9 +1411,9 @@ route.post("/api/fetch/items/in/cart", async (req, res) => {
 
 route.get("/api/fetch/delivery/:deliveryId", auth, async (req, res) => {
   try {
-    const delivery = await Delivery.findById(req.params.deliveryId).populate(
-      "driver"
-    );
+    const delivery = await Delivery.findById(req.params.deliveryId)
+      .populate("driver", "phoneNumber vehicleNo")
+      .populate("user", "firstName lastName phoneNumber address");
     if (!delivery) {
       return res.status(401).send({ message: "delivery not found" });
     }

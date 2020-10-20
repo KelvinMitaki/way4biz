@@ -13,6 +13,9 @@ const auth = require("../middlewares/is-auth");
 const Seller = require("../models/Seller");
 const Driver = require("../models/Driver");
 
+const confirmEmailTemplate = require("../mails/confirmEmail");
+const resetPasswordTemplate = require("../mails/resetPassword");
+
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
     auth: {
@@ -157,144 +160,13 @@ route.post(
       });
       await user.save();
       // **TODO** FROM EMAIL TO BE CHANGED
+      const url = `${process.env.EMAIL_CONFIRM_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Email Confirmation",
-          html: `
-          <!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Way4Biz</title>
-              <link rel="stylesheet" />
-              <style>
-                * {
-                  padding: 0px;
-                  margin: 0px;
-                  box-sizing: border-box;
-                }
-                html,
-                body {
-                  overflow-x: hidden;
-                }
-                body {
-                  font-family: Arial, Helvetica, sans-serif;
-                  min-height: 100vh;
-                  display: flex;
-                  flex-direction: column;
-                }
-          
-                #content {
-                  flex: 1 0 auto;
-                }
-          
-                a {
-                  text-decoration: none;
-                }
-          
-                a:hover {
-                  text-decoration: underline;
-                }
-          
-                #mail-header {
-                  background-color: #00001e;
-                  height: 80px;
-                  display: flex;
-                  align-items: center;
-                  width: 100%;
-                  justify-content: center;
-                  color: #f76b1a;
-                  border-bottom: 3px solid #f76b1a;
-                }
-          
-                #mail-body {
-                  width: 90%;
-                  margin: auto;
-                  text-align: center;
-                  padding: 30px 0px;
-                }
-          
-                .container {
-                  width: 60%;
-                  display: flex;
-                  flex-direction: column;
-                  margin: auto;
-                  align-items: center;
-                }
-          
-                .action-link {
-                  background-color: #f76b1a;
-                  color: #fff;
-                  min-width: 150px;
-                  padding: 10px;
-                  border-radius: 4px;
-                  width: 150px;
-                  margin: 10px 0px;
-                }
-          
-                #mail-footer {
-                  padding: 20px 10px;
-                  border-top: 1px solid #d4d4d4;
-                  flex-shrink: 0;
-                  color: #f76b1a;
-                  display: flex;
-                  width: 100%;
-                  align-items: center;
-                  justify-content: center;
-                  flex-direction: column;
-                }
-          
-                #mail-footer a {
-                  color: #f76b1a;
-                }
-          
-                @media screen and (max-width: 768px) {
-                  .container {
-                    width: 90%;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div id="content">
-                <section id="mail-header">
-                  <!-- mail subject here -->
-                  <img
-                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
-                    height="100%"
-                    alt="mail-logo"
-                  />
-                </section>
-                <section id="mail-body">
-                  <div class="container">
-                    <!-- subject here -->
-                    <h1>Email Confirmation</h1>
-                    <!-- use this link to create other links -->
-                    <p style="margin-top:10px">Please confirm your email by clicking the link below.</p>
-                    <a href=${process.env.EMAIL_CONFIRM_REDIRECT}/${token} class="action-link">Confirm Email</a>
-                    <!-- <p>Do something</p> -->
-                  </div>
-                </section>
-                <section id="mail-footer">
-                  <div style="margin: 10px 0px">
-                    <a href="https://way4biz.com/">Home</a> |
-                    <a href="https://way4biz.com/contact-us">Support Center</a> |
-                    <a href="https://way4biz.com/help-center">FAQs</a>
-                  </div>
-
-                  <div class="copyright">
-                    <p>
-                      &copy;<span id="currentYear">2020</span>
-                      <span style="margin-left: 5px">All Rights Reserved.</span>
-                    </p>
-                  </div>
-                </section>
-              </body>
-            </html>
-          `
+          html: confirmEmailTemplate(url)
         },
         (error, info) => {
           if (error) {
@@ -408,146 +280,13 @@ route.post("/api/reset", async (req, res) => {
         expiresIn: "30 minutes"
       });
       // **TODO** from email address to be fixed
+      const url = `${process.env.RESET_REDIRECT}/${token}`;
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
-          html: `
-          <!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Way4Biz</title>
-              <link rel="stylesheet" />
-              <style>
-                * {
-                  padding: 0px;
-                  margin: 0px;
-                  box-sizing: border-box;
-                }
-                html,
-                body {
-                  overflow-x: hidden;
-                }
-                body {
-                  font-family: Arial, Helvetica, sans-serif;
-                  min-height: 100vh;
-                  display: flex;
-                  flex-direction: column;
-                }
-          
-                #content {
-                  flex: 1 0 auto;
-                }
-          
-                a {
-                  text-decoration: none;
-                }
-          
-                a:hover {
-                  text-decoration: underline;
-                }
-          
-                #mail-header {
-                  background-color: #00001e;
-                  height: 80px;
-                  display: flex;
-                  align-items: center;
-                  width: 100%;
-                  justify-content: center;
-                  color: #f76b1a;
-                  border-bottom: 3px solid #f76b1a;
-                }
-          
-                #mail-body {
-                  width: 90%;
-                  margin: auto;
-                  text-align: center;
-                  padding: 30px 0px;
-                }
-          
-                .container {
-                  width: 60%;
-                  display: flex;
-                  flex-direction: column;
-                  margin: auto;
-                  align-items: center;
-                }
-          
-                .action-link {
-                  background-color: #f76b1a;
-                  color: #fff;
-                  min-width: 150px;
-                  padding: 10px;
-                  border-radius: 4px;
-                  width: 150px;
-                  margin: 10px 0px;
-                }
-          
-                #mail-footer {
-                  padding: 20px 10px;
-                  border-top: 1px solid #d4d4d4;
-                  flex-shrink: 0;
-                  color: #f76b1a;
-                  display: flex;
-                  width: 100%;
-                  align-items: center;
-                  justify-content: center;
-                  flex-direction: column;
-                }
-          
-                #mail-footer a {
-                  color: #f76b1a;
-                }
-          
-                @media screen and (max-width: 768px) {
-                  .container {
-                    width: 90%;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div id="content">
-                <section id="mail-header">
-                  <!-- mail subject here -->
-                  <img
-                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
-                    height="100%"
-                    alt="mail-logo"
-                  />
-                </section>
-                <section id="mail-body">
-                  <div class="container">
-                    <!-- subject here -->
-                    <h1>Password Reset</h1>
-                    <!-- use this link to create other links -->
-                    <p style="margin-top:10px">Use the link below to reset your password.</p>
-                    <a href=${process.env.RESET_REDIRECT}/${token} class="action-link">Reset Password</a>
-                    <!-- <p>Do something</p> -->
-                  </div>
-                </section>
-              </div>
-              <section id="mail-footer">
-                <div style="margin: 10px 0px">
-                  <a href="https://way4biz.com/">Home</a> |
-                  <a href="https://way4biz.com/contact-us">Support Center</a> |
-                  <a href="https://way4biz.com/help-center">FAQs</a>
-                </div>
-
-                <div class="copyright">
-                  <p>
-                    &copy;<span id="currentYear">2020</span>
-                    <span style="margin-left: 5px">All Rights Reserved.</span>
-                  </p>
-                </div>
-              </section>
-              
-            </body>
-          </html>
-          `
+          html: resetPasswordTemplate(url)
         },
         (error, info) => {
           if (error) console.log(error);
@@ -563,146 +302,14 @@ route.post("/api/reset", async (req, res) => {
       const token = jwt.sign({ _id: seller._id }, process.env.JWT_SECRET, {
         expiresIn: "30 minutes"
       });
+      const url = `${process.env.RESET_REDIRECT}/${token}`;
       // **TODO** from email address to be fixed
       transporter.sendMail(
         {
           to: email,
-          from: "kevinkhalifa911@gmail.com",
+          from: "contact@way4biz.com",
           subject: "Password Resetting",
-          html: `
-          <!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Way4Biz</title>
-              <link rel="stylesheet" />
-              <style>
-                * {
-                  padding: 0px;
-                  margin: 0px;
-                  box-sizing: border-box;
-                }
-                html,
-                body {
-                  overflow-x: hidden;
-                }
-                body {
-                  font-family: Arial, Helvetica, sans-serif;
-                  min-height: 100vh;
-                  display: flex;
-                  flex-direction: column;
-                }
-          
-                #content {
-                  flex: 1 0 auto;
-                }
-          
-                a {
-                  text-decoration: none;
-                }
-          
-                a:hover {
-                  text-decoration: underline;
-                }
-          
-                #mail-header {
-                  background-color: #00001e;
-                  height: 80px;
-                  display: flex;
-                  align-items: center;
-                  width: 100%;
-                  justify-content: center;
-                  color: #f76b1a;
-                  border-bottom: 3px solid #f76b1a;
-                }
-          
-                #mail-body {
-                  width: 90%;
-                  margin: auto;
-                  text-align: center;
-                  padding: 30px 0px;
-                }
-          
-                .container {
-                  width: 60%;
-                  display: flex;
-                  flex-direction: column;
-                  margin: auto;
-                  align-items: center;
-                }
-          
-                .action-link {
-                  background-color: #f76b1a;
-                  color: #fff;
-                  min-width: 150px;
-                  padding: 10px;
-                  border-radius: 4px;
-                  width: 150px;
-                  margin: 10px 0px;
-                }
-          
-                #mail-footer {
-                  padding: 20px 10px;
-                  border-top: 1px solid #d4d4d4;
-                  flex-shrink: 0;
-                  color: #f76b1a;
-                  display: flex;
-                  width: 100%;
-                  align-items: center;
-                  justify-content: center;
-                  flex-direction: column;
-                }
-          
-                #mail-footer a {
-                  color: #f76b1a;
-                }
-          
-                @media screen and (max-width: 768px) {
-                  .container {
-                    width: 90%;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div id="content">
-                <section id="mail-header">
-                  <!-- mail subject here -->
-                  <img
-                    src="https://e-commerce-gig.s3.eu-west-2.amazonaws.com/5efd9987b53dfa39cc27bae9/logo.jpg"
-                    height="100%"
-                    alt="mail-logo"
-                  />
-                </section>
-                <section id="mail-body">
-                  <div class="container">
-                    <!-- subject here -->
-                    <h1>Password Reset</h1>
-                    <!-- use this link to create other links -->
-                    <p style="margin-top:10px">Use the link below to reset your password.</p>
-                    <a href=${process.env.RESET_REDIRECT}/${token} class="action-link">Reset Password</a>
-                    <!-- <p>Do something</p> -->
-                  </div>
-                </section>
-              </div>
-              <section id="mail-footer">
-                <div style="margin: 10px 0px">
-                  <a href="https://way4biz.com/">Home</a> |
-                  <a href="https://way4biz.com/contact-us">Support Center</a> |
-                  <a href="https://way4biz.com/help-center">FAQs</a>
-                </div>
-
-                <div class="copyright">
-                  <p>
-                    &copy;<span id="currentYear">2020</span>
-                    <span style="margin-left: 5px">All Rights Reserved.</span>
-                  </p>
-                </div>
-              </section>
-            </body>
-          </html>
-          `
+          html: resetPasswordTemplate(url)
         },
         (error, info) => {
           if (error) console.log(error);

@@ -7,7 +7,10 @@ import {
   MAKE_ORDER_STOP,
   REQUEST_SERVICE_START,
   REQUEST_SERVICE_STOP,
-  FETCH_DELIVERY
+  FETCH_DELIVERY,
+  EMPTY_FETCHED_DELIVERY,
+  CONFIRM_LOGISTICS_START,
+  CONFIRM_LOGISTICS_STOP
 } from "../actions/types";
 
 const INITIAL_VALUES = {
@@ -16,7 +19,8 @@ const INITIAL_VALUES = {
   makeOrderLoading: false,
   requestServiceLoading: false,
   requestServiceError: null,
-  fetchedDelivery: null
+  fetchedDelivery: null,
+  logisticsLoading: false
 };
 
 export default (state = INITIAL_VALUES, action) => {
@@ -43,6 +47,12 @@ export default (state = INITIAL_VALUES, action) => {
       };
     case FETCH_DELIVERY:
       return { ...state, fetchedDelivery: action.payload };
+    case EMPTY_FETCHED_DELIVERY:
+      return { ...state, fetchedDelivery: null };
+    case CONFIRM_LOGISTICS_START:
+      return { ...state, logisticsLoading: true };
+    case CONFIRM_LOGISTICS_STOP:
+      return { ...state, logisticsLoading: false };
     default:
       return state;
   }
