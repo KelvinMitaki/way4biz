@@ -6,7 +6,8 @@
   width: 200px !important;
 }
 
-.logisitics-confirm-details p {
+.logisitics-confirm-details p,
+.logistics-driver-details p {
   margin: 5px 0px;
 }
 
