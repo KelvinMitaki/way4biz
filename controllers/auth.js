@@ -15,6 +15,7 @@ const Driver = require("../models/Driver");
 
 const confirmEmailTemplate = require("../mails/confirmEmail");
 const resetPasswordTemplate = require("../mails/resetPassword");
+const Delivery = require("../models/Delivery");
 
 const transporter = nodeMailer.createTransport(
   sendgridTransport({
@@ -451,6 +452,17 @@ route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
       return res.send({ message: "Password updated successfully" });
     }
     res.status(404).send({ message: "No user with that ID found" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/api/fetch/client/deliveries", auth, async (req, res) => {
+  try {
+    const deliveries = await Delivery.find({ user: req.session.user._id })
+      .populate("user", "address")
+      .select("itemName receiverAddress user");
+    res.send(deliveries);
   } catch (error) {
     res.status(500).send(error);
   }

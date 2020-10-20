@@ -37,15 +37,23 @@ class LogisticsPayment extends React.Component {
     ) {
       return <Redirect to="/" />;
     }
+    let user;
+    if (this.props.fetchedDelivery.user) {
+      user = this.props.fetchedDelivery.user;
+    }
+    if (this.props.fetchedDelivery.userSeller) {
+      user = this.props.fetchedDelivery.userSeller;
+    }
+    const { firstName, lastName, phoneNumber, address } = user;
     const {
-      user: { firstName, lastName, phoneNumber, address },
       receiverFirstName,
       receiverLastName,
       itemName,
       itemQuantity,
       receiverPhoneNumber,
       receiverAddress,
-      confirmed
+      confirmed,
+      _id
     } = this.props.fetchedDelivery;
     return (
       <div className="main">
@@ -153,7 +161,17 @@ class LogisticsPayment extends React.Component {
                     {this.props.fetchedDelivery.driver.vehicleNo}
                   </p>
                 </div>
-                <p>You will be notified when he arrives.</p>
+                <p>
+                  You will be notified when he arrives. View your delivery
+                  details{" "}
+                  <Link
+                    to={`/logistic/${_id}`}
+                    style={{ color: "#f76b1a", textDecoration: "none" }}
+                  >
+                    here
+                  </Link>
+                  .
+                </p>
               </div>
             )}
           </div>

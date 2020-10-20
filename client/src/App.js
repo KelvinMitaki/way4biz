@@ -95,7 +95,6 @@ import AdminDashBoardRedeems from "./components/Admin/AdminDashBoardRedeems";
 import ReturnPolicy from "./components/Pages/HelpCenter/ReturnPolicy";
 import Riders from "./components/Riders/Riders";
 import RiderLogin from "./components/Riders/RiderLogin";
-// import RidersRegister from "./components/Riders/RidersRegister";
 import AdminAddDriver from "./components/Admin/AdminAddDriver";
 import AdminDrivers from "./components/Admin/AdminDrivers";
 import AdminDriver from "./components/Admin/AdminDriver";
@@ -103,6 +102,8 @@ import RiderChangePassword from "./components/Riders/RiderChangePassword";
 import LogisticsPayment from "./components/Pages/LogisticsPayment";
 import Logistics404 from "./components/Pages/Logistics404";
 import CartItemsRedirect from "./components/Pages/CartItemsRedirect";
+import AccountLogistics from "./components/Account/AccountLogistics";
+import AccountLogistic from "./components/Account/AccountLogistic";
 
 class App extends React.Component {
   state = {
@@ -746,6 +747,29 @@ class App extends React.Component {
                     <Redirect to="/sign-in" />
                   ) : (
                     <AddressForm />
+                  )
+                }
+              />
+              <Route
+                path="/account-logistics"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AccountLogistics />
+                  )
+                }
+              />
+
+              <Route
+                path="/logistic/:deliveryId"
+                exact
+                render={() =>
+                  this.props.isSignedIn === false ? (
+                    <Redirect to="/sign-in" />
+                  ) : (
+                    <AccountLogistic />
                   )
                 }
               />

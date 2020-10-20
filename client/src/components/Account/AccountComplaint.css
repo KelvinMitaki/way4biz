@@ -2,7 +2,8 @@
   padding: 10px;
 }
 
-.account-complain h6 {
+.account-complain h6,
+.account-logistic h6 {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
