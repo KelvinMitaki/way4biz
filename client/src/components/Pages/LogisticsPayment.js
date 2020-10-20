@@ -115,7 +115,18 @@ class LogisticsPayment extends React.Component {
                   className="btn btn-md my-3 secondary-button logistics-confirm-payment"
                   disabled={this.props.fetchedDelivery.confirmed}
                 >
-                  Confirm Payment
+                  {this.props.logisticsLoading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  {this.props.logisticsLoading ? (
+                    <span> {"  "}Loading...</span>
+                  ) : (
+                    <span>Confirm Payment</span>
+                  )}
                 </button>
               </div>
             )}
@@ -154,7 +165,8 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     fetchedDelivery: state.user.fetchedDelivery,
-    driver: state.user.driver
+    driver: state.user.driver,
+    logisticsLoading: state.user.logisticsLoading
   };
 };
 export default connect(mapStateToProps, {
