@@ -1,22 +1,17 @@
 import React from "react";
-import "./AccountComplaints.css";
+import "./AccountLogistics.css";
 import AccountMenu from "./AccountMenu";
 import Footer from "../Footer/Footer";
 import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import AccountHeader from "../Header/AccountHeader";
 import { Link } from "react-router-dom";
-import { fetchBuyerComplaints } from "../../redux/actions";
 import { connect } from "react-redux";
 import ScreenLoader from "../Pages/ScreenLoader";
 import { BsExclamationCircle } from "react-icons/bs";
 import MobileLogo from "../Header/MobileLogo";
 
-class AccountComplaints extends React.Component {
-  componentDidMount() {
-    this.props.fetchBuyerComplaints();
-  }
+class AccountLogistics extends React.Component {
   render() {
-    if (!this.props.buyerComplaints) return <ScreenLoader />;
     return (
       <div className="main">
         <div className="content">
@@ -100,10 +95,6 @@ class AccountComplaints extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {
-    buyerComplaints: state.product.buyerComplaints,
-  };
+  return {};
 };
-export default connect(mapStateToProps, { fetchBuyerComplaints })(
-  AccountComplaints
-);
+export default connect(mapStateToProps)(AccountLogistics);
