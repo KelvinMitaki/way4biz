@@ -460,7 +460,7 @@ route.patch("/api/loggedIn/reset/password", auth, async (req, res) => {
 route.get("/api/fetch/client/deliveries", auth, async (req, res) => {
   try {
     const deliveries = await Delivery.find({ user: req.session.user._id })
-      .populate("user", "address")
+      .populate("user userSeller", "address")
       .select("itemName receiverAddress user");
     res.send(deliveries);
   } catch (error) {

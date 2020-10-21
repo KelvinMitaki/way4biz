@@ -245,9 +245,7 @@ class Logistics extends React.Component {
                       !this.props.valid ||
                       this.props.requestServiceLoading ||
                       Object.keys(this.state.townLatLng).length === 0 ||
-                      Object.keys(this.state.cityLatLng).length === 0 ||
-                      Object.keys(this.state.receiverCityLatLng).length === 0 ||
-                      Object.keys(this.state.receiverTownLatLng).length === 0
+                      Object.keys(this.state.cityLatLng).length === 0
                     }
                     type="submit"
                   >
@@ -391,10 +389,7 @@ export default withRouter(
     reduxForm({
       validate,
       form: "Logistics",
-      keepDirtyOnReinitialize: true,
-      forceUnregisterOnUnmount: false,
-      destroyOnUnmount: false,
-      enableReinitialize: true
+      destroyOnUnmount: false
     })(Logistics)
   )
 );
