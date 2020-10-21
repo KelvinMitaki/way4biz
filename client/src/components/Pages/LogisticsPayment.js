@@ -30,19 +30,18 @@ class LogisticsPayment extends React.Component {
     if (this.props.fetchedDelivery === "") {
       return <NotFound />;
     }
-    if (
-      !this.props.user ||
-      (this.props.user &&
-        this.props.user._id !== this.props.fetchedDelivery.user._id)
-    ) {
-      return <Redirect to="/" />;
-    }
     let user;
     if (this.props.fetchedDelivery.user) {
       user = this.props.fetchedDelivery.user;
     }
     if (this.props.fetchedDelivery.userSeller) {
       user = this.props.fetchedDelivery.userSeller;
+    }
+    if (
+      !this.props.user ||
+      (this.props.user && this.props.user._id !== user._id)
+    ) {
+      return <Redirect to="/" />;
     }
     const { firstName, lastName, phoneNumber, address } = user;
     const {

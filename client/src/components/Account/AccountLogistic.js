@@ -20,7 +20,6 @@ class AccountLogistic extends React.Component {
     this.props.clearSingleCategory();
   }
   render() {
-    console.log(this.props.userDelivery);
     if (!this.props.userDelivery) {
       return <ScreenLoader />;
     }
