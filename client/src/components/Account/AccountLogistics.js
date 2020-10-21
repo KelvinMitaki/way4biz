@@ -61,7 +61,7 @@ class AccountLogistics extends React.Component {
                         if (del.user) {
                           user = del.user;
                         }
-                        if (user.sellerUser) {
+                        if (del.sellerUser) {
                           user = del.sellerUser;
                         }
                         return (
