@@ -9,9 +9,37 @@ import { BsArrowLeft } from "react-icons/bs";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import MobileLogo from "../Header/MobileLogo";
+import { clearSingleCategory, fetchSingleDelivery } from "../../redux/actions";
+import ScreenLoader from "../Pages/ScreenLoader";
 
 class AccountLogistic extends React.Component {
+  componentDidMount() {
+    this.props.fetchSingleDelivery(this.props.match.params.deliveryId);
+  }
+  componentWillUnmount() {
+    this.props.clearSingleCategory();
+  }
   render() {
+    if (!this.props.userDelivery) {
+      return <ScreenLoader />;
+    }
+    const {
+      receiverFirstName,
+      receiverLastName,
+      receiverPhoneNumber,
+      itemName,
+      itemQuantity,
+      receiverAddress,
+      delivered
+    } = this.props.userDelivery;
+    let user;
+    if (this.props.userDelivery.user) {
+      user = this.props.userDelivery.user;
+    }
+    if (this.props.userDelivery.userSeller) {
+      user = this.props.userDelivery.userSeller;
+    }
+    const { address } = user;
     return (
       <div className="main">
         <div className="content">
@@ -47,30 +75,35 @@ class AccountLogistic extends React.Component {
                 <div className="box-container p-2 account-logistic">
                   <div className="container">
                     <p>
-                      <b>Recipient: </b>Mike
+                      <b>Recipient: </b>
+                      {receiverFirstName} {receiverLastName}
                     </p>
                     <p>
-                      <b>Phone: </b>0799000000
+                      <b>Phone: </b>0{receiverPhoneNumber}
                     </p>
                     <p>
                       {/* if not delivered */}
                       {/* <b>Item To Deliver: </b> Pizza */}
-                      <b>Item Delivered: </b>Pizza
+                      <b>Item Delivered: </b>
+                      {itemName}
                     </p>
                     <p>
-                      <b>Item Quantity: </b>2
+                      <b>Item Quantity: </b> {itemQuantity}
                     </p>
                     <p>
-                      <b>From: </b>TRM
+                      <b>From: </b>
+                      {address}
                     </p>
                     <p>
-                      <b>To: </b>Revlon Plaza
+                      <b>To: </b>
+                      {receiverAddress}
                     </p>
                     <p>
                       <b>Delivery Date: </b>1/1/2000
                     </p>
                     <p>
-                      <b>Status: </b>Delivered
+                      <b>Status: </b>
+                      {delivered ? "Delivered" : "Pending"}
                     </p>
                   </div>
                 </div>
@@ -85,7 +118,13 @@ class AccountLogistic extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    userDelivery: state.user.userDelivery
+  };
 };
-export default withRouter(connect(mapStateToProps)(AccountLogistic));
+export default withRouter(
+  connect(mapStateToProps, { fetchSingleDelivery, clearSingleCategory })(
+    AccountLogistic
+  )
+);

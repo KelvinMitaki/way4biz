@@ -9,7 +9,7 @@ import { Link, Redirect } from "react-router-dom";
 import {
   confirmLogisticsDelivery,
   emptyFetchedDelivery,
-  fetchDelivery,
+  fetchDelivery
 } from "../../redux/actions";
 import ScreenLoader from "./ScreenLoader";
 import NotFound from "./NotFound";
@@ -30,15 +30,21 @@ class LogisticsPayment extends React.Component {
     if (this.props.fetchedDelivery === "") {
       return <NotFound />;
     }
+    let user;
+    if (this.props.fetchedDelivery.user) {
+      user = this.props.fetchedDelivery.user;
+    }
+    if (this.props.fetchedDelivery.userSeller) {
+      user = this.props.fetchedDelivery.userSeller;
+    }
     if (
       !this.props.user ||
-      (this.props.user &&
-        this.props.user._id !== this.props.fetchedDelivery.user._id)
+      (this.props.user && this.props.user._id !== user._id)
     ) {
       return <Redirect to="/" />;
     }
+    const { firstName, lastName, phoneNumber, address } = user;
     const {
-      user: { firstName, lastName, phoneNumber, address },
       receiverFirstName,
       receiverLastName,
       itemName,
@@ -46,6 +52,7 @@ class LogisticsPayment extends React.Component {
       receiverPhoneNumber,
       receiverAddress,
       confirmed,
+      _id
     } = this.props.fetchedDelivery;
     return (
       <div className="main">
@@ -157,7 +164,7 @@ class LogisticsPayment extends React.Component {
                   You will be notified when he arrives. View your delivery
                   details{" "}
                   <Link
-                    to="/logistic"
+                    to={`/logistic/${_id}`}
                     style={{ color: "#f76b1a", textDecoration: "none" }}
                   >
                     here
@@ -174,16 +181,16 @@ class LogisticsPayment extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     fetchedDelivery: state.user.fetchedDelivery,
     driver: state.user.driver,
-    logisticsLoading: state.user.logisticsLoading,
+    logisticsLoading: state.user.logisticsLoading
   };
 };
 export default connect(mapStateToProps, {
   fetchDelivery,
   confirmLogisticsDelivery,
-  emptyFetchedDelivery,
+  emptyFetchedDelivery
 })(LogisticsPayment);
