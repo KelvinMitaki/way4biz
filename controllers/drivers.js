@@ -256,7 +256,11 @@ route.post(
                 maxDistance: 4000000,
                 spherical: true,
                 distanceField: "dist.calculated",
-                includeLocs: "dist.location"
+                includeLocs: "dist.location",
+                query: {
+                  free: true,
+                  verified: true
+                }
               }
             }
           ]);
@@ -279,7 +283,6 @@ route.post(
             userSeller: req.session.user._id
           });
           await delivery.save();
-
           res.send({ delivery, driver: driver[0] });
         }
       );
