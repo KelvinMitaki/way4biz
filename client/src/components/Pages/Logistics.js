@@ -29,19 +29,30 @@ class Logistics extends React.Component {
     receiverAddressLatLng: {
       lat: -1.28585,
       lng: 36.8263
-    }
+    },
+    citySelected: false,
+    townSelected: false,
+    addressSelected: false
   };
   async componentDidUpdate() {
     if (!this.state.cityLatLng.lat || !this.state.townLatLng.lat) {
-      if (this.props.user.city) {
+      if (this.props.user.city && !this.state.citySelected) {
+        this.setState({ citySelected: true });
         const results = await geocodeByAddress(this.props.user.city);
         const latlng = await getLatLng(results[0]);
         this.setState({ cityLatLng: latlng });
       }
-      if (this.props.user.town) {
+      if (this.props.user.town && !this.state.townSelected) {
+        this.setState({ townSelected: true });
         const results = await geocodeByAddress(this.props.user.town);
         const latlng = await getLatLng(results[0]);
         this.setState({ townLatLng: latlng });
+      }
+      if (this.props.user.address && !this.state.addressSelected) {
+        this.setState({ addressSelected: true });
+        const results = await geocodeByAddress(this.props.user.address);
+        const latlng = await getLatLng(results[0]);
+        this.setState({ addressLatLng: latlng });
       }
     }
   }
@@ -245,7 +256,8 @@ class Logistics extends React.Component {
                       !this.props.valid ||
                       this.props.requestServiceLoading ||
                       Object.keys(this.state.townLatLng).length === 0 ||
-                      Object.keys(this.state.cityLatLng).length === 0
+                      Object.keys(this.state.cityLatLng).length === 0 ||
+                      this.props.pristine
                     }
                     type="submit"
                   >
@@ -381,7 +393,8 @@ const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
     user: state.auth.user,
-    requestServiceLoading: state.user.requestServiceLoading
+    requestServiceLoading: state.user.requestServiceLoading,
+    customForm: state.form
   };
 };
 export default withRouter(
