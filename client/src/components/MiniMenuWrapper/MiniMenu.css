@@ -36,10 +36,9 @@
 }
 
 .account-mini-links {
-  /* height: 150px; */
   background-color: #fff;
   flex-direction: column;
-  z-index: 20000;
+  z-index: 20000 !important;
   display: flex;
   width: 100%;
   justify-content: center;
