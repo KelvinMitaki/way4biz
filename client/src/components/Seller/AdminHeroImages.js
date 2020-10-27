@@ -37,7 +37,6 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
   };
 
   const categories = props.categories;
-  console.log(category);
 
   return (
     <div
