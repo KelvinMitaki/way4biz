@@ -22,22 +22,22 @@ class Account extends React.Component {
     townLatLng: {},
     addressLatLng: {
       lat: -1.28585,
-      lng: 36.8263,
-    },
+      lng: 36.8263
+    }
   };
-  handleCitySelect = async (selectedCity) => {
+  handleCitySelect = async selectedCity => {
     const results = await geocodeByAddress(selectedCity);
     const latlng = await getLatLng(results[0]);
     this.setState({ cityLatLng: latlng });
     this.props.change("city", selectedCity);
   };
-  handleTownSelect = async (selectedTown) => {
+  handleTownSelect = async selectedTown => {
     const results = await geocodeByAddress(selectedTown);
     const latlng = await getLatLng(results[0]);
     this.setState({ townLatLng: latlng });
     this.props.change("town", selectedTown);
   };
-  handleAddressSelect = async (selectedAddress) => {
+  handleAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
     this.setState({ addressLatLng: latlng });
@@ -56,7 +56,7 @@ class Account extends React.Component {
               <div className="col-lg-8  box-container" id="address-form">
                 <h3 className="legend">My Account</h3>
                 <form
-                  onSubmit={this.props.handleSubmit((formValues) =>
+                  onSubmit={this.props.handleSubmit(formValues =>
                     this.props.editUser(formValues, this.props.history)
                   )}
                 >
@@ -84,7 +84,10 @@ class Account extends React.Component {
                     label="City"
                     className="account-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleCitySelect}
                   />
                   <Field
@@ -93,7 +96,10 @@ class Account extends React.Component {
                     label="Town"
                     className="account-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleTownSelect}
                   />
                   <Field
@@ -105,7 +111,7 @@ class Account extends React.Component {
                     options={{
                       location: new google.maps.LatLng(this.state.cityLatLng),
                       radius: 1000,
-                      types: ["establishment"],
+                      types: ["establishment"]
                     }}
                     onSelect={this.handleAddressSelect}
                   />
@@ -154,7 +160,7 @@ class Account extends React.Component {
     );
   }
 }
-const validate = (formValues) => {
+const validate = formValues => {
   const errors = {};
   if (
     !formValues.firstName ||
@@ -195,12 +201,12 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     initialValues: state.auth.user,
     googleId: state.auth.user.googleId,
     editUserError: state.auth.editUserError,
-    loading: state.auth.loading,
+    loading: state.auth.loading
   };
 };
 

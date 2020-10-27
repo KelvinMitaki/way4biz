@@ -168,7 +168,10 @@ class Logistics extends React.Component {
                     label="From City"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleCitySelect}
                   />
                   <Field
@@ -177,7 +180,10 @@ class Logistics extends React.Component {
                     label="From Town"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleTownSelect}
                   />
                   <Field
@@ -218,7 +224,10 @@ class Logistics extends React.Component {
                     label="To City"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleReceiverCitySelect}
                   />
                   <Field
@@ -227,7 +236,10 @@ class Logistics extends React.Component {
                     label="To Town"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleReceiverTownSelect}
                   />
                   <Field
