@@ -36,11 +36,11 @@ export class Image extends Component {
           className="loading image-overlay"
           data-src={this.props.image}
           ref={this.text}
-          src="/load.jpg"
+          src={this.props.spinner ? "/1.gif" : "/load.jpg"}
           alt={this.props.alt}
           height={this.props.height}
           width={this.props.width}
-          style={{ margin: "auto" }}
+          style={{ margin: "auto", cursor: "pointer" }}
         />
       </React.Fragment>
     );
