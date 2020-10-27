@@ -64,14 +64,21 @@ class HeroCarousel extends React.Component {
                 {this.props.heroImages &&
                   this.props.heroImages.length !== 0 &&
                   this.props.heroImages.map(image => (
-                    <Carousel.Item key={image._id} className="slider">
-                      <Link to={`/products/category/${image.category}`}>
-                        <img
-                          className="img-fluid"
-                          src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl}`}
-                          alt={image.imageUrl}
-                        />
-                      </Link>
+                    <Carousel.Item
+                      key={image._id}
+                      onClick={() =>
+                        this.props.history.push(
+                          `/products/category/${image.category}`
+                        )
+                      }
+                      className="slider"
+                    >
+                      <img
+                        className="img-fluid"
+                        style={{ cursor: "pointer" }}
+                        src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl}`}
+                        alt={image.imageUrl}
+                      />
                     </Carousel.Item>
                   ))}
               </Carousel>
