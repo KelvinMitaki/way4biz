@@ -15,12 +15,13 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
   const [categorySelected, setCategorySelected] = useState(false);
   useEffect(() => {
     return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      files.forEach(file => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
     try {
-      await uploadHeroImage(image);
+      await uploadHeroImage(image, category);
+
       handleCancelCrop();
     } catch (error) {
       console.log("error", error);
@@ -31,7 +32,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
     setImage(null);
   };
 
-  const handleCategorySelect = (e) => {
+  const handleCategorySelect = e => {
     setCategory(e.target.value);
     setCategorySelected(true);
   };
@@ -42,7 +43,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
     <div
       className="container-v p-0 box-container"
       style={{
-        width: "100%",
+        width: "100%"
         // margin: "0px auto 10px auto",
       }}
     >
@@ -74,7 +75,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
                   minHeight: "200px",
                   width: "1200px",
                   overflow: "hidden",
-                  zIndex: "-1",
+                  zIndex: "-1"
                 }}
               />
               <select onChange={handleCategorySelect} className="hero-category">
@@ -116,10 +117,10 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     heroImageLoading: state.product.heroImageLoading,
-    categories: state.product.categories,
+    categories: state.product.categories
   };
 };
 export default connect(mapStateToProps, { uploadHeroImage })(AdminHeroImages);
