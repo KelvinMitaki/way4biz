@@ -21,7 +21,7 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
   const handleUploadImage = async () => {
     try {
       await uploadHeroImage(image, category);
-
+      setCategorySelected(false);
       handleCancelCrop();
     } catch (error) {
       console.log("error", error);
