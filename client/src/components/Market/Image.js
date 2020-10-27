@@ -5,7 +5,7 @@ export class Image extends Component {
   text = React.createRef();
   componentDidMount() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;
@@ -18,7 +18,7 @@ export class Image extends Component {
   }
   componentDidUpdate() {
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target;
           image.src = image.dataset.src;
@@ -36,11 +36,11 @@ export class Image extends Component {
           className="loading image-overlay"
           data-src={this.props.image}
           ref={this.text}
-          src="/load.jpg"
+          src={this.props.spinner ? "/hero.png" : "/load.jpg"}
           alt={this.props.alt}
           height={this.props.height}
           width={this.props.width}
-          style={{ margin: "auto" }}
+          style={{ margin: "auto", cursor: "pointer" }}
         />
       </React.Fragment>
     );

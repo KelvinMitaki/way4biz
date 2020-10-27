@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { FaUserCircle, FaUserAlt } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
-
+import Image from "../Market/Image";
 import "./Carousel.css";
 import { connect } from "react-redux";
 import {
@@ -14,7 +14,6 @@ import {
 import { MdRateReview } from "react-icons/md";
 import { GoClippy } from "react-icons/go";
 import ScreenLoader from "../Pages/ScreenLoader";
-import Image from "../Market/Image";
 // import Carousel from "react-slick";
 
 class HeroCarousel extends React.Component {
@@ -73,11 +72,10 @@ class HeroCarousel extends React.Component {
                       }
                       className="slider"
                     >
-                      <img
-                        className="img-fluid"
-                        style={{ cursor: "pointer" }}
-                        src={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl}`}
+                      <Image
+                        image={`https://e-commerce-gig.s3.eu-west-2.amazonaws.com/${image.imageUrl}`}
                         alt={image.imageUrl}
+                        spinner={true}
                       />
                     </Carousel.Item>
                   ))}

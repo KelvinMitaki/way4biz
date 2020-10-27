@@ -109,7 +109,10 @@ class AddressForm extends React.Component {
                     label="City"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleCitySelect}
                   />
                   <Field
@@ -118,7 +121,10 @@ class AddressForm extends React.Component {
                     label="Town"
                     className="address-location-input"
                     component={AutoComplete}
-                    options={{ types: ["(cities)"] }}
+                    options={{
+                      componentRestrictions: { country: ["ke"] },
+                      types: ["(cities)"]
+                    }}
                     onSelect={this.handleTownSelect}
                   />
                   <Field
