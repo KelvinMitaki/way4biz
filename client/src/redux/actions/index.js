@@ -2497,7 +2497,7 @@ export const clearNewSellerDetails = () => {
   };
 };
 
-export const uploadHeroImage = image => async dispatch => {
+export const uploadHeroImage = (image, category) => async dispatch => {
   try {
     dispatch({ type: HERO_IMAGE_START });
     const uploadConfig = await axios.get("/api/admin/image/upload");
@@ -2518,7 +2518,8 @@ export const uploadHeroImage = image => async dispatch => {
         return;
       }
       await axios.post("/api/admin/add/hero/image", {
-        imageUrl: uploadConfig.data.key
+        imageUrl: uploadConfig.data.key,
+        category
       });
       dispatch(fetchHeroImages());
       dispatch({ type: HERO_IMAGE_STOP });

@@ -38,25 +38,27 @@ class AccountLogistics extends React.Component {
                       Logistics Services
                     </h3>
                   </div>
-                  <div className="container y">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h6>Item</h6>
+                  {this.props.deliveries && this.props.deliveries.length !== 0 && (
+                    <div className="container y">
+                      <div className="row">
+                        <div className="col-md-3">
+                          <h6>Item</h6>
+                        </div>
+                        <div className="col-md-3">
+                          <h6>Delivered From</h6>
+                        </div>
+                        <div className="col-md-3">
+                          <h6>Delivered To</h6>
+                        </div>
+                        <div className="col-md-3"></div>
                       </div>
-                      <div className="col-md-3">
-                        <h6>Delivered From</h6>
-                      </div>
-                      <div className="col-md-3">
-                        <h6>Delivered To</h6>
-                      </div>
-                      <div className="col-md-3"></div>
                     </div>
-                  </div>
+                  )}
                   <div className="container">
                     {/* mapping here */}
                     {this.props.deliveries &&
                       this.props.deliveries.length !== 0 &&
-                      this.props.deliveries.map(del => {
+                      this.props.deliveries.map((del) => {
                         let user;
                         if (del.user) {
                           user = del.user;
@@ -135,9 +137,9 @@ class AccountLogistics extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    deliveries: state.user.deliveries
+    deliveries: state.user.deliveries,
   };
 };
 export default connect(mapStateToProps, { fetchClientDeliveries })(

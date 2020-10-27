@@ -124,12 +124,12 @@ class MiniMenu extends React.Component {
                       <BsExclamationCircle />
                       <span className="ml-2">Complaints</span>
                     </NavLink>
-                    {this.props.user && !this.props.user.isAdmin && (
+                    {this.props.user || this.props.user.isAdmin ? (
                       <NavLink className="primary-link" to="/account-logistics">
                         <RiMotorbikeLine />
                         <span className="ml-2">Logistics</span>
                       </NavLink>
-                    )}
+                    ) : null}
 
                     {this.props.user && this.props.user.storeName && (
                       <NavLink className="primary-link" to="/seller-dashboard">

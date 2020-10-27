@@ -5,6 +5,10 @@ const HeroImageSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
       required: true
+    },
+    category: {
+      type: String,
+      required: true
     }
   },
   { timestamps: true }
