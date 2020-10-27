@@ -2239,18 +2239,20 @@ route.post(
   auth,
   isAdmin,
   check("imageUrl").not().isEmpty(),
+  check("category").not().isEmpty(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).send({ message: errors.array()[0].msg });
       }
-      const { imageUrl } = req.body;
-      const photo = new HeroImage({
-        imageUrl
+      const { imageUrl, category } = req.body;
+      const image = new HeroImage({
+        imageUrl,
+        category
       });
-      await photo.save();
-      res.send(photo);
+      await image.save();
+      res.send(image);
     } catch (error) {
       res.status(500).send(error);
     }
