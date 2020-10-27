@@ -8,12 +8,13 @@ import "./AdminHeroImages.css";
 import { uploadHeroImage } from "../../redux/actions";
 import { connect } from "react-redux";
 
-const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
+const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
+  const [categorySelected, setCategorySelected] = useState(false);
   useEffect(() => {
     return () => {
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [files]);
   const handleUploadImage = async () => {
@@ -28,11 +29,18 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     setFiles([]);
     setImage(null);
   };
+
+  const handleCategorySelect = () => {
+    setCategorySelected(true);
+  };
+
+  const categories = props.categories;
+
   return (
     <div
       className="container-v p-0 box-container"
       style={{
-        width: "100%"
+        width: "100%",
         // margin: "0px auto 10px auto",
       }}
     >
@@ -64,28 +72,40 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
                   minHeight: "200px",
                   width: "1200px",
                   overflow: "hidden",
-                  zIndex: "-1"
+                  zIndex: "-1",
                 }}
               />
+              <select onChange={handleCategorySelect} className="hero-category">
+                <option defaultValue>--select category---</option>
+                {categories &&
+                  categories.map((category, idx) => (
+                    <option key={idx} value={category._id}>
+                      {category._id}
+                    </option>
+                  ))}
+              </select>
               <div
                 style={{ cursor: "pointer" }}
                 onClick={handleUploadImage}
                 className="mt-3 admin-product-upload-btn-wrapper"
               >
-                <div style={{ textAlign: "center" }}>
-                  {heroImageLoading && (
-                    <span
-                      className="spinner-grow spinner-grow-sm"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                  )}
-                  {heroImageLoading ? (
-                    <span> {"  "}Loading...</span>
-                  ) : (
-                    <span>Upload Image</span>
-                  )}
-                </div>
+                {categorySelected ? (
+                  <div style={{ textAlign: "center" }}>
+                    {heroImageLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+
+                    {heroImageLoading ? (
+                      <span> {"  "}Loading...</span>
+                    ) : (
+                      <span>Upload Image</span>
+                    )}
+                  </div>
+                ) : null}
               </div>
             </React.Fragment>
           )}
@@ -94,9 +114,10 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading }, props) => {
     </div>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    heroImageLoading: state.product.heroImageLoading
+    heroImageLoading: state.product.heroImageLoading,
+    categories: state.product.categories,
   };
 };
 export default connect(mapStateToProps, { uploadHeroImage })(AdminHeroImages);

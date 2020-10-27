@@ -6,3 +6,13 @@
   width: 200px;
   /* width: 100%; */
 }
+
+.hero-category {
+  width: 200px;
+  border: 1px solid #d4d4d4;
+  margin-top: 10px;
+}
+
+.hero-category:focus {
+  border: 1px solid #d4d4d4;
+}
