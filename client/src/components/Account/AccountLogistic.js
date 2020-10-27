@@ -57,7 +57,9 @@ class AccountLogistic extends React.Component {
                       value={{ className: "arrow-icon ml-3 my-2" }}
                     >
                       <div
-                        onClick={() => this.props.history.goBack()}
+                        onClick={() =>
+                          this.props.history.push("/account-logistics")
+                        }
                         className="d-flex align-items-center"
                       >
                         <div style={{ cursor: "pointer" }}>

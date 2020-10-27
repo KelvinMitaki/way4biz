@@ -7,7 +7,7 @@ import {
   singleCategory,
   fetchAllCategories,
   fetchSubCategories,
-  emptySubCategories,
+  emptySubCategories
 } from "../../redux/actions";
 import { IconContext } from "react-icons";
 import { AiOutlineBars } from "react-icons/ai";
@@ -21,7 +21,7 @@ class HeroCategories extends React.Component {
   };
 
   handleMouseOver = (e, category) => {
-    this.props.fetchSubCategories(category);
+    // this.props.fetchSubCategories(category);
   };
   render() {
     if (!this.props.categories) return <ScreenLoader />;
@@ -47,14 +47,14 @@ class HeroCategories extends React.Component {
             </IconContext.Provider>
           </li>
           {this.props.categories.length !== 0 &&
-            this.props.categories.map((category) => (
+            this.props.categories.map(category => (
               <li
                 key={category._id}
                 onClick={() => {
                   this.handleEmptyArray();
                   this.props.history.push(`/products/category/${category._id}`);
                 }}
-                onMouseEnter={(e) => this.handleMouseOver(e, category._id)}
+                onMouseEnter={e => this.handleMouseOver(e, category._id)}
               >
                 <div>
                   {MainIcons[category.icon]}
@@ -70,11 +70,11 @@ class HeroCategories extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.product.categories,
     subcategories: state.product.subcategories,
-    filter: state.filter,
+    filter: state.filter
   };
 };
 export default withRouter(
@@ -82,6 +82,6 @@ export default withRouter(
     singleCategory,
     fetchAllCategories,
     fetchSubCategories,
-    emptySubCategories,
+    emptySubCategories
   })(HeroCategories)
 );
