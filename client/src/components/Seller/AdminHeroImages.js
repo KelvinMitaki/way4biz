@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
+  const [category, setCategory] = useState(null);
   const [categorySelected, setCategorySelected] = useState(false);
   useEffect(() => {
     return () => {
@@ -30,7 +31,8 @@ const AdminHeroImages = ({ uploadHeroImage, heroImageLoading, ...props }) => {
     setImage(null);
   };
 
-  const handleCategorySelect = () => {
+  const handleCategorySelect = (e) => {
+    setCategory(e.target.value);
     setCategorySelected(true);
   };
 
