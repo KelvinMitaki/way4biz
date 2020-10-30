@@ -468,28 +468,31 @@ route.post(
             "174379",
             process.env.MPESA_PASS_KEY
           )
-          .then(res => {
+          .then(async res => {
             console.log(res.data);
+            const checkoutRequestId = res.data.CheckoutRequestID;
+            const order = new Order({
+              items: test,
+              paymentMethod: formValues.payment,
+              deliveryMethod: formValues.delivery,
+              totalPrice: price + Math.round(distance.shippingFees),
+              buyer: _id,
+              buyerSeller: _id,
+              distance: distanceId,
+              cancelled: true,
+              checkoutRequestId
+            });
+            await order.save();
+            const orderWithDistance = await Order.findById(order._id).populate(
+              "distance"
+            );
+            return res.send(orderWithDistance);
           })
           .catch(err => {
             console.log("err", err);
+
+            return res.status(401).send({ message: err });
           });
-        const order = new Order({
-          items: test,
-          paymentMethod: formValues.payment,
-          deliveryMethod: formValues.delivery,
-          totalPrice: price + Math.round(distance.shippingFees),
-          buyer: _id,
-          buyerSeller: _id,
-          distance: distanceId,
-          cancelled: true,
-          checkoutRequestId
-        });
-        await order.save();
-        const orderWithDistance = await Order.findById(order._id).populate(
-          "distance"
-        );
-        return res.send(orderWithDistance);
       }
 
       res.status(401).send({ message: "Invalid ID" });
