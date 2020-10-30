@@ -19,6 +19,22 @@ class OrderPaymentSuccess extends React.Component {
     if (!this.props.orderSuccess) return <Redirect to="/" />;
     if (this.props.orderSuccess && this.props.orderSuccess.message)
       return <Redirect to="/mpesa/error" />;
+    let shippingFees;
+    if (
+      this.props.orderSuccess &&
+      this.props.orderSuccess.distance &&
+      this.props.orderSuccess.distance.shippingFees === 0
+    ) {
+      shippingFees = null;
+    } else if (
+      !this.props.orderSuccess ||
+      (this.props.orderSuccess && !this.props.orderSuccess.distance)
+    ) {
+      shippingFees = null;
+    } else {
+      shippingFees = this.props.orderSuccess.distance.shippingFees;
+    }
+
     return (
       <div className="main">
         <div className="content">
@@ -90,25 +106,22 @@ class OrderPaymentSuccess extends React.Component {
                       <h5>Order Subtotal</h5>
                       <p>
                         Ksh.
-                        {(this.props.orderSuccess.totalPrice &&
-                          this.props.orderSuccess.distance.shippingFees) ||
-                          (this.props.orderSuccess.distance.shippingFees ===
-                            0 &&
-                            Math.round(
-                              this.props.orderSuccess.totalPrice -
-                                this.props.orderSuccess.distance.shippingFees
-                            ).toLocaleString())}{" "}
+                        {this.props.orderSuccess.totalPrice && shippingFees
+                          ? Math.round(
+                              this.props.orderSuccess.totalPrice - shippingFees
+                            ).toLocaleString()
+                          : Math.round(
+                              this.props.orderSuccess.totalPrice
+                            ).toLocaleString()}{" "}
                       </p>
                     </div>
                     <div>
                       <h5>Shipping Cost</h5>
                       <p>
                         Ksh.{" "}
-                        {this.props.orderSuccess.distance &&
-                          this.props.orderSuccess.distance.shippingFees &&
-                          Math.round(
-                            this.props.orderSuccess.distance.shippingFees
-                          ).toLocaleString()}{" "}
+                        {shippingFees
+                          ? Math.round(shippingFees).toLocaleString()
+                          : 0}{" "}
                       </p>
                     </div>
                     <div className="mt-3" style={{ color: "#f76b1a" }}>
