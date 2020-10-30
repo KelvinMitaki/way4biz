@@ -36,7 +36,7 @@ export class Image extends Component {
           className="loading image-overlay"
           data-src={this.props.image}
           ref={this.text}
-          src={this.props.spinner ? "/hero.png" : "/load.jpg"}
+          src={this.props.spinner ? this.props.heroImage : "/load.jpg"}
           alt={this.props.alt}
           height={this.props.height}
           width={this.props.width}
