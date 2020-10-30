@@ -518,7 +518,10 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
         }
       },
       (err, response, body) => {
-        if (err) return console.log("err", err);
+        if (err) {
+          console.log("Line 522");
+          return console.log("err", err);
+        }
         const datevalues = moment().format("YYYYMMDDHHmmss");
         const STK_URL =
           "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
@@ -540,6 +543,7 @@ route.post("/api/mpesa/paid/order", auth, async (req, res) => {
           },
           async (err, response, body2) => {
             if (err) {
+              console.log("Line 546");
               return res.send(err);
             }
             console.log(body2);
