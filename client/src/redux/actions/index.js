@@ -298,7 +298,8 @@ import {
   CONFIRM_LOGISTICS_STOP,
   FETCH_CLIENT_DELIVERIES,
   FETCH_SINGLE_DELIVERY,
-  CLEAR_SINGLE_CATEGORY
+  CLEAR_SINGLE_CATEGORY,
+  UNVERIFIED_DATA
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2592,17 +2593,58 @@ export const saveOrder = history => async (dispatch, getState) => {
       callback: async function (data) {
         // specified callback function
         try {
-          const res = await axios.post("/api/verify/flutterwave/payment", {
+          dispatch({ type: UNVERIFIED_DATA, payload: data });
+
+          const response = await axios.post("/api/verify/flutterwave/payment", {
             ...data,
             cart
           });
           dispatch({
             type: FETCH_ORDER_SUCCESS,
-            payload: { ...res.data.data, ...res.data.order }
+            payload: { ...response.data.data, ...response.data.order }
           });
           history.push("/order/success");
         } catch (error) {
+          authCheck(error);
           console.log(error.response);
+          dispatch({
+            type: FETCH_ORDER_SUCCESS,
+            payload: "error validating purchase"
+          });
+          history.push("/card/error");
+        }
+      },
+      onclose: async function () {
+        const orderSuccess = getState().cartReducer.orderSuccess;
+        const unverifiedData = getState().cartReducer.unverifiedData;
+        if (!orderSuccess && unverifiedData) {
+          try {
+            const response = await axios.post(
+              "/api/verify/flutterwave/payment",
+              {
+                ...unverifiedData,
+                cart
+              }
+            );
+            dispatch({
+              type: FETCH_ORDER_SUCCESS,
+              payload: { ...response.data.data, ...response.data.order }
+            });
+            return history.push("/order/success");
+          } catch (error) {
+            dispatch({
+              type: FETCH_ORDER_SUCCESS,
+              payload: "error validating purchase"
+            });
+            return history.push("/card/error");
+          }
+        }
+        if (!orderSuccess && !unverifiedData) {
+          dispatch({
+            type: FETCH_ORDER_SUCCESS,
+            payload: "error validating purchase"
+          });
+          return history.push("/card/error");
         }
       },
       customizations: {

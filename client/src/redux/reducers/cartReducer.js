@@ -28,7 +28,8 @@ import {
   P_TO_CHECKOUT_STOP,
   FETCH_ITEMS_IN_CART,
   EMPTY_ITEMS_IN_CART,
-  P_TO_CHECKOUT_CLEAR
+  P_TO_CHECKOUT_CLEAR,
+  UNVERIFIED_DATA
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -44,7 +45,8 @@ const INITIAL_STATE = {
   orderSuccessLoading: false,
   deleteCartLoading: false,
   pToCheckoutLoading: false,
-  fetchedItems: null
+  fetchedItems: null,
+  unverifiedData: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -143,7 +145,12 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ORDER_SUCCESS:
       return { ...state, orderSuccess: action.payload };
     case REMOVE_PENDING_AND_SUCCESS:
-      return { ...state, pendingOrder: null, orderSuccess: null };
+      return {
+        ...state,
+        pendingOrder: null,
+        orderSuccess: null,
+        unverifiedData: null
+      };
     case FETCH_ORDER_SUCCESS_START:
       return { ...state, orderSuccessLoading: true };
     case FETCH_ORDER_SUCCESS_STOP:
@@ -164,6 +171,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, fetchedItems: null };
     case P_TO_CHECKOUT_CLEAR:
       return { ...state, pToCheckoutLoading: false };
+    case UNVERIFIED_DATA:
+      return { ...state, unverifiedData: action.payload };
     default:
       return state;
   }
