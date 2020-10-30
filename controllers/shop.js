@@ -457,6 +457,7 @@ route.post(
           consumerKey: process.env.MPESA_CONSUMER_KEY,
           consumerSecret: process.env.MPESA_CONSUMER_SECRET
         });
+        let checkoutRequestId;
         mpesaApi
           .lipaNaMpesaOnline(
             `254${req.session.user.phoneNumber}`,
@@ -468,31 +469,29 @@ route.post(
             "174379",
             process.env.MPESA_PASS_KEY
           )
-          .then(async response => {
-            console.log(response.data);
-            const checkoutRequestId = response.data.CheckoutRequestID;
-            const order = new Order({
-              items: test,
-              paymentMethod: formValues.payment,
-              deliveryMethod: formValues.delivery,
-              totalPrice: price + Math.round(distance.shippingFees),
-              buyer: _id,
-              buyerSeller: _id,
-              distance: distanceId,
-              cancelled: true,
-              checkoutRequestId
-            });
-            await order.save();
-            const orderWithDistance = await Order.findById(order._id).populate(
-              "distance"
-            );
-            return res.send(orderWithDistance);
+          .then(res => {
+            console.log(res.data);
+            checkoutRequestId = res.data.CheckoutRequestID;
           })
           .catch(err => {
             console.log("err", err);
-
-            return res.status(401).send({ message: err });
           });
+        const order = new Order({
+          items: test,
+          paymentMethod: formValues.payment,
+          deliveryMethod: formValues.delivery,
+          totalPrice: price + Math.round(distance.shippingFees),
+          buyer: _id,
+          buyerSeller: _id,
+          distance: distanceId,
+          cancelled: true,
+          checkoutRequestId
+        });
+        await order.save();
+        const orderWithDistance = await Order.findById(order._id).populate(
+          "distance"
+        );
+        return res.send(orderWithDistance);
       }
 
       res.status(401).send({ message: "Invalid ID" });
