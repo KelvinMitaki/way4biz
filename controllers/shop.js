@@ -468,9 +468,9 @@ route.post(
             "174379",
             process.env.MPESA_PASS_KEY
           )
-          .then(async res => {
-            console.log(res.data);
-            const checkoutRequestId = res.data.CheckoutRequestID;
+          .then(async response => {
+            console.log(response.data);
+            const checkoutRequestId = response.data.CheckoutRequestID;
             const order = new Order({
               items: test,
               paymentMethod: formValues.payment,
