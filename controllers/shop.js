@@ -457,25 +457,20 @@ route.post(
           consumerKey: process.env.MPESA_CONSUMER_KEY,
           consumerSecret: process.env.MPESA_CONSUMER_SECRET
         });
-        let checkoutRequestId;
-        mpesaApi
-          .lipaNaMpesaOnline(
-            `254${req.session.user.phoneNumber}`,
-            1,
-            "https://e-commerce-gig.herokuapp.com/api/stk_callback",
-            "Way4Biz",
-            "Online payment",
-            "CustomerPayBillOnline",
-            "174379",
-            process.env.MPESA_PASS_KEY
-          )
-          .then(res => {
-            console.log(res.data);
-            checkoutRequestId = res.data.CheckoutRequestID;
-          })
-          .catch(err => {
-            console.log("err", err);
-          });
+        const response = await mpesaApi.lipaNaMpesaOnline(
+          `254${req.session.user.phoneNumber}`,
+          1,
+          "https://e-commerce-gig.herokuapp.com/api/stk_callback",
+          "Way4Biz",
+          "Online payment",
+          "CustomerPayBillOnline",
+          "174379",
+          process.env.MPESA_PASS_KEY
+        );
+
+        console.log(response.data);
+        const checkoutRequestId = response.data.CheckoutRequestID;
+        console.log("checkoutRequestId", checkoutRequestId);
         const order = new Order({
           items: test,
           paymentMethod: formValues.payment,
