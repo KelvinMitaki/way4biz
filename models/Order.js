@@ -76,6 +76,9 @@ const OrderSchema = new mongoose.Schema(
     dispatched: {
       type: Boolean,
       default: false
+    },
+    checkoutRequestId: {
+      type: String
     }
   },
   { timestamps: true }

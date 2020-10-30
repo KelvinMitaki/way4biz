@@ -396,8 +396,6 @@ route.post("/api/verify/flutterwave/payment", auth, async (req, res) => {
   }
 });
 
-let checkoutRequestId;
-let orderId;
 route.post(
   "/api/new/order",
   auth,
@@ -472,7 +470,6 @@ route.post(
           )
           .then(res => {
             console.log(res.data);
-            checkoutRequestId = res.data.CheckoutRequestID;
           })
           .catch(err => {
             console.log("err", err);
@@ -485,10 +482,10 @@ route.post(
           buyer: _id,
           buyerSeller: _id,
           distance: distanceId,
-          cancelled: true
+          cancelled: true,
+          checkoutRequestId
         });
         await order.save();
-        orderId = order._id;
         const orderWithDistance = await Order.findById(order._id).populate(
           "distance"
         );
@@ -502,101 +499,114 @@ route.post(
     }
   }
 );
-route.post("/api/mpesa/paid/order", auth, async (req, res) => {
-  try {
-    const { cart } = req.body;
-    const url =
-      "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-    const auth = Buffer.from(
-      `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
-    ).toString("base64");
-    request(
-      {
-        url,
-        headers: {
-          Authorization: "Basic " + auth
-        }
-      },
-      (err, response, body) => {
-        if (err) {
-          console.log("Line 522");
-          return console.log("err", err);
-        }
-        const datevalues = moment().format("YYYYMMDDHHmmss");
-        const STK_URL =
-          "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
-        request(
-          {
-            method: "POST",
-            url: STK_URL,
-            headers: {
-              Authorization: "Bearer " + JSON.parse(body).access_token
-            },
-            json: {
-              BusinessShortCode: "174379",
-              Password: Buffer.from(
-                `174379${process.env.MPESA_PASS_KEY}${datevalues}`
-              ).toString("base64"),
-              Timestamp: datevalues,
-              CheckoutRequestID: checkoutRequestId
-            }
-          },
-          async (err, response, body2) => {
-            if (err) {
-              console.log("Line 546");
-              return res.send(err);
-            }
-            console.log(body2);
-            if (body2.ResultCode && body2.ResultCode === "0") {
-              await Order.findByIdAndUpdate(orderId, {
-                mpesaCode: body2.ResultCode,
-                mpesaDesc: body2.ResultDesc,
-                paid: true,
-                cancelled: false
-              });
-              const savedOrder = await Order.findById(orderId).populate(
-                "distance items.product"
-              );
-
-              return res.send(savedOrder);
-            }
-            if (body2.ResultCode && body2.ResultCode !== "0") {
-              await Order.findByIdAndUpdate(orderId, {
-                mpesaCode: body2.ResultCode,
-                mpesaDesc: body2.ResultDesc,
-                cancelled: true
-              });
-              const savedOrder = await Order.findById(orderId).populate(
-                "distance items.product"
-              );
-              await Promise.all(
-                cart.map(async item => {
-                  // const pro=await Product.findById(item._id)
-                  // if(pro.stockQuantity<item.quantity){
-
-                  // }
-                  await Product.findByIdAndUpdate(
-                    item._id,
-                    {
-                      $inc: { stockQuantity: -item.quantity }
-                    },
-                    { runValidators: true }
-                  );
-                })
-              );
-
-              return res.send(savedOrder);
-            }
-            await Order.findByIdAndDelete(orderId);
-            res.send({ message: "error" });
-          }
-        );
+route.post(
+  "/api/mpesa/paid/order",
+  auth,
+  check("checkoutRequestId")
+    .trim()
+    .notEmpty()
+    .withMessage("enter a checkoutRequestId"),
+  check("orderId").trim().notEmpty().withMessage("Enter a valid order id"),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).send({ message: errors.array()[0].msg });
       }
-    );
-  } catch (error) {
-    res.status(500).send(error);
+      const { cart, checkoutRequestId, orderId } = req.body;
+      const url =
+        "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+      const auth = Buffer.from(
+        `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+      ).toString("base64");
+      request(
+        {
+          url,
+          headers: {
+            Authorization: "Basic " + auth
+          }
+        },
+        (err, response, body) => {
+          if (err) {
+            console.log("Line 522");
+            return console.log("err", err);
+          }
+          const datevalues = moment().format("YYYYMMDDHHmmss");
+          const STK_URL =
+            "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
+          request(
+            {
+              method: "POST",
+              url: STK_URL,
+              headers: {
+                Authorization: "Bearer " + JSON.parse(body).access_token
+              },
+              json: {
+                BusinessShortCode: "174379",
+                Password: Buffer.from(
+                  `174379${process.env.MPESA_PASS_KEY}${datevalues}`
+                ).toString("base64"),
+                Timestamp: datevalues,
+                CheckoutRequestID: checkoutRequestId
+              }
+            },
+            async (err, response, body2) => {
+              if (err) {
+                console.log("Line 546");
+                return res.send(err);
+              }
+              console.log(body2);
+              if (body2.ResultCode && body2.ResultCode === "0") {
+                await Order.findByIdAndUpdate(orderId, {
+                  mpesaCode: body2.ResultCode,
+                  mpesaDesc: body2.ResultDesc,
+                  paid: true,
+                  cancelled: false
+                });
+                const savedOrder = await Order.findById(orderId).populate(
+                  "distance items.product"
+                );
+
+                return res.send(savedOrder);
+              }
+              if (body2.ResultCode && body2.ResultCode !== "0") {
+                await Order.findByIdAndUpdate(orderId, {
+                  mpesaCode: body2.ResultCode,
+                  mpesaDesc: body2.ResultDesc,
+                  cancelled: true
+                });
+                const savedOrder = await Order.findById(orderId).populate(
+                  "distance items.product"
+                );
+                await Promise.all(
+                  cart.map(async item => {
+                    // const pro=await Product.findById(item._id)
+                    // if(pro.stockQuantity<item.quantity){
+
+                    // }
+                    await Product.findByIdAndUpdate(
+                      item._id,
+                      {
+                        $inc: { stockQuantity: -item.quantity }
+                      },
+                      { runValidators: true }
+                    );
+                  })
+                );
+
+                return res.send(savedOrder);
+              }
+              await Order.findByIdAndDelete(orderId);
+              res.send({ message: "error" });
+            }
+          );
+        }
+      );
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
-});
+);
 
 route.delete("/api/delete/whole/cart", auth, async (req, res) => {
   try {

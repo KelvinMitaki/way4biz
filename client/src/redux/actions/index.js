@@ -929,7 +929,11 @@ export const fetchOrderSuccess = history => async (dispatch, getState) => {
       getState().cartReducer.pendingOrder._id;
     const cart = getState().cartReducer.cart;
     if (orderId) {
-      const res = await axios.post(`/api/mpesa/paid/order`, { cart });
+      const res = await axios.post(`/api/mpesa/paid/order`, {
+        cart,
+        orderId,
+        checkoutRequestId: getState().cartReducer.pendingOrder.checkoutRequestId
+      });
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: res.data });
     }
     const orderSuccess = getState().cartReducer.orderSuccess;
