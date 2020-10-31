@@ -11,6 +11,13 @@ export class EmailConfirm extends Component {
           An email has been sent to your email address, please check it to
           confirm your account.
         </p>
+        <p>Didn't receive an email?</p>
+        <button
+          className="btn btn-md"
+          style={{ backgroundColor: "#f76b1a", color: "#fff", border: "none" }}
+        >
+          Resend Email
+        </button>
       </div>
     );
   }

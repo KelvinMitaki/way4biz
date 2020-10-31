@@ -223,3 +223,9 @@
     justify-content: center;
   }
 }
+
+@media screen and (max-width: 340px) {
+  .carousel-indicators {
+    bottom: 0px;
+  }
+}

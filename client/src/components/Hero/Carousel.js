@@ -17,23 +17,31 @@ import ScreenLoader from "../Pages/ScreenLoader";
 // import Carousel from "react-slick";
 
 class HeroCarousel extends React.Component {
-  state = {
-    viewPortWidth: null,
-  };
-
-  componentDidMount() {
-    this.setState({
-      viewPortWidth: window.innerWidth,
-    });
-  }
-
-  image= () => {
-    let width = this.state.viewPortWidth;
+  image = () => {
+    let width = window.innerWidth;
     let img;
-    if (width < 768) {
+    if (width >= 1180) {
       img = "/hero.png";
-    } else {
+    }
+    if (width < 1180) {
       img = "/heromd.png";
+    }
+    if (width <= 1160) {
+      img = "/heromdx.png";
+    }
+    if (width < 992) {
+      img = "/heromds.png";
+    }
+
+    if (width < 850) {
+      img = "/heromdl.png";
+    }
+
+    if (width < 768) {
+      img = "/heromd.png";
+    }
+    if (width < 540) {
+      img = "herosm.png";
     }
 
     return img;
@@ -119,7 +127,7 @@ class HeroCarousel extends React.Component {
                   >
                     <Image
                       height="120vh"
-                      width="120vw"
+                      width="100%"
                       image={
                         prod.imageUrl[0].includes("http")
                           ? prod.imageUrl[0]
