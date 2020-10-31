@@ -299,7 +299,9 @@ import {
   FETCH_CLIENT_DELIVERIES,
   FETCH_SINGLE_DELIVERY,
   CLEAR_SINGLE_CATEGORY,
-  UNVERIFIED_DATA
+  UNVERIFIED_DATA,
+  SET_URL,
+  CLEAR_URL
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -2953,5 +2955,18 @@ export const fetchSingleDelivery = deliveryId => async dispatch => {
 export const clearSingleCategory = () => {
   return {
     type: CLEAR_SINGLE_CATEGORY
+  };
+};
+
+export const setUrl = url => {
+  return {
+    type: SET_URL,
+    payload: url
+  };
+};
+
+export const clearUrl = () => {
+  return {
+    type: CLEAR_URL
   };
 };
