@@ -240,6 +240,7 @@ class App extends React.Component {
               <Route path="/normal-delivery" component={NormalDelivery} />
               <Route path="/express-delivery" component={ExpressDelivery} />
               <Route path="/logistics" exact component={Logistics} />
+              <Route path="/notfound" exact component={NotFound} />
               <Route
                 path="/logistics/confirm/:deliveryId"
                 component={LogisticsPayment}

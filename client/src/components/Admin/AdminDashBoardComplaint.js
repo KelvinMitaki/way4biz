@@ -14,7 +14,10 @@ import Image from "../Market/Image";
 
 class AdminDashBoardComplaints extends React.Component {
   componentDidMount() {
-    this.props.fetchComplaint(this.props.match.params.complaintId);
+    this.props.fetchComplaint(
+      this.props.match.params.complaintId,
+      this.props.history
+    );
   }
   render() {
     if (!this.props.complaint || this.props.complaintLoading)

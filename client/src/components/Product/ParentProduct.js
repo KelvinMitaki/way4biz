@@ -8,13 +8,19 @@ import ScreenLoader from "../Pages/ScreenLoader";
 export class ParentProduct extends Component {
   componentDidMount() {
     this.props.fetchProductReviews(this.props.match.params.productId);
-    this.props.fetchSingleProduct(this.props.match.params.productId);
+    this.props.fetchSingleProduct(
+      this.props.match.params.productId,
+      this.props.history
+    );
   }
   componentDidUpdate(prevProps) {
     if (
       this.props.match.params.productId !== prevProps.match.params.productId
     ) {
-      this.props.fetchSingleProduct(this.props.match.params.productId);
+      this.props.fetchSingleProduct(
+        this.props.match.params.productId,
+        this.props.history
+      );
       this.props.fetchProductReviews(this.props.match.params.productId);
     }
   }

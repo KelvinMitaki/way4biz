@@ -11,13 +11,16 @@ import ScreenLoader from "../Pages/ScreenLoader";
 import {
   fetchReviewProduct,
   acceptProduct,
-  rejectProduct,
+  rejectProduct
 } from "../../redux/actions";
 import Image from "../Market/Image";
 
 class AdminDashBoardNewProduct extends React.Component {
   componentDidMount() {
-    this.props.fetchReviewProduct(this.props.match.params.productId);
+    this.props.fetchReviewProduct(
+      this.props.match.params.productId,
+      this.props.history
+    );
   }
   render() {
     if (!this.props.reviewProduct || this.props.fetchReviewProductLoading)
@@ -147,18 +150,18 @@ class AdminDashBoardNewProduct extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     reviewProduct: state.product.reviewProduct,
     acceptProductLoading: state.product.acceptProductLoading,
     rejectProductLoading: state.product.rejectProductLoading,
-    fetchReviewProductLoading: state.product.fetchReviewProductLoading,
+    fetchReviewProductLoading: state.product.fetchReviewProductLoading
   };
 };
 export default withRouter(
   connect(mapStateToProps, {
     fetchReviewProduct,
     acceptProduct,
-    rejectProduct,
+    rejectProduct
   })(AdminDashBoardNewProduct)
 );

@@ -15,7 +15,10 @@ import MobileLogo from "../Header/MobileLogo";
 
 class Store extends Component {
   componentDidMount() {
-    this.props.fetchStoreProducts(this.props.match.params.sellerId);
+    this.props.fetchStoreProducts(
+      this.props.match.params.sellerId,
+      this.props.history
+    );
     this.props.fetchAllCategories();
   }
   render() {

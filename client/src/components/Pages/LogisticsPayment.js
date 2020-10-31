@@ -5,7 +5,7 @@ import MiniMenuWrapper from "../MiniMenuWrapper/MiniMenuWrapper";
 import { connect } from "react-redux";
 import "./LogisticsPayment.css";
 import MobileLogo from "../Header/MobileLogo";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import {
   confirmLogisticsDelivery,
   emptyFetchedDelivery,
@@ -18,7 +18,10 @@ import { BsCheckCircle } from "react-icons/bs";
 class LogisticsPayment extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.fetchDelivery(this.props.match.params.deliveryId);
+    this.props.fetchDelivery(
+      this.props.match.params.deliveryId,
+      this.props.history
+    );
   }
   componentWillUnmount() {
     this.props.emptyFetchedDelivery();
@@ -189,8 +192,10 @@ const mapStateToProps = state => {
     logisticsLoading: state.user.logisticsLoading
   };
 };
-export default connect(mapStateToProps, {
-  fetchDelivery,
-  confirmLogisticsDelivery,
-  emptyFetchedDelivery
-})(LogisticsPayment);
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchDelivery,
+    confirmLogisticsDelivery,
+    emptyFetchedDelivery
+  })(LogisticsPayment)
+);

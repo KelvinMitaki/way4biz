@@ -17,7 +17,10 @@ import MobileLogo from "../Header/MobileLogo";
 
 class ProductReviewsWrapper extends React.Component {
   componentDidMount() {
-    this.props.fetchProductReviews(this.props.match.params.productId);
+    this.props.fetchProductReviews(
+      this.props.match.params.productId,
+      this.props.history
+    );
   }
   render() {
     if (this.props.fetchOrdersLoading) return <ScreenLoader />;
@@ -50,7 +53,7 @@ class ProductReviewsWrapper extends React.Component {
             <div style={{ borderTop: "1px solid #d4d4d4" }}>
               {/* mapping here */}
               {this.props.productReviews.length !== 0 &&
-                this.props.productReviews.map((prod) => (
+                this.props.productReviews.map(prod => (
                   <div className="buyer-review-wrapper" key={prod._id}>
                     <Rating size={15} clickable={false} value={prod.rating} />
 
@@ -80,10 +83,10 @@ class ProductReviewsWrapper extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     productReviews: state.product.productReviews,
-    fetchOrdersLoading: state.auth.fetchOrdersLoading,
+    fetchOrdersLoading: state.auth.fetchOrdersLoading
   };
 };
 export default withRouter(
