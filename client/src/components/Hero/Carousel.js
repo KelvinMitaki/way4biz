@@ -43,9 +43,6 @@ class HeroCarousel extends React.Component {
     if (width < 540) {
       img = "herosm.png";
     }
-    // if (width < 340) {
-    //   img = "herosmx.png";
-    // }
 
     return img;
   };
@@ -130,7 +127,7 @@ class HeroCarousel extends React.Component {
                   >
                     <Image
                       height="120vh"
-                      width="120vw"
+                      width="100%"
                       image={
                         prod.imageUrl[0].includes("http")
                           ? prod.imageUrl[0]
