@@ -12,7 +12,10 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class AdminDriver extends React.Component {
   componentDidMount() {
-    this.props.fetchDriverDetails(this.props.match.params.driverId);
+    this.props.fetchDriverDetails(
+      this.props.match.params.driverId,
+      this.props.history
+    );
   }
   componentWillUnmount() {
     this.props.emptyDriverDetails();

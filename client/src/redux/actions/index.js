@@ -299,7 +299,9 @@ import {
   FETCH_CLIENT_DELIVERIES,
   FETCH_SINGLE_DELIVERY,
   CLEAR_SINGLE_CATEGORY,
-  UNVERIFIED_DATA
+  UNVERIFIED_DATA,
+  SET_URL,
+  CLEAR_URL
   // FETCH_SUCCESSFUL_DELIVERIES_START,
   // SUCCESSFUL_DELIVERIES_FETCHED,
   // FETCH_SUCCESSFUL_DELIVERIES_STOP,
@@ -337,6 +339,25 @@ const authCheck = error => {
     error.response.data.seller
   ) {
     return (window.location.href = "/seller/sign-in");
+  }
+};
+
+const pathCheck = (error, history) => {
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    error.response.data.stringValue
+  ) {
+    history.push("/notfound");
+  }
+  if (
+    error &&
+    error.response &&
+    error.response.status &&
+    error.response.status === 404
+  ) {
+    history.push("/notfound");
   }
 };
 
@@ -1054,7 +1075,7 @@ export const removeFromWishlist = product => async (dispatch, getState) => {
   }
 };
 
-export const fetchBuyerOrderDetails = orderId => async dispatch => {
+export const fetchBuyerOrderDetails = (orderId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/buyer/order/details/${orderId}`);
@@ -1062,6 +1083,7 @@ export const fetchBuyerOrderDetails = orderId => async dispatch => {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error.response);
   }
@@ -1119,7 +1141,7 @@ export const registerClick = () => {
   };
 };
 
-export const fetchSingleProduct = productId => async dispatch => {
+export const fetchSingleProduct = (productId, history) => async dispatch => {
   try {
     dispatch({ type: SINGLE_PRODUCT_START });
     const res = await axios.get(`/api/product/${productId}`);
@@ -1128,6 +1150,7 @@ export const fetchSingleProduct = productId => async dispatch => {
   } catch (error) {
     dispatch({ type: SINGLE_PRODUCT_STOP });
     console.log(error.response);
+    pathCheck(error, history);
   }
 };
 
@@ -1214,12 +1237,12 @@ export const redirectOnNotDelivered = (
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: REDIRECT_ON_FAIL_STOP });
-    history.push("/");
   }
 };
 
-export const fetchProductReviews = productId => async dispatch => {
+export const fetchProductReviews = (productId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_ORDERS_LOADING_START });
     const res = await axios.get(`/api/product/reviews/${productId}`);
@@ -1229,6 +1252,7 @@ export const fetchProductReviews = productId => async dispatch => {
     dispatch({ type: FETCH_ORDERS_LOADING_STOP });
     console.log(error);
     console.log(error.response);
+    pathCheck(error, history);
   }
 };
 export const singleCategory = (category, filter, history) => async (
@@ -1623,6 +1647,7 @@ export const fetchVerifiedSeller = (sellerId, history) => async dispatch => {
     dispatch({ type: VERIFIED_SELLER_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: VERIFIED_SELLER_STOP });
     history.push("/");
   }
@@ -1648,7 +1673,7 @@ export const fetchNewSeller = (sellerId, history) => async dispatch => {
     dispatch({ type: FETCH_NEW_SELLERS_STOP });
   } catch (error) {
     authCheck(error);
-    history.push("/");
+    pathCheck(error, history);
     dispatch({ type: FETCH_NEW_SELLERS_STOP });
     console.log(error.response);
   }
@@ -1773,14 +1798,7 @@ export const fetchAdminOrder = (orderId, history) => async dispatch => {
     dispatch({ type: FETCH_ADMIN_ORDER_STOP });
   } catch (error) {
     authCheck(error);
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.stringValue
-    ) {
-      history.push("/");
-    }
+    pathCheck(error, history);
     dispatch({ type: FETCH_ADMIN_ORDERS_STOP });
     console.log(error.response);
   }
@@ -1873,14 +1891,7 @@ export const fetchSingleCategory = (categoryId, history) => async dispatch => {
     dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
   } catch (error) {
     authCheck(error);
-    if (
-      error &&
-      error.response &&
-      error.response.data &&
-      error.response.data.stringValue
-    ) {
-      history.push("/");
-    }
+    pathCheck(error, history);
     dispatch({ type: FETCH_SINGLE_CATEGORY_STOP });
     console.log(error.response);
   }
@@ -2014,7 +2025,7 @@ export const fetchUnderReview = () => async dispatch => {
   }
 };
 
-export const fetchReviewProduct = productId => async dispatch => {
+export const fetchReviewProduct = (productId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_UNDER_REVIEW_START });
     const res = await axios.get(`/api/root/admin/review/product/${productId}`);
@@ -2022,6 +2033,7 @@ export const fetchReviewProduct = productId => async dispatch => {
     dispatch({ type: FETCH_UNDER_REVIEW_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: FETCH_UNDER_REVIEW_STOP });
     console.log(error.response);
   }
@@ -2068,6 +2080,7 @@ export const rejectMessage = (
     dispatch({ type: REJECT_MESSAGE_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: REJECT_MESSAGE_STOP });
     console.log(error.response);
   }
@@ -2101,7 +2114,7 @@ export const deleteSellerProduct = (productId, history) => async dispatch => {
     console.log(error.response);
   }
 };
-export const fetchStoreProducts = sellerId => async dispatch => {
+export const fetchStoreProducts = (sellerId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_STORE_PRODUCTS_START });
     const res = await axios.get(`/api/fetch/store/products/${sellerId}`);
@@ -2110,6 +2123,7 @@ export const fetchStoreProducts = sellerId => async dispatch => {
   } catch (error) {
     authCheck(error);
     dispatch({ type: FETCH_STORE_PRODUCTS_STOP });
+    pathCheck(error, history);
     if (
       error &&
       error.response &&
@@ -2165,7 +2179,7 @@ export const fetchAllComplaints = () => async dispatch => {
   }
 };
 
-export const fetchComplaint = complaintId => async dispatch => {
+export const fetchComplaint = (complaintId, history) => async dispatch => {
   try {
     dispatch({ type: FETCH_COMPLAINT_START });
     const res = await axios.get(`/api/root/admin/complaint/${complaintId}`);
@@ -2173,6 +2187,7 @@ export const fetchComplaint = complaintId => async dispatch => {
     dispatch({ type: FETCH_COMPLAINT_STOP });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     dispatch({ type: FETCH_COMPLAINT_STOP });
     console.log(error.response);
   }
@@ -2198,7 +2213,7 @@ export const fetchBuyerComplaint = (complaintId, history) => async dispatch => {
     authCheck(error);
     dispatch({ type: FETCH_BUYER_COMPLAINT_STOP });
     console.log(error.response);
-    history.push("/");
+    pathCheck(error, history);
   }
 };
 
@@ -2860,13 +2875,14 @@ export const requestService = (formValues, history) => async dispatch => {
   }
 };
 
-export const fetchDelivery = deliveryId => async dispatch => {
+export const fetchDelivery = (deliveryId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/fetch/delivery/${deliveryId}`);
     dispatch({ type: FETCH_DELIVERY, payload: res.data });
   } catch (error) {
     dispatch({ type: FETCH_DELIVERY, payload: "" });
     authCheck(error);
+    pathCheck(error, history);
   }
 };
 
@@ -2895,12 +2911,13 @@ export const fetchAllDrivers = () => async dispatch => {
   }
 };
 
-export const fetchDriverDetails = driverId => async dispatch => {
+export const fetchDriverDetails = (driverId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/fetch/driver/details/${driverId}`);
     dispatch({ type: FETCH_DRIVER_DETAILS, payload: res.data });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     console.log(error.response);
   }
 };
@@ -2940,12 +2957,13 @@ export const fetchClientDeliveries = () => async dispatch => {
   }
 };
 
-export const fetchSingleDelivery = deliveryId => async dispatch => {
+export const fetchSingleDelivery = (deliveryId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/fetch/single/delivery/${deliveryId}`);
     dispatch({ type: FETCH_SINGLE_DELIVERY, payload: res.data });
   } catch (error) {
     authCheck(error);
+    pathCheck(error, history);
     console.log(error.response);
   }
 };
@@ -2953,5 +2971,18 @@ export const fetchSingleDelivery = deliveryId => async dispatch => {
 export const clearSingleCategory = () => {
   return {
     type: CLEAR_SINGLE_CATEGORY
+  };
+};
+
+export const setUrl = url => {
+  return {
+    type: SET_URL,
+    payload: url
+  };
+};
+
+export const clearUrl = () => {
+  return {
+    type: CLEAR_URL
   };
 };

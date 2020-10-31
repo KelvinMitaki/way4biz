@@ -15,7 +15,10 @@ import MobileLogo from "../Header/MobileLogo";
 
 class BuyerOrderDetails extends Component {
   componentDidMount() {
-    this.props.fetchBuyerOrderDetails(this.props.match.params.orderId);
+    this.props.fetchBuyerOrderDetails(
+      this.props.match.params.orderId,
+      this.props.history
+    );
   }
   render() {
     const { buyerOrderDetails } = this.props;

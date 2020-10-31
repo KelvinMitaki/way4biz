@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { singleCategory, revertFilter } from "../../redux/actions";
+import { singleCategory, revertFilter, setUrl } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import Products from "./Products";
 import ScreenLoader from "../Pages/ScreenLoader";
@@ -13,6 +13,7 @@ export class ProductParent extends Component {
       this.props.filter,
       this.props.history
     );
+    this.props.setUrl(this.props.history.location.pathname);
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.category !== nextProps.match.params.category) {
@@ -53,5 +54,7 @@ const mapStateToProps = state => {
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { singleCategory, revertFilter })(ProductParent)
+  connect(mapStateToProps, { singleCategory, revertFilter, setUrl })(
+    ProductParent
+  )
 );

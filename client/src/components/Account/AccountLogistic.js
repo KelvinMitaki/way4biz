@@ -14,7 +14,10 @@ import ScreenLoader from "../Pages/ScreenLoader";
 
 class AccountLogistic extends React.Component {
   componentDidMount() {
-    this.props.fetchSingleDelivery(this.props.match.params.deliveryId);
+    this.props.fetchSingleDelivery(
+      this.props.match.params.deliveryId,
+      this.props.history
+    );
   }
   componentWillUnmount() {
     this.props.clearSingleCategory();

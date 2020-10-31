@@ -4,6 +4,7 @@ import QuantityCounter from "./QuantityCounter";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
+  clearUrl,
   deleteFromCart,
   fetchCartItems,
   proceedToCheckout,
@@ -18,6 +19,9 @@ import ScreenLoader from "../Pages/ScreenLoader";
 class MyCart extends React.Component {
   componentDidMount() {
     this.props.pToCheckoutClear();
+  }
+  componentWillUnmount() {
+    this.props.clearUrl();
   }
   render() {
     if (this.props.deleteCartLoading) return <ScreenLoader />;
@@ -138,7 +142,12 @@ class MyCart extends React.Component {
                 )}
               </button>
               <button
-                onClick={() => this.props.history.goBack()}
+                onClick={() => {
+                  if (this.props.url) {
+                    return this.props.history.goBack();
+                  }
+                  this.props.history.push("/");
+                }}
                 className="btn shopping-btn btn-md btn-block"
               >
                 Continue Shopping
@@ -167,6 +176,7 @@ class MyCart extends React.Component {
 const mapStateToProps = state => {
   return {
     cart: state.cartReducer.cart,
+    url: state.cartReducer.url,
     isSignedIn: state.auth.isSignedIn,
     cartLoading: state.cartReducer.cartLoading,
     pToCheckoutLoading: state.cartReducer.pToCheckoutLoading,
@@ -178,6 +188,7 @@ export default withRouter(
     deleteFromCart,
     fetchCartItems,
     proceedToCheckout,
-    pToCheckoutClear
+    pToCheckoutClear,
+    clearUrl
   })(MyCart)
 );

@@ -29,7 +29,9 @@ import {
   FETCH_ITEMS_IN_CART,
   EMPTY_ITEMS_IN_CART,
   P_TO_CHECKOUT_CLEAR,
-  UNVERIFIED_DATA
+  UNVERIFIED_DATA,
+  SET_URL,
+  CLEAR_URL
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -46,7 +48,8 @@ const INITIAL_STATE = {
   deleteCartLoading: false,
   pToCheckoutLoading: false,
   fetchedItems: null,
-  unverifiedData: null
+  unverifiedData: null,
+  url: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -173,6 +176,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, pToCheckoutLoading: false };
     case UNVERIFIED_DATA:
       return { ...state, unverifiedData: action.payload };
+    case SET_URL:
+      return { ...state, url: action.payload };
+    case CLEAR_URL:
+      return { ...state, url: null };
     default:
       return state;
   }
