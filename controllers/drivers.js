@@ -180,11 +180,7 @@ route.post(
   check("itemQuantity")
     .isNumeric()
     .withMessage("please enter a valid item quantity"),
-  check("receiverFirstName")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's name"),
-  check("receiverLastName")
+  check("receiverFullName")
     .trim()
     .notEmpty()
     .withMessage("enter a valid receiver's name"),
@@ -221,8 +217,7 @@ route.post(
       const {
         itemName,
         itemQuantity,
-        receiverFirstName,
-        receiverLastName,
+        receiverFullName,
         receiverPhoneNumber,
         receiverCity,
         receiverAddress,
@@ -266,8 +261,7 @@ route.post(
           const delivery = new Delivery({
             itemName,
             itemQuantity,
-            receiverFirstName,
-            receiverLastName,
+            receiverFullName,
             receiverPhoneNumber,
             receiverCity,
             receiverAddress,

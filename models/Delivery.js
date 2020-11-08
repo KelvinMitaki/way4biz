@@ -25,11 +25,7 @@ const DeliverySchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    receiverFirstName: {
-      type: String,
-      required: true
-    },
-    receiverLastName: {
+    receiverFullName: {
       type: String,
       required: true
     },

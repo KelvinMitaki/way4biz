@@ -168,18 +168,7 @@ class Logistics extends React.Component {
                     }}
                     onSelect={this.handleCitySelect}
                   />
-                  <Field
-                    type="text"
-                    name="town"
-                    label="From Town"
-                    className="address-location-input"
-                    component={AutoComplete}
-                    options={{
-                      componentRestrictions: { country: ["ke"] },
-                      types: ["(cities)"]
-                    }}
-                    onSelect={this.handleTownSelect}
-                  />
+
                   <Field
                     type="text"
                     name="address"
@@ -196,14 +185,8 @@ class Logistics extends React.Component {
 
                   <Field
                     type="text"
-                    name="receiverFirstName"
-                    label="Receiver First Name"
-                    component={FormField}
-                  />
-                  <Field
-                    type="text"
-                    name="receiverLastName"
-                    label="Receiver Last Name"
+                    name="receiverFullName"
+                    label="Receiver Full Name"
                     component={FormField}
                   />
                   <Field
@@ -303,11 +286,11 @@ const validate = formValues => {
     errors.firstName = "Please enter a valid first name";
   }
   if (
-    !formValues.receiverFirstName ||
-    (formValues.receiverFirstName &&
-      formValues.receiverFirstName.trim().length < 2)
+    !formValues.receiverFullName ||
+    (formValues.receiverFullName &&
+      formValues.receiverFullName.trim().length < 2)
   ) {
-    errors.receiverFirstName = "Please enter a valid first name";
+    errors.receiverFullName = "Please enter a valid first name";
   }
   if (
     !formValues.lastName ||
@@ -371,9 +354,6 @@ const validate = formValues => {
     (formValues.receiverCity && formValues.receiverCity === "choose")
   ) {
     errors.receiverCity = "Please enter a valid city";
-  }
-  if (!formValues.town || (formValues.town && formValues.town === "choose")) {
-    errors.town = "Please enter a valid town";
   }
 
   return errors;

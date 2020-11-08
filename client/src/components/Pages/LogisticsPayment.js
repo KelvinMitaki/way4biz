@@ -48,8 +48,7 @@ class LogisticsPayment extends React.Component {
     }
     const { firstName, lastName, phoneNumber, address } = user;
     const {
-      receiverFirstName,
-      receiverLastName,
+      receiverFullName,
       itemName,
       itemQuantity,
       receiverPhoneNumber,
@@ -103,7 +102,7 @@ class LogisticsPayment extends React.Component {
                   </p>
                   <p>
                     <b>Recipient: </b>
-                    {receiverFirstName} {receiverLastName}
+                    {receiverFullName}
                   </p>
                   <p>
                     <b>Phone: </b>0{receiverPhoneNumber}
