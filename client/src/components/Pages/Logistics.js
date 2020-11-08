@@ -25,7 +25,6 @@ class Logistics extends React.Component {
       lng: 36.8263
     },
     receiverCityLatLng: {},
-    receiverTownLatLng: {},
     receiverAddressLatLng: {
       lat: -1.28585,
       lng: 36.8263
@@ -80,12 +79,7 @@ class Logistics extends React.Component {
     this.setState({ receiverCityLatLng: latlng });
     this.props.change("receiverCity", selectedCity);
   };
-  handleReceiverTownSelect = async selectedTown => {
-    const results = await geocodeByAddress(selectedTown);
-    const latlng = await getLatLng(results[0]);
-    this.setState({ receiverTownLatLng: latlng });
-    this.props.change("receiverTown", selectedTown);
-  };
+
   handleReceiverAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
@@ -230,18 +224,7 @@ class Logistics extends React.Component {
                     }}
                     onSelect={this.handleReceiverCitySelect}
                   />
-                  <Field
-                    type="text"
-                    name="receiverTown"
-                    label="To Town"
-                    className="address-location-input"
-                    component={AutoComplete}
-                    options={{
-                      componentRestrictions: { country: ["ke"] },
-                      types: ["(cities)"]
-                    }}
-                    onSelect={this.handleReceiverTownSelect}
-                  />
+
                   <Field
                     type="text"
                     name="receiverAddress"
@@ -292,8 +275,7 @@ class Logistics extends React.Component {
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
                       Object.keys(this.state.cityLatLng).length === 0 ||
-                      Object.keys(this.state.receiverCityLatLng).length === 0 ||
-                      (Object.keys(this.state.receiverTownLatLng).length ===
+                      (Object.keys(this.state.receiverCityLatLng).length ===
                         0 && (
                         <p>
                           Please choose a valid destination or wait for the map
@@ -393,12 +375,7 @@ const validate = formValues => {
   if (!formValues.town || (formValues.town && formValues.town === "choose")) {
     errors.town = "Please enter a valid town";
   }
-  if (
-    !formValues.receiverTown ||
-    (formValues.receiverTown && formValues.receiverTown === "choose")
-  ) {
-    errors.receiverTown = "Please enter a valid town";
-  }
+
   return errors;
 };
 const mapStateToProps = state => {

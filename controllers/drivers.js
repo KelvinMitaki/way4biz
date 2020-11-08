@@ -195,10 +195,6 @@ route.post(
     .trim()
     .notEmpty()
     .withMessage("enter a valid receiver's city"),
-  check("receiverTown")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's town"),
   check("receiverAddress")
     .trim()
     .notEmpty()
@@ -229,7 +225,6 @@ route.post(
         receiverLastName,
         receiverPhoneNumber,
         receiverCity,
-        receiverTown,
         receiverAddress,
         origins,
         destination
@@ -274,7 +269,6 @@ route.post(
             receiverFirstName,
             receiverLastName,
             receiverPhoneNumber,
-            receiverTown,
             receiverCity,
             receiverAddress,
             user: req.session.user._id,

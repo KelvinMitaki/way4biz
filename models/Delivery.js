@@ -41,10 +41,6 @@ const DeliverySchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    receiverTown: {
-      type: String,
-      required: true
-    },
     receiverAddress: {
       type: String,
       required: true

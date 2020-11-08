@@ -82,7 +82,7 @@ class AdminDriver extends React.Component {
                   const {
                     itemName,
                     receiverPhoneNumber,
-                    receiverTown,
+                    receiverCity,
                     receiverAddress
                   } = del;
                   let user;
@@ -92,14 +92,14 @@ class AdminDriver extends React.Component {
                   if (del.userSeller) {
                     user = del.userSeller;
                   }
-                  const { phoneNumber, town, address } = user;
+                  const { phoneNumber, city, address } = user;
                   return (
                     <div key={del._id} className="my-1 driver-delivery">
                       <p>
                         Delivered {itemName}
                         <strong> FROM </strong>
-                        {town}, {address} <strong> TO </strong>
-                        {receiverTown}, {receiverAddress} on 1/1/2000.
+                        {city}, {address} <strong> TO </strong>
+                        {receiverCity}, {receiverAddress} on 1/1/2000.
                       </p>
                       <p>Sender Phone: 0{phoneNumber}</p>
                       <p>Recipient Phone: 0{receiverPhoneNumber}</p>

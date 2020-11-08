@@ -2334,7 +2334,7 @@ route.get(
       }
       const deliveries = await Delivery.find({ driver: driver._id }).populate(
         "user userSeller",
-        "phoneNumber town address"
+        "phoneNumber city address"
       );
       res.send({ driver, deliveries });
     } catch (error) {
