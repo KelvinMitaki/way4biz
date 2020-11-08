@@ -25,7 +25,6 @@ class Logistics extends React.Component {
       lng: 36.8263
     },
     receiverCityLatLng: {},
-    receiverTownLatLng: {},
     receiverAddressLatLng: {
       lat: -1.28585,
       lng: 36.8263
@@ -80,12 +79,7 @@ class Logistics extends React.Component {
     this.setState({ receiverCityLatLng: latlng });
     this.props.change("receiverCity", selectedCity);
   };
-  handleReceiverTownSelect = async selectedTown => {
-    const results = await geocodeByAddress(selectedTown);
-    const latlng = await getLatLng(results[0]);
-    this.setState({ receiverTownLatLng: latlng });
-    this.props.change("receiverTown", selectedTown);
-  };
+
   handleReceiverAddressSelect = async selectedAddress => {
     const results = await geocodeByAddress(selectedAddress);
     const latlng = await getLatLng(results[0]);
@@ -174,18 +168,7 @@ class Logistics extends React.Component {
                     }}
                     onSelect={this.handleCitySelect}
                   />
-                  <Field
-                    type="text"
-                    name="town"
-                    label="From Town"
-                    className="address-location-input"
-                    component={AutoComplete}
-                    options={{
-                      componentRestrictions: { country: ["ke"] },
-                      types: ["(cities)"]
-                    }}
-                    onSelect={this.handleTownSelect}
-                  />
+
                   <Field
                     type="text"
                     name="address"
@@ -202,14 +185,8 @@ class Logistics extends React.Component {
 
                   <Field
                     type="text"
-                    name="receiverFirstName"
-                    label="Receiver First Name"
-                    component={FormField}
-                  />
-                  <Field
-                    type="text"
-                    name="receiverLastName"
-                    label="Receiver Last Name"
+                    name="receiverFullName"
+                    label="Receiver Full Name"
                     component={FormField}
                   />
                   <Field
@@ -230,18 +207,7 @@ class Logistics extends React.Component {
                     }}
                     onSelect={this.handleReceiverCitySelect}
                   />
-                  <Field
-                    type="text"
-                    name="receiverTown"
-                    label="To Town"
-                    className="address-location-input"
-                    component={AutoComplete}
-                    options={{
-                      componentRestrictions: { country: ["ke"] },
-                      types: ["(cities)"]
-                    }}
-                    onSelect={this.handleReceiverTownSelect}
-                  />
+
                   <Field
                     type="text"
                     name="receiverAddress"
@@ -292,8 +258,7 @@ class Logistics extends React.Component {
                     {(!this.props.pristine &&
                       Object.keys(this.state.townLatLng).length === 0) ||
                       Object.keys(this.state.cityLatLng).length === 0 ||
-                      Object.keys(this.state.receiverCityLatLng).length === 0 ||
-                      (Object.keys(this.state.receiverTownLatLng).length ===
+                      (Object.keys(this.state.receiverCityLatLng).length ===
                         0 && (
                         <p>
                           Please choose a valid destination or wait for the map
@@ -321,11 +286,11 @@ const validate = formValues => {
     errors.firstName = "Please enter a valid first name";
   }
   if (
-    !formValues.receiverFirstName ||
-    (formValues.receiverFirstName &&
-      formValues.receiverFirstName.trim().length < 2)
+    !formValues.receiverFullName ||
+    (formValues.receiverFullName &&
+      formValues.receiverFullName.trim().length < 2)
   ) {
-    errors.receiverFirstName = "Please enter a valid first name";
+    errors.receiverFullName = "Please enter a valid first name";
   }
   if (
     !formValues.lastName ||
@@ -390,15 +355,7 @@ const validate = formValues => {
   ) {
     errors.receiverCity = "Please enter a valid city";
   }
-  if (!formValues.town || (formValues.town && formValues.town === "choose")) {
-    errors.town = "Please enter a valid town";
-  }
-  if (
-    !formValues.receiverTown ||
-    (formValues.receiverTown && formValues.receiverTown === "choose")
-  ) {
-    errors.receiverTown = "Please enter a valid town";
-  }
+
   return errors;
 };
 const mapStateToProps = state => {

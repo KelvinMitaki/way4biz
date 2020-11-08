@@ -10,12 +10,12 @@ class SuccessfulDeliveries extends React.Component {
         <div>
           {this.props.clients && this.props.clients.length !== 0 ? (
             <React.Fragment>
-              {this.props.clients.map((client) => {
+              {this.props.clients.map(client => {
                 const {
                   receiverAddress,
-                  receiverTown,
+                  receiveCity,
                   receiverPhoneNumber,
-                  itemName,
+                  itemName
                 } = client;
                 let user;
                 if (client.userSeller) {
@@ -31,7 +31,7 @@ class SuccessfulDeliveries extends React.Component {
                       Delivered {itemName} <strong>FROM </strong>
                       {town}, {address}
                       <strong> TO </strong>
-                      {receiverTown}, {receiverAddress} on 15/10/2020
+                      {receiveCity}, {receiverAddress} on 15/10/2020
                     </p>
                     <p>Sender Phone: 0{phoneNumber}</p>
                     <p>Recipient Phone: 0{receiverPhoneNumber}</p>
@@ -47,9 +47,9 @@ class SuccessfulDeliveries extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    clients: state.riders.clients,
+    clients: state.riders.clients
   };
 };
 export default connect(mapStateToProps)(SuccessfulDeliveries);

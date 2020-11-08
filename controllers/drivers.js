@@ -180,11 +180,7 @@ route.post(
   check("itemQuantity")
     .isNumeric()
     .withMessage("please enter a valid item quantity"),
-  check("receiverFirstName")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's name"),
-  check("receiverLastName")
+  check("receiverFullName")
     .trim()
     .notEmpty()
     .withMessage("enter a valid receiver's name"),
@@ -195,10 +191,6 @@ route.post(
     .trim()
     .notEmpty()
     .withMessage("enter a valid receiver's city"),
-  check("receiverTown")
-    .trim()
-    .notEmpty()
-    .withMessage("enter a valid receiver's town"),
   check("receiverAddress")
     .trim()
     .notEmpty()
@@ -225,11 +217,9 @@ route.post(
       const {
         itemName,
         itemQuantity,
-        receiverFirstName,
-        receiverLastName,
+        receiverFullName,
         receiverPhoneNumber,
         receiverCity,
-        receiverTown,
         receiverAddress,
         origins,
         destination
@@ -271,10 +261,8 @@ route.post(
           const delivery = new Delivery({
             itemName,
             itemQuantity,
-            receiverFirstName,
-            receiverLastName,
+            receiverFullName,
             receiverPhoneNumber,
-            receiverTown,
             receiverCity,
             receiverAddress,
             user: req.session.user._id,

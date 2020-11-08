@@ -25,11 +25,7 @@ const DeliverySchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    receiverFirstName: {
-      type: String,
-      required: true
-    },
-    receiverLastName: {
+    receiverFullName: {
       type: String,
       required: true
     },
@@ -38,10 +34,6 @@ const DeliverySchema = new mongoose.Schema(
       required: true
     },
     receiverCity: {
-      type: String,
-      required: true
-    },
-    receiverTown: {
       type: String,
       required: true
     },

@@ -27,8 +27,7 @@ class AccountLogistic extends React.Component {
       return <ScreenLoader />;
     }
     const {
-      receiverFirstName,
-      receiverLastName,
+      receiverFullName,
       receiverPhoneNumber,
       itemName,
       itemQuantity,
@@ -81,7 +80,7 @@ class AccountLogistic extends React.Component {
                   <div className="container">
                     <p>
                       <b>Recipient: </b>
-                      {receiverFirstName} {receiverLastName}
+                      {receiverFullName}
                     </p>
                     <p>
                       <b>Phone: </b>0{receiverPhoneNumber}
