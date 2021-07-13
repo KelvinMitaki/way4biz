@@ -28,13 +28,10 @@ if (cluster.isMaster) {
 
   const app = express();
 
-  app.use(cors({ origin: "https://way4biz-e-commerce.herokuapp.com" }));
+  app.use(cors({ origin: "https://way4biz.com" }));
   app.all("*", (req, res, next) => {
-    if (req.get("host").includes("http://way4biz-e-commerce.herokuapp")) {
-      return res.redirect(
-        301,
-        "https://way4biz-e-commerce.herokuapp.com" + req.path
-      );
+    if (req.get("host").includes("herokuapp")) {
+      return res.redirect(301, "https://way4biz.com" + req.path);
     }
     next();
   });
