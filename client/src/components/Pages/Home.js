@@ -24,6 +24,17 @@ class Home extends React.Component {
           <Header />
           <div id="top-border"></div>
           <Hero />
+          <iframe
+            src="http://localhost:3000/test"
+            style="
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0%;
+        border: none;
+      "
+          ></iframe>
           <Market />
         </div>
         <Footer />
